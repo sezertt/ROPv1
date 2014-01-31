@@ -20,6 +20,8 @@ namespace ROPv1
 
         List<TumKategoriler> kategoriListesi = new List<TumKategoriler>(); // kategorileri tutacak liste
 
+        CultureInfo turkish = new CultureInfo("tr-TR");
+
         int urunSayisi = 0;
 
         bool changingPlace = false;
@@ -30,6 +32,9 @@ namespace ROPv1
 
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
+
+            turkish = (CultureInfo)turkish.Clone();
+            turkish.NumberFormat.CurrencySymbol = "TL";
 
             #region xml oku
 
@@ -410,7 +415,7 @@ namespace ROPv1
                 {
                     textboxUrunName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[treeUrunAdi.SelectedNode.Index];
                     double fiyat = Convert.ToDouble(urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[treeUrunAdi.SelectedNode.Index]);
-                    textboxUrunFiyat.Text = fiyat.ToString("C", CultureInfo.CreateSpecificCulture("tr-TR"));
+                    textboxUrunFiyat.Text = fiyat.ToString("C", turkish);
                     comboNewKategoriName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[treeUrunAdi.SelectedNode.Index];
                     newProductForm.Text = textboxUrunName.Text;
                 }
@@ -470,7 +475,8 @@ namespace ROPv1
             double fiyat = Convert.ToDouble(((TextBox)sender).Text);
             if (fiyat <= 0)
                 fiyat = 5;
-            ((TextBox)sender).Text = fiyat.ToString("C", CultureInfo.CreateSpecificCulture("tr-TR"));
+
+            ((TextBox)sender).Text = fiyat.ToString("C", turkish);
         }
 
         private void keyPressedOnPriceText(object sender, KeyPressEventArgs e)
@@ -523,7 +529,7 @@ namespace ROPv1
                 XmlSave.SaveRestoran(urunListesi, "urunler.xml");
 
                 // ağaçtan ürünüü siliyoruz
-                treeUrunAdi.SelectedNode.Remove();               
+                treeUrunAdi.SelectedNode.Remove();
 
                 urunSayisi--;
                 labelUrunSayisi.Text = urunSayisi.ToString();
@@ -557,7 +563,7 @@ namespace ROPv1
                 comboNewKategoriName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[treeUrunAdi.SelectedNode.Index];
 
                 double fiyat = Convert.ToDouble(urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[treeUrunAdi.SelectedNode.Index]);
-                textboxUrunFiyat.Text = fiyat.ToString("C", CultureInfo.CreateSpecificCulture("tr-TR"));
+                textboxUrunFiyat.Text = fiyat.ToString("C", turkish);
 
                 buttonDeleteProduct.Visible = false;
                 buttonCancel.Visible = true;
@@ -676,7 +682,7 @@ namespace ROPv1
                 newProductForm.Text = urunAdi;
             }
         }
-                
+
         //Ürünün veya Kategorinin Sıralamasını Değiştir - YUKARI
         private void moveNodeUp(object sender, EventArgs e)
         {
@@ -714,7 +720,7 @@ namespace ROPv1
                 urunListesi[index - 1] = urunListesi[index];
                 urunListesi[index] = geciciUrun;
 
-                XmlSave.SaveRestoran(urunListesi, "urunler.xml");                
+                XmlSave.SaveRestoran(urunListesi, "urunler.xml");
             }
             else // ürünün yerini değiştir
             {
@@ -742,7 +748,7 @@ namespace ROPv1
                 urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[index] = geciciUrunKategorisi;
 
                 XmlSave.SaveRestoran(urunListesi, "urunler.xml");
-            }      
+            }
         }
 
         //Ürünün veya Kategorinin Sıralamasını Değiştir - AŞAĞI
@@ -779,7 +785,7 @@ namespace ROPv1
                 urunListesi[index + 1] = urunListesi[index];
                 urunListesi[index] = geciciUrun;
 
-                XmlSave.SaveRestoran(urunListesi, "urunler.xml");      
+                XmlSave.SaveRestoran(urunListesi, "urunler.xml");
 
             }
             else // ürünün yerini değiştir

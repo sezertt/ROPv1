@@ -571,7 +571,7 @@ namespace ROPv1
             {
                 textTableName.Enabled = false;
                 textTableName.Text = ((Button)sender).Text;
-                textTableName.Tag = Convert.ToInt32(((Button)sender).Name);
+                textTableName.Tag = ((Button)sender).Name;
                 textTableName.Enabled = true;
                 textTableName.Focus();
             }
