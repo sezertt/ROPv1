@@ -61,7 +61,7 @@ namespace ROPv1
             {
                 infoMenu[0] = new Menuler();
                 infoMenu[0].menuAdi = "Menü";
-
+                infoMenu[0].menukategorileri = new List<string>();
                 infoMenu[0].menukategorileri.AddRange(infoKategoriler[0].kategoriler);
                 XmlSave.SaveRestoran(infoMenu, "menu.xml");
             }
