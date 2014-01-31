@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SiparisFormu));
             this.exitButton = new System.Windows.Forms.Button();
             this.dayButton = new System.Windows.Forms.Button();
             this.adminButton = new System.Windows.Forms.Button();
@@ -93,6 +94,7 @@
             this.Controls.Add(this.dayButton);
             this.Controls.Add(this.exitButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SiparisFormu";
             this.Text = "SiparisFormu";
             this.TopMost = true;

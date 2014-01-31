@@ -93,16 +93,6 @@ namespace ROPv1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap BackOfDialog {
-            get {
-                object obj = ResourceManager.GetObject("BackOfDialog", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap dayOff {
             get {
                 object obj = ResourceManager.GetObject("dayOff", resourceCulture);

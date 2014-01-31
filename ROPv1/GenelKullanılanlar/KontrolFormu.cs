@@ -15,6 +15,10 @@ namespace ROPv1
         public KontrolFormu(string textboxText,bool BoxType)
         {
             InitializeComponent();
+
+            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+
             labelAciklama.Text = textboxText;
             if (!BoxType) //OK Box
             {

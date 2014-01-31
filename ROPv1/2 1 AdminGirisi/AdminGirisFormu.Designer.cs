@@ -239,6 +239,7 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.splitPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AdminGirisFormu";
             this.Text = "AdminGirisFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

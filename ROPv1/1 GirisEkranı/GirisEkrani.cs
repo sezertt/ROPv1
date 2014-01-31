@@ -66,7 +66,7 @@ namespace ROPv1
         }
 
         private void siparisButtonPressed(object sender, EventArgs e)
-        {            
+        {
             //sipariş ekranına geçilecek
             closeOrShowAnotherForm = true;
 
