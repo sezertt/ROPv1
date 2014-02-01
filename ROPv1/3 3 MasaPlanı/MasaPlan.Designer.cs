@@ -36,13 +36,13 @@
             this.textTableDesignName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.buttonSaveNewTable = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.tablePanel = new System.Windows.Forms.TableLayoutPanel();
             this.textTableName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonEditDesign = new System.Windows.Forms.Button();
             this.buttonDeleteTable = new System.Windows.Forms.Button();
-            this.buttonSaveNewTable = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonAddTableDesign = new System.Windows.Forms.Button();
             this.newTableForm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericTableCount)).BeginInit();
@@ -160,6 +160,41 @@
             this.label5.TabIndex = 19;
             this.label5.Text = "Masa Planının Adı:";
             // 
+            // buttonSaveNewTable
+            // 
+            this.buttonSaveNewTable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSaveNewTable.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonSaveNewTable.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonSaveNewTable.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonSaveNewTable.Image = ((System.Drawing.Image)(resources.GetObject("buttonSaveNewTable.Image")));
+            this.buttonSaveNewTable.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSaveNewTable.Location = new System.Drawing.Point(152, 160);
+            this.buttonSaveNewTable.Name = "buttonSaveNewTable";
+            this.buttonSaveNewTable.Size = new System.Drawing.Size(101, 45);
+            this.buttonSaveNewTable.TabIndex = 5;
+            this.buttonSaveNewTable.Text = "Kaydet";
+            this.buttonSaveNewTable.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonSaveNewTable.UseVisualStyleBackColor = false;
+            this.buttonSaveNewTable.Click += new System.EventHandler(this.buttonAddNewTableDesign);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonCancel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
+            this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonCancel.Location = new System.Drawing.Point(9, 160);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(101, 45);
+            this.buttonCancel.TabIndex = 17;
+            this.buttonCancel.TabStop = false;
+            this.buttonCancel.Text = "İptal Et";
+            this.buttonCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonCancel.UseVisualStyleBackColor = false;
+            this.buttonCancel.Click += new System.EventHandler(this.cancelNewTable);
+            // 
             // tablePanel
             // 
             this.tablePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -211,7 +246,7 @@
             this.textTableName.Enabled = false;
             this.textTableName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textTableName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textTableName.Location = new System.Drawing.Point(728, 249);
+            this.textTableName.Location = new System.Drawing.Point(728, 305);
             this.textTableName.MaxLength = 7;
             this.textTableName.Name = "textTableName";
             this.textTableName.Size = new System.Drawing.Size(244, 32);
@@ -224,7 +259,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Location = new System.Drawing.Point(724, 222);
+            this.label1.Location = new System.Drawing.Point(724, 278);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(108, 24);
             this.label1.TabIndex = 29;
@@ -238,7 +273,7 @@
             this.buttonEditDesign.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonEditDesign.Image = global::ROPv1.Properties.Resources.editicon;
             this.buttonEditDesign.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonEditDesign.Location = new System.Drawing.Point(862, 287);
+            this.buttonEditDesign.Location = new System.Drawing.Point(862, 225);
             this.buttonEditDesign.Name = "buttonEditDesign";
             this.buttonEditDesign.Size = new System.Drawing.Size(110, 52);
             this.buttonEditDesign.TabIndex = 30;
@@ -255,7 +290,7 @@
             this.buttonDeleteTable.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteTable.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonDeleteTable.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteTable.Location = new System.Drawing.Point(728, 287);
+            this.buttonDeleteTable.Location = new System.Drawing.Point(728, 225);
             this.buttonDeleteTable.Name = "buttonDeleteTable";
             this.buttonDeleteTable.Size = new System.Drawing.Size(101, 52);
             this.buttonDeleteTable.TabIndex = 0;
@@ -264,41 +299,6 @@
             this.buttonDeleteTable.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonDeleteTable.UseVisualStyleBackColor = false;
             this.buttonDeleteTable.Click += new System.EventHandler(this.deleteTableDesign);
-            // 
-            // buttonSaveNewTable
-            // 
-            this.buttonSaveNewTable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSaveNewTable.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonSaveNewTable.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonSaveNewTable.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonSaveNewTable.Image = ((System.Drawing.Image)(resources.GetObject("buttonSaveNewTable.Image")));
-            this.buttonSaveNewTable.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSaveNewTable.Location = new System.Drawing.Point(152, 160);
-            this.buttonSaveNewTable.Name = "buttonSaveNewTable";
-            this.buttonSaveNewTable.Size = new System.Drawing.Size(101, 45);
-            this.buttonSaveNewTable.TabIndex = 5;
-            this.buttonSaveNewTable.Text = "Kaydet";
-            this.buttonSaveNewTable.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonSaveNewTable.UseVisualStyleBackColor = false;
-            this.buttonSaveNewTable.Click += new System.EventHandler(this.buttonAddNewTableDesign);
-            // 
-            // buttonCancel
-            // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonCancel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
-            this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonCancel.Location = new System.Drawing.Point(9, 160);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(101, 45);
-            this.buttonCancel.TabIndex = 17;
-            this.buttonCancel.TabStop = false;
-            this.buttonCancel.Text = "İptal Et";
-            this.buttonCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonCancel.UseVisualStyleBackColor = false;
-            this.buttonCancel.Click += new System.EventHandler(this.cancelNewTable);
             // 
             // buttonAddTableDesign
             // 
