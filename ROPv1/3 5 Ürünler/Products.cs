@@ -32,7 +32,7 @@ namespace ROPv1
 
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
-
+           
             turkish = (CultureInfo)turkish.Clone();
             turkish.NumberFormat.CurrencySymbol = "TL";
 
@@ -553,21 +553,25 @@ namespace ROPv1
         // Yeni Ürün Oluşturma Butonu Basıldı
         private void createNewProductButtonPressed(object sender, EventArgs e)
         {
-            if (treeUrunAdi.SelectedNode.Parent == null || treeUrunAdi.SelectedNode == null)
+            if (treeUrunAdi.SelectedNode == null)
                 return;
 
             if (newProductForm.Text != "Yeni Ürün") // her basışta yeniden ayarlanmasın diye, ayarlandı mı kontrolü
             {
                 newProductForm.Text = "Yeni Ürün";
                 textboxUrunName.Text = "";
-                comboNewKategoriName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[treeUrunAdi.SelectedNode.Index];
+                if(treeUrunAdi.SelectedNode.Parent == null)
+                    comboNewKategoriName.Text = urunListesi[treeUrunAdi.SelectedNode.Index].kategorininAdi;
+                else
+                    comboNewKategoriName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].kategorininAdi;
 
-                double fiyat = Convert.ToDouble(urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[treeUrunAdi.SelectedNode.Index]);
+                double fiyat = 5.00;
                 textboxUrunFiyat.Text = fiyat.ToString("C", turkish);
 
                 buttonDeleteProduct.Visible = false;
                 buttonCancel.Visible = true;
                 buttonAddNewProduct.Enabled = false;
+                newProductForm.Enabled = true;
             }
             textboxUrunName.Focus();
         }
@@ -575,7 +579,7 @@ namespace ROPv1
         // ürünü kaydetme butonuna basıldı 
         private void saveProductButtonPressed(object sender, EventArgs e)
         {
-            if (treeUrunAdi.SelectedNode.Parent == null || treeUrunAdi.SelectedNode == null)
+            if (treeUrunAdi.SelectedNode == null)
                 return;
 
             if (textboxUrunName.Text == "Yeni Ürün" || textboxUrunName.Text == "")
