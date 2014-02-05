@@ -8,7 +8,10 @@
     <Setting Name="masaDizaynSayisi" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="MenuSayisi" Type="System.Int32" Scope="User">
+    <Setting Name="menuSayisi" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="kullaniciSayisi" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>

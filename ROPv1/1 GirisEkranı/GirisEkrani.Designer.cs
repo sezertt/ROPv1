@@ -144,6 +144,7 @@
             this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.exitButton.AutoSize = true;
             this.exitButton.BackColor = System.Drawing.SystemColors.Window;
+            this.exitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.exitButton.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.exitButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.exitButton.Image = global::ROPv1.Properties.Resources.logOut;
@@ -161,9 +162,11 @@
             // 
             // GirisEkrani
             // 
+            this.AcceptButton = this.girisButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.CancelButton = this.exitButton;
             this.ClientSize = new System.Drawing.Size(1114, 819);
             this.ControlBox = false;
             this.Controls.Add(this.exitButton);

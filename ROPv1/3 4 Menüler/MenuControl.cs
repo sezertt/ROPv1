@@ -14,7 +14,7 @@ namespace ROPv1
 {
     public partial class MenuControl : UserControl
     {
-        int menuSayisi = Properties.Settings.Default.MenuSayisi; // oluşturulmuş menülerin sayısı
+        int menuSayisi = Properties.Settings.Default.menuSayisi; // oluşturulmuş menülerin sayısı
 
         List<Menuler> menuListesi = new List<Menuler>();  // menüleri tutacak liste
 
@@ -459,7 +459,7 @@ namespace ROPv1
 
                 //menü sayımızı azaltıp kayedediyoruz
                 menuSayisi--;
-                Properties.Settings.Default.MenuSayisi = menuSayisi;
+                Properties.Settings.Default.menuSayisi = menuSayisi;
                 Properties.Settings.Default.Save();
 
                 // tek menü kaldıysa silinmesin diyoruz
@@ -712,7 +712,7 @@ namespace ROPv1
 
                 //menü sayısı arttırılıp kaydedilir
                 menuSayisi++;
-                Properties.Settings.Default.MenuSayisi = menuSayisi;
+                Properties.Settings.Default.menuSayisi = menuSayisi;
                 Properties.Settings.Default.Save();
 
                 buttonDeleteMenu.Visible = true;

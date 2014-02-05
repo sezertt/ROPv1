@@ -291,6 +291,7 @@ namespace ROPv1
             UrunOzellikleri[] infoUrun2 = new UrunOzellikleri[infoKategoriler[0].kategoriler.Count];
 
             int count = infoUrun.Count();
+
             if (infoUrun.Count() > infoUrun2.Count())
                 count = infoUrun2.Count();
 
@@ -528,7 +529,7 @@ namespace ROPv1
                 //kaydediyoruz
                 XmlSave.SaveRestoran(urunListesi, "urunler.xml");
 
-                // ağaçtan ürünüü siliyoruz
+                // ağaçtan ürünü siliyoruz
                 treeUrunAdi.SelectedNode.Remove();
 
                 urunSayisi--;

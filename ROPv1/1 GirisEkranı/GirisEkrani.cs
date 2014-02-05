@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ROPv1
 {
@@ -18,6 +21,8 @@ namespace ROPv1
 
         bool closeOrShowAnotherForm = false;
 
+        KullaniciOzellikleri[] infoKullanici;
+
         public GirisEkrani()
         {
             InitializeComponent();
@@ -25,6 +30,40 @@ namespace ROPv1
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
 
+            int kullaniciSayisi = Properties.Settings.Default.kullaniciSayisi;
+
+            infoKullanici = new KullaniciOzellikleri[kullaniciSayisi];
+
+            if (!File.Exists("tempfiles.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default kategorilerimizi giriyoruz.
+            {
+                infoKullanici[0] = new KullaniciOzellikleri();
+                infoKullanici[0].adi = "Adınız";
+                infoKullanici[0].soyadi = "Soy Adınız";
+                infoKullanici[0].kullaniciAdi = Helper.ComputeHash("admin", "SHA512", null);
+                infoKullanici[0].pinKodu = Helper.ComputeHash("0000", "SHA512", null);
+                infoKullanici[0].sifresi = Helper.ComputeHash("00000", "SHA512", null);
+                infoKullanici[0].unvani = "Yönetici";
+                infoKullanici[0].yetkileri[0] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].yetkileri[1] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].yetkileri[2] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].yetkileri[3] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].yetkileri[4] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].yetkileri[5] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].yetkileri[6] = Helper.ComputeHash("true", "SHA512", null);
+
+                XmlSave.SaveRestoran(infoKullanici, "tempfiles.xml");
+
+                File.SetAttributes(
+                   "tempfiles.xml",
+                   FileAttributes.Archive |
+                   FileAttributes.Hidden |
+                   FileAttributes.ReadOnly
+                   );
+            }
+            XmlLoad<KullaniciOzellikleri> loadInfoKullanicilar = new XmlLoad<KullaniciOzellikleri>();
+            infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
+
+            
             //wpflerimizi oluşturduğumuz elementhostların childına atıyoruz
             userNameTextBox = new WPF_UserControls.VerticalCenterTextBox();
             usernameBoxHost.Child = userNameTextBox;
@@ -52,17 +91,46 @@ namespace ROPv1
 
         private void girisButtonPressed(object sender, EventArgs e)
         {
-            closeOrShowAnotherForm = true;
-
-            ShowWaitForm();
+            closeOrShowAnotherForm = true;            
 
             string username = userNameTextBox.getNameText(); //name lazım olduğunda al
             string password = passwordTextBox.getPasswordText(); //password lazım olduğunda al 
 
-            //bilgiler kontrol edilip admin ekranına geçilecek
-            AdminGirisFormu adminForm = new AdminGirisFormu(false);
-            adminForm.Show();
-            this.Close();
+            int kullaniciAdi = -5;
+
+            for(int i = 0; i < infoKullanici.Count(); i++)
+            {
+                if (Helper.VerifyHash(username, "SHA512", infoKullanici[i].kullaniciAdi))
+                {
+                    kullaniciAdi = i;
+                    break;
+                }
+            }
+            if(kullaniciAdi != -5)
+            {
+                bool flag = Helper.VerifyHash(password, "SHA512", infoKullanici[kullaniciAdi].sifresi);
+                if (flag == true)
+                { //şifre doğru
+                    ShowWaitForm();
+                    AdminGirisFormu adminForm = new AdminGirisFormu(false);
+                    adminForm.Show();
+                    this.Close();
+                }
+                else
+                {
+                    using (KontrolFormu dialog = new KontrolFormu("Yanlış kullanıcı adı/şifre girdiniz", false))
+                    {
+                        dialog.ShowDialog();
+                    }
+                }
+            }
+            else
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Yanlış kullanıcı adı/şifre girdiniz", false))
+                {
+                    dialog.ShowDialog();
+                }
+            }
         }
 
         private void siparisButtonPressed(object sender, EventArgs e)

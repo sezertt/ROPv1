@@ -50,12 +50,24 @@ namespace ROPv1.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int MenuSayisi {
+        public int menuSayisi {
             get {
-                return ((int)(this["MenuSayisi"]));
+                return ((int)(this["menuSayisi"]));
             }
             set {
-                this["MenuSayisi"] = value;
+                this["menuSayisi"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int kullaniciSayisi {
+            get {
+                return ((int)(this["kullaniciSayisi"]));
+            }
+            set {
+                this["kullaniciSayisi"] = value;
             }
         }
     }

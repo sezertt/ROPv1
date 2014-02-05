@@ -92,7 +92,7 @@ namespace ROPv1
 
             if (File.Exists("menu.xml"))
             {
-                int menuSayisi = Properties.Settings.Default.MenuSayisi;
+                int menuSayisi = Properties.Settings.Default.menuSayisi;
 
                 Menuler[] menuListesi = new Menuler[menuSayisi];
 
