@@ -68,18 +68,19 @@
             this.newProductForm.Controls.Add(this.buttonCancel);
             this.newProductForm.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.newProductForm.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.newProductForm.Location = new System.Drawing.Point(647, 3);
+            this.newProductForm.Location = new System.Drawing.Point(657, 3);
             this.newProductForm.Name = "newProductForm";
-            this.newProductForm.Size = new System.Drawing.Size(343, 335);
+            this.newProductForm.Size = new System.Drawing.Size(322, 335);
             this.newProductForm.TabIndex = 35;
             this.newProductForm.TabStop = false;
             this.newProductForm.Text = "Yeni Ürün";
             // 
             // labelUrunSayisi
             // 
+            this.labelUrunSayisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelUrunSayisi.AutoSize = true;
             this.labelUrunSayisi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelUrunSayisi.Location = new System.Drawing.Point(146, 299);
+            this.labelUrunSayisi.Location = new System.Drawing.Point(148, 299);
             this.labelUrunSayisi.Name = "labelUrunSayisi";
             this.labelUrunSayisi.Size = new System.Drawing.Size(22, 24);
             this.labelUrunSayisi.TabIndex = 44;
@@ -87,9 +88,10 @@
             // 
             // labelUrunSayisiYazisi
             // 
+            this.labelUrunSayisiYazisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelUrunSayisiYazisi.AutoSize = true;
             this.labelUrunSayisiYazisi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelUrunSayisiYazisi.Location = new System.Drawing.Point(10, 299);
+            this.labelUrunSayisiYazisi.Location = new System.Drawing.Point(12, 299);
             this.labelUrunSayisiYazisi.Name = "labelUrunSayisiYazisi";
             this.labelUrunSayisiYazisi.Size = new System.Drawing.Size(137, 24);
             this.labelUrunSayisiYazisi.TabIndex = 43;
@@ -101,7 +103,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Location = new System.Drawing.Point(6, 166);
+            this.label1.Location = new System.Drawing.Point(4, 168);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(112, 24);
             this.label1.TabIndex = 42;
@@ -115,9 +117,10 @@
             this.comboNewKategoriName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.comboNewKategoriName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.comboNewKategoriName.FormattingEnabled = true;
-            this.comboNewKategoriName.Location = new System.Drawing.Point(10, 195);
+            this.comboNewKategoriName.Location = new System.Drawing.Point(8, 195);
+            this.comboNewKategoriName.MaxDropDownItems = 20;
             this.comboNewKategoriName.Name = "comboNewKategoriName";
-            this.comboNewKategoriName.Size = new System.Drawing.Size(324, 32);
+            this.comboNewKategoriName.Size = new System.Drawing.Size(305, 32);
             this.comboNewKategoriName.TabIndex = 4;
             this.comboNewKategoriName.Click += new System.EventHandler(this.showMenu);
             this.comboNewKategoriName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
@@ -133,9 +136,9 @@
             this.textboxUrunFiyat.ContextMenuStrip = this.contextMenuStrip1;
             this.textboxUrunFiyat.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxUrunFiyat.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textboxUrunFiyat.Location = new System.Drawing.Point(10, 126);
+            this.textboxUrunFiyat.Location = new System.Drawing.Point(8, 126);
             this.textboxUrunFiyat.Name = "textboxUrunFiyat";
-            this.textboxUrunFiyat.Size = new System.Drawing.Size(324, 32);
+            this.textboxUrunFiyat.Size = new System.Drawing.Size(305, 32);
             this.textboxUrunFiyat.TabIndex = 3;
             this.textboxUrunFiyat.Enter += new System.EventHandler(this.fiyatGirilcek);
             this.textboxUrunFiyat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPressedOnPriceText);
@@ -146,9 +149,9 @@
             this.textboxUrunName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxUrunName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxUrunName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textboxUrunName.Location = new System.Drawing.Point(10, 57);
+            this.textboxUrunName.Location = new System.Drawing.Point(8, 57);
             this.textboxUrunName.Name = "textboxUrunName";
-            this.textboxUrunName.Size = new System.Drawing.Size(324, 32);
+            this.textboxUrunName.Size = new System.Drawing.Size(305, 32);
             this.textboxUrunName.TabIndex = 2;
             // 
             // label7
@@ -157,7 +160,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label7.Location = new System.Drawing.Point(6, 97);
+            this.label7.Location = new System.Drawing.Point(4, 99);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(183, 24);
             this.label7.TabIndex = 25;
@@ -169,7 +172,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label5.Location = new System.Drawing.Point(6, 28);
+            this.label5.Location = new System.Drawing.Point(4, 30);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(103, 24);
             this.label5.TabIndex = 19;
@@ -183,7 +186,7 @@
             this.buttonSaveNewProduct.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSaveNewProduct.Image = ((System.Drawing.Image)(resources.GetObject("buttonSaveNewProduct.Image")));
             this.buttonSaveNewProduct.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSaveNewProduct.Location = new System.Drawing.Point(224, 244);
+            this.buttonSaveNewProduct.Location = new System.Drawing.Point(203, 244);
             this.buttonSaveNewProduct.Name = "buttonSaveNewProduct";
             this.buttonSaveNewProduct.Size = new System.Drawing.Size(110, 45);
             this.buttonSaveNewProduct.TabIndex = 6;
@@ -200,7 +203,7 @@
             this.buttonDeleteProduct.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteProduct.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonDeleteProduct.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteProduct.Location = new System.Drawing.Point(11, 244);
+            this.buttonDeleteProduct.Location = new System.Drawing.Point(8, 244);
             this.buttonDeleteProduct.Name = "buttonDeleteProduct";
             this.buttonDeleteProduct.Size = new System.Drawing.Size(110, 45);
             this.buttonDeleteProduct.TabIndex = 5;
@@ -211,13 +214,13 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.BackColor = System.Drawing.SystemColors.Window;
             this.buttonCancel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonCancel.Location = new System.Drawing.Point(11, 244);
+            this.buttonCancel.Location = new System.Drawing.Point(8, 244);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(110, 44);
             this.buttonCancel.TabIndex = 8;

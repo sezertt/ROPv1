@@ -83,6 +83,13 @@
     <Compile Include="2 1 AdminGirisi\AdminGirisFormu.Designer.cs">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
     </Compile>
+    <Compile Include="3 1 Kullanıcılar\Kullanici.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="3 1 Kullanıcılar\Kullanici.Designer.cs">
+      <DependentUpon>Kullanici.cs</DependentUpon>
+    </Compile>
+    <Compile Include="3 1 Kullanıcılar\KullaniciOzellikleri.cs" />
     <Compile Include="3 4 Menüler\MenuControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -117,6 +124,13 @@
     <Compile Include="1 GirisEkranı\MyWaitForm.Designer.cs">
       <DependentUpon>MyWaitForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="3 6 Stoklar\StokBilgileri.cs" />
+    <Compile Include="3 6 Stoklar\Stoklar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="3 6 Stoklar\Stoklar.Designer.cs">
+      <DependentUpon>Stoklar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gereksizler\Program.cs" />
     <Compile Include="3 5 Ürünler\Products.cs">
       <SubType>UserControl</SubType>
@@ -148,6 +162,9 @@
     <EmbeddedResource Include="2 1 AdminGirisi\AdminGirisFormu.resx">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="3 1 Kullanıcılar\Kullanici.resx">
+      <DependentUpon>Kullanici.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="3 3 MasaPlanı\MasaPlan.resx">
       <DependentUpon>MasaPlan.cs</DependentUpon>
     </EmbeddedResource>
@@ -165,6 +182,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="3 5 Ürünler\Products.resx">
       <DependentUpon>Products.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="3 6 Stoklar\Stoklar.resx">
+      <DependentUpon>Stoklar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GenelKullanılanlar\KontrolFormu.resx">
       <DependentUpon>KontrolFormu.cs</DependentUpon>
@@ -277,6 +297,7 @@
   <ItemGroup>
     <Content Include="ROP.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

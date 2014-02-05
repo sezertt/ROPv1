@@ -101,9 +101,9 @@
             this.newDepartmentForm.Controls.Add(this.buttonCancel);
             this.newDepartmentForm.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.newDepartmentForm.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.newDepartmentForm.Location = new System.Drawing.Point(599, 5);
+            this.newDepartmentForm.Location = new System.Drawing.Point(604, 5);
             this.newDepartmentForm.Name = "newDepartmentForm";
-            this.newDepartmentForm.Size = new System.Drawing.Size(391, 335);
+            this.newDepartmentForm.Size = new System.Drawing.Size(379, 335);
             this.newDepartmentForm.TabIndex = 19;
             this.newDepartmentForm.TabStop = false;
             this.newDepartmentForm.Text = "Yeni Departman";
@@ -116,9 +116,10 @@
             this.comboNewDepView.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.comboNewDepView.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.comboNewDepView.FormattingEnabled = true;
-            this.comboNewDepView.Location = new System.Drawing.Point(7, 116);
+            this.comboNewDepView.Location = new System.Drawing.Point(9, 116);
+            this.comboNewDepView.MaxDropDownItems = 20;
             this.comboNewDepView.Name = "comboNewDepView";
-            this.comboNewDepView.Size = new System.Drawing.Size(374, 32);
+            this.comboNewDepView.Size = new System.Drawing.Size(360, 32);
             this.comboNewDepView.TabIndex = 3;
             this.comboNewDepView.Click += new System.EventHandler(this.showMenu);
             this.comboNewDepView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
@@ -136,9 +137,10 @@
             this.comboNewDepStore.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.comboNewDepStore.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.comboNewDepStore.FormattingEnabled = true;
-            this.comboNewDepStore.Location = new System.Drawing.Point(8, 240);
+            this.comboNewDepStore.Location = new System.Drawing.Point(10, 240);
+            this.comboNewDepStore.MaxDropDownItems = 20;
             this.comboNewDepStore.Name = "comboNewDepStore";
-            this.comboNewDepStore.Size = new System.Drawing.Size(374, 32);
+            this.comboNewDepStore.Size = new System.Drawing.Size(360, 32);
             this.comboNewDepStore.TabIndex = 5;
             this.comboNewDepStore.Click += new System.EventHandler(this.showMenu);
             this.comboNewDepStore.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
@@ -151,9 +153,10 @@
             this.comboNewDepMenu.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.comboNewDepMenu.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.comboNewDepMenu.FormattingEnabled = true;
-            this.comboNewDepMenu.Location = new System.Drawing.Point(8, 178);
+            this.comboNewDepMenu.Location = new System.Drawing.Point(10, 178);
+            this.comboNewDepMenu.MaxDropDownItems = 20;
             this.comboNewDepMenu.Name = "comboNewDepMenu";
-            this.comboNewDepMenu.Size = new System.Drawing.Size(374, 32);
+            this.comboNewDepMenu.Size = new System.Drawing.Size(360, 32);
             this.comboNewDepMenu.TabIndex = 4;
             this.comboNewDepMenu.Click += new System.EventHandler(this.showMenu);
             this.comboNewDepMenu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
@@ -166,9 +169,9 @@
             this.comboNewDepName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.comboNewDepName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.comboNewDepName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.comboNewDepName.Location = new System.Drawing.Point(8, 54);
+            this.comboNewDepName.Location = new System.Drawing.Point(10, 54);
             this.comboNewDepName.Name = "comboNewDepName";
-            this.comboNewDepName.Size = new System.Drawing.Size(374, 32);
+            this.comboNewDepName.Size = new System.Drawing.Size(360, 32);
             this.comboNewDepName.TabIndex = 2;
             // 
             // label7
@@ -177,7 +180,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label7.Location = new System.Drawing.Point(3, 89);
+            this.label7.Location = new System.Drawing.Point(6, 89);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(275, 24);
             this.label7.TabIndex = 25;
@@ -189,7 +192,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label3.Location = new System.Drawing.Point(3, 213);
+            this.label3.Location = new System.Drawing.Point(12, 213);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(328, 24);
             this.label3.TabIndex = 23;
@@ -201,7 +204,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label4.Location = new System.Drawing.Point(3, 151);
+            this.label4.Location = new System.Drawing.Point(12, 151);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(330, 24);
             this.label4.TabIndex = 21;
@@ -215,7 +218,7 @@
             this.buttonDeleteDepartment.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteDepartment.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonDeleteDepartment.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteDepartment.Location = new System.Drawing.Point(8, 284);
+            this.buttonDeleteDepartment.Location = new System.Drawing.Point(10, 284);
             this.buttonDeleteDepartment.Name = "buttonDeleteDepartment";
             this.buttonDeleteDepartment.Size = new System.Drawing.Size(154, 45);
             this.buttonDeleteDepartment.TabIndex = 0;
@@ -231,7 +234,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label5.Location = new System.Drawing.Point(3, 27);
+            this.label5.Location = new System.Drawing.Point(12, 27);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(184, 24);
             this.label5.TabIndex = 19;
@@ -245,7 +248,7 @@
             this.buttonSaveNewDep.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSaveNewDep.Image = ((System.Drawing.Image)(resources.GetObject("buttonSaveNewDep.Image")));
             this.buttonSaveNewDep.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSaveNewDep.Location = new System.Drawing.Point(281, 284);
+            this.buttonSaveNewDep.Location = new System.Drawing.Point(275, 284);
             this.buttonSaveNewDep.Name = "buttonSaveNewDep";
             this.buttonSaveNewDep.Size = new System.Drawing.Size(101, 45);
             this.buttonSaveNewDep.TabIndex = 6;
@@ -262,7 +265,7 @@
             this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonCancel.Location = new System.Drawing.Point(8, 284);
+            this.buttonCancel.Location = new System.Drawing.Point(16, 284);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(101, 45);
             this.buttonCancel.TabIndex = 17;

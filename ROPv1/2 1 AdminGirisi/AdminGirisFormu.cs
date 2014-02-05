@@ -145,16 +145,8 @@ namespace ROPv1
                     leftPanelView.Nodes.Add("Ürünler");
                     leftPanelView.Nodes.Add("Stok Ayarları");                    
                     leftPanelView.SelectedNode = leftPanelView.Nodes[0];
-
-                    //burada kullanıcı ekranını ekle alttaki şekilde
-                    //Departman departmanView = new Departman();                    
-                    //splitPanel.Panel2.Controls.Add(departmanView);
-                    //departmanView.Dock = DockStyle.Fill;
                     
-                    //Veri tabanından gerekli verileri al
-
-                    
-                    //ayarlar işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok                    
+                    //Veri tabanından gerekli verileri al                  
                     break;
                 default:
                     break;
@@ -186,7 +178,9 @@ namespace ROPv1
             {
                 #region
                 case 0: //Kullanıcılar Seçildi
-
+                    Kullanici kullaniciView = new Kullanici();
+                    splitPanel.Panel2.Controls.Add(kullaniciView);
+                    kullaniciView.Dock = DockStyle.Fill;
                     //Veri tabanından gerekli verileri alınmamışsa al
 
                     break;
@@ -222,8 +216,10 @@ namespace ROPv1
                     //Veri tabanından gerekli verileri alınmamışsa al
 
                     break;
-                case 6: //Stok Ayarları Seçildi
-
+                case 5: //Stok Ayarları Seçildi
+                    Stoklar stokView = new Stoklar();
+                    splitPanel.Panel2.Controls.Add(stokView);
+                    stokView.Dock = DockStyle.Fill;
                     //Veri tabanından gerekli verileri alınmamışsa al
 
                     break;
