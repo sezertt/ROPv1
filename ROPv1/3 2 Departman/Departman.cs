@@ -294,6 +294,11 @@ if (File.Exists("depolar.xml"))
                     buttonDeleteDepartment.Enabled = true;
                 if (treeDepartman.Nodes.Count > 9)
                     buttonAddDepartment.Enabled = false;
+
+                using (KontrolFormu dialog = new KontrolFormu("Yeni Departman Bilgileri Kaydedilmiştir", false))
+                {
+                    dialog.ShowDialog();
+                }
             }
             else
             {
@@ -308,6 +313,11 @@ if (File.Exists("depolar.xml"))
 
                 treeDepartman.Nodes[treeDepartman.SelectedNode.Index].Text = comboNewDepName.Text;
                 newDepartmentForm.Text = comboNewDepName.Text;
+
+                using (KontrolFormu dialog = new KontrolFormu("Departman Bilgileri Güncellenmiştir", false))
+                {
+                    dialog.ShowDialog();
+                }
             }
 
             //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz

@@ -122,7 +122,7 @@ namespace ROPv1
             if (treeMenuName.Nodes.Count < 2)
                 buttonDeleteMenu.Enabled = false;
 
-            if (treeNewKategori.Nodes.Count < 2)
+            if (kategoriListesi[0].kategoriler.Count < 2)
                 buttonDeleteNewKategori.Enabled = false;
 
             //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
@@ -132,7 +132,7 @@ namespace ROPv1
                 {
                     treeMenuName.Font = new Font(treeMenuName.Font.FontFamily, treeMenuName.Font.Size - 0.5f, treeMenuName.Font.Style);
                 }
-            }            
+            }
 
             #region ürünlerin ilk tanımlaması
             if (!File.Exists("urunler.xml"))
@@ -344,7 +344,7 @@ namespace ROPv1
                 infoUrun[6].kategorininAdi = "Salatalar";
                 infoUrun[7].kategorininAdi = "Tatlılar";
                 infoUrun[8].kategorininAdi = "İçecekler";
-                infoUrun[8].kategorininAdi = "Kategorisiz Ürünler";                
+                infoUrun[8].kategorininAdi = "Kategorisiz Ürünler";
 
                 XmlSave.SaveRestoran(infoUrun, "urunler.xml");
             }
@@ -442,9 +442,9 @@ namespace ROPv1
             using (KontrolFormu dialog = new KontrolFormu(treeMenuName.SelectedNode.Text + " adlı menüyü silmek istediğinize emin misiniz?", true))
             {
                 eminMisiniz = dialog.ShowDialog();
-                                
+
             }
-           
+
 
             if (eminMisiniz == DialogResult.Yes)
             {
@@ -455,7 +455,7 @@ namespace ROPv1
                 XmlSave.SaveRestoran(menuListesi, "menu.xml");
 
                 // ağaçtan menüyü siliyoruz
-                treeMenuName.Nodes[treeMenuName.SelectedNode.Index].Remove();
+                treeMenuName.SelectedNode.Remove();
 
                 //menü sayımızı azaltıp kayedediyoruz
                 menuSayisi--;
@@ -527,7 +527,7 @@ namespace ROPv1
         // Tüm kategoriler içinde değiştirilen kategoriyi kaydetme butonuna basıldı
         private void saveNewKategoriPressed(object sender, EventArgs e)
         {
-            if (textBoxYeniKategori.Text == "Yeni Kategori" || textBoxYeniKategori.Text == "" || textBoxYeniKategori.Text ==  "Kategorisiz Ürünler")
+            if (textBoxYeniKategori.Text == "Yeni Kategori" || textBoxYeniKategori.Text == "" || textBoxYeniKategori.Text == "Kategorisiz Ürünler")
             {
                 using (KontrolFormu dialog = new KontrolFormu("Hatalı bilgi girdiniz, lütfen kontrol edin", false))
                 {
@@ -545,7 +545,7 @@ namespace ROPv1
                         using (KontrolFormu dialog = new KontrolFormu("Hatalı bilgi girdiniz, lütfen kontrol edin", false))
                         {
                             dialog.ShowDialog();
-                        } 
+                        }
                         return;
                     }
                 }
@@ -556,7 +556,7 @@ namespace ROPv1
                 newMenuForm.Text = textBoxYeniKategori.Text;
 
                 // tüm kategoriler listemize kategoriyi ekleyip kaydediyoruz
-                kategoriListesi[0].kategoriler.Insert(kategoriListesi[0].kategoriler.Count - 1,textBoxYeniKategori.Text);
+                kategoriListesi[0].kategoriler.Insert(kategoriListesi[0].kategoriler.Count - 1, textBoxYeniKategori.Text);
                 XmlSave.SaveRestoran(kategoriListesi, "kategoriler.xml");
 
                 treeNewKategori.SelectedNode = treeNewKategori.Nodes[treeNewKategori.Nodes.Count - 1];
@@ -570,8 +570,12 @@ namespace ROPv1
                 treeMenuName.Enabled = true;
                 treeMenuKategori.Enabled = true;
 
-                if (treeNewKategori.Nodes.Count > 1)
+                if (kategoriListesi[0].kategoriler.Count > 1)
                     buttonDeleteNewKategori.Enabled = true;
+                using (KontrolFormu dialog = new KontrolFormu("Yeni Kategori Kaydedilmiştir", false))
+                {
+                    dialog.ShowDialog();
+                }
             }
             else // kategori düzenleme
             {
@@ -601,18 +605,25 @@ namespace ROPv1
                     }
                 }
 
-                string nameBeforeSave = kategoriListesi[0].kategoriler[treeNewKategori.SelectedNode.Index];
-
+                string nameBeforeSave = treeNewKategori.SelectedNode.Text;
+               
                 //kategorinin listedeki ismini güncelliyoruz ve kaydediyoruz
-                kategoriListesi[0].kategoriler[treeNewKategori.SelectedNode.Index] = textBoxYeniKategori.Text;
-                XmlSave.SaveRestoran(kategoriListesi, "kategoriler.xml");
+                int temp = 0;
+                for (int i = 0; i < kategoriListesi[0].kategoriler.Count; i++)
+                {
+                    if (kategoriListesi[0].kategoriler[i] == nameBeforeSave)
+                    {
+                        temp = i;
+                        break;
+                    }
+                }
+
+                kategoriListesi[0].kategoriler[temp] = textBoxYeniKategori.Text;
+                XmlSave.SaveRestoran(kategoriListesi, "kategoriler.xml");               
 
                 //görünümdeki isimleri güncelliyoruz
-                treeNewKategori.Nodes[treeNewKategori.SelectedNode.Index].Text = textBoxYeniKategori.Text;
+                treeNewKategori.SelectedNode.Text = textBoxYeniKategori.Text;
                 newKategoriForm.Text = textBoxYeniKategori.Text;
-
-                // sadece ekrandaki treeviewın görüntüsünü değiştir, ekranda olmayan menülerde bu kategoriyi bulursan onlarında, ismini değiştir ve kaydet
-                bool onlyForTreeViewOnScreen = true;
 
                 for (int i = 0; i < menuSayisi; i++)
                 {
@@ -621,13 +632,14 @@ namespace ROPv1
                         if (menuListesi[i].menukategorileri[j] == nameBeforeSave)
                         {
                             menuListesi[i].menukategorileri[j] = textBoxYeniKategori.Text;
-
-                            if (onlyForTreeViewOnScreen)
-                                treeMenuKategori.Nodes[j].Text = textBoxYeniKategori.Text;
                         }
                     }
                 }
                 XmlSave.SaveRestoran(menuListesi, "menu.xml");
+                using (KontrolFormu dialog = new KontrolFormu("Kategori Güncellenmiştir", false))
+                {
+                    dialog.ShowDialog();
+                }
             }
         }
 
@@ -675,7 +687,7 @@ namespace ROPv1
                 // görünümden çıkarıyoruz
                 treeNewKategori.Nodes[treeNewKategori.SelectedNode.Index].Remove();
 
-                if (treeNewKategori.Nodes.Count < 2)
+                if (kategoriListesi[0].kategoriler.Count < 2)
                     buttonDeleteNewKategori.Enabled = false;
             }
         }
@@ -724,6 +736,10 @@ namespace ROPv1
 
                 if (treeMenuName.Nodes.Count > 1)
                     buttonDeleteMenu.Enabled = true;
+                using (KontrolFormu dialog = new KontrolFormu("Yeni Menü Kaydedilmiştir", false))
+                {
+                    dialog.ShowDialog();
+                }
             }
             else // eski menü düzenleniyor
             {
@@ -734,6 +750,10 @@ namespace ROPv1
                 //eski menünün görünümdeki ismi güncellenir
                 treeMenuName.Nodes[treeMenuName.SelectedNode.Index].Text = textboxMenuName.Text;
                 newMenuForm.Text = textboxMenuName.Text;
+                using (KontrolFormu dialog = new KontrolFormu("Menü Güncellenmiştir", false))
+                {
+                    dialog.ShowDialog();
+                }
             }
             buttonDeleteKategori.Enabled = true;
             //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
@@ -743,7 +763,7 @@ namespace ROPv1
                 {
                     treeMenuName.Font = new Font(treeMenuName.Font.FontFamily, treeMenuName.Font.Size - 0.5f, treeMenuName.Font.Style);
                 }
-            }
+            }            
         }
 
         // Yeni Menü Oluşturma Butonu Basıldı

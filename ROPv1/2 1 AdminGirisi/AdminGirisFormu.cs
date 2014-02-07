@@ -7,26 +7,65 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace ROPv1
 {
     public partial class AdminGirisFormu : Form
     {
-        bool closeOrShowAnotherForm = false, goSiparis = false;
+        bool closeOrShowAnotherForm = false;
         int whichCheckBoxShouldUncheck = 0;
-        
-        public AdminGirisFormu(bool fromWhere)
+        int kullaniciAdi = 0;
+        KullaniciOzellikleri[] infoKullanici;
+
+        public AdminGirisFormu()
         {
             InitializeComponent();
-            splitPanel.SplitterDistance = Screen.FromControl(this).Bounds.Size.Width/6;
-            changeButonChecked(saleCheckBox);
-            goSiparis = fromWhere;
-            if (goSiparis)
+            splitPanel.SplitterDistance = Screen.FromControl(this).Bounds.Size.Width / 6;            
+
+            infoKullanici = new KullaniciOzellikleri[1];
+
+            #region xml oku
+
+            XmlLoad<KullaniciOzellikleri> loadInfoKullanicilar = new XmlLoad<KullaniciOzellikleri>();
+            infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
+
+            #endregion           
+
+            if (Properties.Settings.Default.sonGirisYapanKullanici != "ropisimiz")
             {
-                //garsonun yetkilerine göre butonları disable et
+                //kullanıcının yerini bul
+                for (int i = 0; i < infoKullanici.Count(); i++)
+                {
+                    if (Properties.Settings.Default.sonGirisYapanKullanici == infoKullanici[i].kullaniciAdi)
+                    {
+                        kullaniciAdi = i;
+                        break;
+                    }
+                }
+                //yetkilerine göre işlemlere izin verme
+                for (int i = 0; i < 5; i++)
+                {
+                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].yetkileri[i]))
+                    {
+                        flowLayoutPanel1.Controls[i].Enabled = false;
+                    }
+                }                
             }
+
+            if (saleCheckBox.Enabled == true)
+                changeButonChecked(saleCheckBox);
+            else if (reportCheckBox.Enabled == true)
+                changeButonChecked(reportCheckBox);
+            else if (stokCheckBox.Enabled == true)
+                changeButonChecked(stokCheckBox);
+            else if (adisyonCheckBox.Enabled == true)
+                changeButonChecked(adisyonCheckBox);
+            else if (ayarCheckBox.Enabled == true)
+                changeButonChecked(ayarCheckBox);
         }
-            
+
         private void CloseApp(object sender, FormClosedEventArgs e)
         {
             if (!closeOrShowAnotherForm)  // eğer başka bir forma gidilmeyecekse uygulamayı kapat
@@ -46,16 +85,9 @@ namespace ROPv1
             {
                 closeOrShowAnotherForm = true; // başka forma geçilecek uygulamayı kapatma
 
-                if (goSiparis) //eğer sipariş ekranından geldiysen o ekrana geri dön yoksa giriş ekranına dön
-                {
-                    SiparisFormu siparisForm = new SiparisFormu();
-                    siparisForm.Show();
-                }
-                else
-                {
-                    GirisEkrani girisForm = new GirisEkrani();
-                    girisForm.Show();
-                }
+                GirisEkrani girisForm = new GirisEkrani();
+                girisForm.Show();
+
 
                 this.Close();
             }
@@ -66,14 +98,13 @@ namespace ROPv1
             changeButonChecked(sender); // seçilen checkboxa gönder
         }
 
-        private void changeButonChecked(object sender) 
+        private void changeButonChecked(object sender)
         {
             if (Convert.ToInt32(((CheckBox)sender).Tag) == whichCheckBoxShouldUncheck) // eğer checkbox zaten seçiliyse birşey yapmadan dön
                 return;
 
             leftPanelView.Nodes.Clear();
             splitPanel.Panel2.Controls.Clear();
-
 
             switch (whichCheckBoxShouldUncheck) // önceden seçili olan checkboxı kaldır
             {
@@ -107,7 +138,7 @@ namespace ROPv1
                     break;
                 #endregion
             }
-          
+
 
             switch (Convert.ToInt32(((CheckBox)sender).Tag)) // yeni seçilen checkboxı işaretle ve gerekli işlemleri yap
             {
@@ -140,12 +171,19 @@ namespace ROPv1
                     ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingsback;
                     leftPanelView.Nodes.Add("Kullanıcılar");
                     leftPanelView.Nodes.Add("Departmanlar");
-                    leftPanelView.Nodes.Add("Masa Yerleşim Planı"); 
+                    leftPanelView.Nodes.Add("Masa Yerleşim Planı");
                     leftPanelView.Nodes.Add("Menüler");
                     leftPanelView.Nodes.Add("Ürünler");
-                    leftPanelView.Nodes.Add("Stok Ayarları");                    
-                    leftPanelView.SelectedNode = leftPanelView.Nodes[0];
+                    leftPanelView.Nodes.Add("Stok Ayarları");
+
+                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].yetkileri[6]))
+                    {
+                        leftPanelView.SelectedNode = leftPanelView.Nodes[1];
+                    }
+                    else
+                        leftPanelView.SelectedNode = leftPanelView.Nodes[0];
                     
+
                     //Veri tabanından gerekli verileri al                  
                     break;
                 default:
@@ -154,20 +192,20 @@ namespace ROPv1
             }
             // yeni seçilen checkboxı işaretlemenin kalan kısmı
             ((CheckBox)sender).ImageAlign = ContentAlignment.MiddleCenter;
-            ((CheckBox)sender).ForeColor = Color.White;            
+            ((CheckBox)sender).ForeColor = Color.White;
 
             //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
-            foreach (TreeNode node in leftPanelView.Nodes) 
+            foreach (TreeNode node in leftPanelView.Nodes)
             {
                 while (leftPanelView.Width - 12 < System.Windows.Forms.TextRenderer.MeasureText(node.Text, new Font(leftPanelView.Font.FontFamily, leftPanelView.Font.Size, leftPanelView.Font.Style)).Width)
                 {
                     leftPanelView.Font = new Font(leftPanelView.Font.FontFamily, leftPanelView.Font.Size - 0.5f, leftPanelView.Font.Style);
                 }
             }
-            
+
             //yeni seçilen checkboxı son seçilen checkbox yap
             whichCheckBoxShouldUncheck = Convert.ToInt32(((CheckBox)sender).Tag);
-          
+
             leftPanelView.Focus();
         }
 
@@ -178,9 +216,17 @@ namespace ROPv1
             {
                 #region
                 case 0: //Kullanıcılar Seçildi
-                    Kullanici kullaniciView = new Kullanici();
-                    splitPanel.Panel2.Controls.Add(kullaniciView);
-                    kullaniciView.Dock = DockStyle.Fill;
+                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].yetkileri[6]))
+                    {
+                        leftPanelView.SelectedNode = leftPanelView.Nodes[1];
+                    }
+                    else
+                    {
+                        leftPanelView.SelectedNode = leftPanelView.Nodes[0];
+                        Kullanici kullaniciView = new Kullanici();
+                        splitPanel.Panel2.Controls.Add(kullaniciView);
+                        kullaniciView.Dock = DockStyle.Fill;
+                    }
                     //Veri tabanından gerekli verileri alınmamışsa al
 
                     break;
@@ -227,8 +273,6 @@ namespace ROPv1
                     break;
                 #endregion
             }
-        }        
+        }
     }
 }
-
-

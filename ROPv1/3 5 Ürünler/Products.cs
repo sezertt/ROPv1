@@ -292,14 +292,17 @@ namespace ROPv1
 
             int count = infoUrun.Count();
 
+            //eklenen üğrün var ise sayısını buluyoruz
             if (infoUrun.Count() > infoUrun2.Count())
                 count = infoUrun2.Count();
-
+             
+            //var olan ürünleri ekliyoruz
             for (int i = 0; i < count; i++)
             {
                 infoUrun2[i] = infoUrun[i];
             }
 
+            //eklenen üğrün var ise onlara yer açıyoruz 
             for (int i = infoUrun.Count(); i < infoUrun2.Count(); i++)
             {
                 infoUrun2[i] = new UrunOzellikleri();
@@ -638,6 +641,10 @@ namespace ROPv1
 
                 urunSayisi++;
                 labelUrunSayisi.Text = urunSayisi.ToString();
+                using (KontrolFormu dialog = new KontrolFormu("Yeni Ürün Bilgileri Kaydedilmiştir", false))
+                {
+                    dialog.ShowDialog();
+                }
             }
             else // eski ürün düzenleniyor
             {
@@ -685,6 +692,10 @@ namespace ROPv1
 
                 //eski ürünün görünümdeki ismi güncellenir
                 newProductForm.Text = urunAdi;
+                using (KontrolFormu dialog = new KontrolFormu("Ürün Bilgileri Güncellenmiştir", false))
+                {
+                    dialog.ShowDialog();
+                }
             }
         }
 

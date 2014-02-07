@@ -15,7 +15,7 @@ namespace ROPv1
 {
     public partial class Kullanici : UserControl
     {
-        List<TumKategoriler> kategoriListesi = new List<TumKategoriler>(); // kategorileri tutacak liste
+        List<KullaniciOzellikleri> kullaniciListesi = new List<KullaniciOzellikleri>(); // kategorileri tutacak liste
 
         public Kullanici()
         {
@@ -23,176 +23,77 @@ namespace ROPv1
 
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
-            /*
+
+            KullaniciOzellikleri[] infoKullanici = new KullaniciOzellikleri[1];
+
             #region xml oku
 
-                Get whether the file has the ReadOnly attribute
-                bool isReadOnly = (File.GetAttributes("tempfiles.xml") & FileAttributes.ReadOnly) == FileAttributes.ReadOnly;
+            XmlLoad<KullaniciOzellikleri> loadInfoKullanicilar = new XmlLoad<KullaniciOzellikleri>();
+            infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
 
-                // Remove the ReadOnly attribute
-                if (isReadOnly)
-                    File.SetAttributes("tempfiles.xml", File.GetAttributes("tempfiles.xml") & ~FileAttributes.ReadOnly);
-
-            TumKategoriler[] infoKategoriler = new TumKategoriler[1];
-
-            if (!File.Exists("kategoriler.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default kategorilerimizi giriyoruz.
-            {
-                infoKategoriler[0] = new TumKategoriler();
-                infoKategoriler[0].kategoriler = new List<string>();
-                infoKategoriler[0].kategoriler.Add("Çorbalar");
-                infoKategoriler[0].kategoriler.Add("Spesyaller");
-                infoKategoriler[0].kategoriler.Add("Döner");
-                infoKategoriler[0].kategoriler.Add("Pideler");
-                infoKategoriler[0].kategoriler.Add("Et Yemekleri");
-                infoKategoriler[0].kategoriler.Add("Kebaplar");
-                infoKategoriler[0].kategoriler.Add("Salatalar");
-                infoKategoriler[0].kategoriler.Add("Tatlılar");
-                infoKategoriler[0].kategoriler.Add("İçecekler");
-                infoKategoriler[0].kategoriler.Add("Kategorisiz Ürünler");
-                XmlSave.SaveRestoran(infoKategoriler, "kategoriler.xml");
-            }
-            // Oluşturulmuş kategorileri xml den okuyoruz
-            XmlLoad<TumKategoriler> loadInfoKategori = new XmlLoad<TumKategoriler>();
-            infoKategoriler = loadInfoKategori.LoadRestoran("kategoriler.xml");
+            #endregion
 
             //kategorileri tutacak listemize atıyoruz
-            kategoriListesi.AddRange(infoKategoriler);
+            kullaniciListesi.AddRange(infoKullanici);
 
-            for (int i = 0; i < kategoriListesi[0].kategoriler.Count; i++)
+            for (int i = 0; i < kullaniciListesi.Count; i++)
             {
-                treeUrunAdi.Nodes.Add(kategoriListesi[0].kategoriler[i]);
-                comboNewKategoriName.Items.Add(kategoriListesi[0].kategoriler[i]);
+                treeUserName.Nodes.Add(kullaniciListesi[i].adi + " " + kullaniciListesi[i].soyadi);
             }
 
-            UrunOzellikleri[] infoUrun = new UrunOzellikleri[infoKategoriler[0].kategoriler.Count];
+            comboNewTitle.Items.Add("Yönetici");
+            comboNewTitle.Items.Add("Şef Garson");
+            comboNewTitle.Items.Add("Garson");
 
-            #region ürünlerin ilk tanımlaması
-            if (!File.Exists("urunler.xml"))
+            if (treeUserName.Nodes.Count < 2)
+                buttonDeleteUser.Enabled = false;
+
+            //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
+            foreach (TreeNode node in treeUserName.Nodes)
             {
-                for (int i = 0; i < infoKategoriler[0].kategoriler.Count; i++)
+                while (treeUserName.Width - 12 < System.Windows.Forms.TextRenderer.MeasureText(node.Text, new Font(treeUserName.Font.FontFamily, treeUserName.Font.Size, treeUserName.Font.Style)).Width)
                 {
-                    infoUrun[i] = new UrunOzellikleri();
-                    infoUrun[i].urunAdi = new List<string>();
-                    infoUrun[i].porsiyonFiyati = new List<string>();
-                    infoUrun[i].urunKategorisi = new List<string>();
-                }                
-
-                XmlSave.SaveRestoran(infoUrun, "urunler.xml");
-            }
-            #endregion
-
-            XmlLoad<UrunOzellikleri> loadInfoUrun = new XmlLoad<UrunOzellikleri>();
-            infoUrun = loadInfoUrun.LoadRestoran("urunler.xml");
-
-            UrunOzellikleri[] infoUrun2 = new UrunOzellikleri[infoKategoriler[0].kategoriler.Count];
-
-            int count = infoUrun.Count();
-
-            if (infoUrun.Count() > infoUrun2.Count())
-                count = infoUrun2.Count();
-
-            for (int i = 0; i < count; i++)
-            {
-                infoUrun2[i] = infoUrun[i];
-            }
-
-            for (int i = infoUrun.Count(); i < infoUrun2.Count(); i++)
-            {
-                infoUrun2[i] = new UrunOzellikleri();
-                infoUrun2[i].urunAdi = new List<string>();
-                infoUrun2[i].porsiyonFiyati = new List<string>();
-                infoUrun2[i].urunKategorisi = new List<string>();
-            }
-
-            for (int i = 0; i < kategoriListesi[0].kategoriler.Count; i++)
-            {
-                infoUrun2[i].kategorininAdi = kategoriListesi[0].kategoriler[i];
-            }
-
-            List<UrunOzellikleri> urunListesiGecici = new List<UrunOzellikleri>();
-
-            urunListesiGecici.AddRange(infoUrun2);
-
-            int kategoriYeri = 0;
-
-            for (int i = 0; i < urunListesiGecici.Count; i++)
-            {
-                for (int x = 0; x < urunListesiGecici[i].urunAdi.Count; x++)
-                {
-                    bool girmedi = true;
-                    for (int j = 0; j < treeUrunAdi.Nodes.Count; j++)
-                    {
-                        if (treeUrunAdi.Nodes[j].Text == urunListesiGecici[i].urunKategorisi[x])
-                        {
-                            girmedi = false;
-                            kategoriYeri = j;
-                            break;
-                        }
-                    }
-                    if (girmedi)
-                    {
-                        urunListesiGecici[urunListesiGecici.Count - 1].urunKategorisi.Add("Kategorisiz Ürünler");
-                        urunListesiGecici[urunListesiGecici.Count - 1].urunAdi.Add(urunListesiGecici[i].urunAdi[x]);
-                        urunListesiGecici[urunListesiGecici.Count - 1].porsiyonFiyati.Add(urunListesiGecici[i].porsiyonFiyati[x]);
-
-                        if (i != urunListesiGecici.Count - 1)
-                        {
-                            urunListesiGecici[i].urunAdi.RemoveAt(x);
-                            urunListesiGecici[i].urunKategorisi.RemoveAt(x);
-                            urunListesiGecici[i].porsiyonFiyati.RemoveAt(x);
-                            x--;
-                        }
-                    }
-                    else
-                    {
-                        if (kategoriYeri <= i)
-                            treeUrunAdi.Nodes[kategoriYeri].Nodes.Add(urunListesiGecici[i].urunAdi[x]);
-
-                        if (urunListesiGecici[i].urunKategorisi[x] != urunListesiGecici[i].kategorininAdi)
-                        {
-                            urunListesiGecici[kategoriYeri].urunKategorisi.Add(urunListesiGecici[i].urunKategorisi[x]);
-                            urunListesiGecici[kategoriYeri].urunAdi.Add(urunListesiGecici[i].urunAdi[x]);
-                            urunListesiGecici[kategoriYeri].porsiyonFiyati.Add(urunListesiGecici[i].porsiyonFiyati[x]);
-
-                            urunListesiGecici[i].urunAdi.RemoveAt(x);
-                            urunListesiGecici[i].urunKategorisi.RemoveAt(x);
-                            urunListesiGecici[i].porsiyonFiyati.RemoveAt(x);
-                            x--;
-                        }
-                    }
-                }
-
-                //kategorilerden silindiğinde sil
-                if (urunListesiGecici[i].urunAdi.Count < 1)
-                {
-                    bool varMi = false;
-                    for (int j = 0; j < kategoriListesi[0].kategoriler.Count; j++)
-                    {
-                        if (kategoriListesi[0].kategoriler[j] == urunListesiGecici[i].kategorininAdi)
-                            varMi = true;
-                    }
-                    if (!varMi)
-                    {
-                        urunListesiGecici.RemoveAt(i);
-                        i--;
-                    }
+                    treeUserName.Font = new Font(treeUserName.Font.FontFamily, treeUserName.Font.Size - 0.5f, treeUserName.Font.Style);
                 }
             }
 
-            XmlSave.SaveRestoran(urunListesiGecici, "urunler.xml");
+            treeUserName.SelectedNode = treeUserName.Nodes[0];
+        }
 
-            urunListesi.AddRange(urunListesiGecici);
-
-            urunListesiGecici = null;
-
-            for (int i = 0; i < treeUrunAdi.Nodes.Count; i++)
+        private void changeKullanici(object sender, TreeViewEventArgs e) // Farklı bir departman seçildi
+        {
+            if (buttonDeleteUser.Visible)
             {
-                treeUrunAdi.Nodes[i].Text = treeUrunAdi.Nodes[i].Text + " (" + urunListesi[i].urunAdi.Count + " ürün)";
-                urunSayisi += urunListesi[i].urunAdi.Count;
+                int i = treeUserName.SelectedNode.Index;
+                textboxName.Text = kullaniciListesi[i].adi;
+                textboxSurname.Text = kullaniciListesi[i].soyadi;
+                textboxUserName.Text = kullaniciListesi[i].kullaniciAdi;
+                textboxPin.Text = "";
+                textBoxPassword.Text = "";
+                comboNewTitle.Text = kullaniciListesi[i].unvani;
+                newUserForm.Text = textboxUserName.Text;
+
+                for (int j = 0; j < 7; j++)
+                {
+                    if (Helper.VerifyHash("true", "SHA512", kullaniciListesi[i].yetkileri[j]))
+                    {
+                        treeYetkiler.Nodes[j].Checked = true;
+                    }
+                }
+
+                if (i == 0)
+                {
+                    buttonDeleteUser.Enabled = false;
+                    treeYetkiler.Enabled = false;
+                    comboNewTitle.Enabled = false;
+                }
+                else
+                {
+                    buttonDeleteUser.Enabled = true;
+                    treeYetkiler.Enabled = true;
+                    comboNewTitle.Enabled = true;
+                }
             }
-            labelUrunSayisi.Text = urunSayisi.ToString();
-            #endregion
-            */
         }
 
         //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
@@ -230,5 +131,318 @@ namespace ROPv1
             ((ComboBox)sender).DroppedDown = true;
         }
 
+        //yeni kullanıcı ekle veya kullanıcıyı güncelle butonu
+        private void buttonSaveNewUserPressed(object sender, EventArgs e)
+        {
+            if (textboxUserName.Text == "Yeni Kullanıcı" || textboxUserName.Text == "" || textboxSurname.Text == "" || textboxName.Text == "")
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Hatalı bilgi girdiniz, lütfen kontrol edin", false))
+                {
+                    dialog.ShowDialog();
+                }
+                return;
+            }
+
+            if (newUserForm.Text == "Yeni Kullanıcı")
+            {// yeni Kullanıcı kaydetme
+                if (textboxPin.Text == "" || textBoxPassword.Text == "")
+                {
+                    using (KontrolFormu dialog = new KontrolFormu("Pin/Şifre girmediniz, lütfen kontrol edin", false))
+                    {
+                        dialog.ShowDialog();
+                    }
+                    return;
+                }
+
+                for (int j = 0; j < kullaniciListesi.Count(); j++)
+                {
+                    if (Helper.VerifyHash(textboxPin.Text, "SHA512", kullaniciListesi[j].pinKodu) || textboxUserName.Text == kullaniciListesi[j].kullaniciAdi)
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Hatalı kullanıcı adı veya pin girdiniz, lütfen kontrol edin", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        return;
+                    }
+                }
+
+                // tüm Kullanıcılar görünümüne kategoriyi ekliyoruz
+                treeUserName.Nodes.Add(textboxName.Text + " " + textboxSurname.Text);
+
+                newUserForm.Text = textboxUserName.Text;
+
+                // tüm Kullanıcılar listemize Kullanıcıyı ekleyip kaydediyoruz
+                KullaniciOzellikleri temp = new KullaniciOzellikleri();
+                temp.adi = textboxName.Text;
+                temp.soyadi = textboxSurname.Text;
+                temp.kullaniciAdi = textboxUserName.Text;
+                temp.pinKodu = Helper.ComputeHash(textboxPin.Text, "SHA512", null);
+                temp.sifresi = Helper.ComputeHash(textBoxPassword.Text, "SHA512", null);
+                temp.unvani = comboNewTitle.Text;
+                for (int i = 0; i < 7; i++)
+                {
+                    if(treeYetkiler.Nodes[i].Checked)
+                        temp.yetkileri[i] = Helper.ComputeHash("true", "SHA512", null);
+                    else
+                        temp.yetkileri[i] = Helper.ComputeHash("false", "SHA512", null);
+                }
+
+                kullaniciListesi.Add(temp);
+
+                // dosya korumayı açıyoruz
+                File.SetAttributes("tempfiles.xml", FileAttributes.Normal);
+
+                //kaydediyoruz
+                XmlSave.SaveRestoran(kullaniciListesi, "tempfiles.xml");
+
+                //yeniden korumaları ekliyoruz
+                File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
+
+                treeUserName.SelectedNode = treeUserName.Nodes[treeUserName.Nodes.Count - 1];
+                treeUserName.Focus();
+
+                buttonDeleteUser.Visible = true;
+                buttonAddNewUser.Enabled = true;
+                buttonCancel.Visible = false;
+
+                using (KontrolFormu dialog = new KontrolFormu("Yeni Kullanıcı Bilgileri Kaydedilmiştir", false))
+                {
+                    dialog.ShowDialog();
+                }
+            }
+            else // Kullanıcı düzenleme
+            {
+                if (textboxPin.Text != "")
+                {
+                    DialogResult eminMisiniz;
+
+                    using (KontrolFormu dialog = new KontrolFormu(treeUserName.SelectedNode.Text + " adlı kullanıcının pinini değiştirmek istediğinize emin misiniz?", true))
+                    {
+                        eminMisiniz = dialog.ShowDialog();
+                    }
+
+                    if (eminMisiniz == DialogResult.No)
+                    {
+                        textboxPin.Text = "";
+                    }
+                }
+
+                if (textBoxPassword.Text != "")
+                {
+                    DialogResult eminMisiniz;
+
+                    using (KontrolFormu dialog = new KontrolFormu(treeUserName.SelectedNode.Text + " adlı kullanıcının şifresini değiştirmek istediğinize emin misiniz?", true))
+                    {
+                        eminMisiniz = dialog.ShowDialog();
+                    }
+
+                    if (eminMisiniz == DialogResult.No)
+                    {
+                        textBoxPassword.Text = "";
+                    }
+                }
+                                
+                int kacTane = 0,kacTane1 = 0;
+
+                for (int j = 0; j < kullaniciListesi.Count(); j++)
+                {
+                    if (Helper.VerifyHash(textboxPin.Text, "SHA512", kullaniciListesi[j].pinKodu))
+                    {
+                        kacTane++;
+                    }
+                    if(textboxUserName.Text == kullaniciListesi[j].kullaniciAdi)
+                        kacTane1++;
+
+                    if (kacTane == 2 || kacTane1 == 2)
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Hatalı kullanıcı adı veya pin girdiniz, lütfen kontrol edin", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        return;
+                    }
+                }
+
+                int i = treeUserName.SelectedNode.Index;
+                //kullanıcının listedeki bilgilerini güncelliyoruz ve kaydediyoruz
+                kullaniciListesi[i].kullaniciAdi = textboxUserName.Text;
+                kullaniciListesi[i].adi = textboxName.Text;
+                kullaniciListesi[i].soyadi = textboxSurname.Text;
+                kullaniciListesi[i].kullaniciAdi = textboxUserName.Text;
+
+                if (textboxPin.Text != "")
+                    kullaniciListesi[i].pinKodu = Helper.ComputeHash(textboxPin.Text, "SHA512", null); 
+
+                if (textBoxPassword.Text != "")
+                    kullaniciListesi[i].sifresi = Helper.ComputeHash(textBoxPassword.Text, "SHA512", null);
+
+                kullaniciListesi[i].unvani = comboNewTitle.Text;
+
+                for (int x = 0; x < 7; x++)
+                {
+                    if (treeYetkiler.Nodes[x].Checked)
+                        kullaniciListesi[i].yetkileri[x] = Helper.ComputeHash("true", "SHA512", null);
+                    else
+                        kullaniciListesi[i].yetkileri[x] = Helper.ComputeHash("false", "SHA512", null);
+                }
+
+                // dosya korumayı açıyoruz
+                File.SetAttributes("tempfiles.xml", FileAttributes.Normal);
+
+                //kaydediyoruz
+                XmlSave.SaveRestoran(kullaniciListesi, "tempfiles.xml");
+
+                //yeniden korumaları ekliyoruz
+                File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
+
+                //görünümdeki isimleri güncelliyoruz
+                treeUserName.SelectedNode.Text = textboxName.Text +" "+textboxSurname.Text;
+                newUserForm.Text = textboxUserName.Text;
+                using (KontrolFormu dialog = new KontrolFormu("Kullanıcı Bilgileri Güncellenmiştir", false))
+                {
+                    dialog.ShowDialog();
+                }
+            }
+        }
+
+        //seçilen kullanıcıyı sil butonu
+        private void buttonDeleteExistingUserPressed(object sender, EventArgs e)
+        {
+            DialogResult eminMisiniz;
+
+            using (KontrolFormu dialog = new KontrolFormu(treeUserName.SelectedNode.Text + " adlı kullanıcıyı silmek istediğinize emin misiniz?", true))
+            {
+                eminMisiniz = dialog.ShowDialog();
+            }
+
+            if (eminMisiniz == DialogResult.Yes)
+            {
+                //listeden kullanıcıyı siliyoruz
+                kullaniciListesi.RemoveAt(treeUserName.SelectedNode.Index);
+
+                // dosya korumayı açıyoruz
+                File.SetAttributes("tempfiles.xml", FileAttributes.Normal);
+
+                //kaydediyoruz
+                XmlSave.SaveRestoran(kullaniciListesi, "tempfiles.xml");
+
+                //yeniden korumaları ekliyoruz
+                File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
+
+                // ağaçtan ürünü siliyoruz
+                treeUserName.SelectedNode.Remove();
+            }
+        }
+
+        //yeni kullanıcı oluşturmayı iptal et butonu
+        private void buttonCancelSavingNewUserPressed(object sender, EventArgs e)
+        {
+            int i = treeUserName.SelectedNode.Index;
+            textboxName.Text = kullaniciListesi[i].adi;
+            textboxSurname.Text = kullaniciListesi[i].soyadi;
+            textboxUserName.Text = kullaniciListesi[i].kullaniciAdi;
+            textboxPin.Text = "";
+            textBoxPassword.Text = "";
+            comboNewTitle.Text = kullaniciListesi[i].unvani;
+            newUserForm.Text = textboxUserName.Text;
+
+            for (int j = 0; j < 7; j++)
+            {
+                if (Helper.VerifyHash("true", "SHA512", kullaniciListesi[i].yetkileri[j]))
+                {
+                    treeYetkiler.Nodes[j].Checked = true;
+                }
+            }
+
+            if (i == 0)
+            {
+                buttonDeleteUser.Enabled = false;
+                treeYetkiler.Enabled = false;
+                comboNewTitle.Enabled = false;
+            }
+            else
+            {
+                buttonDeleteUser.Enabled = true;
+                treeYetkiler.Enabled = true;
+                comboNewTitle.Enabled = true;
+            }
+
+            buttonDeleteUser.Visible = true;
+            buttonCancel.Visible = false;
+            buttonAddNewUser.Enabled = true;
+            treeUserName.Focus();
+        }
+
+        //yeni kullanıcı oluşturmaya başla butonu
+        private void buttonCreateNewUserPressed(object sender, EventArgs e)
+        {
+            if (newUserForm.Text != "Yeni Kullanıcı") // her basışta yeniden ayarlanmasın diye, ayarlandı mı kontrolü
+            {
+                newUserForm.Text = "Yeni Kullanıcı";
+                textboxName.Text = "";
+                textboxSurname.Text = "";
+                textboxUserName.Text = "";
+                textboxPin.Text = "";
+                textBoxPassword.Text = "";
+                comboNewTitle.SelectedIndex = 2;
+
+                for (int j = 0; j < 7; j++)
+                {
+                    treeYetkiler.Nodes[j].Checked = false;
+                }
+
+                buttonDeleteUser.Visible = false;
+                buttonCancel.Visible = true;
+                buttonAddNewUser.Enabled = false;
+                buttonDeleteUser.Enabled = true;
+                treeYetkiler.Enabled = true;
+                comboNewTitle.Enabled = true;
+            }
+            textboxName.Focus();
+        }
+
+        private void checkYetkiFromTree(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            TreeViewHitTestInfo info = treeYetkiler.HitTest(treeYetkiler.PointToClient(Cursor.Position));
+
+            if (info != null && info.Location != TreeViewHitTestLocations.StateImage)
+            {
+                int index = info.Node.Index;
+                if (treeYetkiler.Nodes[index].Checked == true)
+                    treeYetkiler.Nodes[index].Checked = false;
+                else
+                    treeYetkiler.Nodes[index].Checked = true;
+            }
+        }
+
+        private void comboBoxYetkileriDegisti(object sender, EventArgs e)
+        {
+            if (comboNewTitle.SelectedIndex == 0)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    treeYetkiler.Nodes[j].Checked = true;
+                }
+            }
+            else if (comboNewTitle.SelectedIndex == 1)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    if (j == 4 || j == 6)
+                    {
+                        treeYetkiler.Nodes[j].Checked = false;
+                    }
+                    else
+                        treeYetkiler.Nodes[j].Checked = true;
+                }
+            }
+            else
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    treeYetkiler.Nodes[j].Checked = false;
+                }
+            }
+        }
     }
 }

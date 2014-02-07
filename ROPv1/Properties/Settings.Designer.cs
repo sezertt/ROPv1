@@ -61,13 +61,25 @@ namespace ROPv1.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int kullaniciSayisi {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string sonGirisYapanKullanici {
             get {
-                return ((int)(this["kullaniciSayisi"]));
+                return ((string)(this["sonGirisYapanKullanici"]));
             }
             set {
-                this["kullaniciSayisi"] = value;
+                this["sonGirisYapanKullanici"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool gunAcikMi {
+            get {
+                return ((bool)(this["gunAcikMi"]));
+            }
+            set {
+                this["gunAcikMi"] = value;
             }
         }
     }

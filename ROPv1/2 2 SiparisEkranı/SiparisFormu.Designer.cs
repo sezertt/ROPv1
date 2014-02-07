@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SiparisFormu));
             this.exitButton = new System.Windows.Forms.Button();
             this.dayButton = new System.Windows.Forms.Button();
-            this.adminButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // exitButton
@@ -42,9 +41,9 @@
             this.exitButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.exitButton.Image = global::ROPv1.Properties.Resources.logOut;
             this.exitButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.exitButton.Location = new System.Drawing.Point(1136, 12);
+            this.exitButton.Location = new System.Drawing.Point(882, 12);
             this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(275, 120);
+            this.exitButton.Size = new System.Drawing.Size(220, 110);
             this.exitButton.TabIndex = 4;
             this.exitButton.Text = "Çıkış";
             this.exitButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -59,38 +58,21 @@
             this.dayButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
             this.dayButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.dayButton.Location = new System.Drawing.Point(574, 12);
+            this.dayButton.Location = new System.Drawing.Point(656, 12);
             this.dayButton.Name = "dayButton";
-            this.dayButton.Size = new System.Drawing.Size(275, 120);
+            this.dayButton.Size = new System.Drawing.Size(220, 110);
             this.dayButton.TabIndex = 5;
             this.dayButton.Text = "Gün İşlemleri";
             this.dayButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.dayButton.UseVisualStyleBackColor = false;
-            // 
-            // adminButton
-            // 
-            this.adminButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.adminButton.BackColor = System.Drawing.SystemColors.Window;
-            this.adminButton.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.adminButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.adminButton.Image = global::ROPv1.Properties.Resources.username;
-            this.adminButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.adminButton.Location = new System.Drawing.Point(855, 12);
-            this.adminButton.Name = "adminButton";
-            this.adminButton.Size = new System.Drawing.Size(275, 120);
-            this.adminButton.TabIndex = 6;
-            this.adminButton.Text = "Yönetici İşlemleri";
-            this.adminButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.adminButton.UseVisualStyleBackColor = false;
-            this.adminButton.Click += new System.EventHandler(this.adminButton_Click);
+            this.dayButton.Click += new System.EventHandler(this.buttonGunIslemiPressed);
             // 
             // SiparisFormu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1423, 819);
-            this.Controls.Add(this.adminButton);
+            this.ClientSize = new System.Drawing.Size(1114, 819);
             this.Controls.Add(this.dayButton);
             this.Controls.Add(this.exitButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -108,6 +90,5 @@
 
         private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.Button dayButton;
-        private System.Windows.Forms.Button adminButton;
     }
 }

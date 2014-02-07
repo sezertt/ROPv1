@@ -17,6 +17,7 @@ namespace ROPv1
         public SiparisFormu()
         {            
             InitializeComponent();
+
             //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et
             /*
              if(gunBasi)
@@ -53,12 +54,10 @@ namespace ROPv1
             }
         }
 
-        private void adminButton_Click(object sender, EventArgs e)
+        private void buttonGunIslemiPressed(object sender, EventArgs e)
         {
-            closeOrShowAnotherForm = true; // başka forma geçilecek uygulamayı kapatma
-            AdminGirisFormu adminForm = new AdminGirisFormu(closeOrShowAnotherForm); // admin formuna siparis formundan gidildiği bilgisini ver
-            adminForm.Show();
-            this.Close();
+            PinKoduFormu pinForm = new PinKoduFormu();
+            pinForm.ShowDialog();
         }
     }
 }

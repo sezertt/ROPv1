@@ -452,6 +452,10 @@ namespace ROPv1
                 //eğer 10dan fazla dizayn olmuşsa ekleme butonu devredışı duruma  getirilir
                 if (treeMasaPlanName.Nodes.Count > 9)
                     buttonAddTableDesign.Enabled = false;
+                using (KontrolFormu dialog = new KontrolFormu("Yeni Masa Planı Bilgileri Kaydedilmiştir", false))
+                {
+                    dialog.ShowDialog();
+                }
             }
             else
             {
@@ -497,6 +501,10 @@ namespace ROPv1
                         }
                         tablebutton.BackColor = Color.White;
                     }
+                }
+                using (KontrolFormu dialog = new KontrolFormu("Masa Planı Bilgileri Güncellenmiştir", false))
+                {
+                    dialog.ShowDialog();
                 }
             }
             //kısıtlanan butonların kısıtları kaldırılır, düzen ekranı devredışı bırakılır, düzenlemenin bittiği belirtilir

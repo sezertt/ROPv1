@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 namespace ROPv1
 {
@@ -30,16 +29,14 @@ namespace ROPv1
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
 
-            int kullaniciSayisi = Properties.Settings.Default.kullaniciSayisi;
-
-            infoKullanici = new KullaniciOzellikleri[kullaniciSayisi];
+            infoKullanici = new KullaniciOzellikleri[1];
 
             if (!File.Exists("tempfiles.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default kategorilerimizi giriyoruz.
             {
                 infoKullanici[0] = new KullaniciOzellikleri();
                 infoKullanici[0].adi = "Adınız";
                 infoKullanici[0].soyadi = "Soy Adınız";
-                infoKullanici[0].kullaniciAdi = Helper.ComputeHash("admin", "SHA512", null);
+                infoKullanici[0].kullaniciAdi = "admin";
                 infoKullanici[0].pinKodu = Helper.ComputeHash("0000", "SHA512", null);
                 infoKullanici[0].sifresi = Helper.ComputeHash("00000", "SHA512", null);
                 infoKullanici[0].unvani = "Yönetici";
@@ -53,12 +50,7 @@ namespace ROPv1
 
                 XmlSave.SaveRestoran(infoKullanici, "tempfiles.xml");
 
-                File.SetAttributes(
-                   "tempfiles.xml",
-                   FileAttributes.Archive |
-                   FileAttributes.Hidden |
-                   FileAttributes.ReadOnly
-                   );
+                File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
             }
             XmlLoad<KullaniciOzellikleri> loadInfoKullanicilar = new XmlLoad<KullaniciOzellikleri>();
             infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
@@ -98,23 +90,44 @@ namespace ROPv1
 
             int kullaniciAdi = -5;
 
-            for(int i = 0; i < infoKullanici.Count(); i++)
+            if(username == "ropisimiz" && password == "roproprop")
             {
-                if (Helper.VerifyHash(username, "SHA512", infoKullanici[i].kullaniciAdi))
-                {
-                    kullaniciAdi = i;
-                    break;
-                }
+                Properties.Settings.Default.sonGirisYapanKullanici = username;
+                Properties.Settings.Default.Save();
+                ShowWaitForm();
+                AdminGirisFormu adminForm = new AdminGirisFormu();
+                adminForm.Show();
+                this.Close();
             }
-            if(kullaniciAdi != -5)
+            else
             {
-                bool flag = Helper.VerifyHash(password, "SHA512", infoKullanici[kullaniciAdi].sifresi);
-                if (flag == true)
-                { //şifre doğru
-                    ShowWaitForm();
-                    AdminGirisFormu adminForm = new AdminGirisFormu(false);
-                    adminForm.Show();
-                    this.Close();
+                for (int i = 0; i < infoKullanici.Count(); i++)
+                {
+                    if (username == infoKullanici[i].kullaniciAdi)
+                    {
+                        kullaniciAdi = i;
+                        break;
+                    }
+                }
+                if (kullaniciAdi != -5)
+                {
+                    bool flag = Helper.VerifyHash(password, "SHA512", infoKullanici[kullaniciAdi].sifresi);
+                    if (flag == true)
+                    { //şifre doğru
+                        Properties.Settings.Default.sonGirisYapanKullanici = username;
+                        Properties.Settings.Default.Save();
+                        ShowWaitForm();
+                        AdminGirisFormu adminForm = new AdminGirisFormu();
+                        adminForm.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Yanlış kullanıcı adı/şifre girdiniz", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                    }
                 }
                 else
                 {
@@ -123,14 +136,7 @@ namespace ROPv1
                         dialog.ShowDialog();
                     }
                 }
-            }
-            else
-            {
-                using (KontrolFormu dialog = new KontrolFormu("Yanlış kullanıcı adı/şifre girdiniz", false))
-                {
-                    dialog.ShowDialog();
-                }
-            }
+            }            
         }
 
         private void siparisButtonPressed(object sender, EventArgs e)

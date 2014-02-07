@@ -29,22 +29,25 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Satışlar");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Raporlar");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Stoklar");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Adisyonlar");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Ayarlar");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Gün İşlemleri");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Şifre/Pin İşlemleri");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Kullanici));
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.label1 = new System.Windows.Forms.Label();
             this.comboNewTitle = new System.Windows.Forms.ComboBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.buttonAddNewUser = new System.Windows.Forms.Button();
             this.textboxPin = new System.Windows.Forms.TextBox();
-            this.textboxNameSurname = new System.Windows.Forms.TextBox();
+            this.textboxName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.buttonSaveNewUser = new System.Windows.Forms.Button();
-            this.buttonDeleteUser = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
             this.treeUserName = new System.Windows.Forms.TreeView();
             this.newUserForm = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textboxSurname = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -52,6 +55,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.treeYetkiler = new System.Windows.Forms.TreeView();
+            this.buttonSaveNewUser = new System.Windows.Forms.Button();
+            this.buttonDeleteUser = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.buttonAddNewUser = new System.Windows.Forms.Button();
             this.newUserForm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,11 +80,11 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Location = new System.Drawing.Point(10, 210);
+            this.label1.Location = new System.Drawing.Point(10, 148);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 24);
+            this.label1.Size = new System.Drawing.Size(140, 24);
             this.label1.TabIndex = 42;
-            this.label1.Text = "Ünvanı";
+            this.label1.Text = "Kullanıcı Adı:";
             // 
             // comboNewTitle
             // 
@@ -87,11 +94,12 @@
             this.comboNewTitle.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.comboNewTitle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.comboNewTitle.FormattingEnabled = true;
-            this.comboNewTitle.Location = new System.Drawing.Point(14, 237);
+            this.comboNewTitle.Location = new System.Drawing.Point(14, 113);
             this.comboNewTitle.MaxDropDownItems = 20;
             this.comboNewTitle.Name = "comboNewTitle";
             this.comboNewTitle.Size = new System.Drawing.Size(307, 32);
-            this.comboNewTitle.TabIndex = 7;
+            this.comboNewTitle.TabIndex = 3;
+            this.comboNewTitle.SelectedIndexChanged += new System.EventHandler(this.comboBoxYetkileriDegisti);
             this.comboNewTitle.Click += new System.EventHandler(this.showMenu);
             this.comboNewTitle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
             // 
@@ -100,30 +108,13 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // buttonAddNewUser
-            // 
-            this.buttonAddNewUser.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddNewUser.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonAddNewUser.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonAddNewUser.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonAddNewUser.Image = global::ROPv1.Properties.Resources.add;
-            this.buttonAddNewUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddNewUser.Location = new System.Drawing.Point(5, 293);
-            this.buttonAddNewUser.Name = "buttonAddNewUser";
-            this.buttonAddNewUser.Size = new System.Drawing.Size(440, 45);
-            this.buttonAddNewUser.TabIndex = 39;
-            this.buttonAddNewUser.TabStop = false;
-            this.buttonAddNewUser.Text = "Yeni Kullanıcı Oluştur";
-            this.buttonAddNewUser.UseVisualStyleBackColor = false;
-            // 
             // textboxPin
             // 
             this.textboxPin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxPin.ContextMenuStrip = this.contextMenuStrip1;
             this.textboxPin.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxPin.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textboxPin.Location = new System.Drawing.Point(14, 175);
+            this.textboxPin.Location = new System.Drawing.Point(14, 237);
             this.textboxPin.MaxLength = 4;
             this.textboxPin.Name = "textboxPin";
             this.textboxPin.PasswordChar = '*';
@@ -132,15 +123,15 @@
             this.textboxPin.UseSystemPasswordChar = true;
             this.textboxPin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.pinPressed);
             // 
-            // textboxNameSurname
+            // textboxName
             // 
-            this.textboxNameSurname.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textboxNameSurname.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textboxNameSurname.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textboxNameSurname.Location = new System.Drawing.Point(14, 51);
-            this.textboxNameSurname.Name = "textboxNameSurname";
-            this.textboxNameSurname.Size = new System.Drawing.Size(142, 32);
-            this.textboxNameSurname.TabIndex = 2;
+            this.textboxName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.textboxName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.textboxName.Location = new System.Drawing.Point(14, 51);
+            this.textboxName.Name = "textboxName";
+            this.textboxName.Size = new System.Drawing.Size(142, 32);
+            this.textboxName.TabIndex = 1;
             // 
             // label7
             // 
@@ -148,7 +139,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label7.Location = new System.Drawing.Point(10, 148);
+            this.label7.Location = new System.Drawing.Point(10, 210);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(154, 24);
             this.label7.TabIndex = 25;
@@ -165,54 +156,6 @@
             this.label5.Size = new System.Drawing.Size(50, 24);
             this.label5.TabIndex = 19;
             this.label5.Text = "Adı:";
-            // 
-            // buttonSaveNewUser
-            // 
-            this.buttonSaveNewUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSaveNewUser.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonSaveNewUser.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonSaveNewUser.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonSaveNewUser.Image = ((System.Drawing.Image)(resources.GetObject("buttonSaveNewUser.Image")));
-            this.buttonSaveNewUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSaveNewUser.Location = new System.Drawing.Point(211, 277);
-            this.buttonSaveNewUser.Name = "buttonSaveNewUser";
-            this.buttonSaveNewUser.Size = new System.Drawing.Size(110, 45);
-            this.buttonSaveNewUser.TabIndex = 9;
-            this.buttonSaveNewUser.Text = "Kaydet";
-            this.buttonSaveNewUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonSaveNewUser.UseVisualStyleBackColor = false;
-            // 
-            // buttonDeleteUser
-            // 
-            this.buttonDeleteUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonDeleteUser.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonDeleteUser.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonDeleteUser.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonDeleteUser.Image = global::ROPv1.Properties.Resources.delete;
-            this.buttonDeleteUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteUser.Location = new System.Drawing.Point(14, 277);
-            this.buttonDeleteUser.Name = "buttonDeleteUser";
-            this.buttonDeleteUser.Size = new System.Drawing.Size(142, 45);
-            this.buttonDeleteUser.TabIndex = 8;
-            this.buttonDeleteUser.Text = "Kullanıcıyı Sil";
-            this.buttonDeleteUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonDeleteUser.UseVisualStyleBackColor = false;
-            // 
-            // buttonCancel
-            // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonCancel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
-            this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonCancel.Location = new System.Drawing.Point(14, 277);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(110, 44);
-            this.buttonCancel.TabIndex = 10;
-            this.buttonCancel.Text = "İptal Et  ";
-            this.buttonCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonCancel.UseVisualStyleBackColor = false;
             // 
             // treeUserName
             // 
@@ -232,12 +175,13 @@
             this.treeUserName.ShowLines = false;
             this.treeUserName.Size = new System.Drawing.Size(440, 282);
             this.treeUserName.TabIndex = 38;
+            this.treeUserName.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.changeKullanici);
             // 
             // newUserForm
             // 
             this.newUserForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.newUserForm.BackColor = System.Drawing.Color.White;
-            this.newUserForm.Controls.Add(this.textBox1);
+            this.newUserForm.Controls.Add(this.textboxSurname);
             this.newUserForm.Controls.Add(this.label6);
             this.newUserForm.Controls.Add(this.textBoxPassword);
             this.newUserForm.Controls.Add(this.label4);
@@ -248,7 +192,7 @@
             this.newUserForm.Controls.Add(this.label1);
             this.newUserForm.Controls.Add(this.comboNewTitle);
             this.newUserForm.Controls.Add(this.textboxPin);
-            this.newUserForm.Controls.Add(this.textboxNameSurname);
+            this.newUserForm.Controls.Add(this.textboxName);
             this.newUserForm.Controls.Add(this.label7);
             this.newUserForm.Controls.Add(this.label5);
             this.newUserForm.Controls.Add(this.buttonSaveNewUser);
@@ -263,15 +207,15 @@
             this.newUserForm.TabStop = false;
             this.newUserForm.Text = "Yeni Kullanıcı";
             // 
-            // textBox1
+            // textboxSurname
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBox1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBox1.Location = new System.Drawing.Point(179, 51);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(142, 32);
-            this.textBox1.TabIndex = 3;
+            this.textboxSurname.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxSurname.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.textboxSurname.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.textboxSurname.Location = new System.Drawing.Point(179, 51);
+            this.textboxSurname.Name = "textboxSurname";
+            this.textboxSurname.Size = new System.Drawing.Size(142, 32);
+            this.textboxSurname.TabIndex = 2;
             // 
             // label6
             // 
@@ -290,7 +234,7 @@
             this.textBoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxPassword.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxPassword.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBoxPassword.Location = new System.Drawing.Point(179, 175);
+            this.textBoxPassword.Location = new System.Drawing.Point(179, 237);
             this.textBoxPassword.MaxLength = 10;
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
@@ -304,7 +248,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label4.Location = new System.Drawing.Point(175, 148);
+            this.label4.Location = new System.Drawing.Point(175, 210);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 24);
             this.label4.TabIndex = 47;
@@ -315,7 +259,7 @@
             this.textboxUserName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxUserName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxUserName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textboxUserName.Location = new System.Drawing.Point(14, 113);
+            this.textboxUserName.Location = new System.Drawing.Point(14, 175);
             this.textboxUserName.MaxLength = 10;
             this.textboxUserName.Name = "textboxUserName";
             this.textboxUserName.Size = new System.Drawing.Size(307, 32);
@@ -329,9 +273,9 @@
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label3.Location = new System.Drawing.Point(10, 86);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(140, 24);
+            this.label3.Size = new System.Drawing.Size(87, 24);
             this.label3.TabIndex = 45;
-            this.label3.Text = "Kullanıcı Adı:";
+            this.label3.Text = "Ünvanı:";
             // 
             // label2
             // 
@@ -349,19 +293,111 @@
             // 
             this.treeYetkiler.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.treeYetkiler.CheckBoxes = true;
-            this.treeYetkiler.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.treeYetkiler.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.treeYetkiler.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.treeYetkiler.FullRowSelect = true;
-            this.treeYetkiler.HideSelection = false;
-            this.treeYetkiler.HotTracking = true;
-            this.treeYetkiler.Indent = 10;
-            this.treeYetkiler.ItemHeight = 35;
+            this.treeYetkiler.Indent = 5;
+            this.treeYetkiler.ItemHeight = 38;
             this.treeYetkiler.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
             this.treeYetkiler.Location = new System.Drawing.Point(327, 51);
             this.treeYetkiler.Name = "treeYetkiler";
+            treeNode1.Name = "Satis";
+            treeNode1.Text = "Satışlar";
+            treeNode2.Name = "Rapor";
+            treeNode2.Text = "Raporlar";
+            treeNode3.Name = "Stok";
+            treeNode3.Text = "Stoklar";
+            treeNode4.Name = "Adisyon";
+            treeNode4.Text = "Adisyonlar";
+            treeNode5.Name = "Ayar";
+            treeNode5.Text = "Ayarlar";
+            treeNode6.Name = "GunIslemleri";
+            treeNode6.Text = "Gün İşlemleri";
+            treeNode7.Name = "PinPassword";
+            treeNode7.Text = "Şifre/Pin İşlemleri";
+            this.treeYetkiler.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode6,
+            treeNode7});
             this.treeYetkiler.ShowLines = false;
+            this.treeYetkiler.ShowPlusMinus = false;
+            this.treeYetkiler.ShowRootLines = false;
             this.treeYetkiler.Size = new System.Drawing.Size(196, 270);
-            this.treeYetkiler.TabIndex = 42;
+            this.treeYetkiler.TabIndex = 10;
+            this.treeYetkiler.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.checkYetkiFromTree);
+            // 
+            // buttonSaveNewUser
+            // 
+            this.buttonSaveNewUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSaveNewUser.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonSaveNewUser.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonSaveNewUser.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonSaveNewUser.Image = ((System.Drawing.Image)(resources.GetObject("buttonSaveNewUser.Image")));
+            this.buttonSaveNewUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSaveNewUser.Location = new System.Drawing.Point(211, 277);
+            this.buttonSaveNewUser.Name = "buttonSaveNewUser";
+            this.buttonSaveNewUser.Size = new System.Drawing.Size(110, 45);
+            this.buttonSaveNewUser.TabIndex = 8;
+            this.buttonSaveNewUser.Text = "Kaydet";
+            this.buttonSaveNewUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonSaveNewUser.UseVisualStyleBackColor = false;
+            this.buttonSaveNewUser.Click += new System.EventHandler(this.buttonSaveNewUserPressed);
+            // 
+            // buttonDeleteUser
+            // 
+            this.buttonDeleteUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDeleteUser.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonDeleteUser.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonDeleteUser.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonDeleteUser.Image = global::ROPv1.Properties.Resources.delete;
+            this.buttonDeleteUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonDeleteUser.Location = new System.Drawing.Point(14, 277);
+            this.buttonDeleteUser.Name = "buttonDeleteUser";
+            this.buttonDeleteUser.Size = new System.Drawing.Size(142, 45);
+            this.buttonDeleteUser.TabIndex = 7;
+            this.buttonDeleteUser.Text = "Kullanıcıyı Sil";
+            this.buttonDeleteUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonDeleteUser.UseVisualStyleBackColor = false;
+            this.buttonDeleteUser.Click += new System.EventHandler(this.buttonDeleteExistingUserPressed);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonCancel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
+            this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonCancel.Location = new System.Drawing.Point(14, 277);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(110, 44);
+            this.buttonCancel.TabIndex = 9;
+            this.buttonCancel.Text = "İptal Et  ";
+            this.buttonCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonCancel.UseVisualStyleBackColor = false;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancelSavingNewUserPressed);
+            // 
+            // buttonAddNewUser
+            // 
+            this.buttonAddNewUser.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddNewUser.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonAddNewUser.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonAddNewUser.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonAddNewUser.Image = global::ROPv1.Properties.Resources.add;
+            this.buttonAddNewUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAddNewUser.Location = new System.Drawing.Point(5, 293);
+            this.buttonAddNewUser.Name = "buttonAddNewUser";
+            this.buttonAddNewUser.Size = new System.Drawing.Size(440, 45);
+            this.buttonAddNewUser.TabIndex = 39;
+            this.buttonAddNewUser.TabStop = false;
+            this.buttonAddNewUser.Text = "Yeni Kullanıcı Oluştur";
+            this.buttonAddNewUser.UseVisualStyleBackColor = false;
+            this.buttonAddNewUser.Click += new System.EventHandler(this.buttonCreateNewUserPressed);
             // 
             // Kullanici
             // 
@@ -387,7 +423,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button buttonAddNewUser;
         private System.Windows.Forms.TextBox textboxPin;
-        private System.Windows.Forms.TextBox textboxNameSurname;
+        private System.Windows.Forms.TextBox textboxName;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonSaveNewUser;
@@ -401,7 +437,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxPassword;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textboxSurname;
         private System.Windows.Forms.Label label6;
     }
 }

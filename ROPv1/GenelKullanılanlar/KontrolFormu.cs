@@ -24,7 +24,7 @@ namespace ROPv1
             {
                 buttonNO.Visible = false;
                 buttonYES.Visible = false;
-                buttonOK.Visible = true;
+                buttonTamam.Visible = true;
             }
         }
     }

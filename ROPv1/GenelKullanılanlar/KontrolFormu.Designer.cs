@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KontrolFormu));
             this.labelAciklama = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonTamam = new System.Windows.Forms.Button();
             this.buttonNO = new System.Windows.Forms.Button();
             this.buttonYES = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
@@ -58,23 +58,23 @@
             this.panel1.Size = new System.Drawing.Size(450, 110);
             this.panel1.TabIndex = 32;
             // 
-            // buttonOK
+            // buttonTamam
             // 
-            this.buttonOK.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.buttonOK.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonOK.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonOK.Image = ((System.Drawing.Image)(resources.GetObject("buttonOK.Image")));
-            this.buttonOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonOK.Location = new System.Drawing.Point(174, 132);
-            this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(125, 50);
-            this.buttonOK.TabIndex = 33;
-            this.buttonOK.Text = "Tamam";
-            this.buttonOK.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonOK.UseVisualStyleBackColor = false;
-            this.buttonOK.Visible = false;
+            this.buttonTamam.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonTamam.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonTamam.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonTamam.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonTamam.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonTamam.Image = ((System.Drawing.Image)(resources.GetObject("buttonTamam.Image")));
+            this.buttonTamam.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonTamam.Location = new System.Drawing.Point(174, 132);
+            this.buttonTamam.Name = "buttonTamam";
+            this.buttonTamam.Size = new System.Drawing.Size(125, 50);
+            this.buttonTamam.TabIndex = 33;
+            this.buttonTamam.Text = "Tamam";
+            this.buttonTamam.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonTamam.UseVisualStyleBackColor = false;
+            this.buttonTamam.Visible = false;
             // 
             // buttonNO
             // 
@@ -118,7 +118,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(474, 189);
             this.ControlBox = false;
-            this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.buttonTamam);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.buttonNO);
             this.Controls.Add(this.buttonYES);
@@ -144,6 +144,6 @@
         private System.Windows.Forms.Button buttonYES;
         private System.Windows.Forms.Label labelAciklama;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button buttonOK;
+        private System.Windows.Forms.Button buttonTamam;
     }
 }
