@@ -1,4 +1,5 @@
-﻿using System;
+﻿extern alias pinKeyboard;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,6 +19,11 @@ namespace ROPv1
 
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+        }
+
+        private void keyboardcontrol2_UserKeyPressed(object sender, pinKeyboard.KeyboardClassLibrary.KeyboardEventArgs e)
+        {
+            SendKeys.Send(e.KeyboardKeyPressed);
         }
 
         private void buttonOK_Click(object sender, EventArgs e)

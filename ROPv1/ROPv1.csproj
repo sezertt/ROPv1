@@ -69,6 +69,11 @@
     <Reference Include="TouchscreenKeyboard">
       <HintPath>dll dosyası\TouchscreenKeyboard.dll</HintPath>
     </Reference>
+    <Reference Include="TouchscreenPinboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll dosyası\TouchscreenPinboard.dll</HintPath>
+      <Aliases>pinKeyboard</Aliases>
+    </Reference>
     <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />

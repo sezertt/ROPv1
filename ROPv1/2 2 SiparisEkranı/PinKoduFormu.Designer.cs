@@ -1,4 +1,5 @@
-﻿namespace ROPv1
+﻿extern alias pinKeyboard;
+namespace ROPv1
 {
     partial class PinKoduFormu
     {
@@ -35,6 +36,7 @@
             this.textboxPin = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.label5 = new System.Windows.Forms.Label();
+            this.keyboardcontrol2 = new pinKeyboard.KeyboardClassLibrary.Keyboardcontrol2();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -103,6 +105,15 @@
             this.label5.TabIndex = 52;
             this.label5.Text = "PİN KODU";
             // 
+            // keyboardcontrol2
+            // 
+            this.keyboardcontrol2.KeyboardType = pinKeyboard.KeyboardClassLibrary.BoW.Standard;
+            this.keyboardcontrol2.Location = new System.Drawing.Point(112, 165);
+            this.keyboardcontrol2.Name = "keyboardcontrol2";
+            this.keyboardcontrol2.Size = new System.Drawing.Size(252, 228);
+            this.keyboardcontrol2.TabIndex = 53;
+            this.keyboardcontrol2.UserKeyPressed += new pinKeyboard.KeyboardClassLibrary.KeyboardDelegate(this.keyboardcontrol2_UserKeyPressed);
+            // 
             // PinKoduFormu
             // 
             this.AcceptButton = this.buttonOK;
@@ -110,17 +121,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(477, 674);
+            this.ClientSize = new System.Drawing.Size(477, 394);
             this.ControlBox = false;
+            this.Controls.Add(this.keyboardcontrol2);
             this.Controls.Add(this.textboxPin);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonNO);
             this.ForeColor = System.Drawing.SystemColors.Window;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(493, 690);
+            this.MaximumSize = new System.Drawing.Size(493, 410);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(493, 690);
+            this.MinimumSize = new System.Drawing.Size(493, 410);
             this.Name = "PinKoduFormu";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -139,6 +151,7 @@
         private System.Windows.Forms.TextBox textboxPin;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private pinKeyboard.KeyboardClassLibrary.Keyboardcontrol2 keyboardcontrol2;
 
     }
 }
