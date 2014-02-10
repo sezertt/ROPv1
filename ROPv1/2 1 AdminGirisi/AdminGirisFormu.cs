@@ -38,7 +38,7 @@ namespace ROPv1
                 //kullanıcının yerini bul
                 for (int i = 0; i < infoKullanici.Count(); i++)
                 {
-                    if (Properties.Settings.Default.sonGirisYapanKullanici == infoKullanici[i].UIUN)
+                    if (Properties.Settings.Default.sonGirisYapanKullanici == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
                     {
                         kullaniciAdi = i;
                         break;

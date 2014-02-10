@@ -328,6 +328,7 @@
             this.treeYetkiler.ShowRootLines = false;
             this.treeYetkiler.Size = new System.Drawing.Size(196, 270);
             this.treeYetkiler.TabIndex = 10;
+            this.treeYetkiler.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.ifPinChecked);
             this.treeYetkiler.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.checkYetkiFromTree);
             // 
             // buttonSaveNewUser

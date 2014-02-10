@@ -9,11 +9,11 @@ namespace ROPv1
     [Serializable]
     public class UItemp
     {
-        public string UIUN; // kullanıcı adı
-        public string UIN; // adı
-        public string UIS; // soyadı
+        public byte[] UIUN; // kullanıcı adı
+        public byte[] UIN; // adı
+        public byte[] UIS; // soyadı
         public string UIPW; // şifresi
-        public string UIU; // ünvanı
+        public byte [] UIU; // ünvanı
         public string UIPN; // pin kodu
         public string[] UIY; // yetkileri
 

@@ -34,12 +34,12 @@ namespace ROPv1
             if (!File.Exists("tempfiles.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default kategorilerimizi giriyoruz.
             {
                 infoKullanici[0] = new UItemp();
-                infoKullanici[0].UIN = "Adınız";
-                infoKullanici[0].UIS = "Soy Adınız";
-                infoKullanici[0].UIUN = "admin";
+                infoKullanici[0].UIN = (new UnicodeEncoding()).GetBytes("Adınız");
+                infoKullanici[0].UIS = (new UnicodeEncoding()).GetBytes("Soy Adınız");
+                infoKullanici[0].UIUN = (new UnicodeEncoding()).GetBytes("admin");
                 infoKullanici[0].UIPN = Helper.ComputeHash("0000", "SHA512", null);
                 infoKullanici[0].UIPW = Helper.ComputeHash("00000", "SHA512", null);
-                infoKullanici[0].UIU = "Yönetici";
+                infoKullanici[0].UIU = (new UnicodeEncoding()).GetBytes("Yönetici");
                 infoKullanici[0].UIY[0] = Helper.ComputeHash("true", "SHA512", null);
                 infoKullanici[0].UIY[1] = Helper.ComputeHash("true", "SHA512", null);
                 infoKullanici[0].UIY[2] = Helper.ComputeHash("true", "SHA512", null);
@@ -103,7 +103,7 @@ namespace ROPv1
             {
                 for (int i = 0; i < infoKullanici.Count(); i++)
                 {
-                    if (username == infoKullanici[i].UIUN)
+                    if (username == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
                     {
                         kullaniciAdi = i;
                         break;

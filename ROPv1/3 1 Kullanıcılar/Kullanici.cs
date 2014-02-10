@@ -40,7 +40,7 @@ namespace ROPv1
 
             for (int i = 0; i < kullaniciListesi.Count; i++)
             {
-                treeUserName.Nodes.Add(kullaniciListesi[i].UIN + " " + kullaniciListesi[i].UIS);
+                treeUserName.Nodes.Add((new UnicodeEncoding()).GetString(kullaniciListesi[i].UIN) + " " + (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIS));
             }
 
             comboNewTitle.Items.Add("Yönetici");
@@ -62,17 +62,17 @@ namespace ROPv1
             treeUserName.SelectedNode = treeUserName.Nodes[0];
         }
 
-        private void changeKullanici(object sender, TreeViewEventArgs e) // Farklı bir departman seçildi
+        private void changeKullanici(object sender, TreeViewEventArgs e) // Farklı bir kullanıcı seçildi
         {
             if (buttonDeleteUser.Visible)
             {
                 int i = treeUserName.SelectedNode.Index;
-                textboxName.Text = kullaniciListesi[i].UIN;
-                textboxSurname.Text = kullaniciListesi[i].UIS;
-                textboxUserName.Text = kullaniciListesi[i].UIUN;
+                textboxName.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIN);
+                textboxSurname.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIS); 
+                textboxUserName.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIUN); 
                 textboxPin.Text = "";
                 textBoxPassword.Text = "";
-                comboNewTitle.Text = kullaniciListesi[i].UIU;
+                comboNewTitle.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIU); 
                 newUserForm.Text = textboxUserName.Text;
 
                 for (int j = 0; j < 7; j++)
@@ -158,7 +158,7 @@ namespace ROPv1
 
                 for (int j = 0; j < kullaniciListesi.Count(); j++)
                 {
-                    if (Helper.VerifyHash(textboxPin.Text, "SHA512", kullaniciListesi[j].UIPN) || textboxUserName.Text == kullaniciListesi[j].UIUN)
+                    if (Helper.VerifyHash(textboxPin.Text, "SHA512", kullaniciListesi[j].UIPN) || textboxUserName.Text == (new UnicodeEncoding()).GetString(kullaniciListesi[j].UIUN))
                     {
                         using (KontrolFormu dialog = new KontrolFormu("Hatalı kullanıcı adı veya pin girdiniz, lütfen kontrol edin", false))
                         {
@@ -175,12 +175,12 @@ namespace ROPv1
 
                 // tüm Kullanıcılar listemize Kullanıcıyı ekleyip kaydediyoruz
                 UItemp temp = new UItemp();
-                temp.UIN = textboxName.Text;
-                temp.UIS = textboxSurname.Text;
-                temp.UIUN = textboxUserName.Text;
+                temp.UIN = (new UnicodeEncoding()).GetBytes(textboxName.Text);
+                temp.UIS = (new UnicodeEncoding()).GetBytes(textboxSurname.Text);
+                temp.UIUN = (new UnicodeEncoding()).GetBytes(textboxUserName.Text);
                 temp.UIPN = Helper.ComputeHash(textboxPin.Text, "SHA512", null);
                 temp.UIPW = Helper.ComputeHash(textBoxPassword.Text, "SHA512", null);
-                temp.UIU = comboNewTitle.Text;
+                temp.UIU = (new UnicodeEncoding()).GetBytes(comboNewTitle.Text);
                 for (int i = 0; i < 7; i++)
                 {
                     if(treeYetkiler.Nodes[i].Checked)
@@ -252,7 +252,7 @@ namespace ROPv1
                     {
                         kacTane++;
                     }
-                    if(textboxUserName.Text == kullaniciListesi[j].UIUN)
+                    if (textboxUserName.Text == (new UnicodeEncoding()).GetString(kullaniciListesi[j].UIUN))
                         kacTane1++;
 
                     if (kacTane == 2 || kacTane1 == 2)
@@ -267,10 +267,10 @@ namespace ROPv1
 
                 int i = treeUserName.SelectedNode.Index;
                 //kullanıcının listedeki bilgilerini güncelliyoruz ve kaydediyoruz
-                kullaniciListesi[i].UIUN = textboxUserName.Text;
-                kullaniciListesi[i].UIN = textboxName.Text;
-                kullaniciListesi[i].UIS = textboxSurname.Text;
-                kullaniciListesi[i].UIUN = textboxUserName.Text;
+                kullaniciListesi[i].UIUN = (new UnicodeEncoding()).GetBytes(textboxUserName.Text);
+                kullaniciListesi[i].UIN = (new UnicodeEncoding()).GetBytes(textboxName.Text);
+                kullaniciListesi[i].UIS = (new UnicodeEncoding()).GetBytes(textboxSurname.Text);
+                kullaniciListesi[i].UIUN = (new UnicodeEncoding()).GetBytes(textboxUserName.Text);
 
                 if (textboxPin.Text != "")
                     kullaniciListesi[i].UIPN = Helper.ComputeHash(textboxPin.Text, "SHA512", null); 
@@ -278,7 +278,7 @@ namespace ROPv1
                 if (textBoxPassword.Text != "")
                     kullaniciListesi[i].UIPW = Helper.ComputeHash(textBoxPassword.Text, "SHA512", null);
 
-                kullaniciListesi[i].UIU = comboNewTitle.Text;
+                kullaniciListesi[i].UIU = (new UnicodeEncoding()).GetBytes(comboNewTitle.Text);
 
                 for (int x = 0; x < 7; x++)
                 {
@@ -340,12 +340,12 @@ namespace ROPv1
         private void buttonCancelSavingNewUserPressed(object sender, EventArgs e)
         {
             int i = treeUserName.SelectedNode.Index;
-            textboxName.Text = kullaniciListesi[i].UIN;
-            textboxSurname.Text = kullaniciListesi[i].UIS;
-            textboxUserName.Text = kullaniciListesi[i].UIUN;
+            textboxName.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIN);
+            textboxSurname.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIS);
+            textboxUserName.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIUN);
             textboxPin.Text = "";
             textBoxPassword.Text = "";
-            comboNewTitle.Text = kullaniciListesi[i].UIU;
+            comboNewTitle.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIU);
             newUserForm.Text = textboxUserName.Text;
 
             for (int j = 0; j < 7; j++)
@@ -414,6 +414,16 @@ namespace ROPv1
                     treeYetkiler.Nodes[index].Checked = false;
                 else
                     treeYetkiler.Nodes[index].Checked = true;
+
+                //pin şifre değiştirme seçilirse ayarlarda seçili olmak zorunda, pin seçiliyken ayarlar seçimi kaldırılırsa pinde kaldırılmalı
+                if (e.Node.Index == 6 && !treeYetkiler.Nodes[4].Checked)
+                {
+                    treeYetkiler.Nodes[4].Checked = true;
+                }
+                if (e.Node.Index == 4 && treeYetkiler.Nodes[6].Checked)
+                {
+                    treeYetkiler.Nodes[6].Checked = false;
+                }
             }
         }
 
@@ -445,6 +455,11 @@ namespace ROPv1
                     treeYetkiler.Nodes[j].Checked = false;
                 }
             }
+        }
+
+        private void ifPinChecked(object sender, TreeViewEventArgs e)
+        {
+
         }
     }
 }
