@@ -28,11 +28,11 @@ namespace ROPv1
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            KullaniciOzellikleri[] infoKullanici = new KullaniciOzellikleri[1];
+            UItemp[] infoKullanici = new UItemp[1];
 
             #region xml oku
 
-            XmlLoad<KullaniciOzellikleri> loadInfoKullanicilar = new XmlLoad<KullaniciOzellikleri>();
+            XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
             infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
 
             #endregion
@@ -54,7 +54,7 @@ namespace ROPv1
                 //kullanıcının yerini bul
                 for (int i = 0; i < infoKullanici.Count(); i++)
                 {
-                    if (Helper.VerifyHash(textboxPin.Text, "SHA512", infoKullanici[i].pinKodu))
+                    if (Helper.VerifyHash(textboxPin.Text, "SHA512", infoKullanici[i].UIPN))
                     {
                         kullaniciAdi = i;
                         break;
@@ -64,7 +64,7 @@ namespace ROPv1
                 //yetkilerine göre işlemlere izin verme
                 if (kullaniciAdi != -5)
                 {
-                    if (Helper.VerifyHash("true", "SHA512", infoKullanici[kullaniciAdi].yetkileri[5]))
+                    if (Helper.VerifyHash("true", "SHA512", infoKullanici[kullaniciAdi].UIY[5]))
                     {
                         //Gün Formuna Git 
                         //Gün formu oluştur ve o forma git

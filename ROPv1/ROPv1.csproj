@@ -100,7 +100,7 @@
     <Compile Include="3 1 Kullanıcılar\Kullanici.Designer.cs">
       <DependentUpon>Kullanici.cs</DependentUpon>
     </Compile>
-    <Compile Include="3 1 Kullanıcılar\KullaniciOzellikleri.cs" />
+    <Compile Include="3 1 Kullanıcılar\UItemp.cs" />
     <Compile Include="3 4 Menüler\MenuControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

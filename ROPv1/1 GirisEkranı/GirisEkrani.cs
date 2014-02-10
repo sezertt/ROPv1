@@ -20,7 +20,7 @@ namespace ROPv1
 
         bool closeOrShowAnotherForm = false;
 
-        KullaniciOzellikleri[] infoKullanici;
+        UItemp[] infoKullanici;
 
         public GirisEkrani()
         {
@@ -29,30 +29,30 @@ namespace ROPv1
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
 
-            infoKullanici = new KullaniciOzellikleri[1];
+            infoKullanici = new UItemp[1];
 
             if (!File.Exists("tempfiles.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default kategorilerimizi giriyoruz.
             {
-                infoKullanici[0] = new KullaniciOzellikleri();
-                infoKullanici[0].adi = "Adınız";
-                infoKullanici[0].soyadi = "Soy Adınız";
-                infoKullanici[0].kullaniciAdi = "admin";
-                infoKullanici[0].pinKodu = Helper.ComputeHash("0000", "SHA512", null);
-                infoKullanici[0].sifresi = Helper.ComputeHash("00000", "SHA512", null);
-                infoKullanici[0].unvani = "Yönetici";
-                infoKullanici[0].yetkileri[0] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].yetkileri[1] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].yetkileri[2] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].yetkileri[3] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].yetkileri[4] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].yetkileri[5] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].yetkileri[6] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0] = new UItemp();
+                infoKullanici[0].UIN = "Adınız";
+                infoKullanici[0].UIS = "Soy Adınız";
+                infoKullanici[0].UIUN = "admin";
+                infoKullanici[0].UIPN = Helper.ComputeHash("0000", "SHA512", null);
+                infoKullanici[0].UIPW = Helper.ComputeHash("00000", "SHA512", null);
+                infoKullanici[0].UIU = "Yönetici";
+                infoKullanici[0].UIY[0] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[1] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[2] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[3] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[4] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[5] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[6] = Helper.ComputeHash("true", "SHA512", null);
 
                 XmlSave.SaveRestoran(infoKullanici, "tempfiles.xml");
 
                 File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
             }
-            XmlLoad<KullaniciOzellikleri> loadInfoKullanicilar = new XmlLoad<KullaniciOzellikleri>();
+            XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
             infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
 
             
@@ -103,7 +103,7 @@ namespace ROPv1
             {
                 for (int i = 0; i < infoKullanici.Count(); i++)
                 {
-                    if (username == infoKullanici[i].kullaniciAdi)
+                    if (username == infoKullanici[i].UIUN)
                     {
                         kullaniciAdi = i;
                         break;
@@ -111,7 +111,7 @@ namespace ROPv1
                 }
                 if (kullaniciAdi != -5)
                 {
-                    bool flag = Helper.VerifyHash(password, "SHA512", infoKullanici[kullaniciAdi].sifresi);
+                    bool flag = Helper.VerifyHash(password, "SHA512", infoKullanici[kullaniciAdi].UIPW);
                     if (flag == true)
                     { //şifre doğru
                         Properties.Settings.Default.sonGirisYapanKullanici = username;

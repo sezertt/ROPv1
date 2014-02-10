@@ -17,18 +17,18 @@ namespace ROPv1
         bool closeOrShowAnotherForm = false;
         int whichCheckBoxShouldUncheck = 0;
         int kullaniciAdi = 0;
-        KullaniciOzellikleri[] infoKullanici;
+        UItemp[] infoKullanici;
 
         public AdminGirisFormu()
         {
             InitializeComponent();
             splitPanel.SplitterDistance = Screen.FromControl(this).Bounds.Size.Width / 6;            
 
-            infoKullanici = new KullaniciOzellikleri[1];
+            infoKullanici = new UItemp[1];
 
             #region xml oku
 
-            XmlLoad<KullaniciOzellikleri> loadInfoKullanicilar = new XmlLoad<KullaniciOzellikleri>();
+            XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
             infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
 
             #endregion           
@@ -38,7 +38,7 @@ namespace ROPv1
                 //kullanıcının yerini bul
                 for (int i = 0; i < infoKullanici.Count(); i++)
                 {
-                    if (Properties.Settings.Default.sonGirisYapanKullanici == infoKullanici[i].kullaniciAdi)
+                    if (Properties.Settings.Default.sonGirisYapanKullanici == infoKullanici[i].UIUN)
                     {
                         kullaniciAdi = i;
                         break;
@@ -47,7 +47,7 @@ namespace ROPv1
                 //yetkilerine göre işlemlere izin verme
                 for (int i = 0; i < 5; i++)
                 {
-                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].yetkileri[i]))
+                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[i]))
                     {
                         flowLayoutPanel1.Controls[i].Enabled = false;
                     }
@@ -176,7 +176,7 @@ namespace ROPv1
                     leftPanelView.Nodes.Add("Ürünler");
                     leftPanelView.Nodes.Add("Stok Ayarları");
 
-                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].yetkileri[6]))
+                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[6]))
                     {
                         leftPanelView.SelectedNode = leftPanelView.Nodes[1];
                     }
@@ -216,7 +216,7 @@ namespace ROPv1
             {
                 #region
                 case 0: //Kullanıcılar Seçildi
-                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].yetkileri[6]))
+                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[6]))
                     {
                         leftPanelView.SelectedNode = leftPanelView.Nodes[1];
                     }
