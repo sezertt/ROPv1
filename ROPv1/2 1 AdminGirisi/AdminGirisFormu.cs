@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml.Serialization;
+using System.Globalization;
 
 namespace ROPv1
 {
@@ -22,7 +23,13 @@ namespace ROPv1
         public AdminGirisFormu()
         {
             InitializeComponent();
-            splitPanel.SplitterDistance = Screen.FromControl(this).Bounds.Size.Width / 6;            
+
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
+            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
+            timerSaat.Start();
+
+            splitPanel.SplitterDistance = Screen.FromControl(this).Bounds.Size.Width / 6;
 
             infoKullanici = new UItemp[1];
 
@@ -31,7 +38,7 @@ namespace ROPv1
             XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
             infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
 
-            #endregion           
+            #endregion
 
             if (Properties.Settings.Default.sonGirisYapanKullanici != "ropisimiz")
             {
@@ -51,7 +58,7 @@ namespace ROPv1
                     {
                         flowLayoutPanel1.Controls[i].Enabled = false;
                     }
-                }                
+                }
             }
 
             if (saleCheckBox.Enabled == true)
@@ -182,7 +189,7 @@ namespace ROPv1
                     }
                     else
                         leftPanelView.SelectedNode = leftPanelView.Nodes[0];
-                    
+
 
                     //Veri tabanından gerekli verileri al                  
                     break;
@@ -273,6 +280,11 @@ namespace ROPv1
                     break;
                 #endregion
             }
+        }
+
+        private void timerSaat_Tick(object sender, EventArgs e)
+        {
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
         }
     }
 }

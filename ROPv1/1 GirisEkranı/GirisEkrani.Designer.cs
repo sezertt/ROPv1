@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GirisEkrani));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.passwordBoxHost = new System.Windows.Forms.Integration.ElementHost();
@@ -38,6 +39,10 @@
             this.button2 = new System.Windows.Forms.Button();
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.exitButton = new System.Windows.Forms.Button();
+            this.labelGun = new System.Windows.Forms.Label();
+            this.labelTarih = new System.Windows.Forms.Label();
+            this.labelSaat = new System.Windows.Forms.Label();
+            this.timerSaat = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -53,7 +58,7 @@
             this.groupBox1.Controls.Add(this.girisButton);
             this.groupBox1.Font = new System.Drawing.Font("Arial", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.Window;
-            this.groupBox1.Location = new System.Drawing.Point(377, 50);
+            this.groupBox1.Location = new System.Drawing.Point(471, 50);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(360, 262);
             this.groupBox1.TabIndex = 0;
@@ -120,7 +125,7 @@
             this.button2.BackColor = System.Drawing.SystemColors.Window;
             this.button2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.button2.Location = new System.Drawing.Point(357, 334);
+            this.button2.Location = new System.Drawing.Point(451, 334);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(400, 35);
             this.button2.TabIndex = 5;
@@ -133,7 +138,7 @@
             this.keyboardcontrol1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.keyboardcontrol1.ForeColor = System.Drawing.SystemColors.Window;
             this.keyboardcontrol1.KeyboardType = KeyboardClassLibrary.BoW.Standard;
-            this.keyboardcontrol1.Location = new System.Drawing.Point(60, 525);
+            this.keyboardcontrol1.Location = new System.Drawing.Point(154, 525);
             this.keyboardcontrol1.Name = "keyboardcontrol1";
             this.keyboardcontrol1.Size = new System.Drawing.Size(993, 282);
             this.keyboardcontrol1.TabIndex = 0;
@@ -149,7 +154,7 @@
             this.exitButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.exitButton.Image = global::ROPv1.Properties.Resources.logOut;
             this.exitButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.exitButton.Location = new System.Drawing.Point(902, 12);
+            this.exitButton.Location = new System.Drawing.Point(848, 12);
             this.exitButton.MaximumSize = new System.Drawing.Size(300, 110);
             this.exitButton.MinimumSize = new System.Drawing.Size(150, 110);
             this.exitButton.Name = "exitButton";
@@ -160,6 +165,50 @@
             this.exitButton.UseVisualStyleBackColor = false;
             this.exitButton.Click += new System.EventHandler(this.exitButtonPressed);
             // 
+            // labelGun
+            // 
+            this.labelGun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelGun.AutoSize = true;
+            this.labelGun.BackColor = System.Drawing.Color.Transparent;
+            this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelGun.Location = new System.Drawing.Point(1117, 90);
+            this.labelGun.Name = "labelGun";
+            this.labelGun.Size = new System.Drawing.Size(0, 33);
+            this.labelGun.TabIndex = 15;
+            this.labelGun.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelTarih
+            // 
+            this.labelTarih.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelTarih.AutoSize = true;
+            this.labelTarih.BackColor = System.Drawing.Color.Transparent;
+            this.labelTarih.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelTarih.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelTarih.Location = new System.Drawing.Point(1087, 63);
+            this.labelTarih.Name = "labelTarih";
+            this.labelTarih.Size = new System.Drawing.Size(0, 33);
+            this.labelTarih.TabIndex = 14;
+            this.labelTarih.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelSaat
+            // 
+            this.labelSaat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelSaat.AutoSize = true;
+            this.labelSaat.BackColor = System.Drawing.Color.Transparent;
+            this.labelSaat.Font = new System.Drawing.Font("Calibri", 45F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelSaat.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelSaat.Location = new System.Drawing.Point(1053, 2);
+            this.labelSaat.Name = "labelSaat";
+            this.labelSaat.Size = new System.Drawing.Size(0, 73);
+            this.labelSaat.TabIndex = 13;
+            this.labelSaat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // timerSaat
+            // 
+            this.timerSaat.Interval = 1000;
+            this.timerSaat.Tick += new System.EventHandler(this.timerSaat_Tick);
+            // 
             // GirisEkrani
             // 
             this.AcceptButton = this.girisButton;
@@ -167,8 +216,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.CancelButton = this.exitButton;
-            this.ClientSize = new System.Drawing.Size(1114, 819);
+            this.ClientSize = new System.Drawing.Size(1302, 819);
             this.ControlBox = false;
+            this.Controls.Add(this.labelGun);
+            this.Controls.Add(this.labelTarih);
+            this.Controls.Add(this.labelSaat);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.keyboardcontrol1);
             this.Controls.Add(this.button2);
@@ -202,6 +254,10 @@
         private System.Windows.Forms.Integration.ElementHost passwordBoxHost;
         private KeyboardClassLibrary.Keyboardcontrol keyboardcontrol1;
         private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.Label labelGun;
+        private System.Windows.Forms.Label labelTarih;
+        private System.Windows.Forms.Label labelSaat;
+        private System.Windows.Forms.Timer timerSaat;
     }
 }
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace ROPv1
 {
@@ -17,6 +18,11 @@ namespace ROPv1
         public SiparisFormu()
         {            
             InitializeComponent();
+
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
+            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
+            timerSaat.Start();
 
             //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et
             /*
@@ -58,6 +64,11 @@ namespace ROPv1
         {
             PinKoduFormu pinForm = new PinKoduFormu();
             pinForm.ShowDialog();
+        }
+
+        private void timerSaat_Tick(object sender, EventArgs e)
+        {
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Xml.Serialization;
+using System.Globalization;
 
 namespace ROPv1
 {
@@ -25,6 +26,12 @@ namespace ROPv1
         public GirisEkrani()
         {
             InitializeComponent();
+
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+            timerSaat.Start();
+            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
+            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
+            
 
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
@@ -196,6 +203,11 @@ namespace ROPv1
 
              if (eminMisiniz == DialogResult.Yes)
                 Application.Exit();
+        }
+
+        private void timerSaat_Tick(object sender, EventArgs e)
+        {
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
         }
     }
 }
