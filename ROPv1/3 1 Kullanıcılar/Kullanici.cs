@@ -158,9 +158,17 @@ namespace ROPv1
 
                 for (int j = 0; j < kullaniciListesi.Count(); j++)
                 {
-                    if (Helper.VerifyHash(textboxPin.Text, "SHA512", kullaniciListesi[j].UIPN) || textboxUserName.Text == (new UnicodeEncoding()).GetString(kullaniciListesi[j].UIUN))
+                    if (textboxUserName.Text == (new UnicodeEncoding()).GetString(kullaniciListesi[j].UIUN))
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Hatalı kullanıcı adı veya pin girdiniz, lütfen kontrol edin", false))
+                        using (KontrolFormu dialog = new KontrolFormu("Kullanımda olan bir kullanıcı adı girdiniz, lütfen kontrol edin", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        return;
+                    }
+                    else if (Helper.VerifyHash(textboxPin.Text, "SHA512", kullaniciListesi[j].UIPN))
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Kullanımda olan bir pin girdiniz, lütfen kontrol edin", false))
                         {
                             dialog.ShowDialog();
                         }

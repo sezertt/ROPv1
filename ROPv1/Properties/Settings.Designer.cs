@@ -25,42 +25,6 @@ namespace ROPv1.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int departmanSayisi {
-            get {
-                return ((int)(this["departmanSayisi"]));
-            }
-            set {
-                this["departmanSayisi"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int masaDizaynSayisi {
-            get {
-                return ((int)(this["masaDizaynSayisi"]));
-            }
-            set {
-                this["masaDizaynSayisi"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int menuSayisi {
-            get {
-                return ((int)(this["menuSayisi"]));
-            }
-            set {
-                this["menuSayisi"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string sonGirisYapanKullanici {
             get {

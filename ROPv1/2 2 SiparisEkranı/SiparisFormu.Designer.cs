@@ -36,6 +36,9 @@
             this.labelTarih = new System.Windows.Forms.Label();
             this.labelSaat = new System.Windows.Forms.Label();
             this.timerSaat = new System.Windows.Forms.Timer(this.components);
+            this.adisyonButton = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tablePanel = new System.Windows.Forms.TableLayoutPanel();
             this.SuspendLayout();
             // 
             // exitButton
@@ -119,12 +122,90 @@
             this.timerSaat.Interval = 1000;
             this.timerSaat.Tick += new System.EventHandler(this.timerSaat_Tick);
             // 
+            // adisyonButton
+            // 
+            this.adisyonButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.adisyonButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.adisyonButton.BackColor = System.Drawing.SystemColors.Window;
+            this.adisyonButton.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.adisyonButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.adisyonButton.Image = ((System.Drawing.Image)(resources.GetObject("adisyonButton.Image")));
+            this.adisyonButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.adisyonButton.Location = new System.Drawing.Point(393, 11);
+            this.adisyonButton.MaximumSize = new System.Drawing.Size(300, 110);
+            this.adisyonButton.MinimumSize = new System.Drawing.Size(180, 110);
+            this.adisyonButton.Name = "adisyonButton";
+            this.adisyonButton.Size = new System.Drawing.Size(220, 110);
+            this.adisyonButton.TabIndex = 13;
+            this.adisyonButton.Tag = "4";
+            this.adisyonButton.Text = "Adisyonlar";
+            this.adisyonButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.adisyonButton.UseVisualStyleBackColor = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Location = new System.Drawing.Point(0, 769);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1313, 50);
+            this.panel1.TabIndex = 14;
+            this.panel1.SizeChanged += new System.EventHandler(this.myPannel_SizeChanged);
+            // 
+            // tablePanel
+            // 
+            this.tablePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tablePanel.BackColor = System.Drawing.Color.Transparent;
+            this.tablePanel.ColumnCount = 7;
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
+            this.tablePanel.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.tablePanel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.tablePanel.Location = new System.Drawing.Point(12, 127);
+            this.tablePanel.Name = "tablePanel";
+            this.tablePanel.RowCount = 6;
+            this.tablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tablePanel.Size = new System.Drawing.Size(1289, 636);
+            this.tablePanel.TabIndex = 24;
+            // 
             // SiparisFormu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1313, 819);
+            this.Controls.Add(this.tablePanel);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.adisyonButton);
             this.Controls.Add(this.labelGun);
             this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.labelSaat);
@@ -134,7 +215,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SiparisFormu";
             this.Text = "SiparisFormu";
-            this.TopMost = true;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CloseApp);
             this.ResumeLayout(false);
@@ -150,5 +230,8 @@
         private System.Windows.Forms.Label labelTarih;
         private System.Windows.Forms.Label labelSaat;
         private System.Windows.Forms.Timer timerSaat;
+        private System.Windows.Forms.CheckBox adisyonButton;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TableLayoutPanel tablePanel;
     }
 }

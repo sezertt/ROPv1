@@ -170,6 +170,7 @@
             this.comboNewDepName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.comboNewDepName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.comboNewDepName.Location = new System.Drawing.Point(10, 54);
+            this.comboNewDepName.MaxLength = 20;
             this.comboNewDepName.Name = "comboNewDepName";
             this.comboNewDepName.Size = new System.Drawing.Size(360, 32);
             this.comboNewDepName.TabIndex = 2;

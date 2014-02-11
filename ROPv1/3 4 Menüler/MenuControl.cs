@@ -14,8 +14,6 @@ namespace ROPv1
 {
     public partial class MenuControl : UserControl
     {
-        int menuSayisi = Properties.Settings.Default.menuSayisi; // oluşturulmuş menülerin sayısı
-
         List<Menuler> menuListesi = new List<Menuler>();  // menüleri tutacak liste
 
         List<TumKategoriler> kategoriListesi = new List<TumKategoriler>(); // kategorileri tutacak liste
@@ -55,7 +53,7 @@ namespace ROPv1
             //kategorileri tutacak listemize atıyoruz
             kategoriListesi.AddRange(infoKategoriler);
 
-            Menuler[] infoMenu = new Menuler[menuSayisi];
+            Menuler[] infoMenu = new Menuler[1];
 
             if (!File.Exists("menu.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default menümüzü giriyoruz.
             {
@@ -96,7 +94,7 @@ namespace ROPv1
             }
 
             //Menü isimlerini en sol tree viewa yazdırıyoruz
-            for (int i = 1; i < menuSayisi; i++)
+            for (int i = 1; i < menuListesi.Count; i++)
             {
                 treeMenuName.Nodes.Add(menuListesi[i].menuAdi);
             }
@@ -457,11 +455,6 @@ namespace ROPv1
                 // ağaçtan menüyü siliyoruz
                 treeMenuName.SelectedNode.Remove();
 
-                //menü sayımızı azaltıp kayedediyoruz
-                menuSayisi--;
-                Properties.Settings.Default.menuSayisi = menuSayisi;
-                Properties.Settings.Default.Save();
-
                 // tek menü kaldıysa silinmesin diyoruz
                 if (treeMenuName.Nodes.Count < 2)
                     buttonDeleteMenu.Enabled = false;
@@ -625,7 +618,7 @@ namespace ROPv1
                 treeNewKategori.SelectedNode.Text = textBoxYeniKategori.Text;
                 newKategoriForm.Text = textBoxYeniKategori.Text;
 
-                for (int i = 0; i < menuSayisi; i++)
+                for (int i = 0; i < menuListesi.Count; i++)
                 {
                     for (int j = 0; j < menuListesi[i].menukategorileri.Count(); j++)
                     {
@@ -655,7 +648,7 @@ namespace ROPv1
                 return;
             }
 
-            for (int i = 0; i < menuSayisi; i++)
+            for (int i = 0; i < menuListesi.Count; i++)
             {
                 for (int j = 0; j < menuListesi[i].menukategorileri.Count(); j++)
                 {
@@ -721,11 +714,6 @@ namespace ROPv1
 
                 treeMenuName.SelectedNode = treeMenuName.Nodes[treeMenuName.Nodes.Count - 1];
                 treeMenuName.Focus();
-
-                //menü sayısı arttırılıp kaydedilir
-                menuSayisi++;
-                Properties.Settings.Default.menuSayisi = menuSayisi;
-                Properties.Settings.Default.Save();
 
                 buttonDeleteMenu.Visible = true;
                 buttonCancel.Visible = false;

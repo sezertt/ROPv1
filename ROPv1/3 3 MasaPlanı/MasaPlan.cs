@@ -17,9 +17,6 @@ namespace ROPv1
         //masa planının değişip değişmediğini kontrol eden editingDesign ve masa ismi değiştiyse kaydedilip edilmemesi gereğini belirleyen shouldsavetablename değişkenleri
         bool editingDesign, shouldSaveTableName;
 
-        //toplam masa dizaynlarının sayısını tuttuğumuz settings değişkenini integer bir değişkene atarak programın geri kalanında kullanmamızı sağlıyoruz
-        int masaDizaynSayisi = Properties.Settings.Default.masaDizaynSayisi;
-
         //xml olarak kayıtlı tutulan masa dizaynlarını programımızda kullanmak amacıyla oluşturacağımız dizayn listesi
         List<MasaDizayn> masaDizaynListesi = new List<MasaDizayn>();
 
@@ -29,31 +26,26 @@ namespace ROPv1
         public MasaPlan()
         {
             InitializeComponent();
-            /*
-            Properties.Settings.Default.masaDizaynSayisi = 1;
-            Properties.Settings.Default.Save();
-            */
 
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
 
             #region xml oku
 
-            MasaDizayn[] info = new MasaDizayn[masaDizaynSayisi];
+            MasaDizayn[] info = new MasaDizayn[1];
 
             //eğer masaDizayn listesi bulunmuyorsa default değerlerle ilk dizaynı oluşturuyoruz
             if (!File.Exists("masaDizayn.xml"))
             {
-                int departmanSayisi = Properties.Settings.Default.departmanSayisi;
-                Restoran[] departmanVarmi = new Restoran[departmanSayisi];
+                Restoran[] departmanVarmi = new Restoran[1];
 
                 if (!File.Exists("restoran.xml"))
                 {
                     departmanVarmi[0] = new Restoran();
-                    departmanVarmi[0].DepartmanAdi = "Departman";
-                    departmanVarmi[0].DepartmanMenusu = "Menü";
-                    departmanVarmi[0].DepartmanEkrani = "Masa Ekranı";
-                    departmanVarmi[0].DepartmanDeposu = "Depo";
+                    departmanVarmi[0].departmanAdi = "Departman";
+                    departmanVarmi[0].departmanMenusu = "Menü";
+                    departmanVarmi[0].departmanEkrani = "Masa Ekranı";
+                    departmanVarmi[0].departmanDeposu = "Depo";
                     XmlSave.SaveRestoran(departmanVarmi, "restoran.xml");
                 }
 
@@ -62,7 +54,7 @@ namespace ROPv1
 
 
                 info[0] = new MasaDizayn();
-                info[0].masaPlanIsmi = departmanVarmi[0].DepartmanEkrani;
+                info[0].masaPlanIsmi = departmanVarmi[0].departmanEkrani;
 
                 string[][] refresher = new string[][]
                 {
@@ -124,7 +116,7 @@ namespace ROPv1
             treeMasaPlanName.Nodes.Add(masaDizaynListesi[0].masaPlanIsmi);
 
             //listede başka dizaynlar varsa onların da isimleri gösteriliyor
-            for (int i = 1; i < masaDizaynSayisi; i++)
+            for (int i = 1; i < masaDizaynListesi.Count; i++)
             {
                 treeMasaPlanName.Nodes.Add(masaDizaynListesi[i].masaPlanIsmi);
             }
@@ -241,11 +233,6 @@ namespace ROPv1
                 // seçilen dizaynı görünümden çıkar
                 treeMasaPlanName.Nodes[treeMasaPlanName.SelectedNode.Index].Remove();
 
-                //dizayn sayısını azalt ve settingi kaydet
-                masaDizaynSayisi--;
-                Properties.Settings.Default.masaDizaynSayisi = masaDizaynSayisi;
-                Properties.Settings.Default.Save();
-
                 // 1 masa dizaynı kaldıysa silemesin
                 if (treeMasaPlanName.Nodes.Count < 2)
                     buttonDeleteTable.Enabled = false;
@@ -297,10 +284,10 @@ namespace ROPv1
                         }
                         else
                         {
-                            tablebutton.BackColor = Color.White;
-                            tablebutton.Visible = true;
+                            tablebutton.BackColor = Color.White;                            
                             tablebutton.Text = "";
                         }
+                        tablebutton.Visible = true;
                     }
                 }
             }
@@ -438,12 +425,6 @@ namespace ROPv1
                 XmlSave.SaveRestoran(masaDizaynListesi, "masaDizayn.xml");
 
                 treeMasaPlanName.Focus();
-
-                //dizayn sayısının arttığı bilgisi settingse girilir
-                masaDizaynSayisi++;
-                Properties.Settings.Default.masaDizaynSayisi = masaDizaynSayisi;
-                Properties.Settings.Default.Save();
-
 
                 //eğer 1den fazla dizayn olmuşsa silme butonu aktif hale getirilir
                 if (treeMasaPlanName.Nodes.Count > 1)

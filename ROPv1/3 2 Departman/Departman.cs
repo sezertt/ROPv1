@@ -19,11 +19,12 @@ namespace ROPv1
 
     public partial class Departman : UserControl
     {
-        int departmanSayisi = Properties.Settings.Default.departmanSayisi;
-
         bool changingPlace = false;
 
         List<Restoran> restoranListesi = new List<Restoran>();
+
+
+        List<MasaDizayn> masaListesi = new List<MasaDizayn>();
 
         public Departman()
         {
@@ -34,15 +35,15 @@ namespace ROPv1
 
             #region xml oku
 
-            Restoran[] info = new Restoran[departmanSayisi];
+            Restoran[] info = new Restoran[1];
 
             if (!File.Exists("restoran.xml"))
             {
                 info[0] = new Restoran();
-                info[0].DepartmanAdi = "Departman";
-                info[0].DepartmanMenusu = "Menü";
-                info[0].DepartmanEkrani = "Masa Ekranı";
-                info[0].DepartmanDeposu = "Depo";
+                info[0].departmanAdi = "Departman";
+                info[0].departmanMenusu = "Menü";
+                info[0].departmanEkrani = "Masa Ekranı";
+                info[0].departmanDeposu = "Depo";
                 XmlSave.SaveRestoran(info, "restoran.xml");
             }
 
@@ -51,18 +52,18 @@ namespace ROPv1
 
             restoranListesi.AddRange(info);
 
-            comboNewDepName.Text = restoranListesi[0].DepartmanAdi;
-            comboNewDepMenu.Text = restoranListesi[0].DepartmanMenusu;
-            comboNewDepStore.Text = restoranListesi[0].DepartmanDeposu;
-            comboNewDepView.Text = restoranListesi[0].DepartmanEkrani;
+            comboNewDepName.Text = restoranListesi[0].departmanAdi;
+            comboNewDepMenu.Text = restoranListesi[0].departmanMenusu;
+            comboNewDepStore.Text = restoranListesi[0].departmanDeposu;
+            comboNewDepView.Text = restoranListesi[0].departmanEkrani;
 
             newDepartmentForm.Text = comboNewDepName.Text;
 
-            treeDepartman.Nodes.Add(restoranListesi[0].DepartmanAdi);
+            treeDepartman.Nodes.Add(restoranListesi[0].departmanAdi);
 
-            for (int i = 1; i < departmanSayisi; i++)
+            for (int i = 1; i < restoranListesi.Count; i++)
             {
-                treeDepartman.Nodes.Add(restoranListesi[i].DepartmanAdi);
+                treeDepartman.Nodes.Add(restoranListesi[i].departmanAdi);
             }
 
             //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
@@ -76,31 +77,36 @@ namespace ROPv1
 
             if (File.Exists("masaDizayn.xml"))
             {
-                int masaDizaynSayisi = Properties.Settings.Default.masaDizaynSayisi;
-
-                MasaDizayn[] masaDizaynlari = new MasaDizayn[masaDizaynSayisi];
+                MasaDizayn[] masaDizaynlari = new MasaDizayn[1];
 
                 //liste varsa okuyoruz
                 XmlLoad<MasaDizayn> loadInfoMasaDizayn = new XmlLoad<MasaDizayn>();
                 masaDizaynlari = loadInfoMasaDizayn.LoadRestoran("masaDizayn.xml");
 
-                for (int i = 0; i < masaDizaynSayisi; i++)
+                masaListesi.AddRange(masaDizaynlari);
+
+                for (int i = 0; i < masaDizaynlari.Count(); i++)
                 {
-                    comboNewDepView.Items.Add(masaDizaynlari[i].masaPlanIsmi);
+                    bool dizaynVar = false;
+                    for (int j = 0; j < restoranListesi.Count;j++ )
+                    {
+                        if (restoranListesi[j].departmanEkrani == masaDizaynlari[i].masaPlanIsmi)
+                            dizaynVar = true;
+                    }                        
+                    if(!dizaynVar)        
+                        comboNewDepView.Items.Add(masaDizaynlari[i].masaPlanIsmi);
                 }
             }
 
             if (File.Exists("menu.xml"))
             {
-                int menuSayisi = Properties.Settings.Default.menuSayisi;
-
-                Menuler[] menuListesi = new Menuler[menuSayisi];
+                Menuler[] menuListesi = new Menuler[1];
 
                 //liste varsa okuyoruz
                 XmlLoad<Menuler> loadInfoMenuler = new XmlLoad<Menuler>();
                 menuListesi = loadInfoMenuler.LoadRestoran("menu.xml");
 
-                for (int i = 0; i < menuSayisi; i++)
+                for (int i = 0; i < menuListesi.Count(); i++)
                 {
                     comboNewDepMenu.Items.Add(menuListesi[i].menuAdi);
                 }
@@ -163,29 +169,51 @@ if (File.Exists("depolar.xml"))
             //yeni bir departmanın yaratılmadığını silme tuşunun görünür olmasından anlayabiliriz, eğer yaratılıyor olsaydı iptal tuşu görünür olurdu
             if (buttonDeleteDepartment.Visible)
             {
-                comboNewDepName.Text = restoranListesi[treeDepartman.SelectedNode.Index].DepartmanAdi;
-                comboNewDepMenu.Text = restoranListesi[treeDepartman.SelectedNode.Index].DepartmanMenusu;
-                comboNewDepStore.Text = restoranListesi[treeDepartman.SelectedNode.Index].DepartmanDeposu;
-                comboNewDepView.Text = restoranListesi[treeDepartman.SelectedNode.Index].DepartmanEkrani;
+                comboNewDepName.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanAdi;
+                comboNewDepMenu.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanMenusu;
+                comboNewDepStore.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanDeposu;
+                comboNewDepView.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanEkrani;
                 newDepartmentForm.Text = comboNewDepName.Text;
 
-                bool menuVarMi = false;
+                int temp2 = -1;
                 for (int i = 0; i < comboNewDepMenu.Items.Count; i++)
                     if (comboNewDepMenu.Text == comboNewDepMenu.Items[i].ToString())
                     {
-                        menuVarMi = true;
+                        temp2 = i;
                     }
-                if (!menuVarMi)
+                if (temp2 == -1)
+                {
                     comboNewDepMenu.Text = "";
+                    restoranListesi[treeDepartman.SelectedNode.Index].departmanMenusu = "";                
+                }
 
-                bool masaPlaniVarMi = false;
-                for (int i = 0; i < comboNewDepView.Items.Count; i++)
-                    if (comboNewDepView.Text == comboNewDepView.Items[i].ToString())
+                int temp = -1;
+                for (int i = 0; i < masaListesi.Count; i++)
+                    if (comboNewDepView.Text == masaListesi[i].masaPlanIsmi)
                     {
-                        masaPlaniVarMi = true;
+                        temp = i;
                     }
-                if (!masaPlaniVarMi)
+                if (temp == -1)
+                {
                     comboNewDepView.Text = "";
+                    restoranListesi[treeDepartman.SelectedNode.Index].departmanEkrani = "";
+                }
+
+                if(temp == -1 || temp2 == -1)
+                    XmlSave.SaveRestoran(restoranListesi, "restoran.xml");
+
+                comboNewDepView.Items.Clear();
+                for (int i = 0; i < masaListesi.Count(); i++)
+                {
+                    bool dizaynVar = false;
+                    for (int j = 0; j < restoranListesi.Count; j++)
+                    {
+                        if (restoranListesi[j].departmanEkrani == masaListesi[i].masaPlanIsmi)
+                            dizaynVar = true;
+                    }
+                    if (!dizaynVar)
+                        comboNewDepView.Items.Add(masaListesi[i].masaPlanIsmi);
+                }
             }
         }
 
@@ -206,10 +234,6 @@ if (File.Exists("depolar.xml"))
                 XmlSave.SaveRestoran(restoranListesi, "restoran.xml");
 
                 treeDepartman.Nodes[treeDepartman.SelectedNode.Index].Remove();
-
-                departmanSayisi--;
-                Properties.Settings.Default.departmanSayisi = departmanSayisi;
-                Properties.Settings.Default.Save();
 
                 if (treeDepartman.Nodes.Count < 2)
                     buttonDeleteDepartment.Enabled = false;
@@ -238,10 +262,10 @@ if (File.Exists("depolar.xml"))
         //Yeni departman eklemeyi iptal etme tuşu. 
         private void cancelNewDepartment(object sender, EventArgs e)
         {
-            comboNewDepName.Text = restoranListesi[treeDepartman.SelectedNode.Index].DepartmanAdi;
-            comboNewDepMenu.Text = restoranListesi[treeDepartman.SelectedNode.Index].DepartmanMenusu;
-            comboNewDepStore.Text = restoranListesi[treeDepartman.SelectedNode.Index].DepartmanDeposu;
-            comboNewDepView.Text = restoranListesi[treeDepartman.SelectedNode.Index].DepartmanEkrani;
+            comboNewDepName.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanAdi;
+            comboNewDepMenu.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanMenusu;
+            comboNewDepStore.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanDeposu;
+            comboNewDepView.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanEkrani;
             newDepartmentForm.Text = comboNewDepName.Text;
 
             buttonDeleteDepartment.Visible = true;
@@ -269,10 +293,10 @@ if (File.Exists("depolar.xml"))
                 treeDepartman.Nodes.Add(comboNewDepName.Text);
 
                 Restoran newDepartman = new Restoran();
-                newDepartman.DepartmanAdi = comboNewDepName.Text;
-                newDepartman.DepartmanMenusu = comboNewDepMenu.Text;
-                newDepartman.DepartmanDeposu = comboNewDepStore.Text;
-                newDepartman.DepartmanEkrani = comboNewDepView.Text;
+                newDepartman.departmanAdi = comboNewDepName.Text;
+                newDepartman.departmanMenusu = comboNewDepMenu.Text;
+                newDepartman.departmanDeposu = comboNewDepStore.Text;
+                newDepartman.departmanEkrani = comboNewDepView.Text;
 
                 newDepartmentForm.Text = comboNewDepName.Text;
 
@@ -282,10 +306,6 @@ if (File.Exists("depolar.xml"))
 
                 treeDepartman.SelectedNode = treeDepartman.Nodes[treeDepartman.Nodes.Count - 1];
                 treeDepartman.Focus();
-
-                departmanSayisi++;
-                Properties.Settings.Default.departmanSayisi = departmanSayisi;
-                Properties.Settings.Default.Save();
 
                 buttonDeleteDepartment.Visible = true;
                 buttonCancel.Visible = false;
@@ -304,10 +324,10 @@ if (File.Exists("depolar.xml"))
             {
                 //Departmanda değişiklik yapıldıktan sonra basılan kaydet butonu.
                 // Girilen bilgilerin doğruluğu kontrol edilir daha sonra comboboxlardaki bilgiler xmle aktarılır ve departman ismi treeviewda güncellenir.
-                restoranListesi[treeDepartman.SelectedNode.Index].DepartmanAdi = comboNewDepName.Text;
-                restoranListesi[treeDepartman.SelectedNode.Index].DepartmanMenusu = comboNewDepMenu.Text;
-                restoranListesi[treeDepartman.SelectedNode.Index].DepartmanDeposu = comboNewDepStore.Text;
-                restoranListesi[treeDepartman.SelectedNode.Index].DepartmanEkrani = comboNewDepView.Text;
+                restoranListesi[treeDepartman.SelectedNode.Index].departmanAdi = comboNewDepName.Text;
+                restoranListesi[treeDepartman.SelectedNode.Index].departmanMenusu = comboNewDepMenu.Text;
+                restoranListesi[treeDepartman.SelectedNode.Index].departmanDeposu = comboNewDepStore.Text;
+                restoranListesi[treeDepartman.SelectedNode.Index].departmanEkrani = comboNewDepView.Text;
 
                 XmlSave.SaveRestoran(restoranListesi, "restoran.xml");
 
@@ -389,6 +409,18 @@ if (File.Exists("depolar.xml"))
 
         private void showMenu(object sender, EventArgs e)
         {
+            comboNewDepView.Items.Clear();
+            for (int i = 0; i < masaListesi.Count(); i++)
+            {
+                bool dizaynVar = false;
+                for (int j = 0; j < restoranListesi.Count; j++)
+                {
+                    if (restoranListesi[j].departmanEkrani == masaListesi[i].masaPlanIsmi)
+                        dizaynVar = true;
+                }
+                if (!dizaynVar)
+                    comboNewDepView.Items.Add(masaListesi[i].masaPlanIsmi);
+            }
             ((ComboBox)sender).DroppedDown = true;
         }
     }
