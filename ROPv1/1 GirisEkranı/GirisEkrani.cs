@@ -89,17 +89,17 @@ namespace ROPv1
 
         private void girisButtonPressed(object sender, EventArgs e)
         {
-            closeOrShowAnotherForm = true;            
+            closeOrShowAnotherForm = true;
 
-            string username = userNameTextBox.getNameText(); //name lazım olduğunda al
+            string[] username = new string[1];
+            username[0] = userNameTextBox.getNameText(); //name lazım olduğunda al
             string password = passwordTextBox.getPasswordText(); //password lazım olduğunda al 
 
             int kullaniciAdi = -5;
 
-            if(username == "ropisimiz" && password == "roproprop")
+            if (username[0] == "ropisimiz" && password == "roproprop")
             {
-                Properties.Settings.Default.sonGirisYapanKullanici = username;
-                Properties.Settings.Default.Save();
+                XmlSave.SaveRestoran(username, "sonKullanici.xml");
                 ShowWaitForm();
                 AdminGirisFormu adminForm = new AdminGirisFormu();
                 adminForm.Show();
@@ -109,7 +109,7 @@ namespace ROPv1
             {
                 for (int i = 0; i < infoKullanici.Count(); i++)
                 {
-                    if (username == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
+                    if (username[0] == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
                     {
                         kullaniciAdi = i;
                         break;
@@ -120,8 +120,7 @@ namespace ROPv1
                     bool flag = Helper.VerifyHash(password, "SHA512", infoKullanici[kullaniciAdi].UIPW);
                     if (flag == true)
                     { //şifre doğru
-                        Properties.Settings.Default.sonGirisYapanKullanici = username;
-                        Properties.Settings.Default.Save();
+                        XmlSave.SaveRestoran(username, "sonKullanici.xml");
                         ShowWaitForm();
                         AdminGirisFormu adminForm = new AdminGirisFormu();
                         adminForm.Show();
@@ -152,7 +151,7 @@ namespace ROPv1
 
             ShowWaitForm();
 
-            SiparisFormu siparisForm = new SiparisFormu();
+            SiparisMasaFormu siparisForm = new SiparisMasaFormu();
             siparisForm.Show();
             this.Close();
         }

@@ -1,6 +1,6 @@
 ﻿namespace ROPv1
 {
-    partial class SiparisFormu
+    partial class SiparisMasaFormu
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SiparisFormu));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SiparisMasaFormu));
             this.labelGun = new System.Windows.Forms.Label();
             this.labelTarih = new System.Windows.Forms.Label();
             this.labelSaat = new System.Windows.Forms.Label();

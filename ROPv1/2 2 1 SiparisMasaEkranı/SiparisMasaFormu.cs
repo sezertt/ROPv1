@@ -12,7 +12,7 @@ using System.IO;
 
 namespace ROPv1
 {
-    public partial class SiparisFormu : Form
+    public partial class SiparisMasaFormu : Form
     {
         bool closeOrShowAnotherForm = false;
 
@@ -22,7 +22,9 @@ namespace ROPv1
 
         List<MasaDizayn> masaDizaynListesi = new List<MasaDizayn>();
 
-        public SiparisFormu()
+        List<GunBilgileri> gunListesi = new List<GunBilgileri>();
+
+        public SiparisMasaFormu()
         {
             InitializeComponent();
 
@@ -31,8 +33,15 @@ namespace ROPv1
             labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
             timerSaat.Start();
 
+            GunBilgileri[] infoGunler = new GunBilgileri[1];
+
+            XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
+            infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
+
+            gunListesi.AddRange(infoGunler);
+
             //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
-            if (Properties.Settings.Default.gunAcikMi)
+            if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
             {
                 dayButton.Image = global::ROPv1.Properties.Resources.dayOn;
             }
@@ -179,20 +188,28 @@ namespace ROPv1
             }
             panel1.ResumeLayout();
         }
-        
+
         private void siparisButonuBasildi(object sender, EventArgs e)
         {
+            GunBilgileri[] infoGunler = new GunBilgileri[1];
+
+            XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
+            infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
+
+            gunListesi.AddRange(infoGunler);
+
             //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
-            if (Properties.Settings.Default.gunAcikMi)
+            if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
             { //gün açık sipariş ekranına geçilebilir
-                
+                SiparisMenuFormu gunForm = new SiparisMenuFormu(((Button)sender).Name, restoranListesi[hangiButtonSecili]);//burada masa numarasını da yolla
+                gunForm.ShowDialog();
             }
             else
             { //gün başı yapılmalı
                 using (KontrolFormu dialog = new KontrolFormu("Gün Başı yapmanız gerekiyor", false))
                 {
                     dialog.ShowDialog();
-                    this.buttonGunIslemiPressed(null,null);
+                    this.buttonGunIslemiPressed(null, null);
                 }
             }
         }
@@ -234,7 +251,7 @@ namespace ROPv1
                             buttonTable.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
                             buttonTable.Click += siparisButonuBasildi;
                             buttonTable.Name = "" + i + j;
-                            tablePanel.Controls.Add(buttonTable, j, i);                            
+                            tablePanel.Controls.Add(buttonTable, j, i);
                             tablePanel.Tag = (int)((Button)sender).Tag;
                         }
                     }
@@ -295,6 +312,7 @@ namespace ROPv1
             {
                 eminMisiniz = dialog.ShowDialog();
             }
+
             if (eminMisiniz == DialogResult.Yes)
             {
                 closeOrShowAnotherForm = true; // başka forma geçilecek uygulamayı kapatma
@@ -309,20 +327,27 @@ namespace ROPv1
             PinKoduFormu pinForm = new PinKoduFormu();
             pinForm.ShowDialog();
 
-            if(pinForm.dogru)
+            if (pinForm.dogru)
             {
                 GunFormu gunForm = new GunFormu(pinForm.ayarYapanKisi);
-                gunForm.ShowDialog();                
+                gunForm.ShowDialog();
+
+                GunBilgileri[] infoGunler = new GunBilgileri[1];
+
+                XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
+                infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
+
+                gunListesi.AddRange(infoGunler);
 
                 //gün başı yapılmış mı bak
-                if (Properties.Settings.Default.gunAcikMi)
+                if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
                 {
                     dayButton.Image = global::ROPv1.Properties.Resources.dayOn;
                 }
                 else
                 {
                     dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
-                }                
+                }
             }
         }
 

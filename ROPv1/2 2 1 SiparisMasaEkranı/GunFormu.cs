@@ -37,7 +37,13 @@ namespace ROPv1
             }
             else
             {
-                if (Properties.Settings.Default.gunAcikMi)
+                // Oluşturulmuş menüleri xml den okuyoruz
+                XmlLoad<GunBilgileri> loadInfo = new XmlLoad<GunBilgileri>();
+                infoGunler = loadInfo.LoadRestoran("gunler.xml");
+
+                gunListesi.AddRange(infoGunler);
+
+                if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
                 {
                     buttonGunSonu.Enabled = true;
                     buttonGunBasi.Enabled = false;
@@ -47,12 +53,6 @@ namespace ROPv1
                     buttonGunSonu.Enabled = false;
                     buttonGunBasi.Enabled = true;
                 }
-
-                // Oluşturulmuş menüleri xml den okuyoruz
-                XmlLoad<GunBilgileri> loadInfo = new XmlLoad<GunBilgileri>();
-                infoGunler = loadInfo.LoadRestoran("gunler.xml");
-
-                gunListesi.AddRange(infoGunler);
 
                 numericNumberOfCurrentPage.Maximum = gunListesi.Count / 20 + 1;
                 labelNumberOfPages.Text = (gunListesi.Count / 20 + 1).ToString();
@@ -77,9 +77,6 @@ namespace ROPv1
 
             treeGunBasi.Nodes.Insert(0, yeniGunBasi.gunBasiVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")) + ", " + yeniGunBasi.gunBasiVakti.ToString("dddd", new CultureInfo("tr-TR")) + " / Saat " + yeniGunBasi.gunBasiVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")) + " ----- ");
 
-            Properties.Settings.Default.gunAcikMi = true;
-            Properties.Settings.Default.Save();
-
             buttonGunSonu.Enabled = true;
             buttonGunBasi.Enabled = false;
             treeGunBasi.SelectedNode = treeGunBasi.Nodes[0];
@@ -98,9 +95,6 @@ namespace ROPv1
             XmlSave.SaveRestoran(gunListesi, "gunler.xml");
 
             treeGunBasi.Nodes[0].Text += DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")) + ", " + DateTime.Now.ToString("dddd", new CultureInfo("tr-TR")) + " / Saat " + DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
-
-            Properties.Settings.Default.gunAcikMi = false;
-            Properties.Settings.Default.Save();
 
             buttonGunSonu.Enabled = false;
             buttonGunBasi.Enabled = true;

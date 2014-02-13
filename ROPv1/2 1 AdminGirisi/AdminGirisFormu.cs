@@ -37,14 +37,16 @@ namespace ROPv1
             XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
             infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
 
+            XmlLoad<string> loadInfoSonKullanici = new XmlLoad<string>();
+            string[] sonGirisYapanKullanici = loadInfoSonKullanici.LoadRestoran("sonKullanici.xml");
             #endregion
 
-            if (Properties.Settings.Default.sonGirisYapanKullanici != "ropisimiz")
+            if (sonGirisYapanKullanici[0] != "ropisimiz")
             {
                 //kullanıcının yerini bul
                 for (int i = 0; i < infoKullanici.Count(); i++)
                 {
-                    if (Properties.Settings.Default.sonGirisYapanKullanici == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
+                    if (sonGirisYapanKullanici[0] == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
                     {
                         kullaniciAdi = i;
                         break;

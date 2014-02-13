@@ -88,18 +88,24 @@
     <Compile Include="2 1 AdminGirisi\AdminGirisFormu.Designer.cs">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="2 2 SiparisEkranı\GunBilgileri.cs" />
-    <Compile Include="2 2 SiparisEkranı\GunFormu.cs">
+    <Compile Include="2 2 1 SiparisMasaEkranı\GunBilgileri.cs" />
+    <Compile Include="2 2 1 SiparisMasaEkranı\GunFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="2 2 SiparisEkranı\GunFormu.Designer.cs">
+    <Compile Include="2 2 1 SiparisMasaEkranı\GunFormu.Designer.cs">
       <DependentUpon>GunFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="2 2 SiparisEkranı\PinKoduFormu.cs">
+    <Compile Include="2 2 1 SiparisMasaEkranı\PinKoduFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="2 2 SiparisEkranı\PinKoduFormu.Designer.cs">
+    <Compile Include="2 2 1 SiparisMasaEkranı\PinKoduFormu.Designer.cs">
       <DependentUpon>PinKoduFormu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="2 2 2 SiparisMenüEkranı\SiparisMenuFormu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="2 2 2 SiparisMenüEkranı\SiparisMenuFormu.Designer.cs">
+      <DependentUpon>SiparisMenuFormu.cs</DependentUpon>
     </Compile>
     <Compile Include="3 1 Kullanıcılar\Kullanici.cs">
       <SubType>UserControl</SubType>
@@ -172,20 +178,23 @@
     <Compile Include="Gereksizler\Settings.cs" />
     <Compile Include="3 2 Departman\Restoran.cs" />
     <Compile Include="GenelKullanılanlar\SaveLoadXml.cs" />
-    <Compile Include="2 2 SiparisEkranı\SiparisFormu.cs">
+    <Compile Include="2 2 1 SiparisMasaEkranı\SiparisMasaFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="2 2 SiparisEkranı\SiparisFormu.Designer.cs">
-      <DependentUpon>SiparisFormu.cs</DependentUpon>
+    <Compile Include="2 2 1 SiparisMasaEkranı\SiparisMasaFormu.Designer.cs">
+      <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="2 1 AdminGirisi\AdminGirisFormu.resx">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="2 2 SiparisEkranı\GunFormu.resx">
+    <EmbeddedResource Include="2 2 1 SiparisMasaEkranı\GunFormu.resx">
       <DependentUpon>GunFormu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="2 2 SiparisEkranı\PinKoduFormu.resx">
+    <EmbeddedResource Include="2 2 1 SiparisMasaEkranı\PinKoduFormu.resx">
       <DependentUpon>PinKoduFormu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="2 2 2 SiparisMenüEkranı\SiparisMenuFormu.resx">
+      <DependentUpon>SiparisMenuFormu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="3 1 Kullanıcılar\Kullanici.resx">
       <DependentUpon>Kullanici.cs</DependentUpon>
@@ -219,8 +228,8 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="2 2 SiparisEkranı\SiparisFormu.resx">
-      <DependentUpon>SiparisFormu.cs</DependentUpon>
+    <EmbeddedResource Include="2 2 1 SiparisMasaEkranı\SiparisMasaFormu.resx">
+      <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
