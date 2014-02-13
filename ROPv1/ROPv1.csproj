@@ -88,6 +88,13 @@
     <Compile Include="2 1 AdminGirisi\AdminGirisFormu.Designer.cs">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
     </Compile>
+    <Compile Include="2 2 SiparisEkranı\GunBilgileri.cs" />
+    <Compile Include="2 2 SiparisEkranı\GunFormu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="2 2 SiparisEkranı\GunFormu.Designer.cs">
+      <DependentUpon>GunFormu.cs</DependentUpon>
+    </Compile>
     <Compile Include="2 2 SiparisEkranı\PinKoduFormu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +180,9 @@
     </Compile>
     <EmbeddedResource Include="2 1 AdminGirisi\AdminGirisFormu.resx">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="2 2 SiparisEkranı\GunFormu.resx">
+      <DependentUpon>GunFormu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="2 2 SiparisEkranı\PinKoduFormu.resx">
       <DependentUpon>PinKoduFormu.cs</DependentUpon>

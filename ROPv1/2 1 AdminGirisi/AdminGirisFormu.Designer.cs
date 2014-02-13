@@ -97,6 +97,7 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Controls.Add(this.saleCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.reportCheckBox);
@@ -104,7 +105,7 @@
             this.flowLayoutPanel1.Controls.Add(this.adisyonCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.ayarCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.exitButton);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 9);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(250, 7);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1116, 116);
             this.flowLayoutPanel1.TabIndex = 0;
@@ -236,12 +237,11 @@
             // 
             // labelSaat
             // 
-            this.labelSaat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelSaat.AutoSize = true;
             this.labelSaat.BackColor = System.Drawing.Color.Transparent;
             this.labelSaat.Font = new System.Drawing.Font("Calibri", 45F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelSaat.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelSaat.Location = new System.Drawing.Point(1129, 2);
+            this.labelSaat.Location = new System.Drawing.Point(0, 0);
             this.labelSaat.Name = "labelSaat";
             this.labelSaat.Size = new System.Drawing.Size(246, 73);
             this.labelSaat.TabIndex = 7;
@@ -250,12 +250,11 @@
             // 
             // labelTarih
             // 
-            this.labelTarih.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelTarih.AutoSize = true;
             this.labelTarih.BackColor = System.Drawing.Color.Transparent;
             this.labelTarih.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelTarih.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelTarih.Location = new System.Drawing.Point(1163, 63);
+            this.labelTarih.Location = new System.Drawing.Point(34, 61);
             this.labelTarih.Name = "labelTarih";
             this.labelTarih.Size = new System.Drawing.Size(180, 33);
             this.labelTarih.TabIndex = 8;
@@ -264,12 +263,11 @@
             // 
             // labelGun
             // 
-            this.labelGun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelGun.AutoSize = true;
             this.labelGun.BackColor = System.Drawing.Color.Transparent;
             this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGun.Location = new System.Drawing.Point(1193, 90);
+            this.labelGun.Location = new System.Drawing.Point(64, 88);
             this.labelGun.Name = "labelGun";
             this.labelGun.Size = new System.Drawing.Size(116, 33);
             this.labelGun.TabIndex = 9;

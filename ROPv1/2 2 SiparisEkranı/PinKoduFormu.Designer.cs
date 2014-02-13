@@ -129,6 +129,7 @@ namespace ROPv1
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonNO);
             this.ForeColor = System.Drawing.SystemColors.Window;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(493, 410);
             this.MinimizeBox = false;

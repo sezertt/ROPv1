@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
 using System.IO;
-using System.Xml.Serialization;
 
 namespace ROPv1
 {
     public partial class SiparisFormu : Form
     {
         bool closeOrShowAnotherForm = false;
+
+        int hangiButtonSecili = 0;
 
         List<Restoran> restoranListesi = new List<Restoran>();
 
@@ -49,16 +50,36 @@ namespace ROPv1
                 restoranListesi.AddRange(info);
 
                 Button[] departmanButtons = new Button[restoranListesi.Count];
+
+                int a = 0;
+
                 for (int i = 0; i < departmanButtons.Length; i++)
                 {
                     departmanButtons[i] = new Button();
                     departmanButtons[i].Text = restoranListesi[i].departmanAdi;
-                    departmanButtons[i].BackColor = Color.White;
-                    departmanButtons[i].ForeColor = SystemColors.ActiveCaption;
+                    if (i == 0)
+                    {
+                        departmanButtons[i].BackColor = SystemColors.ActiveCaption;
+                        departmanButtons[i].ForeColor = Color.White;
+                    }
+                    else
+                    {
+                        departmanButtons[i].BackColor = Color.White;
+                        departmanButtons[i].ForeColor = SystemColors.ActiveCaption;
+                    }
                     departmanButtons[i].Font = new Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
                     departmanButtons[i].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
                     departmanButtons[i].UseVisualStyleBackColor = false;
-                    departmanButtons[i].Tag = i;
+                    departmanButtons[i].Name = "" + i;
+
+                    if (restoranListesi[i].departmanEkrani == "")
+                        departmanButtons[i].Tag = 200;
+                    else
+                    {
+                        departmanButtons[i].Tag = a;
+                        a++;
+                    }
+
                     departmanButtons[i].Height = panel1.Height;
                     departmanButtons[i].Dock = DockStyle.Right;
                     departmanButtons[i].Click += changeTableView;
@@ -75,12 +96,14 @@ namespace ROPv1
 
                 for (int i = 0; i < 6; i++)
                 {
+                    if (masaDizaynListesi[0].masaPlanIsmi == "")
+                        break;
+
                     for (int j = 0; j < 7; j++)
                     {
                         if (masaDizaynListesi[0].masaYerleri[i][j] != null)
                         {
                             Button buttonTable = new Button();
-
                             buttonTable.Text = masaDizaynListesi[0].masaYerleri[i][j];
                             buttonTable.UseVisualStyleBackColor = false;
                             buttonTable.BackColor = Color.White;
@@ -89,6 +112,7 @@ namespace ROPv1
                             buttonTable.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
                             tablePanel.Controls.Add(buttonTable, j, i);
                             buttonTable.Name = "" + i + j;
+                            buttonTable.Click += siparisButonuBasildi;
                             tablePanel.Tag = 0;
                         }
                     }
@@ -96,6 +120,9 @@ namespace ROPv1
 
                 for (int j = 6; j > 0; j--)
                 {
+                    if (masaDizaynListesi[0].masaPlanIsmi == "")
+                        break;
+
                     bool sutunBos = true;
                     for (int i = 5; i > 0; i--)
                     {
@@ -113,6 +140,9 @@ namespace ROPv1
 
                 for (int j = 5; j > 0; j--)
                 {
+                    if (masaDizaynListesi[0].masaPlanIsmi == "")
+                        break;
+
                     bool sutunBos = true;
                     for (int i = 6; i > 0; i--)
                     {
@@ -127,6 +157,7 @@ namespace ROPv1
                     else
                         break;
                 }
+
             }
         }
 
@@ -148,23 +179,52 @@ namespace ROPv1
             }
             panel1.ResumeLayout();
         }
+        
+        private void siparisButonuBasildi(object sender, EventArgs e)
+        {
+            //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
+            if (Properties.Settings.Default.gunAcikMi)
+            { //gün açık sipariş ekranına geçilebilir
+                
+            }
+            else
+            { //gün başı yapılmalı
+                using (KontrolFormu dialog = new KontrolFormu("Gün Başı yapmanız gerekiyor", false))
+                {
+                    dialog.ShowDialog();
+                    this.buttonGunIslemiPressed(null,null);
+                }
+            }
+        }
 
         private void changeTableView(object sender, EventArgs e)
         {
-            tablePanel.RowCount = 6;
-            tablePanel.ColumnCount = 7;
+            panel1.Controls[hangiButtonSecili].BackColor = Color.White;
+            panel1.Controls[hangiButtonSecili].ForeColor = SystemColors.ActiveCaption;
+            panel1.Controls[Convert.ToInt32(((Button)sender).Name)].BackColor = SystemColors.ActiveCaption;
+            panel1.Controls[Convert.ToInt32(((Button)sender).Name)].ForeColor = Color.White;
+            hangiButtonSecili = Convert.ToInt32(((Button)sender).Name);
 
-            if ((int)tablePanel.Tag != (int)((Button)sender).Tag) //burayı düzelt eğer seçili masa planı zaten ekrandaysa yenisi koyulmasın, ekranda değilse eskiler silinip yenisi eklensin
+            if ((int)((Button)sender).Tag > masaDizaynListesi.Count - 1)
             {
+                tablePanel.Controls.Clear();
+                tablePanel.Tag = -1;
+                return;
+            }
+            else if ((int)tablePanel.Tag != (int)((Button)sender).Tag) //burayı düzelt eğer seçili masa planı zaten ekrandaysa yenisi koyulmasın, ekranda değilse eskiler silinip yenisi eklensin
+            {
+                tablePanel.RowCount = 6;
+                tablePanel.ColumnCount = 7;
                 tablePanel.Controls.Clear();
                 for (int i = 0; i < 6; i++)
                 {
+                    if (masaDizaynListesi[(int)((Button)sender).Tag].masaPlanIsmi == "")
+                        break;
                     for (int j = 0; j < 7; j++)
                     {
                         if (masaDizaynListesi[(int)((Button)sender).Tag].masaYerleri[i][j] != null)
                         {
                             Button buttonTable = new Button();
-
                             buttonTable.Text = masaDizaynListesi[(int)((Button)sender).Tag].masaYerleri[i][j];
 
                             buttonTable.UseVisualStyleBackColor = false;
@@ -172,8 +232,9 @@ namespace ROPv1
                             buttonTable.ForeColor = SystemColors.ActiveCaption;
                             buttonTable.Font = new Font("Arial", 21.75F, FontStyle.Bold);
                             buttonTable.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                            tablePanel.Controls.Add(buttonTable, j, i);
+                            buttonTable.Click += siparisButonuBasildi;
                             buttonTable.Name = "" + i + j;
+                            tablePanel.Controls.Add(buttonTable, j, i);                            
                             tablePanel.Tag = (int)((Button)sender).Tag;
                         }
                     }
@@ -181,6 +242,9 @@ namespace ROPv1
 
                 for (int j = 6; j > 0; j--)
                 {
+                    if (masaDizaynListesi[(int)((Button)sender).Tag].masaPlanIsmi == "")
+                        break;
+
                     bool sutunBos = true;
                     for (int i = 5; i > 0; i--)
                     {
@@ -198,6 +262,8 @@ namespace ROPv1
 
                 for (int j = 5; j > 0; j--)
                 {
+                    if (masaDizaynListesi[(int)((Button)sender).Tag].masaPlanIsmi == "")
+                        break;
                     bool sutunBos = true;
                     for (int i = 6; i > 0; i--)
                     {
@@ -242,6 +308,22 @@ namespace ROPv1
         {
             PinKoduFormu pinForm = new PinKoduFormu();
             pinForm.ShowDialog();
+
+            if(pinForm.dogru)
+            {
+                GunFormu gunForm = new GunFormu(pinForm.ayarYapanKisi);
+                gunForm.ShowDialog();                
+
+                //gün başı yapılmış mı bak
+                if (Properties.Settings.Default.gunAcikMi)
+                {
+                    dayButton.Image = global::ROPv1.Properties.Resources.dayOn;
+                }
+                else
+                {
+                    dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
+                }                
+            }
         }
 
         private void timerSaat_Tick(object sender, EventArgs e)

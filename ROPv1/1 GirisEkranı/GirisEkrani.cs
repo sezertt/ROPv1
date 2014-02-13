@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
-using System.Xml.Serialization;
 using System.Globalization;
 
 namespace ROPv1
@@ -208,6 +207,18 @@ namespace ROPv1
         private void timerSaat_Tick(object sender, EventArgs e)
         {
             labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+        }
+
+        private void buttonMutfak_Click(object sender, EventArgs e)
+        {
+            //mutfak ekranına geçilecek
+            closeOrShowAnotherForm = true;
+
+            ShowWaitForm();
+
+            //MutfakFormu mutfakForm = new MutfakFormu();
+            //mutfakForm.Show();
+            //this.Close();
         }
     }
 }

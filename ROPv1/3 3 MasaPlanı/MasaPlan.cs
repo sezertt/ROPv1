@@ -22,6 +22,7 @@ namespace ROPv1
 
         //Programın ilk oluşumunda default verilen ve yeni dizayn oluşumunda default gösterilen masa planını bir stringde tutuyoruz
 
+        Restoran[] departmanVarmi = new Restoran[1];
 
         public MasaPlan()
         {
@@ -36,9 +37,7 @@ namespace ROPv1
 
             //eğer masaDizayn listesi bulunmuyorsa default değerlerle ilk dizaynı oluşturuyoruz
             if (!File.Exists("masaDizayn.xml"))
-            {
-                Restoran[] departmanVarmi = new Restoran[1];
-
+            {             
                 if (!File.Exists("restoran.xml"))
                 {
                     departmanVarmi[0] = new Restoran();
@@ -51,7 +50,6 @@ namespace ROPv1
 
                 XmlLoad<Restoran> loadInfoFromDepartman = new XmlLoad<Restoran>();
                 departmanVarmi = loadInfoFromDepartman.LoadRestoran("restoran.xml");
-
 
                 info[0] = new MasaDizayn();
                 info[0].masaPlanIsmi = departmanVarmi[0].departmanEkrani;
@@ -68,6 +66,11 @@ namespace ROPv1
 
                 info[0].masaYerleri = refresher;
                 XmlSave.SaveRestoran(info, "masaDizayn.xml");
+            }
+            else
+            {
+                XmlLoad<Restoran> loadInfoFromDepartman2 = new XmlLoad<Restoran>();
+                departmanVarmi = loadInfoFromDepartman2.LoadRestoran("restoran.xml");
             }
 
             //liste varsa okuyoruz
@@ -224,6 +227,16 @@ namespace ROPv1
 
             if (eminMisiniz == DialogResult.Yes)
             {
+                for (int i = 0; i < departmanVarmi.Count(); i++)
+                {
+                    if (departmanVarmi[i].departmanEkrani == masaDizaynListesi[treeMasaPlanName.SelectedNode.Index].masaPlanIsmi)
+                    {
+                        departmanVarmi[i].departmanEkrani = "";
+                        XmlSave.SaveRestoran(departmanVarmi, "restoran.xml");
+                        break;
+                    }
+                }
+                
                 // seçilen dizaynı listeden çıkar
                 masaDizaynListesi.RemoveAt(treeMasaPlanName.SelectedNode.Index);
 

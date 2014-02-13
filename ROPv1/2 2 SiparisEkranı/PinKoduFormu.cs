@@ -13,6 +13,8 @@ namespace ROPv1
 {
     public partial class PinKoduFormu : Form
     {
+        public bool dogru = false;
+        public string ayarYapanKisi;
         public PinKoduFormu()
         {
             InitializeComponent();
@@ -43,10 +45,8 @@ namespace ROPv1
             {
                 //Gün Formuna Git 
                 //Gün formu oluştur ve o forma git
-                /*                
-                GunFormu girisForm = new GunFormu();
-                GunFormu.Show();
-                */
+                dogru = true;
+                ayarYapanKisi = "-----";            
                 this.Close();
             }
             else // kullanıcıların girişi
@@ -68,11 +68,9 @@ namespace ROPv1
                     {
                         //Gün Formuna Git 
                         //Gün formu oluştur ve o forma git
-                        /*                
-                        GunFormu girisForm = new GunFormu();
-                        GunFormu.Show();
-                        */
-                        this.Close();
+                        dogru = true;
+                        ayarYapanKisi = (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIS);
+                        this.Close();                                               
                     }
                     else
                     {
@@ -89,7 +87,8 @@ namespace ROPv1
                         dialog.ShowDialog();
                     }
                 }
-            }            
+            }
+            textboxPin.Focus();
         }
 
         private void pinPressed(object sender, KeyPressEventArgs e)

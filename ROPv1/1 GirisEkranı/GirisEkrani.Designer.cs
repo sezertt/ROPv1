@@ -43,6 +43,7 @@
             this.labelTarih = new System.Windows.Forms.Label();
             this.labelSaat = new System.Windows.Forms.Label();
             this.timerSaat = new System.Windows.Forms.Timer(this.components);
+            this.buttonMutfak = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -154,7 +155,7 @@
             this.exitButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.exitButton.Image = global::ROPv1.Properties.Resources.logOut;
             this.exitButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.exitButton.Location = new System.Drawing.Point(848, 12);
+            this.exitButton.Location = new System.Drawing.Point(1090, 12);
             this.exitButton.MaximumSize = new System.Drawing.Size(300, 110);
             this.exitButton.MinimumSize = new System.Drawing.Size(150, 110);
             this.exitButton.Name = "exitButton";
@@ -167,47 +168,61 @@
             // 
             // labelGun
             // 
-            this.labelGun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelGun.AutoSize = true;
             this.labelGun.BackColor = System.Drawing.Color.Transparent;
             this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGun.Location = new System.Drawing.Point(1117, 90);
+            this.labelGun.Location = new System.Drawing.Point(64, 88);
             this.labelGun.Name = "labelGun";
-            this.labelGun.Size = new System.Drawing.Size(0, 33);
+            this.labelGun.Size = new System.Drawing.Size(116, 33);
             this.labelGun.TabIndex = 15;
+            this.labelGun.Text = "Pazartesi";
             this.labelGun.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelTarih
             // 
-            this.labelTarih.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelTarih.AutoSize = true;
             this.labelTarih.BackColor = System.Drawing.Color.Transparent;
             this.labelTarih.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelTarih.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelTarih.Location = new System.Drawing.Point(1087, 63);
+            this.labelTarih.Location = new System.Drawing.Point(34, 61);
             this.labelTarih.Name = "labelTarih";
-            this.labelTarih.Size = new System.Drawing.Size(0, 33);
+            this.labelTarih.Size = new System.Drawing.Size(180, 33);
             this.labelTarih.TabIndex = 14;
+            this.labelTarih.Text = "10 Şubat 2014 ";
             this.labelTarih.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelSaat
             // 
-            this.labelSaat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelSaat.AutoSize = true;
             this.labelSaat.BackColor = System.Drawing.Color.Transparent;
             this.labelSaat.Font = new System.Drawing.Font("Calibri", 45F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelSaat.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelSaat.Location = new System.Drawing.Point(1053, 2);
+            this.labelSaat.Location = new System.Drawing.Point(0, 0);
             this.labelSaat.Name = "labelSaat";
-            this.labelSaat.Size = new System.Drawing.Size(0, 73);
+            this.labelSaat.Size = new System.Drawing.Size(246, 73);
             this.labelSaat.TabIndex = 13;
+            this.labelSaat.Text = "22:55:30";
             this.labelSaat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // timerSaat
             // 
             this.timerSaat.Interval = 1000;
             this.timerSaat.Tick += new System.EventHandler(this.timerSaat_Tick);
+            // 
+            // buttonMutfak
+            // 
+            this.buttonMutfak.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonMutfak.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonMutfak.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonMutfak.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonMutfak.Location = new System.Drawing.Point(451, 389);
+            this.buttonMutfak.Name = "buttonMutfak";
+            this.buttonMutfak.Size = new System.Drawing.Size(400, 35);
+            this.buttonMutfak.TabIndex = 16;
+            this.buttonMutfak.Text = "Mutfak Ekranına Geç";
+            this.buttonMutfak.UseVisualStyleBackColor = false;
+            this.buttonMutfak.Click += new System.EventHandler(this.buttonMutfak_Click);
             // 
             // GirisEkrani
             // 
@@ -218,6 +233,7 @@
             this.CancelButton = this.exitButton;
             this.ClientSize = new System.Drawing.Size(1302, 819);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonMutfak);
             this.Controls.Add(this.labelGun);
             this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.labelSaat);
@@ -257,6 +273,7 @@
         private System.Windows.Forms.Label labelTarih;
         private System.Windows.Forms.Label labelSaat;
         private System.Windows.Forms.Timer timerSaat;
+        private System.Windows.Forms.Button buttonMutfak;
     }
 }
 
