@@ -1,5 +1,4 @@
-﻿extern alias pinKeyboard;
-namespace ROPv1
+﻿namespace ROPv1
 {
     partial class PinKoduFormu
     {
@@ -36,7 +35,7 @@ namespace ROPv1
             this.textboxPin = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.label5 = new System.Windows.Forms.Label();
-            this.keyboardcontrol2 = new pinKeyboard.KeyboardClassLibrary.Keyboardcontrol2();
+            this.pinboardcontrol21 = new PinboardClassLibrary.Pinboardcontrol2();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -105,14 +104,14 @@ namespace ROPv1
             this.label5.TabIndex = 52;
             this.label5.Text = "PİN KODU";
             // 
-            // keyboardcontrol2
+            // pinboardcontrol21
             // 
-            this.keyboardcontrol2.KeyboardType = pinKeyboard.KeyboardClassLibrary.BoW.Standard;
-            this.keyboardcontrol2.Location = new System.Drawing.Point(112, 165);
-            this.keyboardcontrol2.Name = "keyboardcontrol2";
-            this.keyboardcontrol2.Size = new System.Drawing.Size(252, 228);
-            this.keyboardcontrol2.TabIndex = 53;
-            this.keyboardcontrol2.UserKeyPressed += new pinKeyboard.KeyboardClassLibrary.KeyboardDelegate(this.keyboardcontrol2_UserKeyPressed);
+            this.pinboardcontrol21.KeyboardType = PinboardClassLibrary.BoW.Standard;
+            this.pinboardcontrol21.Location = new System.Drawing.Point(91, 153);
+            this.pinboardcontrol21.Name = "pinboardcontrol21";
+            this.pinboardcontrol21.Size = new System.Drawing.Size(293, 237);
+            this.pinboardcontrol21.TabIndex = 53;
+            this.pinboardcontrol21.UserKeyPressed += new PinboardClassLibrary.PinboardDelegate(this.pinboardcontrol21_UserKeyPressed);
             // 
             // PinKoduFormu
             // 
@@ -123,7 +122,7 @@ namespace ROPv1
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(477, 394);
             this.ControlBox = false;
-            this.Controls.Add(this.keyboardcontrol2);
+            this.Controls.Add(this.pinboardcontrol21);
             this.Controls.Add(this.textboxPin);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.buttonOK);
@@ -152,7 +151,6 @@ namespace ROPv1
         private System.Windows.Forms.TextBox textboxPin;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private pinKeyboard.KeyboardClassLibrary.Keyboardcontrol2 keyboardcontrol2;
-
+        private PinboardClassLibrary.Pinboardcontrol2 pinboardcontrol21;
     }
 }

@@ -1,5 +1,4 @@
-﻿extern alias pinKeyboard;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,7 +22,7 @@ namespace ROPv1
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
         }
 
-        private void keyboardcontrol2_UserKeyPressed(object sender, pinKeyboard.KeyboardClassLibrary.KeyboardEventArgs e)
+        private void pinboardcontrol21_UserKeyPressed(object sender, PinboardClassLibrary.PinboardEventArgs e)
         {
             SendKeys.Send(e.KeyboardKeyPressed);
         }

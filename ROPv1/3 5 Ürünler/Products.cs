@@ -31,7 +31,7 @@ namespace ROPv1
 
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
-           
+
             turkish = (CultureInfo)turkish.Clone();
             turkish.NumberFormat.CurrencySymbol = "TL";
 
@@ -68,7 +68,7 @@ namespace ROPv1
                 comboNewKategoriName.Items.Add(kategoriListesi[0].kategoriler[i]);
             }
 
-            UrunOzellikleri[] infoUrun = new UrunOzellikleri[infoKategoriler[0].kategoriler.Count];
+            UrunOzellikleri[] infoUrun = new UrunOzellikleri[1];
 
             #region ürünlerin ilk tanımlaması
             if (!File.Exists("urunler.xml"))
@@ -294,7 +294,7 @@ namespace ROPv1
             //eklenen üğrün var ise sayısını buluyoruz
             if (infoUrun.Count() > infoUrun2.Count())
                 count = infoUrun2.Count();
-             
+
             //var olan ürünleri ekliyoruz
             for (int i = 0; i < count; i++)
             {
@@ -563,7 +563,7 @@ namespace ROPv1
             {
                 newProductForm.Text = "Yeni Ürün";
                 textboxUrunName.Text = "";
-                if(treeUrunAdi.SelectedNode.Parent == null)
+                if (treeUrunAdi.SelectedNode.Parent == null)
                     comboNewKategoriName.Text = urunListesi[treeUrunAdi.SelectedNode.Index].kategorininAdi;
                 else
                     comboNewKategoriName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].kategorininAdi;
@@ -615,8 +615,21 @@ namespace ROPv1
             //kontrol edilir sonra yeni ürün mü ekleniyor yoksa eski ürün mü düzenleniyor ona bakılır
             if (newProductForm.Text == "Yeni Ürün") // yeni ürün ekleniyor
             {
+                for (int i = 0; i < urunListesi.Count; i++)
+                {
+                    for (int j = 0; j < urunListesi[i].urunAdi.Count; j++)
+                    {
+                        if (urunAdi == urunListesi[i].urunAdi[j])
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Aynı isimde bir ürün bulunmaktadır, lütfen ürün ismini değiştirin", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
+                    }
+                }
                 //ürünün kategorisine göre ürünü ağaca ekleriz
-
                 treeUrunAdi.Nodes[kategoriYeri].Nodes.Add(urunAdi);
 
                 //ürün eklenen kategorideki ürün sayısını 1 arttır
@@ -647,6 +660,23 @@ namespace ROPv1
             }
             else // eski ürün düzenleniyor
             {
+                for (int i = 0; i < urunListesi.Count; i++)
+                {
+                    for (int j = 0; j < urunListesi[i].urunAdi.Count; j++)
+                    {
+                        if (i == treeUrunAdi.SelectedNode.Parent.Index && j == treeUrunAdi.SelectedNode.Index)
+                            continue;
+                        if (urunAdi == urunListesi[i].urunAdi[j])
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Aynı isimde bir ürün bulunmaktadır, lütfen ürün ismini değiştirin", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
+                    }
+                }
+
                 //Ürünün kategorisi değişmediyse yerinin değişmesine gerek yok
                 if (agactakiKategori == urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[treeUrunAdi.SelectedNode.Index])
                 {

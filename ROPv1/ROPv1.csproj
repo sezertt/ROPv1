@@ -72,7 +72,6 @@
     <Reference Include="TouchscreenPinboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>dll dosyası\TouchscreenPinboard.dll</HintPath>
-      <Aliases>pinKeyboard</Aliases>
     </Reference>
     <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
@@ -100,6 +99,9 @@
     </Compile>
     <Compile Include="2 2 1 SiparisMasaEkranı\PinKoduFormu.Designer.cs">
       <DependentUpon>PinKoduFormu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="2 2 2 SiparisMenüEkranı\MyListView.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="2 2 2 SiparisMenüEkranı\SiparisMenuFormu.cs">
       <SubType>Form</SubType>
@@ -329,6 +331,18 @@
     <None Include="Resources\righticon.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\swap.png" />
+    <None Include="Resources\pay.png" />
+    <None Include="Resources\checkmark.png" />
+    <None Include="Resources\BosImage.png" />
+    <None Include="Resources\table.png" />
+    <None Include="Resources\kitchen.png" />
+    <None Include="Resources\upBig.png" />
+    <None Include="Resources\downBig.png" />
+    <None Include="Resources\tableSmall.png" />
+    <None Include="Resources\deleteBig.png" />
+    <None Include="Resources\addBig.png" />
+    <None Include="Resources\minus.png" />
     <Content Include="ROP.ico" />
   </ItemGroup>
   <ItemGroup />

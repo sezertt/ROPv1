@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace ROPv1
 {
-     [Serializable]
+    [Serializable]
     public class Menuler
     {
-         public List<string> menukategorileri;
-         public string menuAdi;
+        public List<string> menukategorileri;
+        public string menuAdi;
+
+        public Menuler()
+        {
+            menukategorileri = new List<string>();
+        }
     }
 }

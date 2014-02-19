@@ -389,7 +389,7 @@ namespace ROPv1
             newKategoriForm.Visible = true;
         }
 
-        // Farklı menü seçildi sağ kontrolü ve menünün kategorilerini güncelle
+        // Farklı menü seçildi sağdaki kontrolü ve menünün kategorilerini güncelle
         private void changeMenuName(object sender, TreeViewEventArgs e)
         {
             textboxMenuName.Text = menuListesi[treeMenuName.SelectedNode.Index].menuAdi;
@@ -397,14 +397,17 @@ namespace ROPv1
             treeMenuKategori.Nodes.Clear();
 
             // menüde olan kategorileri menünün kategori listesine yazıyoruz
+
             for (int i = 0; i < menuListesi[treeMenuName.SelectedNode.Index].menukategorileri.Count(); i++)
             {
                 treeMenuKategori.Nodes.Add(menuListesi[treeMenuName.SelectedNode.Index].menukategorileri[i]);
             }
 
+
             treeNewKategori.Nodes.Clear();
 
             // menüde olmayan kategori isimlerini en sağ tree viewa genel kategori listesine yazdırıyoruz
+
             for (int i = 0; i < kategoriListesi[0].kategoriler.Count; i++)
             {
                 bool varMi = true;
@@ -421,6 +424,7 @@ namespace ROPv1
 
             if (menuListesi[treeMenuName.SelectedNode.Index].menukategorileri.Count() > 0)
                 treeMenuKategori.SelectedNode = treeMenuKategori.Nodes[0];
+
 
             //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
             foreach (TreeNode node in treeMenuKategori.Nodes)
@@ -599,7 +603,7 @@ namespace ROPv1
                 }
 
                 string nameBeforeSave = treeNewKategori.SelectedNode.Text;
-               
+
                 //kategorinin listedeki ismini güncelliyoruz ve kaydediyoruz
                 int temp = 0;
                 for (int i = 0; i < kategoriListesi[0].kategoriler.Count; i++)
@@ -612,7 +616,7 @@ namespace ROPv1
                 }
 
                 kategoriListesi[0].kategoriler[temp] = textBoxYeniKategori.Text;
-                XmlSave.SaveRestoran(kategoriListesi, "kategoriler.xml");               
+                XmlSave.SaveRestoran(kategoriListesi, "kategoriler.xml");
 
                 //görünümdeki isimleri güncelliyoruz
                 treeNewKategori.SelectedNode.Text = textBoxYeniKategori.Text;
@@ -751,7 +755,7 @@ namespace ROPv1
                 {
                     treeMenuName.Font = new Font(treeMenuName.Font.FontFamily, treeMenuName.Font.Size - 0.5f, treeMenuName.Font.Style);
                 }
-            }            
+            }
         }
 
         // Yeni Menü Oluşturma Butonu Basıldı

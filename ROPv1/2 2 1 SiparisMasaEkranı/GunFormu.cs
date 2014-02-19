@@ -54,8 +54,13 @@ namespace ROPv1
                     buttonGunBasi.Enabled = true;
                 }
 
-                numericNumberOfCurrentPage.Maximum = gunListesi.Count / 20 + 1;
-                labelNumberOfPages.Text = (gunListesi.Count / 20 + 1).ToString();
+                int a = 1;
+                if (gunListesi.Count % 20 == 0)
+                    a = 0;
+
+                numericNumberOfCurrentPage.Maximum = gunListesi.Count / 20 + a;
+                labelNumberOfPages.Text = (gunListesi.Count / 20 + a).ToString();
+
 
                 this.currentPageChanged(null, null);
 
@@ -66,6 +71,9 @@ namespace ROPv1
 
         private void buttonGunBasi_Click(object sender, EventArgs e)
         {
+
+            numericNumberOfCurrentPage.Value = 1;
+
             GunBilgileri yeniGunBasi = new GunBilgileri();
 
             yeniGunBasi.gunBasiVakti = DateTime.Parse(DateTime.Now.ToString(), new CultureInfo("tr-TR"));
@@ -85,21 +93,34 @@ namespace ROPv1
 
             labelSure.Text = ((int)span.TotalHours).ToString() + "saat " + ((int)span.Minutes).ToString().PadLeft(2, '0') + "dk " + ((int)span.Seconds).ToString().PadLeft(2, '0') + "sn";
             timerGecenSure.Start();
+
         }
 
         private void buttonGunSonu_Click(object sender, EventArgs e)
         {
-            gunListesi[gunListesi.Count - 1].gunSonuVakti = DateTime.Parse(DateTime.Now.ToString(), new CultureInfo("tr-TR"));
-            gunListesi[gunListesi.Count - 1].gunSonuYapanKisi = ayarYapanKisi;
+            DialogResult eminMisiniz;
 
-            XmlSave.SaveRestoran(gunListesi, "gunler.xml");
+            using (KontrolFormu dialog = new KontrolFormu("Gün sonu yapmak istediğinize emin misiniz?", true))
+            {
+                eminMisiniz = dialog.ShowDialog();
+            }
 
-            treeGunBasi.Nodes[0].Text += DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")) + ", " + DateTime.Now.ToString("dddd", new CultureInfo("tr-TR")) + " / Saat " + DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+            if (eminMisiniz == DialogResult.Yes)
+            {
 
-            buttonGunSonu.Enabled = false;
-            buttonGunBasi.Enabled = true;
-            treeGunBasi.SelectedNode = treeGunBasi.Nodes[0];
-            timerGecenSure.Stop();
+                numericNumberOfCurrentPage.Value = 1;
+                gunListesi[gunListesi.Count - 1].gunSonuVakti = DateTime.Parse(DateTime.Now.ToString(), new CultureInfo("tr-TR"));
+                gunListesi[gunListesi.Count - 1].gunSonuYapanKisi = ayarYapanKisi;
+
+                XmlSave.SaveRestoran(gunListesi, "gunler.xml");
+
+                treeGunBasi.Nodes[0].Text += DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")) + ", " + DateTime.Now.ToString("dddd", new CultureInfo("tr-TR")) + " / Saat " + DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+
+                buttonGunSonu.Enabled = false;
+                buttonGunBasi.Enabled = true;
+                treeGunBasi.SelectedNode = treeGunBasi.Nodes[0];
+                timerGecenSure.Stop();
+            }
         }
 
         private void gunBilgisiDoldur(object sender, TreeViewEventArgs e)
@@ -158,6 +179,31 @@ namespace ROPv1
             TimeSpan span = DateTime.Now.Subtract(gunListesi[gunListesi.Count - 1].gunBasiVakti);
 
             labelSure.Text = ((int)span.TotalHours).ToString() + "saat " + ((int)span.Minutes).ToString().PadLeft(2, '0') + "dk " + ((int)span.Seconds).ToString().PadLeft(2, '0') + "sn";
+        }
+
+        private void buttonDown_Click(object sender, EventArgs e)
+        {
+            numericNumberOfCurrentPage.UpButton();
+        }
+
+        private void buttonUp_Click(object sender, EventArgs e)
+        {
+            numericNumberOfCurrentPage.DownButton();
+        }
+
+        private void showKeyPad(object sender, EventArgs e)
+        {
+            pinboardcontrol21.Visible = true;
+        }
+
+        private void hideKeyPad(object sender, EventArgs e)
+        {
+            pinboardcontrol21.Visible = false;
+        }
+
+        private void pinboardcontrol21_UserKeyPressed(object sender, PinboardClassLibrary.PinboardEventArgs e)
+        {
+            SendKeys.Send(e.KeyboardKeyPressed);
         }
     }
 }

@@ -27,7 +27,6 @@ namespace ROPv1
         public SiparisMasaFormu()
         {
             InitializeComponent();
-
             labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
             labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
             labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
@@ -58,41 +57,39 @@ namespace ROPv1
 
                 restoranListesi.AddRange(info);
 
-                Button[] departmanButtons = new Button[restoranListesi.Count];
-
                 int a = 0;
 
-                for (int i = 0; i < departmanButtons.Length; i++)
+                for (int i = 0; i < restoranListesi.Count; i++)
                 {
-                    departmanButtons[i] = new Button();
-                    departmanButtons[i].Text = restoranListesi[i].departmanAdi;
+                    Button departmanButton = new Button();
+                    departmanButton.Text = restoranListesi[i].departmanAdi;
                     if (i == 0)
                     {
-                        departmanButtons[i].BackColor = SystemColors.ActiveCaption;
-                        departmanButtons[i].ForeColor = Color.White;
+                        departmanButton.BackColor = SystemColors.ActiveCaption;
+                        departmanButton.ForeColor = Color.White;
                     }
                     else
                     {
-                        departmanButtons[i].BackColor = Color.White;
-                        departmanButtons[i].ForeColor = SystemColors.ActiveCaption;
+                        departmanButton.BackColor = Color.White;
+                        departmanButton.ForeColor = SystemColors.ActiveCaption;
                     }
-                    departmanButtons[i].Font = new Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-                    departmanButtons[i].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-                    departmanButtons[i].UseVisualStyleBackColor = false;
-                    departmanButtons[i].Name = "" + i;
+                    departmanButton.Font = new Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+                    departmanButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+                    departmanButton.UseVisualStyleBackColor = false;
+                    departmanButton.Name = "" + i;
 
                     if (restoranListesi[i].departmanEkrani == "")
-                        departmanButtons[i].Tag = 200;
+                        departmanButton.Tag = 200;
                     else
                     {
-                        departmanButtons[i].Tag = a;
+                        departmanButton.Tag = a;
                         a++;
                     }
 
-                    departmanButtons[i].Height = panel1.Height;
-                    departmanButtons[i].Dock = DockStyle.Right;
-                    departmanButtons[i].Click += changeTableView;
-                    panel1.Controls.Add(departmanButtons[i]);
+                    departmanButton.Height = panel1.Height;
+                    departmanButton.Dock = DockStyle.Right;
+                    departmanButton.Click += changeTableView;
+                    panel1.Controls.Add(departmanButton);
                 }
 
                 MasaDizayn[] infoMasa = new MasaDizayn[1];
@@ -120,7 +117,6 @@ namespace ROPv1
                             buttonTable.Font = new Font("Arial", 21.75F, FontStyle.Bold);
                             buttonTable.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
                             tablePanel.Controls.Add(buttonTable, j, i);
-                            buttonTable.Name = "" + i + j;
                             buttonTable.Click += siparisButonuBasildi;
                             tablePanel.Tag = 0;
                         }
@@ -179,7 +175,7 @@ namespace ROPv1
                 {
                     ctrl.Width = panel1.ClientSize.Width / panel1.Controls.Count;
 
-                    while (ctrl.Width - 12 < System.Windows.Forms.TextRenderer.MeasureText(ctrl.Text, new Font(ctrl.Font.FontFamily, ctrl.Font.Size, ctrl.Font.Style)).Width)
+                    while (ctrl.Width < System.Windows.Forms.TextRenderer.MeasureText(ctrl.Text, new Font(ctrl.Font.FontFamily, ctrl.Font.Size, ctrl.Font.Style)).Width)
                     {
                         ctrl.Font = new Font(ctrl.Font.FontFamily, ctrl.Font.Size - 0.5f, ctrl.Font.Style);
                     }
@@ -201,8 +197,15 @@ namespace ROPv1
             //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
             if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
             { //gün açık sipariş ekranına geçilebilir
-                SiparisMenuFormu gunForm = new SiparisMenuFormu(((Button)sender).Name, restoranListesi[hangiButtonSecili]);//burada masa numarasını da yolla
-                gunForm.ShowDialog();
+
+                PinKoduFormu pinForm = new PinKoduFormu();
+                pinForm.ShowDialog();
+
+                if (pinForm.dogru)
+                {
+                    SiparisMenuFormu siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi);//burada masa numarasını da yolla
+                    siparisForm.ShowDialog();
+                }
             }
             else
             { //gün başı yapılmalı
@@ -250,7 +253,6 @@ namespace ROPv1
                             buttonTable.Font = new Font("Arial", 21.75F, FontStyle.Bold);
                             buttonTable.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
                             buttonTable.Click += siparisButonuBasildi;
-                            buttonTable.Name = "" + i + j;
                             tablePanel.Controls.Add(buttonTable, j, i);
                             tablePanel.Tag = (int)((Button)sender).Tag;
                         }
