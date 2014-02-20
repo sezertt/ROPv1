@@ -32,22 +32,30 @@ namespace ROPv1
             labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
             timerSaat.Start();
 
-            GunBilgileri[] infoGunler = new GunBilgileri[1];
-
-            XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
-            infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
-
-            gunListesi.AddRange(infoGunler);
-
-            //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
-            if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
+            if (File.Exists("gunler.xml"))
             {
-                dayButton.Image = global::ROPv1.Properties.Resources.dayOn;
+                GunBilgileri[] infoGunler = new GunBilgileri[1];
+
+                XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
+                infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
+
+                gunListesi.AddRange(infoGunler);
+
+                //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
+                if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
+                {
+                    dayButton.Image = global::ROPv1.Properties.Resources.dayOn;
+                }
+                else
+                {
+                    dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
+                }
             }
             else
             {
                 dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
             }
+            
 
             if (File.Exists("restoran.xml"))
             {
@@ -66,12 +74,12 @@ namespace ROPv1
                     if (i == 0)
                     {
                         departmanButton.BackColor = SystemColors.ActiveCaption;
-                        departmanButton.ForeColor = Color.White;
+                        departmanButton.ForeColor = Color.White;    
                     }
                     else
                     {
                         departmanButton.BackColor = Color.White;
-                        departmanButton.ForeColor = SystemColors.ActiveCaption;
+                        departmanButton.ForeColor = SystemColors.ActiveCaption;                                           
                     }
                     departmanButton.Font = new Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
                     departmanButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -187,28 +195,40 @@ namespace ROPv1
 
         private void siparisButonuBasildi(object sender, EventArgs e)
         {
-            GunBilgileri[] infoGunler = new GunBilgileri[1];
+            if (File.Exists("gunler.xml"))
+            {
 
-            XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
-            infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
+                GunBilgileri[] infoGunler = new GunBilgileri[1];
 
-            gunListesi.AddRange(infoGunler);
+                XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
+                infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
 
-            //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
-            if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
-            { //gün açık sipariş ekranına geçilebilir
+                gunListesi.AddRange(infoGunler);
 
-                PinKoduFormu pinForm = new PinKoduFormu();
-                pinForm.ShowDialog();
+                //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
+                if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
+                { //gün açık sipariş ekranına geçilebilir
 
-                if (pinForm.dogru)
-                {
-                    SiparisMenuFormu siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi);//burada masa numarasını da yolla
-                    siparisForm.ShowDialog();
+                    PinKoduFormu pinForm = new PinKoduFormu();
+                    pinForm.ShowDialog();
+
+                    if (pinForm.dogru)
+                    {
+                        SiparisMenuFormu siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi);//burada masa numarasını da yolla
+                        siparisForm.ShowDialog();
+                    }
+                }
+                else
+                { //gün başı yapılmalı
+                    using (KontrolFormu dialog = new KontrolFormu("Gün Başı yapmanız gerekiyor", false))
+                    {
+                        dialog.ShowDialog();
+                        this.buttonGunIslemiPressed(null, null);
+                    }
                 }
             }
             else
-            { //gün başı yapılmalı
+            {
                 using (KontrolFormu dialog = new KontrolFormu("Gün Başı yapmanız gerekiyor", false))
                 {
                     dialog.ShowDialog();
@@ -222,7 +242,7 @@ namespace ROPv1
             panel1.Controls[hangiButtonSecili].BackColor = Color.White;
             panel1.Controls[hangiButtonSecili].ForeColor = SystemColors.ActiveCaption;
             panel1.Controls[Convert.ToInt32(((Button)sender).Name)].BackColor = SystemColors.ActiveCaption;
-            panel1.Controls[Convert.ToInt32(((Button)sender).Name)].ForeColor = Color.White;
+            panel1.Controls[Convert.ToInt32(((Button)sender).Name)].ForeColor = Color.White; 
             hangiButtonSecili = Convert.ToInt32(((Button)sender).Name);
 
             if ((int)((Button)sender).Tag > masaDizaynListesi.Count - 1)
@@ -231,7 +251,7 @@ namespace ROPv1
                 tablePanel.Tag = -1;
                 return;
             }
-            else if ((int)tablePanel.Tag != (int)((Button)sender).Tag) //burayı düzelt eğer seçili masa planı zaten ekrandaysa yenisi koyulmasın, ekranda değilse eskiler silinip yenisi eklensin
+            else if ((int)tablePanel.Tag != (int)((Button)sender).Tag) //eğer seçili masa planı zaten ekrandaysa yenisi koyulmasın, ekranda değilse eskiler silinip yenisi eklensin
             {
                 tablePanel.RowCount = 6;
                 tablePanel.ColumnCount = 7;

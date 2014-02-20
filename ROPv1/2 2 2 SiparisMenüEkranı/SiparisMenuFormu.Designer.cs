@@ -200,6 +200,7 @@
             this.buttonUrunuAzalt.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonUrunuAzalt.Location = new System.Drawing.Point(772, 453);
             this.buttonUrunuAzalt.Name = "buttonUrunuAzalt";
+            this.buttonUrunuAzalt.Padding = new System.Windows.Forms.Padding(8);
             this.buttonUrunuAzalt.Size = new System.Drawing.Size(190, 67);
             this.buttonUrunuAzalt.TabIndex = 85;
             this.buttonUrunuAzalt.Text = "Çıkar";
@@ -217,6 +218,7 @@
             this.buttonUrunuArttir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonUrunuArttir.Location = new System.Drawing.Point(772, 527);
             this.buttonUrunuArttir.Name = "buttonUrunuArttir";
+            this.buttonUrunuArttir.Padding = new System.Windows.Forms.Padding(8);
             this.buttonUrunuArttir.Size = new System.Drawing.Size(190, 67);
             this.buttonUrunuArttir.TabIndex = 84;
             this.buttonUrunuArttir.Text = "Ekle";
@@ -234,6 +236,7 @@
             this.buttonTasi.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonTasi.Location = new System.Drawing.Point(772, 234);
             this.buttonTasi.Name = "buttonTasi";
+            this.buttonTasi.Padding = new System.Windows.Forms.Padding(8);
             this.buttonTasi.Size = new System.Drawing.Size(190, 67);
             this.buttonTasi.TabIndex = 83;
             this.buttonTasi.Text = "Taşı";
@@ -251,6 +254,7 @@
             this.buttonUrunIptal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonUrunIptal.Location = new System.Drawing.Point(772, 380);
             this.buttonUrunIptal.Name = "buttonUrunIptal";
+            this.buttonUrunIptal.Padding = new System.Windows.Forms.Padding(8);
             this.buttonUrunIptal.Size = new System.Drawing.Size(190, 67);
             this.buttonUrunIptal.TabIndex = 81;
             this.buttonUrunIptal.Text = "İptal";
@@ -268,6 +272,7 @@
             this.buttonUrunIkram.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonUrunIkram.Location = new System.Drawing.Point(772, 307);
             this.buttonUrunIkram.Name = "buttonUrunIkram";
+            this.buttonUrunIkram.Padding = new System.Windows.Forms.Padding(8);
             this.buttonUrunIkram.Size = new System.Drawing.Size(190, 67);
             this.buttonUrunIkram.TabIndex = 80;
             this.buttonUrunIkram.Text = "İkram";

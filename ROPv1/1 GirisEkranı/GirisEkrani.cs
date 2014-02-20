@@ -146,11 +146,20 @@ namespace ROPv1
 
         private void siparisButtonPressed(object sender, EventArgs e)
         {
+            if (!File.Exists("restoran.xml") || !File.Exists("sonKullanici.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("sonKullanici.xml") || !File.Exists("urunler.xml"))
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Lütfen önce programı ayarları kullanarak yapılandırın", false))
+                {
+                    dialog.ShowDialog();
+                    return;
+                }
+            }
+
             //sipariş ekranına geçilecek
             closeOrShowAnotherForm = true;
 
             ShowWaitForm();
-
+           
             SiparisMasaFormu siparisForm = new SiparisMasaFormu();
             siparisForm.Show();
             this.Close();
@@ -210,6 +219,14 @@ namespace ROPv1
 
         private void buttonMutfak_Click(object sender, EventArgs e)
         {
+            if (!File.Exists("restoran.xml") || !File.Exists("sonKullanici.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("sonKullanici.xml") || !File.Exists("urunler.xml"))
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Lütfen önce programı ayarları kullanarak yapılandırın", false))
+                {
+                    dialog.ShowDialog();
+                    return;
+                }
+            }
             //mutfak ekranına geçilecek
             closeOrShowAnotherForm = true;
 

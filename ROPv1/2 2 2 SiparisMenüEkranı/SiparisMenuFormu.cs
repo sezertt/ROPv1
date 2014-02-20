@@ -73,8 +73,8 @@ namespace ROPv1
                 menuBasliklariButonlari.Text = menuListesi[hangiMenu].menukategorileri[i];
 
                 menuBasliklariButonlari.UseVisualStyleBackColor = false;
-                menuBasliklariButonlari.BackColor = Color.FromArgb(163, 190, 219);
-                menuBasliklariButonlari.ForeColor = Color.White;
+                menuBasliklariButonlari.BackColor = Color.White;
+                menuBasliklariButonlari.ForeColor = SystemColors.ActiveCaption; 
                 menuBasliklariButonlari.TextAlign = ContentAlignment.MiddleCenter;
                 menuBasliklariButonlari.Font = new Font("Arial", 18.00F, FontStyle.Bold);
                 menuBasliklariButonlari.Tag = -1;
