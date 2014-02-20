@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KontrolFormu));
             this.labelAciklama = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonTamam = new System.Windows.Forms.Button();
@@ -65,7 +64,7 @@
             this.buttonTamam.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonTamam.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonTamam.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonTamam.Image = ((System.Drawing.Image)(resources.GetObject("buttonTamam.Image")));
+            this.buttonTamam.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonTamam.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonTamam.Location = new System.Drawing.Point(174, 132);
             this.buttonTamam.Name = "buttonTamam";
@@ -100,7 +99,7 @@
             this.buttonYES.DialogResult = System.Windows.Forms.DialogResult.Yes;
             this.buttonYES.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonYES.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonYES.Image = ((System.Drawing.Image)(resources.GetObject("buttonYES.Image")));
+            this.buttonYES.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonYES.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonYES.Location = new System.Drawing.Point(37, 132);
             this.buttonYES.Name = "buttonYES";

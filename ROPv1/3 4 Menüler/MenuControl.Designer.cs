@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuControl));
             this.newMenuForm = new System.Windows.Forms.GroupBox();
             this.buttonDeleteKategori = new System.Windows.Forms.Button();
             this.textboxMenuName = new System.Windows.Forms.TextBox();
@@ -117,7 +116,7 @@
             this.buttonSaveNewMenu.BackColor = System.Drawing.SystemColors.Window;
             this.buttonSaveNewMenu.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonSaveNewMenu.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonSaveNewMenu.Image = ((System.Drawing.Image)(resources.GetObject("buttonSaveNewMenu.Image")));
+            this.buttonSaveNewMenu.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonSaveNewMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonSaveNewMenu.Location = new System.Drawing.Point(161, 144);
             this.buttonSaveNewMenu.Name = "buttonSaveNewMenu";

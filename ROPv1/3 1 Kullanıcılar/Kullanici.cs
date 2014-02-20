@@ -464,9 +464,12 @@ namespace ROPv1
             }
         }
 
-        private void ifPinChecked(object sender, TreeViewEventArgs e)
+        private void textboxName_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            if (e.KeyChar == '-')
+            {
+                e.Handled = true;
+            }
         }
     }
 }

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Products));
             this.newProductForm = new System.Windows.Forms.GroupBox();
             this.labelUrunSayisi = new System.Windows.Forms.Label();
             this.labelUrunSayisiYazisi = new System.Windows.Forms.Label();
@@ -184,7 +183,7 @@
             this.buttonSaveNewProduct.BackColor = System.Drawing.SystemColors.Window;
             this.buttonSaveNewProduct.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonSaveNewProduct.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonSaveNewProduct.Image = ((System.Drawing.Image)(resources.GetObject("buttonSaveNewProduct.Image")));
+            this.buttonSaveNewProduct.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonSaveNewProduct.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonSaveNewProduct.Location = new System.Drawing.Point(203, 244);
             this.buttonSaveNewProduct.Name = "buttonSaveNewProduct";

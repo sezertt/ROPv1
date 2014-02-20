@@ -29,14 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Satışlar");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Raporlar");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Stoklar");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Adisyonlar");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Ayarlar");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Gün İşlemleri");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Şifre/Pin İşlemleri");
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Kullanici));
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Satışlar");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Raporlar");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Stoklar");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Adisyonlar");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Ayarlar");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Gün İşlemleri");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Şifre/Pin İşlemleri");
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.label1 = new System.Windows.Forms.Label();
             this.comboNewTitle = new System.Windows.Forms.ComboBox();
@@ -126,12 +125,14 @@
             // textboxName
             // 
             this.textboxName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxName.ContextMenuStrip = this.contextMenuStrip1;
             this.textboxName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textboxName.Location = new System.Drawing.Point(14, 51);
             this.textboxName.Name = "textboxName";
             this.textboxName.Size = new System.Drawing.Size(142, 32);
             this.textboxName.TabIndex = 1;
+            this.textboxName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxName_KeyPress);
             // 
             // label7
             // 
@@ -210,12 +211,14 @@
             // textboxSurname
             // 
             this.textboxSurname.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxSurname.ContextMenuStrip = this.contextMenuStrip1;
             this.textboxSurname.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxSurname.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textboxSurname.Location = new System.Drawing.Point(179, 51);
             this.textboxSurname.Name = "textboxSurname";
             this.textboxSurname.Size = new System.Drawing.Size(142, 32);
             this.textboxSurname.TabIndex = 2;
+            this.textboxSurname.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxName_KeyPress);
             // 
             // label6
             // 
@@ -301,34 +304,33 @@
             this.treeYetkiler.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
             this.treeYetkiler.Location = new System.Drawing.Point(327, 51);
             this.treeYetkiler.Name = "treeYetkiler";
-            treeNode1.Name = "Satis";
-            treeNode1.Text = "Satışlar";
-            treeNode2.Name = "Rapor";
-            treeNode2.Text = "Raporlar";
-            treeNode3.Name = "Stok";
-            treeNode3.Text = "Stoklar";
-            treeNode4.Name = "Adisyon";
-            treeNode4.Text = "Adisyonlar";
-            treeNode5.Name = "Ayar";
-            treeNode5.Text = "Ayarlar";
-            treeNode6.Name = "GunIslemleri";
-            treeNode6.Text = "Gün İşlemleri";
-            treeNode7.Name = "PinPassword";
-            treeNode7.Text = "Şifre/Pin İşlemleri";
+            treeNode8.Name = "Satis";
+            treeNode8.Text = "Satışlar";
+            treeNode9.Name = "Rapor";
+            treeNode9.Text = "Raporlar";
+            treeNode10.Name = "Stok";
+            treeNode10.Text = "Stoklar";
+            treeNode11.Name = "Adisyon";
+            treeNode11.Text = "Adisyonlar";
+            treeNode12.Name = "Ayar";
+            treeNode12.Text = "Ayarlar";
+            treeNode13.Name = "GunIslemleri";
+            treeNode13.Text = "Gün İşlemleri";
+            treeNode14.Name = "PinPassword";
+            treeNode14.Text = "Şifre/Pin İşlemleri";
             this.treeYetkiler.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5,
-            treeNode6,
-            treeNode7});
+            treeNode8,
+            treeNode9,
+            treeNode10,
+            treeNode11,
+            treeNode12,
+            treeNode13,
+            treeNode14});
             this.treeYetkiler.ShowLines = false;
             this.treeYetkiler.ShowPlusMinus = false;
             this.treeYetkiler.ShowRootLines = false;
             this.treeYetkiler.Size = new System.Drawing.Size(196, 270);
             this.treeYetkiler.TabIndex = 10;
-            this.treeYetkiler.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.ifPinChecked);
             this.treeYetkiler.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.checkYetkiFromTree);
             // 
             // buttonSaveNewUser
@@ -337,7 +339,7 @@
             this.buttonSaveNewUser.BackColor = System.Drawing.SystemColors.Window;
             this.buttonSaveNewUser.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonSaveNewUser.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonSaveNewUser.Image = ((System.Drawing.Image)(resources.GetObject("buttonSaveNewUser.Image")));
+            this.buttonSaveNewUser.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonSaveNewUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonSaveNewUser.Location = new System.Drawing.Point(211, 277);
             this.buttonSaveNewUser.Name = "buttonSaveNewUser";

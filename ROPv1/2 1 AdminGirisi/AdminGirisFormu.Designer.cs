@@ -138,7 +138,7 @@
             this.reportCheckBox.BackColor = System.Drawing.SystemColors.Window;
             this.reportCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.reportCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.reportCheckBox.Image = ((System.Drawing.Image)(resources.GetObject("reportCheckBox.Image")));
+            this.reportCheckBox.Image = global::ROPv1.Properties.Resources.reportscolor;
             this.reportCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.reportCheckBox.Location = new System.Drawing.Point(189, 3);
             this.reportCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
@@ -159,7 +159,7 @@
             this.stokCheckBox.BackColor = System.Drawing.SystemColors.Window;
             this.stokCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.stokCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.stokCheckBox.Image = ((System.Drawing.Image)(resources.GetObject("stokCheckBox.Image")));
+            this.stokCheckBox.Image = global::ROPv1.Properties.Resources.stockcolor;
             this.stokCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.stokCheckBox.Location = new System.Drawing.Point(375, 3);
             this.stokCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
@@ -180,7 +180,7 @@
             this.adisyonCheckBox.BackColor = System.Drawing.SystemColors.Window;
             this.adisyonCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.adisyonCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.adisyonCheckBox.Image = ((System.Drawing.Image)(resources.GetObject("adisyonCheckBox.Image")));
+            this.adisyonCheckBox.Image = global::ROPv1.Properties.Resources.adisyon;
             this.adisyonCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.adisyonCheckBox.Location = new System.Drawing.Point(561, 3);
             this.adisyonCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
@@ -201,7 +201,7 @@
             this.ayarCheckBox.BackColor = System.Drawing.SystemColors.Window;
             this.ayarCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.ayarCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ayarCheckBox.Image = ((System.Drawing.Image)(resources.GetObject("ayarCheckBox.Image")));
+            this.ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingscolor;
             this.ayarCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ayarCheckBox.Location = new System.Drawing.Point(747, 3);
             this.ayarCheckBox.MaximumSize = new System.Drawing.Size(300, 110);

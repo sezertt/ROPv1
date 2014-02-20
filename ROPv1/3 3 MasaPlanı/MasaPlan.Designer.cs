@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MasaPlan));
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.treeMasaPlanName = new System.Windows.Forms.TreeView();
             this.newTableForm = new System.Windows.Forms.GroupBox();
@@ -166,7 +165,7 @@
             this.buttonSaveNewTable.BackColor = System.Drawing.SystemColors.Window;
             this.buttonSaveNewTable.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonSaveNewTable.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonSaveNewTable.Image = ((System.Drawing.Image)(resources.GetObject("buttonSaveNewTable.Image")));
+            this.buttonSaveNewTable.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonSaveNewTable.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonSaveNewTable.Location = new System.Drawing.Point(152, 160);
             this.buttonSaveNewTable.Name = "buttonSaveNewTable";

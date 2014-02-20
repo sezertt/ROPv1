@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Departman));
             this.treeDepartman = new System.Windows.Forms.TreeView();
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.newDepartmentForm = new System.Windows.Forms.GroupBox();
@@ -247,7 +246,7 @@
             this.buttonSaveNewDep.BackColor = System.Drawing.SystemColors.Window;
             this.buttonSaveNewDep.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonSaveNewDep.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonSaveNewDep.Image = ((System.Drawing.Image)(resources.GetObject("buttonSaveNewDep.Image")));
+            this.buttonSaveNewDep.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonSaveNewDep.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonSaveNewDep.Location = new System.Drawing.Point(275, 284);
             this.buttonSaveNewDep.Name = "buttonSaveNewDep";

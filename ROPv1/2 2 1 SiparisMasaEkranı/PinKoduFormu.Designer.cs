@@ -44,7 +44,7 @@
             this.buttonOK.BackColor = System.Drawing.SystemColors.Window;
             this.buttonOK.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonOK.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonOK.Image = ((System.Drawing.Image)(resources.GetObject("buttonOK.Image")));
+            this.buttonOK.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonOK.Location = new System.Drawing.Point(13, 98);
             this.buttonOK.Name = "buttonOK";

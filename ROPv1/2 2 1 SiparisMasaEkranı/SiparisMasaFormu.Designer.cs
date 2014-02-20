@@ -147,7 +147,7 @@
             this.adisyonButton.BackColor = System.Drawing.SystemColors.Window;
             this.adisyonButton.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.adisyonButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.adisyonButton.Image = ((System.Drawing.Image)(resources.GetObject("adisyonButton.Image")));
+            this.adisyonButton.Image = global::ROPv1.Properties.Resources.adisyon;
             this.adisyonButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.adisyonButton.Location = new System.Drawing.Point(629, 12);
             this.adisyonButton.MaximumSize = new System.Drawing.Size(300, 110);
@@ -194,7 +194,7 @@
             this.exitButton.UseVisualStyleBackColor = false;
             this.exitButton.Click += new System.EventHandler(this.exitPressed);
             // 
-            // SiparisFormu
+            // SiparisMasaFormu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -210,7 +210,7 @@
             this.Controls.Add(this.exitButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "SiparisFormu";
+            this.Name = "SiparisMasaFormu";
             this.Text = "SiparisFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CloseApp);

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Stoklar));
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.textboxStokName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -117,7 +116,7 @@
             this.buttonSaveNewStok.BackColor = System.Drawing.SystemColors.Window;
             this.buttonSaveNewStok.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonSaveNewStok.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonSaveNewStok.Image = ((System.Drawing.Image)(resources.GetObject("buttonSaveNewStok.Image")));
+            this.buttonSaveNewStok.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonSaveNewStok.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonSaveNewStok.Location = new System.Drawing.Point(207, 245);
             this.buttonSaveNewStok.Name = "buttonSaveNewStok";
