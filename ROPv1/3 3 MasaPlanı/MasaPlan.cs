@@ -37,7 +37,7 @@ namespace ROPv1
 
             //eğer masaDizayn listesi bulunmuyorsa default değerlerle ilk dizaynı oluşturuyoruz
             if (!File.Exists("masaDizayn.xml"))
-            {             
+            {
                 if (!File.Exists("restoran.xml"))
                 {
                     departmanVarmi[0] = new Restoran();
@@ -190,15 +190,18 @@ namespace ROPv1
             }
         }
 
-        //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
-        [DllImport("user32.dll")]
-        static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        internal static class NativeMethods
+        {
+            //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
+            [DllImport("user32.dll")]
+            internal static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        }
         static void ToggleCapsLock(bool onOrOff)
         {
             if (IsKeyLocked(Keys.CapsLock) == onOrOff)
                 return;
-            keybd_event(0x14, 0x45, 0x1, (UIntPtr)0);
-            keybd_event(0x14, 0x45, 0x1 | 0x2, (UIntPtr)0);
+            NativeMethods.keybd_event(0x14, 0x45, 0x1, (UIntPtr)0);
+            NativeMethods.keybd_event(0x14, 0x45, 0x1 | 0x2, (UIntPtr)0);
 
         }
 
@@ -236,7 +239,7 @@ namespace ROPv1
                         break;
                     }
                 }
-                
+
                 // seçilen dizaynı listeden çıkar
                 masaDizaynListesi.RemoveAt(treeMasaPlanName.SelectedNode.Index);
 
@@ -255,7 +258,7 @@ namespace ROPv1
                     buttonAddTableDesign.Enabled = true;
 
                 newTableForm.Enabled = false;
-            }           
+            }
         }
 
         string[][] refresher2 = new string[][]
@@ -297,7 +300,7 @@ namespace ROPv1
                         }
                         else
                         {
-                            tablebutton.BackColor = Color.White;                            
+                            tablebutton.BackColor = Color.White;
                             tablebutton.Text = "";
                         }
                         tablebutton.Visible = true;

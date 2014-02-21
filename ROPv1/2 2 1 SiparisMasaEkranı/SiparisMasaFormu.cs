@@ -34,10 +34,8 @@ namespace ROPv1
 
             if (File.Exists("gunler.xml"))
             {
-                GunBilgileri[] infoGunler = new GunBilgileri[1];
-
                 XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
-                infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
+                GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
 
                 gunListesi.AddRange(infoGunler);
 
@@ -59,9 +57,8 @@ namespace ROPv1
 
             if (File.Exists("restoran.xml"))
             {
-                Restoran[] info = new Restoran[1];
                 XmlLoad<Restoran> loadInfo = new XmlLoad<Restoran>();
-                info = loadInfo.LoadRestoran("restoran.xml");
+                Restoran[] info = loadInfo.LoadRestoran("restoran.xml");
 
                 restoranListesi.AddRange(info);
 
@@ -100,10 +97,9 @@ namespace ROPv1
                     panel1.Controls.Add(departmanButton);
                 }
 
-                MasaDizayn[] infoMasa = new MasaDizayn[1];
 
                 XmlLoad<MasaDizayn> loadInfoMasa = new XmlLoad<MasaDizayn>();
-                infoMasa = loadInfoMasa.LoadRestoran("masaDizayn.xml");
+                MasaDizayn[] infoMasa = loadInfoMasa.LoadRestoran("masaDizayn.xml");
 
                 //kendi listemize atıyoruz
                 masaDizaynListesi.AddRange(infoMasa);
@@ -197,11 +193,8 @@ namespace ROPv1
         {
             if (File.Exists("gunler.xml"))
             {
-
-                GunBilgileri[] infoGunler = new GunBilgileri[1];
-
                 XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
-                infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
+                GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
 
                 gunListesi.AddRange(infoGunler);
 
@@ -354,10 +347,8 @@ namespace ROPv1
                 GunFormu gunForm = new GunFormu(pinForm.ayarYapanKisi);
                 gunForm.ShowDialog();
 
-                GunBilgileri[] infoGunler = new GunBilgileri[1];
-
                 XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
-                infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
+                GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
 
                 gunListesi.AddRange(infoGunler);
 

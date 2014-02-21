@@ -29,8 +29,6 @@ namespace ROPv1
 
             ayarYapanKisi = GunBasiveyaSonuYapanKisi;
 
-            GunBilgileri[] infoGunler = new GunBilgileri[1];
-
             if (!File.Exists("gunler.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default menümüzü giriyoruz.
             {
                 buttonGunSonu.Enabled = false;
@@ -39,7 +37,7 @@ namespace ROPv1
             {
                 // Oluşturulmuş menüleri xml den okuyoruz
                 XmlLoad<GunBilgileri> loadInfo = new XmlLoad<GunBilgileri>();
-                infoGunler = loadInfo.LoadRestoran("gunler.xml");
+                GunBilgileri[] infoGunler = loadInfo.LoadRestoran("gunler.xml");
 
                 gunListesi.AddRange(infoGunler);
 

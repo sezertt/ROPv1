@@ -76,11 +76,9 @@ namespace ROPv1
 
             if (File.Exists("masaDizayn.xml"))
             {
-                MasaDizayn[] masaDizaynlari = new MasaDizayn[1];
-
-                //liste varsa okuyoruz
+                //listeyi okuyoruz
                 XmlLoad<MasaDizayn> loadInfoMasaDizayn = new XmlLoad<MasaDizayn>();
-                masaDizaynlari = loadInfoMasaDizayn.LoadRestoran("masaDizayn.xml");
+                MasaDizayn[] masaDizaynlari = loadInfoMasaDizayn.LoadRestoran("masaDizayn.xml");
 
                 masaListesi.AddRange(masaDizaynlari);
 
@@ -99,11 +97,9 @@ namespace ROPv1
 
             if (File.Exists("menu.xml"))
             {
-                Menuler[] menuListesi = new Menuler[1];
-
                 //liste varsa okuyoruz
                 XmlLoad<Menuler> loadInfoMenuler = new XmlLoad<Menuler>();
-                menuListesi = loadInfoMenuler.LoadRestoran("menu.xml");
+                Menuler[] menuListesi = loadInfoMenuler.LoadRestoran("menu.xml");
 
                 for (int i = 0; i < menuListesi.Count(); i++)
                 {
@@ -140,15 +136,18 @@ if (File.Exists("depolar.xml"))
                 buttonAddDepartment.Enabled = false;
         }
 
-        //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
-        [DllImport("user32.dll")]
-        static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        internal static class NativeMethods
+        {
+            //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
+            [DllImport("user32.dll")]
+            internal static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        }
         static void ToggleCapsLock(bool onOrOff)
         {
             if (IsKeyLocked(Keys.CapsLock) == onOrOff)
                 return;
-            keybd_event(0x14, 0x45, 0x1, (UIntPtr)0);
-            keybd_event(0x14, 0x45, 0x1 | 0x2, (UIntPtr)0);
+            NativeMethods.keybd_event(0x14, 0x45, 0x1, (UIntPtr)0);
+            NativeMethods.keybd_event(0x14, 0x45, 0x1 | 0x2, (UIntPtr)0);
         }
 
         //sanal klayvemize basıldığında touchscreenkeyboard dll mize basılan key i yolluyoruz

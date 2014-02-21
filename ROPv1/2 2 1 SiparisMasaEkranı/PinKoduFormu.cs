@@ -29,12 +29,10 @@ namespace ROPv1
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            UItemp[] infoKullanici = new UItemp[1];
-
             #region xml oku
 
             XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
-            infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
+            UItemp[] infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
 
             #endregion
 

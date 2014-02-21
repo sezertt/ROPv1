@@ -349,15 +349,18 @@ namespace ROPv1
             #endregion
         }
 
-        //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
-        [DllImport("user32.dll")]
-        static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        internal static class NativeMethods
+        {
+            //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
+            [DllImport("user32.dll")]
+            internal static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        }
         static void ToggleCapsLock(bool onOrOff)
         {
             if (IsKeyLocked(Keys.CapsLock) == onOrOff)
                 return;
-            keybd_event(0x14, 0x45, 0x1, (UIntPtr)0);
-            keybd_event(0x14, 0x45, 0x1 | 0x2, (UIntPtr)0);
+            NativeMethods.keybd_event(0x14, 0x45, 0x1, (UIntPtr)0);
+            NativeMethods.keybd_event(0x14, 0x45, 0x1 | 0x2, (UIntPtr)0);
         }
 
         private void keyboardcontrol1_UserKeyPressed(object sender, KeyboardClassLibrary.KeyboardEventArgs e)

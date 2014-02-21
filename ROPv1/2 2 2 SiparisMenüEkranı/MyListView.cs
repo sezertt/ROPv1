@@ -22,21 +22,21 @@ namespace ROPv1
         const int WM_RBUTTONUP = 0x0205;
         const int WM_RBUTTONDOWN = 0x0204;      
         [StructLayout(LayoutKind.Sequential)]
-        struct POINT
+        internal struct POINT
         {
-            public int x;
-            public int y;
+            internal int x;
+            internal int y;
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        struct LVHITTESTINFO
+        internal struct LVHITTESTINFO
         {
-            public POINT pt;
-            public LVHITTESTFLAGS flags;
-            public int iItem;
-            public int iSubItem;
+            internal POINT pt;
+            internal LVHITTESTFLAGS flags;
+            internal int iItem;
+            internal int iSubItem;
             // Vista/Win7+
-            public int iGroup;
+            internal int iGroup;
         }
 
         [Flags]
@@ -65,10 +65,13 @@ namespace ROPv1
             return new Point(lparam.ToInt32() & 0xFFFF, lparam.ToInt32() >> 16);
         }
 
-        /// call SendMessage using hit test structures
-        /// </summary>
-        [DllImport("User32.dll")]
-        static extern int SendMessage(IntPtr hWnd, int msg, int wParam, ref LVHITTESTINFO lParam);
+        internal static class NativeMethods
+        {
+            /// call SendMessage using hit test structures
+            /// </summary>
+            [DllImport("User32.dll")]
+            internal static extern int SendMessage(IntPtr hWnd, int msg, int wParam, ref LVHITTESTINFO lParam);
+        }
 
         protected override void WndProc(ref Message m)
         {
@@ -85,7 +88,7 @@ namespace ROPv1
                 info.pt.y = hitPoint.Y;
 
                 //if the click is on the group header, exit, otherwise send message
-                if (SendMessage(this.Handle, LVM_SUBITEMHITTEST, -1, ref info) != -1)
+                if (NativeMethods.SendMessage(this.Handle, LVM_SUBITEMHITTEST, -1, ref info) != -1)
                     if ((info.flags & LVHITTESTFLAGS.LVHT_EX_GROUP_HEADER) != 0)
                         return; //*
 

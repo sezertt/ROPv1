@@ -30,8 +30,6 @@ namespace ROPv1
 
             splitPanel.SplitterDistance = Screen.FromControl(this).Bounds.Size.Width / 6;
 
-            infoKullanici = new UItemp[1];
-
             #region xml oku
 
             XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();

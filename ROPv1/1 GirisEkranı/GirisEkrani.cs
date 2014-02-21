@@ -33,12 +33,12 @@ namespace ROPv1
             
 
             //açılışta capslock açıksa kapatıyoruz.
-            ToggleCapsLock(false);
-
-            infoKullanici = new UItemp[1];
+            ToggleCapsLock(false);            
 
             if (!File.Exists("tempfiles.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default kategorilerimizi giriyoruz.
             {
+                infoKullanici = new UItemp[1];
+
                 infoKullanici[0] = new UItemp();
                 infoKullanici[0].UIN = (new UnicodeEncoding()).GetBytes("Adınız");
                 infoKullanici[0].UIS = (new UnicodeEncoding()).GetBytes("Soy Adınız");
@@ -69,15 +69,18 @@ namespace ROPv1
             passwordBoxHost.Child = passwordTextBox;
         }
 
-        //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
-        [DllImport("user32.dll")]
-        static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        internal static class NativeMethods
+        {
+            //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
+            [DllImport("user32.dll")]
+            internal static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        }
         static void ToggleCapsLock(bool onOrOff)
         {
             if (IsKeyLocked(Keys.CapsLock) == onOrOff)
                 return;
-            keybd_event(0x14, 0x45, 0x1, (UIntPtr)0);
-            keybd_event(0x14, 0x45, 0x1 | 0x2, (UIntPtr)0);
+            NativeMethods.keybd_event(0x14, 0x45, 0x1, (UIntPtr)0);
+            NativeMethods.keybd_event(0x14, 0x45, 0x1 | 0x2, (UIntPtr)0);
 
         }
 
