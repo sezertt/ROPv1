@@ -36,9 +36,9 @@
             this.timerSaat = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.tablePanel = new System.Windows.Forms.TableLayoutPanel();
-            this.adisyonButton = new System.Windows.Forms.CheckBox();
             this.dayButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
+            this.buttonAdisyon = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelGun
@@ -140,26 +140,6 @@
             this.tablePanel.Size = new System.Drawing.Size(1289, 636);
             this.tablePanel.TabIndex = 24;
             // 
-            // adisyonButton
-            // 
-            this.adisyonButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.adisyonButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.adisyonButton.BackColor = System.Drawing.SystemColors.Window;
-            this.adisyonButton.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.adisyonButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.adisyonButton.Image = global::ROPv1.Properties.Resources.adisyon;
-            this.adisyonButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.adisyonButton.Location = new System.Drawing.Point(629, 12);
-            this.adisyonButton.MaximumSize = new System.Drawing.Size(300, 110);
-            this.adisyonButton.MinimumSize = new System.Drawing.Size(180, 110);
-            this.adisyonButton.Name = "adisyonButton";
-            this.adisyonButton.Size = new System.Drawing.Size(220, 110);
-            this.adisyonButton.TabIndex = 13;
-            this.adisyonButton.Tag = "4";
-            this.adisyonButton.Text = "Adisyonlar";
-            this.adisyonButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.adisyonButton.UseVisualStyleBackColor = false;
-            // 
             // dayButton
             // 
             this.dayButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -194,15 +174,32 @@
             this.exitButton.UseVisualStyleBackColor = false;
             this.exitButton.Click += new System.EventHandler(this.exitPressed);
             // 
+            // buttonAdisyon
+            // 
+            this.buttonAdisyon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAdisyon.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonAdisyon.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonAdisyon.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonAdisyon.Image = global::ROPv1.Properties.Resources.adisyon;
+            this.buttonAdisyon.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.buttonAdisyon.Location = new System.Drawing.Point(629, 11);
+            this.buttonAdisyon.Name = "buttonAdisyon";
+            this.buttonAdisyon.Size = new System.Drawing.Size(220, 110);
+            this.buttonAdisyon.TabIndex = 25;
+            this.buttonAdisyon.Text = "Adisyonlar";
+            this.buttonAdisyon.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.buttonAdisyon.UseVisualStyleBackColor = false;
+            this.buttonAdisyon.Click += new System.EventHandler(this.buttonAdisyon_Click);
+            // 
             // SiparisMasaFormu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1313, 819);
+            this.Controls.Add(this.buttonAdisyon);
             this.Controls.Add(this.tablePanel);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.adisyonButton);
             this.Controls.Add(this.labelGun);
             this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.labelSaat);
@@ -227,8 +224,8 @@
         private System.Windows.Forms.Label labelTarih;
         private System.Windows.Forms.Label labelSaat;
         private System.Windows.Forms.Timer timerSaat;
-        private System.Windows.Forms.CheckBox adisyonButton;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tablePanel;
+        private System.Windows.Forms.Button buttonAdisyon;
     }
 }

@@ -53,6 +53,7 @@ namespace ROPv1
                 infoKullanici[0].UIY[4] = Helper.ComputeHash("true", "SHA512", null);
                 infoKullanici[0].UIY[5] = Helper.ComputeHash("true", "SHA512", null);
                 infoKullanici[0].UIY[6] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[7] = Helper.ComputeHash("true", "SHA512", null);
 
                 XmlSave.SaveRestoran(infoKullanici, "tempfiles.xml");
 

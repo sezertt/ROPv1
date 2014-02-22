@@ -289,19 +289,19 @@ namespace ROPv1
 
             UrunOzellikleri[] infoUrun2 = new UrunOzellikleri[infoKategoriler[0].kategoriler.Count];
 
-            int count = infoUrun.Count();
+            int count = infoUrun.Count(); // yeni eklenen kategoriler yokken toplam kategori sayısı
 
-            //eklenen üğrün var ise sayısını buluyoruz
+            //eklenen kategori var ise sayısını buluyoruz
             if (infoUrun.Count() > infoUrun2.Count())
                 count = infoUrun2.Count();
 
-            //var olan ürünleri ekliyoruz
+            //var olan ürünleri ekliyoruz 
             for (int i = 0; i < count; i++)
             {
                 infoUrun2[i] = infoUrun[i];
             }
 
-            //eklenen üğrün var ise onlara yer açıyoruz 
+            //eklenen ürün var ise onlara yer açıyoruz 
             for (int i = infoUrun.Count(); i < infoUrun2.Count(); i++)
             {
                 infoUrun2[i] = new UrunOzellikleri();
@@ -325,22 +325,26 @@ namespace ROPv1
             {
                 for (int x = 0; x < urunListesiGecici[i].urunAdi.Count; x++)
                 {
-                    bool girmedi = true;
+                    bool urunKategorisiVar = true;
+                    //ürünün kategorisi şu anki listede var mı bak 
                     for (int j = 0; j < treeUrunAdi.Nodes.Count; j++)
                     {
                         if (treeUrunAdi.Nodes[j].Text == urunListesiGecici[i].urunKategorisi[x])
                         {
-                            girmedi = false;
+                            urunKategorisiVar = false;
                             kategoriYeri = j;
                             break;
                         }
                     }
-                    if (girmedi)
+
+                    //yoksa ürünü kategorisini gecici listeye ekle
+                    if (urunKategorisiVar)
                     {
                         urunListesiGecici[urunListesiGecici.Count - 1].urunKategorisi.Add("Kategorisiz Ürünler");
                         urunListesiGecici[urunListesiGecici.Count - 1].urunAdi.Add(urunListesiGecici[i].urunAdi[x]);
                         urunListesiGecici[urunListesiGecici.Count - 1].porsiyonFiyati.Add(urunListesiGecici[i].porsiyonFiyati[x]);
 
+                        //ürün kategorisiz ürünlerdense sil çünkü kategorisiz ürünler en sonda olduğu için, en son döngüde o ürünler yeniden eklenecek.
                         if (i != urunListesiGecici.Count - 1)
                         {
                             urunListesiGecici[i].urunAdi.RemoveAt(x);
@@ -349,7 +353,7 @@ namespace ROPv1
                             x--;
                         }
                     }
-                    else
+                    else // varsa ürünü
                     {
                         if (kategoriYeri <= i)
                             treeUrunAdi.Nodes[kategoriYeri].Nodes.Add(urunListesiGecici[i].urunAdi[x]);
@@ -424,7 +428,12 @@ namespace ROPv1
                 }
             }
             else
-                newProductForm.Enabled = false;
+            {
+                if (buttonDeleteProduct.Visible)
+                {
+                    newProductForm.Enabled = false;
+                }
+            }
         }
 
         internal static class NativeMethods
@@ -463,7 +472,8 @@ namespace ROPv1
             if (info != null && info.Node != null)
                 if (info.Node.Parent == null)
                 {
-                    newProductForm.Enabled = false;
+                    if (buttonDeleteProduct.Visible)
+                        newProductForm.Enabled = false;
 
                     int index = info.Node.Index;
                     if (treeUrunAdi.Nodes[index].IsExpanded)
@@ -544,10 +554,17 @@ namespace ROPv1
         // ürün oluşturmayı iptal et
         private void cancelNewProduct(object sender, EventArgs e)
         {
-            textboxUrunName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[treeUrunAdi.SelectedNode.Index];
-            textboxUrunFiyat.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[treeUrunAdi.SelectedNode.Index];
-            comboNewKategoriName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[treeUrunAdi.SelectedNode.Index];
-            newProductForm.Text = textboxUrunName.Text;
+            if(treeUrunAdi.SelectedNode.Parent == null)
+            {
+                newProductForm.Enabled = false;
+            }
+            else 
+            {
+                textboxUrunName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[treeUrunAdi.SelectedNode.Index];
+                textboxUrunFiyat.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[treeUrunAdi.SelectedNode.Index];
+                comboNewKategoriName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[treeUrunAdi.SelectedNode.Index];
+                newProductForm.Text = textboxUrunName.Text;
+            }            
 
             buttonDeleteProduct.Visible = true;
             buttonCancel.Visible = false;

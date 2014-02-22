@@ -72,7 +72,7 @@ namespace ROPv1
                 comboNewTitle.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIU); 
                 newUserForm.Text = textboxUserName.Text;
 
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < 8; j++)
                 {
                     if (Helper.VerifyHash("true", "SHA512", kullaniciListesi[i].UIY[j]))
                     {
@@ -189,7 +189,7 @@ namespace ROPv1
                 temp.UIPN = Helper.ComputeHash(textboxPin.Text, "SHA512", null);
                 temp.UIPW = Helper.ComputeHash(textBoxPassword.Text, "SHA512", null);
                 temp.UIU = (new UnicodeEncoding()).GetBytes(comboNewTitle.Text);
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 8; i++)
                 {
                     if(treeYetkiler.Nodes[i].Checked)
                         temp.UIY[i] = Helper.ComputeHash("true", "SHA512", null);
@@ -288,7 +288,7 @@ namespace ROPv1
 
                 kullaniciListesi[i].UIU = (new UnicodeEncoding()).GetBytes(comboNewTitle.Text);
 
-                for (int x = 0; x < 7; x++)
+                for (int x = 0; x < 8; x++)
                 {
                     if (treeYetkiler.Nodes[x].Checked)
                         kullaniciListesi[i].UIY[x] = Helper.ComputeHash("true", "SHA512", null);
@@ -356,7 +356,7 @@ namespace ROPv1
             comboNewTitle.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIU);
             newUserForm.Text = textboxUserName.Text;
 
-            for (int j = 0; j < 7; j++)
+            for (int j = 0; j < 8; j++)
             {
                 if (Helper.VerifyHash("true", "SHA512", kullaniciListesi[i].UIY[j]))
                 {
@@ -396,7 +396,7 @@ namespace ROPv1
                 textBoxPassword.Text = "";
                 comboNewTitle.SelectedIndex = 2;
 
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < 8; j++)
                 {
                     treeYetkiler.Nodes[j].Checked = false;
                 }
@@ -439,14 +439,14 @@ namespace ROPv1
         {
             if (comboNewTitle.SelectedIndex == 0)
             {
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < 8; j++)
                 {
                     treeYetkiler.Nodes[j].Checked = true;
                 }
             }
             else if (comboNewTitle.SelectedIndex == 1)
             {
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < 8; j++)
                 {
                     if (j == 4 || j == 6)
                     {
@@ -458,7 +458,7 @@ namespace ROPv1
             }
             else
             {
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < 8; j++)
                 {
                     treeYetkiler.Nodes[j].Checked = false;
                 }

@@ -14,9 +14,13 @@ namespace ROPv1
     {
         public bool dogru = false;
         public string ayarYapanKisi;
-        public PinKoduFormu()
+        string yapilacakIslem;
+
+        public PinKoduFormu(string yapilacakIslemNe)
         {
             InitializeComponent();
+
+            yapilacakIslem = yapilacakIslemNe;
 
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
@@ -61,21 +65,47 @@ namespace ROPv1
                 //yetkilerine göre işlemlere izin verme
                 if (kullaniciAdi != -5)
                 {
-                    if (Helper.VerifyHash("true", "SHA512", infoKullanici[kullaniciAdi].UIY[5]))
+                    if (yapilacakIslem == "Masa Görüntüleme")
                     {
                         //Gün Formuna Git 
-                        //Gün formu oluştur ve o forma git
                         dogru = true;
                         ayarYapanKisi = (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIS);
-                        this.Close();                                               
+                        this.Close();
                     }
-                    else
+                    else if (yapilacakIslem == "Gün İşlemi")
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Gün işlemi açma/kapama yetkiniz bulunmamaktadır", false))
+                        if (Helper.VerifyHash("true", "SHA512", infoKullanici[kullaniciAdi].UIY[5]))
                         {
-                            dialog.ShowDialog();
+                            //Gün Formuna Git 
+                            dogru = true;
+                            ayarYapanKisi = (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIS);
+                            this.Close();
+                        }
+                        else
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Gün işlemi açma/kapama yetkiniz bulunmamaktadır", false))
+                            {
+                                dialog.ShowDialog();
+                            }
                         }
                     }
+                    else if (yapilacakIslem == "Adisyon Görüntüleme")
+                    {
+                        if (Helper.VerifyHash("true", "SHA512", infoKullanici[kullaniciAdi].UIY[3]))
+                        {
+                            //Gün Formuna Git 
+                            dogru = true;
+                            ayarYapanKisi = (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIS);
+                            this.Close();
+                        }
+                        else
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Adisyon görüntüleme yetkiniz bulunmamaktadır", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                        }
+                    }       
                 }
                 else
                 {

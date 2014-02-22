@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("İkram", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Sipariş", System.Windows.Forms.HorizontalAlignment.Left);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SiparisMenuFormu));
             this.flowPanelUrunler = new System.Windows.Forms.FlowLayoutPanel();
             this.labelGun = new System.Windows.Forms.Label();
@@ -41,9 +42,14 @@
             this.labelMasa = new System.Windows.Forms.Label();
             this.labelDepartman = new System.Windows.Forms.Label();
             this.ımageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.buttonTasi = new System.Windows.Forms.Button();
+            this.listHesap = new ROPv1.MyListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonUrunIptal = new System.Windows.Forms.Button();
             this.buttonUrunIkram = new System.Windows.Forms.Button();
+            this.buttonTasi = new System.Windows.Forms.Button();
             this.buttonUrunListDown = new System.Windows.Forms.Button();
             this.buttonUrunListUp = new System.Windows.Forms.Button();
             this.buttonMenulerDown = new System.Windows.Forms.Button();
@@ -54,11 +60,6 @@
             this.buttonNotEkle = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
             this.buttonHesapOde = new System.Windows.Forms.Button();
-            this.listHesap = new ROPv1.MyListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.buttonAdd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // flowPanelUrunler
@@ -188,23 +189,74 @@
             this.ımageList1.ImageSize = new System.Drawing.Size(1, 28);
             this.ımageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // buttonTasi
+            // listHesap
             // 
-            this.buttonTasi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonTasi.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonTasi.Enabled = false;
-            this.buttonTasi.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonTasi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonTasi.Image = global::ROPv1.Properties.Resources.tableSmall;
-            this.buttonTasi.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTasi.Location = new System.Drawing.Point(772, 246);
-            this.buttonTasi.Name = "buttonTasi";
-            this.buttonTasi.Padding = new System.Windows.Forms.Padding(8);
-            this.buttonTasi.Size = new System.Drawing.Size(190, 79);
-            this.buttonTasi.TabIndex = 83;
-            this.buttonTasi.Text = "Taşı";
-            this.buttonTasi.UseVisualStyleBackColor = false;
-            this.buttonTasi.Click += new System.EventHandler(this.buttonTasi_Click);
+            this.listHesap.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listHesap.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.listHesap.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listHesap.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3});
+            this.listHesap.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.listHesap.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.listHesap.FullRowSelect = true;
+            listViewGroup1.Header = "İkram";
+            listViewGroup1.Name = "ikramGrubu";
+            listViewGroup1.Tag = "0";
+            listViewGroup2.Header = "Sipariş";
+            listViewGroup2.Name = "siparisGrubu";
+            listViewGroup2.Tag = "1";
+            this.listHesap.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1,
+            listViewGroup2});
+            this.listHesap.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.listHesap.HideSelection = false;
+            this.listHesap.LabelWrap = false;
+            this.listHesap.Location = new System.Drawing.Point(969, 161);
+            this.listHesap.Margin = new System.Windows.Forms.Padding(0);
+            this.listHesap.Name = "listHesap";
+            this.listHesap.Size = new System.Drawing.Size(385, 504);
+            this.listHesap.SmallImageList = this.ımageList1;
+            this.listHesap.TabIndex = 0;
+            this.listHesap.UseCompatibleStateImageBehavior = false;
+            this.listHesap.View = System.Windows.Forms.View.Details;
+            this.listHesap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listHesap_Click);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Adet";
+            this.columnHeader1.Width = 50;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Siparişler";
+            this.columnHeader2.Width = 230;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Fiyatları";
+            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader3.Width = 100;
+            // 
+            // buttonAdd
+            // 
+            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAdd.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonAdd.Enabled = false;
+            this.buttonAdd.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonAdd.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonAdd.Image = global::ROPv1.Properties.Resources.addBig;
+            this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAdd.Location = new System.Drawing.Point(772, 331);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Padding = new System.Windows.Forms.Padding(8);
+            this.buttonAdd.Size = new System.Drawing.Size(190, 79);
+            this.buttonAdd.TabIndex = 84;
+            this.buttonAdd.Text = "Ekle";
+            this.buttonAdd.UseVisualStyleBackColor = false;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonUrunIptal
             // 
@@ -241,6 +293,24 @@
             this.buttonUrunIkram.Text = "İkram";
             this.buttonUrunIkram.UseVisualStyleBackColor = false;
             this.buttonUrunIkram.Click += new System.EventHandler(this.buttonUrunIkram_Click);
+            // 
+            // buttonTasi
+            // 
+            this.buttonTasi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonTasi.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonTasi.Enabled = false;
+            this.buttonTasi.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonTasi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonTasi.Image = global::ROPv1.Properties.Resources.tableSmall;
+            this.buttonTasi.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonTasi.Location = new System.Drawing.Point(772, 246);
+            this.buttonTasi.Name = "buttonTasi";
+            this.buttonTasi.Padding = new System.Windows.Forms.Padding(8);
+            this.buttonTasi.Size = new System.Drawing.Size(190, 79);
+            this.buttonTasi.TabIndex = 83;
+            this.buttonTasi.Text = "Taşı";
+            this.buttonTasi.UseVisualStyleBackColor = false;
+            this.buttonTasi.Click += new System.EventHandler(this.buttonTasi_Click);
             // 
             // buttonUrunListDown
             // 
@@ -410,71 +480,6 @@
             this.buttonHesapOde.Text = "HESAP ÖDEME";
             this.buttonHesapOde.UseVisualStyleBackColor = false;
             this.buttonHesapOde.Click += new System.EventHandler(this.paymentButton_Click);
-            // 
-            // listHesap
-            // 
-            this.listHesap.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.listHesap.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-            this.listHesap.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listHesap.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3});
-            this.listHesap.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.listHesap.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.listHesap.FullRowSelect = true;
-            listViewGroup1.Header = "İkram";
-            listViewGroup1.Name = "ikramgrubu";
-            listViewGroup1.Tag = "0";
-            this.listHesap.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1});
-            this.listHesap.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.listHesap.HideSelection = false;
-            this.listHesap.LabelWrap = false;
-            this.listHesap.Location = new System.Drawing.Point(969, 161);
-            this.listHesap.Margin = new System.Windows.Forms.Padding(0);
-            this.listHesap.Name = "listHesap";
-            this.listHesap.Size = new System.Drawing.Size(385, 504);
-            this.listHesap.SmallImageList = this.ımageList1;
-            this.listHesap.TabIndex = 0;
-            this.listHesap.UseCompatibleStateImageBehavior = false;
-            this.listHesap.View = System.Windows.Forms.View.Details;
-            this.listHesap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listHesap_Click);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Adet";
-            this.columnHeader1.Width = 50;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Siparişler";
-            this.columnHeader2.Width = 230;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Fiyatları";
-            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader3.Width = 100;
-            // 
-            // buttonAdd
-            // 
-            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAdd.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonAdd.Enabled = false;
-            this.buttonAdd.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonAdd.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonAdd.Image = global::ROPv1.Properties.Resources.addBig;
-            this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAdd.Location = new System.Drawing.Point(772, 331);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Padding = new System.Windows.Forms.Padding(8);
-            this.buttonAdd.Size = new System.Drawing.Size(190, 79);
-            this.buttonAdd.TabIndex = 84;
-            this.buttonAdd.Text = "Ekle";
-            this.buttonAdd.UseVisualStyleBackColor = false;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // SiparisMenuFormu
             // 

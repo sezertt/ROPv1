@@ -15,19 +15,21 @@ namespace ROPv1
     {
         Restoran hangiDepartman;
 
-        bool grupOlustur = true;
-
         int hangiMenuSecili = 0, scrollPosition = 0, elemanBoyu, gorunenListeElemaniSayisi, atlama;
 
         const int urunBoyu = 220, fiyatBoyu = 90;
 
-        string siparisiKimGirdi;
+        string siparisiKimGirdi, adisyonNotu;
 
         List<Menuler> menuListesi = new List<Menuler>();  // menüleri tutacak liste
 
         List<UrunOzellikleri> urunListesi = new List<UrunOzellikleri>();
 
         List<bool> listedeSeciliOlanItemlar = new List<bool>();
+
+        UItemp[] infoKullanici;
+
+        bool iptalIkram = true;
 
         public SiparisMenuFormu(string masaninAdi, Restoran butonBilgileri, string siparisiGirenKisi)
         {
@@ -38,6 +40,29 @@ namespace ROPv1
 
             //hangi departmanda olduğumuzu tutan değişken
             hangiDepartman = butonBilgileri;
+
+            XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
+            infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
+
+            int kullaniciYeri = 0;
+            //kullanıcının yerini bul
+            for (int i = 0; i < infoKullanici.Count(); i++)
+            {
+                if (siparisiKimGirdi == (new UnicodeEncoding()).GetString(infoKullanici[i].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[i].UIS))
+                {
+                    kullaniciYeri = i;
+                    break;
+                }
+            }
+
+            //yetkilerine göre işlemlere izin verme
+
+            if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciYeri].UIY[7]))
+            {
+                buttonUrunIkram.Enabled = false;
+                buttonUrunIptal.Enabled = false;
+                iptalIkram = false;
+            }
 
             labelMasa.Text = "Masa: " + masaninAdi;
             labelDepartman.Text = "Departman: " + hangiDepartman.departmanAdi;
@@ -110,6 +135,8 @@ namespace ROPv1
                     break;
                 }
             }
+
+            listHesap.Groups[1].Header += " - " + DateTime.Now.ToShortTimeString();
         }
 
         //kategori seçildiğinde kategori içindeki ürünleri panele getiren method
@@ -317,23 +344,13 @@ namespace ROPv1
             else
                 kacPorsiyon = 1;
 
-
             if (kacPorsiyon == 0)
                 return;
 
-            if (grupOlustur) // masaya yeni bir giriş yapıldıysa saatini ve kişi tutmak için grup oluştur
-            {
-                grupOlustur = false;
-                listHesap.Groups.Add("siparis", siparisiKimGirdi + " - " + DateTime.Now.ToShortTimeString());
-                listHesap.Groups[listHesap.Groups.Count - 1].Tag = listHesap.Groups.Count - 1;
-            }
-
-            int kacinciGrup = listHesap.Groups.Count - 1;
-
             int gruptaYeniGelenSiparisVarmi = -1; //ürün cinsi hesapta var mı bak 
-            for (int i = 0; i < listHesap.Groups[kacinciGrup].Items.Count; i++)
+            for (int i = 0; i < listHesap.Groups[1].Items.Count; i++)
             {
-                if (((Button)sender).Text == listHesap.Groups[kacinciGrup].Items[i].SubItems[1].Text)
+                if (((Button)sender).Text == listHesap.Groups[1].Items[i].SubItems[1].Text)
                 {
                     gruptaYeniGelenSiparisVarmi = i;
                     break;
@@ -345,7 +362,7 @@ namespace ROPv1
                 listHesap.Items.Add("" + kacPorsiyon);
                 listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(((Button)sender).Text);
                 listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(((double)kacPorsiyon * Convert.ToDouble(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00"));
-                listHesap.Items[listHesap.Items.Count - 1].Group = listHesap.Groups[kacinciGrup];
+                listHesap.Items[listHesap.Items.Count - 1].Group = listHesap.Groups[1];
                 listHesap.Items[listHesap.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
                 listedeSeciliOlanItemlar.Add(false);
 
@@ -353,6 +370,7 @@ namespace ROPv1
                 int itemsCount = this.listHesap.Items.Count + this.listHesap.Groups.Count;
                 int itemHeight = this.listHesap.Items[0].Bounds.Height;
                 int VisiableItem = (int)this.listHesap.ClientRectangle.Height / itemHeight;
+
                 if (itemsCount >= VisiableItem)
                 {
                     listHesap.Columns[1].Width = urunBoyu;
@@ -393,14 +411,14 @@ namespace ROPv1
             }
             else // varsa ürünün hesaptaki değerlerini istenilene göre arttır
             {
-                listHesap.Groups[kacinciGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text = (Convert.ToDouble(listHesap.Groups[kacinciGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text) + kacPorsiyon).ToString();
+                listHesap.Groups[1].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text = (Convert.ToDouble(listHesap.Groups[1].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text) + kacPorsiyon).ToString();
 
-                listHesap.Groups[kacinciGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[kacinciGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text) + (double)kacPorsiyon * Convert.ToDouble(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00");
+                listHesap.Groups[1].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[1].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text) + (double)kacPorsiyon * Convert.ToDouble(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00");
 
-                while (listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Groups[kacinciGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text, listHesap.Groups[kacinciGrup].Items[gruptaYeniGelenSiparisVarmi].Font).Width
-                    || listHesap.Columns[0].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Groups[kacinciGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text, listHesap.Groups[kacinciGrup].Items[gruptaYeniGelenSiparisVarmi].Font).Width)
+                while (listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Groups[1].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text, listHesap.Groups[1].Items[gruptaYeniGelenSiparisVarmi].Font).Width
+                    || listHesap.Columns[0].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Groups[1].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text, listHesap.Groups[1].Items[gruptaYeniGelenSiparisVarmi].Font).Width)
                 {
-                    listHesap.Groups[kacinciGrup].Items[gruptaYeniGelenSiparisVarmi].Font = new Font(listHesap.Groups[kacinciGrup].Items[gruptaYeniGelenSiparisVarmi].Font.FontFamily, listHesap.Groups[kacinciGrup].Items[gruptaYeniGelenSiparisVarmi].Font.Size - 0.5f, listHesap.Groups[kacinciGrup].Items[gruptaYeniGelenSiparisVarmi].Font.Style);
+                    listHesap.Groups[1].Items[gruptaYeniGelenSiparisVarmi].Font = new Font(listHesap.Groups[1].Items[gruptaYeniGelenSiparisVarmi].Font.FontFamily, listHesap.Groups[1].Items[gruptaYeniGelenSiparisVarmi].Font.Size - 0.5f, listHesap.Groups[1].Items[gruptaYeniGelenSiparisVarmi].Font.Style);
                 }
 
                 labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) + (double)kacPorsiyon * Convert.ToDouble(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00");
@@ -552,39 +570,19 @@ namespace ROPv1
             }
             else if (kacElemanSecili == 1)
             {
+                if (iptalIkram)
+                {
+                    buttonUrunIkram.Enabled = true;
+                    buttonUrunIptal.Enabled = true;
+                }
 
-                // BURADA PİN KONTROLÜ YAP EĞER İKRAM İZNİ VARSA İKRAM BUTONUNU AÇ 
-                // BURADA PİN KONTROLÜ YAP EĞER İKRAM İZNİ VARSA İKRAM BUTONUNU AÇ 
-                // BURADA PİN KONTROLÜ YAP EĞER İKRAM İZNİ VARSA İKRAM BUTONUNU AÇ 
-                // BURADA PİN KONTROLÜ YAP EĞER İKRAM İZNİ VARSA İKRAM BUTONUNU AÇ                 
-                buttonUrunIkram.Enabled = true;
-                // BURADA PİN KONTROLÜ YAP EĞER İKRAM İZNİ VARSA İKRAM BUTONUNU AÇ 
-                // BURADA PİN KONTROLÜ YAP EĞER İKRAM İZNİ VARSA İKRAM BUTONUNU AÇ 
-                // BURADA PİN KONTROLÜ YAP EĞER İKRAM İZNİ VARSA İKRAM BUTONUNU AÇ 
-                // BURADA PİN KONTROLÜ YAP EĞER İKRAM İZNİ VARSA İKRAM BUTONUNU AÇ 
-
-
-                if (listHesap.SelectedItems[0].Group.Name == "ikramgrubu")
+                if (listHesap.SelectedItems[0].Group.Name == "ikramGrubu")
                     buttonUrunIkram.Text = "   İkram İptal";
                 else
                     buttonUrunIkram.Text = "İkram";
 
                 buttonTasi.Enabled = true;
-
                 buttonAdd.Enabled = true;
-
-                string siparisiOnceGirenKisi = "";
-                if (listHesap.SelectedItems[0].Group.Name != "ikramgrubu")
-                {
-                    //eğer siparişi giren kişi ile iptal etmeye çalışan kişi aynı kişilerse iptal işlemine izin ver
-                    int yeri = listHesap.SelectedItems[0].Group.ToString().IndexOf("-") - 1;
-                    siparisiOnceGirenKisi = listHesap.SelectedItems[0].Group.ToString().Substring(0, yeri);
-                }
-
-                if (siparisiKimGirdi == siparisiOnceGirenKisi)
-                    buttonUrunIptal.Enabled = true;
-                else
-                    buttonUrunIptal.Enabled = false;
             }
             else
             {
@@ -606,7 +604,6 @@ namespace ROPv1
 
 
 
-
         private void changeTablesButton_Click(object sender, EventArgs e)
         {
             //burada bir split viewa departman ve masalarını koy seçilen departmana göre masa ve departman adını değiştir.
@@ -615,11 +612,29 @@ namespace ROPv1
         private void addNoteButton_Click(object sender, EventArgs e)
         {
             //burda başka bir user control göster not girilsin ve girilen not kaydedilsin exitte not sqle yazılsın
+
+            //eski adisyon notu varsa onu yolla yoksa boş text "" yolla            
+            AdisyonNotuFormu notFormu;
+            string adisyonNotuDegistiMi = adisyonNotu;
+            //Burada adisyonNotu'nu sql den al
+            if (adisyonNotu != "")
+                notFormu = new AdisyonNotuFormu(adisyonNotu); // varsa notu yolla 
+            else
+                notFormu = new AdisyonNotuFormu(""); //yoksa boş yolla               
+
+            notFormu.ShowDialog();
+            if (adisyonNotu != adisyonNotuDegistiMi)
+            {
+                adisyonNotu = notFormu.AdisyonNotu;
+                //burada adisyonNotu'nu sql e yolla
+            }
         }
 
         private void exitButton_Click(object sender, EventArgs e)
         {
             //Burda sqle not hesap vs yazılacak..
+
+            //masa numarası, departman adı, siparişler, açılış zamanı, siparişi veren kişi,toplam fiyat, ikramlar,not bilgisi(BOŞ DEĞİLSE).
             this.Close();
         }
 
@@ -687,11 +702,6 @@ namespace ROPv1
                     listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
                     listHesap.SelectedItems[0].Remove();
                 }
-
-                string ikramVerenler = listHesap.Groups[0].Header;
-
-                if (ikramVerenler.IndexOf(siparisiKimGirdi) < 0)
-                    listHesap.Groups[0].Header += " - " + siparisiKimGirdi;
             }
             else
             {
@@ -721,7 +731,7 @@ namespace ROPv1
                     listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(listHesap.SelectedItems[0].SubItems[1].Text);
                     listHesap.Items[listHesap.Items.Count - 1].SubItems.Add((dusulecekDeger * carpan).ToString("0.00"));
 
-                    listHesap.Items[listHesap.Items.Count - 1].Group = listHesap.Groups[listHesap.Groups.Count - 1];
+                    listHesap.Items[listHesap.Items.Count - 1].Group = listHesap.Groups[1];
                     listHesap.Items[listHesap.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
                     listedeSeciliOlanItemlar.Add(false);
                 }
@@ -731,11 +741,6 @@ namespace ROPv1
                     listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
                     listHesap.SelectedItems[0].Remove();
                 }
-
-                string ikramVerenler = listHesap.Groups[0].Header;
-
-                if (listHesap.Groups[0].Items.Count == 0)
-                    listHesap.Groups[0].Header = "İkram";
             }
 
             for (int i = 0; i < listedeSeciliOlanItemlar.Count; i++)
@@ -787,7 +792,7 @@ namespace ROPv1
                 {
                     return;
                 }
-            }            
+            }
 
             double dusulecekDeger = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) / Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
 
@@ -799,16 +804,10 @@ namespace ROPv1
 
             int silinecekGrup = Convert.ToInt32(listHesap.SelectedItems[0].Group.Tag);
 
-            if(listHesap.SelectedItems[0].Text == "0")
+            if (listHesap.SelectedItems[0].Text == "0")
             {
                 listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
                 listHesap.SelectedItems[0].Remove();
-            }
-
-            if (listHesap.Groups[silinecekGrup].Items.Count < 1)
-            {
-                listHesap.Groups.RemoveAt(silinecekGrup);
-                grupOlustur = true;
             }
 
             if (labelToplamHesap.Text == "0,00")
@@ -863,17 +862,12 @@ namespace ROPv1
 
             labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) + (dusulecekDeger * carpan)).ToString("0.00");
 
-            for (int i = 0; i < listedeSeciliOlanItemlar.Count; i++)
+            while (listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.SelectedItems[0].SubItems[2].Text, listHesap.SelectedItems[0].Font).Width
+                    || listHesap.Columns[0].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.SelectedItems[0].SubItems[0].Text, listHesap.SelectedItems[0].Font).Width)
             {
-                listedeSeciliOlanItemlar[i] = false;
-                listHesap.Items[i].Selected = false;
+                listHesap.SelectedItems[0].Font = new Font(listHesap.SelectedItems[0].Font.FontFamily, listHesap.SelectedItems[0].Font.Size - 0.5f, listHesap.SelectedItems[0].Font.Style);
             }
-
             textNumberOfItem.Text = "";
-            buttonUrunIkram.Enabled = false;
-            buttonTasi.Enabled = false;
-            buttonUrunIptal.Enabled = false;
-            buttonAdd.Enabled = false;
         }
 
         private void buttonTasi_Click(object sender, EventArgs e)

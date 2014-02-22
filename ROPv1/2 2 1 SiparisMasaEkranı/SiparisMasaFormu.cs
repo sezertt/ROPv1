@@ -22,8 +22,6 @@ namespace ROPv1
 
         List<MasaDizayn> masaDizaynListesi = new List<MasaDizayn>();
 
-        List<GunBilgileri> gunListesi = new List<GunBilgileri>();
-
         public SiparisMasaFormu()
         {
             InitializeComponent();
@@ -37,10 +35,8 @@ namespace ROPv1
                 XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
                 GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
 
-                gunListesi.AddRange(infoGunler);
-
                 //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
-                if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
+                if (infoGunler[infoGunler.Count() - 1].gunSonuYapanKisi == null && infoGunler[infoGunler.Count() - 1].gunBasiYapanKisi != null)
                 {
                     dayButton.Image = global::ROPv1.Properties.Resources.dayOn;
                 }
@@ -196,16 +192,14 @@ namespace ROPv1
                 XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
                 GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
 
-                gunListesi.AddRange(infoGunler);
-
                 //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
-                if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
+                if (infoGunler[infoGunler.Count() - 1].gunSonuYapanKisi == null && infoGunler[infoGunler.Count() - 1].gunBasiYapanKisi != null)
                 { //gün açık sipariş ekranına geçilebilir
 
-                    PinKoduFormu pinForm = new PinKoduFormu();
+                    PinKoduFormu pinForm = new PinKoduFormu("Masa Görüntüleme");
                     pinForm.ShowDialog();
 
-                    if (pinForm.dogru)
+                    if (pinForm.dogru) //pin doğru
                     {
                         SiparisMenuFormu siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi);//burada masa numarasını da yolla
                         siparisForm.ShowDialog();
@@ -339,7 +333,7 @@ namespace ROPv1
 
         private void buttonGunIslemiPressed(object sender, EventArgs e)
         {
-            PinKoduFormu pinForm = new PinKoduFormu();
+            PinKoduFormu pinForm = new PinKoduFormu("Gün İşlemi");
             pinForm.ShowDialog();
 
             if (pinForm.dogru)
@@ -350,10 +344,8 @@ namespace ROPv1
                 XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
                 GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
 
-                gunListesi.AddRange(infoGunler);
-
                 //gün başı yapılmış mı bak
-                if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
+                if (infoGunler[infoGunler.Count() - 1].gunSonuYapanKisi == null && infoGunler[infoGunler.Count() - 1].gunBasiYapanKisi != null)
                 {
                     dayButton.Image = global::ROPv1.Properties.Resources.dayOn;
                 }
@@ -367,6 +359,23 @@ namespace ROPv1
         private void timerSaat_Tick(object sender, EventArgs e)
         {
             labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+        }
+
+        private void buttonAdisyon_Click(object sender, EventArgs e)
+        {
+            PinKoduFormu pinForm = new PinKoduFormu("Adisyon Görüntüleme");
+            pinForm.ShowDialog();
+
+            if (pinForm.dogru) // burada adisyon sayfası oluşturulacak ve ona geçilecek
+            {
+                /*
+                GunFormu gunForm = new GunFormu(pinForm.ayarYapanKisi);
+                gunForm.ShowDialog();
+
+                XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
+                GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
+                */
+            }
         }
     }
 }
