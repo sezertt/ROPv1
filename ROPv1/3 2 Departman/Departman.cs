@@ -42,7 +42,6 @@ namespace ROPv1
                 info[0].departmanAdi = "Departman";
                 info[0].departmanMenusu = "Menü";
                 info[0].departmanEkrani = "Masa Ekranı";
-                info[0].departmanDeposu = "Depo";
                 XmlSave.SaveRestoran(info, "restoran.xml");
             }
 
@@ -53,7 +52,6 @@ namespace ROPv1
 
             comboNewDepName.Text = restoranListesi[0].departmanAdi;
             comboNewDepMenu.Text = restoranListesi[0].departmanMenusu;
-            comboNewDepStore.Text = restoranListesi[0].departmanDeposu;
             comboNewDepView.Text = restoranListesi[0].departmanEkrani;
 
             newDepartmentForm.Text = comboNewDepName.Text;
@@ -107,24 +105,6 @@ namespace ROPv1
                 }
             }
 
-
-            /* BURAYI AÇ STOK BİTİNCE
-if (File.Exists("depolar.xml"))
-{
-    int depoSayisi = Properties.Settings.Default.depoSayisi;
-
-    Depolar[] depolar = new Depolar[depoSayisi];
-
-    //liste varsa okuyoruz
-    XmlLoad<Depolar> loadInfoDepolar = new XmlLoad<Depolar>();
-    depolar = loadInfoDepolar.LoadRestoran("depolar.xml");
-
-    for (int i = 0; i < depoSayisi; i++)
-    {
-        comboNewDepView.Items.Add(depolar[i].DepartmanDeposu);
-    }
-}   
-*/
             #endregion
 
             treeDepartman.SelectedNode = treeDepartman.Nodes[0];
@@ -169,7 +149,6 @@ if (File.Exists("depolar.xml"))
             {
                 comboNewDepName.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanAdi;
                 comboNewDepMenu.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanMenusu;
-                comboNewDepStore.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanDeposu;
                 comboNewDepView.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanEkrani;
                 newDepartmentForm.Text = comboNewDepName.Text;
 
@@ -249,7 +228,6 @@ if (File.Exists("depolar.xml"))
                 newDepartmentForm.Text = "Yeni Departman";
                 comboNewDepName.Text = "";
                 comboNewDepMenu.Text = "";
-                comboNewDepStore.Text = "";
                 comboNewDepView.Text = "";
                 buttonDeleteDepartment.Visible = false;
                 buttonCancel.Visible = true;
@@ -262,7 +240,6 @@ if (File.Exists("depolar.xml"))
         {
             comboNewDepName.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanAdi;
             comboNewDepMenu.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanMenusu;
-            comboNewDepStore.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanDeposu;
             comboNewDepView.Text = restoranListesi[treeDepartman.SelectedNode.Index].departmanEkrani;
             newDepartmentForm.Text = comboNewDepName.Text;
 
@@ -293,7 +270,6 @@ if (File.Exists("depolar.xml"))
                 Restoran newDepartman = new Restoran();
                 newDepartman.departmanAdi = comboNewDepName.Text;
                 newDepartman.departmanMenusu = comboNewDepMenu.Text;
-                newDepartman.departmanDeposu = comboNewDepStore.Text;
                 newDepartman.departmanEkrani = comboNewDepView.Text;
 
                 newDepartmentForm.Text = comboNewDepName.Text;
@@ -324,7 +300,6 @@ if (File.Exists("depolar.xml"))
                 // Girilen bilgilerin doğruluğu kontrol edilir daha sonra comboboxlardaki bilgiler xmle aktarılır ve departman ismi treeviewda güncellenir.
                 restoranListesi[treeDepartman.SelectedNode.Index].departmanAdi = comboNewDepName.Text;
                 restoranListesi[treeDepartman.SelectedNode.Index].departmanMenusu = comboNewDepMenu.Text;
-                restoranListesi[treeDepartman.SelectedNode.Index].departmanDeposu = comboNewDepStore.Text;
                 restoranListesi[treeDepartman.SelectedNode.Index].departmanEkrani = comboNewDepView.Text;
 
                 XmlSave.SaveRestoran(restoranListesi, "restoran.xml");

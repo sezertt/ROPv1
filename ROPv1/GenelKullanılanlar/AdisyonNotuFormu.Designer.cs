@@ -39,7 +39,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.keyboardcontrol1.ForeColor = System.Drawing.SystemColors.Window;
             this.keyboardcontrol1.KeyboardType = KeyboardClassLibrary.BoW.Standard;
-            this.keyboardcontrol1.Location = new System.Drawing.Point(12, 54);
+            this.keyboardcontrol1.Location = new System.Drawing.Point(12, 102);
             this.keyboardcontrol1.MaximumSize = new System.Drawing.Size(993, 282);
             this.keyboardcontrol1.MinimumSize = new System.Drawing.Size(993, 282);
             this.keyboardcontrol1.Name = "keyboardcontrol1";
@@ -49,14 +49,14 @@
             // 
             // buttonTamam
             // 
-            this.buttonTamam.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonTamam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonTamam.BackColor = System.Drawing.SystemColors.Window;
             this.buttonTamam.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonTamam.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonTamam.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonTamam.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonTamam.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTamam.Location = new System.Drawing.Point(874, 286);
+            this.buttonTamam.Location = new System.Drawing.Point(874, 334);
             this.buttonTamam.Name = "buttonTamam";
             this.buttonTamam.Size = new System.Drawing.Size(125, 50);
             this.buttonTamam.TabIndex = 34;
@@ -70,9 +70,11 @@
             this.textboxNot.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textboxNot.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxNot.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textboxNot.Location = new System.Drawing.Point(12, 12);
+            this.textboxNot.Location = new System.Drawing.Point(18, 12);
+            this.textboxNot.MaxLength = 250;
+            this.textboxNot.Multiline = true;
             this.textboxNot.Name = "textboxNot";
-            this.textboxNot.Size = new System.Drawing.Size(987, 32);
+            this.textboxNot.Size = new System.Drawing.Size(981, 81);
             this.textboxNot.TabIndex = 35;
             // 
             // AdisyonNotuFormu
@@ -81,7 +83,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1019, 348);
+            this.ClientSize = new System.Drawing.Size(1019, 396);
             this.ControlBox = false;
             this.Controls.Add(this.buttonTamam);
             this.Controls.Add(this.textboxNot);

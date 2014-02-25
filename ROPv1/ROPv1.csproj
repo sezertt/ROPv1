@@ -164,6 +164,7 @@
       <DependentUpon>AdisyonNotuFormu.cs</DependentUpon>
     </Compile>
     <Compile Include="GenelKullanılanlar\Helper.cs" />
+    <Compile Include="GenelKullanılanlar\SQLBaglantisi.cs" />
     <Compile Include="Gereksizler\Program.cs" />
     <Compile Include="3 5 Ürünler\Products.cs">
       <SubType>UserControl</SubType>

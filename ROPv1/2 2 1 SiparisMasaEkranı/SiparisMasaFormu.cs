@@ -201,6 +201,7 @@ namespace ROPv1
 
                     if (pinForm.dogru) //pin doğru
                     {
+
                         SiparisMenuFormu siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi);//burada masa numarasını da yolla
                         siparisForm.ShowDialog();
                     }

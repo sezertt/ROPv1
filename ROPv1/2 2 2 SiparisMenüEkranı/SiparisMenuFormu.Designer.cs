@@ -58,7 +58,7 @@
             this.buttonUrunlerUp = new System.Windows.Forms.Button();
             this.buttonMasaDegistir = new System.Windows.Forms.Button();
             this.buttonNotEkle = new System.Windows.Forms.Button();
-            this.exitButton = new System.Windows.Forms.Button();
+            this.buttonTamam = new System.Windows.Forms.Button();
             this.buttonHesapOde = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -446,23 +446,23 @@
             this.buttonNotEkle.UseVisualStyleBackColor = false;
             this.buttonNotEkle.Click += new System.EventHandler(this.addNoteButton_Click);
             // 
-            // exitButton
+            // buttonTamam
             // 
-            this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.exitButton.BackColor = System.Drawing.SystemColors.Window;
-            this.exitButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.exitButton.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.exitButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.exitButton.Image = global::ROPv1.Properties.Resources.checkmark;
-            this.exitButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.exitButton.Location = new System.Drawing.Point(1164, 12);
-            this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(190, 110);
-            this.exitButton.TabIndex = 60;
-            this.exitButton.Text = "Tamam";
-            this.exitButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.exitButton.UseVisualStyleBackColor = false;
-            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            this.buttonTamam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonTamam.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonTamam.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.buttonTamam.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonTamam.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonTamam.Image = global::ROPv1.Properties.Resources.checkmark;
+            this.buttonTamam.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.buttonTamam.Location = new System.Drawing.Point(1164, 12);
+            this.buttonTamam.Name = "buttonTamam";
+            this.buttonTamam.Size = new System.Drawing.Size(190, 110);
+            this.buttonTamam.TabIndex = 60;
+            this.buttonTamam.Text = "Tamam";
+            this.buttonTamam.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.buttonTamam.UseVisualStyleBackColor = false;
+            this.buttonTamam.Click += new System.EventHandler(this.buttonTamam_Click);
             // 
             // buttonHesapOde
             // 
@@ -508,7 +508,7 @@
             this.Controls.Add(this.labelToplamHesap);
             this.Controls.Add(this.labelGun);
             this.Controls.Add(this.flowPanelMenuBasliklari);
-            this.Controls.Add(this.exitButton);
+            this.Controls.Add(this.buttonTamam);
             this.Controls.Add(this.buttonHesapOde);
             this.Controls.Add(this.flowPanelUrunler);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -526,7 +526,7 @@
 
         private System.Windows.Forms.FlowLayoutPanel flowPanelUrunler;
         private System.Windows.Forms.Button buttonHesapOde;
-        private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.Button buttonTamam;
         private System.Windows.Forms.Label labelGun;
         private System.Windows.Forms.Label labelToplamHesap;
         private System.Windows.Forms.Button buttonNotEkle;

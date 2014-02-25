@@ -34,11 +34,9 @@
             this.newDepartmentForm = new System.Windows.Forms.GroupBox();
             this.comboNewDepView = new System.Windows.Forms.ComboBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.comboNewDepStore = new System.Windows.Forms.ComboBox();
             this.comboNewDepMenu = new System.Windows.Forms.ComboBox();
             this.comboNewDepName = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.buttonDeleteDepartment = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -88,11 +86,9 @@
             this.newDepartmentForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.newDepartmentForm.BackColor = System.Drawing.Color.White;
             this.newDepartmentForm.Controls.Add(this.comboNewDepView);
-            this.newDepartmentForm.Controls.Add(this.comboNewDepStore);
             this.newDepartmentForm.Controls.Add(this.comboNewDepMenu);
             this.newDepartmentForm.Controls.Add(this.comboNewDepName);
             this.newDepartmentForm.Controls.Add(this.label7);
-            this.newDepartmentForm.Controls.Add(this.label3);
             this.newDepartmentForm.Controls.Add(this.label4);
             this.newDepartmentForm.Controls.Add(this.buttonDeleteDepartment);
             this.newDepartmentForm.Controls.Add(this.label5);
@@ -102,7 +98,7 @@
             this.newDepartmentForm.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.newDepartmentForm.Location = new System.Drawing.Point(604, 5);
             this.newDepartmentForm.Name = "newDepartmentForm";
-            this.newDepartmentForm.Size = new System.Drawing.Size(379, 335);
+            this.newDepartmentForm.Size = new System.Drawing.Size(379, 315);
             this.newDepartmentForm.TabIndex = 19;
             this.newDepartmentForm.TabStop = false;
             this.newDepartmentForm.Text = "Yeni Departman";
@@ -115,7 +111,7 @@
             this.comboNewDepView.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.comboNewDepView.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.comboNewDepView.FormattingEnabled = true;
-            this.comboNewDepView.Location = new System.Drawing.Point(9, 116);
+            this.comboNewDepView.Location = new System.Drawing.Point(9, 139);
             this.comboNewDepView.MaxDropDownItems = 20;
             this.comboNewDepView.Name = "comboNewDepView";
             this.comboNewDepView.Size = new System.Drawing.Size(360, 32);
@@ -128,22 +124,6 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // comboNewDepStore
-            // 
-            this.comboNewDepStore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboNewDepStore.ContextMenuStrip = this.contextMenuStrip1;
-            this.comboNewDepStore.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.comboNewDepStore.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.comboNewDepStore.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.comboNewDepStore.FormattingEnabled = true;
-            this.comboNewDepStore.Location = new System.Drawing.Point(10, 240);
-            this.comboNewDepStore.MaxDropDownItems = 20;
-            this.comboNewDepStore.Name = "comboNewDepStore";
-            this.comboNewDepStore.Size = new System.Drawing.Size(360, 32);
-            this.comboNewDepStore.TabIndex = 5;
-            this.comboNewDepStore.Click += new System.EventHandler(this.showMenu);
-            this.comboNewDepStore.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
-            // 
             // comboNewDepMenu
             // 
             this.comboNewDepMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -152,7 +132,7 @@
             this.comboNewDepMenu.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.comboNewDepMenu.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.comboNewDepMenu.FormattingEnabled = true;
-            this.comboNewDepMenu.Location = new System.Drawing.Point(10, 178);
+            this.comboNewDepMenu.Location = new System.Drawing.Point(10, 216);
             this.comboNewDepMenu.MaxDropDownItems = 20;
             this.comboNewDepMenu.Name = "comboNewDepMenu";
             this.comboNewDepMenu.Size = new System.Drawing.Size(360, 32);
@@ -168,7 +148,7 @@
             this.comboNewDepName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.comboNewDepName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.comboNewDepName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.comboNewDepName.Location = new System.Drawing.Point(10, 54);
+            this.comboNewDepName.Location = new System.Drawing.Point(10, 62);
             this.comboNewDepName.MaxLength = 20;
             this.comboNewDepName.Name = "comboNewDepName";
             this.comboNewDepName.Size = new System.Drawing.Size(360, 32);
@@ -180,23 +160,11 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label7.Location = new System.Drawing.Point(6, 89);
+            this.label7.Location = new System.Drawing.Point(6, 107);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(275, 24);
             this.label7.TabIndex = 25;
             this.label7.Text = "Departmanın Masa Ekranı:";
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label3.Location = new System.Drawing.Point(12, 213);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(328, 24);
-            this.label3.TabIndex = 23;
-            this.label3.Text = "Departmanın Kullanacağı Depo:";
             // 
             // label4
             // 
@@ -204,7 +172,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label4.Location = new System.Drawing.Point(12, 151);
+            this.label4.Location = new System.Drawing.Point(12, 184);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(330, 24);
             this.label4.TabIndex = 21;
@@ -218,7 +186,7 @@
             this.buttonDeleteDepartment.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteDepartment.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonDeleteDepartment.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteDepartment.Location = new System.Drawing.Point(10, 284);
+            this.buttonDeleteDepartment.Location = new System.Drawing.Point(10, 260);
             this.buttonDeleteDepartment.Name = "buttonDeleteDepartment";
             this.buttonDeleteDepartment.Size = new System.Drawing.Size(154, 45);
             this.buttonDeleteDepartment.TabIndex = 0;
@@ -234,7 +202,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label5.Location = new System.Drawing.Point(12, 27);
+            this.label5.Location = new System.Drawing.Point(12, 32);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(184, 24);
             this.label5.TabIndex = 19;
@@ -248,7 +216,7 @@
             this.buttonSaveNewDep.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSaveNewDep.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonSaveNewDep.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSaveNewDep.Location = new System.Drawing.Point(275, 284);
+            this.buttonSaveNewDep.Location = new System.Drawing.Point(269, 260);
             this.buttonSaveNewDep.Name = "buttonSaveNewDep";
             this.buttonSaveNewDep.Size = new System.Drawing.Size(101, 45);
             this.buttonSaveNewDep.TabIndex = 6;
@@ -265,7 +233,7 @@
             this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonCancel.Location = new System.Drawing.Point(16, 284);
+            this.buttonCancel.Location = new System.Drawing.Point(10, 260);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(101, 45);
             this.buttonCancel.TabIndex = 17;
@@ -354,7 +322,6 @@
         private System.Windows.Forms.Button buttonAddDepartment;
         private KeyboardClassLibrary.Keyboardcontrol keyboardcontrol1;
         private System.Windows.Forms.GroupBox newDepartmentForm;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonSaveNewDep;
@@ -362,7 +329,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox comboNewDepName;
         private System.Windows.Forms.ComboBox comboNewDepMenu;
-        private System.Windows.Forms.ComboBox comboNewDepStore;
         private System.Windows.Forms.ComboBox comboNewDepView;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;

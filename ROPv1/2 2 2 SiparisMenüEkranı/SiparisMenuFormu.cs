@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Data.SqlClient;
 
 namespace ROPv1
 {
@@ -18,6 +19,8 @@ namespace ROPv1
         int hangiMenuSecili = 0, scrollPosition = 0, elemanBoyu, gorunenListeElemaniSayisi, atlama;
 
         const int urunBoyu = 220, fiyatBoyu = 90;
+
+        DateTime acilisZamani;
 
         string siparisiKimGirdi, adisyonNotu;
 
@@ -31,6 +34,7 @@ namespace ROPv1
 
         bool iptalIkram = true;
 
+        string MasaAdi;
         public SiparisMenuFormu(string masaninAdi, Restoran butonBilgileri, string siparisiGirenKisi)
         {
             InitializeComponent();
@@ -63,7 +67,7 @@ namespace ROPv1
                 buttonUrunIptal.Enabled = false;
                 iptalIkram = false;
             }
-
+            MasaAdi = masaninAdi;
             labelMasa.Text = "Masa: " + masaninAdi;
             labelDepartman.Text = "Departman: " + hangiDepartman.departmanAdi;
 
@@ -136,7 +140,8 @@ namespace ROPv1
                 }
             }
 
-            listHesap.Groups[1].Header += " - " + DateTime.Now.ToShortTimeString();
+            acilisZamani = DateTime.Now;
+            listHesap.Groups[1].Header += " - " + acilisZamani.ToShortTimeString();
         }
 
         //kategori seçildiğinde kategori içindeki ürünleri panele getiren method
@@ -284,6 +289,11 @@ namespace ROPv1
         //form load
         private void SiparisMenuFormu_Load(object sender, EventArgs e)
         {
+            if (true) // eğer masa açıksa
+            {
+                //SqlCommand cmd = SQLBaglantisi.getCommand("select ");
+            }
+
             //form load olduğunda tool larımızda ekranın boyundan fazla ürün yoksa scroll butonlarını saklıyoruz
             if (!flowPanelMenuBasliklari.VerticalScroll.Visible)
             {
@@ -630,14 +640,6 @@ namespace ROPv1
             }
         }
 
-        private void exitButton_Click(object sender, EventArgs e)
-        {
-            //Burda sqle not hesap vs yazılacak..
-
-            //masa numarası, departman adı, siparişler, açılış zamanı, siparişi veren kişi,toplam fiyat, ikramlar,not bilgisi(BOŞ DEĞİLSE).
-            this.Close();
-        }
-
         private void paymentButton_Click(object sender, EventArgs e)
         {
             //ödendiğinde sql de ödendi flagini 1 yap 
@@ -876,5 +878,60 @@ namespace ROPv1
 
         }
         #endregion
+
+        private void buttonTamam_Click(object sender, EventArgs e)
+        {
+            //Burda sqle not hesap vs yazılacak..
+
+            //masa numarası, departman adı, siparişler, açılış zamanı, siparişi veren kişi,toplam fiyat, ikramlar,not bilgisi(BOŞ DEĞİLSE).
+
+            if (listHesap.Items.Count == 0 /* || adisyon sql de açıkmı */)// Hepsi iptal olduğu durumda adisyonun ve siparişlerin iptal mi kısmını true yap
+                this.Close();
+            else
+            {
+                try // açık
+                {
+                    SqlCommand cmd = SQLBaglantisi.getCommand("select acikMi from Adisyon where MasaAdi=" + MasaAdi + " and DepartmanAdi=" + hangiDepartman.departmanAdi + " and acikMi=1");
+                }
+                catch // kapalı
+                {
+                    adisyonOlustur();
+                    foreach(ListViewItem x in listHesap.Items)
+                    {
+                        siparisOlustur();
+                    }
+                }
+            }
+        }
+
+        public void adisyonOlustur()
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("insert into Adisyon(acikMi,AdisyonNotu,AcilisZamani,DepartmanAdi,MasaAdi,ToplamHesap,KalanHesap) values(@_acikMi,@_AdisyonNotu,@_AcilisZamani,@_DepartmanAdi,@_MasaAdi,@_ToplamHesap,@_KalanHesap)");
+            cmd.Parameters.AddWithValue("@_acikmi", 1);
+            cmd.Parameters.AddWithValue("@_AdisyonNotu", adisyonNotu);
+            cmd.Parameters.AddWithValue("@_AcilisZamani", acilisZamani);
+            cmd.Parameters.AddWithValue("@_DepartmanAdi", hangiDepartman.departmanAdi);
+            cmd.Parameters.AddWithValue("@_MasaAdi", MasaAdi);
+            cmd.Parameters.AddWithValue("@_ToplamHesap", Convert.ToDecimal(labelToplamHesap.Text));
+            cmd.Parameters.AddWithValue("@_KalanHesap", Convert.ToDecimal(labelToplamHesap.Text));
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void siparisOlustur()
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("insert into Adisyon(acikMi,AdisyonNotu,AcilisZamani,DepartmanAdi,MasaAdi,ToplamHesap,KalanHesap) values(@_acikMi,@_AdisyonNotu,@_AcilisZamani,@_DepartmanAdi,@_MasaAdi,@_ToplamHesap,@_KalanHesap)");
+            cmd.Parameters.AddWithValue("@_acikmi", 1);
+            cmd.Parameters.AddWithValue("@_AdisyonNotu", adisyonNotu);
+            cmd.Parameters.AddWithValue("@_AcilisZamani", acilisZamani);
+            cmd.Parameters.AddWithValue("@_DepartmanAdi", hangiDepartman.departmanAdi);
+            cmd.Parameters.AddWithValue("@_MasaAdi", MasaAdi);
+            cmd.Parameters.AddWithValue("@_ToplamHesap", Convert.ToDecimal(labelToplamHesap.Text));
+            cmd.Parameters.AddWithValue("@_KalanHesap", Convert.ToDecimal(labelToplamHesap.Text));
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
     }
 }

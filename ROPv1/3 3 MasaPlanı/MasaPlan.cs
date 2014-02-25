@@ -44,7 +44,6 @@ namespace ROPv1
                     departmanVarmi[0].departmanAdi = "Departman";
                     departmanVarmi[0].departmanMenusu = "Menü";
                     departmanVarmi[0].departmanEkrani = "Masa Ekranı";
-                    departmanVarmi[0].departmanDeposu = "Depo";
                     XmlSave.SaveRestoran(departmanVarmi, "restoran.xml");
                 }
 

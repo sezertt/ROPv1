@@ -149,6 +149,7 @@
             this.textboxUrunName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxUrunName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textboxUrunName.Location = new System.Drawing.Point(8, 57);
+            this.textboxUrunName.MaxLength = 30;
             this.textboxUrunName.Name = "textboxUrunName";
             this.textboxUrunName.Size = new System.Drawing.Size(305, 32);
             this.textboxUrunName.TabIndex = 2;

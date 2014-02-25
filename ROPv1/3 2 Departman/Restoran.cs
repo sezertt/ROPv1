@@ -12,6 +12,5 @@ namespace ROPv1
         public string departmanAdi;
         public string departmanMenusu;
         public string departmanEkrani;
-        public string departmanDeposu;
     }
 }
