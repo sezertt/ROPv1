@@ -29,8 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("İkram", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Sipariş", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("İkramlar", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Siparişler", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Yeni İkramlar", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Yeni Siparişler", System.Windows.Forms.HorizontalAlignment.Left);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SiparisMenuFormu));
             this.flowPanelUrunler = new System.Windows.Forms.FlowLayoutPanel();
             this.labelGun = new System.Windows.Forms.Label();
@@ -202,15 +204,22 @@
             this.listHesap.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.listHesap.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.listHesap.FullRowSelect = true;
-            listViewGroup1.Header = "İkram";
+            listViewGroup1.Header = "İkramlar";
             listViewGroup1.Name = "ikramGrubu";
             listViewGroup1.Tag = "0";
-            listViewGroup2.Header = "Sipariş";
+            listViewGroup2.Header = "Siparişler";
             listViewGroup2.Name = "siparisGrubu";
             listViewGroup2.Tag = "1";
+            listViewGroup3.Header = "Yeni İkramlar";
+            listViewGroup3.Name = "YeniIkramGrubu";
+            listViewGroup4.Header = "Yeni Siparişler";
+            listViewGroup4.Name = "YeniSiparisGrubu";
+            listViewGroup4.Tag = "2";
             this.listHesap.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
             listViewGroup1,
-            listViewGroup2});
+            listViewGroup2,
+            listViewGroup3,
+            listViewGroup4});
             this.listHesap.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listHesap.HideSelection = false;
             this.listHesap.LabelWrap = false;

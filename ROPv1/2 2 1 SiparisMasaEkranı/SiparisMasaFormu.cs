@@ -201,9 +201,29 @@ namespace ROPv1
 
                     if (pinForm.dogru) //pin doğru
                     {
+                        SiparisMenuFormu siparisForm;
+                        if(((Button)sender).BackColor == Color.White)
+                        {
+                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi,false);//burada masa numarasını da yolla
+                            siparisForm.ShowDialog();
+                        }
+                        else
+                        {
+                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi,true);//burada masa numarasını da yolla
+                            siparisForm.ShowDialog();
+                        }                        
 
-                        SiparisMenuFormu siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi);//burada masa numarasını da yolla
-                        siparisForm.ShowDialog();
+                        if (siparisForm.masaAcikMi)
+                        {
+                            ((Button)sender).ForeColor = Color.White;
+                            ((Button)sender).BackColor = Color.Firebrick;
+                        }
+                        else
+                        {
+                            ((Button)sender).ForeColor = SystemColors.ActiveCaption;
+                            ((Button)sender).BackColor = Color.White;
+                        }
+
                     }
                 }
                 else
