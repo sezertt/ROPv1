@@ -9,6 +9,10 @@ namespace ROPv1
     [Serializable]
     public class StokBilgileri
     {
+        
+        public string StokAdi;
+        public string StokMiktari;
+        public string MiktarTipi;
 
     }
 }
