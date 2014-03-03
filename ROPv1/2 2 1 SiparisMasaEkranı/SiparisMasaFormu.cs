@@ -22,6 +22,8 @@ namespace ROPv1
 
         List<MasaDizayn> masaDizaynListesi = new List<MasaDizayn>();
 
+        DateTime hangiGun;
+
         public SiparisMasaFormu()
         {
             InitializeComponent();
@@ -34,11 +36,12 @@ namespace ROPv1
             {
                 XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
                 GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
-
+                
                 //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
                 if (infoGunler[infoGunler.Count() - 1].gunSonuYapanKisi == null && infoGunler[infoGunler.Count() - 1].gunBasiYapanKisi != null)
                 {
                     dayButton.Image = global::ROPv1.Properties.Resources.dayOn;
+                    hangiGun = infoGunler[infoGunler.Count() - 1].gunBasiVakti.Date;
                 }
                 else
                 {
@@ -192,6 +195,16 @@ namespace ROPv1
                 XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
                 GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
 
+                if (hangiGun != DateTime.Now.Date)
+                {
+                    using (KontrolFormu dialog = new KontrolFormu("Gün değişti! Gün Sonu yapmanız gerekiyor", false))
+                    {
+                        dialog.ShowDialog();
+                        this.buttonGunIslemiPressed(null, null);
+                    }
+                    return;
+                }
+
                 //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
                 if (infoGunler[infoGunler.Count() - 1].gunSonuYapanKisi == null && infoGunler[infoGunler.Count() - 1].gunBasiYapanKisi != null)
                 { //gün açık sipariş ekranına geçilebilir
@@ -201,9 +214,29 @@ namespace ROPv1
 
                     if (pinForm.dogru) //pin doğru
                     {
+                        SiparisMenuFormu siparisForm;
+                        if(((Button)sender).BackColor == Color.White)
+                        {
+                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi,false);//burada masa numarasını da yolla
+                            siparisForm.ShowDialog();
+                        }
+                        else
+                        {
+                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi,true);//burada masa numarasını da yolla
+                            siparisForm.ShowDialog();
+                        }                        
 
-                        SiparisMenuFormu siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi);//burada masa numarasını da yolla
-                        siparisForm.ShowDialog();
+                        if (siparisForm.masaAcikMi)
+                        {
+                            ((Button)sender).ForeColor = Color.White;
+                            ((Button)sender).BackColor = Color.Firebrick;
+                        }
+                        else
+                        {
+                            ((Button)sender).ForeColor = SystemColors.ActiveCaption;
+                            ((Button)sender).BackColor = Color.White;
+                        }
+
                     }
                 }
                 else

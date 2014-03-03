@@ -87,11 +87,11 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Location = new System.Drawing.Point(0, 769);
+            this.panel1.Location = new System.Drawing.Point(13, 126);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1313, 50);
+            this.panel1.Size = new System.Drawing.Size(1287, 50);
             this.panel1.TabIndex = 14;
             this.panel1.SizeChanged += new System.EventHandler(this.myPannel_SizeChanged);
             // 
@@ -128,7 +128,7 @@
             this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.166667F));
             this.tablePanel.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.tablePanel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.tablePanel.Location = new System.Drawing.Point(12, 127);
+            this.tablePanel.Location = new System.Drawing.Point(11, 177);
             this.tablePanel.Name = "tablePanel";
             this.tablePanel.RowCount = 6;
             this.tablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
@@ -137,7 +137,7 @@
             this.tablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tablePanel.Size = new System.Drawing.Size(1289, 636);
+            this.tablePanel.Size = new System.Drawing.Size(1291, 636);
             this.tablePanel.TabIndex = 24;
             // 
             // dayButton
