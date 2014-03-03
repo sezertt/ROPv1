@@ -240,5 +240,10 @@ namespace ROPv1
             //mutfakForm.Show();
             //this.Close();
         }
+
+        private void GirisEkrani_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -1088,7 +1088,7 @@ namespace ROPv1
 
             //masa numarası, departman adı, siparişler, açılış zamanı, siparişi veren kişi,toplam fiyat, ikramlar,not bilgisi(BOŞ DEĞİLSE).
 
-            if (listHesap.Items.Count == 0 /* || adisyon sql de açıkmı */)// Hepsi iptal olduğu durumda adisyonun ve siparişlerin iptal mi kısmını true yap
+            if (listHesap.Items.Count == 0 /* || adisyon sql de açıkmı */)// Tüm siparişler iptal olduğu durumda adisyonun ve siparişlerin iptal mi kısmını true yap
                 this.Close();
             else
             {
