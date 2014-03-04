@@ -12,6 +12,7 @@ namespace ROPv1
         public List<string> urunAdi;
         public List<string> porsiyonFiyati;
         public List<string> urunKategorisi;
+        public List<int> urunKDV;
         public string kategorininAdi;
 
         public UrunOzellikleri()
@@ -19,6 +20,7 @@ namespace ROPv1
             urunAdi = new List<string>();
             porsiyonFiyati = new List<string>();
             urunKategorisi = new List<string>();
+            urunKDV = new List<int>();
         }
     }
 }

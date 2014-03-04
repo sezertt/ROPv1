@@ -36,15 +36,8 @@ namespace ROPv1
 
                 XmlLoad<StokBilgileri> loadInfo = new XmlLoad<StokBilgileri>();
                 info = loadInfo.LoadRestoran("stoklar.xml");
-
                 stokListesi.AddRange(info);
-
-                for (int i = 0; i < stokListesi.Count; i++)
-                {
-                    myListUrunler.Items.Add(stokListesi[i].StokAdi);
-                    myListUrunler.Items[i].SubItems.Add(stokListesi[i].StokMiktari);
-                    myListUrunler.Items[i].SubItems.Add(stokListesi[i].MiktarTipi);
-                }
+                goster();
             }
         }
         //yeni ürün ekle butonuna basıldığında
@@ -71,20 +64,40 @@ namespace ROPv1
             buttonSaveNewStok.Enabled = false;
             textboxUrunAdi.Clear();
             textBoxUrunMiktari.Clear();
+            goster();
 
         }
-
-        private void buttonSaveNewStok_Click(object sender, EventArgs e)
+        //ürünleri listview'a aktarmak için gereken fonksiyon
+        private void goster()
+        {
+            for (int i = 0; i < stokListesi.Count; i++)
+            {
+                myListUrunler.Items.Add(stokListesi[i].StokAdi);
+                myListUrunler.Items[i].SubItems.Add(stokListesi[i].StokMiktari);
+                myListUrunler.Items[i].SubItems.Add(stokListesi[i].MiktarTipi);
+            }
+        }
+        //ürün eklemek için gereken fonksiyon
+        private void kaydet ()
         {
             buttonDeleteStok.Enabled = false;
             buttonSaveNewStok.Enabled = false;
             buttonCancel.Enabled = false;
             buttonAddNewStok.Enabled = true;
-            if (textboxUrunAdi.Text == null || textBoxUrunMiktari.Text == null)
+            if (textboxUrunAdi.Text == "" || textBoxUrunMiktari.Text == "")
             {
                 MessageBox.Show("Eksik bilgi girdiniz. Lütfen ürün adı ve ürün miktarı girdiğinizden emin olunuz.");
+                buttonDeleteStok.Visible = false;
+                buttonCancel.Visible = true;
+                buttonCancel.Enabled = true;
+                buttonSaveNewStok.Enabled = true;
+                buttonAddNewStok.Enabled = false;
+                textboxUrunAdi.Enabled = true;
+                textBoxUrunMiktari.Enabled = true;
+                newStokForm.Text = "Yeni Ürün";
+                textboxUrunAdi.Focus();
             }
-            if (newStokForm.Text == "Yeni Ürün")
+            else
             {
                 newStokForm.Text = textboxUrunAdi.Text;
                 StokBilgileri yeniurun = new StokBilgileri();
@@ -97,7 +110,11 @@ namespace ROPv1
                 stokListesi.Add(yeniurun);
                 XmlSave.SaveRestoran(stokListesi, "stoklar.xml");
             }
+        }
 
+        private void buttonSaveNewStok_Click(object sender, EventArgs e)
+        {
+            kaydet();
         }
 
         private void keyboardcontrol1_UserKeyPressed(object sender, KeyboardClassLibrary.KeyboardEventArgs e)
@@ -159,5 +176,48 @@ namespace ROPv1
                  
             }
         }
+
+        private void textBoxUrunMiktari_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void Stoklar_Load(object sender, EventArgs e)
+        {
+            this.columnUrunAdi.Width = myListUrunler.Width * 70/100;
+            this.columnUrunMiktari.Width = myListUrunler.Width * 15/100;
+            this.columnMiktarTipi.Width = myListUrunler.Width * 15/100;
+        }
+
+        private void textboxUrunAdi_KeyDown(object sender, KeyEventArgs e)
+        {
+             if (e.KeyCode == Keys.Enter)
+             {
+                 textBoxUrunMiktari.Focus();
+                 e.Handled = true;
+                 e.SuppressKeyPress = true;
+             }
+        }
+
+        private void textBoxUrunMiktari_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode==Keys.Enter)
+            {
+                comboBoxMiktarTipi.Focus();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void comboBoxMiktarTipi_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                kaydet();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
     }
 }

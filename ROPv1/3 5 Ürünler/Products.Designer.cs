@@ -47,6 +47,8 @@
             this.treeUrunAdi = new System.Windows.Forms.TreeView();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.comboKDV = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.newProductForm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,8 +56,8 @@
             // 
             this.newProductForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.newProductForm.BackColor = System.Drawing.Color.White;
-            this.newProductForm.Controls.Add(this.labelUrunSayisi);
-            this.newProductForm.Controls.Add(this.labelUrunSayisiYazisi);
+            this.newProductForm.Controls.Add(this.label2);
+            this.newProductForm.Controls.Add(this.comboKDV);
             this.newProductForm.Controls.Add(this.label1);
             this.newProductForm.Controls.Add(this.comboNewKategoriName);
             this.newProductForm.Controls.Add(this.textboxUrunFiyat);
@@ -79,7 +81,7 @@
             this.labelUrunSayisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelUrunSayisi.AutoSize = true;
             this.labelUrunSayisi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelUrunSayisi.Location = new System.Drawing.Point(148, 299);
+            this.labelUrunSayisi.Location = new System.Drawing.Point(352, 302);
             this.labelUrunSayisi.Name = "labelUrunSayisi";
             this.labelUrunSayisi.Size = new System.Drawing.Size(22, 24);
             this.labelUrunSayisi.TabIndex = 44;
@@ -90,9 +92,9 @@
             this.labelUrunSayisiYazisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelUrunSayisiYazisi.AutoSize = true;
             this.labelUrunSayisiYazisi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelUrunSayisiYazisi.Location = new System.Drawing.Point(12, 299);
+            this.labelUrunSayisiYazisi.Location = new System.Drawing.Point(218, 302);
             this.labelUrunSayisiYazisi.Name = "labelUrunSayisiYazisi";
-            this.labelUrunSayisiYazisi.Size = new System.Drawing.Size(137, 24);
+            this.labelUrunSayisiYazisi.Size = new System.Drawing.Size(139, 24);
             this.labelUrunSayisiYazisi.TabIndex = 43;
             this.labelUrunSayisiYazisi.Text = "Ürün Sayısı =";
             // 
@@ -174,7 +176,7 @@
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label5.Location = new System.Drawing.Point(4, 30);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(103, 24);
+            this.label5.Size = new System.Drawing.Size(104, 24);
             this.label5.TabIndex = 19;
             this.label5.Text = "Ürün Adı:";
             // 
@@ -186,7 +188,7 @@
             this.buttonSaveNewProduct.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSaveNewProduct.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonSaveNewProduct.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSaveNewProduct.Location = new System.Drawing.Point(203, 244);
+            this.buttonSaveNewProduct.Location = new System.Drawing.Point(206, 290);
             this.buttonSaveNewProduct.Name = "buttonSaveNewProduct";
             this.buttonSaveNewProduct.Size = new System.Drawing.Size(110, 45);
             this.buttonSaveNewProduct.TabIndex = 6;
@@ -203,7 +205,7 @@
             this.buttonDeleteProduct.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteProduct.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonDeleteProduct.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteProduct.Location = new System.Drawing.Point(8, 244);
+            this.buttonDeleteProduct.Location = new System.Drawing.Point(8, 290);
             this.buttonDeleteProduct.Name = "buttonDeleteProduct";
             this.buttonDeleteProduct.Size = new System.Drawing.Size(110, 45);
             this.buttonDeleteProduct.TabIndex = 5;
@@ -220,7 +222,7 @@
             this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonCancel.Location = new System.Drawing.Point(8, 244);
+            this.buttonCancel.Location = new System.Drawing.Point(8, 290);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(110, 44);
             this.buttonCancel.TabIndex = 8;
@@ -314,10 +316,36 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.moveNodeUp);
             // 
+            // comboKDV
+            // 
+            this.comboKDV.Font = new System.Drawing.Font("Arial", 15.75F);
+            this.comboKDV.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.comboKDV.FormattingEnabled = true;
+            this.comboKDV.Items.AddRange(new object[] {
+            "1",
+            "8",
+            "18"});
+            this.comboKDV.Location = new System.Drawing.Point(100, 242);
+            this.comboKDV.Name = "comboKDV";
+            this.comboKDV.Size = new System.Drawing.Size(213, 32);
+            this.comboKDV.TabIndex = 43;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold);
+            this.label2.Location = new System.Drawing.Point(4, 244);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 24);
+            this.label2.TabIndex = 44;
+            this.label2.Text = "KDV (%)";
+            // 
             // Products
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.labelUrunSayisi);
+            this.Controls.Add(this.labelUrunSayisiYazisi);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonAddNewProduct);
@@ -331,6 +359,7 @@
             this.newProductForm.ResumeLayout(false);
             this.newProductForm.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -354,6 +383,8 @@
         private System.Windows.Forms.Label labelUrunSayisiYazisi;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboKDV;
 
     }
 }

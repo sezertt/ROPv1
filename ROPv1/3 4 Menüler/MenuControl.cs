@@ -637,195 +637,243 @@ namespace ROPv1
                     infoUrun[i].urunAdi = new List<string>();
                     infoUrun[i].porsiyonFiyati = new List<string>();
                     infoUrun[i].urunKategorisi = new List<string>();
+                    infoUrun[i].urunKDV = new List<int>();
                 }
 
                 infoUrun[0].urunAdi.Add("Şırdan Tuzlama");
                 infoUrun[0].porsiyonFiyati.Add("7,00");
                 infoUrun[0].urunKategorisi.Add("Çorbalar");
+                infoUrun[0].urunKDV.Add(8);
 
                 infoUrun[0].urunAdi.Add("İşkembe");
                 infoUrun[0].porsiyonFiyati.Add("6,50");
                 infoUrun[0].urunKategorisi.Add("Çorbalar");
+                infoUrun[0].urunKDV.Add(8);
 
                 infoUrun[0].urunAdi.Add("İşkembe Tuzlama");
                 infoUrun[0].porsiyonFiyati.Add("8,00");
                 infoUrun[0].urunKategorisi.Add("Çorbalar");
+                infoUrun[0].urunKDV.Add(8);
 
                 infoUrun[0].urunAdi.Add("Ayak Paça");
                 infoUrun[0].porsiyonFiyati.Add("8,00");
                 infoUrun[0].urunKategorisi.Add("Çorbalar");
+                infoUrun[0].urunKDV.Add(8);
 
                 infoUrun[0].urunAdi.Add("Kelle Paça");
                 infoUrun[0].porsiyonFiyati.Add("9,00");
                 infoUrun[0].urunKategorisi.Add("Çorbalar");
+                infoUrun[0].urunKDV.Add(8);
 
                 infoUrun[1].urunAdi.Add("Mumbar Dolma");
                 infoUrun[1].porsiyonFiyati.Add("9,00");
                 infoUrun[1].urunKategorisi.Add("Spesyaller");
+                infoUrun[1].urunKDV.Add(8);
 
                 infoUrun[1].urunAdi.Add("İşkembe Güveç");
                 infoUrun[1].porsiyonFiyati.Add("9,00");
                 infoUrun[1].urunKategorisi.Add("Spesyaller");
+                infoUrun[1].urunKDV.Add(8);
 
                 infoUrun[1].urunAdi.Add("Tereyağında Tuzlama");
                 infoUrun[1].porsiyonFiyati.Add("7,00");
                 infoUrun[1].urunKategorisi.Add("Spesyaller");
+                infoUrun[1].urunKDV.Add(8);
 
                 infoUrun[1].urunAdi.Add("Kuzu Kelle");
                 infoUrun[1].porsiyonFiyati.Add("8,00");
                 infoUrun[1].urunKategorisi.Add("Spesyaller");
+                infoUrun[1].urunKDV.Add(8);
 
                 infoUrun[1].urunAdi.Add("Beyin Tava");
                 infoUrun[1].porsiyonFiyati.Add("8,00");
                 infoUrun[1].urunKategorisi.Add("Spesyaller");
+                infoUrun[1].urunKDV.Add(8);
 
                 infoUrun[2].urunAdi.Add("Ankara Döneri");
                 infoUrun[2].porsiyonFiyati.Add("8,00");
                 infoUrun[2].urunKategorisi.Add("Döner");
+                infoUrun[2].urunKDV.Add(8);
 
                 infoUrun[2].urunAdi.Add("Dürüm Döner");
                 infoUrun[2].porsiyonFiyati.Add("8,00");
                 infoUrun[2].urunKategorisi.Add("Döner");
+                infoUrun[2].urunKDV.Add(8);
 
                 infoUrun[2].urunAdi.Add("İskender");
                 infoUrun[2].porsiyonFiyati.Add("9,00");
                 infoUrun[2].urunKategorisi.Add("Döner");
+                infoUrun[2].urunKDV.Add(8);
 
                 infoUrun[2].urunAdi.Add("Kapalı Döner");
                 infoUrun[2].porsiyonFiyati.Add("9,00");
                 infoUrun[2].urunKategorisi.Add("Döner");
+                infoUrun[2].urunKDV.Add(8);
 
                 infoUrun[3].urunAdi.Add("Kıymalı Pide");
                 infoUrun[3].porsiyonFiyati.Add("6,00");
                 infoUrun[3].urunKategorisi.Add("Pideler");
+                infoUrun[3].urunKDV.Add(8);
 
                 infoUrun[3].urunAdi.Add("Kuşbaşılı Pide");
                 infoUrun[3].porsiyonFiyati.Add("7,00");
                 infoUrun[3].urunKategorisi.Add("Pideler");
+                infoUrun[3].urunKDV.Add(8);
 
                 infoUrun[3].urunAdi.Add("Kaşarlı Pide");
                 infoUrun[3].porsiyonFiyati.Add("7,00");
                 infoUrun[3].urunKategorisi.Add("Pideler");
+                infoUrun[3].urunKDV.Add(8);
 
                 infoUrun[3].urunAdi.Add("Karışık Pide");
                 infoUrun[3].porsiyonFiyati.Add("8,00");
                 infoUrun[3].urunKategorisi.Add("Pideler");
+                infoUrun[3].urunKDV.Add(8);
 
                 infoUrun[3].urunAdi.Add("Sucuklu Pide");
                 infoUrun[3].porsiyonFiyati.Add("8,00");
                 infoUrun[3].urunKategorisi.Add("Pideler");
+                infoUrun[3].urunKDV.Add(8);
 
                 infoUrun[3].urunAdi.Add("Lahmacun");
                 infoUrun[3].porsiyonFiyati.Add("3,00");
                 infoUrun[3].urunKategorisi.Add("Pideler");
+                infoUrun[3].urunKDV.Add(8);
 
                 infoUrun[4].urunAdi.Add("Tas Kebabı");
                 infoUrun[4].porsiyonFiyati.Add("10,00");
                 infoUrun[4].urunKategorisi.Add("Et Yemekleri");
+                infoUrun[4].urunKDV.Add(8);
 
                 infoUrun[4].urunAdi.Add("Püreli Kebap");
                 infoUrun[4].porsiyonFiyati.Add("10,00");
                 infoUrun[4].urunKategorisi.Add("Et Yemekleri");
+                infoUrun[4].urunKDV.Add(8);
 
                 infoUrun[4].urunAdi.Add("Beğendili Kebap");
                 infoUrun[4].porsiyonFiyati.Add("10,00");
                 infoUrun[4].urunKategorisi.Add("Et Yemekleri");
+                infoUrun[4].urunKDV.Add(8);
 
                 infoUrun[4].urunAdi.Add("Dana Rosto");
                 infoUrun[4].porsiyonFiyati.Add("10,00");
                 infoUrun[4].urunKategorisi.Add("Et Yemekleri");
+                infoUrun[4].urunKDV.Add(8);
 
                 infoUrun[4].urunAdi.Add("Orman Kebabı");
                 infoUrun[4].porsiyonFiyati.Add("10,00");
                 infoUrun[4].urunKategorisi.Add("Et Yemekleri");
+                infoUrun[4].urunKDV.Add(8);
 
                 infoUrun[4].urunAdi.Add("Çiftlik Kebabı");
                 infoUrun[4].porsiyonFiyati.Add("10,00");
                 infoUrun[4].urunKategorisi.Add("Et Yemekleri");
+                infoUrun[4].urunKDV.Add(8);
 
                 infoUrun[5].urunAdi.Add("İnegöl Köfte");
                 infoUrun[5].porsiyonFiyati.Add("7,00");
                 infoUrun[5].urunKategorisi.Add("Kebaplar");
+                infoUrun[5].urunKDV.Add(8);
 
                 infoUrun[5].urunAdi.Add("Kaşarlı Köfte");
                 infoUrun[5].porsiyonFiyati.Add("8,00");
                 infoUrun[5].urunKategorisi.Add("Kebaplar");
+                infoUrun[5].urunKDV.Add(8);
 
                 infoUrun[5].urunAdi.Add("Adana Kebap");
                 infoUrun[5].porsiyonFiyati.Add("7,50");
                 infoUrun[5].urunKategorisi.Add("Kebaplar");
+                infoUrun[5].urunKDV.Add(8);
 
                 infoUrun[5].urunAdi.Add("Beyti Kebap");
                 infoUrun[5].porsiyonFiyati.Add("9,00");
                 infoUrun[5].urunKategorisi.Add("Kebaplar");
+                infoUrun[5].urunKDV.Add(8);
 
                 infoUrun[5].urunAdi.Add("Patlıcan Kebap");
                 infoUrun[5].porsiyonFiyati.Add("10,00");
                 infoUrun[5].urunKategorisi.Add("Kebaplar");
+                infoUrun[5].urunKDV.Add(8);
 
                 infoUrun[5].urunAdi.Add("Domatesli Kebap");
                 infoUrun[5].porsiyonFiyati.Add("8,00");
                 infoUrun[5].urunKategorisi.Add("Kebaplar");
+                infoUrun[5].urunKDV.Add(8);
 
                 infoUrun[6].urunAdi.Add("Mevsim Salata");
                 infoUrun[6].porsiyonFiyati.Add("4,00");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
+                infoUrun[6].urunKDV.Add(8);
 
                 infoUrun[6].urunAdi.Add("Çoban Salata");
                 infoUrun[6].porsiyonFiyati.Add("4,00");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
+                infoUrun[6].urunKDV.Add(8);
 
                 infoUrun[6].urunAdi.Add("Beyin Salata");
                 infoUrun[6].porsiyonFiyati.Add("7,00");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
+                infoUrun[6].urunKDV.Add(8);
 
                 infoUrun[6].urunAdi.Add("Cacık");
                 infoUrun[6].porsiyonFiyati.Add("4,00");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
+                infoUrun[6].urunKDV.Add(8);
 
                 infoUrun[7].urunAdi.Add("Kaymaklı Ekmek Kadayıfı");
                 infoUrun[7].porsiyonFiyati.Add("5,00");
                 infoUrun[7].urunKategorisi.Add("Tatlılar");
+                infoUrun[7].urunKDV.Add(8);
 
                 infoUrun[7].urunAdi.Add("Sütlü Kadayıf");
                 infoUrun[7].porsiyonFiyati.Add("4,00");
                 infoUrun[7].urunKategorisi.Add("Tatlılar");
+                infoUrun[7].urunKDV.Add(8);
 
                 infoUrun[7].urunAdi.Add("Şekerpare");
                 infoUrun[7].porsiyonFiyati.Add("4,00");
                 infoUrun[7].urunKategorisi.Add("Tatlılar");
+                infoUrun[7].urunKDV.Add(8);
 
                 infoUrun[7].urunAdi.Add("Fırın Sütlaç");
                 infoUrun[7].porsiyonFiyati.Add("4,00");
                 infoUrun[7].urunKategorisi.Add("Tatlılar");
+                infoUrun[7].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Kola");
                 infoUrun[8].porsiyonFiyati.Add("2,00");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Fanta");
                 infoUrun[8].porsiyonFiyati.Add("2,00");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Meyve Suyu");
                 infoUrun[8].porsiyonFiyati.Add("2,00");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Ayran");
                 infoUrun[8].porsiyonFiyati.Add("1,50");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Soda");
                 infoUrun[8].porsiyonFiyati.Add("1,00");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Su");
                 infoUrun[8].porsiyonFiyati.Add("1,00");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Çay");
                 infoUrun[8].porsiyonFiyati.Add("0,50");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[0].kategorininAdi = "Çorbalar";
                 infoUrun[1].kategorininAdi = "Spesyaller";
