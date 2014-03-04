@@ -15,7 +15,7 @@ namespace ROPv1
 {
     public partial class Stoklar : UserControl
     {
-        List<StokBilgileri> stokListesi= new List<StokBilgileri>();
+        List<StokBilgileri> stokListesi = new List<StokBilgileri>();
 
         public Stoklar()
         {
@@ -80,11 +80,11 @@ namespace ROPv1
             buttonSaveNewStok.Enabled = false;
             buttonCancel.Enabled = false;
             buttonAddNewStok.Enabled = true;
-            if(textboxUrunAdi.Text==null||textBoxUrunMiktari.Text==null)
+            if (textboxUrunAdi.Text == null || textBoxUrunMiktari.Text == null)
             {
-                    MessageBox.Show("Eksik bilgi girdiniz. Lütfen ürün adı ve ürün miktarı girdiğinizden emin olunuz.");
+                MessageBox.Show("Eksik bilgi girdiniz. Lütfen ürün adı ve ürün miktarı girdiğinizden emin olunuz.");
             }
-            if(newStokForm.Text=="Yeni Ürün")
+            if (newStokForm.Text == "Yeni Ürün")
             {
                 newStokForm.Text = textboxUrunAdi.Text;
                 StokBilgileri yeniurun = new StokBilgileri();
@@ -92,13 +92,13 @@ namespace ROPv1
                 yeniurun.StokMiktari = textBoxUrunMiktari.Text;
                 yeniurun.MiktarTipi = comboBoxMiktarTipi.Text;
                 myListUrunler.Items.Add(textboxUrunAdi.Text);
-                myListUrunler.Items[myListUrunler.Items.Count-1].SubItems.Add(textBoxUrunMiktari.Text);
-                myListUrunler.Items[myListUrunler.Items.Count-1].SubItems.Add(comboBoxMiktarTipi.Text);
+                myListUrunler.Items[myListUrunler.Items.Count - 1].SubItems.Add(textBoxUrunMiktari.Text);
+                myListUrunler.Items[myListUrunler.Items.Count - 1].SubItems.Add(comboBoxMiktarTipi.Text);
                 stokListesi.Add(yeniurun);
                 XmlSave.SaveRestoran(stokListesi, "stoklar.xml");
             }
-            
-        } 
+
+        }
 
         private void keyboardcontrol1_UserKeyPressed(object sender, KeyboardClassLibrary.KeyboardEventArgs e)
         {
@@ -134,26 +134,30 @@ namespace ROPv1
 
             if (eminMisiniz == DialogResult.Yes)
             {
-               // //listeden menüyü siliyoruz
-               // myListUrunler.SelectedItems[0].Remove();
-               //// stokListesi[myListUrunler.FocusedItem.Index].StokAdi.Remove(myListUrunler.FocusedItem.Index);
-               //// stokListesi[myListUrunler.FocusedItem.Index].StokMiktari.Remove(myListUrunler.FocusedItem.Index);
-               //// stokListesi[myListUrunler.FocusedItem.Index].MiktarTipi.Remove(myListUrunler.FocusedItem.Index);
-               // //kaydediyoruz
-               // XmlSave.SaveRestoran(stokListesi, "menu.xml");
-                //StokBilgileri silinecekurun = new StokBilgileri();
-                //silinecekurun.StokAdi = textboxUrunAdi.Text;
-                //silinecekurun.StokMiktari = textBoxUrunMiktari.Text;
-                //silinecekurun.MiktarTipi = comboBoxMiktarTipi.Text;bir türlü xml dosyasından silemedm.
+                //listeden menüyü siliyoruz
+                stokListesi.RemoveAt(myListUrunler.SelectedItems[0].Index);
                 myListUrunler.SelectedItems[0].Remove();
                 XmlSave.SaveRestoran(stokListesi, "stoklar.xml");
             }
             textboxUrunAdi.Clear();
             textBoxUrunMiktari.Clear();
+            newStokForm.Text = "";
+            }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            myListUrunler.Items.Clear();
+            for (int i = 0; i < stokListesi.Count; i++)
+            {
+                int kac = textBox1.Text.Length;
+                 if(textBox1.Text.Substring(0,kac)==stokListesi[i].StokAdi.Substring(0,kac))
+                {
+                    myListUrunler.Items.Add(stokListesi[i].StokAdi);
+                    myListUrunler.Items[myListUrunler.Items.Count - 1].SubItems.Add(stokListesi[i].StokMiktari);
+                    myListUrunler.Items[myListUrunler.Items.Count - 1].SubItems.Add(stokListesi[i].MiktarTipi);
+                }
+                 
+            }
         }
-
-
-
-
     }
 }
