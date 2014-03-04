@@ -22,7 +22,7 @@ namespace ROPv1
 
         DateTime acilisZamani;
 
-        string siparisiKimGirdi, adisyonNotu = "";
+        string siparisiKimGirdi, adisyonNotu = "", MasaAdi;
 
         List<Menuler> menuListesi = new List<Menuler>();  // menüleri tutacak liste
 
@@ -32,11 +32,14 @@ namespace ROPv1
 
         UItemp[] infoKullanici;
 
+        List<SiparisBilgileri> SiparisListesi = new List<SiparisBilgileri>();
+
+        List<SiparisBilgileri> ikramListesi = new List<SiparisBilgileri>();
+
         bool iptalIkram = true;
 
         public bool masaAcikMi = false;
 
-        string MasaAdi;
         public SiparisMenuFormu(string masaninAdi, Restoran butonBilgileri, string siparisiGirenKisi, bool MasaAcikmi)
         {
             InitializeComponent();
@@ -62,7 +65,6 @@ namespace ROPv1
                     break;
                 }
             }
-
             //yetkilerine göre işlemlere izin verme
 
             if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciYeri].UIY[7]))
@@ -72,7 +74,7 @@ namespace ROPv1
                 iptalIkram = false;
             }
             MasaAdi = masaninAdi;
-            labelMasa.Text = "Masa: " + masaninAdi;
+            labelMasa.Text = "Masa: " + MasaAdi;
             labelDepartman.Text = "Departman: " + hangiDepartman.departmanAdi;
 
             //labelların fontunu ayarlıyoruz
@@ -293,20 +295,31 @@ namespace ROPv1
         //form load
         private void SiparisMenuFormu_Load(object sender, EventArgs e)
         {
-            if(masaAcikMi)
+            if (masaAcikMi)
             {
-                SqlCommand cmd = SQLBaglantisi.getCommand("select Fiyatı, Porsiyon, YemekAdi, IkramMi from Siparis where MasaAdi='" + MasaAdi + "' and DepartmanAdi='" + hangiDepartman.departmanAdi + "' and IptalMi=0");
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Porsiyon, YemekAdi, IkramMi, Garsonu from Siparis WHERE MasaAdi='" + MasaAdi + "' and DepartmanAdi='" + hangiDepartman.departmanAdi + "' and IptalMi=0 ORDER BY Porsiyon DESC");
                 SqlDataReader dr = cmd.ExecuteReader();
-                while(dr.Read())
+                while (dr.Read())
                 {
-                    double yemeginFiyati = (double)dr.GetDecimal(0);
+                    decimal yemeginFiyati = dr.GetDecimal(0);
                     double kacPorsiyon = (double)dr.GetDecimal(1);
                     string yemeginAdi = dr.GetString(2);
                     bool ikramMi = dr.GetBoolean(3);
+                    string Garson = dr.GetString(4);
+
+                    SiparisBilgileri siparis = new SiparisBilgileri();
+                    siparis.yemekAdi = yemeginAdi;
+                    siparis.adedi = kacPorsiyon;
+                    siparis.siparisiVerenKisi = Garson;
+
+                    if (ikramMi)
+                        ikramListesi.Add(siparis);
+                    else
+                        SiparisListesi.Add(siparis);
 
                     int hangiGrup;
 
-                    if(ikramMi)
+                    if (ikramMi)
                     {
                         hangiGrup = 0;
                     }
@@ -327,14 +340,13 @@ namespace ROPv1
 
                     if (gruptaYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
                     {
-                        listHesap.Items.Add("" + kacPorsiyon);
+                        listHesap.Items.Add(kacPorsiyon.ToString());
                         listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(yemeginAdi);
-                        listHesap.Items[listHesap.Items.Count - 1].SubItems.Add((kacPorsiyon*yemeginFiyati).ToString());
+                        listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(((decimal)kacPorsiyon * yemeginFiyati).ToString("0.00"));
                         listHesap.Items[listHesap.Items.Count - 1].Group = listHesap.Groups[hangiGrup];
                         listHesap.Items[listHesap.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
                         listedeSeciliOlanItemlar.Add(false);
 
-                        //eğer ürün eklendiğinde ekrana sığmıyorsa scroll gösterilecektir, bu yüzden fiyatları sola kaydırıyoruz
                         int itemsCount = this.listHesap.Items.Count + this.listHesap.Groups.Count;
                         int itemHeight = this.listHesap.Items[0].Bounds.Height;
                         int VisiableItem = (int)this.listHesap.ClientRectangle.Height / itemHeight;
@@ -369,19 +381,19 @@ namespace ROPv1
                         atlama = gorunenListeElemaniSayisi;
 
                         while (listHesap.Columns[1].Width < System.Windows.Forms.TextRenderer.MeasureText(yemeginAdi, listHesap.Items[listHesap.Items.Count - 1].Font).Width
-                            || listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText((kacPorsiyon*yemeginFiyati).ToString("0.00"), listHesap.Items[listHesap.Items.Count - 1].Font).Width
+                            || listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(((decimal)kacPorsiyon * yemeginFiyati).ToString("0.00"), listHesap.Items[listHesap.Items.Count - 1].Font).Width
                             || listHesap.Columns[0].Width < System.Windows.Forms.TextRenderer.MeasureText(kacPorsiyon.ToString(), listHesap.Items[listHesap.Items.Count - 1].Font).Width)
                         {
                             listHesap.Items[listHesap.Items.Count - 1].Font = new Font(listHesap.Items[listHesap.Items.Count - 1].Font.FontFamily, listHesap.Items[listHesap.Items.Count - 1].Font.Size - 0.5f, listHesap.Items[listHesap.Items.Count - 1].Font.Style);
                         }
 
-                        labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) + Convert.ToDouble((listHesap.Items[listHesap.Items.Count - 1].SubItems[2].Text))).ToString("0.00");
+                        labelToplamHesap.Text = (Convert.ToDecimal(labelToplamHesap.Text) + Convert.ToDecimal((listHesap.Items[listHesap.Items.Count - 1].SubItems[2].Text))).ToString("0.00");
                     }
                     else // varsa ürünün hesaptaki değerlerini istenilene göre arttır
                     {
                         listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text = (Convert.ToDouble(listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text) + kacPorsiyon).ToString();
 
-                        listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text) + kacPorsiyon * yemeginFiyati).ToString("0.00");
+                        listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text = (Convert.ToDecimal(listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text) + (decimal)kacPorsiyon * yemeginFiyati).ToString("0.00");
 
                         while (listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text, listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].Font).Width
                             || listHesap.Columns[0].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text, listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].Font).Width)
@@ -389,7 +401,7 @@ namespace ROPv1
                             listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].Font = new Font(listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].Font.FontFamily, listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].Font.Size - 0.5f, listHesap.Groups[hangiGrup].Items[gruptaYeniGelenSiparisVarmi].Font.Style);
                         }
 
-                        labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) + kacPorsiyon * yemeginFiyati).ToString("0.00");
+                        labelToplamHesap.Text = (Convert.ToDecimal(labelToplamHesap.Text) + (decimal)kacPorsiyon * yemeginFiyati).ToString("0.00");
                     }
 
                     if (labelToplamHesap.Text != "0,00") //hesapta para varsa butonu enable et
@@ -472,9 +484,9 @@ namespace ROPv1
 
             if (gruptaYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
             {
-                listHesap.Items.Add("" + kacPorsiyon);
+                listHesap.Items.Add(kacPorsiyon.ToString());
                 listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(((Button)sender).Text);
-                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(((double)kacPorsiyon * Convert.ToDouble(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00"));
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(((decimal)kacPorsiyon * Convert.ToDecimal(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00"));
                 listHesap.Items[listHesap.Items.Count - 1].Group = listHesap.Groups[3];
                 listHesap.Items[listHesap.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
                 listedeSeciliOlanItemlar.Add(false);
@@ -514,19 +526,19 @@ namespace ROPv1
                 atlama = gorunenListeElemaniSayisi;
 
                 while (listHesap.Columns[1].Width < System.Windows.Forms.TextRenderer.MeasureText(((Button)sender).Text, listHesap.Items[listHesap.Items.Count - 1].Font).Width
-                    || listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(((double)kacPorsiyon * Convert.ToDouble(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00"), listHesap.Items[listHesap.Items.Count - 1].Font).Width
+                    || listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(((decimal)kacPorsiyon * Convert.ToDecimal(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00"), listHesap.Items[listHesap.Items.Count - 1].Font).Width
                     || listHesap.Columns[0].Width < System.Windows.Forms.TextRenderer.MeasureText(kacPorsiyon.ToString(), listHesap.Items[listHesap.Items.Count - 1].Font).Width)
                 {
                     listHesap.Items[listHesap.Items.Count - 1].Font = new Font(listHesap.Items[listHesap.Items.Count - 1].Font.FontFamily, listHesap.Items[listHesap.Items.Count - 1].Font.Size - 0.5f, listHesap.Items[listHesap.Items.Count - 1].Font.Style);
                 }
 
-                labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) + Convert.ToDouble((listHesap.Items[listHesap.Items.Count - 1].SubItems[2].Text))).ToString("0.00");
+                labelToplamHesap.Text = (Convert.ToDecimal(labelToplamHesap.Text) + Convert.ToDecimal((listHesap.Items[listHesap.Items.Count - 1].SubItems[2].Text))).ToString("0.00");
             }
             else // varsa ürünün hesaptaki değerlerini istenilene göre arttır
             {
                 listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text = (Convert.ToDouble(listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text) + kacPorsiyon).ToString();
 
-                listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text) + (double)kacPorsiyon * Convert.ToDouble(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00");
+                listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text = (Convert.ToDecimal(listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text) + (decimal)kacPorsiyon * Convert.ToDecimal(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00");
 
                 while (listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text, listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].Font).Width
                     || listHesap.Columns[0].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text, listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].Font).Width)
@@ -534,7 +546,7 @@ namespace ROPv1
                     listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].Font = new Font(listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].Font.FontFamily, listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].Font.Size - 0.5f, listHesap.Groups[3].Items[gruptaYeniGelenSiparisVarmi].Font.Style);
                 }
 
-                labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) + (double)kacPorsiyon * Convert.ToDouble(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00");
+                labelToplamHesap.Text = (Convert.ToDecimal(labelToplamHesap.Text) + (decimal)kacPorsiyon * Convert.ToDecimal(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00");
             }
             textNumberOfItem.Text = ""; // çarpanı sil
 
@@ -716,13 +728,6 @@ namespace ROPv1
             }
         }
 
-
-
-        private void changeTablesButton_Click(object sender, EventArgs e)
-        {
-            //burada bir split viewa departman ve masalarını koy seçilen departmana göre masa ve departman adını değiştir.
-        }
-
         //adisyon notu ekleme butonu
         private void addNoteButton_Click(object sender, EventArgs e)
         {
@@ -740,6 +745,13 @@ namespace ROPv1
             {
                 adisyonNotu = notFormu.AdisyonNotu;
             }
+        }
+
+
+
+        private void changeTablesButton_Click(object sender, EventArgs e)
+        {
+            //burada bir split viewa departman ve masalarını koy seçilen departmana göre masa ve departman adını değiştir.
         }
 
         //ödeme kısmına geçiş butonu
@@ -764,106 +776,222 @@ namespace ROPv1
             if (carpan > Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text))
                 carpan = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
 
-            // eğer zaten ikramsa ikramdan çıkar
+            // ikram et
             if (buttonUrunIkram.Text == "İkram")
             {
-                //İkram edildiğinde önce hangi grupta olduğuna bakılacak, eğer yeni eklenenler grubunda (yani 3 indeksli grup) ise SQL de o grubu update etmeye gerek yok
+                //İkram edildiğinde önce hangi grupta olduğuna bakılacak, eğer yeni eklenenler grubunda (yani 3 indeksli grup) ise SQL o grubu update etmeye gerek yok direk ikram kaldırılacak
                 //Eğer eskiden ekli olanlarda ise (yani 1 indeksli grup) ikram adedine ulaşana kadar update yaparak sipariş sayısını azaltacaz
                 //Eğer iptal edilen adedi tam olarak siparişlerde bulunamazsa örneğin 4 iptal var 2 tane 3 adetlik sipariş var yani toplam 6
                 //İlk gelen siparişin ikram özelliği true(1) yapılacak diğerinin adedi update edilerek azaltılacak ikramın kalanı kadarıyla yeni ikram siparişi oluşturulacak
 
+                double istenilenikramSayisi = carpan;
+
+                // ürünün değerini istenilen kadar azalt, tüm hesaptan düş
+                double dusulecekDeger = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) / Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
+                listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) - carpan * dusulecekDeger).ToString("0.00");
+
+                listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) - carpan).ToString();
+
+                labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+
+                bool ikramYok = true;
+
+                for (int i = 0; i < listHesap.Groups[2].Items.Count; i++)
+                {
+                    if (listHesap.Groups[2].Items[i].SubItems[1].Text == listHesap.SelectedItems[0].SubItems[1].Text)
+                    {
+
+                        listHesap.Groups[2].Items[i].Text = (Convert.ToDouble(listHesap.Groups[2].Items[i].Text) + carpan).ToString();
+                        listHesap.Groups[2].Items[i].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[2].Items[i].SubItems[2].Text) + (dusulecekDeger * carpan)).ToString("0.00");
+
+                        ikramYok = false;
+                    }
+                }
+
+                if (ikramYok)
+                {
+
+                    listHesap.Items.Insert(0, carpan.ToString());
+                    listHesap.Items[0].SubItems.Add(listHesap.SelectedItems[0].SubItems[1].Text);
+                    listHesap.Items[0].SubItems.Add((dusulecekDeger * carpan).ToString("0.00"));
+
+                    listHesap.Items[0].Group = listHesap.Groups[2];
+                    listHesap.Items[0].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
+                    listedeSeciliOlanItemlar.Insert(0, false);
+                }
+
                 if (listHesap.SelectedItems[0].Group == listHesap.Groups[1]) //eski ürünlerle ilgili ikram
                 {
-                    // ürünün değerini 1 ürün kadar azalt, tüm hesaptan düş
-                    double dusulecekDeger = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) / Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
-                    listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) - carpan * dusulecekDeger).ToString("0.00");
+                    List<int> siparisiVerenkisininIndexleri = new List<int>(); // siparişi veren kişinin varsa istenilen siparişi verdiği siparişlerin indexleri(örn kişi önceden kola siparişi verdiyse ve ikram olarak kola verilmek isteniyorsa kişiye ait kola siparişlerinin indexlerini tutar)
+                    List<int> tumSiparislerinIndexleri = new List<int>(); // tüm siparişlerin içinde istenilen siparişin indexleri
 
-                    listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) - carpan).ToString();
-
-                    labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
-
-                    bool ikramYok = true;
-
-                    for (int i = 0; i < listHesap.Groups[2].Items.Count; i++)
+                    for (int j = 0; j < SiparisListesi.Count; j++)
                     {
-                        if (listHesap.Groups[2].Items[i].SubItems[1].Text == listHesap.SelectedItems[0].SubItems[1].Text)
+                        if (SiparisListesi[j].yemekAdi == listHesap.SelectedItems[0].SubItems[1].Text)
                         {
-
-                            listHesap.Groups[2].Items[i].Text = (Convert.ToDouble(listHesap.Groups[2].Items[i].Text) + carpan).ToString();
-                            listHesap.Groups[2].Items[i].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[2].Items[i].SubItems[2].Text) + (dusulecekDeger * carpan)).ToString("0.00");
-
-                            ikramYok = false;
+                            // ikramı iptal eden kişinin ikram ettiği var mı bak,varsa kaç tane olduğunu bul
+                            if (SiparisListesi[j].siparisiVerenKisi == siparisiKimGirdi)
+                            {
+                                siparisiVerenkisininIndexleri.Add(j);
+                            }
+                            else
+                            {
+                                tumSiparislerinIndexleri.Add(j);
+                            }
                         }
                     }
 
-                    if (ikramYok)
+                    for (int j = 0; j < siparisiVerenkisininIndexleri.Count; j++)
                     {
+                        if (SiparisListesi[siparisiVerenkisininIndexleri[j]].adedi < istenilenikramSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
+                        {
+                            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.acikMi=1 AND Siparis.IkramMi=0 AND Siparis.MasaAdi='" + MasaAdi + "' AND Siparis.DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
 
-                        listHesap.Items.Insert(0, carpan.ToString());
-                        listHesap.Items[0].SubItems.Add(listHesap.SelectedItems[0].SubItems[1].Text);
-                        listHesap.Items[0].SubItems.Add((dusulecekDeger * carpan).ToString("0.00"));
+                            SqlDataReader dr = cmd.ExecuteReader();
 
-                        listHesap.Items[0].Group = listHesap.Groups[2];
-                        listHesap.Items[0].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
-                        listedeSeciliOlanItemlar.Insert(0, false);
+                            dr.Read();
+
+                            int siparisID = dr.GetInt32(0);
+
+                            ikramUpdateTam(siparisID);
+
+                            istenilenikramSayisi -= SiparisListesi[siparisiVerenkisininIndexleri[j]].adedi;
+                        }
+                        else if (SiparisListesi[siparisiVerenkisininIndexleri[j]].adedi > istenilenikramSayisi) // den büyükse
+                        {
+                            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID, Siparis.AdisyonID FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.acikMi=1 AND Siparis.IkramMi=0 AND Siparis.MasaAdi='" + MasaAdi + "' AND Siparis.DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
+
+                            SqlDataReader dr = cmd.ExecuteReader();
+
+                            dr.Read();
+
+                            int siparisID = dr.GetInt32(0);
+                            int adisyonID = dr.GetInt32(1);
+
+                            ikramUpdateInsert(siparisID, adisyonID, SiparisListesi[siparisiVerenkisininIndexleri[j]], dusulecekDeger, istenilenikramSayisi);
+
+                            istenilenikramSayisi = 0;
+                        }
+                        else // elimizde ikram edilmemişler ikramı istenene eşitse
+                        {
+                            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.acikMi=1 AND Siparis.IkramMi=0 AND Siparis.MasaAdi='" + MasaAdi + "' AND Siparis.DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
+
+                            SqlDataReader dr = cmd.ExecuteReader();
+
+                            dr.Read();
+
+                            int siparisID = dr.GetInt32(0);
+
+                            ikramUpdateTam(siparisID);
+
+                            istenilenikramSayisi = 0;
+                        }
+
+                        if (istenilenikramSayisi == 0)
+                            break;
                     }
 
-                    if (listHesap.SelectedItems[0].Text == "0")
+                    if (istenilenikramSayisi != 0)// ikram edilecekler daha bitmedi başka garsonların siparişlerinden ikram iptaline devam et
                     {
-                        listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
-                        listHesap.SelectedItems[0].Remove();
+                        for (int j = 0; j < tumSiparislerinIndexleri.Count; j++)
+                        {
+                            if (SiparisListesi[siparisiVerenkisininIndexleri[j]].adedi < istenilenikramSayisi)
+                            {
+                                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.acikMi=1 AND Siparis.IkramMi=0 AND Siparis.MasaAdi='" + MasaAdi + "' AND Siparis.DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
+
+                                SqlDataReader dr = cmd.ExecuteReader();
+
+                                dr.Read();
+
+                                int siparisID = dr.GetInt32(0);
+
+                                ikramUpdateTam(siparisID);
+
+                                istenilenikramSayisi -= SiparisListesi[siparisiVerenkisininIndexleri[j]].adedi;
+                            }
+                            else if (SiparisListesi[siparisiVerenkisininIndexleri[j]].adedi > istenilenikramSayisi)
+                            {
+                                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID, AdisyonID FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.acikMi=1 AND Siparis.IkramMi=0 AND Siparis.MasaAdi='" + MasaAdi + "' AND Siparis.DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
+
+                                SqlDataReader dr = cmd.ExecuteReader();
+
+                                dr.Read();
+
+                                int siparisID = dr.GetInt32(0);
+                                int adisyonID = dr.GetInt32(1);
+
+                                ikramUpdateInsert(siparisID, adisyonID, SiparisListesi[siparisiVerenkisininIndexleri[j]], dusulecekDeger, istenilenikramSayisi);
+
+                                istenilenikramSayisi = 0;
+                            }
+                            else
+                            {
+                                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.acikMi=1 AND Siparis.IkramMi=0 AND Siparis.MasaAdi='" + MasaAdi + "' AND Siparis.DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
+
+                                SqlDataReader dr = cmd.ExecuteReader();
+
+                                dr.Read();
+
+                                int siparisID = dr.GetInt32(0);
+
+                                ikramUpdateTam(siparisID);
+
+                                istenilenikramSayisi = 0;
+                            }
+
+                            if (istenilenikramSayisi == 0)
+                                break;
+                        }
                     }
                 }
                 else //yeni ürünlerle ilgili ikram
                 {
-                    // ürünün değerini 1 ürün kadar azalt, tüm hesaptan düş
-                    double dusulecekDeger = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) / Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
-                    listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) - carpan * dusulecekDeger).ToString("0.00");
+                    int siparisinIndexi = listHesap.SelectedItems[0].Index;
 
-                    listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) - carpan).ToString();
+                    SiparisBilgileri siparis = new SiparisBilgileri();
 
-                    labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
-
-                    bool ikramYok = true;
-
-                    for (int i = 0; i < listHesap.Groups[2].Items.Count; i++)
+                    siparis.adedi = Convert.ToInt32(listHesap.Items[siparisinIndexi].SubItems[0].Text);
+                    siparis.yemekAdi = listHesap.Items[siparisinIndexi].SubItems[1].Text;
+                    
+                    if (Convert.ToInt32(listHesap.Items[siparisinIndexi].SubItems[0].Text) > istenilenikramSayisi) // sipariş adedi ikram edileceklerden büyükse 
                     {
-                        if (listHesap.Groups[2].Items[i].SubItems[1].Text == listHesap.SelectedItems[0].SubItems[1].Text)
-                        {
+                        SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID, Siparis.AdisyonID FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.acikMi=1 AND Siparis.IkramMi=0 AND Siparis.MasaAdi='" + MasaAdi + "' AND Siparis.DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
 
-                            listHesap.Groups[2].Items[i].Text = (Convert.ToDouble(listHesap.Groups[2].Items[i].Text) + carpan).ToString();
-                            listHesap.Groups[2].Items[i].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[2].Items[i].SubItems[2].Text) + (dusulecekDeger * carpan)).ToString("0.00");
+                        SqlDataReader dr = cmd.ExecuteReader();
 
-                            ikramYok = false;
-                        }
+                        dr.Read();
+
+                        int siparisID = dr.GetInt32(0);
+                        int adisyonID = dr.GetInt32(1);
+
+                        ikramUpdateInsert(siparisID, adisyonID, siparis, dusulecekDeger, istenilenikramSayisi);
                     }
-
-                    if (ikramYok)
+                    else // siparişler ikramı istenene eşitse
                     {
+                        SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.acikMi=1 AND Siparis.IkramMi=0 AND Siparis.MasaAdi='" + MasaAdi + "' AND Siparis.DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
 
-                        listHesap.Items.Insert(0, carpan.ToString());
-                        listHesap.Items[0].SubItems.Add(listHesap.SelectedItems[0].SubItems[1].Text);
-                        listHesap.Items[0].SubItems.Add((dusulecekDeger * carpan).ToString("0.00"));
+                        SqlDataReader dr = cmd.ExecuteReader();
 
-                        listHesap.Items[0].Group = listHesap.Groups[2];
-                        listHesap.Items[0].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
-                        listedeSeciliOlanItemlar.Insert(0, false);
+                        dr.Read();
+
+                        int siparisID = dr.GetInt32(0);
+
+                        ikramUpdateTam(siparisID);
                     }
+                }
 
-                    if (listHesap.SelectedItems[0].Text == "0")
-                    {
-                        listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
-                        listHesap.SelectedItems[0].Remove();
-                    }
-                }                
+                if (listHesap.SelectedItems[0].Text == "0")
+                {
+                    listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
+                    listHesap.SelectedItems[0].Remove();
+                }
             }
-            else
+            else // ikramı iptal et
             {
                 //İkram iptal edildiğinde önce hangi grupta olduğuna bakılacak, eğer yeni eklenenler grubunda (yani 2. grup) ise SQL de o grubu update etmeye gerek yok
                 //Eğer eskiden ekli olanlarda ise ikram adedine ulaşana kadar update yaparak sipariş sayısını azaltacaz
                 //Eğer iptal edilen adedi tam olarak siparişlerde bulunamazsa örneğin 4 iptal var 2 tane 3 adetlik sipariş var yani toplam 6
                 //İlk gelen siparişin ikram özelliği true(1) yapılacak diğerinin adedi update edilerek azaltılacak ikramın kalanı kadarıyla yeni ikram siparişi oluşturulacak
-
 
                 if (listHesap.SelectedItems[0].Group == listHesap.Groups[0]) //eski ikramlarla ilgili
                 {
@@ -942,7 +1070,7 @@ namespace ROPv1
                         listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
                         listHesap.SelectedItems[0].Remove();
                     }
-                }                
+                }
             }
 
             for (int i = 0; i < listedeSeciliOlanItemlar.Count; i++)
@@ -950,6 +1078,7 @@ namespace ROPv1
                 listedeSeciliOlanItemlar[i] = false;
                 listHesap.Items[i].Selected = false;
             }
+
 
             buttonUrunIkram.Enabled = false;
             buttonTasi.Enabled = false;
@@ -1004,8 +1133,6 @@ namespace ROPv1
             listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) - dusulecekDeger * carpan).ToString("0.00");
 
             labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
-
-            int silinecekGrup = Convert.ToInt32(listHesap.SelectedItems[0].Group.Tag);
 
             if (listHesap.SelectedItems[0].Text == "0")
             {
@@ -1098,14 +1225,14 @@ namespace ROPv1
                     SqlDataReader dr = cmd.ExecuteReader();
                     dr.Read();
                     dr.GetBoolean(0);
-
+                    masaAcikMi = true;
                 }
                 catch // kapalı
                 {
                     adisyonOlustur();
                 }
 
-                foreach (ListViewItem siparis in listHesap.Groups[2].Items)
+                foreach (ListViewItem siparis in listHesap.Groups[3].Items)
                 {
                     SqlCommand cmd = SQLBaglantisi.getCommand("select AdisyonID from Adisyon where MasaAdi='" + MasaAdi + "' and DepartmanAdi='" + hangiDepartman.departmanAdi + "' and acikMi=1");
 
@@ -1143,7 +1270,7 @@ namespace ROPv1
 
         public void siparisOlustur(int adisyonID, ListViewItem siparis)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("insert into Siparis(AdisyonID,Garsonu,DepartmanAdi,MasaAdi,Fiyatı,Porsiyon,YemekAdi) values(@_AdisyonID,@_Garsonu,@_DepartmanAdi,@_MasaAdi,@_Fiyatı,@_Porsiyon,@_YemekAdi)");
+            SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,DepartmanAdi,MasaAdi,Fiyatı,Porsiyon,YemekAdi) values(@_AdisyonID,@_Garsonu,@_DepartmanAdi,@_MasaAdi,@_Fiyatı,@_Porsiyon,@_YemekAdi)");
             cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
             cmd.Parameters.AddWithValue("@_DepartmanAdi", hangiDepartman.departmanAdi);
@@ -1151,6 +1278,44 @@ namespace ROPv1
             cmd.Parameters.AddWithValue("@_Fiyatı", Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text));
             cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(siparis.SubItems[0].Text));
             cmd.Parameters.AddWithValue("@_YemekAdi", siparis.SubItems[1].Text);
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void ikramUpdateInsert(int siparisID, int adisyonID, SiparisBilgileri siparis, double dusulecekDeger, double iptaliGerekenAdet)
+        {
+            double yeniPorsiyonAdetiSiparis = siparis.adedi - iptaliGerekenAdet;
+
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@Porsiyonu", yeniPorsiyonAdetiSiparis);
+            cmd.Parameters.AddWithValue("@id", siparisID);
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+
+            SqlCommand cmd2 = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,DepartmanAdi,MasaAdi,Fiyatı,Porsiyon,YemekAdi,IkramMi) values(@_AdisyonID,@_Garsonu,@_DepartmanAdi,@_MasaAdi,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IkramMi)");
+            cmd2.Parameters.AddWithValue("@_AdisyonID", adisyonID);
+            cmd2.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
+            cmd2.Parameters.AddWithValue("@_DepartmanAdi", hangiDepartman.departmanAdi);
+            cmd2.Parameters.AddWithValue("@_MasaAdi", MasaAdi);
+            cmd2.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
+            cmd2.Parameters.AddWithValue("@_Porsiyon", iptaliGerekenAdet);
+            cmd2.Parameters.AddWithValue("@_YemekAdi", siparis.yemekAdi);
+            cmd2.Parameters.AddWithValue("@_IkramMi", 1);
+            cmd2.ExecuteNonQuery();
+
+            cmd2.Connection.Close();
+            cmd2.Connection.Dispose();
+        }
+
+        public void ikramUpdateTam(int siparisID)
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET IkramMi=1, Garsonu=@Garson WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@SiparisID", siparisID);
+            cmd.Parameters.AddWithValue("@Garson", siparisiKimGirdi);
             cmd.ExecuteNonQuery();
 
             cmd.Connection.Close();

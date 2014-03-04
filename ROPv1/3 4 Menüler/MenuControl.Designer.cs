@@ -398,6 +398,7 @@
             this.Controls.Add(this.keyboardcontrol1);
             this.Name = "MenuControl";
             this.Size = new System.Drawing.Size(993, 626);
+            this.Load += new System.EventHandler(this.MenuControl_Load);
             this.newMenuForm.ResumeLayout(false);
             this.newMenuForm.PerformLayout();
             this.newKategoriForm.ResumeLayout(false);

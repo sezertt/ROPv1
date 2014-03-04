@@ -385,6 +385,7 @@
             this.Name = "GunFormu";
             this.Text = "GunFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.GunFormu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericNumberOfCurrentPage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

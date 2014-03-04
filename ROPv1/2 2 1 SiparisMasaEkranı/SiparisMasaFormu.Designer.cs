@@ -211,6 +211,7 @@
             this.Text = "SiparisFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CloseApp);
+            this.Load += new System.EventHandler(this.SiparisMasaFormu_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

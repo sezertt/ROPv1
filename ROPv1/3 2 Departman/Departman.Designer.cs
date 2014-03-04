@@ -309,6 +309,7 @@
             this.Controls.Add(this.treeDepartman);
             this.Name = "Departman";
             this.Size = new System.Drawing.Size(993, 638);
+            this.Load += new System.EventHandler(this.Departman_Load);
             this.newDepartmentForm.ResumeLayout(false);
             this.newDepartmentForm.PerformLayout();
             this.ResumeLayout(false);

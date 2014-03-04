@@ -327,6 +327,7 @@
             this.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.Name = "Products";
             this.Size = new System.Drawing.Size(993, 626);
+            this.Load += new System.EventHandler(this.Products_Load);
             this.newProductForm.ResumeLayout(false);
             this.newProductForm.PerformLayout();
             this.ResumeLayout(false);

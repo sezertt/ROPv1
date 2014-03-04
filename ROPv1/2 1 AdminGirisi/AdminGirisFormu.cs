@@ -21,55 +21,7 @@ namespace ROPv1
 
         public AdminGirisFormu()
         {
-            InitializeComponent();
-
-            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
-            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
-            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
-            timerSaat.Start();
-
-            splitPanel.SplitterDistance = Screen.FromControl(this).Bounds.Size.Width / 6;
-
-            #region xml oku
-
-            XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
-            infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
-
-            XmlLoad<string> loadInfoSonKullanici = new XmlLoad<string>();
-            string[] sonGirisYapanKullanici = loadInfoSonKullanici.LoadRestoran("sonKullanici.xml");
-            #endregion
-
-            if (sonGirisYapanKullanici[0] != "ropisimiz")
-            {
-                //kullanıcının yerini bul
-                for (int i = 0; i < infoKullanici.Count(); i++)
-                {
-                    if (sonGirisYapanKullanici[0] == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
-                    {
-                        kullaniciAdi = i;
-                        break;
-                    }
-                }
-                //yetkilerine göre işlemlere izin verme
-                for (int i = 0; i < 5; i++)
-                {
-                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[i]))
-                    {
-                        flowLayoutPanel1.Controls[i].Enabled = false;
-                    }
-                }
-            }
-
-            if (saleCheckBox.Enabled == true)
-                changeButonChecked(saleCheckBox);
-            else if (reportCheckBox.Enabled == true)
-                changeButonChecked(reportCheckBox);
-            else if (stokCheckBox.Enabled == true)
-                changeButonChecked(stokCheckBox);
-            else if (adisyonCheckBox.Enabled == true)
-                changeButonChecked(adisyonCheckBox);
-            else if (ayarCheckBox.Enabled == true)
-                changeButonChecked(ayarCheckBox);
+            InitializeComponent();                    
         }
 
         private void CloseApp(object sender, FormClosedEventArgs e)
@@ -284,6 +236,57 @@ namespace ROPv1
         private void timerSaat_Tick(object sender, EventArgs e)
         {
             labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+        }
+
+        private void AdminGirisFormu_Load(object sender, EventArgs e)
+        {
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
+            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
+            timerSaat.Start();
+
+            splitPanel.SplitterDistance = Screen.FromControl(this).Bounds.Size.Width / 6;
+
+            #region xml oku
+
+            XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
+            infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
+
+            XmlLoad<string> loadInfoSonKullanici = new XmlLoad<string>();
+            string[] sonGirisYapanKullanici = loadInfoSonKullanici.LoadRestoran("sonKullanici.xml");
+            #endregion
+
+            if (sonGirisYapanKullanici[0] != "ropisimiz")
+            {
+                //kullanıcının yerini bul
+                for (int i = 0; i < infoKullanici.Count(); i++)
+                {
+                    if (sonGirisYapanKullanici[0] == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
+                    {
+                        kullaniciAdi = i;
+                        break;
+                    }
+                }
+                //yetkilerine göre işlemlere izin verme
+                for (int i = 0; i < 5; i++)
+                {
+                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[i]))
+                    {
+                        flowLayoutPanel1.Controls[i].Enabled = false;
+                    }
+                }
+            }
+
+            if (saleCheckBox.Enabled == true)
+                changeButonChecked(saleCheckBox);
+            else if (reportCheckBox.Enabled == true)
+                changeButonChecked(reportCheckBox);
+            else if (stokCheckBox.Enabled == true)
+                changeButonChecked(stokCheckBox);
+            else if (adisyonCheckBox.Enabled == true)
+                changeButonChecked(adisyonCheckBox);
+            else if (ayarCheckBox.Enabled == true)
+                changeButonChecked(ayarCheckBox);
         }
     }
 }

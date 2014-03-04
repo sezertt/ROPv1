@@ -19,52 +19,7 @@ namespace ROPv1
         public GunFormu(string GunBasiveyaSonuYapanKisi)
         {
             InitializeComponent();
-
-            this.BringToFront();
-
-            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
-            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
-            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
-            timerSaat.Start();
-
             ayarYapanKisi = GunBasiveyaSonuYapanKisi;
-
-            if (!File.Exists("gunler.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default menümüzü giriyoruz.
-            {
-                buttonGunSonu.Enabled = false;
-            }
-            else
-            {
-                // Oluşturulmuş menüleri xml den okuyoruz
-                XmlLoad<GunBilgileri> loadInfo = new XmlLoad<GunBilgileri>();
-                GunBilgileri[] infoGunler = loadInfo.LoadRestoran("gunler.xml");
-
-                gunListesi.AddRange(infoGunler);
-
-                if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
-                {
-                    buttonGunSonu.Enabled = true;
-                    buttonGunBasi.Enabled = false;
-                }
-                else
-                {
-                    buttonGunSonu.Enabled = false;
-                    buttonGunBasi.Enabled = true;
-                }
-
-                int a = 1;
-                if (gunListesi.Count % 20 == 0)
-                    a = 0;
-
-                numericNumberOfCurrentPage.Maximum = gunListesi.Count / 20 + a;
-                labelNumberOfPages.Text = (gunListesi.Count / 20 + a).ToString();
-
-
-                this.currentPageChanged(null, null);
-
-                if (treeGunBasi.Nodes.Count > 0)
-                    treeGunBasi.SelectedNode = treeGunBasi.Nodes[0];
-            }
         }
 
         private void buttonGunBasi_Click(object sender, EventArgs e)
@@ -91,7 +46,7 @@ namespace ROPv1
 
             labelSure.Text = ((int)span.TotalHours).ToString() + "saat " + ((int)span.Minutes).ToString().PadLeft(2, '0') + "dk " + ((int)span.Seconds).ToString().PadLeft(2, '0') + "sn";
             timerGecenSure.Start();
-
+            labelGunBasi.Text = ayarYapanKisi;
         }
 
         private void buttonGunSonu_Click(object sender, EventArgs e)
@@ -118,6 +73,7 @@ namespace ROPv1
                 buttonGunBasi.Enabled = true;
                 treeGunBasi.SelectedNode = treeGunBasi.Nodes[0];
                 timerGecenSure.Stop();
+                labelGunSonu.Text = ayarYapanKisi;
             }
         }
 
@@ -202,6 +158,53 @@ namespace ROPv1
         private void pinboardcontrol21_UserKeyPressed(object sender, PinboardClassLibrary.PinboardEventArgs e)
         {
             SendKeys.Send(e.KeyboardKeyPressed);
+        }
+
+        private void GunFormu_Load(object sender, EventArgs e)
+        {
+            this.BringToFront();
+
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
+            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
+            timerSaat.Start();            
+
+            if (!File.Exists("gunler.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default menümüzü giriyoruz.
+            {
+                buttonGunSonu.Enabled = false;
+            }
+            else
+            {
+                // Oluşturulmuş menüleri xml den okuyoruz
+                XmlLoad<GunBilgileri> loadInfo = new XmlLoad<GunBilgileri>();
+                GunBilgileri[] infoGunler = loadInfo.LoadRestoran("gunler.xml");
+
+                gunListesi.AddRange(infoGunler);
+
+                if (gunListesi[gunListesi.Count - 1].gunSonuYapanKisi == null && gunListesi[gunListesi.Count - 1].gunBasiYapanKisi != null)
+                {
+                    buttonGunSonu.Enabled = true;
+                    buttonGunBasi.Enabled = false;
+                }
+                else
+                {
+                    buttonGunSonu.Enabled = false;
+                    buttonGunBasi.Enabled = true;
+                }
+
+                int a = 1;
+                if (gunListesi.Count % 20 == 0)
+                    a = 0;
+
+                numericNumberOfCurrentPage.Maximum = gunListesi.Count / 20 + a;
+                labelNumberOfPages.Text = (gunListesi.Count / 20 + a).ToString();
+
+
+                this.currentPageChanged(null, null);
+
+                if (treeGunBasi.Nodes.Count > 0)
+                    treeGunBasi.SelectedNode = treeGunBasi.Nodes[0];
+            }
         }
     }
 }

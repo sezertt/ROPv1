@@ -21,42 +21,6 @@ namespace ROPv1
         public Kullanici()
         {
             InitializeComponent();
-
-            //açılışta capslock açıksa kapatıyoruz.
-            ToggleCapsLock(false);
-
-            #region xml oku
-
-            XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
-            UItemp[] infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
-
-            #endregion
-
-            //kategorileri tutacak listemize atıyoruz
-            kullaniciListesi.AddRange(infoKullanici);
-
-            for (int i = 0; i < kullaniciListesi.Count; i++)
-            {
-                treeUserName.Nodes.Add((new UnicodeEncoding()).GetString(kullaniciListesi[i].UIN) + " " + (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIS));
-            }
-
-            comboNewTitle.Items.Add("Yönetici");
-            comboNewTitle.Items.Add("Şef Garson");
-            comboNewTitle.Items.Add("Garson");
-
-            if (treeUserName.Nodes.Count < 2)
-                buttonDeleteUser.Enabled = false;
-
-            //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
-            foreach (TreeNode node in treeUserName.Nodes)
-            {
-                while (treeUserName.Width - 12 < System.Windows.Forms.TextRenderer.MeasureText(node.Text, new Font(treeUserName.Font.FontFamily, treeUserName.Font.Size, treeUserName.Font.Style)).Width)
-                {
-                    treeUserName.Font = new Font(treeUserName.Font.FontFamily, treeUserName.Font.Size - 0.5f, treeUserName.Font.Style);
-                }
-            }
-
-            treeUserName.SelectedNode = treeUserName.Nodes[0];
         }
 
         private void changeKullanici(object sender, TreeViewEventArgs e) // Farklı bir kullanıcı seçildi
@@ -471,6 +435,45 @@ namespace ROPv1
             {
                 e.Handled = true;
             }
+        }
+
+        private void Kullanici_Load(object sender, EventArgs e)
+        {
+            //açılışta capslock açıksa kapatıyoruz.
+            ToggleCapsLock(false);
+
+            #region xml oku
+
+            XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
+            UItemp[] infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
+
+            #endregion
+
+            //kategorileri tutacak listemize atıyoruz
+            kullaniciListesi.AddRange(infoKullanici);
+
+            for (int i = 0; i < kullaniciListesi.Count; i++)
+            {
+                treeUserName.Nodes.Add((new UnicodeEncoding()).GetString(kullaniciListesi[i].UIN) + " " + (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIS));
+            }
+
+            comboNewTitle.Items.Add("Yönetici");
+            comboNewTitle.Items.Add("Şef Garson");
+            comboNewTitle.Items.Add("Garson");
+
+            if (treeUserName.Nodes.Count < 2)
+                buttonDeleteUser.Enabled = false;
+
+            //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
+            foreach (TreeNode node in treeUserName.Nodes)
+            {
+                while (treeUserName.Width - 12 < System.Windows.Forms.TextRenderer.MeasureText(node.Text, new Font(treeUserName.Font.FontFamily, treeUserName.Font.Size, treeUserName.Font.Style)).Width)
+                {
+                    treeUserName.Font = new Font(treeUserName.Font.FontFamily, treeUserName.Font.Size - 0.5f, treeUserName.Font.Style);
+                }
+            }
+
+            treeUserName.SelectedNode = treeUserName.Nodes[0];
         }
     }
 }

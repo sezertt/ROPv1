@@ -332,6 +332,7 @@
             this.Controls.Add(this.keyboardcontrol1);
             this.Name = "MasaPlan";
             this.Size = new System.Drawing.Size(993, 638);
+            this.Load += new System.EventHandler(this.MasaPlan_Load);
             this.Leave += new System.EventHandler(this.Leaving);
             this.newTableForm.ResumeLayout(false);
             this.newTableForm.PerformLayout();

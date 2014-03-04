@@ -24,50 +24,7 @@ namespace ROPv1
 
         public GirisEkrani()
         {
-            InitializeComponent();
-
-            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
-            timerSaat.Start();
-            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
-            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
-            
-
-            //açılışta capslock açıksa kapatıyoruz.
-            ToggleCapsLock(false);            
-
-            if (!File.Exists("tempfiles.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default kategorilerimizi giriyoruz.
-            {
-                infoKullanici = new UItemp[1];
-
-                infoKullanici[0] = new UItemp();
-                infoKullanici[0].UIN = (new UnicodeEncoding()).GetBytes("Adınız");
-                infoKullanici[0].UIS = (new UnicodeEncoding()).GetBytes("Soy Adınız");
-                infoKullanici[0].UIUN = (new UnicodeEncoding()).GetBytes("admin");
-                infoKullanici[0].UIPN = Helper.ComputeHash("0000", "SHA512", null);
-                infoKullanici[0].UIPW = Helper.ComputeHash("00000", "SHA512", null);
-                infoKullanici[0].UIU = (new UnicodeEncoding()).GetBytes("Yönetici");
-                infoKullanici[0].UIY[0] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].UIY[1] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].UIY[2] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].UIY[3] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].UIY[4] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].UIY[5] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].UIY[6] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].UIY[7] = Helper.ComputeHash("true", "SHA512", null);
-
-                XmlSave.SaveRestoran(infoKullanici, "tempfiles.xml");
-
-                File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
-            }
-            XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
-            infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
-
-            
-            //wpflerimizi oluşturduğumuz elementhostların childına atıyoruz
-            userNameTextBox = new WPF_UserControls.VerticalCenterTextBox();
-            usernameBoxHost.Child = userNameTextBox;
-            passwordTextBox = new WPF_UserControls.VerticalCenterPasswordBox();
-            passwordBoxHost.Child = passwordTextBox;
+            InitializeComponent();            
         }
 
         internal static class NativeMethods
@@ -187,7 +144,7 @@ namespace ROPv1
             _waitForm.Refresh();
 
             // force the wait window to display for at least 700ms so it doesn't just flash on the screen
-            System.Threading.Thread.Sleep(700);
+            System.Threading.Thread.Sleep(500);
             Application.Idle += OnLoaded;
         }
 
@@ -243,7 +200,48 @@ namespace ROPv1
 
         private void GirisEkrani_Load(object sender, EventArgs e)
         {
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+            timerSaat.Start();
+            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
+            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
 
+
+            //açılışta capslock açıksa kapatıyoruz.
+            ToggleCapsLock(false);
+
+            if (!File.Exists("tempfiles.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default kategorilerimizi giriyoruz.
+            {
+                infoKullanici = new UItemp[1];
+
+                infoKullanici[0] = new UItemp();
+                infoKullanici[0].UIN = (new UnicodeEncoding()).GetBytes("Adınız");
+                infoKullanici[0].UIS = (new UnicodeEncoding()).GetBytes("Soy Adınız");
+                infoKullanici[0].UIUN = (new UnicodeEncoding()).GetBytes("admin");
+                infoKullanici[0].UIPN = Helper.ComputeHash("0000", "SHA512", null);
+                infoKullanici[0].UIPW = Helper.ComputeHash("00000", "SHA512", null);
+                infoKullanici[0].UIU = (new UnicodeEncoding()).GetBytes("Yönetici");
+                infoKullanici[0].UIY[0] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[1] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[2] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[3] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[4] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[5] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[6] = Helper.ComputeHash("true", "SHA512", null);
+                infoKullanici[0].UIY[7] = Helper.ComputeHash("true", "SHA512", null);
+
+                XmlSave.SaveRestoran(infoKullanici, "tempfiles.xml");
+
+                File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
+            }
+            XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
+            infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
+
+
+            //wpflerimizi oluşturduğumuz elementhostların childına atıyoruz
+            userNameTextBox = new WPF_UserControls.VerticalCenterTextBox();
+            usernameBoxHost.Child = userNameTextBox;
+            passwordTextBox = new WPF_UserControls.VerticalCenterPasswordBox();
+            passwordBoxHost.Child = passwordTextBox;
         }
     }
 }

@@ -296,6 +296,7 @@
             this.Text = "AdminGirisFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CloseApp);
+            this.Load += new System.EventHandler(this.AdminGirisFormu_Load);
             this.splitPanel.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitPanel)).EndInit();
             this.splitPanel.ResumeLayout(false);

@@ -27,93 +27,7 @@ namespace ROPv1
 
         public Departman()
         {
-            InitializeComponent();
-
-            //açılışta capslock açıksa kapatıyoruz.
-            ToggleCapsLock(false);
-
-            #region xml oku
-
-            Restoran[] info = new Restoran[1];
-
-            if (!File.Exists("restoran.xml"))
-            {
-                info[0] = new Restoran();
-                info[0].departmanAdi = "Departman";
-                info[0].departmanMenusu = "Menü";
-                info[0].departmanEkrani = "Masa Ekranı";
-                XmlSave.SaveRestoran(info, "restoran.xml");
-            }
-
-            XmlLoad<Restoran> loadInfo = new XmlLoad<Restoran>();
-            info = loadInfo.LoadRestoran("restoran.xml");
-
-            restoranListesi.AddRange(info);
-
-            comboNewDepName.Text = restoranListesi[0].departmanAdi;
-            comboNewDepMenu.Text = restoranListesi[0].departmanMenusu;
-            comboNewDepView.Text = restoranListesi[0].departmanEkrani;
-
-            newDepartmentForm.Text = comboNewDepName.Text;
-
-            treeDepartman.Nodes.Add(restoranListesi[0].departmanAdi);
-
-            for (int i = 1; i < restoranListesi.Count; i++)
-            {
-                treeDepartman.Nodes.Add(restoranListesi[i].departmanAdi);
-            }
-
-            //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
-            foreach (TreeNode node in treeDepartman.Nodes)
-            {
-                while (treeDepartman.Width - 12 < System.Windows.Forms.TextRenderer.MeasureText(node.Text, new Font(treeDepartman.Font.FontFamily, treeDepartman.Font.Size, treeDepartman.Font.Style)).Width)
-                {
-                    treeDepartman.Font = new Font(treeDepartman.Font.FontFamily, treeDepartman.Font.Size - 0.5f, treeDepartman.Font.Style);
-                }
-            }
-
-            if (File.Exists("masaDizayn.xml"))
-            {
-                //listeyi okuyoruz
-                XmlLoad<MasaDizayn> loadInfoMasaDizayn = new XmlLoad<MasaDizayn>();
-                MasaDizayn[] masaDizaynlari = loadInfoMasaDizayn.LoadRestoran("masaDizayn.xml");
-
-                masaListesi.AddRange(masaDizaynlari);
-
-                for (int i = 0; i < masaDizaynlari.Count(); i++)
-                {
-                    bool dizaynVar = false;
-                    for (int j = 0; j < restoranListesi.Count;j++ )
-                    {
-                        if (restoranListesi[j].departmanEkrani == masaDizaynlari[i].masaPlanIsmi)
-                            dizaynVar = true;
-                    }                        
-                    if(!dizaynVar)        
-                        comboNewDepView.Items.Add(masaDizaynlari[i].masaPlanIsmi);
-                }
-            }
-
-            if (File.Exists("menu.xml"))
-            {
-                //liste varsa okuyoruz
-                XmlLoad<Menuler> loadInfoMenuler = new XmlLoad<Menuler>();
-                Menuler[] menuListesi = loadInfoMenuler.LoadRestoran("menu.xml");
-
-                for (int i = 0; i < menuListesi.Count(); i++)
-                {
-                    comboNewDepMenu.Items.Add(menuListesi[i].menuAdi);
-                }
-            }
-
-            #endregion
-
-            treeDepartman.SelectedNode = treeDepartman.Nodes[0];
-
-            if (treeDepartman.Nodes.Count < 2)
-                buttonDeleteDepartment.Enabled = false;
-
-            if (treeDepartman.Nodes.Count > 9)
-                buttonAddDepartment.Enabled = false;
+            InitializeComponent();            
         }
 
         internal static class NativeMethods
@@ -395,6 +309,95 @@ namespace ROPv1
                     comboNewDepView.Items.Add(masaListesi[i].masaPlanIsmi);
             }
             ((ComboBox)sender).DroppedDown = true;
+        }
+
+        private void Departman_Load(object sender, EventArgs e)
+        {
+            //açılışta capslock açıksa kapatıyoruz.
+            ToggleCapsLock(false);
+
+            #region xml oku
+
+            Restoran[] info = new Restoran[1];
+
+            if (!File.Exists("restoran.xml"))
+            {
+                info[0] = new Restoran();
+                info[0].departmanAdi = "Departman";
+                info[0].departmanMenusu = "Menü";
+                info[0].departmanEkrani = "Masa Ekranı";
+                XmlSave.SaveRestoran(info, "restoran.xml");
+            }
+
+            XmlLoad<Restoran> loadInfo = new XmlLoad<Restoran>();
+            info = loadInfo.LoadRestoran("restoran.xml");
+
+            restoranListesi.AddRange(info);
+
+            comboNewDepName.Text = restoranListesi[0].departmanAdi;
+            comboNewDepMenu.Text = restoranListesi[0].departmanMenusu;
+            comboNewDepView.Text = restoranListesi[0].departmanEkrani;
+
+            newDepartmentForm.Text = comboNewDepName.Text;
+
+            treeDepartman.Nodes.Add(restoranListesi[0].departmanAdi);
+
+            for (int i = 1; i < restoranListesi.Count; i++)
+            {
+                treeDepartman.Nodes.Add(restoranListesi[i].departmanAdi);
+            }
+
+            //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
+            foreach (TreeNode node in treeDepartman.Nodes)
+            {
+                while (treeDepartman.Width - 12 < System.Windows.Forms.TextRenderer.MeasureText(node.Text, new Font(treeDepartman.Font.FontFamily, treeDepartman.Font.Size, treeDepartman.Font.Style)).Width)
+                {
+                    treeDepartman.Font = new Font(treeDepartman.Font.FontFamily, treeDepartman.Font.Size - 0.5f, treeDepartman.Font.Style);
+                }
+            }
+
+            if (File.Exists("masaDizayn.xml"))
+            {
+                //listeyi okuyoruz
+                XmlLoad<MasaDizayn> loadInfoMasaDizayn = new XmlLoad<MasaDizayn>();
+                MasaDizayn[] masaDizaynlari = loadInfoMasaDizayn.LoadRestoran("masaDizayn.xml");
+
+                masaListesi.AddRange(masaDizaynlari);
+
+                for (int i = 0; i < masaDizaynlari.Count(); i++)
+                {
+                    bool dizaynVar = false;
+                    for (int j = 0; j < restoranListesi.Count; j++)
+                    {
+                        if (restoranListesi[j].departmanEkrani == masaDizaynlari[i].masaPlanIsmi)
+                            dizaynVar = true;
+                    }
+                    if (!dizaynVar)
+                        comboNewDepView.Items.Add(masaDizaynlari[i].masaPlanIsmi);
+                }
+            }
+
+            if (File.Exists("menu.xml"))
+            {
+                //liste varsa okuyoruz
+                XmlLoad<Menuler> loadInfoMenuler = new XmlLoad<Menuler>();
+                Menuler[] menuListesi = loadInfoMenuler.LoadRestoran("menu.xml");
+
+                for (int i = 0; i < menuListesi.Count(); i++)
+                {
+                    comboNewDepMenu.Items.Add(menuListesi[i].menuAdi);
+                }
+            }
+
+            #endregion
+
+            treeDepartman.SelectedNode = treeDepartman.Nodes[0];
+
+            if (treeDepartman.Nodes.Count < 2)
+                buttonDeleteDepartment.Enabled = false;
+
+            if (treeDepartman.Nodes.Count > 9)
+                buttonAddDepartment.Enabled = false;
         }
     }
 }

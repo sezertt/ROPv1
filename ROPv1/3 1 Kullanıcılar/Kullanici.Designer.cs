@@ -417,6 +417,7 @@
             this.Controls.Add(this.newUserForm);
             this.Name = "Kullanici";
             this.Size = new System.Drawing.Size(993, 626);
+            this.Load += new System.EventHandler(this.Kullanici_Load);
             this.newUserForm.ResumeLayout(false);
             this.newUserForm.PerformLayout();
             this.ResumeLayout(false);
