@@ -240,6 +240,7 @@ namespace ROPv1
             }
 
             string urunAdi = textboxUrunName.Text, urunKategorisi = comboNewKategoriName.Text, urunFiyati = textboxUrunFiyat.Text.Substring(0, textboxUrunFiyat.Text.Length - 3);
+            int urunKDV = Convert.ToInt32(comboKDV.Text);
 
             int kategoriYeri = 0;
             for (int i = 0; i < treeUrunAdi.Nodes.Count; i++) // kategori varsa yerini al
@@ -284,6 +285,7 @@ namespace ROPv1
                 urunListesi[kategoriYeri].urunAdi.Add(urunAdi);// burayı düzenle
                 urunListesi[kategoriYeri].urunKategorisi.Add(urunKategorisi);
                 urunListesi[kategoriYeri].porsiyonFiyati.Add(urunFiyati);
+                urunListesi[kategoriYeri].urunKDV.Add(urunKDV);
                 XmlSave.SaveRestoran(urunListesi, "urunler.xml");
 
                 newProductForm.Text = urunAdi;
@@ -329,6 +331,7 @@ namespace ROPv1
                     urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[treeUrunAdi.SelectedNode.Index] = urunAdi;
                     urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[treeUrunAdi.SelectedNode.Index] = urunFiyati;
                     urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[treeUrunAdi.SelectedNode.Index] = urunKategorisi;
+                    urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKDV[treeUrunAdi.SelectedNode.Index] = urunKDV;
 
                     //eski ürünün görünümdeki ismi güncellenir
                     treeUrunAdi.SelectedNode.Text = urunAdi;
@@ -347,6 +350,7 @@ namespace ROPv1
                     urunListesi[kategoriYeri].urunAdi.Add(urunAdi);// burayı düzenle
                     urunListesi[kategoriYeri].urunKategorisi.Add(urunKategorisi);
                     urunListesi[kategoriYeri].porsiyonFiyati.Add(urunFiyati);
+                    urunListesi[kategoriYeri].urunKDV.Add(urunKDV);
 
                     //eski ürünü listeden çıkarırız
                     urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi.RemoveAt(treeUrunAdi.SelectedNode.Index);
