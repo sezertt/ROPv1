@@ -24,7 +24,6 @@ namespace ROPv1
 
         private void buttonGunBasi_Click(object sender, EventArgs e)
         {
-
             numericNumberOfCurrentPage.Value = 1;
 
             GunBilgileri yeniGunBasi = new GunBilgileri();
@@ -36,11 +35,13 @@ namespace ROPv1
 
             XmlSave.SaveRestoran(gunListesi, "gunler.xml");
 
-            treeGunBasi.Nodes.Insert(0, yeniGunBasi.gunBasiVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")) + ", " + yeniGunBasi.gunBasiVakti.ToString("dddd", new CultureInfo("tr-TR")) + " / Saat " + yeniGunBasi.gunBasiVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")) + " ----- ");
+            listHesap.Items.Insert(0, yeniGunBasi.gunBasiVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")));
+            listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(yeniGunBasi.gunBasiVakti.ToString("dddd", new CultureInfo("tr-TR")));
+            listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(yeniGunBasi.gunBasiVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
 
             buttonGunSonu.Enabled = true;
             buttonGunBasi.Enabled = false;
-            treeGunBasi.SelectedNode = treeGunBasi.Nodes[0];
+            listHesap.FocusedItem = listHesap.Items[0];
 
             TimeSpan span = DateTime.Now.Subtract(gunListesi[gunListesi.Count - 1].gunBasiVakti);
 
@@ -67,22 +68,25 @@ namespace ROPv1
 
                 XmlSave.SaveRestoran(gunListesi, "gunler.xml");
 
-                treeGunBasi.Nodes[0].Text += DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")) + ", " + DateTime.Now.ToString("dddd", new CultureInfo("tr-TR")) + " / Saat " + DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+                listHesap.Items[0].SubItems.Add(DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")));
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(DateTime.Now.ToString("dddd", new CultureInfo("tr-TR")));
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
 
                 buttonGunSonu.Enabled = false;
                 buttonGunBasi.Enabled = true;
-                treeGunBasi.SelectedNode = treeGunBasi.Nodes[0];
+
+                listHesap.FocusedItem = listHesap.Items[0];
+
                 timerGecenSure.Stop();
                 labelGunSonu.Text = ayarYapanKisi;
             }
         }
-
-        private void gunBilgisiDoldur(object sender, TreeViewEventArgs e)
+        private void listHesap_MouseUp(object sender, MouseEventArgs e)
         {
-            int neresi = gunListesi.Count - 1 - (((int)numericNumberOfCurrentPage.Value - 1) * 20) - treeGunBasi.SelectedNode.Index;
+            int neresi = gunListesi.Count - 1 - (((int)numericNumberOfCurrentPage.Value - 1) * 19) - listHesap.SelectedItems[0].Index;
             labelGunBasi.Text = gunListesi[neresi].gunBasiYapanKisi;
             labelGunSonu.Text = gunListesi[neresi].gunSonuYapanKisi;
-            if (treeGunBasi.SelectedNode.Index == 0 && labelGunSonu.Text == "")
+            if (listHesap.SelectedItems[0].Index == 0 && labelGunSonu.Text == "")
             {
                 TimeSpan span = DateTime.Now.Subtract(gunListesi[gunListesi.Count - 1].gunBasiVakti);
 
@@ -100,21 +104,55 @@ namespace ROPv1
 
         private void currentPageChanged(object sender, EventArgs e)
         {
-            treeGunBasi.Nodes.Clear();
-            int yazdirilacakDeger = gunListesi.Count - 1 - ((int)numericNumberOfCurrentPage.Value - 1) * 20;
-            int durulacakDeger = yazdirilacakDeger - 20;
+            listHesap.Items.Clear();
+
+            int yazdirilacakDeger = gunListesi.Count - 1 - ((int)numericNumberOfCurrentPage.Value - 1) * 19;
+            int durulacakDeger = yazdirilacakDeger - 19;
 
             if (durulacakDeger < -1)
                 durulacakDeger = -1;
 
             if (gunListesi[yazdirilacakDeger].gunSonuVakti.Date.Year > 10)
-                treeGunBasi.Nodes.Add(gunListesi[yazdirilacakDeger].gunBasiVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")) + ", " + gunListesi[yazdirilacakDeger].gunBasiVakti.ToString("dddd", new CultureInfo("tr-TR")) + " / Saat " + gunListesi[yazdirilacakDeger].gunBasiVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")) + " ----- " + gunListesi[yazdirilacakDeger].gunSonuVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")) + ", " + gunListesi[yazdirilacakDeger].gunSonuVakti.ToString("dddd", new CultureInfo("tr-TR")) + " / Saat " + gunListesi[yazdirilacakDeger].gunSonuVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
+            {
+                listHesap.Items.Add(gunListesi[yazdirilacakDeger].gunBasiVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")));
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(gunListesi[yazdirilacakDeger].gunBasiVakti.ToString("dddd", new CultureInfo("tr-TR")));
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(gunListesi[yazdirilacakDeger].gunBasiVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add("");
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(gunListesi[yazdirilacakDeger].gunSonuVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")));
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(gunListesi[yazdirilacakDeger].gunSonuVakti.ToString("dddd", new CultureInfo("tr-TR")));
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(gunListesi[yazdirilacakDeger].gunSonuVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
+            }
             else if (gunListesi[yazdirilacakDeger].gunBasiVakti != null)
-                treeGunBasi.Nodes.Add(gunListesi[yazdirilacakDeger].gunBasiVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")) + ", " + gunListesi[yazdirilacakDeger].gunBasiVakti.ToString("dddd", new CultureInfo("tr-TR")) + " / Saat " + gunListesi[yazdirilacakDeger].gunBasiVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")) + " ----- ");
+            {
+                listHesap.Items.Add(gunListesi[yazdirilacakDeger].gunBasiVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")));
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(gunListesi[yazdirilacakDeger].gunBasiVakti.ToString("dddd", new CultureInfo("tr-TR")));
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(gunListesi[yazdirilacakDeger].gunBasiVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
+            }
+
 
             for (int i = yazdirilacakDeger - 1; i > durulacakDeger; i--)
             {
-                treeGunBasi.Nodes.Add(gunListesi[i].gunBasiVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")) + ", " + gunListesi[i].gunBasiVakti.ToString("dddd", new CultureInfo("tr-TR")) + " / Saat " + gunListesi[i].gunBasiVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")) + " ----- " + gunListesi[i].gunSonuVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")) + ", " + gunListesi[i].gunSonuVakti.ToString("dddd", new CultureInfo("tr-TR")) + " / Saat " + gunListesi[i].gunSonuVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
+                listHesap.Items.Add(gunListesi[i].gunBasiVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")));
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(gunListesi[i].gunBasiVakti.ToString("dddd", new CultureInfo("tr-TR")));
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(gunListesi[i].gunBasiVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add("");
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(gunListesi[i].gunSonuVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")));
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(gunListesi[i].gunSonuVakti.ToString("dddd", new CultureInfo("tr-TR")));
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(gunListesi[i].gunSonuVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
             }
         }
 
@@ -167,7 +205,7 @@ namespace ROPv1
             labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
             labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
             labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
-            timerSaat.Start();            
+            timerSaat.Start();
 
             if (!File.Exists("gunler.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default menümüzü giriyoruz.
             {
@@ -193,18 +231,31 @@ namespace ROPv1
                 }
 
                 int a = 1;
-                if (gunListesi.Count % 20 == 0)
+                if (gunListesi.Count % 19 == 0)
                     a = 0;
 
-                numericNumberOfCurrentPage.Maximum = gunListesi.Count / 20 + a;
-                labelNumberOfPages.Text = (gunListesi.Count / 20 + a).ToString();
+                numericNumberOfCurrentPage.Maximum = gunListesi.Count / 19 + a;
+                labelNumberOfPages.Text = (gunListesi.Count / 19 + a).ToString();
 
 
                 this.currentPageChanged(null, null);
 
-                if (treeGunBasi.Nodes.Count > 0)
-                    treeGunBasi.SelectedNode = treeGunBasi.Nodes[0];
+                if (listHesap.Items.Count > 0)
+                    listHesap.FocusedItem = listHesap.Items[0];
             }
+            listHesap.Columns[0].Width = listHesap.Width / 7;
+            listHesap.Columns[1].Width = listHesap.Width / 7;
+            listHesap.Columns[2].Width = listHesap.Width / 7;
+            listHesap.Columns[3].Width = listHesap.Width / 7;
+            listHesap.Columns[4].Width = listHesap.Width / 7;
+            listHesap.Columns[5].Width = listHesap.Width / 7;
+            listHesap.Columns[6].Width = listHesap.Width / 7;
+        }
+
+        private void listHesap_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            e.Cancel = true;
+            e.NewWidth = listHesap.Columns[e.ColumnIndex].Width;
         }
     }
 }

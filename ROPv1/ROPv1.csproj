@@ -116,7 +116,6 @@
       <DependentUpon>Kullanici.cs</DependentUpon>
     </Compile>
     <Compile Include="3 1 Kullanıcılar\UItemp.cs" />
-    <Compile Include="3 3 MasaPlanı\SiparisBilgileri.cs" />
     <Compile Include="3 4 Menüler\MenuControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

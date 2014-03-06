@@ -16,6 +16,7 @@ namespace ROPv1
             return cnn;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         public static SqlCommand getCommand (string query)
         {
             SqlCommand cmd = new SqlCommand(query,getConnection());

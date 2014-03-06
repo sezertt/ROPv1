@@ -25,6 +25,8 @@ namespace ROPv1
 
         DateTime hangiGun;
 
+        decimal toplamHesap = 0, kalanHesap = 0;
+
         public SiparisMasaFormu()
         {
             InitializeComponent();            
@@ -80,12 +82,18 @@ namespace ROPv1
                         SiparisMenuFormu siparisForm;
                         if(((Button)sender).BackColor == Color.White)
                         {
-                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi,false);//burada masa numarasını da yolla
+                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi,false,0,0);//burada masa numarasını da yolla
                             siparisForm.ShowDialog();
                         }
                         else
                         {
-                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi,true);//burada masa numarasını da yolla
+                            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT ToplamHesap,KalanHesap FROM Adisyon WHERE MasaAdi='" + ((Button)sender).Text + "' AND DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
+                            SqlDataReader dr = cmd.ExecuteReader();
+                            dr.Read();
+                            toplamHesap = dr.GetDecimal(0);
+                            kalanHesap = dr.GetDecimal(1);
+
+                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi,true,toplamHesap,kalanHesap);//burada masa numarasını da yolla
                             siparisForm.ShowDialog();
                         }                        
 
@@ -161,7 +169,7 @@ namespace ROPv1
 
                             try // açık
                             {
-                                SqlCommand cmd = SQLBaglantisi.getCommand("select acikMi from Adisyon where MasaAdi='" + buttonTable.Text + "' and DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' and acikMi=1");
+                                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT acikMi FROM Adisyon WHERE MasaAdi='" + buttonTable.Text + "' AND DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
                                 SqlDataReader dr = cmd.ExecuteReader();
                                 dr.Read();
                                 dr.GetBoolean(0);
@@ -389,7 +397,7 @@ namespace ROPv1
 
                             try // açık
                             {
-                                SqlCommand cmd = SQLBaglantisi.getCommand("select acikMi from Adisyon where MasaAdi='" + buttonTable.Text + "' and DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' and acikMi=1");
+                                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT acikMi FROM Adisyon WHERE MasaAdi='" + buttonTable.Text + "' AND DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
                                 SqlDataReader dr = cmd.ExecuteReader();
                                 dr.Read();
                                 dr.GetBoolean(0);

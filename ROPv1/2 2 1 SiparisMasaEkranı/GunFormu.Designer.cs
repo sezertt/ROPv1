@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GunFormu));
-            this.treeGunBasi = new System.Windows.Forms.TreeView();
             this.buttonGunBasi = new System.Windows.Forms.Button();
             this.buttonGunSonu = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -51,31 +50,18 @@
             this.buttonDown = new System.Windows.Forms.Button();
             this.buttonUp = new System.Windows.Forms.Button();
             this.pinboardcontrol21 = new PinboardClassLibrary.Pinboardcontrol2();
+            this.listHesap = new ROPv1.MyListView();
+            this.Tarih = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Gun = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Saat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Bosluk = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TarihBitis = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.GunBitis = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.SaatBitis = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.numericNumberOfCurrentPage)).BeginInit();
             this.SuspendLayout();
-            // 
-            // treeGunBasi
-            // 
-            this.treeGunBasi.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeGunBasi.Font = new System.Drawing.Font("Arial", 18.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.treeGunBasi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.treeGunBasi.FullRowSelect = true;
-            this.treeGunBasi.HideSelection = false;
-            this.treeGunBasi.HotTracking = true;
-            this.treeGunBasi.Indent = 5;
-            this.treeGunBasi.ItemHeight = 35;
-            this.treeGunBasi.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
-            this.treeGunBasi.Location = new System.Drawing.Point(12, 12);
-            this.treeGunBasi.Name = "treeGunBasi";
-            this.treeGunBasi.Scrollable = false;
-            this.treeGunBasi.ShowLines = false;
-            this.treeGunBasi.ShowPlusMinus = false;
-            this.treeGunBasi.ShowRootLines = false;
-            this.treeGunBasi.Size = new System.Drawing.Size(1027, 735);
-            this.treeGunBasi.TabIndex = 39;
-            this.treeGunBasi.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.gunBilgisiDoldur);
             // 
             // buttonGunBasi
             // 
@@ -348,12 +334,87 @@
             // 
             this.pinboardcontrol21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pinboardcontrol21.KeyboardType = PinboardClassLibrary.BoW.Standard;
-            this.pinboardcontrol21.Location = new System.Drawing.Point(1067, 601);
+            this.pinboardcontrol21.Location = new System.Drawing.Point(1067, 599);
             this.pinboardcontrol21.Name = "pinboardcontrol21";
             this.pinboardcontrol21.Size = new System.Drawing.Size(220, 215);
             this.pinboardcontrol21.TabIndex = 59;
             this.pinboardcontrol21.Visible = false;
             this.pinboardcontrol21.UserKeyPressed += new PinboardClassLibrary.PinboardDelegate(this.pinboardcontrol21_UserKeyPressed);
+            // 
+            // listHesap
+            // 
+            this.listHesap.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listHesap.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.listHesap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listHesap.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Tarih,
+            this.Gun,
+            this.Saat,
+            this.Bosluk,
+            this.TarihBitis,
+            this.GunBitis,
+            this.SaatBitis});
+            this.listHesap.Font = new System.Drawing.Font("Arial", 18.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.listHesap.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.listHesap.FullRowSelect = true;
+            this.listHesap.GridLines = true;
+            this.listHesap.HideSelection = false;
+            this.listHesap.LabelWrap = false;
+            this.listHesap.Location = new System.Drawing.Point(12, 12);
+            this.listHesap.Margin = new System.Windows.Forms.Padding(0);
+            this.listHesap.MultiSelect = false;
+            this.listHesap.Name = "listHesap";
+            this.listHesap.Scrollable = false;
+            this.listHesap.Size = new System.Drawing.Size(1027, 735);
+            this.listHesap.TabIndex = 60;
+            this.listHesap.UseCompatibleStateImageBehavior = false;
+            this.listHesap.View = System.Windows.Forms.View.Details;
+            this.listHesap.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.listHesap_ColumnWidthChanging);
+            this.listHesap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listHesap_MouseUp);
+            // 
+            // Tarih
+            // 
+            this.Tarih.Text = "Gün Başlangıcı";
+            this.Tarih.Width = 280;
+            // 
+            // Gun
+            // 
+            this.Gun.Text = "";
+            // 
+            // Saat
+            // 
+            this.Saat.Text = "";
+            this.Saat.Width = 281;
+            // 
+            // Bosluk
+            // 
+            this.Bosluk.Text = "";
+            // 
+            // TarihBitis
+            // 
+            this.TarihBitis.Text = "Gün Sonu";
+            this.TarihBitis.Width = 257;
+            // 
+            // GunBitis
+            // 
+            this.GunBitis.Text = "";
+            // 
+            // SaatBitis
+            // 
+            this.SaatBitis.Text = "";
+            this.SaatBitis.Width = 200;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Başlangıç Tarihi";
+            this.columnHeader1.Width = 250;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Bitiş Tarihi";
+            this.columnHeader2.Width = 250;
             // 
             // GunFormu
             // 
@@ -361,6 +422,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1313, 819);
+            this.Controls.Add(this.listHesap);
             this.Controls.Add(this.pinboardcontrol21);
             this.Controls.Add(this.buttonDown);
             this.Controls.Add(this.buttonUp);
@@ -377,7 +439,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.buttonGunSonu);
             this.Controls.Add(this.buttonGunBasi);
-            this.Controls.Add(this.treeGunBasi);
             this.Controls.Add(this.labelSaat);
             this.Controls.Add(this.labelNumberOfPages);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -394,7 +455,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TreeView treeGunBasi;
         private System.Windows.Forms.Button buttonGunBasi;
         private System.Windows.Forms.Button buttonGunSonu;
         private System.Windows.Forms.Label label5;
@@ -415,5 +475,15 @@
         private System.Windows.Forms.Button buttonDown;
         private System.Windows.Forms.Button buttonUp;
         private PinboardClassLibrary.Pinboardcontrol2 pinboardcontrol21;
+        private MyListView listHesap;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader Tarih;
+        private System.Windows.Forms.ColumnHeader TarihBitis;
+        private System.Windows.Forms.ColumnHeader Saat;
+        private System.Windows.Forms.ColumnHeader SaatBitis;
+        private System.Windows.Forms.ColumnHeader Gun;
+        private System.Windows.Forms.ColumnHeader GunBitis;
+        private System.Windows.Forms.ColumnHeader Bosluk;
     }
 }
