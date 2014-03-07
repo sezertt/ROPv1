@@ -203,7 +203,7 @@ namespace ROPv1
         {
             if (textBoxYeniKategori.Text == "Yeni Kategori" || textBoxYeniKategori.Text == "" || textBoxYeniKategori.Text == "Kategorisiz Ürünler")
             {
-                using (KontrolFormu dialog = new KontrolFormu("Hatalı bilgi girdiniz, lütfen kontrol edin", false))
+                using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
                 {
                     dialog.ShowDialog();
                 }
@@ -216,7 +216,7 @@ namespace ROPv1
                 {
                     if (kategoriListesi[0].kategoriler[j] == textBoxYeniKategori.Text)
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Hatalı bilgi girdiniz, lütfen kontrol edin", false))
+                        using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
                         {
                             dialog.ShowDialog();
                         }
@@ -371,7 +371,7 @@ namespace ROPv1
         {
             if (textboxMenuName.Text == "Yeni Menü" || textboxMenuName.Text == "")
             {
-                using (KontrolFormu dialog = new KontrolFormu("Hatalı bilgi girdiniz, lütfen kontrol edin", false))
+                using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
                 {
                     dialog.ShowDialog();
                 }

@@ -150,11 +150,18 @@
     <Compile Include="1 GirisEkranı\MyWaitForm.Designer.cs">
       <DependentUpon>MyWaitForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="3 6 Stoklar\StokBilgileri.cs" />
-    <Compile Include="3 6 Stoklar\Stoklar.cs">
+    <Compile Include="3 6 Ürün Menüleri\UrunMenuBilgileri.cs" />
+    <Compile Include="3 6 Ürün Menüleri\UrunMenuleri.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="3 6 Stoklar\Stoklar.Designer.cs">
+    <Compile Include="3 6 Ürün Menüleri\UrunMenuleri.Designer.cs">
+      <DependentUpon>UrunMenuleri.cs</DependentUpon>
+    </Compile>
+    <Compile Include="3 7 Stoklar\StokBilgileri.cs" />
+    <Compile Include="3 7 Stoklar\Stoklar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="3 7 Stoklar\Stoklar.Designer.cs">
       <DependentUpon>Stoklar.cs</DependentUpon>
     </Compile>
     <Compile Include="GenelKullanılanlar\AdisyonNotuFormu.cs">
@@ -226,7 +233,10 @@
     <EmbeddedResource Include="3 5 Ürünler\Products.resx">
       <DependentUpon>Products.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="3 6 Stoklar\Stoklar.resx">
+    <EmbeddedResource Include="3 6 Ürün Menüleri\UrunMenuleri.resx">
+      <DependentUpon>UrunMenuleri.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="3 7 Stoklar\Stoklar.resx">
       <DependentUpon>Stoklar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GenelKullanılanlar\AdisyonNotuFormu.resx">

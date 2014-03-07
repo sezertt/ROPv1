@@ -102,7 +102,7 @@ namespace ROPv1
         {
             if (textboxUserName.Text == "Yeni Kullanıcı" || textboxUserName.Text == "" || textboxSurname.Text == "" || textboxName.Text == "")
             {
-                using (KontrolFormu dialog = new KontrolFormu("Hatalı bilgi girdiniz, lütfen kontrol edin", false))
+                using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
                 {
                     dialog.ShowDialog();
                 }

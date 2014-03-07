@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.newProductForm = new System.Windows.Forms.GroupBox();
-            this.labelUrunSayisi = new System.Windows.Forms.Label();
-            this.labelUrunSayisiYazisi = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboKDV = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboNewKategoriName = new System.Windows.Forms.ComboBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -42,13 +42,13 @@
             this.buttonSaveNewProduct = new System.Windows.Forms.Button();
             this.buttonDeleteProduct = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.labelUrunSayisi = new System.Windows.Forms.Label();
+            this.labelUrunSayisiYazisi = new System.Windows.Forms.Label();
             this.buttonAddNewProduct = new System.Windows.Forms.Button();
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.treeUrunAdi = new System.Windows.Forms.TreeView();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.comboKDV = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.newProductForm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,27 +76,32 @@
             this.newProductForm.TabStop = false;
             this.newProductForm.Text = "Yeni Ürün";
             // 
-            // labelUrunSayisi
+            // label2
             // 
-            this.labelUrunSayisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelUrunSayisi.AutoSize = true;
-            this.labelUrunSayisi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelUrunSayisi.Location = new System.Drawing.Point(352, 302);
-            this.labelUrunSayisi.Name = "labelUrunSayisi";
-            this.labelUrunSayisi.Size = new System.Drawing.Size(22, 24);
-            this.labelUrunSayisi.TabIndex = 44;
-            this.labelUrunSayisi.Text = "0";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold);
+            this.label2.Location = new System.Drawing.Point(4, 244);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 24);
+            this.label2.TabIndex = 44;
+            this.label2.Text = "KDV (%)";
             // 
-            // labelUrunSayisiYazisi
+            // comboKDV
             // 
-            this.labelUrunSayisiYazisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelUrunSayisiYazisi.AutoSize = true;
-            this.labelUrunSayisiYazisi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelUrunSayisiYazisi.Location = new System.Drawing.Point(218, 302);
-            this.labelUrunSayisiYazisi.Name = "labelUrunSayisiYazisi";
-            this.labelUrunSayisiYazisi.Size = new System.Drawing.Size(139, 24);
-            this.labelUrunSayisiYazisi.TabIndex = 43;
-            this.labelUrunSayisiYazisi.Text = "Ürün Sayısı =";
+            this.comboKDV.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.comboKDV.Font = new System.Drawing.Font("Arial", 15.75F);
+            this.comboKDV.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.comboKDV.FormattingEnabled = true;
+            this.comboKDV.Items.AddRange(new object[] {
+            "1",
+            "8",
+            "18"});
+            this.comboKDV.Location = new System.Drawing.Point(100, 242);
+            this.comboKDV.Name = "comboKDV";
+            this.comboKDV.Size = new System.Drawing.Size(213, 32);
+            this.comboKDV.TabIndex = 43;
+            this.comboKDV.Click += new System.EventHandler(this.showMenu);
+            this.comboKDV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
             // 
             // label1
             // 
@@ -176,7 +181,7 @@
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label5.Location = new System.Drawing.Point(4, 30);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(104, 24);
+            this.label5.Size = new System.Drawing.Size(103, 24);
             this.label5.TabIndex = 19;
             this.label5.Text = "Ürün Adı:";
             // 
@@ -188,7 +193,7 @@
             this.buttonSaveNewProduct.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSaveNewProduct.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonSaveNewProduct.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSaveNewProduct.Location = new System.Drawing.Point(206, 290);
+            this.buttonSaveNewProduct.Location = new System.Drawing.Point(203, 282);
             this.buttonSaveNewProduct.Name = "buttonSaveNewProduct";
             this.buttonSaveNewProduct.Size = new System.Drawing.Size(110, 45);
             this.buttonSaveNewProduct.TabIndex = 6;
@@ -205,7 +210,7 @@
             this.buttonDeleteProduct.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteProduct.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonDeleteProduct.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteProduct.Location = new System.Drawing.Point(8, 290);
+            this.buttonDeleteProduct.Location = new System.Drawing.Point(8, 282);
             this.buttonDeleteProduct.Name = "buttonDeleteProduct";
             this.buttonDeleteProduct.Size = new System.Drawing.Size(110, 45);
             this.buttonDeleteProduct.TabIndex = 5;
@@ -222,14 +227,36 @@
             this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonCancel.Location = new System.Drawing.Point(8, 290);
+            this.buttonCancel.Location = new System.Drawing.Point(8, 282);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(110, 44);
+            this.buttonCancel.Size = new System.Drawing.Size(110, 45);
             this.buttonCancel.TabIndex = 8;
             this.buttonCancel.Text = "İptal Et  ";
             this.buttonCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new System.EventHandler(this.cancelNewProduct);
+            // 
+            // labelUrunSayisi
+            // 
+            this.labelUrunSayisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelUrunSayisi.AutoSize = true;
+            this.labelUrunSayisi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelUrunSayisi.Location = new System.Drawing.Point(354, 305);
+            this.labelUrunSayisi.Name = "labelUrunSayisi";
+            this.labelUrunSayisi.Size = new System.Drawing.Size(22, 24);
+            this.labelUrunSayisi.TabIndex = 44;
+            this.labelUrunSayisi.Text = "0";
+            // 
+            // labelUrunSayisiYazisi
+            // 
+            this.labelUrunSayisiYazisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelUrunSayisiYazisi.AutoSize = true;
+            this.labelUrunSayisiYazisi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelUrunSayisiYazisi.Location = new System.Drawing.Point(218, 305);
+            this.labelUrunSayisiYazisi.Name = "labelUrunSayisiYazisi";
+            this.labelUrunSayisiYazisi.Size = new System.Drawing.Size(141, 24);
+            this.labelUrunSayisiYazisi.TabIndex = 43;
+            this.labelUrunSayisiYazisi.Text = "Ürün Sayısı =";
             // 
             // buttonAddNewProduct
             // 
@@ -315,30 +342,6 @@
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.moveNodeUp);
-            // 
-            // comboKDV
-            // 
-            this.comboKDV.Font = new System.Drawing.Font("Arial", 15.75F);
-            this.comboKDV.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.comboKDV.FormattingEnabled = true;
-            this.comboKDV.Items.AddRange(new object[] {
-            "1",
-            "8",
-            "18"});
-            this.comboKDV.Location = new System.Drawing.Point(100, 242);
-            this.comboKDV.Name = "comboKDV";
-            this.comboKDV.Size = new System.Drawing.Size(213, 32);
-            this.comboKDV.TabIndex = 43;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(4, 244);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 24);
-            this.label2.TabIndex = 44;
-            this.label2.Text = "KDV (%)";
             // 
             // Products
             // 

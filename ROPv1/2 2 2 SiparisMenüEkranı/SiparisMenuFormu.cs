@@ -344,7 +344,7 @@ namespace ROPv1
                         listHesap.Items[listHesap.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
                         listedeSeciliOlanItemlar.Add(false);
 
-                        int itemsCount = this.listHesap.Items.Count + this.listHesap.Groups.Count;
+                        int itemsCount = this.listHesap.Items.Count + 3;// 3 aslında grup sayısı -1
                         int itemHeight = this.listHesap.Items[0].Bounds.Height;
                         int VisiableItem = (int)this.listHesap.ClientRectangle.Height / itemHeight;
 
@@ -403,7 +403,6 @@ namespace ROPv1
 
                 if (labelToplamHesap.Text != "0,00") //hesapta para varsa butonu enable et
                     buttonHesapOde.Enabled = true;
-
             }
 
             //form load olduğunda tool larımızda ekranın boyundan fazla ürün yoksa scroll butonlarını saklıyoruz
@@ -431,7 +430,7 @@ namespace ROPv1
 
             if (this.listHesap.Items.Count > 0)
             {
-                int itemsCount = this.listHesap.Items.Count + this.listHesap.Groups.Count;
+                int itemsCount = this.listHesap.Items.Count + 3;// 3 aslında grup sayısı -1
                 int itemHeight = this.listHesap.Items[0].Bounds.Height;
                 int VisiableItem = (int)this.listHesap.ClientRectangle.Height / itemHeight;
                 if (itemsCount >= VisiableItem)
@@ -489,7 +488,7 @@ namespace ROPv1
                 listedeSeciliOlanItemlar.Add(false);
 
                 //eğer ürün eklendiğinde ekrana sığmıyorsa scroll gösterilecektir, bu yüzden fiyatları sola kaydırıyoruz
-                int itemsCount = this.listHesap.Items.Count + this.listHesap.Groups.Count;
+                int itemsCount = this.listHesap.Items.Count + 3;// 3 aslında grup sayısı -1
                 int itemHeight = this.listHesap.Items[0].Bounds.Height;
                 int VisiableItem = (int)this.listHesap.ClientRectangle.Height / itemHeight;
 
@@ -577,25 +576,37 @@ namespace ROPv1
         #region Scroll Butonları
         private void buttonUrunListUp_Click(object sender, EventArgs e)
         {
-            listHesap.Focus();
+            int toplamUrun = listHesap.Items.Count;
+
             if (scrollPosition - atlama <= 0)
             {
-                this.listHesap.EnsureVisible(0);
+                listHesap.Focus();
+                listHesap.EnsureVisible(listHesap.Groups[0].Items[0].Index);
             }
             else
             {
-                this.listHesap.EnsureVisible(scrollPosition - atlama);
+                listHesap.Focus();
+                listHesap.EnsureVisible(scrollPosition - atlama);
                 scrollPosition -= atlama;
             }
         }
 
         private void buttonUrunListDown_Click(object sender, EventArgs e)
         {
+            int x = listHesap.TopItem.Group.Items[0].Index;
+            x = listHesap.Groups[0].Items[0].Index;
+            x = listHesap.Groups[1].Items[0].Index;
+            x = listHesap.Groups[2].Items[0].Index;
+            x = listHesap.Groups[3].Items[0].Index;
 
-            if (scrollPosition + atlama >= this.listHesap.Items.Count - 1)
-                listHesap.EnsureVisible(this.listHesap.Items.Count - 1);
+            if (scrollPosition + atlama >= listHesap.Items.Count - 1)
+            {
+                listHesap.Focus();
+                listHesap.EnsureVisible(listHesap.Items.Count - 1);
+            }
             else
             {
+                listHesap.Focus();
                 listHesap.EnsureVisible(scrollPosition + atlama);
                 scrollPosition += atlama;
             }
@@ -659,6 +670,8 @@ namespace ROPv1
         //listede eleman seçildiğinde çalışacak olan method
         private void listHesap_Click(object sender, MouseEventArgs e)
         {
+
+            int a = listHesap.SelectedIndices[0];
             ListViewHitTestInfo info = listHesap.HitTest(listHesap.PointToClient(Cursor.Position));
             int kacElemanSecili;
 
@@ -748,20 +761,6 @@ namespace ROPv1
             }
         }
 
-
-
-        private void changeTablesButton_Click(object sender, EventArgs e)
-        {
-            //burada bir split viewa departman ve masalarını koy seçilen departmana göre masa ve departman adını değiştir.
-        }
-
-        //ödeme kısmına geçiş butonu
-        private void paymentButton_Click(object sender, EventArgs e)
-        {
-            //ödendiğinde sql de ödendi flagini 1 yap 
-        }
-
-        #region Ürüne Basıldığında Enable Olan Butonlar
         // ürün ikram etme ve ikramı iptal etme butonu
         private void buttonUrunIkram_Click(object sender, EventArgs e)
         {
@@ -1107,13 +1106,11 @@ namespace ROPv1
         private void buttonUrunIptal_Click(object sender, EventArgs e)
         {
             double carpan;
-            bool direkSil = true;
             if (textNumberOfItem.Text != "")
             {
                 carpan = Convert.ToDouble(textNumberOfItem.Text);
                 if (carpan > Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text))
                     carpan = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
-                direkSil = false;
             }
             else
                 carpan = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
@@ -1121,19 +1118,16 @@ namespace ROPv1
             if (carpan == 0)
                 return;
 
-            if (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) > 1 && direkSil)
+            DialogResult eminMisiniz;
+
+            using (KontrolFormu dialog = new KontrolFormu(carpan + " adet "+ listHesap.SelectedItems[0].SubItems[1].Text +" iptal edilecek. Emin misiniz?", true))
             {
-                DialogResult eminMisiniz;
+                eminMisiniz = dialog.ShowDialog();
+            }
 
-                using (KontrolFormu dialog = new KontrolFormu("Seçili siparişin tamamını iptal etmek istediğinize emin misiniz?", true))
-                {
-                    eminMisiniz = dialog.ShowDialog();
-                }
-
-                if (eminMisiniz == DialogResult.No)
-                {
-                    return;
-                }
+            if (eminMisiniz == DialogResult.No)
+            {
+                return;
             }
 
             double dusulecekDeger = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) / Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
@@ -1142,10 +1136,12 @@ namespace ROPv1
 
             listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) - dusulecekDeger * carpan).ToString("0.00");
 
-            labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+            if (listHesap.SelectedItems[0].Group == listHesap.Groups[2] || listHesap.SelectedItems[0].Group == listHesap.Groups[3])
+            {
+                labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
 
-            labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
-
+                labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+            }
 
             if (listHesap.SelectedItems[0].Group != listHesap.Groups[yeniSiparisler])
             {
@@ -1257,7 +1253,7 @@ namespace ROPv1
 
             if (this.listHesap.Items.Count > 0)
             {
-                int itemsCount = this.listHesap.Items.Count + this.listHesap.Groups.Count;
+                int itemsCount = this.listHesap.Items.Count + 3;// 3 aslında grup sayısı -1
                 int itemHeight = this.listHesap.Items[0].Bounds.Height;
                 int VisiableItem = (int)this.listHesap.ClientRectangle.Height / itemHeight;
                 if (itemsCount < VisiableItem)
@@ -1285,52 +1281,113 @@ namespace ROPv1
         // ürüne ekleme yapma butonu
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            double carpan;
+            double kacPorsiyon = 1;
 
             if (textNumberOfItem.Text != "")
-            {
-                carpan = Convert.ToDouble(textNumberOfItem.Text);
-            }
+                kacPorsiyon = Convert.ToDouble(textNumberOfItem.Text);
             else
-                carpan = 1;
+                kacPorsiyon = 1;
 
-            if (carpan == 0)
+            if (kacPorsiyon == 0)
                 return;
 
-            double eklenecekDeger = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) / Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
-
-            listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) + carpan).ToString();
-
-            listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) + eklenecekDeger * carpan).ToString("0.00");
-
-            labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) + (eklenecekDeger * carpan)).ToString("0.00");
-
-            labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) + (eklenecekDeger * carpan)).ToString("0.00");
-
-            while (listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.SelectedItems[0].SubItems[2].Text, listHesap.SelectedItems[0].Font).Width
-                    || listHesap.Columns[0].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.SelectedItems[0].SubItems[0].Text, listHesap.SelectedItems[0].Font).Width)
+            int gruptaYeniGelenSiparisVarmi = -1; //ürün cinsi hesapta var mı bak 
+            for (int i = 0; i < listHesap.Groups[yeniSiparisler].Items.Count; i++)
             {
-                listHesap.SelectedItems[0].Font = new Font(listHesap.SelectedItems[0].Font.FontFamily, listHesap.SelectedItems[0].Font.Size - 0.5f, listHesap.SelectedItems[0].Font.Style);
+                if (listHesap.SelectedItems[0].SubItems[1].Text == listHesap.Groups[yeniSiparisler].Items[i].SubItems[1].Text)
+                {
+                    gruptaYeniGelenSiparisVarmi = i;
+                    break;
+                }
             }
-            textNumberOfItem.Text = "";
-        }
 
-        private void buttonTasi_Click(object sender, EventArgs e)
-        {
-            //burada bir split viewa departman ve masalarını koy seçilen departmanın masasının hesabına seçilen siparişleri ekle(hesap yoksa yeni oluştur varsa ekle), burdakinden çıkar
+            decimal eklenecekDeger = Convert.ToDecimal(listHesap.SelectedItems[0].SubItems[2].Text) / Convert.ToDecimal(listHesap.SelectedItems[0].SubItems[0].Text);
 
+            if (gruptaYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
+            {
+                listHesap.Items.Add(kacPorsiyon.ToString());
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(listHesap.SelectedItems[0].SubItems[1].Text);
+
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(((decimal)kacPorsiyon * eklenecekDeger).ToString("0.00"));
+                listHesap.Items[listHesap.Items.Count - 1].Group = listHesap.Groups[yeniSiparisler];
+                listHesap.Items[listHesap.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
+                listedeSeciliOlanItemlar.Add(false);
+
+                //eğer ürün eklendiğinde ekrana sığmıyorsa scroll gösterilecektir, bu yüzden fiyatları sola kaydırıyoruz
+                int itemsCount = this.listHesap.Items.Count + 3;// 3 aslında grup sayısı -1
+                int itemHeight = this.listHesap.Items[0].Bounds.Height;
+                int VisiableItem = (int)this.listHesap.ClientRectangle.Height / itemHeight;
+
+                if (itemsCount >= VisiableItem)
+                {
+                    listHesap.Columns[1].Width = urunBoyu;
+                    listHesap.Columns[2].Width = fiyatBoyu;
+                    buttonUrunListUp.Visible = true;
+                    buttonUrunListDown.Visible = true;
+
+                    for (int i = 0; i < listHesap.Items.Count; i++)
+                    {
+                        while (listHesap.Columns[0].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Items[i].SubItems[0].Text, new Font(listHesap.Items[i].Font.FontFamily, listHesap.Items[i].Font.Size, listHesap.Items[i].Font.Style)).Width)
+                        {
+                            listHesap.Items[i].Font = new Font(listHesap.Items[i].Font.FontFamily, listHesap.Items[i].Font.Size - 0.5f, listHesap.Items[i].Font.Style);
+                        }
+                        while (listHesap.Columns[1].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Items[i].SubItems[1].Text, new Font(listHesap.Items[i].Font.FontFamily, listHesap.Items[i].Font.Size, listHesap.Items[i].Font.Style)).Width)
+                        {
+                            listHesap.Items[i].Font = new Font(listHesap.Items[i].Font.FontFamily, listHesap.Items[i].Font.Size - 0.5f, listHesap.Items[i].Font.Style);
+                        }
+
+                        while (listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Items[i].SubItems[2].Text, new Font(listHesap.Items[i].Font.FontFamily, listHesap.Items[i].Font.Size, listHesap.Items[i].Font.Style)).Width)
+                        {
+                            listHesap.Items[i].Font = new Font(listHesap.Items[i].Font.FontFamily, listHesap.Items[i].Font.Size - 0.5f, listHesap.Items[i].Font.Style);
+                        }
+                    }
+                }
+
+                elemanBoyu = this.listHesap.Items[0].Bounds.Height;
+                gorunenListeElemaniSayisi = (int)this.listHesap.ClientRectangle.Height / elemanBoyu;
+                atlama = gorunenListeElemaniSayisi;
+
+                while (listHesap.Columns[1].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.SelectedItems[0].SubItems[2].Text, listHesap.Items[listHesap.Items.Count - 1].Font).Width
+                    || listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(((decimal)kacPorsiyon * eklenecekDeger).ToString("0.00"), listHesap.Items[listHesap.Items.Count - 1].Font).Width
+                    || listHesap.Columns[0].Width < System.Windows.Forms.TextRenderer.MeasureText(kacPorsiyon.ToString(), listHesap.Items[listHesap.Items.Count - 1].Font).Width)
+                {
+                    listHesap.Items[listHesap.Items.Count - 1].Font = new Font(listHesap.Items[listHesap.Items.Count - 1].Font.FontFamily, listHesap.Items[listHesap.Items.Count - 1].Font.Size - 0.5f, listHesap.Items[listHesap.Items.Count - 1].Font.Style);
+                }
+
+                labelToplamHesap.Text = (Convert.ToDecimal(labelToplamHesap.Text) + Convert.ToDecimal((listHesap.Items[listHesap.Items.Count - 1].SubItems[2].Text))).ToString("0.00");
+                labelKalanHesap.Text = (Convert.ToDecimal(labelKalanHesap.Text) + Convert.ToDecimal((listHesap.Items[listHesap.Items.Count - 1].SubItems[2].Text))).ToString("0.00");
+            }
+            else // varsa ürünün hesaptaki değerlerini istenilene göre arttır
+            {
+                listHesap.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text = (Convert.ToDouble(listHesap.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text) + kacPorsiyon).ToString();
+
+                listHesap.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text = (Convert.ToDecimal(listHesap.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text) + (decimal)kacPorsiyon * eklenecekDeger).ToString("0.00");
+
+                while (listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].SubItems[2].Text, listHesap.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].Font).Width
+                    || listHesap.Columns[0].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text, listHesap.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].Font).Width)
+                {
+                    listHesap.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].Font = new Font(listHesap.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].Font.FontFamily, listHesap.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].Font.Size - 0.5f, listHesap.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].Font.Style);
+                }
+
+                labelToplamHesap.Text = (Convert.ToDecimal(labelToplamHesap.Text) + (decimal)kacPorsiyon * eklenecekDeger).ToString("0.00");
+                labelKalanHesap.Text = (Convert.ToDecimal(labelKalanHesap.Text) + (decimal)kacPorsiyon * eklenecekDeger).ToString("0.00");
+            }
+            textNumberOfItem.Text = ""; // çarpanı sil
+
+            if (labelToplamHesap.Text != "0,00") //hesapta para varsa butonu enable et
+                buttonHesapOde.Enabled = true;
         }
-        #endregion
 
         // sipariş işlemleri bittiğinde basılan buton
         private void buttonTamam_Click(object sender, EventArgs e)
         {
             //Burda sqle not hesap vs yazılacak..
             SqlCommand cmd;
-            
-            if (listHesap.Items.Count == 0 )
+
+            if (listHesap.Items.Count == 0)
             {
-                int adisyonID=-6;
+                int adisyonID = -6;
                 try // açık
                 {
                     cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE acikMi=1 AND IptalMi=0 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
@@ -1340,11 +1397,11 @@ namespace ROPv1
 
                     cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Siparis WHERE IptalMi=0 MasaAdi='" + MasaAdi + "' AND AdisyonID='" + adisyonID + "'");
                     SqlDataReader dr2 = cmd.ExecuteReader();
-                    dr2.GetInt32(0);                    
+                    dr2.GetInt32(0);
                 }
                 catch // kapalı
                 {
-                    if(adisyonID != -6)
+                    if (adisyonID != -6)
                     {
                         masaAcikMi = false;
                         adisyonIptal(adisyonID);
@@ -1495,9 +1552,11 @@ namespace ROPv1
 
         public void adisyonIptal(int adisyonID)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET IptalMi=@iptal WHERE AdisyonID=@id");
-            cmd.Parameters.AddWithValue("@id", adisyonID);
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET acikMi=@acik, IptalMi=@iptal WHERE AdisyonID=@id");
+            cmd.Parameters.AddWithValue("@acik", 0);
             cmd.Parameters.AddWithValue("@iptal", 1);
+            cmd.Parameters.AddWithValue("@id", adisyonID);
+
             cmd.ExecuteNonQuery();
 
             cmd.Connection.Close();
@@ -1544,7 +1603,31 @@ namespace ROPv1
             cmd.Connection.Close();
             cmd.Connection.Dispose();
         }
-       
+
         #endregion
+
+
+
+
+
+        //ödeme kısmına geçiş butonu
+        private void paymentButton_Click(object sender, EventArgs e)
+        {
+            //ödendiğinde sql de ödendi flagini 1 yap 
+        }
+
+        //Masaların adisyonlarını değiştiren method
+        private void changeTablesButton_Click(object sender, EventArgs e)
+        {
+            //burada bir split viewa departman ve masalarını koy seçilen departmana göre masa ve departman adını değiştir.
+        }
+
+        //Seçili siparişlerin adisyonunu değiştiren method
+        private void buttonTasi_Click(object sender, EventArgs e)
+        {
+            //burada bir split viewa departman ve masalarını koy seçilen departmanın masasının hesabına seçilen siparişleri ekle(hesap yoksa yeni oluştur varsa ekle), burdakinden çıkar
+
+        }
+
     }
 }

@@ -167,7 +167,7 @@ namespace ROPv1
         {
             if (comboNewDepName.Text == "Yeni Departman" || comboNewDepName.Text == "" || comboNewDepMenu.Text == "" || comboNewDepView.Text == "") // ilerde var olan depo,isim,menü veya masa planı var mı diye bak ona göre burayı göster 
             {
-                using (KontrolFormu dialog = new KontrolFormu("Hatalı bilgi girdiniz, lütfen kontrol edin",false))
+                using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
                 {
                     dialog.ShowDialog();
                 }

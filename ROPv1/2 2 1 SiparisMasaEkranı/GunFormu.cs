@@ -36,8 +36,8 @@ namespace ROPv1
             XmlSave.SaveRestoran(gunListesi, "gunler.xml");
 
             listHesap.Items.Insert(0, yeniGunBasi.gunBasiVakti.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")));
-            listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(yeniGunBasi.gunBasiVakti.ToString("dddd", new CultureInfo("tr-TR")));
-            listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(yeniGunBasi.gunBasiVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
+            listHesap.Items[0].SubItems.Add(yeniGunBasi.gunBasiVakti.ToString("dddd", new CultureInfo("tr-TR")));
+            listHesap.Items[0].SubItems.Add(yeniGunBasi.gunBasiVakti.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
 
             buttonGunSonu.Enabled = true;
             buttonGunBasi.Enabled = false;
@@ -68,9 +68,10 @@ namespace ROPv1
 
                 XmlSave.SaveRestoran(gunListesi, "gunler.xml");
 
+                listHesap.Items[0].SubItems.Add("");
                 listHesap.Items[0].SubItems.Add(DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR")));
-                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(DateTime.Now.ToString("dddd", new CultureInfo("tr-TR")));
-                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
+                listHesap.Items[0].SubItems.Add(DateTime.Now.ToString("dddd", new CultureInfo("tr-TR")));
+                listHesap.Items[0].SubItems.Add(DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR")));
 
                 buttonGunSonu.Enabled = false;
                 buttonGunBasi.Enabled = true;

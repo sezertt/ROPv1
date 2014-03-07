@@ -21,7 +21,7 @@ namespace ROPv1
 
         public AdminGirisFormu()
         {
-            InitializeComponent();                    
+            InitializeComponent();
         }
 
         private void CloseApp(object sender, FormClosedEventArgs e)
@@ -132,6 +132,7 @@ namespace ROPv1
                     leftPanelView.Nodes.Add("Masa Yerleşim Planı");
                     leftPanelView.Nodes.Add("Menüler");
                     leftPanelView.Nodes.Add("Ürünler");
+                    leftPanelView.Nodes.Add("Ürün Menüleri");
                     leftPanelView.Nodes.Add("Stok Ayarları");
 
                     if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[6]))
@@ -185,48 +186,45 @@ namespace ROPv1
                         splitPanel.Panel2.Controls.Add(kullaniciView);
                         kullaniciView.Dock = DockStyle.Fill;
                     }
-                    //Veri tabanından gerekli verileri alınmamışsa al
-
                     break;
+
                 case 1: //Departmanlar Seçildi
                     Departman departmanView = new Departman();
                     splitPanel.Panel2.Controls.Add(departmanView);
                     departmanView.Dock = DockStyle.Fill;
-
-                    //Veri tabanından gerekli verileri alınmamışsa al
-
                     break;
+
                 case 2: //Departman Yerleşim Planı Seçildi
                     MasaPlan masaPlanView = new MasaPlan();
                     splitPanel.Panel2.Controls.Add(masaPlanView);
                     masaPlanView.Dock = DockStyle.Fill;
-
-                    //Veri tabanından gerekli verileri alınmamışsa al
-
                     break;
+
                 case 3: //Menüler Seçildi
                     MenuControl menuView = new MenuControl();
                     splitPanel.Panel2.Controls.Add(menuView);
                     menuView.Dock = DockStyle.Fill;
-
-                    //Veri tabanından gerekli verileri alınmamışsa al
-
                     break;
+
                 case 4: //Ürünler Seçildi
                     Products productView = new Products();
                     splitPanel.Panel2.Controls.Add(productView);
                     productView.Dock = DockStyle.Fill;
-
-                    //Veri tabanından gerekli verileri alınmamışsa al
-
                     break;
-                case 5: //Stok Ayarları Seçildi
+
+                case 5: //Ürün Menüleri Seçildi
+                    UrunMenuleri urunMenuView = new UrunMenuleri();
+                    splitPanel.Panel2.Controls.Add(urunMenuView);
+                    urunMenuView.Dock = DockStyle.Fill;
+                    break;
+
+                case 6: //Stok Ayarları Seçildi
                     Stoklar stokView = new Stoklar();
                     splitPanel.Panel2.Controls.Add(stokView);
                     stokView.Dock = DockStyle.Fill;
-                    //Veri tabanından gerekli verileri alınmamışsa al
 
                     break;
+
                 default:
                     break;
                 #endregion
