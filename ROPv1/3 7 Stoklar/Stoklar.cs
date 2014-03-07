@@ -46,7 +46,7 @@ namespace ROPv1
         {
             DialogResult eminMisiniz;
 
-            using (KontrolFormu dialog = new KontrolFormu(myListUrunler.SelectedItems[0].SubItems[0].Text + "adlı stoğu silmek istediğinize emin misiniz?", true))
+            using (KontrolFormu dialog = new KontrolFormu(myListUrunler.SelectedItems[0].SubItems[0].Text + " adlı stoğu silmek istediğinize emin misiniz?", true))
             {
                 eminMisiniz = dialog.ShowDialog();
             }
@@ -64,7 +64,7 @@ namespace ROPv1
                 if (myListUrunler.Items.Count > 0)
                 {
                     if (selectedPlace > myListUrunler.Items.Count - 1)
-                        selectedPlace = myListUrunler.Items.Count -1;
+                        selectedPlace = myListUrunler.Items.Count - 1;
 
                     myListUrunler.Items[selectedPlace].Selected = true;
                     textboxUrunAdi.Text = myListUrunler.SelectedItems[0].SubItems[0].Text;
@@ -92,7 +92,7 @@ namespace ROPv1
                 buttonDeleteStok.Visible = false;
                 buttonCancel.Visible = true;
             }
-            if(!newStokForm.Enabled)
+            if (!newStokForm.Enabled)
             {
                 newStokForm.Enabled = true;
                 buttonDeleteStok.Visible = false;
@@ -108,7 +108,7 @@ namespace ROPv1
             buttonDeleteStok.Visible = true;
             buttonCancel.Visible = false;
 
-            if(myListUrunler.Items.Count > 0)
+            if (myListUrunler.Items.Count > 0)
             {
                 textboxUrunAdi.Text = myListUrunler.SelectedItems[0].SubItems[0].Text;
                 textBoxUrunMiktari.Text = myListUrunler.SelectedItems[0].SubItems[1].Text;
@@ -125,6 +125,7 @@ namespace ROPv1
         //ürün eklemek için veya güncellemek için gereken fonksiyon
         private void buttonSaveNewStok_Click(object sender, EventArgs e)
         {
+
             if (textboxUrunAdi.Text == "Yeni Ürün" || textboxUrunAdi.Text == "" || textBoxUrunMiktari.Text == "" || comboBoxMiktarTipi.Text == "")
             {
                 using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
@@ -135,9 +136,43 @@ namespace ROPv1
                 return;
             }
 
+
             //Yeni ürün kaydet tuşu. ekle tuşuna basıp bilgileri girdikten sonra kaydete basıyoruz
             if (newStokForm.Text == "Yeni Ürün")
             {
+                bool varmi = true;
+                int bulunanindis = 0;
+                for (int i = 0; i < stokListesi.Count; i++)
+                {
+                    if (stokListesi[i].StokAdi == textboxUrunAdi.Text)
+                    {
+                        varmi = false;
+                        bulunanindis = i;
+                        break;
+                    }
+                }
+                if (varmi == false)
+                {
+                    DialogResult eminMisiniz;
+
+                    using (KontrolFormu dialog = new KontrolFormu("Eklemek istediğiniz ürün stoklarda bulunmaktadır. Ürün miktarını varolan stoğa eklemek ister misiniz?", true))
+                    {
+                        eminMisiniz = dialog.ShowDialog();
+                    }
+
+                    if (eminMisiniz == DialogResult.Yes)
+                    {
+                        stokListesi[bulunanindis].StokMiktari = (Convert.ToInt32(stokListesi[bulunanindis].StokMiktari) + Convert.ToInt32(textBoxUrunMiktari.Text)).ToString();
+                        myListUrunler.Items[bulunanindis].SubItems[1].Text = stokListesi[bulunanindis].StokMiktari;
+                        XmlSave.SaveRestoran(stokListesi, "stoklar.xml");
+                    }
+                    else
+                    {
+                        textboxUrunAdi.Focus();
+                        return;
+                    }
+                }
+
                 newStokForm.Text = textboxUrunAdi.Text;
 
                 StokBilgileri yeniurun = new StokBilgileri();
@@ -157,7 +192,7 @@ namespace ROPv1
 
                 myListUrunler.Items[myListUrunler.Items.Count - 1].Selected = true;
 
-                if(myListUrunler.Items.Count > 0 )
+                if (myListUrunler.Items.Count > 0)
                     newStokForm.Enabled = true;
 
                 buttonDeleteStok.Visible = true;
@@ -170,6 +205,42 @@ namespace ROPv1
             }
             else //üründe değişiklik yapıldıktan sonra basılan kaydet butonu.
             {
+                if(sender != null)
+                {
+                    bool varmi = true;
+                    int bulunanindis = 0;
+                    for (int i = 0; i < stokListesi.Count; i++)
+                    {
+                        if (stokListesi[i].StokAdi == textboxUrunAdi.Text)
+                        {
+                            varmi = false;
+                            bulunanindis = i;
+                            break;
+                        }
+                    }
+                    if (varmi == false)
+                    {
+                        DialogResult eminMisiniz;
+
+                        using (KontrolFormu dialog = new KontrolFormu("Eklemek istediğiniz ürün stoklarda bulunmaktadır. Ürün miktarını varolan stoğa eklemek ister misiniz?", true))
+                        {
+                            eminMisiniz = dialog.ShowDialog();
+                        }
+
+                        if (eminMisiniz == DialogResult.Yes)
+                        {
+                            stokListesi[bulunanindis].StokMiktari = (Convert.ToInt32(stokListesi[bulunanindis].StokMiktari) + Convert.ToInt32(textBoxUrunMiktari.Text)).ToString();
+                            myListUrunler.Items[bulunanindis].SubItems[1].Text = stokListesi[bulunanindis].StokMiktari;
+                            XmlSave.SaveRestoran(stokListesi, "stoklar.xml");
+                        }
+                        else
+                        {
+                            textboxUrunAdi.Focus();
+                            return;
+                        }
+                    }
+                }
+                
                 stokListesi[myListUrunler.SelectedIndices[0]].StokAdi = textboxUrunAdi.Text;
                 stokListesi[myListUrunler.SelectedIndices[0]].StokMiktari = textBoxUrunMiktari.Text;
                 stokListesi[myListUrunler.SelectedIndices[0]].MiktarTipi = comboBoxMiktarTipi.Text;
@@ -185,7 +256,8 @@ namespace ROPv1
                 {
                     dialog.ShowDialog();
                 }
-            }         
+            }
+
         }
 
         //arama methodu
@@ -326,6 +398,55 @@ namespace ROPv1
         {
             double fiyat = Convert.ToDouble(((TextBox)sender).Text);
             ((TextBox)sender).Text = fiyat.ToString();
+        }
+        private void btnStogaEkle_Click(object sender, EventArgs e)
+        {
+            if (txtStogaEkle.Text == String.Empty)
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Lütfen eklenecek stok miktarını giriniz.", false))
+                {
+                    dialog.ShowDialog();
+                }
+                textboxUrunAdi.Focus();
+                return;
+            }
+            else
+            {
+                int c = Convert.ToInt32(textBoxUrunMiktari.Text) + Convert.ToInt32(txtStogaEkle.Text);
+                textBoxUrunMiktari.Text = c.ToString();
+                buttonSaveNewStok_Click(null, null);
+                txtStogaEkle.Text = "";
+            }
+        }
+
+        //miktar 00023 gibi girilemesin
+        private void txtStogaEkle_Leave(object sender, EventArgs e)
+        {
+            double fiyat = Convert.ToDouble(((TextBox)sender).Text);
+            ((TextBox)sender).Text = fiyat.ToString();
+        }
+
+        //ürünün miktarı girilirken sadece sayı ve 1 , girilebilsin
+        private void txtStogaEkle_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if (e.KeyChar == ',' && (sender as TextBox).Text.IndexOf(',') > -1)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void myListUrunler_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (myListUrunler.SelectedItems.Count < 1)
+                buttonSaveNewStok.Enabled = false;
+            else
+                buttonSaveNewStok.Enabled = true;
         }
     }
 }

@@ -34,6 +34,7 @@
             this.labelUrunAdi = new System.Windows.Forms.Label();
             this.newStokForm = new System.Windows.Forms.GroupBox();
             this.comboBoxMiktarTipi = new System.Windows.Forms.ComboBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.labelUrunMiktari = new System.Windows.Forms.Label();
             this.buttonSaveNewStok = new System.Windows.Forms.Button();
             this.buttonDeleteStok = new System.Windows.Forms.Button();
@@ -42,7 +43,8 @@
             this.buttonAddNewStok = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.lblUrunAra = new System.Windows.Forms.Label();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.txtStogaEkle = new System.Windows.Forms.TextBox();
+            this.btnStogaEkle = new System.Windows.Forms.Button();
             this.myListUrunler = new ROPv1.MyListView();
             this.columnUrunAdi = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnUrunMiktari = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -81,7 +83,7 @@
             this.labelUrunAdi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.labelUrunAdi.Location = new System.Drawing.Point(8, 29);
             this.labelUrunAdi.Name = "labelUrunAdi";
-            this.labelUrunAdi.Size = new System.Drawing.Size(103, 24);
+            this.labelUrunAdi.Size = new System.Drawing.Size(104, 24);
             this.labelUrunAdi.TabIndex = 19;
             this.labelUrunAdi.Text = "Ürün Adı:";
             // 
@@ -125,6 +127,11 @@
             this.comboBoxMiktarTipi.Click += new System.EventHandler(this.showMenu);
             this.comboBoxMiktarTipi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // labelUrunMiktari
             // 
             this.labelUrunMiktari.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -133,7 +140,7 @@
             this.labelUrunMiktari.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.labelUrunMiktari.Location = new System.Drawing.Point(8, 95);
             this.labelUrunMiktari.Name = "labelUrunMiktari";
-            this.labelUrunMiktari.Size = new System.Drawing.Size(137, 24);
+            this.labelUrunMiktari.Size = new System.Drawing.Size(138, 24);
             this.labelUrunMiktari.TabIndex = 19;
             this.labelUrunMiktari.Text = "Ürün Miktarı:";
             // 
@@ -211,7 +218,7 @@
             this.buttonAddNewStok.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonAddNewStok.Image = global::ROPv1.Properties.Resources.add;
             this.buttonAddNewStok.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddNewStok.Location = new System.Drawing.Point(762, 231);
+            this.buttonAddNewStok.Location = new System.Drawing.Point(762, 293);
             this.buttonAddNewStok.Name = "buttonAddNewStok";
             this.buttonAddNewStok.Size = new System.Drawing.Size(302, 45);
             this.buttonAddNewStok.TabIndex = 39;
@@ -238,14 +245,39 @@
             this.lblUrunAra.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.lblUrunAra.Location = new System.Drawing.Point(7, 11);
             this.lblUrunAra.Name = "lblUrunAra";
-            this.lblUrunAra.Size = new System.Drawing.Size(105, 24);
+            this.lblUrunAra.Size = new System.Drawing.Size(106, 24);
             this.lblUrunAra.TabIndex = 44;
             this.lblUrunAra.Text = "Ürün Ara:";
             // 
-            // contextMenuStrip1
+            // txtStogaEkle
             // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            this.txtStogaEkle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtStogaEkle.ContextMenuStrip = this.contextMenuStrip1;
+            this.txtStogaEkle.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.txtStogaEkle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txtStogaEkle.Location = new System.Drawing.Point(900, 243);
+            this.txtStogaEkle.Name = "txtStogaEkle";
+            this.txtStogaEkle.Size = new System.Drawing.Size(164, 32);
+            this.txtStogaEkle.TabIndex = 22;
+            this.txtStogaEkle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtStogaEkle_KeyPress);
+            this.txtStogaEkle.Leave += new System.EventHandler(this.txtStogaEkle_Leave);
+            // 
+            // btnStogaEkle
+            // 
+            this.btnStogaEkle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStogaEkle.BackColor = System.Drawing.SystemColors.Window;
+            this.btnStogaEkle.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnStogaEkle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnStogaEkle.Image = global::ROPv1.Properties.Resources.icon;
+            this.btnStogaEkle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnStogaEkle.Location = new System.Drawing.Point(762, 237);
+            this.btnStogaEkle.Name = "btnStogaEkle";
+            this.btnStogaEkle.Size = new System.Drawing.Size(132, 44);
+            this.btnStogaEkle.TabIndex = 22;
+            this.btnStogaEkle.Text = "Stoğa Ekle";
+            this.btnStogaEkle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStogaEkle.UseVisualStyleBackColor = false;
+            this.btnStogaEkle.Click += new System.EventHandler(this.btnStogaEkle_Click);
             // 
             // myListUrunler
             // 
@@ -271,6 +303,7 @@
             this.myListUrunler.TabIndex = 42;
             this.myListUrunler.UseCompatibleStateImageBehavior = false;
             this.myListUrunler.View = System.Windows.Forms.View.Details;
+            this.myListUrunler.SelectedIndexChanged += new System.EventHandler(this.myListUrunler_SelectedIndexChanged);
             this.myListUrunler.SizeChanged += new System.EventHandler(this.myListUrunler_SizeChanged);
             this.myListUrunler.MouseUp += new System.Windows.Forms.MouseEventHandler(this.myListUrunler_MouseUp);
             // 
@@ -292,6 +325,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnStogaEkle);
+            this.Controls.Add(this.txtStogaEkle);
             this.Controls.Add(this.lblUrunAra);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.myListUrunler);
@@ -329,5 +364,7 @@
         private System.Windows.Forms.Label lblUrunAra;
         private System.Windows.Forms.GroupBox newStokForm;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.TextBox txtStogaEkle;
+        private System.Windows.Forms.Button btnStogaEkle;
     }
 }

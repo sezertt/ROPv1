@@ -68,7 +68,7 @@
             // splitPanel.Panel2
             // 
             this.splitPanel.Panel2.BackColor = System.Drawing.SystemColors.Window;
-            this.splitPanel.Size = new System.Drawing.Size(1354, 679);
+            this.splitPanel.Size = new System.Drawing.Size(1354, 648);
             this.splitPanel.SplitterDistance = 200;
             this.splitPanel.SplitterWidth = 6;
             this.splitPanel.TabIndex = 6;
@@ -91,7 +91,7 @@
             this.leftPanelView.Name = "leftPanelView";
             this.leftPanelView.ShowLines = false;
             this.leftPanelView.ShowRootLines = false;
-            this.leftPanelView.Size = new System.Drawing.Size(192, 670);
+            this.leftPanelView.Size = new System.Drawing.Size(192, 639);
             this.leftPanelView.TabIndex = 7;
             this.leftPanelView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.changeSettingsScreen);
             // 
@@ -284,7 +284,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1378, 819);
+            this.ClientSize = new System.Drawing.Size(1378, 788);
             this.Controls.Add(this.labelGun);
             this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.flowLayoutPanel1);
