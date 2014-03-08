@@ -16,7 +16,7 @@ namespace ROPv1
     {
         Restoran hangiDepartman;
 
-        int hangiMenuSecili = 555, scrollPosition = 0, elemanBoyu, gorunenListeElemaniSayisi, atlama;
+        int hangiMenuSecili = 555;
 
         const int eskiIkramlar = 0, yeniIkramlar = 1, eskiSiparisler = 2, yeniSiparisler = 3;
 
@@ -232,7 +232,8 @@ namespace ROPv1
         //keypadin methodu
         private void pinboardcontrol21_UserKeyPressed(object sender, PinboardClassLibrary.PinboardEventArgs e)
         {
-            textNumberOfItem.Focus();
+            if (!textBoxYuzde.Focused)
+                textNumberOfItem.Focus();
             SendKeys.Send(e.KeyboardKeyPressed);
         }
 
@@ -240,6 +241,7 @@ namespace ROPv1
         private void buttonDeleteText_Click(object sender, EventArgs e)
         {
             textNumberOfItem.Text = "";
+            textBoxYuzde.Text = "";            
         }
 
         #region Panellerdeki itemların görünümünü ekrana göre ayarlıyoruz
@@ -352,8 +354,6 @@ namespace ROPv1
                         {
                             listHesap.Columns[1].Width = urunBoyu;
                             listHesap.Columns[2].Width = fiyatBoyu;
-                            buttonUrunListUp.Visible = true;
-                            buttonUrunListDown.Visible = true;
 
                             for (int i = 0; i < listHesap.Items.Count; i++)
                             {
@@ -372,10 +372,6 @@ namespace ROPv1
                                 }
                             }
                         }
-
-                        elemanBoyu = this.listHesap.Items[0].Bounds.Height;
-                        gorunenListeElemaniSayisi = (int)this.listHesap.ClientRectangle.Height / elemanBoyu;
-                        atlama = gorunenListeElemaniSayisi;
 
                         while (listHesap.Columns[1].Width < System.Windows.Forms.TextRenderer.MeasureText(yemeginAdi, listHesap.Items[listHesap.Items.Count - 1].Font).Width
                             || listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(((decimal)kacPorsiyon * yemeginFiyati).ToString("0.00"), listHesap.Items[listHesap.Items.Count - 1].Font).Width
@@ -437,20 +433,9 @@ namespace ROPv1
                 {
                     listHesap.Columns[1].Width = urunBoyu;
                     listHesap.Columns[2].Width = fiyatBoyu;
-                    buttonUrunListUp.Visible = true;
-                    buttonUrunListDown.Visible = true;
-                }
-                else
-                {
-                    buttonUrunListUp.Visible = false;
-                    buttonUrunListDown.Visible = false;
                 }
             }
-            else
-            {
-                buttonUrunListUp.Visible = false;
-                buttonUrunListDown.Visible = false;
-            }
+
             if (labelToplamHesap.Text == "0,00")
                 buttonHesapOde.Enabled = false;
         }
@@ -496,8 +481,6 @@ namespace ROPv1
                 {
                     listHesap.Columns[1].Width = urunBoyu;
                     listHesap.Columns[2].Width = fiyatBoyu;
-                    buttonUrunListUp.Visible = true;
-                    buttonUrunListDown.Visible = true;
 
                     for (int i = 0; i < listHesap.Items.Count; i++)
                     {
@@ -516,10 +499,6 @@ namespace ROPv1
                         }
                     }
                 }
-
-                elemanBoyu = this.listHesap.Items[0].Bounds.Height;
-                gorunenListeElemaniSayisi = (int)this.listHesap.ClientRectangle.Height / elemanBoyu;
-                atlama = gorunenListeElemaniSayisi;
 
                 while (listHesap.Columns[1].Width < System.Windows.Forms.TextRenderer.MeasureText(((Button)sender).Text, listHesap.Items[listHesap.Items.Count - 1].Font).Width
                     || listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(((decimal)kacPorsiyon * Convert.ToDecimal(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00"), listHesap.Items[listHesap.Items.Count - 1].Font).Width
@@ -565,7 +544,7 @@ namespace ROPv1
             {
                 e.Handled = true;
             }
-            else if (e.KeyChar == ',' && (sender as TextBox).Text.IndexOf(',') > -1)
+            else if (e.KeyChar == ',' && (sender as TextBox).Text.IndexOf(',') > -1 && (sender as TextBox).Text.Length < 4)
             { // 1 kere , kullanmasına izin ver
 
                 e.Handled = true;
@@ -574,43 +553,6 @@ namespace ROPv1
 
         //liste ve panellerin scroll butonları
         #region Scroll Butonları
-        private void buttonUrunListUp_Click(object sender, EventArgs e)
-        {
-            int toplamUrun = listHesap.Items.Count;
-
-            if (scrollPosition - atlama <= 0)
-            {
-                listHesap.Focus();
-                listHesap.EnsureVisible(listHesap.Groups[0].Items[0].Index);
-            }
-            else
-            {
-                listHesap.Focus();
-                listHesap.EnsureVisible(scrollPosition - atlama);
-                scrollPosition -= atlama;
-            }
-        }
-
-        private void buttonUrunListDown_Click(object sender, EventArgs e)
-        {
-            int x = listHesap.TopItem.Group.Items[0].Index;
-            x = listHesap.Groups[0].Items[0].Index;
-            x = listHesap.Groups[1].Items[0].Index;
-            x = listHesap.Groups[2].Items[0].Index;
-            x = listHesap.Groups[3].Items[0].Index;
-
-            if (scrollPosition + atlama >= listHesap.Items.Count - 1)
-            {
-                listHesap.Focus();
-                listHesap.EnsureVisible(listHesap.Items.Count - 1);
-            }
-            else
-            {
-                listHesap.Focus();
-                listHesap.EnsureVisible(scrollPosition + atlama);
-                scrollPosition += atlama;
-            }
-        }
 
         private void UrunScrollUp(object sender, EventArgs e)
         {
@@ -670,8 +612,6 @@ namespace ROPv1
         //listede eleman seçildiğinde çalışacak olan method
         private void listHesap_Click(object sender, MouseEventArgs e)
         {
-
-            int a = listHesap.SelectedIndices[0];
             ListViewHitTestInfo info = listHesap.HitTest(listHesap.PointToClient(Cursor.Position));
             int kacElemanSecili;
 
@@ -787,7 +727,7 @@ namespace ROPv1
 
                 listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) - carpan).ToString();
 
-                labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+                // labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
 
                 labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
 
@@ -956,7 +896,7 @@ namespace ROPv1
 
                 listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) - carpan).ToString();
 
-                labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) + (dusulecekDeger * carpan)).ToString("0.00");
+                // labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) + (dusulecekDeger * carpan)).ToString("0.00");
 
                 labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) + (dusulecekDeger * carpan)).ToString("0.00");
 
@@ -1105,6 +1045,7 @@ namespace ROPv1
         // ürün iptal etme butonu
         private void buttonUrunIptal_Click(object sender, EventArgs e)
         {
+            bool indirimSilindiMi = false;
             double carpan;
             if (textNumberOfItem.Text != "")
             {
@@ -1120,7 +1061,7 @@ namespace ROPv1
 
             DialogResult eminMisiniz;
 
-            using (KontrolFormu dialog = new KontrolFormu(carpan + " adet "+ listHesap.SelectedItems[0].SubItems[1].Text +" iptal edilecek. Emin misiniz?", true))
+            using (KontrolFormu dialog = new KontrolFormu(carpan + " adet " + listHesap.SelectedItems[0].SubItems[1].Text + " iptal edilecek. Emin misiniz?", true))
             {
                 eminMisiniz = dialog.ShowDialog();
             }
@@ -1138,10 +1079,11 @@ namespace ROPv1
 
             if (listHesap.SelectedItems[0].Group == listHesap.Groups[2] || listHesap.SelectedItems[0].Group == listHesap.Groups[3])
             {
-                labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
-
                 labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
             }
+
+            labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+
 
             if (listHesap.SelectedItems[0].Group != listHesap.Groups[yeniSiparisler])
             {
@@ -1260,8 +1202,6 @@ namespace ROPv1
                 {
                     listHesap.Columns[1].Width = urunBoyu + 10;
                     listHesap.Columns[2].Width = fiyatBoyu + 10;
-                    buttonUrunListUp.Visible = false;
-                    buttonUrunListDown.Visible = false;
                 }
             }
 
@@ -1281,6 +1221,7 @@ namespace ROPv1
         // ürüne ekleme yapma butonu
         private void buttonAdd_Click(object sender, EventArgs e)
         {
+
             double kacPorsiyon = 1;
 
             if (textNumberOfItem.Text != "")
@@ -1323,8 +1264,6 @@ namespace ROPv1
                 {
                     listHesap.Columns[1].Width = urunBoyu;
                     listHesap.Columns[2].Width = fiyatBoyu;
-                    buttonUrunListUp.Visible = true;
-                    buttonUrunListDown.Visible = true;
 
                     for (int i = 0; i < listHesap.Items.Count; i++)
                     {
@@ -1343,10 +1282,6 @@ namespace ROPv1
                         }
                     }
                 }
-
-                elemanBoyu = this.listHesap.Items[0].Bounds.Height;
-                gorunenListeElemaniSayisi = (int)this.listHesap.ClientRectangle.Height / elemanBoyu;
-                atlama = gorunenListeElemaniSayisi;
 
                 while (listHesap.Columns[1].Width < System.Windows.Forms.TextRenderer.MeasureText(listHesap.SelectedItems[0].SubItems[2].Text, listHesap.Items[listHesap.Items.Count - 1].Font).Width
                     || listHesap.Columns[2].Width < System.Windows.Forms.TextRenderer.MeasureText(((decimal)kacPorsiyon * eklenecekDeger).ToString("0.00"), listHesap.Items[listHesap.Items.Count - 1].Font).Width
@@ -1377,6 +1312,40 @@ namespace ROPv1
 
             if (labelToplamHesap.Text != "0,00") //hesapta para varsa butonu enable et
                 buttonHesapOde.Enabled = true;
+        }
+
+        //çarpan özellikleri
+        private void keyPressedOnYuzdeText(object sender, KeyPressEventArgs e)
+        {
+
+            if (checkBoxYuzde.Checked)
+            {
+                try
+                {
+                    if (Convert.ToDouble(textBoxYuzde.Text) > 100)
+                    {
+                        textBoxYuzde.Text = "100";
+                        e.Handled = true;
+                        return;
+                    }
+                }
+                catch { }
+            }
+
+            if (textBoxYuzde.Text == String.Empty)
+            {
+                if (e.KeyChar == '0')
+                    e.Handled = true;
+            }
+
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
+            {
+                e.Handled = true;
+            }
+            else if (e.KeyChar == ',' && (sender as TextBox).Text.IndexOf(',') > -1)
+            { // 1 kere , kullanmasına izin ver
+                e.Handled = true;
+            }
         }
 
         // sipariş işlemleri bittiğinde basılan buton
@@ -1444,7 +1413,7 @@ namespace ROPv1
         #region SQL İşlemleri
         public void adisyonOlustur()
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("insert into Adisyon(acikMi,AdisyonNotu,AcilisZamani,DepartmanAdi,MasaAdi,ToplamHesap,KalanHesap) values(@_acikMi,@_AdisyonNotu,@_AcilisZamani,@_DepartmanAdi,@_MasaAdi,@_ToplamHesap,@_KalanHesap)");
+            SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Adisyon(acikMi,AdisyonNotu,AcilisZamani,DepartmanAdi,MasaAdi,ToplamHesap,KalanHesap) VALUES(@_acikMi,@_AdisyonNotu,@_AcilisZamani,@_DepartmanAdi,@_MasaAdi,@_ToplamHesap,@_KalanHesap)");
 
             cmd.Parameters.AddWithValue("@_acikmi", 1);
             cmd.Parameters.AddWithValue("@_AdisyonNotu", adisyonNotu);
@@ -1463,7 +1432,7 @@ namespace ROPv1
 
         public void siparisOlustur(int adisyonID, ListViewItem siparis)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,DepartmanAdi,MasaAdi,Fiyatı,Porsiyon,YemekAdi,VerilisTarihi) values(@_AdisyonID,@_Garsonu,@_DepartmanAdi,@_MasaAdi,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_VerilisTarihi)");
+            SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,DepartmanAdi,MasaAdi,Fiyatı,Porsiyon,YemekAdi,VerilisTarihi) VALUES(@_AdisyonID,@_Garsonu,@_DepartmanAdi,@_MasaAdi,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_VerilisTarihi)");
             cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
             cmd.Parameters.AddWithValue("@_DepartmanAdi", hangiDepartman.departmanAdi);
@@ -1629,5 +1598,43 @@ namespace ROPv1
 
         }
 
+        //Adisyona eklenecek indirim
+        private void buttonindirim_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxYuzde_Leave(object sender, EventArgs e)
+        {
+            if (checkBoxYuzde.Checked)
+            {
+                if (Convert.ToDouble(textBoxYuzde.Text) > 100)
+                {
+                    textBoxYuzde.Text = "100";
+                }
+            }
+        }
+
+        private void checkBoxYuzde_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxYuzde.Checked)
+            {
+                checkBoxYuzde.Text = "%";
+                try
+                {
+                    if (Convert.ToDouble(textBoxYuzde.Text) > 100)
+                    {
+                        textBoxYuzde.Text = "100";                        
+                    }
+                }
+                catch { }
+                textBoxYuzde.MaxLength = 5;
+            }
+            else
+            {
+                checkBoxYuzde.Text = "TL";
+                textBoxYuzde.MaxLength = 7;
+            }
+        }
     }
 }

@@ -112,8 +112,9 @@ namespace ROPv1
                     using (KontrolFormu dialog = new KontrolFormu("Yanlış pin kodu girdiniz", false))
                     {
                         dialog.ShowDialog();
-                    }
+                    }                    
                 }
+                textboxPin.Text = "";
             }
             textboxPin.Focus();
         }

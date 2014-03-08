@@ -363,6 +363,7 @@
     <None Include="Resources\deleteBig.png" />
     <None Include="Resources\addBig.png" />
     <None Include="Resources\minus.png" />
+    <None Include="Resources\indirim.png" />
     <Content Include="ROP.ico" />
   </ItemGroup>
   <ItemGroup />
