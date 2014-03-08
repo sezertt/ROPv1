@@ -265,7 +265,7 @@ namespace ROPv1
 
                 for (int j = 0; j < kategoriListesi[0].kategoriler.Count(); j++)
                 {
-                    if (kategoriListesi[0].kategoriler[j] == textBoxYeniKategori.Text)
+                    if (string.Equals(kategoriListesi[0].kategoriler[j], textBoxYeniKategori.Text, StringComparison.CurrentCultureIgnoreCase) )
                     {
                         kacTane++;
                     }

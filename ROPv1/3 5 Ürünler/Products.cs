@@ -265,7 +265,7 @@ namespace ROPv1
                 {
                     for (int j = 0; j < urunListesi[i].urunAdi.Count; j++)
                     {
-                        if (urunAdi == urunListesi[i].urunAdi[j])
+                        if (string.Equals(urunAdi, urunListesi[i].urunAdi[j], StringComparison.CurrentCultureIgnoreCase))
                         {
                             using (KontrolFormu dialog = new KontrolFormu("Aynı isimde bir ürün bulunmaktadır, lütfen ürün ismini değiştirin", false))
                             {
@@ -313,7 +313,7 @@ namespace ROPv1
                     {
                         if (i == treeUrunAdi.SelectedNode.Parent.Index && j == treeUrunAdi.SelectedNode.Index)
                             continue;
-                        if (urunAdi == urunListesi[i].urunAdi[j])
+                        if (string.Equals(urunAdi, urunListesi[i].urunAdi[j], StringComparison.CurrentCultureIgnoreCase))
                         {
                             using (KontrolFormu dialog = new KontrolFormu("Aynı isimde bir ürün bulunmaktadır, lütfen ürün ismini değiştirin", false))
                             {

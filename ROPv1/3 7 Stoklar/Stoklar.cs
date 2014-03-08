@@ -76,6 +76,7 @@ namespace ROPv1
                 else
                 {
                     newStokForm.Enabled = false;
+                    btnStogaEkle.Enabled = false;
                 }
             }
         }
@@ -91,7 +92,9 @@ namespace ROPv1
 
                 buttonDeleteStok.Visible = false;
                 buttonCancel.Visible = true;
+                btnStogaEkle.Enabled = false;
             }
+
             if (!newStokForm.Enabled)
             {
                 newStokForm.Enabled = true;
@@ -107,6 +110,7 @@ namespace ROPv1
         {
             buttonDeleteStok.Visible = true;
             buttonCancel.Visible = false;
+            btnStogaEkle.Enabled = true;
 
             if (myListUrunler.Items.Count > 0)
             {
@@ -119,6 +123,7 @@ namespace ROPv1
             else
             {
                 newStokForm.Enabled = false;
+                btnStogaEkle.Enabled = false;
             }
         }
 
@@ -140,18 +145,52 @@ namespace ROPv1
             //Yeni ürün kaydet tuşu. ekle tuşuna basıp bilgileri girdikten sonra kaydete basıyoruz
             if (newStokForm.Text == "Yeni Ürün")
             {
-                bool varmi = true;
+                bool varmi = false, ayniMi = false;
                 int bulunanindis = 0;
                 for (int i = 0; i < stokListesi.Count; i++)
                 {
-                    if (stokListesi[i].StokAdi == textboxUrunAdi.Text)
+                    if ( string.Equals( stokListesi[i].StokAdi, textboxUrunAdi.Text, StringComparison.CurrentCultureIgnoreCase)  && stokListesi[i].MiktarTipi != comboBoxMiktarTipi.Text)
                     {
-                        varmi = false;
+                        ayniMi = true;
+                        bulunanindis = i;
+                        break;
+                    }
+
+                    if (string.Equals(stokListesi[i].StokAdi, textboxUrunAdi.Text, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        varmi = true;
                         bulunanindis = i;
                         break;
                     }
                 }
-                if (varmi == false)
+
+                if (ayniMi)
+                {
+                    DialogResult eminMisiniz;
+
+                    using (KontrolFormu dialog = new KontrolFormu("Eklemek istediğiniz ürün stoklarda bulunmaktadır. Ancak ürün miktarı tipi farklı girilmiş, ürün miktarını varolan stoğa eklemek ister misiniz?", true))
+                    {
+                        eminMisiniz = dialog.ShowDialog();
+                    }
+
+                    if (eminMisiniz == DialogResult.Yes)
+                    {
+                        stokListesi[bulunanindis].StokMiktari += Convert.ToDouble(textBoxUrunMiktari.Text);
+                        myListUrunler.Items[bulunanindis].SubItems[1].Text = (stokListesi[bulunanindis].StokMiktari).ToString();
+                        XmlSave.SaveRestoran(stokListesi, "stoklar.xml");
+
+                        using (KontrolFormu dialog = new KontrolFormu(stokListesi[bulunanindis].StokAdi + " adlı ürün güncellenmiştir", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                    }
+                    else
+                    {
+                        textboxUrunAdi.Focus();
+                    }
+                    return;
+                }
+                else if (varmi)
                 {
                     DialogResult eminMisiniz;
 
@@ -162,15 +201,20 @@ namespace ROPv1
 
                     if (eminMisiniz == DialogResult.Yes)
                     {
-                        stokListesi[bulunanindis].StokMiktari = (Convert.ToInt32(stokListesi[bulunanindis].StokMiktari) + Convert.ToInt32(textBoxUrunMiktari.Text)).ToString();
-                        myListUrunler.Items[bulunanindis].SubItems[1].Text = stokListesi[bulunanindis].StokMiktari;
+                        stokListesi[bulunanindis].StokMiktari += Convert.ToDouble(textBoxUrunMiktari.Text);
+                        myListUrunler.Items[bulunanindis].SubItems[1].Text = (stokListesi[bulunanindis].StokMiktari).ToString();
                         XmlSave.SaveRestoran(stokListesi, "stoklar.xml");
+
+                        using (KontrolFormu dialog = new KontrolFormu(stokListesi[bulunanindis].StokAdi + " adlı ürün güncellenmiştir", false))
+                        {
+                            dialog.ShowDialog();
+                        }
                     }
                     else
                     {
                         textboxUrunAdi.Focus();
-                        return;
                     }
+                    return;
                 }
 
                 newStokForm.Text = textboxUrunAdi.Text;
@@ -178,7 +222,7 @@ namespace ROPv1
                 StokBilgileri yeniurun = new StokBilgileri();
 
                 yeniurun.StokAdi = textboxUrunAdi.Text;
-                yeniurun.StokMiktari = textBoxUrunMiktari.Text;
+                yeniurun.StokMiktari = Convert.ToDouble(textBoxUrunMiktari.Text);
                 yeniurun.MiktarTipi = comboBoxMiktarTipi.Text;
 
                 stokListesi.Add(yeniurun);
@@ -187,13 +231,16 @@ namespace ROPv1
 
 
                 myListUrunler.Items.Add(yeniurun.StokAdi);
-                myListUrunler.Items[myListUrunler.Items.Count - 1].SubItems.Add(yeniurun.StokMiktari);
+                myListUrunler.Items[myListUrunler.Items.Count - 1].SubItems.Add(yeniurun.StokMiktari.ToString());
                 myListUrunler.Items[myListUrunler.Items.Count - 1].SubItems.Add(yeniurun.MiktarTipi);
 
                 myListUrunler.Items[myListUrunler.Items.Count - 1].Selected = true;
 
                 if (myListUrunler.Items.Count > 0)
+                {
                     newStokForm.Enabled = true;
+                    btnStogaEkle.Enabled = false;
+                }
 
                 buttonDeleteStok.Visible = true;
                 buttonCancel.Visible = false;
@@ -205,44 +252,101 @@ namespace ROPv1
             }
             else //üründe değişiklik yapıldıktan sonra basılan kaydet butonu.
             {
-                if(sender != null)
+                if (sender != null)
                 {
-                    bool varmi = true;
+                    bool varmi = false, ayniMi = false;
                     int bulunanindis = 0;
-                    for (int i = 0; i < stokListesi.Count; i++)
+
+                    if (myListUrunler.SelectedItems[0].Text != textboxUrunAdi.Text)
                     {
-                        if (stokListesi[i].StokAdi == textboxUrunAdi.Text)
+                        for (int i = 0; i < stokListesi.Count; i++)
                         {
-                            varmi = false;
-                            bulunanindis = i;
-                            break;
+                            if (string.Equals(stokListesi[i].StokAdi, textboxUrunAdi.Text, StringComparison.CurrentCultureIgnoreCase) && i != myListUrunler.SelectedIndices[0] && stokListesi[i].MiktarTipi != comboBoxMiktarTipi.Text)
+                            {
+                                ayniMi = true;
+                                bulunanindis = i;
+                                break;
+                            }
+
+                            if (string.Equals(stokListesi[i].StokAdi, textboxUrunAdi.Text, StringComparison.CurrentCultureIgnoreCase) && i != myListUrunler.SelectedIndices[0])
+                            {
+                                varmi = true;
+                                bulunanindis = i;
+                                break;
+                            }
                         }
                     }
-                    if (varmi == false)
+
+                    if (ayniMi)
                     {
                         DialogResult eminMisiniz;
 
-                        using (KontrolFormu dialog = new KontrolFormu("Eklemek istediğiniz ürün stoklarda bulunmaktadır. Ürün miktarını varolan stoğa eklemek ister misiniz?", true))
+                        using (KontrolFormu dialog = new KontrolFormu("Güncellemek istediğiniz ürün stoklarda bulunmaktadır, ancak ürün miktarı tipi farklı. Ürün miktarını varolan stoğa eklemek ister misiniz?", true))
                         {
                             eminMisiniz = dialog.ShowDialog();
                         }
 
                         if (eminMisiniz == DialogResult.Yes)
                         {
-                            stokListesi[bulunanindis].StokMiktari = (Convert.ToInt32(stokListesi[bulunanindis].StokMiktari) + Convert.ToInt32(textBoxUrunMiktari.Text)).ToString();
-                            myListUrunler.Items[bulunanindis].SubItems[1].Text = stokListesi[bulunanindis].StokMiktari;
+                            string silinen = myListUrunler.SelectedItems[0].Text, guncellenen = stokListesi[bulunanindis].StokAdi;
+
+                            stokListesi[bulunanindis].StokMiktari += Convert.ToDouble(textBoxUrunMiktari.Text);
+
+                            myListUrunler.Items[bulunanindis].SubItems[1].Text = (stokListesi[bulunanindis].StokMiktari).ToString();
+
+                            stokListesi.RemoveAt(myListUrunler.SelectedItems[0].Index);
                             XmlSave.SaveRestoran(stokListesi, "stoklar.xml");
+
+                            myListUrunler.SelectedItems[0].Remove();
+
+                            using (KontrolFormu dialog = new KontrolFormu(silinen + " adlı ürün silinmiş ve miktarı " + guncellenen + " adlı ürüne eklenmiştir", false))
+                            {
+                                dialog.ShowDialog();
+                            }
                         }
                         else
                         {
                             textboxUrunAdi.Focus();
-                            return;
                         }
+                        return;
+                    }
+                    else if (varmi)
+                    {
+                        DialogResult eminMisiniz;
+
+                        using (KontrolFormu dialog = new KontrolFormu("Güncellemek istediğiniz ürün stoklarda bulunmaktadır. Ürün miktarını varolan stoğa eklemek ister misiniz?", true))
+                        {
+                            eminMisiniz = dialog.ShowDialog();
+                        }
+
+                        if (eminMisiniz == DialogResult.Yes)
+                        {
+                            string silinen = myListUrunler.SelectedItems[0].Text, guncellenen = stokListesi[bulunanindis].StokAdi;
+
+                            stokListesi[bulunanindis].StokMiktari += Convert.ToDouble(textBoxUrunMiktari.Text);
+
+                            myListUrunler.Items[bulunanindis].SubItems[1].Text = (stokListesi[bulunanindis].StokMiktari).ToString();
+
+                            stokListesi.RemoveAt(myListUrunler.SelectedItems[0].Index);
+                            XmlSave.SaveRestoran(stokListesi, "stoklar.xml");
+
+                            myListUrunler.SelectedItems[0].Remove();
+
+                            using (KontrolFormu dialog = new KontrolFormu(silinen + " adlı ürün silinmiş ve miktarı " + guncellenen + " adlı ürüne eklenmiştir", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                        }
+                        else
+                        {
+                            textboxUrunAdi.Focus();
+                        }
+                        return;
                     }
                 }
-                
+
                 stokListesi[myListUrunler.SelectedIndices[0]].StokAdi = textboxUrunAdi.Text;
-                stokListesi[myListUrunler.SelectedIndices[0]].StokMiktari = textBoxUrunMiktari.Text;
+                stokListesi[myListUrunler.SelectedIndices[0]].StokMiktari = Convert.ToDouble(textBoxUrunMiktari.Text);
                 stokListesi[myListUrunler.SelectedIndices[0]].MiktarTipi = comboBoxMiktarTipi.Text;
 
                 XmlSave.SaveRestoran(stokListesi, "stoklar.xml");
@@ -257,7 +361,7 @@ namespace ROPv1
                     dialog.ShowDialog();
                 }
             }
-
+            btnStogaEkle.Enabled = true;
         }
 
         //arama methodu
@@ -274,10 +378,30 @@ namespace ROPv1
                 if (textBox1.Text.Substring(0, kac) == stokListesi[i].StokAdi.Substring(0, kac))
                 {
                     myListUrunler.Items.Add(stokListesi[i].StokAdi);
-                    myListUrunler.Items[myListUrunler.Items.Count - 1].SubItems.Add(stokListesi[i].StokMiktari);
+                    myListUrunler.Items[myListUrunler.Items.Count - 1].SubItems.Add(stokListesi[i].StokMiktari.ToString());
                     myListUrunler.Items[myListUrunler.Items.Count - 1].SubItems.Add(stokListesi[i].MiktarTipi);
                 }
 
+            }
+        }
+
+        private void textboxUrunAdi_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                textBoxUrunMiktari.Focus();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void textBoxUrunMiktari_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                comboBoxMiktarTipi.Focus();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
             }
         }
 
@@ -288,6 +412,9 @@ namespace ROPv1
             {
                 e.Handled = true;
             }
+
+            if (e.KeyChar == '-' && textBoxUrunMiktari.SelectionStart == 0)
+                e.Handled = false;
 
             // only allow one decimal point
             if (e.KeyChar == ',' && (sender as TextBox).Text.IndexOf(',') > -1)
@@ -326,6 +453,7 @@ namespace ROPv1
             else
             {
                 newStokForm.Enabled = false;
+                btnStogaEkle.Enabled = false;
             }
         }
 
@@ -335,28 +463,8 @@ namespace ROPv1
             for (int i = 0; i < stokListesi.Count; i++)
             {
                 myListUrunler.Items.Add(stokListesi[i].StokAdi);
-                myListUrunler.Items[i].SubItems.Add(stokListesi[i].StokMiktari);
+                myListUrunler.Items[i].SubItems.Add(stokListesi[i].StokMiktari.ToString());
                 myListUrunler.Items[i].SubItems.Add(stokListesi[i].MiktarTipi);
-            }
-        }
-
-        private void textboxUrunAdi_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                textBoxUrunMiktari.Focus();
-                e.Handled = true;
-                e.SuppressKeyPress = true;
-            }
-        }
-
-        private void textBoxUrunMiktari_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                comboBoxMiktarTipi.Focus();
-                e.Handled = true;
-                e.SuppressKeyPress = true;
             }
         }
 
@@ -396,8 +504,12 @@ namespace ROPv1
         //miktar 00023 gibi girilemesin
         private void textBoxUrunMiktari_Leave(object sender, EventArgs e)
         {
-            double fiyat = Convert.ToDouble(((TextBox)sender).Text);
-            ((TextBox)sender).Text = fiyat.ToString();
+            try
+            {
+                double fiyat = Convert.ToDouble(((TextBox)sender).Text);
+                ((TextBox)sender).Text = fiyat.ToString();
+            }
+            catch { }
         }
         private void btnStogaEkle_Click(object sender, EventArgs e)
         {
@@ -412,7 +524,7 @@ namespace ROPv1
             }
             else
             {
-                int c = Convert.ToInt32(textBoxUrunMiktari.Text) + Convert.ToInt32(txtStogaEkle.Text);
+                double c = Convert.ToDouble(textBoxUrunMiktari.Text) + Convert.ToDouble(txtStogaEkle.Text);
                 textBoxUrunMiktari.Text = c.ToString();
                 buttonSaveNewStok_Click(null, null);
                 txtStogaEkle.Text = "";
@@ -422,8 +534,11 @@ namespace ROPv1
         //miktar 00023 gibi girilemesin
         private void txtStogaEkle_Leave(object sender, EventArgs e)
         {
-            double fiyat = Convert.ToDouble(((TextBox)sender).Text);
-            ((TextBox)sender).Text = fiyat.ToString();
+            if (txtStogaEkle.Text != "")
+            {
+                double fiyat = Convert.ToDouble(((TextBox)sender).Text);
+                ((TextBox)sender).Text = fiyat.ToString();
+            }
         }
 
         //ürünün miktarı girilirken sadece sayı ve 1 , girilebilsin
@@ -433,6 +548,9 @@ namespace ROPv1
             {
                 e.Handled = true;
             }
+
+            if (e.KeyChar == '-' && txtStogaEkle.SelectionStart == 0)
+                e.Handled = false;
 
             // only allow one decimal point
             if (e.KeyChar == ',' && (sender as TextBox).Text.IndexOf(',') > -1)

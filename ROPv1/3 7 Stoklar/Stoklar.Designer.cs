@@ -72,7 +72,7 @@
             this.textboxUrunAdi.Location = new System.Drawing.Point(12, 56);
             this.textboxUrunAdi.Name = "textboxUrunAdi";
             this.textboxUrunAdi.Size = new System.Drawing.Size(302, 32);
-            this.textboxUrunAdi.TabIndex = 2;
+            this.textboxUrunAdi.TabIndex = 1;
             this.textboxUrunAdi.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxUrunAdi_KeyDown);
             // 
             // labelUrunAdi
@@ -83,7 +83,7 @@
             this.labelUrunAdi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.labelUrunAdi.Location = new System.Drawing.Point(8, 29);
             this.labelUrunAdi.Name = "labelUrunAdi";
-            this.labelUrunAdi.Size = new System.Drawing.Size(104, 24);
+            this.labelUrunAdi.Size = new System.Drawing.Size(103, 24);
             this.labelUrunAdi.TabIndex = 19;
             this.labelUrunAdi.Text = "Ürün Adı:";
             // 
@@ -123,7 +123,7 @@
             this.comboBoxMiktarTipi.Location = new System.Drawing.Point(193, 122);
             this.comboBoxMiktarTipi.Name = "comboBoxMiktarTipi";
             this.comboBoxMiktarTipi.Size = new System.Drawing.Size(121, 32);
-            this.comboBoxMiktarTipi.TabIndex = 21;
+            this.comboBoxMiktarTipi.TabIndex = 3;
             this.comboBoxMiktarTipi.Click += new System.EventHandler(this.showMenu);
             this.comboBoxMiktarTipi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
             // 
@@ -140,7 +140,7 @@
             this.labelUrunMiktari.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.labelUrunMiktari.Location = new System.Drawing.Point(8, 95);
             this.labelUrunMiktari.Name = "labelUrunMiktari";
-            this.labelUrunMiktari.Size = new System.Drawing.Size(138, 24);
+            this.labelUrunMiktari.Size = new System.Drawing.Size(137, 24);
             this.labelUrunMiktari.TabIndex = 19;
             this.labelUrunMiktari.Text = "Ürün Miktarı:";
             // 
@@ -155,7 +155,7 @@
             this.buttonSaveNewStok.Location = new System.Drawing.Point(193, 166);
             this.buttonSaveNewStok.Name = "buttonSaveNewStok";
             this.buttonSaveNewStok.Size = new System.Drawing.Size(121, 44);
-            this.buttonSaveNewStok.TabIndex = 6;
+            this.buttonSaveNewStok.TabIndex = 4;
             this.buttonSaveNewStok.Text = "Kaydet  ";
             this.buttonSaveNewStok.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonSaveNewStok.UseVisualStyleBackColor = false;
@@ -189,7 +189,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(12, 166);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(121, 44);
-            this.buttonCancel.TabIndex = 8;
+            this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "İptal Et    ";
             this.buttonCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonCancel.UseVisualStyleBackColor = false;
@@ -205,7 +205,7 @@
             this.textBoxUrunMiktari.Location = new System.Drawing.Point(12, 122);
             this.textBoxUrunMiktari.Name = "textBoxUrunMiktari";
             this.textBoxUrunMiktari.Size = new System.Drawing.Size(175, 32);
-            this.textBoxUrunMiktari.TabIndex = 20;
+            this.textBoxUrunMiktari.TabIndex = 2;
             this.textBoxUrunMiktari.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxUrunMiktari_KeyDown);
             this.textBoxUrunMiktari.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUrunMiktari_KeyPress);
             this.textBoxUrunMiktari.Leave += new System.EventHandler(this.textBoxUrunMiktari_Leave);
@@ -221,7 +221,7 @@
             this.buttonAddNewStok.Location = new System.Drawing.Point(762, 293);
             this.buttonAddNewStok.Name = "buttonAddNewStok";
             this.buttonAddNewStok.Size = new System.Drawing.Size(302, 45);
-            this.buttonAddNewStok.TabIndex = 39;
+            this.buttonAddNewStok.TabIndex = 9;
             this.buttonAddNewStok.Text = "      Yeni Ürün Ekle";
             this.buttonAddNewStok.UseVisualStyleBackColor = false;
             this.buttonAddNewStok.Click += new System.EventHandler(this.buttonAddNewStok_Click);
@@ -235,7 +235,7 @@
             this.textBox1.Location = new System.Drawing.Point(118, 8);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(623, 32);
-            this.textBox1.TabIndex = 43;
+            this.textBox1.TabIndex = 10;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // lblUrunAra
@@ -245,7 +245,7 @@
             this.lblUrunAra.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.lblUrunAra.Location = new System.Drawing.Point(7, 11);
             this.lblUrunAra.Name = "lblUrunAra";
-            this.lblUrunAra.Size = new System.Drawing.Size(106, 24);
+            this.lblUrunAra.Size = new System.Drawing.Size(105, 24);
             this.lblUrunAra.TabIndex = 44;
             this.lblUrunAra.Text = "Ürün Ara:";
             // 
@@ -258,7 +258,7 @@
             this.txtStogaEkle.Location = new System.Drawing.Point(900, 243);
             this.txtStogaEkle.Name = "txtStogaEkle";
             this.txtStogaEkle.Size = new System.Drawing.Size(164, 32);
-            this.txtStogaEkle.TabIndex = 22;
+            this.txtStogaEkle.TabIndex = 8;
             this.txtStogaEkle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtStogaEkle_KeyPress);
             this.txtStogaEkle.Leave += new System.EventHandler(this.txtStogaEkle_Leave);
             // 
@@ -268,12 +268,12 @@
             this.btnStogaEkle.BackColor = System.Drawing.SystemColors.Window;
             this.btnStogaEkle.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnStogaEkle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnStogaEkle.Image = global::ROPv1.Properties.Resources.icon;
+            this.btnStogaEkle.Image = global::ROPv1.Properties.Resources.add;
             this.btnStogaEkle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnStogaEkle.Location = new System.Drawing.Point(762, 237);
             this.btnStogaEkle.Name = "btnStogaEkle";
             this.btnStogaEkle.Size = new System.Drawing.Size(132, 44);
-            this.btnStogaEkle.TabIndex = 22;
+            this.btnStogaEkle.TabIndex = 7;
             this.btnStogaEkle.Text = "Stoğa Ekle";
             this.btnStogaEkle.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnStogaEkle.UseVisualStyleBackColor = false;
@@ -300,7 +300,7 @@
             this.myListUrunler.MultiSelect = false;
             this.myListUrunler.Name = "myListUrunler";
             this.myListUrunler.Size = new System.Drawing.Size(730, 292);
-            this.myListUrunler.TabIndex = 42;
+            this.myListUrunler.TabIndex = 11;
             this.myListUrunler.UseCompatibleStateImageBehavior = false;
             this.myListUrunler.View = System.Windows.Forms.View.Details;
             this.myListUrunler.SelectedIndexChanged += new System.EventHandler(this.myListUrunler_SelectedIndexChanged);

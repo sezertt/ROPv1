@@ -11,7 +11,7 @@ namespace ROPv1
     {
         
         public string StokAdi;
-        public string StokMiktari;
+        public double StokMiktari;
         public string MiktarTipi;
 
     }
