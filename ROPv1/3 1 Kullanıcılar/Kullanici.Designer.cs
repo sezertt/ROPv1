@@ -36,7 +36,7 @@
             System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Ayarlar");
             System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Gün İşlemleri");
             System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Şifre/Pin İşlemleri");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("İkram/İptal İzni");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Hesap İzinleri");
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.label1 = new System.Windows.Forms.Label();
             this.comboNewTitle = new System.Windows.Forms.ComboBox();
@@ -321,7 +321,8 @@
             treeNode7.Name = "PinPassword";
             treeNode7.Text = "Şifre/Pin İşlemleri";
             treeNode8.Name = "ikramIptal";
-            treeNode8.Text = "İkram/İptal İzni";
+            treeNode8.Text = "Hesap İzinleri";
+            treeNode8.ToolTipText = "İptal/İkram/İndirim İzinleri";
             this.treeYetkiler.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
@@ -332,6 +333,7 @@
             treeNode7,
             treeNode8});
             this.treeYetkiler.ShowLines = false;
+            this.treeYetkiler.ShowNodeToolTips = true;
             this.treeYetkiler.ShowPlusMinus = false;
             this.treeYetkiler.ShowRootLines = false;
             this.treeYetkiler.Size = new System.Drawing.Size(196, 270);

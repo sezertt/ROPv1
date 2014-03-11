@@ -114,9 +114,18 @@ namespace ROPv1
 
             if (myListUrunler.Items.Count > 0)
             {
-                textboxUrunAdi.Text = myListUrunler.SelectedItems[0].SubItems[0].Text;
-                textBoxUrunMiktari.Text = myListUrunler.SelectedItems[0].SubItems[1].Text;
-                comboBoxMiktarTipi.Text = myListUrunler.SelectedItems[0].SubItems[2].Text;
+                if (myListUrunler.SelectedItems.Count > 0)
+                {
+                    textboxUrunAdi.Text = myListUrunler.SelectedItems[0].SubItems[0].Text;
+                    textBoxUrunMiktari.Text = myListUrunler.SelectedItems[0].SubItems[1].Text;
+                    comboBoxMiktarTipi.Text = myListUrunler.SelectedItems[0].SubItems[2].Text;
+                }
+                else
+                {
+                    textboxUrunAdi.Text = myListUrunler.Items[0].SubItems[0].Text;
+                    textBoxUrunMiktari.Text = myListUrunler.Items[0].SubItems[1].Text;
+                    comboBoxMiktarTipi.Text = myListUrunler.Items[0].SubItems[2].Text;
+                }
                 newStokForm.Text = textboxUrunAdi.Text;
                 myListUrunler.Focus();
             }

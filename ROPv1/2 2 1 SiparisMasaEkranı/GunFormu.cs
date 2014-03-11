@@ -16,6 +16,7 @@ namespace ROPv1
     {
         List<GunBilgileri> gunListesi = new List<GunBilgileri>();
         string ayarYapanKisi;
+
         public GunFormu(string GunBasiveyaSonuYapanKisi)
         {
             InitializeComponent();

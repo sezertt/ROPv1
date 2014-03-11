@@ -33,6 +33,7 @@
             System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Yeni İkramlar", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Eski Siparişler", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Yeni Siparişler", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("ikramGrubu", System.Windows.Forms.HorizontalAlignment.Left);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SiparisMenuFormu));
             this.flowPanelUrunler = new System.Windows.Forms.FlowLayoutPanel();
             this.labelToplam = new System.Windows.Forms.Label();
@@ -226,6 +227,7 @@
             // 
             this.buttonindirim.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonindirim.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonindirim.Enabled = false;
             this.buttonindirim.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonindirim.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonindirim.Image = global::ROPv1.Properties.Resources.indirim;
@@ -289,7 +291,7 @@
             this.buttonUrunIkram.Padding = new System.Windows.Forms.Padding(8);
             this.buttonUrunIkram.Size = new System.Drawing.Size(190, 79);
             this.buttonUrunIkram.TabIndex = 80;
-            this.buttonUrunIkram.Text = "  İkram Et";
+            this.buttonUrunIkram.Text = "  İkram";
             this.buttonUrunIkram.UseVisualStyleBackColor = false;
             this.buttonUrunIkram.Click += new System.EventHandler(this.buttonUrunIkram_Click);
             // 
@@ -453,6 +455,7 @@
             this.checkBoxYuzde.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxYuzde.Appearance = System.Windows.Forms.Appearance.Button;
             this.checkBoxYuzde.AutoSize = true;
+            this.checkBoxYuzde.Enabled = false;
             this.checkBoxYuzde.Font = new System.Drawing.Font("Arial", 23.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.checkBoxYuzde.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.checkBoxYuzde.Location = new System.Drawing.Point(901, 620);
@@ -466,6 +469,7 @@
             // textBoxYuzde
             // 
             this.textBoxYuzde.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxYuzde.Enabled = false;
             this.textBoxYuzde.Font = new System.Drawing.Font("Arial", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxYuzde.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxYuzde.Location = new System.Drawing.Point(774, 620);
@@ -501,11 +505,15 @@
             listViewGroup4.Header = "Yeni Siparişler";
             listViewGroup4.Name = "YeniSiparisGrubu";
             listViewGroup4.Tag = "3";
+            listViewGroup5.Header = "ikramGrubu";
+            listViewGroup5.Name = "ikramGrubu";
+            listViewGroup5.Tag = "4";
             this.listHesap.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
             listViewGroup1,
             listViewGroup2,
             listViewGroup3,
-            listViewGroup4});
+            listViewGroup4,
+            listViewGroup5});
             this.listHesap.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listHesap.HideSelection = false;
             this.listHesap.LabelWrap = false;

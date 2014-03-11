@@ -29,7 +29,7 @@ namespace ROPv1
 
         public SiparisMasaFormu()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private void myPannel_SizeChanged(object sender, EventArgs e)
@@ -58,8 +58,6 @@ namespace ROPv1
                 XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
                 GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
 
-                
-
                 //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
                 if (infoGunler[infoGunler.Count() - 1].gunSonuYapanKisi == null && infoGunler[infoGunler.Count() - 1].gunBasiYapanKisi != null)
                 { //gün açık sipariş ekranına geçilebilir
@@ -80,9 +78,9 @@ namespace ROPv1
                     if (pinForm.dogru) //pin doğru
                     {
                         SiparisMenuFormu siparisForm;
-                        if(((Button)sender).BackColor == Color.White)
+                        if (((Button)sender).BackColor == Color.White)
                         {
-                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi,false,0,0);//burada masa numarasını da yolla
+                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi, false, 0, 0);//burada masa numarasını da yolla
                             siparisForm.ShowDialog();
                         }
                         else
@@ -93,9 +91,9 @@ namespace ROPv1
                             toplamHesap = dr.GetDecimal(0);
                             kalanHesap = dr.GetDecimal(1);
 
-                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi,true,toplamHesap,kalanHesap);//burada masa numarasını da yolla
+                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi, true, toplamHesap, kalanHesap);//burada masa numarasını da yolla
                             siparisForm.ShowDialog();
-                        }                        
+                        }
 
                         if (siparisForm.masaAcikMi)
                         {
@@ -134,7 +132,7 @@ namespace ROPv1
             panel1.Controls[hangiButtonSecili].BackColor = Color.White;
             panel1.Controls[hangiButtonSecili].ForeColor = SystemColors.ActiveCaption;
             panel1.Controls[Convert.ToInt32(((Button)sender).Name)].BackColor = SystemColors.ActiveCaption;
-            panel1.Controls[Convert.ToInt32(((Button)sender).Name)].ForeColor = Color.White; 
+            panel1.Controls[Convert.ToInt32(((Button)sender).Name)].ForeColor = Color.White;
             hangiButtonSecili = Convert.ToInt32(((Button)sender).Name);
 
             if ((int)((Button)sender).Tag > masaDizaynListesi.Count - 1)
@@ -261,7 +259,16 @@ namespace ROPv1
                 gunForm.ShowDialog();
 
                 XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
-                GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
+
+                GunBilgileri[] infoGunler;
+
+                if (File.Exists("gunler.xml"))
+                    infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
+                else
+                {
+                    dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
+                    return;
+                }
 
                 //gün başı yapılmış mı bak
                 if (infoGunler[infoGunler.Count() - 1].gunSonuYapanKisi == null && infoGunler[infoGunler.Count() - 1].gunBasiYapanKisi != null)
@@ -388,7 +395,7 @@ namespace ROPv1
                             Button buttonTable = new Button();
                             buttonTable.Text = masaDizaynListesi[0].masaYerleri[i][j];
                             buttonTable.UseVisualStyleBackColor = false;
-                            
+
                             buttonTable.Font = new Font("Arial", 21.75F, FontStyle.Bold);
                             buttonTable.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
                             tablePanel.Controls.Add(buttonTable, j, i);

@@ -18,7 +18,7 @@ namespace ROPv1
 
         int hangiMenuSecili = 555;
 
-        const int eskiIkramlar = 0, yeniIkramlar = 1, eskiSiparisler = 2, yeniSiparisler = 3;
+        const int eskiIkramlar = 0, yeniIkramlar = 1, eskiSiparisler = 2, yeniSiparisler = 3, indirimler = 4;
 
         const int urunBoyu = 220, fiyatBoyu = 90;
 
@@ -75,6 +75,9 @@ namespace ROPv1
             {
                 buttonUrunIkram.Enabled = false;
                 buttonUrunIptal.Enabled = false;
+                buttonindirim.Enabled = false;
+                textBoxYuzde.Enabled = false;
+                checkBoxYuzde.Enabled = false;
                 iptalIkram = false;
             }
             MasaAdi = masaninAdi;
@@ -130,6 +133,7 @@ namespace ROPv1
             {
                 if (urunListesi[i].kategorininAdi == flowPanelMenuBasliklari.Controls[0].Text)
                 {
+                    hangiMenuSecili = i;
                     flowPanelMenuBasliklari.Controls[0].Tag = i;
                     for (int j = 0; j < urunListesi[i].urunAdi.Count; j++)
                     {
@@ -241,7 +245,7 @@ namespace ROPv1
         private void buttonDeleteText_Click(object sender, EventArgs e)
         {
             textNumberOfItem.Text = "";
-            textBoxYuzde.Text = "";            
+            textBoxYuzde.Text = "";
         }
 
         #region Panellerdeki itemların görünümünü ekrana göre ayarlıyoruz
@@ -638,6 +642,7 @@ namespace ROPv1
                     listHesap.Items[i].Selected = false;
                 }
             }
+
             if (kacElemanSecili == 0)
             {
                 buttonUrunIkram.Enabled = false;
@@ -656,9 +661,14 @@ namespace ROPv1
                 }
 
                 if (listHesap.SelectedItems[0].Group == listHesap.Groups[eskiIkramlar] || listHesap.SelectedItems[0].Group == listHesap.Groups[yeniIkramlar])
-                    buttonUrunIkram.Text = "   İkram İptal";
+                    buttonUrunIkram.Text = "  İkram İptal";
                 else
-                    buttonUrunIkram.Text = "İkram";
+                    buttonUrunIkram.Text = "  İkram";
+
+                if (listHesap.SelectedItems[0].Group == listHesap.Groups[indirimler])
+                    buttonindirim.Text = "     İndirim Sil";
+                else
+                    buttonindirim.Text = "  İndirim";
 
                 buttonTasi.Enabled = true;
                 buttonAdd.Enabled = true;
@@ -669,6 +679,19 @@ namespace ROPv1
                 buttonTasi.Enabled = true;
                 buttonUrunIptal.Enabled = false;
                 buttonAdd.Enabled = false;
+            }
+
+            if (iptalIkram)
+            {
+                buttonindirim.Enabled = true;
+                textBoxYuzde.Enabled = true;
+                checkBoxYuzde.Enabled = true;
+            }
+            else
+            {
+                buttonindirim.Enabled = false;
+                textBoxYuzde.Enabled = false;
+                checkBoxYuzde.Enabled = false;
             }
         }
 
@@ -717,7 +740,7 @@ namespace ROPv1
                 carpan = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
 
             // ikram et
-            if (buttonUrunIkram.Text == "İkram")
+            if (buttonUrunIkram.Text == "  İkram")
             {
                 decimal istenilenikramSayisi = (decimal)carpan;
 
@@ -801,7 +824,7 @@ namespace ROPv1
 
                         if (istenilenikramSayisi == 0)
                         {
-                            adisyonUpdate(adisyonID);
+                            adisyonUpdateHesapveKalan(adisyonID);
                             break;
                         }
                     } while (dr.Read());
@@ -844,7 +867,7 @@ namespace ROPv1
 
                             if (istenilenikramSayisi == 0)
                             {
-                                adisyonUpdate(adisyonID);
+                                adisyonUpdateHesapveKalan(adisyonID);
                                 break;
                             }
                         } while (dr.Read());
@@ -968,7 +991,7 @@ namespace ROPv1
 
                     if (istenilenIkramiptalSayisi == 0)
                     {
-                        adisyonUpdate(adisyonID);
+                        adisyonUpdateHesapveKalan(adisyonID);
                         break;
                     }
                 } while (dr.Read());
@@ -1010,7 +1033,7 @@ namespace ROPv1
 
                         if (istenilenIkramiptalSayisi == 0)
                         {
-                            adisyonUpdate(adisyonID);
+                            adisyonUpdateHesapveKalan(adisyonID);
                             break;
                         }
                     } while (dr.Read());
@@ -1033,6 +1056,9 @@ namespace ROPv1
             buttonTasi.Enabled = false;
             buttonUrunIptal.Enabled = false;
             buttonAdd.Enabled = false;
+            buttonindirim.Enabled = false;
+            textBoxYuzde.Enabled = false;
+            checkBoxYuzde.Enabled = false;
 
             textNumberOfItem.Text = "";
 
@@ -1135,7 +1161,7 @@ namespace ROPv1
 
                     if (istenilenSiparisiptalSayisi == 0)
                     {
-                        adisyonUpdate(adisyonID);
+                        adisyonUpdateHesapveKalan(adisyonID);
                         break;
                     }
                 } while (dr.Read());
@@ -1177,7 +1203,7 @@ namespace ROPv1
 
                         if (istenilenSiparisiptalSayisi == 0)
                         {
-                            adisyonUpdate(adisyonID);
+                            adisyonUpdateHesapveKalan(adisyonID);
                             break;
                         }
                     } while (dr.Read());
@@ -1216,6 +1242,9 @@ namespace ROPv1
             buttonTasi.Enabled = false;
             buttonUrunIptal.Enabled = false;
             buttonAdd.Enabled = false;
+            buttonindirim.Enabled = false;
+            textBoxYuzde.Enabled = false;
+            checkBoxYuzde.Enabled = false;
         }
 
         // ürüne ekleme yapma butonu
@@ -1348,6 +1377,39 @@ namespace ROPv1
             }
         }
 
+        private void textBoxYuzde_Leave(object sender, EventArgs e)
+        {
+            if (checkBoxYuzde.Checked)
+            {
+                if (Convert.ToDouble(textBoxYuzde.Text) > 100)
+                {
+                    textBoxYuzde.Text = "100";
+                }
+            }
+        }
+
+        private void checkBoxYuzde_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxYuzde.Checked)
+            {
+                checkBoxYuzde.Text = "%";
+                try
+                {
+                    if (Convert.ToDouble(textBoxYuzde.Text) > 100)
+                    {
+                        textBoxYuzde.Text = "100";
+                    }
+                }
+                catch { }
+                textBoxYuzde.MaxLength = 5;
+            }
+            else
+            {
+                checkBoxYuzde.Text = "TL";
+                textBoxYuzde.MaxLength = 7;
+            }
+        }
+
         // sipariş işlemleri bittiğinde basılan buton
         private void buttonTamam_Click(object sender, EventArgs e)
         {
@@ -1402,7 +1464,7 @@ namespace ROPv1
 
                     int adisyonID = dr.GetInt32(0);
 
-                    adisyonUpdate(adisyonID);
+                    adisyonUpdateHesapveKalan(adisyonID);
 
                     siparisOlustur(adisyonID, siparis);
                 }
@@ -1507,7 +1569,7 @@ namespace ROPv1
             cmd2.Connection.Dispose();
         }
 
-        public void adisyonUpdate(int adisyonID)
+        public void adisyonUpdateHesapveKalan(int adisyonID)
         {
             SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
             cmd.Parameters.AddWithValue("@id", adisyonID);
@@ -1573,6 +1635,72 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
+
+
+
+
+
+
+        public void indirimUpdateInsert(int siparisID, int adisyonID, decimal porsiyon, double dusulecekDeger, decimal indirimMiktari, string yemekAdi)
+        {
+            decimal yeniPorsiyonAdetiSiparis = porsiyon - indirimMiktari;
+
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@Porsiyonu", yeniPorsiyonAdetiSiparis);
+            cmd.Parameters.AddWithValue("@id", siparisID);
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+
+            SqlCommand cmd2 = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,DepartmanAdi,MasaAdi,Fiyatı,Porsiyon,YemekAdi,IptalMi,VerilisTarihi) values(@_AdisyonID,@_Garsonu,@_DepartmanAdi,@_MasaAdi,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IptalMi,@_VerilisTarihi)");
+            cmd2.Parameters.AddWithValue("@_AdisyonID", adisyonID);
+            cmd2.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
+            cmd2.Parameters.AddWithValue("@_DepartmanAdi", hangiDepartman.departmanAdi);
+            cmd2.Parameters.AddWithValue("@_MasaAdi", MasaAdi);
+            cmd2.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
+            cmd2.Parameters.AddWithValue("@_Porsiyon", indirimMiktari);
+            cmd2.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
+            cmd2.Parameters.AddWithValue("@_IptalMi", 1);
+            cmd2.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
+
+            cmd2.ExecuteNonQuery();
+
+            cmd2.Connection.Close();
+            cmd2.Connection.Dispose();
+        }
+
+        public void indirimUpdateTam(int siparisID)
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET IptalMi=@iptal, Garsonu=@Garson WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@iptal", 1);
+            cmd.Parameters.AddWithValue("@Garson", siparisiKimGirdi);
+            cmd.Parameters.AddWithValue("@id", siparisID);
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+        public void indirim(int adisyonID, double dusulecekDeger, decimal indirimMiktari, string yemekAdi)
+        {
+            SqlCommand cmd2 = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,DepartmanAdi,MasaAdi,Fiyatı,Porsiyon,YemekAdi,IkramMi,VerilisTarihi) values(@_AdisyonID,@_Garsonu,@_DepartmanAdi,@_MasaAdi,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IkramMi,@_VerilisTarihi)");
+            cmd2.Parameters.AddWithValue("@_AdisyonID", adisyonID);
+            cmd2.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
+            cmd2.Parameters.AddWithValue("@_DepartmanAdi", hangiDepartman.departmanAdi);
+            cmd2.Parameters.AddWithValue("@_MasaAdi", MasaAdi);
+            cmd2.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
+            cmd2.Parameters.AddWithValue("@_Porsiyon", indirimMiktari);
+            cmd2.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
+            cmd2.Parameters.AddWithValue("@_IkramMi", 1);
+            cmd2.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
+            cmd2.ExecuteNonQuery();
+
+            cmd2.Connection.Close();
+            cmd2.Connection.Dispose();
+        }
+
+
+
         #endregion
 
 
@@ -1601,39 +1729,195 @@ namespace ROPv1
         //Adisyona eklenecek indirim
         private void buttonindirim_Click(object sender, EventArgs e)
         {
+            double carpan;
+            if (textBoxYuzde.Text != "")
+                carpan = Convert.ToDouble(textBoxYuzde.Text);
+            else
+                carpan = 1;
 
-        }
+            if (carpan == 0)
+                return;
 
-        private void textBoxYuzde_Leave(object sender, EventArgs e)
-        {
-            if (checkBoxYuzde.Checked)
+            // indirim ekle
+            if (buttonindirim.Text == "  İndirim")
             {
-                if (Convert.ToDouble(textBoxYuzde.Text) > 100)
+                if (checkBoxYuzde.Checked) // indirim hesaba yüzdesel olarak yansıtılacaksa
                 {
-                    textBoxYuzde.Text = "100";
-                }
-            }
-        }
-
-        private void checkBoxYuzde_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxYuzde.Checked)
-            {
-                checkBoxYuzde.Text = "%";
-                try
-                {
-                    if (Convert.ToDouble(textBoxYuzde.Text) > 100)
+                    try
                     {
-                        textBoxYuzde.Text = "100";                        
+                        if (listHesap.Groups[indirimler].Items[0].SubItems[0].Text != "") // 1. indirim satırı % li mi bak değilse ya yoktur yada sabit bir miktardır, catche gir
+                        {
+                            double toplamIndirim = carpan + Convert.ToDouble(listHesap.Groups[indirimler].Items[0].SubItems[0].Text);
+
+                            if(toplamIndirim > 100)
+                            {
+                                DialogResult eminMisiniz;
+
+                                using (KontrolFormu dialog = new KontrolFormu("Toplam indirim hesabın tutarını geçiyor. Hesabın tamamını indirimli yapmak istediğinize emin misiniz?", true))
+                                {
+                                    eminMisiniz = dialog.ShowDialog();
+                                }
+
+                                if (eminMisiniz == DialogResult.No)
+                                {
+                                    return;
+                                }
+
+                                toplamIndirim = 100;
+                            }
+
+                            listHesap.Groups[indirimler].Items[0].SubItems[0].Text = (toplamIndirim).ToString();
+                            listHesap.Groups[indirimler].Items[0].SubItems[2].Text = (Convert.ToDouble(labelToplamHesap.Text) / 100 * Convert.ToDouble(listHesap.Groups[indirimler].Items[0].SubItems[0].Text)).ToString();
+                        }                        
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            if (listHesap.Groups[indirimler].Items[1].SubItems[0].Text != "") // 2. indirim satırı % li mi bak değilse yoktur, catche gir
+                            {
+                                double toplamIndirim = carpan + Convert.ToDouble(listHesap.Groups[indirimler].Items[1].SubItems[0].Text);
+
+                                if (toplamIndirim > 100)
+                                {
+                                    DialogResult eminMisiniz;
+
+                                    using (KontrolFormu dialog = new KontrolFormu("Toplam indirim hesabın tutarını geçiyor. Hesabın tamamını indirimli yapmak istediğinize emin misiniz?", true))
+                                    {
+                                        eminMisiniz = dialog.ShowDialog();
+                                    }
+
+                                    if (eminMisiniz == DialogResult.No)
+                                    {
+                                        return;
+                                    }
+
+                                    toplamIndirim = 100;
+                                }
+
+                                listHesap.Groups[indirimler].Items[1].SubItems[0].Text = (toplamIndirim).ToString();
+                                listHesap.Groups[indirimler].Items[1].SubItems[2].Text = (Convert.ToDouble(labelToplamHesap.Text) / 100 * Convert.ToDouble(listHesap.Groups[indirimler].Items[1].SubItems[0].Text)).ToString();
+                            }                         
+                        }
+                        catch
+                        {
+                            listHesap.Groups[indirimler].Items.Add(carpan.ToString());
+                            listHesap.Groups[indirimler].Items[1].SubItems.Add("İndirim %");
+                            listHesap.Groups[indirimler].Items[1].SubItems.Add((Convert.ToDouble(labelToplamHesap.Text) / 100 * carpan).ToString());
+                        }
                     }
                 }
-                catch { }
-                textBoxYuzde.MaxLength = 5;
+                else // indirim hesaba sabit bir miktar olarak yansıtılacaksa
+                {
+                    try
+                    {
+                        if (listHesap.Groups[indirimler].Items[0].SubItems[0].Text == "") // 1. indirim satırı sabit mi bak değilse ya yoktur yada % li bir miktardır, catche gir
+                        {
+                            double toplamIndirim = carpan + Convert.ToDouble(listHesap.Groups[indirimler].Items[0].SubItems[0].Text);
+
+                            if (toplamIndirim > Convert.ToDouble(labelToplamHesap.Text))
+                            {
+                                DialogResult eminMisiniz;
+
+                                using (KontrolFormu dialog = new KontrolFormu("Toplam indirim hesabın tutarını geçiyor. Hesabın tamamını indirimli yapmak istediğinize emin misiniz?", true))
+                                {
+                                    eminMisiniz = dialog.ShowDialog();
+                                }
+
+                                if (eminMisiniz == DialogResult.No)
+                                {
+                                    return;
+                                }
+
+                                toplamIndirim = 100;
+                            }
+                            listHesap.Groups[indirimler].Items[0].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[indirimler].Items[0].SubItems[2].Text)+carpan).ToString();
+                        }
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            if (listHesap.Groups[indirimler].Items[1].SubItems[0].Text == "") // 2. indirim satırı sabit mi bak değilse yoktur, catche gir
+                            {
+                                listHesap.Groups[indirimler].Items[1].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[indirimler].Items[1].SubItems[2].Text) + carpan).ToString();
+                            }
+                        }
+                        catch
+                        {
+                            listHesap.Groups[indirimler].Items.Add("");
+                            listHesap.Groups[indirimler].Items[1].SubItems.Add("İndirim Sabit");
+                            listHesap.Groups[indirimler].Items[1].SubItems.Add(carpan.ToString());
+                        }
+                    }
+                }
             }
-            else
+            else//indirim kaldır. indirim kaldırırken checkboxyuzdenin bir önemi yok seçilen neyse ona göre işlem yapılır. 
             {
-                checkBoxYuzde.Text = "TL";
-                textBoxYuzde.MaxLength = 7;
+                if(textBoxYuzde.Text != "") // indirimin istenilen kadarını sil
+                {
+                    if (listHesap.SelectedItems[0].SubItems[0].Text != "") // indirim hesaptan yüzdesel olarak düşülecekse
+                    {
+                        if (carpan > Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text))
+                            carpan = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
+                        
+                        try
+                        {
+                            if (listHesap.Groups[indirimler].Items[0].SubItems[0].Text != "") // 1. indirim satırı % li mi bak değilse ya yoktur yada sabit bir miktardır, catche gir
+                            {
+                                listHesap.Groups[indirimler].Items[0].SubItems[0].Text = (Convert.ToDouble(listHesap.Groups[indirimler].Items[0].SubItems[0].Text) + carpan).ToString();
+                                listHesap.Groups[indirimler].Items[0].SubItems[2].Text = (Convert.ToDouble(labelToplamHesap.Text) / 100 * Convert.ToDouble(listHesap.Groups[indirimler].Items[0].SubItems[0].Text)).ToString();
+                            }
+                        }
+                        catch
+                        {
+                            try
+                            {
+                                if (listHesap.Groups[indirimler].Items[1].SubItems[0].Text != "") // 2. indirim satırı % li mi bak değilse yoktur, catche gir
+                                {
+                                    listHesap.Groups[indirimler].Items[1].SubItems[0].Text = (Convert.ToDouble(listHesap.Groups[indirimler].Items[1].SubItems[0].Text) + carpan).ToString();
+                                    listHesap.Groups[indirimler].Items[1].SubItems[2].Text = (Convert.ToDouble(labelToplamHesap.Text) / 100 * Convert.ToDouble(listHesap.Groups[indirimler].Items[1].SubItems[0].Text)).ToString();
+                                }
+                            }
+                            catch
+                            {
+                                listHesap.Groups[indirimler].Items.Add(carpan.ToString());
+                                listHesap.Groups[indirimler].Items[1].SubItems.Add("İndirim %");
+                                listHesap.Groups[indirimler].Items[1].SubItems.Add((Convert.ToDouble(labelToplamHesap.Text) / 100 * carpan).ToString());
+                            }
+                        }
+                    }
+                    else // indirim hesaptan sabit bir miktar olarak düşülecekse
+                    {
+                        try
+                        {
+                            if (listHesap.Groups[indirimler].Items[0].SubItems[0].Text == "") // 1. indirim satırı sabit mi bak değilse ya yoktur yada % li bir miktardır, catche gir
+                            {
+                                listHesap.Groups[indirimler].Items[0].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[indirimler].Items[0].SubItems[2].Text) + carpan).ToString();
+                            }
+                        }
+                        catch
+                        {
+                            try
+                            {
+                                if (listHesap.Groups[indirimler].Items[1].SubItems[0].Text == "") // 2. indirim satırı sabit mi bak değilse yoktur, catche gir
+                                {
+                                    listHesap.Groups[indirimler].Items[1].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[indirimler].Items[1].SubItems[2].Text) + carpan).ToString();
+                                }
+                            }
+                            catch
+                            {
+                                listHesap.Groups[indirimler].Items.Add("");
+                                listHesap.Groups[indirimler].Items[1].SubItems.Add("İndirim Sabit");
+                                listHesap.Groups[indirimler].Items[1].SubItems.Add(carpan.ToString());
+                            }
+                        }
+                    }
+                }
+                else // indirimin tamamını sil
+                {
+
+                }
             }
         }
     }
