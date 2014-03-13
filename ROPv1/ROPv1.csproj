@@ -103,6 +103,18 @@
     <Compile Include="2 2 2 SiparisMenüEkranı\MyListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="2 2 2 SiparisMenüEkranı\MasaDegistirFormu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="2 2 2 SiparisMenüEkranı\MasaDegistirFormu.Designer.cs">
+      <DependentUpon>MasaDegistirFormu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="2 2 2 SiparisMenüEkranı\UrunDegistir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="2 2 2 SiparisMenüEkranı\UrunDegistir.Designer.cs">
+      <DependentUpon>UrunDegistir.cs</DependentUpon>
+    </Compile>
     <Compile Include="2 2 2 SiparisMenüEkranı\SiparisMenuFormu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -208,6 +220,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="2 2 1 SiparisMasaEkranı\PinKoduFormu.resx">
       <DependentUpon>PinKoduFormu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="2 2 2 SiparisMenüEkranı\MasaDegistirFormu.resx">
+      <DependentUpon>MasaDegistirFormu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="2 2 2 SiparisMenüEkranı\UrunDegistir.resx">
+      <DependentUpon>UrunDegistir.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="2 2 2 SiparisMenüEkranı\SiparisMenuFormu.resx">
       <DependentUpon>SiparisMenuFormu.cs</DependentUpon>

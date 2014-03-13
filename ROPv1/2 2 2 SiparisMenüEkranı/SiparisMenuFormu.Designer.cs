@@ -33,7 +33,6 @@
             System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Yeni İkramlar", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Eski Siparişler", System.Windows.Forms.HorizontalAlignment.Left);
             System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Yeni Siparişler", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("ikramGrubu", System.Windows.Forms.HorizontalAlignment.Left);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SiparisMenuFormu));
             this.flowPanelUrunler = new System.Windows.Forms.FlowLayoutPanel();
             this.labelToplam = new System.Windows.Forms.Label();
@@ -47,21 +46,15 @@
             this.ımageList1 = new System.Windows.Forms.ImageList(this.components);
             this.labelKalanHesap = new System.Windows.Forms.Label();
             this.labelKalan = new System.Windows.Forms.Label();
-            this.buttonindirim = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonUrunIptal = new System.Windows.Forms.Button();
             this.buttonUrunIkram = new System.Windows.Forms.Button();
             this.buttonTasi = new System.Windows.Forms.Button();
-            this.buttonMenulerDown = new System.Windows.Forms.Button();
-            this.buttonMenulerUp = new System.Windows.Forms.Button();
-            this.buttonUrunlerDown = new System.Windows.Forms.Button();
-            this.buttonUrunlerUp = new System.Windows.Forms.Button();
             this.buttonMasaDegistir = new System.Windows.Forms.Button();
             this.buttonNotEkle = new System.Windows.Forms.Button();
             this.buttonTamam = new System.Windows.Forms.Button();
             this.buttonHesapOde = new System.Windows.Forms.Button();
-            this.checkBoxYuzde = new System.Windows.Forms.CheckBox();
-            this.textBoxYuzde = new System.Windows.Forms.TextBox();
+            this.buttonTemizle = new System.Windows.Forms.Button();
             this.listHesap = new ROPv1.MyListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -156,7 +149,7 @@
             this.flowPanelMenuBasliklari.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowPanelMenuBasliklari.Location = new System.Drawing.Point(517, 12);
             this.flowPanelMenuBasliklari.Name = "flowPanelMenuBasliklari";
-            this.flowPanelMenuBasliklari.Size = new System.Drawing.Size(250, 671);
+            this.flowPanelMenuBasliklari.Size = new System.Drawing.Size(250, 744);
             this.flowPanelMenuBasliklari.TabIndex = 63;
             this.flowPanelMenuBasliklari.WrapContents = false;
             this.flowPanelMenuBasliklari.SizeChanged += new System.EventHandler(this.myPannel_SizeChanged);
@@ -223,24 +216,6 @@
             this.labelKalan.Text = "Kalan Hesap:";
             this.labelKalan.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // buttonindirim
-            // 
-            this.buttonindirim.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonindirim.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonindirim.Enabled = false;
-            this.buttonindirim.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonindirim.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonindirim.Image = global::ROPv1.Properties.Resources.indirim;
-            this.buttonindirim.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonindirim.Location = new System.Drawing.Point(772, 529);
-            this.buttonindirim.Name = "buttonindirim";
-            this.buttonindirim.Padding = new System.Windows.Forms.Padding(8);
-            this.buttonindirim.Size = new System.Drawing.Size(190, 79);
-            this.buttonindirim.TabIndex = 88;
-            this.buttonindirim.Text = "  İndirim";
-            this.buttonindirim.UseVisualStyleBackColor = false;
-            this.buttonindirim.Click += new System.EventHandler(this.buttonindirim_Click);
-            // 
             // buttonAdd
             // 
             this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -250,10 +225,10 @@
             this.buttonAdd.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonAdd.Image = global::ROPv1.Properties.Resources.addBig;
             this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAdd.Location = new System.Drawing.Point(772, 253);
+            this.buttonAdd.Location = new System.Drawing.Point(772, 266);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Padding = new System.Windows.Forms.Padding(8);
-            this.buttonAdd.Size = new System.Drawing.Size(190, 79);
+            this.buttonAdd.Size = new System.Drawing.Size(190, 100);
             this.buttonAdd.TabIndex = 84;
             this.buttonAdd.Text = "  Ekle";
             this.buttonAdd.UseVisualStyleBackColor = false;
@@ -268,10 +243,10 @@
             this.buttonUrunIptal.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonUrunIptal.Image = global::ROPv1.Properties.Resources.deleteBig;
             this.buttonUrunIptal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonUrunIptal.Location = new System.Drawing.Point(772, 345);
+            this.buttonUrunIptal.Location = new System.Drawing.Point(772, 372);
             this.buttonUrunIptal.Name = "buttonUrunIptal";
             this.buttonUrunIptal.Padding = new System.Windows.Forms.Padding(8);
-            this.buttonUrunIptal.Size = new System.Drawing.Size(190, 79);
+            this.buttonUrunIptal.Size = new System.Drawing.Size(190, 100);
             this.buttonUrunIptal.TabIndex = 81;
             this.buttonUrunIptal.Text = "  İptal Et";
             this.buttonUrunIptal.UseVisualStyleBackColor = false;
@@ -286,10 +261,10 @@
             this.buttonUrunIkram.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonUrunIkram.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonUrunIkram.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonUrunIkram.Location = new System.Drawing.Point(772, 437);
+            this.buttonUrunIkram.Location = new System.Drawing.Point(772, 478);
             this.buttonUrunIkram.Name = "buttonUrunIkram";
             this.buttonUrunIkram.Padding = new System.Windows.Forms.Padding(8);
-            this.buttonUrunIkram.Size = new System.Drawing.Size(190, 79);
+            this.buttonUrunIkram.Size = new System.Drawing.Size(190, 100);
             this.buttonUrunIkram.TabIndex = 80;
             this.buttonUrunIkram.Text = "  İkram";
             this.buttonUrunIkram.UseVisualStyleBackColor = false;
@@ -307,84 +282,17 @@
             this.buttonTasi.Location = new System.Drawing.Point(772, 161);
             this.buttonTasi.Name = "buttonTasi";
             this.buttonTasi.Padding = new System.Windows.Forms.Padding(8);
-            this.buttonTasi.Size = new System.Drawing.Size(190, 79);
+            this.buttonTasi.Size = new System.Drawing.Size(190, 100);
             this.buttonTasi.TabIndex = 83;
-            this.buttonTasi.Text = "  Taşı";
+            this.buttonTasi.Text = "      Ürünleri       Taşı";
             this.buttonTasi.UseVisualStyleBackColor = false;
             this.buttonTasi.Click += new System.EventHandler(this.buttonTasi_Click);
-            // 
-            // buttonMenulerDown
-            // 
-            this.buttonMenulerDown.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonMenulerDown.BackColor = System.Drawing.Color.White;
-            this.buttonMenulerDown.BackgroundImage = global::ROPv1.Properties.Resources.downBig;
-            this.buttonMenulerDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.buttonMenulerDown.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonMenulerDown.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonMenulerDown.Location = new System.Drawing.Point(645, 688);
-            this.buttonMenulerDown.Name = "buttonMenulerDown";
-            this.buttonMenulerDown.Size = new System.Drawing.Size(122, 68);
-            this.buttonMenulerDown.TabIndex = 73;
-            this.buttonMenulerDown.TabStop = false;
-            this.buttonMenulerDown.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonMenulerDown.UseVisualStyleBackColor = false;
-            this.buttonMenulerDown.Click += new System.EventHandler(this.MenuScrollDown);
-            // 
-            // buttonMenulerUp
-            // 
-            this.buttonMenulerUp.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonMenulerUp.BackColor = System.Drawing.Color.White;
-            this.buttonMenulerUp.BackgroundImage = global::ROPv1.Properties.Resources.upBig;
-            this.buttonMenulerUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.buttonMenulerUp.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonMenulerUp.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonMenulerUp.Location = new System.Drawing.Point(517, 688);
-            this.buttonMenulerUp.Name = "buttonMenulerUp";
-            this.buttonMenulerUp.Size = new System.Drawing.Size(122, 68);
-            this.buttonMenulerUp.TabIndex = 72;
-            this.buttonMenulerUp.TabStop = false;
-            this.buttonMenulerUp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonMenulerUp.UseVisualStyleBackColor = false;
-            this.buttonMenulerUp.Click += new System.EventHandler(this.MenuScrollUp);
-            // 
-            // buttonUrunlerDown
-            // 
-            this.buttonUrunlerDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonUrunlerDown.BackColor = System.Drawing.Color.White;
-            this.buttonUrunlerDown.BackgroundImage = global::ROPv1.Properties.Resources.downBig;
-            this.buttonUrunlerDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.buttonUrunlerDown.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonUrunlerDown.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonUrunlerDown.Location = new System.Drawing.Point(373, 546);
-            this.buttonUrunlerDown.Name = "buttonUrunlerDown";
-            this.buttonUrunlerDown.Size = new System.Drawing.Size(122, 68);
-            this.buttonUrunlerDown.TabIndex = 71;
-            this.buttonUrunlerDown.TabStop = false;
-            this.buttonUrunlerDown.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonUrunlerDown.UseVisualStyleBackColor = false;
-            this.buttonUrunlerDown.Click += new System.EventHandler(this.UrunScrollDown);
-            // 
-            // buttonUrunlerUp
-            // 
-            this.buttonUrunlerUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonUrunlerUp.BackColor = System.Drawing.Color.White;
-            this.buttonUrunlerUp.BackgroundImage = global::ROPv1.Properties.Resources.upBig;
-            this.buttonUrunlerUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.buttonUrunlerUp.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonUrunlerUp.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonUrunlerUp.Location = new System.Drawing.Point(373, 474);
-            this.buttonUrunlerUp.Name = "buttonUrunlerUp";
-            this.buttonUrunlerUp.Size = new System.Drawing.Size(122, 68);
-            this.buttonUrunlerUp.TabIndex = 70;
-            this.buttonUrunlerUp.TabStop = false;
-            this.buttonUrunlerUp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonUrunlerUp.UseVisualStyleBackColor = false;
-            this.buttonUrunlerUp.Click += new System.EventHandler(this.UrunScrollUp);
             // 
             // buttonMasaDegistir
             // 
             this.buttonMasaDegistir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonMasaDegistir.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonMasaDegistir.Enabled = false;
             this.buttonMasaDegistir.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonMasaDegistir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonMasaDegistir.Image = global::ROPv1.Properties.Resources.swap;
@@ -450,35 +358,21 @@
             this.buttonHesapOde.UseVisualStyleBackColor = false;
             this.buttonHesapOde.Click += new System.EventHandler(this.paymentButton_Click);
             // 
-            // checkBoxYuzde
+            // buttonTemizle
             // 
-            this.checkBoxYuzde.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxYuzde.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxYuzde.AutoSize = true;
-            this.checkBoxYuzde.Enabled = false;
-            this.checkBoxYuzde.Font = new System.Drawing.Font("Arial", 23.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.checkBoxYuzde.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.checkBoxYuzde.Location = new System.Drawing.Point(901, 620);
-            this.checkBoxYuzde.Name = "checkBoxYuzde";
-            this.checkBoxYuzde.Size = new System.Drawing.Size(61, 45);
-            this.checkBoxYuzde.TabIndex = 90;
-            this.checkBoxYuzde.Text = "TL";
-            this.checkBoxYuzde.UseVisualStyleBackColor = true;
-            this.checkBoxYuzde.CheckedChanged += new System.EventHandler(this.checkBoxYuzde_CheckedChanged);
-            // 
-            // textBoxYuzde
-            // 
-            this.textBoxYuzde.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxYuzde.Enabled = false;
-            this.textBoxYuzde.Font = new System.Drawing.Font("Arial", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBoxYuzde.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBoxYuzde.Location = new System.Drawing.Point(774, 620);
-            this.textBoxYuzde.MaxLength = 7;
-            this.textBoxYuzde.Name = "textBoxYuzde";
-            this.textBoxYuzde.Size = new System.Drawing.Size(188, 45);
-            this.textBoxYuzde.TabIndex = 89;
-            this.textBoxYuzde.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPressedOnYuzdeText);
-            this.textBoxYuzde.Leave += new System.EventHandler(this.textBoxYuzde_Leave);
+            this.buttonTemizle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonTemizle.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonTemizle.Font = new System.Drawing.Font("Arial", 16.5F, System.Drawing.FontStyle.Bold);
+            this.buttonTemizle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonTemizle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonTemizle.Location = new System.Drawing.Point(772, 582);
+            this.buttonTemizle.Name = "buttonTemizle";
+            this.buttonTemizle.Padding = new System.Windows.Forms.Padding(8);
+            this.buttonTemizle.Size = new System.Drawing.Size(190, 83);
+            this.buttonTemizle.TabIndex = 87;
+            this.buttonTemizle.Text = "Seçimi Temizle";
+            this.buttonTemizle.UseVisualStyleBackColor = false;
+            this.buttonTemizle.Click += new System.EventHandler(this.buttonTemizle_Click);
             // 
             // listHesap
             // 
@@ -505,15 +399,11 @@
             listViewGroup4.Header = "Yeni Siparişler";
             listViewGroup4.Name = "YeniSiparisGrubu";
             listViewGroup4.Tag = "3";
-            listViewGroup5.Header = "ikramGrubu";
-            listViewGroup5.Name = "ikramGrubu";
-            listViewGroup5.Tag = "4";
             this.listHesap.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
             listViewGroup1,
             listViewGroup2,
             listViewGroup3,
-            listViewGroup4,
-            listViewGroup5});
+            listViewGroup4});
             this.listHesap.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listHesap.HideSelection = false;
             this.listHesap.LabelWrap = false;
@@ -549,7 +439,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 768);
-            this.Controls.Add(this.buttonindirim);
+            this.Controls.Add(this.buttonTemizle);
             this.Controls.Add(this.labelKalanHesap);
             this.Controls.Add(this.labelKalan);
             this.Controls.Add(this.buttonAdd);
@@ -560,10 +450,6 @@
             this.Controls.Add(this.labelDepartman);
             this.Controls.Add(this.labelMasa);
             this.Controls.Add(this.pinboardcontrol21);
-            this.Controls.Add(this.buttonMenulerDown);
-            this.Controls.Add(this.buttonMenulerUp);
-            this.Controls.Add(this.buttonUrunlerDown);
-            this.Controls.Add(this.buttonUrunlerUp);
             this.Controls.Add(this.buttonDeleteText);
             this.Controls.Add(this.textNumberOfItem);
             this.Controls.Add(this.buttonMasaDegistir);
@@ -574,8 +460,6 @@
             this.Controls.Add(this.buttonTamam);
             this.Controls.Add(this.buttonHesapOde);
             this.Controls.Add(this.flowPanelUrunler);
-            this.Controls.Add(this.checkBoxYuzde);
-            this.Controls.Add(this.textBoxYuzde);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SiparisMenuFormu";
@@ -598,10 +482,6 @@
         private System.Windows.Forms.Button buttonMasaDegistir;
         private System.Windows.Forms.TextBox textNumberOfItem;
         private System.Windows.Forms.Button buttonDeleteText;
-        private System.Windows.Forms.Button buttonUrunlerDown;
-        private System.Windows.Forms.Button buttonUrunlerUp;
-        private System.Windows.Forms.Button buttonMenulerUp;
-        private System.Windows.Forms.Button buttonMenulerDown;
         private PinboardClassLibrary.Pinboardcontrol2 pinboardcontrol21;
         private System.Windows.Forms.FlowLayoutPanel flowPanelMenuBasliklari;
         private System.Windows.Forms.Label labelMasa;
@@ -617,8 +497,6 @@
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Label labelKalanHesap;
         private System.Windows.Forms.Label labelKalan;
-        private System.Windows.Forms.Button buttonindirim;
-        private System.Windows.Forms.CheckBox checkBoxYuzde;
-        private System.Windows.Forms.TextBox textBoxYuzde;
+        private System.Windows.Forms.Button buttonTemizle;
     }
 }

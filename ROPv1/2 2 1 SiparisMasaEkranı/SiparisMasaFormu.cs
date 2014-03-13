@@ -78,12 +78,12 @@ namespace ROPv1
                     if (pinForm.dogru) //pin doğru
                     {
                         SiparisMenuFormu siparisForm;
-                        if (((Button)sender).BackColor == Color.White)
+                        if (((Button)sender).BackColor == Color.White) // masa kapalı
                         {
                             siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi, false, 0, 0);//burada masa numarasını da yolla
                             siparisForm.ShowDialog();
                         }
-                        else
+                        else // masa acik
                         {
                             SqlCommand cmd = SQLBaglantisi.getCommand("SELECT ToplamHesap,KalanHesap FROM Adisyon WHERE MasaAdi='" + ((Button)sender).Text + "' AND DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
                             SqlDataReader dr = cmd.ExecuteReader();
@@ -99,6 +99,24 @@ namespace ROPv1
                         {
                             ((Button)sender).ForeColor = Color.White;
                             ((Button)sender).BackColor = Color.Firebrick;
+
+                            switch (siparisForm.masaDegisti)
+                            {
+                                case 2: // departman değişmedi 1 masa açık
+                                    ((Button)sender).ForeColor = SystemColors.ActiveCaption;
+                                    ((Button)sender).BackColor = Color.White;
+
+                                    Button tablebutton = tablePanel.Controls.Find(siparisForm.yeniMasaninAdi, false)[0] as Button;
+                                    tablebutton.ForeColor = Color.White;
+                                    tablebutton.BackColor = Color.Firebrick;
+                                    break;
+                                case 3: // 1 masa açık departmanda değişti
+                                    ((Button)sender).ForeColor = SystemColors.ActiveCaption;
+                                    ((Button)sender).BackColor = Color.White;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                         else
                         {
@@ -165,23 +183,29 @@ namespace ROPv1
                             tablePanel.Controls.Add(buttonTable, j, i);
                             tablePanel.Tag = (int)((Button)sender).Tag;
 
-                            try // açık
-                            {
-                                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT acikMi FROM Adisyon WHERE MasaAdi='" + buttonTable.Text + "' AND DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
-                                SqlDataReader dr = cmd.ExecuteReader();
-                                dr.Read();
-                                dr.GetBoolean(0);
-                                buttonTable.BackColor = Color.Firebrick;
-                                buttonTable.ForeColor = Color.White;
-                            }
-                            catch // kapalı
-                            {
-                                buttonTable.BackColor = Color.White;
-                                buttonTable.ForeColor = SystemColors.ActiveCaption;
-                            }
+                            buttonTable.Name = buttonTable.Text;
+
+                            buttonTable.BackColor = Color.White;
+                            buttonTable.ForeColor = SystemColors.ActiveCaption;
                         }
                     }
                 }
+
+                List<string> acikMasalar = new List<string>();
+
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    acikMasalar.Add(dr.GetString(0));
+                }
+
+                for (int i = 0; i < acikMasalar.Count; i++)
+                {
+                    Button tablebutton = tablePanel.Controls.Find(acikMasalar[i], false)[0] as Button;
+                    tablebutton.BackColor = Color.Firebrick;
+                    tablebutton.ForeColor = Color.White;
+                }      
 
                 for (int j = 6; j > 0; j--)
                 {
@@ -401,24 +425,29 @@ namespace ROPv1
                             tablePanel.Controls.Add(buttonTable, j, i);
                             buttonTable.Click += siparisButonuBasildi;
                             tablePanel.Tag = 0;
+                            buttonTable.Name = buttonTable.Text;
 
-                            try // açık
-                            {
-                                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT acikMi FROM Adisyon WHERE MasaAdi='" + buttonTable.Text + "' AND DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
-                                SqlDataReader dr = cmd.ExecuteReader();
-                                dr.Read();
-                                dr.GetBoolean(0);
-                                buttonTable.BackColor = Color.Firebrick;
-                                buttonTable.ForeColor = Color.White;
-                            }
-                            catch // kapalı
-                            {
-                                buttonTable.BackColor = Color.White;
-                                buttonTable.ForeColor = SystemColors.ActiveCaption;
-                            }
+                            buttonTable.BackColor = Color.White;
+                            buttonTable.ForeColor = SystemColors.ActiveCaption;
                         }
                     }
                 }
+
+                List<string> acikMasalar = new List<string>();
+
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    acikMasalar.Add(dr.GetString(0));
+                }
+
+                for (int i = 0; i < acikMasalar.Count; i++)
+                {
+                    Button tablebutton = tablePanel.Controls.Find(acikMasalar[i], false)[0] as Button;
+                    tablebutton.BackColor = Color.Firebrick;
+                    tablebutton.ForeColor = Color.White;
+                }      
 
                 for (int j = 6; j > 0; j--)
                 {

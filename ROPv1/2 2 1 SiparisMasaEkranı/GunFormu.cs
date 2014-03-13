@@ -42,7 +42,10 @@ namespace ROPv1
 
             buttonGunSonu.Enabled = true;
             buttonGunBasi.Enabled = false;
-            listHesap.FocusedItem = listHesap.Items[0];
+
+            listHesap.Items[0].Selected = true;
+            listHesap_MouseUp(null, null);
+
 
             TimeSpan span = DateTime.Now.Subtract(gunListesi[gunListesi.Count - 1].gunBasiVakti);
 
@@ -77,7 +80,8 @@ namespace ROPv1
                 buttonGunSonu.Enabled = false;
                 buttonGunBasi.Enabled = true;
 
-                listHesap.FocusedItem = listHesap.Items[0];
+                listHesap.Items[0].Selected = true;
+                listHesap_MouseUp(null, null);
 
                 timerGecenSure.Stop();
                 labelGunSonu.Text = ayarYapanKisi;
@@ -243,7 +247,10 @@ namespace ROPv1
                 this.currentPageChanged(null, null);
 
                 if (listHesap.Items.Count > 0)
-                    listHesap.FocusedItem = listHesap.Items[0];
+                {
+                    listHesap.Items[0].Selected = true;
+                    listHesap_MouseUp(null, null);
+                }
             }
             listHesap.Columns[0].Width = listHesap.Width / 7;
             listHesap.Columns[1].Width = listHesap.Width / 7;
