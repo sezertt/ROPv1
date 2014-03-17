@@ -27,5 +27,24 @@ namespace ROPv1
                 buttonTamam.Visible = true;
             }
         }
+
+        public KontrolFormu(string textboxText, bool BoxType, int iptalButon)
+        {
+            InitializeComponent();
+
+            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+
+            labelAciklama.Text = textboxText;
+            if (BoxType) 
+            {
+                buttonNO.Width += 20; 
+                buttonNO.Text = "Masayı aç";
+                buttonYES.Text = "Tamam";
+                buttonNO.Visible = true;
+                buttonYES.Visible = true;
+                buttonTamam.Visible = false;
+            }
+        }
     }
 }

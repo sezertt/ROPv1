@@ -50,6 +50,7 @@
             // 
             this.buttonOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonOK.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOK.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonOK.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonOK.Image = global::ROPv1.Properties.Resources.icon;
@@ -172,6 +173,7 @@
             this.textBoxUrun5.Size = new System.Drawing.Size(86, 32);
             this.textBoxUrun5.TabIndex = 79;
             this.textBoxUrun5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxUrun5.Click += new System.EventHandler(this.textBoxUrun1_Click);
             this.textBoxUrun5.TextChanged += new System.EventHandler(this.textNumberOfItem_TextChanged);
             this.textBoxUrun5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUrun5_KeyPress);
             // 
@@ -186,6 +188,7 @@
             this.textBoxUrun4.Size = new System.Drawing.Size(86, 32);
             this.textBoxUrun4.TabIndex = 80;
             this.textBoxUrun4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxUrun4.Click += new System.EventHandler(this.textBoxUrun1_Click);
             this.textBoxUrun4.TextChanged += new System.EventHandler(this.textNumberOfItem_TextChanged);
             this.textBoxUrun4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUrun5_KeyPress);
             // 
@@ -200,6 +203,7 @@
             this.textBoxUrun3.Size = new System.Drawing.Size(86, 32);
             this.textBoxUrun3.TabIndex = 81;
             this.textBoxUrun3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxUrun3.Click += new System.EventHandler(this.textBoxUrun1_Click);
             this.textBoxUrun3.TextChanged += new System.EventHandler(this.textNumberOfItem_TextChanged);
             this.textBoxUrun3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUrun5_KeyPress);
             // 
@@ -214,6 +218,7 @@
             this.textBoxUrun2.Size = new System.Drawing.Size(86, 32);
             this.textBoxUrun2.TabIndex = 82;
             this.textBoxUrun2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxUrun2.Click += new System.EventHandler(this.textBoxUrun1_Click);
             this.textBoxUrun2.TextChanged += new System.EventHandler(this.textNumberOfItem_TextChanged);
             this.textBoxUrun2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUrun5_KeyPress);
             // 
@@ -228,6 +233,7 @@
             this.textBoxUrun1.Size = new System.Drawing.Size(86, 32);
             this.textBoxUrun1.TabIndex = 83;
             this.textBoxUrun1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxUrun1.Click += new System.EventHandler(this.textBoxUrun1_Click);
             this.textBoxUrun1.TextChanged += new System.EventHandler(this.textNumberOfItem_TextChanged);
             this.textBoxUrun1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUrun5_KeyPress);
             // 

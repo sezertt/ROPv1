@@ -29,12 +29,15 @@ namespace ROPv1
 
         string eskiMasa, eskiDepartman;
 
-        public MasaDegistirFormu(string masaAdi, string DepartmanAdi)
+        bool MasaMi;
+
+        public MasaDegistirFormu(string masaAdi, string DepartmanAdi, bool MasaMiUrunMu)
         {
             InitializeComponent();
 
             eskiMasa = masaAdi;
             eskiDepartman = DepartmanAdi;
+            MasaMi = MasaMiUrunMu;
         }
 
         private void myPannel_SizeChanged(object sender, EventArgs e)
@@ -63,37 +66,65 @@ namespace ROPv1
             if (yeniDepartman == "" || yeniDepartman == null) // departman değişmemiş demektir
                 yeniDepartman = eskiDepartman;
 
+            // Masa kullanımda mı bakıyoruz
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaId FROM IslemdekiMasalar WHERE DepartmanAdlari='" + yeniDepartman + "' AND MasaAdlari='" + yeniMasa + "'");
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                try
+                {
+                    dr.GetInt32(0);
+                    using (KontrolFormu dialog = new KontrolFormu("Seçtiğiniz masa şu anda kullanımda lütfen başka bir masa seçiniz ya da daha sonra tekrar deneyiniz", false))
+                    {
+                        dialog.ShowDialog();
+                        cmd.Connection.Close();
+                        cmd.Connection.Dispose();
+                        return;
+                    }
+                }
+                catch
+                { }
+            }
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+
             DialogResult eminMisiniz;
 
-            using (KontrolFormu dialog = new KontrolFormu(eskiDepartman + " departmanındaki, " + eskiMasa + " adlı masanın hesabı " + yeniDepartman + " departmanındaki " + yeniMasa + " adlı masanın hesabı ile yer değiştirilsin mi ?", true))
+            if (MasaMi) //masa değişimi
             {
-                eminMisiniz = dialog.ShowDialog();
+                using (KontrolFormu dialog = new KontrolFormu(eskiDepartman + " departmanındaki, " + eskiMasa + " adlı masanın hesabı " + yeniDepartman + " departmanındaki " + yeniMasa + " adlı masanın hesabı ile yer değiştirilsin mi ?", true))
+                {
+                    eminMisiniz = dialog.ShowDialog();
+                }
+            }
+            else // ürün kaydırma
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Ürünler " + eskiDepartman + " departmanındaki, " + eskiMasa + " masasından " + yeniDepartman + " departmanındaki " + yeniMasa + " masasına aktarılsın mı ?", true))
+                {
+                    eminMisiniz = dialog.ShowDialog();
+                }
             }
 
             if (eminMisiniz == DialogResult.Yes)
             {
-                if (yeniMasa == eskiMasa && eskiDepartman == yeniDepartman) //masalar değişmeyecek aynı masa seçildi
-                    this.Close();
-                else
+
+                if (((Button)sender).BackColor == Color.Firebrick && yeniDepartman == eskiDepartman) // departman değişmedi ve masaların ikisi de açık
                 {
-                    if (((Button)sender).BackColor == Color.Firebrick && yeniDepartman == eskiDepartman) // departman değişmedi ve masaların ikisi de açık
-                    {
-                        yapilmasiGerekenIslem = 0;
-                    }
-                    else if (((Button)sender).BackColor == Color.Firebrick) // masalar açık departman değişti
-                    {
-                        yapilmasiGerekenIslem = 1;
-                    }
-                    else if (yeniDepartman == eskiDepartman) // departman değişmedi 1 masa açık
-                    {
-                        yapilmasiGerekenIslem = 2;
-                    }
-                    else // departmanda değişti 1 masa açık 
-                    {
-                        yapilmasiGerekenIslem = 3;                                               
-                    }
-                    this.Close();
+                    yapilmasiGerekenIslem = 0;
                 }
+                else if (((Button)sender).BackColor == Color.Firebrick) // masalar açık departman değişti
+                {
+                    yapilmasiGerekenIslem = 1;
+                }
+                else if (yeniDepartman == eskiDepartman) // departman değişmedi 1 masa açık
+                {
+                    yapilmasiGerekenIslem = 2;
+                }
+                else // departmanda değişti 1 masa açık 
+                {
+                    yapilmasiGerekenIslem = 3;
+                }
+                this.Close();
             }
         }
 
@@ -177,21 +208,17 @@ namespace ROPv1
                     }
                 }
 
-                List<string> acikMasalar = new List<string>();
-
-                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND AcikMi=1");
                 SqlDataReader dr = cmd.ExecuteReader();
-                while(dr.Read())
+                while (dr.Read())
                 {
-                   acikMasalar.Add(dr.GetString(0));
-                }
-
-                for (int i = 0; i < acikMasalar.Count; i++)
-                {
-                    Button tablebutton = tablePanel.Controls.Find(acikMasalar[i], false)[0] as Button;
+                    Button tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
                     tablebutton.BackColor = Color.Firebrick;
                     tablebutton.ForeColor = Color.White;
-                }         
+                }
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
 
                 for (int j = 6; j > 0; j--)
                 {
@@ -282,21 +309,17 @@ namespace ROPv1
                     }
                 }
 
-                List<string> acikMasalar = new List<string>();
-
-                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND AcikMi=1");
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    acikMasalar.Add(dr.GetString(0));
-                }
-
-                for (int i = 0; i < acikMasalar.Count; i++)
-                {
-                    Button tablebutton = tablePanel.Controls.Find(acikMasalar[i], false)[0] as Button;
+                    Button tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
                     tablebutton.BackColor = Color.Firebrick;
                     tablebutton.ForeColor = Color.White;
-                }      
+                }
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
 
                 for (int j = 6; j > 0; j--)
                 {

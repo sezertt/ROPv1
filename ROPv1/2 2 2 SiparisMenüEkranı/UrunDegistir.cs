@@ -12,16 +12,15 @@ namespace ROPv1
 {
     public partial class UrunDegistir : Form
     {
-        List<string> seciliUrunler = new List<string>();
-        List<int> seciliUrunlerinMiktarlari = new List<int>();
-
         ListView.SelectedListViewItemCollection urunler;
+        public List<decimal> miktarlar = new List<decimal>();
 
         public UrunDegistir(ListView.SelectedListViewItemCollection selectedListViewItems)
         {
             InitializeComponent();
 
             urunler = selectedListViewItems;
+
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
         }
@@ -33,13 +32,32 @@ namespace ROPv1
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            urunler[0].SubItems[0].Text = textBoxUrun1.Text.ToString();
-            urunler[1].SubItems[0].Text = textBoxUrun2.Text.ToString();
-            urunler[2].SubItems[0].Text = textBoxUrun3.Text.ToString();
-            urunler[3].SubItems[0].Text = textBoxUrun4.Text.ToString();
-            urunler[4].SubItems[0].Text = textBoxUrun5.Text.ToString();
+            miktarlar.Add(Convert.ToDecimal(textBoxUrun1.Text));
 
-            //BURADAN DEVAM ET
+            switch (urunler.Count)
+            {
+                case 2:
+                    miktarlar.Add(Convert.ToDecimal(textBoxUrun2.Text));
+                    break;
+                case 3:
+                    miktarlar.Add(Convert.ToDecimal(textBoxUrun2.Text));
+                    miktarlar.Add(Convert.ToDecimal(textBoxUrun3.Text));
+                    break;
+                case 4:
+                    miktarlar.Add(Convert.ToDecimal(textBoxUrun2.Text));
+                    miktarlar.Add(Convert.ToDecimal(textBoxUrun3.Text));
+                    miktarlar.Add(Convert.ToDecimal(textBoxUrun4.Text));
+                    break;
+                case 5:
+                    miktarlar.Add(Convert.ToDecimal(textBoxUrun2.Text));
+                    miktarlar.Add(Convert.ToDecimal(textBoxUrun3.Text));
+                    miktarlar.Add(Convert.ToDecimal(textBoxUrun4.Text));
+                    miktarlar.Add(Convert.ToDecimal(textBoxUrun5.Text));
+                    break;
+                default:
+                    break;
+            }
+            this.Close();
         }
 
         private void buttonNO_Click(object sender, EventArgs e)
@@ -164,6 +182,11 @@ namespace ROPv1
             }
             else if (Convert.ToDouble((sender as TextBox).Text) < 0)
                 (sender as TextBox).Text = "0";
+        }
+
+        private void textBoxUrun1_Click(object sender, EventArgs e)
+        {
+            (sender as TextBox).Select(0, (sender as TextBox).TextLength);
         }
     }
 }

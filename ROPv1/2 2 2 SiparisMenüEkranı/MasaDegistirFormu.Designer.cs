@@ -32,15 +32,16 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tablePanel = new System.Windows.Forms.TableLayoutPanel();
             this.exitButton = new System.Windows.Forms.Button();
+            this.labelMasa = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Location = new System.Drawing.Point(11, 12);
+            this.panel1.Location = new System.Drawing.Point(11, 68);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1065, 110);
+            this.panel1.Size = new System.Drawing.Size(1065, 54);
             this.panel1.TabIndex = 14;
             this.panel1.SizeChanged += new System.EventHandler(this.myPannel_SizeChanged);
             // 
@@ -106,12 +107,26 @@
             this.exitButton.UseVisualStyleBackColor = false;
             this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
+            // labelMasa
+            // 
+            this.labelMasa.AutoSize = true;
+            this.labelMasa.BackColor = System.Drawing.Color.Transparent;
+            this.labelMasa.Font = new System.Drawing.Font("Calibri", 32.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelMasa.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelMasa.Location = new System.Drawing.Point(2, 12);
+            this.labelMasa.Name = "labelMasa";
+            this.labelMasa.Size = new System.Drawing.Size(748, 53);
+            this.labelMasa.TabIndex = 77;
+            this.labelMasa.Text = "Lütfen Taşımak İstediğiniz Masayı Seçiniz";
+            this.labelMasa.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // MasaDegistirFormu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1313, 819);
+            this.Controls.Add(this.labelMasa);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.tablePanel);
             this.Controls.Add(this.panel1);
@@ -122,6 +137,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.SiparisMasaFormu_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -130,5 +146,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tablePanel;
         private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.Label labelMasa;
     }
 }

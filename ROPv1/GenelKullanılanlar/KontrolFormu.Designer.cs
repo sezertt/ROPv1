@@ -84,7 +84,7 @@
             this.buttonNO.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonNO.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonNO.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonNO.Location = new System.Drawing.Point(312, 132);
+            this.buttonNO.Location = new System.Drawing.Point(37, 132);
             this.buttonNO.Name = "buttonNO";
             this.buttonNO.Size = new System.Drawing.Size(125, 50);
             this.buttonNO.TabIndex = 28;
@@ -101,7 +101,7 @@
             this.buttonYES.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonYES.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonYES.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonYES.Location = new System.Drawing.Point(37, 132);
+            this.buttonYES.Location = new System.Drawing.Point(312, 132);
             this.buttonYES.Name = "buttonYES";
             this.buttonYES.Size = new System.Drawing.Size(125, 50);
             this.buttonYES.TabIndex = 27;

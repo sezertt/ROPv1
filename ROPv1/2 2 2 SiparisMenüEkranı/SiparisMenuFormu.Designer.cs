@@ -105,7 +105,7 @@
             this.textNumberOfItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textNumberOfItem.Font = new System.Drawing.Font("Arial", 39F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textNumberOfItem.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textNumberOfItem.Location = new System.Drawing.Point(373, 617);
+            this.textNumberOfItem.Location = new System.Drawing.Point(377, 617);
             this.textNumberOfItem.MaxLength = 3;
             this.textNumberOfItem.Name = "textNumberOfItem";
             this.textNumberOfItem.Size = new System.Drawing.Size(122, 67);
@@ -121,7 +121,7 @@
             this.buttonDeleteText.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonDeleteText.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteText.Location = new System.Drawing.Point(373, 688);
+            this.buttonDeleteText.Location = new System.Drawing.Point(377, 688);
             this.buttonDeleteText.Name = "buttonDeleteText";
             this.buttonDeleteText.Size = new System.Drawing.Size(122, 68);
             this.buttonDeleteText.TabIndex = 69;
@@ -465,6 +465,7 @@
             this.Name = "SiparisMenuFormu";
             this.Text = "SiparisMenuFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SiparisMenuFormu_FormClosing);
             this.Load += new System.EventHandler(this.SiparisMenuFormu_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

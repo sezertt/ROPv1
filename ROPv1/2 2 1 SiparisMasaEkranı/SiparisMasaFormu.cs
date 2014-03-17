@@ -71,12 +71,65 @@ namespace ROPv1
                         }
                         return;
                     }
+                    
+                    // Masa kullanımda mı bakıyoruz
+                    SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaId FROM IslemdekiMasalar WHERE DepartmanAdlari='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND MasaAdlari='" + ((Button)sender).Text + "'");
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        try
+                        {
+                            dr.GetInt32(0);
+
+                            using (KontrolFormu dialog = new KontrolFormu("DİKKAT!\nSeçtiğiniz masa şu anda kullanımda. Eğer masanın kullanımda olmadığından eminseniz Masayı AÇ tuşuna basarak masaya girişi açabilirsiniz.", true, 1))
+                            {
+                                DialogResult masaAcilsinMi = dialog.ShowDialog();
+
+                                if (masaAcilsinMi != DialogResult.Yes)
+                                {
+                                    using (KontrolFormu dialog2 = new KontrolFormu("DİKKAT!\nAçmak istediğiniz masa kullanımda ise bu masanın açılması hatalara neden olabilir. Yinede masayı açmak istiyor musunuz? ", true))
+                                    {
+                                        DialogResult masaAcilsinMi2 = dialog2.ShowDialog();
+
+                                        if (masaAcilsinMi2 == DialogResult.Yes)
+                                        {
+                                            cmd = SQLBaglantisi.getCommand("DELETE FROM IslemdekiMasalar WHERE MasaAdlari='" + (sender as Button).Text + "' AND DepartmanAdlari='" + restoranListesi[hangiButtonSecili].departmanAdi + "'");
+                                            cmd.ExecuteNonQuery();
+                                            cmd.Connection.Close();
+                                            cmd.Connection.Dispose();                                            
+                                        }
+                                        else
+                                        {
+                                            cmd.Connection.Close();
+                                            cmd.Connection.Dispose();
+                                            return;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    cmd.Connection.Close();
+                                    cmd.Connection.Dispose();
+                                    return;
+                                }
+                            }
+                        }
+                        catch
+                        { }
+                    }
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
 
                     PinKoduFormu pinForm = new PinKoduFormu("Masa Görüntüleme");
                     pinForm.ShowDialog();
 
                     if (pinForm.dogru) //pin doğru
                     {
+                        cmd = SQLBaglantisi.getCommand("INSERT INTO IslemdekiMasalar(MasaAdlari,DepartmanAdlari) values(@_MasaAdlari,@_DepartmanAdlari)");
+                        cmd.Parameters.AddWithValue("@_MasaAdlari", ((Button)sender).Text);
+                        cmd.Parameters.AddWithValue("@_DepartmanAdlari", restoranListesi[hangiButtonSecili].departmanAdi);
+                        cmd.ExecuteNonQuery();
+
                         SiparisMenuFormu siparisForm;
                         if (((Button)sender).BackColor == Color.White) // masa kapalı
                         {
@@ -85,14 +138,24 @@ namespace ROPv1
                         }
                         else // masa acik
                         {
-                            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT ToplamHesap,KalanHesap FROM Adisyon WHERE MasaAdi='" + ((Button)sender).Text + "' AND DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
-                            SqlDataReader dr = cmd.ExecuteReader();
+                            cmd = SQLBaglantisi.getCommand("SELECT ToplamHesap,KalanHesap FROM Adisyon WHERE MasaAdi='" + ((Button)sender).Text + "' AND DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND AcikMi=1");
+                            dr = cmd.ExecuteReader();
                             dr.Read();
                             toplamHesap = dr.GetDecimal(0);
                             kalanHesap = dr.GetDecimal(1);
 
+                            cmd.Connection.Close();
+                            cmd.Connection.Dispose();
+
                             siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi, true, toplamHesap, kalanHesap);//burada masa numarasını da yolla
                             siparisForm.ShowDialog();
+                        }
+
+                        if(siparisForm.masaAcikMi2 != "")
+                        {
+                            Button tablebutton = tablePanel.Controls.Find(siparisForm.masaAcikMi2, false)[0] as Button;
+                            tablebutton.ForeColor = Color.White;
+                            tablebutton.BackColor = Color.Firebrick;
                         }
 
                         if (siparisForm.masaAcikMi)
@@ -116,7 +179,7 @@ namespace ROPv1
                                     break;
                                 default:
                                     break;
-                            }
+                            }                            
                         }
                         else
                         {
@@ -191,21 +254,17 @@ namespace ROPv1
                     }
                 }
 
-                List<string> acikMasalar = new List<string>();
-
-                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND AcikMi=1");
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    acikMasalar.Add(dr.GetString(0));
-                }
-
-                for (int i = 0; i < acikMasalar.Count; i++)
-                {
-                    Button tablebutton = tablePanel.Controls.Find(acikMasalar[i], false)[0] as Button;
+                    Button tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
                     tablebutton.BackColor = Color.Firebrick;
                     tablebutton.ForeColor = Color.White;
-                }      
+                }
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
 
                 for (int j = 6; j > 0; j--)
                 {
@@ -433,21 +492,18 @@ namespace ROPv1
                     }
                 }
 
-                List<string> acikMasalar = new List<string>();
 
-                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND acikMi=1");
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND AcikMi=1");
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    acikMasalar.Add(dr.GetString(0));
-                }
-
-                for (int i = 0; i < acikMasalar.Count; i++)
-                {
-                    Button tablebutton = tablePanel.Controls.Find(acikMasalar[i], false)[0] as Button;
+                    Button tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
                     tablebutton.BackColor = Color.Firebrick;
                     tablebutton.ForeColor = Color.White;
-                }      
+                }
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
 
                 for (int j = 6; j > 0; j--)
                 {
