@@ -239,7 +239,7 @@ namespace ROPv1
             }
             else
             {
-                using (KontrolFormu dialog = new KontrolFormu("Aynı departman ismi sistemde kayıtlıdır. Lütfen başka bir isimle departman ekleyiniz!", false))
+                using (KontrolFormu dialog = new KontrolFormu("Aynı departman ismi sistemde kayıtlıdır. Lütfen başka bir isimle departman ekleyiniz", false))
                 {
                     dialog.ShowDialog();
                 }
