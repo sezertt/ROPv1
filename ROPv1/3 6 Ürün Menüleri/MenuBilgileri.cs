@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ROPv1
 {
-    public class UrunMenuBilgileri
+    public class MenuBilgileri
     {
         public string menuAdi;
         public double menuFiyati;
-        public List<UrunOzellikleri> urun; 
+        public List<MenuUrunuBilgisi> urun; 
         
-        public UrunMenuBilgileri()
+        public MenuBilgileri()
         {
-            urun = new List<UrunOzellikleri>();
+            urun = new List<MenuUrunuBilgisi>();
         }
     }
     

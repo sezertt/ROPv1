@@ -50,6 +50,8 @@
             // 
             // treeMenununUrunler
             // 
+            this.treeMenununUrunler.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeMenununUrunler.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.treeMenununUrunler.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.treeMenununUrunler.FullRowSelect = true;
@@ -269,6 +271,7 @@
             this.keyboardcontrol1.Name = "keyboardcontrol1";
             this.keyboardcontrol1.Size = new System.Drawing.Size(993, 282);
             this.keyboardcontrol1.TabIndex = 46;
+            this.keyboardcontrol1.UserKeyPressed += new KeyboardClassLibrary.KeyboardDelegate(this.keyboardcontrol1_UserKeyPressed);
             // 
             // buttonAddNewMenu
             // 

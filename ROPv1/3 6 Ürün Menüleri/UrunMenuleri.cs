@@ -15,13 +15,15 @@ namespace ROPv1
 {
     public partial class UrunMenuleri : UserControl
     {
-        List<UrunOzellikleri> UrunListesi = new List<UrunOzellikleri>();
-        List<UrunMenuBilgileri> UrunMenuListesi = new List<UrunMenuBilgileri>();
-        UrunMenuBilgileri yeniMenu = new UrunMenuBilgileri();
+        List<UrunOzellikleri> UrunListesi = new List<UrunOzellikleri>(); // Tüm ürünlerin listesi
+        List<MenuBilgileri> UrunMenuListesi = new List<MenuBilgileri>(); // Menülerin listesi
+        MenuBilgileri yeniMenu = new MenuBilgileri(); // Tek Menü
+
         public UrunMenuleri()
         {
             InitializeComponent();
         }
+
         internal static class NativeMethods
         {
             //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
@@ -39,13 +41,16 @@ namespace ROPv1
         {
             SendKeys.Send(e.KeyboardKeyPressed);
         }
+
+        //Form Load
         private void UrunMenuleri_Load(object sender, EventArgs e)
         {
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
-            UrunMenuBilgileri[] info = new UrunMenuBilgileri[1];
+            MenuBilgileri[] info = new MenuBilgileri[1];
             UrunOzellikleri[] info2 = new UrunOzellikleri[1];
-            if(File.Exists("Urunler.xml"))
+
+            if (File.Exists("Urunler.xml"))
             {
                 XmlLoad<UrunOzellikleri> loadInfo2 = new XmlLoad<UrunOzellikleri>();
                 info2 = loadInfo2.LoadRestoran("Urunler.xml");
@@ -60,9 +65,10 @@ namespace ROPv1
                     }
                 }
             }
+
             if (File.Exists("UrunMenuleri.xml"))
             {
-                XmlLoad<UrunMenuBilgileri> loadInfo = new XmlLoad<UrunMenuBilgileri>();
+                XmlLoad<MenuBilgileri> loadInfo = new XmlLoad<MenuBilgileri>();
                 info = loadInfo.LoadRestoran("UrunMenuleri.xml");
                 UrunMenuListesi.AddRange(info);
                 MenuListesiGoster();
@@ -75,7 +81,18 @@ namespace ROPv1
                     }
                 }
             }
+
+            if(treeMenuler.Nodes.Count > 0)
+            {
+                treeMenuler.SelectedNode = treeMenuler.Nodes[0];
+            }
+            else
+            {
+                newUrunMenuForm.Enabled = false;
+            }
         }
+
+        //treeMenuler-En Soldaki Menü Treesine menü adlarını ekler
         private void MenuListesiGoster()
         {
             for (int i = 0; i < UrunMenuListesi.Count; i++)
@@ -83,17 +100,20 @@ namespace ROPv1
                 treeMenuler.Nodes.Add(UrunMenuListesi[i].menuAdi);
             }
         }
+
+        //treeUrunler-En Sağdaki Ürün Treesine ürün adlarını ekler
         private void UrunListesiGoster()
         {
-            for (int i = 0; i <UrunListesi.Count ; i++)
+            for (int i = 0; i < UrunListesi.Count; i++)
             {
                 for (int j = 0; j < UrunListesi[i].urunAdi.Count; j++)
-			    {
-			    treeUrunler.Nodes.Add(UrunListesi[i].urunAdi[j]);
-			    }
+                {
+                    treeUrunler.Nodes.Add(UrunListesi[i].urunAdi[j]);
+                }
             }
         }
 
+        //Yeni Menü Ekle butonuna basıldığında gerekli ayarlamaları yapar
         private void buttonAddNewMenu_Click(object sender, EventArgs e)
         {
 
@@ -105,7 +125,6 @@ namespace ROPv1
                 treeMenununUrunler.Nodes.Clear();
                 buttonDeleteMenu.Visible = false;
                 buttonCancel.Visible = true;
-                
             }
 
             if (!newUrunMenuForm.Enabled)
@@ -114,10 +133,10 @@ namespace ROPv1
                 buttonDeleteMenu.Visible = false;
                 buttonCancel.Visible = true;
             }
-
             textboxMenuName.Focus();
         }
 
+        //Yeni menü eklemeyi iptal eder
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             buttonDeleteMenu.Visible = true;
@@ -145,9 +164,10 @@ namespace ROPv1
             yeniMenu.urun.Clear();
         }
 
+        //Yeni menü eklemeyi veya menü düzenlemeyi kaydeder
         private void buttonSaveMenu_Click(object sender, EventArgs e)
         {
-            if(textboxMenuName.Text==""||treeMenununUrunler.Nodes.Count<1)
+            if (textboxMenuName.Text == "" || treeMenununUrunler.Nodes.Count < 1)
             {
                 using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
                 {
@@ -156,13 +176,13 @@ namespace ROPv1
                 textboxMenuName.Focus();
                 return;
             }
-            if(newUrunMenuForm.Text=="Yeni Menü")
+            if (newUrunMenuForm.Text == "Yeni Menü")
             {
                 bool varmi = false, ayniMi = false;
                 int bulunanindis = 0;
                 for (int i = 0; i < UrunMenuListesi.Count; i++)
                 {
-                    if (string.Equals(UrunMenuListesi[i].menuAdi, textboxMenuName.Text, StringComparison.CurrentCultureIgnoreCase) && UrunMenuListesi[i].menuFiyati != Convert.ToDouble(textboxFiyat.Text)) 
+                    if (string.Equals(UrunMenuListesi[i].menuAdi, textboxMenuName.Text, StringComparison.CurrentCultureIgnoreCase) && UrunMenuListesi[i].menuFiyati != Convert.ToDouble(textboxFiyat.Text))
                     {
                         ayniMi = true;
                         bulunanindis = i;
@@ -213,11 +233,11 @@ namespace ROPv1
                 }
                 newUrunMenuForm.Text = textboxMenuName.Text;
 
-                UrunMenuBilgileri yeniurun = new UrunMenuBilgileri();
+                MenuBilgileri yeniurun = new MenuBilgileri();
 
                 yeniurun.menuAdi = textboxMenuName.Text;
                 yeniurun.menuFiyati = Convert.ToDouble(textboxFiyat.Text);
-                yeniurun.urun=yeniMenu.urun;
+                yeniurun.urun = yeniMenu.urun;
                 UrunMenuListesi.Add(yeniurun);
                 XmlSave.SaveRestoran(UrunMenuListesi, "UrunMenuleri.xml");
 
@@ -289,8 +309,8 @@ namespace ROPv1
                     }
                 }
                 UrunMenuListesi[treeMenuler.SelectedNode.Index].menuAdi = textboxMenuName.Text;
-                UrunMenuListesi[treeMenuler.SelectedNode.Index].menuFiyati =Convert.ToDouble(textboxFiyat.Text);
-                UrunMenuListesi[treeMenuler.SelectedNode.Index].urun=yeniMenu.urun;
+                UrunMenuListesi[treeMenuler.SelectedNode.Index].menuFiyati = Convert.ToDouble(textboxFiyat.Text);
+                UrunMenuListesi[treeMenuler.SelectedNode.Index].urun = yeniMenu.urun;
                 XmlSave.SaveRestoran(UrunMenuListesi, "UrunMenuleri.xml");
                 newUrunMenuForm.Text = textboxMenuName.Text;
 
@@ -310,14 +330,17 @@ namespace ROPv1
             }
         }
 
+        //Menüye Sağdaki Ürün treesinde seçili olan ürünü ekler
         private void buttonAddUrun_Click(object sender, EventArgs e)
         {
+            MenuUrunuBilgisi yeniUrun = new MenuUrunuBilgisi();
+
             treeMenununUrunler.Nodes.Add(treeUrunler.SelectedNode.Text);
-            int donecek, aradigim = treeUrunler.SelectedNode.Index+1,index=0;
+            int donecek, aradigim = treeUrunler.SelectedNode.Index + 1, index = 0;
             for (int i = 0; i < UrunListesi.Count; i++)
             {
                 donecek = UrunListesi[i].porsiyonFiyati.Count;
-                if(UrunListesi[i].porsiyonFiyati.Count>=aradigim)
+                if (UrunListesi[i].porsiyonFiyati.Count >= aradigim)
                 {
                     index = i;
                     break;
@@ -326,15 +349,22 @@ namespace ROPv1
             }
             if (textboxFiyat.Text == "")
             {
-                textboxFiyat.Text = UrunListesi[index].porsiyonFiyati[aradigim-1];
+                textboxFiyat.Text = UrunListesi[index].porsiyonFiyati[aradigim - 1];
             }
             else
             {
                 double fiyat = Convert.ToDouble(textboxFiyat.Text);
-                fiyat += Convert.ToDouble(UrunListesi[index].porsiyonFiyati[aradigim-1]);
+                fiyat += Convert.ToDouble(UrunListesi[index].porsiyonFiyati[aradigim - 1]);
                 textboxFiyat.Text = fiyat.ToString();
             }
-            yeniMenu.urun.Add(UrunListesi[treeUrunler.SelectedNode.Index]);
+
+            yeniUrun.porsiyonFiyati = UrunListesi[index].porsiyonFiyati[aradigim - 1];
+            yeniUrun.urunAdi = UrunListesi[index].urunAdi[aradigim - 1];
+            yeniUrun.urunKategorisi = UrunListesi[index].urunKategorisi[aradigim - 1];
+            yeniUrun.urunKDV = UrunListesi[index].urunKDV[aradigim - 1];
+
+            yeniMenu.urun.Add(yeniUrun);
+
             //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
             foreach (TreeNode node in treeMenununUrunler.Nodes)
             {
@@ -343,19 +373,19 @@ namespace ROPv1
                     treeMenununUrunler.Font = new Font(treeMenununUrunler.Font.FontFamily, treeMenununUrunler.Font.Size - 0.5f, treeMenununUrunler.Font.Style);
                 }
             }
-
-            
         }
+
+        //Menüden 2. treedeki (treeMenununUrunler) seçili ürünü siler
         private void buttonDeleteUrun_Click(object sender, EventArgs e)
         {
             double fiyat = Convert.ToDouble(textboxFiyat.Text);
-            fiyat -=Convert.ToDouble( yeniMenu.urun[0].porsiyonFiyati[treeMenununUrunler.SelectedNode.Index]);
+            fiyat -= Convert.ToDouble(yeniMenu.urun[treeMenununUrunler.SelectedNode.Index].porsiyonFiyati);
             yeniMenu.urun.RemoveAt(treeMenununUrunler.SelectedNode.Index);
             treeMenununUrunler.Nodes.Remove(treeMenununUrunler.SelectedNode);
-
             textboxFiyat.Text = fiyat.ToString();
         }
-        //arama methodu
+
+        //arama metodu
         private void textboxUrunAra_TextChanged(object sender, EventArgs e)
         {
             treeUrunler.Nodes.Clear();
@@ -365,16 +395,17 @@ namespace ROPv1
                 for (int j = 0; j < UrunListesi[i].urunAdi.Count; j++)
                 {
                     if (UrunListesi[i].urunAdi[j].Length < kac)
-                    continue;
+                        continue;
                     if (string.Equals(UrunListesi[i].urunAdi[j].Substring(0, kac), textboxUrunAra.Text.Substring(0, kac), StringComparison.CurrentCultureIgnoreCase))
                     {
-                    treeUrunler.Nodes.Add(UrunListesi[i].urunAdi[j]);
-                    }  
-          
+                        treeUrunler.Nodes.Add(UrunListesi[i].urunAdi[j]);
+                    }
+
                 }
             }
         }
 
+        //Soldaki treede (treeMenuler) seçili menüyü siler
         private void buttonDeleteMenu_Click(object sender, EventArgs e)
         {
             DialogResult eminMisiniz;
@@ -389,7 +420,7 @@ namespace ROPv1
                 //listeden menüyü siliyoruz
                 UrunMenuListesi.RemoveAt(treeMenuler.SelectedNode.Index);
                 XmlSave.SaveRestoran(UrunMenuListesi, "Urunler.xml");
-                int selectedPlace=treeMenuler.SelectedNode.Index;
+                int selectedPlace = treeMenuler.SelectedNode.Index;
                 treeMenuler.SelectedNode.Remove();
 
                 if (treeMenuler.Nodes.Count > 0)
@@ -406,11 +437,11 @@ namespace ROPv1
             }
         }
 
+        //Soldaki treede (treeMenuler) seçili menü bilgilerini textboxlara atar
         private void treeMenuler_AfterSelect(object sender, TreeViewEventArgs e)
         {
             textboxMenuName.Text = UrunMenuListesi[treeMenuler.SelectedNode.Index].menuAdi;
             textboxFiyat.Text = UrunMenuListesi[treeMenuler.SelectedNode.Index].menuFiyati.ToString();
-
         }
     }
 }
