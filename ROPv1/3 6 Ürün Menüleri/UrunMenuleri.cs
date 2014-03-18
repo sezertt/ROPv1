@@ -17,7 +17,7 @@ namespace ROPv1
     {
         List<UrunOzellikleri> UrunListesi = new List<UrunOzellikleri>();
         List<UrunMenuBilgileri> UrunMenuListesi = new List<UrunMenuBilgileri>();
-        UrunMenuBilgileri yeniUrun = new UrunMenuBilgileri();
+        UrunMenuBilgileri yeniMenu = new UrunMenuBilgileri();
         public UrunMenuleri()
         {
             InitializeComponent();
@@ -142,7 +142,7 @@ namespace ROPv1
 
             else
                 newUrunMenuForm.Enabled = false;
-            yeniUrun.urun.Clear();
+            yeniMenu.urun.Clear();
         }
 
         private void buttonSaveMenu_Click(object sender, EventArgs e)
@@ -217,7 +217,7 @@ namespace ROPv1
 
                 yeniurun.menuAdi = textboxMenuName.Text;
                 yeniurun.menuFiyati = Convert.ToDouble(textboxFiyat.Text);
-                yeniurun.urun=yeniUrun.urun;
+                yeniurun.urun=yeniMenu.urun;
                 UrunMenuListesi.Add(yeniurun);
                 XmlSave.SaveRestoran(UrunMenuListesi, "UrunMenuleri.xml");
 
@@ -290,7 +290,7 @@ namespace ROPv1
                 }
                 UrunMenuListesi[treeMenuler.SelectedNode.Index].menuAdi = textboxMenuName.Text;
                 UrunMenuListesi[treeMenuler.SelectedNode.Index].menuFiyati =Convert.ToDouble(textboxFiyat.Text);
-                UrunMenuListesi[treeMenuler.SelectedNode.Index].urun=yeniUrun.urun;
+                UrunMenuListesi[treeMenuler.SelectedNode.Index].urun=yeniMenu.urun;
                 XmlSave.SaveRestoran(UrunMenuListesi, "UrunMenuleri.xml");
                 newUrunMenuForm.Text = textboxMenuName.Text;
 
@@ -299,7 +299,7 @@ namespace ROPv1
                     dialog.ShowDialog();
                 }
             }
-            yeniUrun.urun.Clear();
+            yeniMenu.urun.Clear();
             //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
             foreach (TreeNode node in treeMenuler.Nodes)
             {
@@ -334,7 +334,7 @@ namespace ROPv1
                 fiyat += Convert.ToDouble(UrunListesi[index].porsiyonFiyati[aradigim-1]);
                 textboxFiyat.Text = fiyat.ToString();
             }
-            yeniUrun.urun.Add(UrunListesi[treeUrunler.SelectedNode.Index]);
+            yeniMenu.urun.Add(UrunListesi[treeUrunler.SelectedNode.Index]);
             //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
             foreach (TreeNode node in treeMenununUrunler.Nodes)
             {
@@ -349,8 +349,8 @@ namespace ROPv1
         private void buttonDeleteUrun_Click(object sender, EventArgs e)
         {
             double fiyat = Convert.ToDouble(textboxFiyat.Text);
-            fiyat -=Convert.ToDouble( yeniUrun.urun[0].porsiyonFiyati[treeMenununUrunler.SelectedNode.Index]);
-            yeniUrun.urun.RemoveAt(treeMenununUrunler.SelectedNode.Index);
+            fiyat -=Convert.ToDouble( yeniMenu.urun[0].porsiyonFiyati[treeMenununUrunler.SelectedNode.Index]);
+            yeniMenu.urun.RemoveAt(treeMenununUrunler.SelectedNode.Index);
             treeMenununUrunler.Nodes.Remove(treeMenununUrunler.SelectedNode);
 
             textboxFiyat.Text = fiyat.ToString();
