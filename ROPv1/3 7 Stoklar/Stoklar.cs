@@ -384,7 +384,7 @@ namespace ROPv1
                 if (stokListesi[i].StokAdi.Length < kac)
                     continue;
 
-                if (textBox1.Text.Substring(0, kac) == stokListesi[i].StokAdi.Substring(0, kac))
+                if (string.Equals(textBox1.Text.Substring(0, kac), stokListesi[i].StokAdi.Substring(0, kac), StringComparison.CurrentCultureIgnoreCase))
                 {
                     myListUrunler.Items.Add(stokListesi[i].StokAdi);
                     myListUrunler.Items[myListUrunler.Items.Count - 1].SubItems.Add(stokListesi[i].StokMiktari.ToString());

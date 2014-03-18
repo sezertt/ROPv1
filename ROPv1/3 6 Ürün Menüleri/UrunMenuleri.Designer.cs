@@ -35,19 +35,21 @@
             this.buttonAddUrun = new System.Windows.Forms.Button();
             this.treeUrunler = new System.Windows.Forms.TreeView();
             this.newUrunMenuForm = new System.Windows.Forms.GroupBox();
+            this.textboxFiyat = new System.Windows.Forms.TextBox();
+            this.lblFiyat = new System.Windows.Forms.Label();
             this.textboxMenuName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.treeMenuler = new System.Windows.Forms.TreeView();
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.buttonAddNewMenu = new System.Windows.Forms.Button();
+            this.textboxUrunAra = new System.Windows.Forms.TextBox();
+            this.lblUrunAra = new System.Windows.Forms.Label();
             this.newUrunMenuForm.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeMenununUrunler
             // 
-            this.treeMenununUrunler.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeMenununUrunler.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.treeMenununUrunler.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.treeMenununUrunler.FullRowSelect = true;
@@ -56,11 +58,11 @@
             this.treeMenununUrunler.Indent = 8;
             this.treeMenununUrunler.ItemHeight = 35;
             this.treeMenununUrunler.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
-            this.treeMenununUrunler.Location = new System.Drawing.Point(298, 5);
+            this.treeMenununUrunler.Location = new System.Drawing.Point(251, 5);
             this.treeMenununUrunler.Name = "treeMenununUrunler";
             this.treeMenununUrunler.ShowLines = false;
             this.treeMenununUrunler.ShowRootLines = false;
-            this.treeMenununUrunler.Size = new System.Drawing.Size(200, 333);
+            this.treeMenununUrunler.Size = new System.Drawing.Size(224, 333);
             this.treeMenununUrunler.TabIndex = 52;
             // 
             // buttonDeleteUrun
@@ -71,13 +73,14 @@
             this.buttonDeleteUrun.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteUrun.Image = global::ROPv1.Properties.Resources.righticon;
             this.buttonDeleteUrun.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonDeleteUrun.Location = new System.Drawing.Point(6, 158);
+            this.buttonDeleteUrun.Location = new System.Drawing.Point(6, 138);
             this.buttonDeleteUrun.Name = "buttonDeleteUrun";
-            this.buttonDeleteUrun.Size = new System.Drawing.Size(266, 60);
+            this.buttonDeleteUrun.Size = new System.Drawing.Size(266, 40);
             this.buttonDeleteUrun.TabIndex = 43;
             this.buttonDeleteUrun.TabStop = false;
             this.buttonDeleteUrun.Text = "   Menüden Çıkar   ";
             this.buttonDeleteUrun.UseVisualStyleBackColor = false;
+            this.buttonDeleteUrun.Click += new System.EventHandler(this.buttonDeleteUrun_Click);
             // 
             // buttonSaveMenu
             // 
@@ -87,13 +90,14 @@
             this.buttonSaveMenu.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSaveMenu.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonSaveMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSaveMenu.Location = new System.Drawing.Point(162, 224);
+            this.buttonSaveMenu.Location = new System.Drawing.Point(162, 184);
             this.buttonSaveMenu.Name = "buttonSaveMenu";
             this.buttonSaveMenu.Size = new System.Drawing.Size(110, 45);
             this.buttonSaveMenu.TabIndex = 5;
             this.buttonSaveMenu.Text = "Kaydet";
             this.buttonSaveMenu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonSaveMenu.UseVisualStyleBackColor = false;
+            this.buttonSaveMenu.Click += new System.EventHandler(this.buttonSaveMenu_Click);
             // 
             // buttonDeleteMenu
             // 
@@ -103,7 +107,7 @@
             this.buttonDeleteMenu.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteMenu.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonDeleteMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteMenu.Location = new System.Drawing.Point(6, 224);
+            this.buttonDeleteMenu.Location = new System.Drawing.Point(6, 184);
             this.buttonDeleteMenu.Name = "buttonDeleteMenu";
             this.buttonDeleteMenu.Size = new System.Drawing.Size(124, 45);
             this.buttonDeleteMenu.TabIndex = 31;
@@ -111,6 +115,7 @@
             this.buttonDeleteMenu.Text = "Menüyü Sil";
             this.buttonDeleteMenu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonDeleteMenu.UseVisualStyleBackColor = false;
+            this.buttonDeleteMenu.Click += new System.EventHandler(this.buttonDeleteMenu_Click);
             // 
             // buttonAddUrun
             // 
@@ -122,11 +127,12 @@
             this.buttonAddUrun.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonAddUrun.Location = new System.Drawing.Point(6, 92);
             this.buttonAddUrun.Name = "buttonAddUrun";
-            this.buttonAddUrun.Size = new System.Drawing.Size(266, 60);
+            this.buttonAddUrun.Size = new System.Drawing.Size(266, 40);
             this.buttonAddUrun.TabIndex = 46;
             this.buttonAddUrun.TabStop = false;
             this.buttonAddUrun.Text = "Menüye Ekle";
             this.buttonAddUrun.UseVisualStyleBackColor = false;
+            this.buttonAddUrun.Click += new System.EventHandler(this.buttonAddUrun_Click);
             // 
             // treeUrunler
             // 
@@ -140,17 +146,19 @@
             this.treeUrunler.Indent = 8;
             this.treeUrunler.ItemHeight = 35;
             this.treeUrunler.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
-            this.treeUrunler.Location = new System.Drawing.Point(788, 5);
+            this.treeUrunler.Location = new System.Drawing.Point(765, 43);
             this.treeUrunler.Name = "treeUrunler";
             this.treeUrunler.ShowLines = false;
             this.treeUrunler.ShowRootLines = false;
-            this.treeUrunler.Size = new System.Drawing.Size(200, 333);
+            this.treeUrunler.Size = new System.Drawing.Size(223, 295);
             this.treeUrunler.TabIndex = 49;
             // 
             // newUrunMenuForm
             // 
             this.newUrunMenuForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.newUrunMenuForm.BackColor = System.Drawing.Color.White;
+            this.newUrunMenuForm.Controls.Add(this.textboxFiyat);
+            this.newUrunMenuForm.Controls.Add(this.lblFiyat);
             this.newUrunMenuForm.Controls.Add(this.buttonAddUrun);
             this.newUrunMenuForm.Controls.Add(this.buttonDeleteUrun);
             this.newUrunMenuForm.Controls.Add(this.textboxMenuName);
@@ -160,12 +168,35 @@
             this.newUrunMenuForm.Controls.Add(this.buttonCancel);
             this.newUrunMenuForm.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.newUrunMenuForm.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.newUrunMenuForm.Location = new System.Drawing.Point(504, 5);
+            this.newUrunMenuForm.Location = new System.Drawing.Point(481, 5);
             this.newUrunMenuForm.Name = "newUrunMenuForm";
-            this.newUrunMenuForm.Size = new System.Drawing.Size(278, 275);
+            this.newUrunMenuForm.Size = new System.Drawing.Size(278, 284);
             this.newUrunMenuForm.TabIndex = 47;
             this.newUrunMenuForm.TabStop = false;
             this.newUrunMenuForm.Text = "Yeni Menü";
+            // 
+            // textboxFiyat
+            // 
+            this.textboxFiyat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxFiyat.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.textboxFiyat.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.textboxFiyat.Location = new System.Drawing.Point(77, 239);
+            this.textboxFiyat.Name = "textboxFiyat";
+            this.textboxFiyat.Size = new System.Drawing.Size(195, 32);
+            this.textboxFiyat.TabIndex = 48;
+            this.textboxFiyat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lblFiyat
+            // 
+            this.lblFiyat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFiyat.AutoSize = true;
+            this.lblFiyat.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblFiyat.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lblFiyat.Location = new System.Drawing.Point(6, 242);
+            this.lblFiyat.Name = "lblFiyat";
+            this.lblFiyat.Size = new System.Drawing.Size(65, 24);
+            this.lblFiyat.TabIndex = 47;
+            this.lblFiyat.Text = "Fiyat:";
             // 
             // textboxMenuName
             // 
@@ -197,7 +228,7 @@
             this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonCancel.Location = new System.Drawing.Point(6, 224);
+            this.buttonCancel.Location = new System.Drawing.Point(6, 185);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(110, 44);
             this.buttonCancel.TabIndex = 40;
@@ -205,6 +236,7 @@
             this.buttonCancel.Text = "İptal Et  ";
             this.buttonCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonCancel.UseVisualStyleBackColor = false;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // treeMenuler
             // 
@@ -219,12 +251,13 @@
             this.treeMenuler.Indent = 8;
             this.treeMenuler.ItemHeight = 35;
             this.treeMenuler.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
-            this.treeMenuler.Location = new System.Drawing.Point(5, 5);
+            this.treeMenuler.Location = new System.Drawing.Point(3, 5);
             this.treeMenuler.Name = "treeMenuler";
             this.treeMenuler.ShowLines = false;
             this.treeMenuler.ShowRootLines = false;
-            this.treeMenuler.Size = new System.Drawing.Size(287, 333);
+            this.treeMenuler.Size = new System.Drawing.Size(242, 333);
             this.treeMenuler.TabIndex = 48;
+            this.treeMenuler.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeMenuler_AfterSelect);
             // 
             // keyboardcontrol1
             // 
@@ -245,18 +278,44 @@
             this.buttonAddNewMenu.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonAddNewMenu.Image = global::ROPv1.Properties.Resources.add;
             this.buttonAddNewMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddNewMenu.Location = new System.Drawing.Point(504, 286);
+            this.buttonAddNewMenu.Location = new System.Drawing.Point(481, 295);
             this.buttonAddNewMenu.Name = "buttonAddNewMenu";
-            this.buttonAddNewMenu.Size = new System.Drawing.Size(278, 52);
+            this.buttonAddNewMenu.Size = new System.Drawing.Size(278, 43);
             this.buttonAddNewMenu.TabIndex = 45;
             this.buttonAddNewMenu.TabStop = false;
             this.buttonAddNewMenu.Text = "     Yeni Menü Oluştur";
             this.buttonAddNewMenu.UseVisualStyleBackColor = false;
+            this.buttonAddNewMenu.Click += new System.EventHandler(this.buttonAddNewMenu_Click);
+            // 
+            // textboxUrunAra
+            // 
+            this.textboxUrunAra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxUrunAra.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.textboxUrunAra.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.textboxUrunAra.Location = new System.Drawing.Point(847, 5);
+            this.textboxUrunAra.Name = "textboxUrunAra";
+            this.textboxUrunAra.Size = new System.Drawing.Size(141, 32);
+            this.textboxUrunAra.TabIndex = 53;
+            this.textboxUrunAra.TextChanged += new System.EventHandler(this.textboxUrunAra_TextChanged);
+            // 
+            // lblUrunAra
+            // 
+            this.lblUrunAra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblUrunAra.AutoSize = true;
+            this.lblUrunAra.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
+            this.lblUrunAra.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lblUrunAra.Location = new System.Drawing.Point(761, 12);
+            this.lblUrunAra.Name = "lblUrunAra";
+            this.lblUrunAra.Size = new System.Drawing.Size(86, 21);
+            this.lblUrunAra.TabIndex = 54;
+            this.lblUrunAra.Text = "Ürün Ara";
             // 
             // UrunMenuleri
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblUrunAra);
+            this.Controls.Add(this.textboxUrunAra);
             this.Controls.Add(this.treeMenununUrunler);
             this.Controls.Add(this.treeUrunler);
             this.Controls.Add(this.newUrunMenuForm);
@@ -265,9 +324,11 @@
             this.Controls.Add(this.buttonAddNewMenu);
             this.Name = "UrunMenuleri";
             this.Size = new System.Drawing.Size(993, 626);
+            this.Load += new System.EventHandler(this.UrunMenuleri_Load);
             this.newUrunMenuForm.ResumeLayout(false);
             this.newUrunMenuForm.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -286,6 +347,10 @@
         private System.Windows.Forms.TreeView treeMenuler;
         private KeyboardClassLibrary.Keyboardcontrol keyboardcontrol1;
         private System.Windows.Forms.Button buttonAddNewMenu;
+        private System.Windows.Forms.TextBox textboxFiyat;
+        private System.Windows.Forms.Label lblFiyat;
+        private System.Windows.Forms.TextBox textboxUrunAra;
+        private System.Windows.Forms.Label lblUrunAra;
 
 
     }
