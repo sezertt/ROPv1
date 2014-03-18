@@ -173,60 +173,79 @@ namespace ROPv1
                 }
                 return;
             }
-
-            //Yeni departmanı kaydet tuşu. ekle tuşuna basıp bilgileri girdikten sonra kaydete basıyoruz önce girilen bilgilerin doğruluğu
-            //kontrol edilir sonra departmanın treeviewdaki yeri + ayarlardaki yeri tag bilgisi olarak eklenir
-            //daha sonra comboboxlardaki bilgiler settingse ve ana ekrandaki comboboxlara aktarılır
-            if (newDepartmentForm.Text == "Yeni Departman")
+            bool varmi = false;
+            for (int i = 0; i < restoranListesi.Count; i++)
             {
-                treeDepartman.Nodes.Add(comboNewDepName.Text);
-
-                Restoran newDepartman = new Restoran();
-                newDepartman.departmanAdi = comboNewDepName.Text;
-                newDepartman.departmanMenusu = comboNewDepMenu.Text;
-                newDepartman.departmanEkrani = comboNewDepView.Text;
-
-                newDepartmentForm.Text = comboNewDepName.Text;
-
-                restoranListesi.Add(newDepartman);
-
-                XmlSave.SaveRestoran(restoranListesi, "restoran.xml");
-
-                treeDepartman.SelectedNode = treeDepartman.Nodes[treeDepartman.Nodes.Count - 1];
-                treeDepartman.Focus();
-
-                buttonDeleteDepartment.Visible = true;
-                buttonCancel.Visible = false;
-
-                if (treeDepartman.Nodes.Count > 1)
-                    buttonDeleteDepartment.Enabled = true;
-                if (treeDepartman.Nodes.Count > 9)
-                    buttonAddDepartment.Enabled = false;
-
-                using (KontrolFormu dialog = new KontrolFormu("Yeni Departman Bilgileri Kaydedilmiştir", false))
+                if (string.Equals(restoranListesi[i].departmanAdi, comboNewDepName.Text, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    dialog.ShowDialog();
+                    varmi = true;
+                    break;
+                }
+            }
+            if (!varmi)
+            {
+                //Yeni departmanı kaydet tuşu. ekle tuşuna basıp bilgileri girdikten sonra kaydete basıyoruz önce girilen bilgilerin doğruluğu
+                //kontrol edilir sonra departmanın treeviewdaki yeri + ayarlardaki yeri tag bilgisi olarak eklenir
+                //daha sonra comboboxlardaki bilgiler settingse ve ana ekrandaki comboboxlara aktarılır
+                if (newDepartmentForm.Text == "Yeni Departman")
+                {
+                    treeDepartman.Nodes.Add(comboNewDepName.Text);
+
+                    Restoran newDepartman = new Restoran();
+                    newDepartman.departmanAdi = comboNewDepName.Text;
+                    newDepartman.departmanMenusu = comboNewDepMenu.Text;
+                    newDepartman.departmanEkrani = comboNewDepView.Text;
+
+                    newDepartmentForm.Text = comboNewDepName.Text;
+
+                    restoranListesi.Add(newDepartman);
+
+                    XmlSave.SaveRestoran(restoranListesi, "restoran.xml");
+
+                    treeDepartman.SelectedNode = treeDepartman.Nodes[treeDepartman.Nodes.Count - 1];
+                    treeDepartman.Focus();
+
+                    buttonDeleteDepartment.Visible = true;
+                    buttonCancel.Visible = false;
+
+                    if (treeDepartman.Nodes.Count > 1)
+                        buttonDeleteDepartment.Enabled = true;
+                    if (treeDepartman.Nodes.Count > 9)
+                        buttonAddDepartment.Enabled = false;
+
+                    using (KontrolFormu dialog = new KontrolFormu("Yeni Departman Bilgileri Kaydedilmiştir", false))
+                    {
+                        dialog.ShowDialog();
+                    }
+                }
+                else
+                {
+                    //Departmanda değişiklik yapıldıktan sonra basılan kaydet butonu.
+                    // Girilen bilgilerin doğruluğu kontrol edilir daha sonra comboboxlardaki bilgiler xmle aktarılır ve departman ismi treeviewda güncellenir.
+                    restoranListesi[treeDepartman.SelectedNode.Index].departmanAdi = comboNewDepName.Text;
+                    restoranListesi[treeDepartman.SelectedNode.Index].departmanMenusu = comboNewDepMenu.Text;
+                    restoranListesi[treeDepartman.SelectedNode.Index].departmanEkrani = comboNewDepView.Text;
+
+                    XmlSave.SaveRestoran(restoranListesi, "restoran.xml");
+
+                    treeDepartman.Nodes[treeDepartman.SelectedNode.Index].Text = comboNewDepName.Text;
+                    newDepartmentForm.Text = comboNewDepName.Text;
+
+                    using (KontrolFormu dialog = new KontrolFormu("Departman Bilgileri Güncellenmiştir", false))
+                    {
+                        dialog.ShowDialog();
+                    }
                 }
             }
             else
             {
-                //Departmanda değişiklik yapıldıktan sonra basılan kaydet butonu.
-                // Girilen bilgilerin doğruluğu kontrol edilir daha sonra comboboxlardaki bilgiler xmle aktarılır ve departman ismi treeviewda güncellenir.
-                restoranListesi[treeDepartman.SelectedNode.Index].departmanAdi = comboNewDepName.Text;
-                restoranListesi[treeDepartman.SelectedNode.Index].departmanMenusu = comboNewDepMenu.Text;
-                restoranListesi[treeDepartman.SelectedNode.Index].departmanEkrani = comboNewDepView.Text;
-
-                XmlSave.SaveRestoran(restoranListesi, "restoran.xml");
-
-                treeDepartman.Nodes[treeDepartman.SelectedNode.Index].Text = comboNewDepName.Text;
-                newDepartmentForm.Text = comboNewDepName.Text;
-
-                using (KontrolFormu dialog = new KontrolFormu("Departman Bilgileri Güncellenmiştir", false))
+                using (KontrolFormu dialog = new KontrolFormu("Aynı departman ismi sistemde kayıtlıdır. Lütfen başka bir isimle departman ekleyiniz!", false))
                 {
                     dialog.ShowDialog();
                 }
+                return;
             }
-
+            
             //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
             foreach (TreeNode node in treeDepartman.Nodes)
             {
