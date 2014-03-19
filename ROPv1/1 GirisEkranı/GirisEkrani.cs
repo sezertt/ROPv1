@@ -11,6 +11,9 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Globalization;
 
+using SPIA;
+using SPIA.Server;
+
 namespace ROPv1
 {
     public partial class GirisEkrani : Form
@@ -18,13 +21,11 @@ namespace ROPv1
         public WPF_UserControls.VerticalCenterTextBox userNameTextBox;
         public WPF_UserControls.VerticalCenterPasswordBox passwordTextBox;
 
-        bool closeOrShowAnotherForm = false;
-
         UItemp[] infoKullanici;
 
         public GirisEkrani()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         internal static class NativeMethods
@@ -50,8 +51,6 @@ namespace ROPv1
 
         private void girisButtonPressed(object sender, EventArgs e)
         {
-            closeOrShowAnotherForm = true;
-
             string[] username = new string[1];
             username[0] = userNameTextBox.getNameText(); //name lazım olduğunda al
             string password = passwordTextBox.getPasswordText(); //password lazım olduğunda al 
@@ -64,7 +63,7 @@ namespace ROPv1
                 ShowWaitForm();
                 AdminGirisFormu adminForm = new AdminGirisFormu();
                 adminForm.Show();
-                this.Close();
+                //this.Close();
             }
             else
             {
@@ -85,7 +84,7 @@ namespace ROPv1
                         ShowWaitForm();
                         AdminGirisFormu adminForm = new AdminGirisFormu();
                         adminForm.Show();
-                        this.Close();
+                        //this.Close();
                     }
                     else
                     {
@@ -102,12 +101,16 @@ namespace ROPv1
                         dialog.ShowDialog();
                     }
                 }
-            }            
+            }
+            userNameTextBox = new WPF_UserControls.VerticalCenterTextBox();
+            usernameBoxHost.Child = userNameTextBox;
+            passwordTextBox = new WPF_UserControls.VerticalCenterPasswordBox();
+            passwordBoxHost.Child = passwordTextBox;
         }
 
         private void siparisButtonPressed(object sender, EventArgs e)
         {
-            if (!File.Exists("restoran.xml") || !File.Exists("sonKullanici.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("sonKullanici.xml") || !File.Exists("urunler.xml"))
+            if (!File.Exists("restoran.xml") || !File.Exists("sonKullanici.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml"))
             {
                 using (KontrolFormu dialog = new KontrolFormu("Lütfen önce programı ayarları kullanarak yapılandırın", false))
                 {
@@ -117,13 +120,11 @@ namespace ROPv1
             }
 
             //sipariş ekranına geçilecek
-            closeOrShowAnotherForm = true;
-
             ShowWaitForm();
-           
+
             SiparisMasaFormu siparisForm = new SiparisMasaFormu();
             siparisForm.Show();
-            this.Close();
+            //this.Close();
         }
 
         private MyWaitForm _waitForm;
@@ -154,23 +155,26 @@ namespace ROPv1
             _waitForm.Close();
         }
 
-        private void closingGiris(object sender, FormClosingEventArgs e)
-        {
-            if (!closeOrShowAnotherForm) // eğer başka bir forma gidilmeyecekse uygulamayı kapat
-                Application.Exit();
-        }
-
         private void exitButtonPressed(object sender, EventArgs e)
         {
-             DialogResult eminMisiniz;
+            DialogResult eminMisiniz;
+            if (Properties.Settings.Default.Server == 2)//server
+            {
+                using (KontrolFormu dialog = new KontrolFormu("DİKKAT!\nÇıkarsanız Server kapatılacak!\nÇıkmak istediğinizden emin misiniz?", true))
+                {
+                    eminMisiniz = dialog.ShowDialog();
+                }
+            }
+            else
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Çıkmak istediğinizden emin misiniz?", true))
+                {
+                    eminMisiniz = dialog.ShowDialog();
+                }
+            }
 
-             using (KontrolFormu dialog = new KontrolFormu("Çıkmak istediğinizden emin misiniz?", true))
-             {
-                 eminMisiniz = dialog.ShowDialog();
-             }
-
-             if (eminMisiniz == DialogResult.Yes)
-                Application.Exit();
+            if (eminMisiniz == DialogResult.Yes)
+                this.Close();
         }
 
         private void timerSaat_Tick(object sender, EventArgs e)
@@ -189,8 +193,6 @@ namespace ROPv1
                 }
             }
             //mutfak ekranına geçilecek
-            closeOrShowAnotherForm = true;
-
             ShowWaitForm();
 
             //MutfakFormu mutfakForm = new MutfakFormu();
@@ -198,13 +200,13 @@ namespace ROPv1
             //this.Close();
         }
 
+        //Form Load
         private void GirisEkrani_Load(object sender, EventArgs e)
         {
             labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
             timerSaat.Start();
             labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
             labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
-
 
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
@@ -236,12 +238,21 @@ namespace ROPv1
             XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
             infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
 
-
             //wpflerimizi oluşturduğumuz elementhostların childına atıyoruz
             userNameTextBox = new WPF_UserControls.VerticalCenterTextBox();
             usernameBoxHost.Child = userNameTextBox;
             passwordTextBox = new WPF_UserControls.VerticalCenterPasswordBox();
-            passwordBoxHost.Child = passwordTextBox;
+            passwordBoxHost.Child = passwordTextBox;            
+        }
+
+        // IP - Port - Server Seçimi Ekranı 
+        private void GirisEkrani_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.Shift && e.KeyCode == Keys.D3) //Kısayol Tuşları ile ekranı açıyoruz ctrl+shift+3
+            {
+                PortFormu portFormu = new PortFormu();
+                portFormu.ShowDialog();
+            }
         }
     }
 }

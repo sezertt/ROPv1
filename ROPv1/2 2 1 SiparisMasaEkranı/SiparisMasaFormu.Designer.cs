@@ -207,11 +207,12 @@
             this.Controls.Add(this.exitButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "SiparisMasaFormu";
             this.Text = "SiparisFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CloseApp);
             this.Load += new System.EventHandler(this.SiparisMasaFormu_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SiparisMasaFormu_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

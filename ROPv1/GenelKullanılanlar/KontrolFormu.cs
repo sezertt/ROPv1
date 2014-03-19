@@ -46,5 +46,14 @@ namespace ROPv1
                 buttonTamam.Visible = false;
             }
         }
+
+        private void KontrolFormu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.Shift && e.KeyCode == Keys.D3) //Kısayol Tuşları ile ekranı açıyoruz ctrl+shift+3
+            {
+                PortFormu portFormu = new PortFormu();
+                portFormu.ShowDialog();
+            }
+        }
     }
 }

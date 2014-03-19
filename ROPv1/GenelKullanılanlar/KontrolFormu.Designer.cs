@@ -122,6 +122,7 @@
             this.Controls.Add(this.buttonNO);
             this.Controls.Add(this.buttonYES);
             this.ForeColor = System.Drawing.SystemColors.Window;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(490, 205);
             this.MinimizeBox = false;
@@ -132,6 +133,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KontrolFormu_KeyDown);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

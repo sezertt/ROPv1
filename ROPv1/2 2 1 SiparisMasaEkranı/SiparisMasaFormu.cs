@@ -15,7 +15,6 @@ namespace ROPv1
 {
     public partial class SiparisMasaFormu : Form
     {
-        bool closeOrShowAnotherForm = false;
 
         int hangiButtonSecili = 0;
 
@@ -307,12 +306,6 @@ namespace ROPv1
             }
         }
 
-        private void CloseApp(object sender, FormClosedEventArgs e)
-        {
-            if (!closeOrShowAnotherForm) // eğer başka bir forma gidilmeyecekse uygulamayı kapat
-                Application.Exit();
-        }
-
         private void exitPressed(object sender, EventArgs e)
         {
             DialogResult eminMisiniz;
@@ -324,9 +317,6 @@ namespace ROPv1
 
             if (eminMisiniz == DialogResult.Yes)
             {
-                closeOrShowAnotherForm = true; // başka forma geçilecek uygulamayı kapatma
-                GirisEkrani girisForm = new GirisEkrani();
-                girisForm.Show();
                 this.Close();
             }
         }
@@ -545,6 +535,15 @@ namespace ROPv1
                         break;
                 }
 
+            }
+        }
+
+        private void SiparisMasaFormu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.Shift && e.KeyCode == Keys.D3) //Kısayol Tuşları ile ekranı açıyoruz ctrl+shift+3
+            {
+                PortFormu portFormu = new PortFormu();
+                portFormu.ShowDialog();
             }
         }
     }

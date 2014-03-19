@@ -43,6 +43,7 @@
             this.labelTarih = new System.Windows.Forms.Label();
             this.labelGun = new System.Windows.Forms.Label();
             this.timerSaat = new System.Windows.Forms.Timer(this.components);
+            this.buttonBilgiAktar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitPanel)).BeginInit();
             this.splitPanel.Panel1.SuspendLayout();
             this.splitPanel.SuspendLayout();
@@ -63,6 +64,7 @@
             // splitPanel.Panel1
             // 
             this.splitPanel.Panel1.BackColor = System.Drawing.SystemColors.Window;
+            this.splitPanel.Panel1.Controls.Add(this.buttonBilgiAktar);
             this.splitPanel.Panel1.Controls.Add(this.leftPanelView);
             // 
             // splitPanel.Panel2
@@ -210,7 +212,7 @@
             this.ayarCheckBox.Size = new System.Drawing.Size(180, 110);
             this.ayarCheckBox.TabIndex = 5;
             this.ayarCheckBox.Tag = "5";
-            this.ayarCheckBox.Text = "Ayarlar";
+            this.ayarCheckBox.Text = "Veri Aktar";
             this.ayarCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.ayarCheckBox.UseVisualStyleBackColor = false;
             this.ayarCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
@@ -279,6 +281,23 @@
             this.timerSaat.Interval = 1000;
             this.timerSaat.Tick += new System.EventHandler(this.timerSaat_Tick);
             // 
+            // buttonBilgiAktar
+            // 
+            this.buttonBilgiAktar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonBilgiAktar.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonBilgiAktar.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonBilgiAktar.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonBilgiAktar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonBilgiAktar.Location = new System.Drawing.Point(3, 615);
+            this.buttonBilgiAktar.Name = "buttonBilgiAktar";
+            this.buttonBilgiAktar.Size = new System.Drawing.Size(192, 60);
+            this.buttonBilgiAktar.TabIndex = 7;
+            this.buttonBilgiAktar.Text = "Bilgi Aktarımını Başlat";
+            this.buttonBilgiAktar.UseVisualStyleBackColor = false;
+            this.buttonBilgiAktar.Visible = false;
+            this.buttonBilgiAktar.Click += new System.EventHandler(this.buttonBilgiAktar_Click);
+            // 
             // AdminGirisFormu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,11 +311,12 @@
             this.Controls.Add(this.labelSaat);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "AdminGirisFormu";
             this.Text = "AdminGirisFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CloseApp);
             this.Load += new System.EventHandler(this.AdminGirisFormu_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AdminGirisFormu_KeyDown);
             this.splitPanel.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitPanel)).EndInit();
             this.splitPanel.ResumeLayout(false);
@@ -322,6 +342,7 @@
         private System.Windows.Forms.Label labelTarih;
         private System.Windows.Forms.Label labelGun;
         private System.Windows.Forms.Timer timerSaat;
+        private System.Windows.Forms.Button buttonBilgiAktar;
 
     }
 }

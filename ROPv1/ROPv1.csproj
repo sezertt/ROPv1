@@ -55,6 +55,9 @@
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="SPIALIBRARY">
+      <HintPath>dll dosyası\SPIALIBRARY.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
@@ -81,6 +84,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="1 GirisEkranı\PortFormu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="1 GirisEkranı\PortFormu.Designer.cs">
+      <DependentUpon>PortFormu.cs</DependentUpon>
+    </Compile>
     <Compile Include="2 1 AdminGirisi\AdminGirisFormu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +194,8 @@
     </Compile>
     <Compile Include="GenelKullanılanlar\Helper.cs" />
     <Compile Include="GenelKullanılanlar\SQLBaglantisi.cs" />
+    <Compile Include="GenelKullanılanlar\XMLAktarClient.cs" />
+    <Compile Include="GenelKullanılanlar\XMLAktarServer.cs" />
     <Compile Include="Gereksizler\Program.cs" />
     <Compile Include="3 5 Ürünler\Products.cs">
       <SubType>UserControl</SubType>
@@ -213,6 +224,9 @@
     <Compile Include="2 2 1 SiparisMasaEkranı\SiparisMasaFormu.Designer.cs">
       <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="1 GirisEkranı\PortFormu.resx">
+      <DependentUpon>PortFormu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="2 1 AdminGirisi\AdminGirisFormu.resx">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
     </EmbeddedResource>

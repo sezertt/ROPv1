@@ -14,7 +14,6 @@ namespace ROPv1
 {
     public partial class AdminGirisFormu : Form
     {
-        bool closeOrShowAnotherForm = false;
         int whichCheckBoxShouldUncheck = 0;
         int kullaniciAdi = 0;
         UItemp[] infoKullanici;
@@ -22,12 +21,6 @@ namespace ROPv1
         public AdminGirisFormu()
         {
             InitializeComponent();
-        }
-
-        private void CloseApp(object sender, FormClosedEventArgs e)
-        {
-            if (!closeOrShowAnotherForm)  // eğer başka bir forma gidilmeyecekse uygulamayı kapat
-                Application.Exit();
         }
 
         private void exitPressed(object sender, EventArgs e)
@@ -41,12 +34,6 @@ namespace ROPv1
 
             if (eminMisiniz == DialogResult.Yes)
             {
-                closeOrShowAnotherForm = true; // başka forma geçilecek uygulamayı kapatma
-
-                GirisEkrani girisForm = new GirisEkrani();
-                girisForm.Show();
-
-
                 this.Close();
             }
         }
@@ -103,47 +90,31 @@ namespace ROPv1
                 #region
                 case 1:
                     saleCheckBox.Image = global::ROPv1.Properties.Resources.salesback;
-
+                    buttonBilgiAktar.Visible = false;
                     //sale işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok
 
                     break;
                 case 2:
                     reportCheckBox.Image = global::ROPv1.Properties.Resources.reportsback;
-
+                    buttonBilgiAktar.Visible = false;
                     //report işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok
 
                     break;
                 case 3:
                     stokCheckBox.Image = global::ROPv1.Properties.Resources.stockback;
-
+                    buttonBilgiAktar.Visible = false;
                     //stok işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok
 
                     break;
                 case 4:
                     adisyonCheckBox.Image = global::ROPv1.Properties.Resources.adisyonback;
-
+                    buttonBilgiAktar.Visible = false;
                     //adisyon işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok
 
                     break;
                 case 5:
                     ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingsback;
-                    leftPanelView.Nodes.Add("Kullanıcılar");
-                    leftPanelView.Nodes.Add("Departmanlar");
-                    leftPanelView.Nodes.Add("Masa Yerleşim Planı");
-                    leftPanelView.Nodes.Add("Menüler");
-                    leftPanelView.Nodes.Add("Ürünler");
-                    leftPanelView.Nodes.Add("Ürün Menüleri");
-                    leftPanelView.Nodes.Add("Stok Ayarları");
-
-                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[6]))
-                    {
-                        leftPanelView.SelectedNode = leftPanelView.Nodes[1];
-                    }
-                    else
-                        leftPanelView.SelectedNode = leftPanelView.Nodes[0];
-
-
-                    //Veri tabanından gerekli verileri al                  
+                    buttonBilgiAktar.Visible = true;
                     break;
                 default:
                     break;
@@ -285,6 +256,91 @@ namespace ROPv1
                 changeButonChecked(adisyonCheckBox);
             else if (ayarCheckBox.Enabled == true)
                 changeButonChecked(ayarCheckBox);
+        }
+
+        private void AdminGirisFormu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (ayarCheckBox.ForeColor == Color.White)
+            {
+                if (e.Control && e.Shift && e.KeyCode == Keys.D3)
+                {
+                    leftPanelView.Nodes.Add("Kullanıcılar");
+                    leftPanelView.Nodes.Add("Departmanlar");
+                    leftPanelView.Nodes.Add("Masa Yerleşim Planı");
+                    leftPanelView.Nodes.Add("Menüler");
+                    leftPanelView.Nodes.Add("Ürünler");
+                    leftPanelView.Nodes.Add("Ürün Menüleri");
+                    leftPanelView.Nodes.Add("Stok Ayarları");
+
+                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[6]))
+                    {
+                        leftPanelView.SelectedNode = leftPanelView.Nodes[1];
+                    }
+                    else
+                        leftPanelView.SelectedNode = leftPanelView.Nodes[0];
+                }
+            }
+        }
+
+        private void buttonBilgiAktar_Click(object sender, EventArgs e)
+        {
+            ShowWaitForm();
+            bool basarili = true;
+            string[] xmlDosyalari = { "gunler.xml", "kategoriler.xml", "masaDizayn.xml", "menu.xml", "restoran.xml", "stoklar.xml", "tempfiles.xml", "urunler.xml", };
+                                        
+            XMLAktarServer aktarimServeri = new XMLAktarServer();
+
+            for (int i = 0; i < 8; i++)
+            {
+               basarili = aktarimServeri.Server(xmlDosyalari[i]);
+               if (!basarili)
+               {
+                   break;
+               }
+            }
+
+            if (basarili)
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Dosya gönderimi başarılı", false))
+                {
+                    dialog.ShowDialog();
+                }
+            }
+            else
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Dosya gönderimi başarısız", false))
+                {
+                    dialog.ShowDialog();
+                }
+            }
+        }
+
+        private MyWaitForm _waitForm;
+
+        //girişe basıldığında id kontrolü sırasında lütfen bekleyiniz yazan bir form göstermek için
+        protected void ShowWaitForm()
+        {
+            // don't display more than one wait form at a time
+            if (_waitForm != null && !_waitForm.IsDisposed)
+            {
+                return;
+            }
+
+            _waitForm = new MyWaitForm();
+            _waitForm.TopMost = true;
+            _waitForm.StartPosition = FormStartPosition.CenterScreen;
+            _waitForm.Show();
+            _waitForm.Refresh();
+
+            // force the wait window to display for at least 700ms so it doesn't just flash on the screen
+            System.Threading.Thread.Sleep(500);
+            Application.Idle += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, EventArgs e)
+        {
+            Application.Idle -= OnLoaded;
+            _waitForm.Close();
         }
     }
 }
