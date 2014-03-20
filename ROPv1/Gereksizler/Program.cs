@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.Principal;
+using System.Diagnostics;
 
 namespace ROPv1
 {
@@ -18,10 +20,38 @@ namespace ROPv1
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            if (!IsUserAdministrator())
+            {
+                ProcessStartInfo proc = new ProcessStartInfo();
+                proc.UseShellExecute = true;
+                proc.WorkingDirectory = Environment.CurrentDirectory;
+                proc.FileName = Application.ExecutablePath;
+                proc.Verb = "runas";
+
+                try
+                {
+                    Process.Start(proc);
+                }
+                catch
+                {
+                    // The user refused the elevation.
+                    // Do nothing and return directly ...
+                    return;
+                }
+                Application.Exit();  // Quit itself
+                /*
+                using (KontrolFormu dikkat = new KontrolFormu("Lütfen Uygulamayı Yönetici Olarak Çalıştırınız", false))
+                {
+                    dikkat.ShowDialog();
+
+                    Application.Exit();
+                }*/
+            }
+
             if (Properties.Settings.Default.Server == 2) // bu makina server
             {
-                //Burada serverı aç
                 Application.Run(new GirisEkrani());
+                //Burada serverı aç
             }
             else //client
             {
@@ -46,23 +76,26 @@ namespace ROPv1
                             {
                                 if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("stoklar.xml") || !File.Exists("urunler.xml") || !File.Exists("gunler.xml") || !File.Exists("restoran.xml"))
                                 {
-                                    using (KontrolFormu dialog2 = new KontrolFormu("Dosyalarda eksik var, lütfen serverdaki dosyaları kontorl ediniz", false))
+                                    using (KontrolFormu dialog2 = new KontrolFormu("Dosyalarda eksik var, lütfen serverdaki dosyaları kontrol ediniz", false))
                                     {
-                                        dialog.ShowDialog();
+                                        dialog2.ShowDialog();
                                         Application.Exit();
                                     }
                                 }
-                                using (KontrolFormu dialog2 = new KontrolFormu("Dosya alımı başarılı, lütfen yeniden giriş yapınız", false))
+                                else
                                 {
-                                    dialog.ShowDialog();
-                                    Application.Exit();
+                                    using (KontrolFormu dialog3 = new KontrolFormu("Dosya alımı başarılı, lütfen yeniden giriş yapınız", false))
+                                    {
+                                        dialog3.ShowDialog();
+                                        Application.Exit();
+                                    }
                                 }
                             }
                             else
                             {
-                                using (KontrolFormu dialog2 = new KontrolFormu("Dosya alımı başarısız, lütfen tekrar deneyiniz", false))
+                                using (KontrolFormu dialog4 = new KontrolFormu("Dosya alımı başarısız, lütfen tekrar deneyiniz", false))
                                 {
-                                    dialog.ShowDialog();
+                                    dialog4.ShowDialog();
                                     Application.Exit();
                                 }
                             }
@@ -75,11 +108,6 @@ namespace ROPv1
                 }
                 else
                 {
-                    // Burada servera bağla 
-
-
-
-
                     if (Properties.Settings.Default.Server == 1) // bu makina mutfak
                     {
                         // Application.Run(new MutfakFormu());
@@ -91,8 +119,31 @@ namespace ROPv1
                     {
                         Application.Run(new SiparisMasaFormu());
                     }
+                    // Burada servera bağla
+
                 }
             }
+        }
+
+        //Kullanıcı 
+        public static bool IsUserAdministrator()
+        {
+            bool isAdmin;
+            try
+            {
+                WindowsIdentity user = WindowsIdentity.GetCurrent();
+                WindowsPrincipal principal = new WindowsPrincipal(user);
+                isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                isAdmin = false;
+            }
+            catch (Exception)
+            {
+                isAdmin = false;
+            }
+            return isAdmin;
         }
     }
 }

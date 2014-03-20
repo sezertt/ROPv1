@@ -298,7 +298,7 @@ namespace ROPv1
                    break;
                }
             }
-
+            OnLoaded(null, null);
             if (basarili)
             {
                 using (KontrolFormu dialog = new KontrolFormu("Dosya gönderimi başarılı", false))
