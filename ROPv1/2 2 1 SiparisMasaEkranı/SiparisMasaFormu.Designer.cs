@@ -148,7 +148,7 @@
             this.dayButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
             this.dayButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.dayButton.Location = new System.Drawing.Point(855, 12);
+            this.dayButton.Location = new System.Drawing.Point(629, 12);
             this.dayButton.Name = "dayButton";
             this.dayButton.Size = new System.Drawing.Size(220, 110);
             this.dayButton.TabIndex = 5;
@@ -182,7 +182,7 @@
             this.buttonAdisyon.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonAdisyon.Image = global::ROPv1.Properties.Resources.adisyon;
             this.buttonAdisyon.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonAdisyon.Location = new System.Drawing.Point(629, 11);
+            this.buttonAdisyon.Location = new System.Drawing.Point(855, 12);
             this.buttonAdisyon.Name = "buttonAdisyon";
             this.buttonAdisyon.Size = new System.Drawing.Size(220, 110);
             this.buttonAdisyon.TabIndex = 25;

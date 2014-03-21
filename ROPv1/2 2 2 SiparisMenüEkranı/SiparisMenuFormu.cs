@@ -615,18 +615,31 @@ namespace ROPv1
         {
             //eski adisyon notu varsa onu yolla yoksa boş text "" yolla            
             AdisyonNotuFormu notFormu;
-            string adisyonNotuDegistiMi = adisyonNotu;
+
             //Burada adisyonNotu'nu sql den al
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonNotu FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "'"); 
+            SqlDataReader dr = cmd.ExecuteReader();
+            dr.Read();
+
+            try
+            {
+                adisyonNotu = dr.GetString(0);
+            }
+            catch
+            {
+
+            }
+
+            string adisyonNotuDegistiMi = adisyonNotu;       
+
             if (adisyonNotu != "")
                 notFormu = new AdisyonNotuFormu(adisyonNotu); // varsa notu yolla 
             else
                 notFormu = new AdisyonNotuFormu(""); //yoksa boş yolla               
 
             notFormu.ShowDialog();
-            if (adisyonNotu != adisyonNotuDegistiMi)
-            {
-                adisyonNotu = notFormu.AdisyonNotu;
-            }
+
+            adisyonNotu = notFormu.AdisyonNotu;
         }
 
         // ürün ikram etme ve ikramı iptal etme butonu
@@ -1717,10 +1730,20 @@ namespace ROPv1
 
         public void adisyonUpdateHesapveKalan(int adisyonID)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
-            cmd.Parameters.AddWithValue("@id", adisyonID);
+            SqlCommand cmd;
+
+            if(adisyonNotu != "")
+            {
+                cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AdisyonNotu=@adisyonNotu, ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
+                cmd.Parameters.AddWithValue("@adisyonNotu", adisyonNotu);
+            }
+            else
+            {
+                cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
+            }            
             cmd.Parameters.AddWithValue("@hesap", Convert.ToDecimal(labelToplamHesap.Text));
             cmd.Parameters.AddWithValue("@kalan", Convert.ToDecimal(labelKalanHesap.Text));
+            cmd.Parameters.AddWithValue("@id", adisyonID);
             cmd.ExecuteNonQuery();
 
             cmd.Connection.Close();

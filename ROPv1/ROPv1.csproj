@@ -58,8 +58,7 @@
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SPIALIBRARY, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="SPIALIBRARY">
       <HintPath>dll dosyası\SPIALIBRARY.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -197,6 +196,7 @@
       <DependentUpon>AdisyonNotuFormu.cs</DependentUpon>
     </Compile>
     <Compile Include="GenelKullanılanlar\Helper.cs" />
+    <Compile Include="GenelKullanılanlar\ServerSPIA.cs" />
     <Compile Include="GenelKullanılanlar\SQLBaglantisi.cs" />
     <Compile Include="GenelKullanılanlar\XMLAktarClient.cs" />
     <Compile Include="GenelKullanılanlar\XMLAktarServer.cs" />

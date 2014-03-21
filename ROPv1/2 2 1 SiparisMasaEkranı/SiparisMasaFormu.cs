@@ -385,6 +385,15 @@ namespace ROPv1
             labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
             timerSaat.Start();
 
+            if(Properties.Settings.Default.Server != 2)
+            {
+                dayButton.Visible = false;
+            }
+
+
+            //burada gün bilgisi alınacak ondan sonra devam edilecek
+
+
             if (File.Exists("gunler.xml"))
             {
                 XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();

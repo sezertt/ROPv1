@@ -38,20 +38,12 @@ namespace ROPv1
                     // Do nothing and return directly ...
                     return;
                 }
-                Application.Exit();  // Quit itself
-                /*
-                using (KontrolFormu dikkat = new KontrolFormu("Lütfen Uygulamayı Yönetici Olarak Çalıştırınız", false))
-                {
-                    dikkat.ShowDialog();
-
-                    Application.Exit();
-                }*/
+                Environment.Exit(7);
             }
 
             if (Properties.Settings.Default.Server == 2) // bu makina server
             {
                 Application.Run(new GirisEkrani());
-                //Burada serverı aç
             }
             else //client
             {
@@ -79,7 +71,7 @@ namespace ROPv1
                                     using (KontrolFormu dialog2 = new KontrolFormu("Dosyalarda eksik var, lütfen serverdaki dosyaları kontrol ediniz", false))
                                     {
                                         dialog2.ShowDialog();
-                                        Application.Exit();
+                                        Environment.Exit(7);
                                     }
                                 }
                                 else
@@ -87,7 +79,7 @@ namespace ROPv1
                                     using (KontrolFormu dialog3 = new KontrolFormu("Dosya alımı başarılı, lütfen yeniden giriş yapınız", false))
                                     {
                                         dialog3.ShowDialog();
-                                        Application.Exit();
+                                        Environment.Exit(7);
                                     }
                                 }
                             }
@@ -96,13 +88,13 @@ namespace ROPv1
                                 using (KontrolFormu dialog4 = new KontrolFormu("Dosya alımı başarısız, lütfen tekrar deneyiniz", false))
                                 {
                                     dialog4.ShowDialog();
-                                    Application.Exit();
+                                    Environment.Exit(7);
                                 }
                             }
                         }
                         else
                         {
-                            Application.Exit();
+                            Environment.Exit(7);
                         }
                     }
                 }
@@ -119,13 +111,11 @@ namespace ROPv1
                     {
                         Application.Run(new SiparisMasaFormu());
                     }
-                    // Burada servera bağla
-
                 }
             }
         }
 
-        //Kullanıcı 
+        //Kullanıcıyı admin girişine zorlamak için
         public static bool IsUserAdministrator()
         {
             bool isAdmin;
@@ -135,7 +125,7 @@ namespace ROPv1
                 WindowsPrincipal principal = new WindowsPrincipal(user);
                 isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
                 isAdmin = false;
             }

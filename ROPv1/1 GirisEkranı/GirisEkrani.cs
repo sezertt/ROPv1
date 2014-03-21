@@ -11,9 +11,6 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Globalization;
 
-using SPIA;
-using SPIA.Server;
-
 namespace ROPv1
 {
     public partial class GirisEkrani : Form
