@@ -184,11 +184,14 @@ namespace ROPv1
                     break;
 
                 case 5: //Ürün Menüleri Seçildi
-                    UrunMenuleri urunMenuView = new UrunMenuleri();
-                    splitPanel.Panel2.Controls.Add(urunMenuView);
-                    urunMenuView.Dock = DockStyle.Fill;
+                    if (File.Exists("urunler.xml"))
+                    {
+                        UrunMenuleri urunMenuView = new UrunMenuleri();
+                        splitPanel.Panel2.Controls.Add(urunMenuView);
+                        urunMenuView.Dock = DockStyle.Fill;
+                        
+                    }
                     break;
-
                 case 6: //Stok Ayarları Seçildi
                     Stoklar stokView = new Stoklar();
                     splitPanel.Panel2.Controls.Add(stokView);
