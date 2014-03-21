@@ -150,7 +150,7 @@ namespace ROPv1
             treeMenununUrunler.Nodes.Clear();
             if (treeMenuler.Nodes.Count > 0)
             {//herhangi bir menü kayıtlıysa seçili menü bilgilerini gösterir.
-                if (treeMenuler.SelectedNode!=null)
+                if (treeMenuler.SelectedNode != null)
                 {
                     int newSelected = treeMenuler.SelectedNode.Index;
                     treeMenuler.SelectedNode = null;
@@ -170,7 +170,7 @@ namespace ROPv1
                 newUrunMenuForm.Enabled = false;
 
             }
-                
+
 
         }
 
@@ -328,6 +328,25 @@ namespace ROPv1
                     treeMenuler.Font = new Font(treeMenuler.Font.FontFamily, treeMenuler.Font.Size - 0.5f, treeMenuler.Font.Style);
                 }
             }
+            // Oluşturulan Menüyü kategorisiz ürünlere ekleyebilmek için ürün özellikleri cinsinden kaydediyoruz.
+
+            XmlLoad<UrunOzellikleri> loadInfo = new XmlLoad<UrunOzellikleri>();
+            UrunOzellikleri[] infoUrun = loadInfo.LoadRestoran("urunler.xml");
+            XmlLoad<TumKategoriler> loadInfoKategori = new XmlLoad<TumKategoriler>();
+            TumKategoriler[] infoKategori = loadInfoKategori.LoadRestoran("kategoriler.xml");
+
+            if (infoKategori[0].kategoriler[0] != "Ürün Menüleri")
+            {
+                infoKategori[0].kategoriler.Insert(0, "Ürün Menüleri");
+                XmlSave.SaveRestoran(infoKategori, "kategoriler.xml");
+            }
+            infoUrun[0].urunAdi.Add(UrunMenuListesi[UrunMenuListesi.Count-1].menuAdi);
+            infoUrun[0].porsiyonFiyati.Add(UrunMenuListesi[UrunMenuListesi.Count - 1].menuFiyati.ToString("0.00"));
+            infoUrun[0].urunKategorisi.Add("Ürün Menüleri");
+            infoUrun[0].urunKDV.Add(8);
+            infoUrun[0].kategorininAdi = "Ürün Menüleri";
+
+            XmlSave.SaveRestoran(infoUrun, "urunler.xml");
         }
 
         //Menüye Sağdaki Ürün treesinde seçili olan ürünü ekler
@@ -362,13 +381,13 @@ namespace ROPv1
                 yeniurun.urunAdi = UrunListesi[index].urunAdi[aradigim - 1];
                 yeniurun.urunKategorisi = UrunListesi[index].urunKategorisi[aradigim - 1];
                 yeniurun.urunKDV = UrunListesi[index].urunKDV[aradigim - 1];
-                
+
                 if (buttonCancel.Visible)
                 {
                     yeniMenu.menuAdi = textboxMenuName.Text;
                     yeniMenu.menuFiyati = Convert.ToDouble(textboxFiyat.Text);
                     yeniMenu.urun.Add(yeniurun);
-                } 
+                }
                 else
                     UrunMenuListesi[treeMenuler.SelectedNode.Index].urun.Add(yeniurun);
                 treeMenununUrunler.Nodes.Add(yeniurun.urunAdi);
@@ -400,17 +419,17 @@ namespace ROPv1
             if (treeMenununUrunler.SelectedNode != null)
             {
                 double fiyat = Convert.ToDouble(textboxFiyat.Text);
-                if(buttonCancel.Visible)
+                if (buttonCancel.Visible)
                 {
                     fiyat -= Convert.ToDouble(yeniMenu.urun[treeMenununUrunler.SelectedNode.Index].porsiyonFiyati);
                     yeniMenu.urun.RemoveAt(treeMenununUrunler.SelectedNode.Index);
                 }
                 else
-                { 
-                fiyat-=Convert.ToDouble( UrunMenuListesi[treeMenuler.SelectedNode.Index].urun[treeMenununUrunler.SelectedNode.Index].porsiyonFiyati);
+                {
+                    fiyat -= Convert.ToDouble(UrunMenuListesi[treeMenuler.SelectedNode.Index].urun[treeMenununUrunler.SelectedNode.Index].porsiyonFiyati);
                 }
                 treeMenununUrunler.Nodes.Remove(treeMenununUrunler.SelectedNode);
-                
+
                 textboxFiyat.Text = fiyat.ToString();
             }
         }
@@ -453,8 +472,8 @@ namespace ROPv1
                 int selectedPlace = treeMenuler.SelectedNode.Index;
                 treeMenuler.SelectedNode.Remove();
                 treeMenununUrunler.Nodes.Clear();
-                if(treeMenuler.Nodes.Count>0)
-                treeMenuler.SelectedNode = treeMenuler.Nodes[0];
+                if (treeMenuler.Nodes.Count > 0)
+                    treeMenuler.SelectedNode = treeMenuler.Nodes[0];
 
                 if (treeMenuler.Nodes.Count > 0)
                 {
@@ -484,5 +503,5 @@ namespace ROPv1
                 treeMenununUrunler.Nodes.Add(UrunMenuListesi[treeMenuler.SelectedNode.Index].urun[i].urunAdi);
             }
         }
-   }
+    }
 }
