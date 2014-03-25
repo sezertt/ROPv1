@@ -431,7 +431,7 @@ namespace ROPv1
 
         private void textboxName_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '-')
+            if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == ',' || e.KeyChar == '-')
             {
                 e.Handled = true;
             }

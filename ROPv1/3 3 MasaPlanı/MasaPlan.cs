@@ -606,5 +606,13 @@ namespace ROPv1
             if (treeMasaPlanName.Nodes.Count > 9)
                 buttonAddTableDesign.Enabled = false;
         }
+
+        private void textTableName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == ',' || e.KeyChar == '-')
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

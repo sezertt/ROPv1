@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.treeMasaPlanName = new System.Windows.Forms.TreeView();
             this.newTableForm = new System.Windows.Forms.GroupBox();
@@ -39,6 +40,7 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.tablePanel = new System.Windows.Forms.TableLayoutPanel();
             this.textTableName = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.buttonEditDesign = new System.Windows.Forms.Button();
             this.buttonDeleteTable = new System.Windows.Forms.Button();
@@ -242,6 +244,7 @@
             // textTableName
             // 
             this.textTableName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textTableName.ContextMenuStrip = this.contextMenuStrip1;
             this.textTableName.Enabled = false;
             this.textTableName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textTableName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
@@ -251,6 +254,12 @@
             this.textTableName.Size = new System.Drawing.Size(244, 32);
             this.textTableName.TabIndex = 28;
             this.textTableName.TextChanged += new System.EventHandler(this.TableName_TextChanged);
+            this.textTableName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textTableName_KeyPress);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // label1
             // 
@@ -359,6 +368,7 @@
         private System.Windows.Forms.TextBox textTableName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonEditDesign;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 
     }
 }

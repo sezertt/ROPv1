@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Satışlar");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Raporlar");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Stoklar");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Adisyonlar");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Ayarlar");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Gün İşlemleri");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Şifre/Pin İşlemleri");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Hesap İzinleri");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Satışlar");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Raporlar");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Stoklar");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Adisyonlar");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Ayarlar");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Gün İşlemleri");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Şifre/Pin İşlemleri");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Hesap İzinleri");
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.label1 = new System.Windows.Forms.Label();
             this.comboNewTitle = new System.Windows.Forms.ComboBox();
@@ -245,6 +245,7 @@
             this.textBoxPassword.Size = new System.Drawing.Size(142, 32);
             this.textBoxPassword.TabIndex = 6;
             this.textBoxPassword.UseSystemPasswordChar = true;
+            this.textBoxPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxName_KeyPress);
             // 
             // label4
             // 
@@ -268,6 +269,7 @@
             this.textboxUserName.Name = "textboxUserName";
             this.textboxUserName.Size = new System.Drawing.Size(307, 32);
             this.textboxUserName.TabIndex = 4;
+            this.textboxUserName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxName_KeyPress);
             // 
             // label3
             // 
@@ -277,7 +279,7 @@
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label3.Location = new System.Drawing.Point(10, 86);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(87, 24);
+            this.label3.Size = new System.Drawing.Size(88, 24);
             this.label3.TabIndex = 45;
             this.label3.Text = "Ünvanı:";
             // 
@@ -306,32 +308,32 @@
             this.treeYetkiler.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(180)))), ((int)(((byte)(209)))));
             this.treeYetkiler.Location = new System.Drawing.Point(327, 51);
             this.treeYetkiler.Name = "treeYetkiler";
-            treeNode1.Name = "Satis";
-            treeNode1.Text = "Satışlar";
-            treeNode2.Name = "Rapor";
-            treeNode2.Text = "Raporlar";
-            treeNode3.Name = "Stok";
-            treeNode3.Text = "Stoklar";
-            treeNode4.Name = "Adisyon";
-            treeNode4.Text = "Adisyonlar";
-            treeNode5.Name = "Ayar";
-            treeNode5.Text = "Ayarlar";
-            treeNode6.Name = "GunIslemleri";
-            treeNode6.Text = "Gün İşlemleri";
-            treeNode7.Name = "PinPassword";
-            treeNode7.Text = "Şifre/Pin İşlemleri";
-            treeNode8.Name = "ikramIptal";
-            treeNode8.Text = "Hesap İzinleri";
-            treeNode8.ToolTipText = "İptal/İkram/İndirim İzinleri";
+            treeNode9.Name = "Satis";
+            treeNode9.Text = "Satışlar";
+            treeNode10.Name = "Rapor";
+            treeNode10.Text = "Raporlar";
+            treeNode11.Name = "Stok";
+            treeNode11.Text = "Stoklar";
+            treeNode12.Name = "Adisyon";
+            treeNode12.Text = "Adisyonlar";
+            treeNode13.Name = "Ayar";
+            treeNode13.Text = "Ayarlar";
+            treeNode14.Name = "GunIslemleri";
+            treeNode14.Text = "Gün İşlemleri";
+            treeNode15.Name = "PinPassword";
+            treeNode15.Text = "Şifre/Pin İşlemleri";
+            treeNode16.Name = "ikramIptal";
+            treeNode16.Text = "Hesap İzinleri";
+            treeNode16.ToolTipText = "İptal/İkram/İndirim İzinleri";
             this.treeYetkiler.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5,
-            treeNode6,
-            treeNode7,
-            treeNode8});
+            treeNode9,
+            treeNode10,
+            treeNode11,
+            treeNode12,
+            treeNode13,
+            treeNode14,
+            treeNode15,
+            treeNode16});
             this.treeYetkiler.ShowLines = false;
             this.treeYetkiler.ShowNodeToolTips = true;
             this.treeYetkiler.ShowPlusMinus = false;
