@@ -106,6 +106,13 @@ namespace ROPv1
                             }
                         }
                     }       
+                    else if (yapilacakIslem == "Kullanici Bilgisi Alma")
+                    {
+                        //Gün Formuna Git 
+                        dogru = true;
+                        ayarYapanKisi = (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIS);
+                        this.Close();
+                    }
                 }
                 else
                 {

@@ -43,7 +43,7 @@ namespace ROPv1
                 clientSock.Close();
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 return false;
             }

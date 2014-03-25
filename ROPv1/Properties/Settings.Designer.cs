@@ -58,5 +58,17 @@ namespace ROPv1.Properties {
                 this["Server"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BilgisayarAdi {
+            get {
+                return ((string)(this["BilgisayarAdi"]));
+            }
+            set {
+                this["BilgisayarAdi"] = value;
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace ROPv1
         public static SqlConnection getConnection()
         {
             SqlConnection cnn = new SqlConnection("server=.;database=ropv1;integrated security=true");
+            
             cnn.Open();
             return cnn;
         }

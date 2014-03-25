@@ -66,28 +66,6 @@ namespace ROPv1
             if (yeniDepartman == "" || yeniDepartman == null) // departman değişmemiş demektir
                 yeniDepartman = eskiDepartman;
 
-            // Masa kullanımda mı bakıyoruz
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaId FROM IslemdekiMasalar WHERE DepartmanAdlari='" + yeniDepartman + "' AND MasaAdlari='" + yeniMasa + "'");
-            SqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                try
-                {
-                    dr.GetInt32(0);
-                    using (KontrolFormu dialog = new KontrolFormu("Seçtiğiniz masa şu anda kullanımda lütfen başka bir masa seçiniz ya da daha sonra tekrar deneyiniz", false))
-                    {
-                        dialog.ShowDialog();
-                        cmd.Connection.Close();
-                        cmd.Connection.Dispose();
-                        return;
-                    }
-                }
-                catch
-                { }
-            }
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-
             DialogResult eminMisiniz;
 
             if (MasaMi) //masa değişimi
@@ -212,11 +190,16 @@ namespace ROPv1
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    Button tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
-                    tablebutton.BackColor = Color.Firebrick;
-                    tablebutton.ForeColor = Color.White;
+                    Button tablebutton;
+                    try
+                    {
+                        tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
+                        tablebutton.BackColor = Color.Firebrick;
+                        tablebutton.ForeColor = Color.White;
+                    }
+                    catch
+                    { }
                 }
-
                 cmd.Connection.Close();
                 cmd.Connection.Dispose();
 
@@ -259,7 +242,6 @@ namespace ROPv1
                     else
                         break;
                 }
-
             }
         }
 
@@ -313,9 +295,14 @@ namespace ROPv1
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    Button tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
-                    tablebutton.BackColor = Color.Firebrick;
-                    tablebutton.ForeColor = Color.White;
+                    try
+                    {
+                        Button tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
+                        tablebutton.BackColor = Color.Firebrick;
+                        tablebutton.ForeColor = Color.White;
+                    }
+                    catch
+                    { }
                 }
 
                 cmd.Connection.Close();

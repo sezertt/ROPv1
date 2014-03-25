@@ -15,6 +15,8 @@ namespace ROPv1
     public partial class AdisyonNotuFormu : Form
     {
         public string AdisyonNotu;
+        bool alwaysFocus = false;
+
         public AdisyonNotuFormu(string eskiNot)
         {
             InitializeComponent();
@@ -24,7 +26,14 @@ namespace ROPv1
 
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
-            textboxNot.Text = eskiNot;          
+            textboxNot.Text = eskiNot;
+            textboxNot.Focus();
+
+            if(eskiNot == "Bilgisayar adını giriniz" || eskiNot == "Girilen bilgisayar adı kullanımda, lütfen başka bir bilgisayar adı giriniz")
+            {
+                alwaysFocus = true;
+                checkBoxSave.Visible = true;
+            }
         }
 
         internal static class NativeMethods
@@ -39,7 +48,6 @@ namespace ROPv1
                 return;
             NativeMethods.keybd_event(0x14, 0x45, 0x1, (UIntPtr)0);
             NativeMethods.keybd_event(0x14, 0x45, 0x1 | 0x2, (UIntPtr)0);
-
         }
 
         //sanal klayvemize basıldığında touchscreenkeyboard dll mize basılan key i yolluyoruz
@@ -52,7 +60,41 @@ namespace ROPv1
         private void buttonTamam_Click(object sender, EventArgs e)
         {
             AdisyonNotu = textboxNot.Text;
+            if (alwaysFocus)
+            {
+                if (textboxNot.Text == "")
+                {
+                    using (KontrolFormu dialog = new KontrolFormu("Bilgisayar adı boş bırakılamaz", false))
+                    {
+                        dialog.ShowDialog();
+                    }
+                    textboxNot.Focus();
+                    return;
+                }
+
+                if (checkBoxSave.Checked)
+                {
+                    Properties.Settings.Default.BilgisayarAdi = AdisyonNotu;
+                    Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    Properties.Settings.Default.BilgisayarAdi = "";
+                    Properties.Settings.Default.Save();
+                }
+            }
             this.Close();
+        }
+
+        private void textboxNot_Click(object sender, EventArgs e)
+        {
+            if (alwaysFocus)
+                textboxNot.Select(0, textboxNot.TextLength);
+        }
+
+        private void textboxNot_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
         }
     }
 }

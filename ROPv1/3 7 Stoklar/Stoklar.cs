@@ -518,7 +518,7 @@ namespace ROPv1
                 double fiyat = Convert.ToDouble(((TextBox)sender).Text);
                 ((TextBox)sender).Text = fiyat.ToString();
             }
-            catch { }
+            catch { ((TextBox)sender).Text = "0"; }
         }
         private void btnStogaEkle_Click(object sender, EventArgs e)
         {

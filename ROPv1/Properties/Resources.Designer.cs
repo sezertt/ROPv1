@@ -103,6 +103,26 @@ namespace ROPv1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap baglantiOK {
+            get {
+                object obj = ResourceManager.GetObject("baglantiOK", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap baglantiYOK {
+            get {
+                object obj = ResourceManager.GetObject("baglantiYOK", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BosImage {
             get {
                 object obj = ResourceManager.GetObject("BosImage", resourceCulture);
@@ -116,6 +136,16 @@ namespace ROPv1.Properties {
         internal static System.Drawing.Bitmap checkmark {
             get {
                 object obj = ResourceManager.GetObject("checkmark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap dataUpdate {
+            get {
+                object obj = ResourceManager.GetObject("dataUpdate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

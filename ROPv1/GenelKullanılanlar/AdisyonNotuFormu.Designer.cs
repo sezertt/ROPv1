@@ -31,6 +31,7 @@
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.buttonTamam = new System.Windows.Forms.Button();
             this.textboxNot = new System.Windows.Forms.TextBox();
+            this.checkBoxSave = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // keyboardcontrol1
@@ -76,6 +77,22 @@
             this.textboxNot.Name = "textboxNot";
             this.textboxNot.Size = new System.Drawing.Size(981, 81);
             this.textboxNot.TabIndex = 35;
+            this.textboxNot.Click += new System.EventHandler(this.textboxNot_Click);
+            this.textboxNot.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxNot_KeyPress);
+            // 
+            // checkBoxSave
+            // 
+            this.checkBoxSave.AutoSize = true;
+            this.checkBoxSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBoxSave.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.checkBoxSave.ForeColor = System.Drawing.SystemColors.Window;
+            this.checkBoxSave.Location = new System.Drawing.Point(636, 351);
+            this.checkBoxSave.Name = "checkBoxSave";
+            this.checkBoxSave.Size = new System.Drawing.Size(222, 20);
+            this.checkBoxSave.TabIndex = 36;
+            this.checkBoxSave.Text = "İsmi Kaydet ve Bir Daha Sorma";
+            this.checkBoxSave.UseVisualStyleBackColor = true;
+            this.checkBoxSave.Visible = false;
             // 
             // AdisyonNotuFormu
             // 
@@ -85,6 +102,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1019, 396);
             this.ControlBox = false;
+            this.Controls.Add(this.checkBoxSave);
             this.Controls.Add(this.buttonTamam);
             this.Controls.Add(this.textboxNot);
             this.Controls.Add(this.keyboardcontrol1);
@@ -107,5 +125,6 @@
         private KeyboardClassLibrary.Keyboardcontrol keyboardcontrol1;
         private System.Windows.Forms.Button buttonTamam;
         private System.Windows.Forms.TextBox textboxNot;
+        private System.Windows.Forms.CheckBox checkBoxSave;
     }
 }

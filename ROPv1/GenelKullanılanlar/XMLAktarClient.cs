@@ -21,15 +21,15 @@ namespace ROPv1
         {
             try
             {
-                //IPAddress[] ipAddress = Dns.GetHostAddresses("127.0.0.1");
-                //ipEnd = new IPEndPoint(ipAddress[0], 13124);
-                IPAddress[] ipAddress = Dns.GetHostAddresses("192.168.2.94");
+                IPAddress[] ipAddress = Dns.GetHostAddresses("127.0.0.1");
                 ipEnd = new IPEndPoint(ipAddress[0], 13124);
+                //IPAddress[] ipAddress = Dns.GetHostAddresses("192.168.2.94");
+                //ipEnd = new IPEndPoint(ipAddress[0], 13124);
                 clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
                 clientSock.Connect(ipEnd);
 
                 byte[] clientData = new byte[1024 * 5000];
-                string receivedPath = @"C:\Program Files\ROP\";
+                string receivedPath = @"C:\ROP\";
 
                 int receivedBytesLen = clientSock.Receive(clientData);
 
@@ -43,7 +43,7 @@ namespace ROPv1
                 clientSock.Close();
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 return false;
             }

@@ -47,12 +47,12 @@ namespace ROPv1
             }
             else //client
             {
-                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("stoklar.xml") || !File.Exists("urunler.xml") || !File.Exists("gunler.xml") || !File.Exists("restoran.xml"))
+                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("gunler.xml") || !File.Exists("restoran.xml"))
                 {
                     using (KontrolFormu dialog = new KontrolFormu("Bilgiler girilmemiş veri aktarımını başlatmak ister misiniz?", true))
                     {
                         DialogResult cevap = dialog.ShowDialog();
-                        bool basarili = true;
+                        bool basarili = false;
 
                         if (cevap == DialogResult.Yes)
                         {
@@ -66,7 +66,7 @@ namespace ROPv1
 
                             if (basarili)
                             {
-                                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("stoklar.xml") || !File.Exists("urunler.xml") || !File.Exists("gunler.xml") || !File.Exists("restoran.xml"))
+                                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("gunler.xml") || !File.Exists("restoran.xml"))
                                 {
                                     using (KontrolFormu dialog2 = new KontrolFormu("Dosyalarda eksik var, lütfen serverdaki dosyaları kontrol ediniz", false))
                                     {
@@ -125,11 +125,7 @@ namespace ROPv1
                 WindowsPrincipal principal = new WindowsPrincipal(user);
                 isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
             }
-            catch (UnauthorizedAccessException)
-            {
-                isAdmin = false;
-            }
-            catch (Exception)
+            catch
             {
                 isAdmin = false;
             }

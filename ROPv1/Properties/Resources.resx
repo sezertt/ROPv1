@@ -136,6 +136,9 @@
   <data name="checkmark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\checkmark.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="adisyonback" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\adisyonback.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -184,14 +187,14 @@
   <data name="addBig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\addBig.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="adisyon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\adisyon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="baglantiOK" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\baglantiOK.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="editicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\editicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="baglantiYOK" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\baglantiYOK.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="minus" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\minus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -201,6 +204,9 @@
   </data>
   <data name="settingsback" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\settingsback.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="righticon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\righticon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="stockback" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stockback.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -214,16 +220,19 @@
   <data name="deleteBig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\deleteBig.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="indirim" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\indirim.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="reportsback" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\reportsback.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="settingscolor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\settingscolor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="righticon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\righticon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="adisyon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\adisyon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="indirim" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\indirim.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="dataUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dataUpdate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -44,6 +44,8 @@
             this.exitButton = new System.Windows.Forms.Button();
             this.buttonMutfak = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.textboxOnlineKullanicilar = new System.Windows.Forms.TextBox();
+            this.buttonConnection = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -59,7 +61,7 @@
             this.groupBox1.Controls.Add(this.girisButton);
             this.groupBox1.Font = new System.Drawing.Font("Arial", 24.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.Window;
-            this.groupBox1.Location = new System.Drawing.Point(471, 50);
+            this.groupBox1.Location = new System.Drawing.Point(503, 50);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(360, 269);
             this.groupBox1.TabIndex = 0;
@@ -122,10 +124,10 @@
             // 
             // keyboardcontrol1
             // 
-            this.keyboardcontrol1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.keyboardcontrol1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.keyboardcontrol1.ForeColor = System.Drawing.SystemColors.Window;
             this.keyboardcontrol1.KeyboardType = KeyboardClassLibrary.BoW.Standard;
-            this.keyboardcontrol1.Location = new System.Drawing.Point(154, 525);
+            this.keyboardcontrol1.Location = new System.Drawing.Point(364, 474);
             this.keyboardcontrol1.Name = "keyboardcontrol1";
             this.keyboardcontrol1.Size = new System.Drawing.Size(993, 282);
             this.keyboardcontrol1.TabIndex = 0;
@@ -185,7 +187,7 @@
             this.exitButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.exitButton.Image = global::ROPv1.Properties.Resources.logOut;
             this.exitButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.exitButton.Location = new System.Drawing.Point(1090, 12);
+            this.exitButton.Location = new System.Drawing.Point(1154, 12);
             this.exitButton.MaximumSize = new System.Drawing.Size(300, 110);
             this.exitButton.MinimumSize = new System.Drawing.Size(150, 110);
             this.exitButton.Name = "exitButton";
@@ -204,7 +206,7 @@
             this.buttonMutfak.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonMutfak.Image = global::ROPv1.Properties.Resources.kitchen;
             this.buttonMutfak.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonMutfak.Location = new System.Drawing.Point(1090, 256);
+            this.buttonMutfak.Location = new System.Drawing.Point(1154, 256);
             this.buttonMutfak.Name = "buttonMutfak";
             this.buttonMutfak.Size = new System.Drawing.Size(200, 110);
             this.buttonMutfak.TabIndex = 16;
@@ -221,7 +223,7 @@
             this.button2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.button2.Image = global::ROPv1.Properties.Resources.table;
             this.button2.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button2.Location = new System.Drawing.Point(1090, 134);
+            this.button2.Location = new System.Drawing.Point(1154, 134);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(200, 110);
             this.button2.TabIndex = 5;
@@ -230,6 +232,35 @@
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.siparisButtonPressed);
             // 
+            // textboxOnlineKullanicilar
+            // 
+            this.textboxOnlineKullanicilar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxOnlineKullanicilar.Enabled = false;
+            this.textboxOnlineKullanicilar.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.textboxOnlineKullanicilar.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.textboxOnlineKullanicilar.Location = new System.Drawing.Point(12, 240);
+            this.textboxOnlineKullanicilar.MaxLength = 25000;
+            this.textboxOnlineKullanicilar.Multiline = true;
+            this.textboxOnlineKullanicilar.Name = "textboxOnlineKullanicilar";
+            this.textboxOnlineKullanicilar.Size = new System.Drawing.Size(343, 516);
+            this.textboxOnlineKullanicilar.TabIndex = 36;
+            // 
+            // buttonConnection
+            // 
+            this.buttonConnection.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonConnection.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonConnection.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonConnection.Image = global::ROPv1.Properties.Resources.baglantiYOK;
+            this.buttonConnection.Location = new System.Drawing.Point(13, 124);
+            this.buttonConnection.Name = "buttonConnection";
+            this.buttonConnection.Size = new System.Drawing.Size(172, 110);
+            this.buttonConnection.TabIndex = 39;
+            this.buttonConnection.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.buttonConnection.UseVisualStyleBackColor = false;
+            this.buttonConnection.Click += new System.EventHandler(this.buttonConnection_Click);
+            // 
             // GirisEkrani
             // 
             this.AcceptButton = this.girisButton;
@@ -237,8 +268,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.CancelButton = this.exitButton;
-            this.ClientSize = new System.Drawing.Size(1302, 819);
+            this.ClientSize = new System.Drawing.Size(1366, 768);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonConnection);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.textboxOnlineKullanicilar);
             this.Controls.Add(this.buttonMutfak);
             this.Controls.Add(this.labelGun);
             this.Controls.Add(this.labelTarih);
@@ -246,7 +280,6 @@
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.keyboardcontrol1);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
@@ -257,6 +290,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GirisEkrani";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GirisEkrani_FormClosing);
             this.Load += new System.EventHandler(this.GirisEkrani_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GirisEkrani_KeyDown);
             this.groupBox1.ResumeLayout(false);
@@ -283,6 +317,8 @@
         private System.Windows.Forms.Label labelSaat;
         private System.Windows.Forms.Timer timerSaat;
         private System.Windows.Forms.Button buttonMutfak;
+        private System.Windows.Forms.TextBox textboxOnlineKullanicilar;
+        private System.Windows.Forms.Button buttonConnection;
     }
 }
 

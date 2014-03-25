@@ -122,7 +122,7 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 26);
             // 
             // comboNewDepMenu
             // 
@@ -144,6 +144,7 @@
             // 
             this.comboNewDepName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboNewDepName.BackColor = System.Drawing.SystemColors.Window;
+            this.comboNewDepName.ContextMenuStrip = this.contextMenuStrip1;
             this.comboNewDepName.Cursor = System.Windows.Forms.Cursors.Default;
             this.comboNewDepName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.comboNewDepName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));

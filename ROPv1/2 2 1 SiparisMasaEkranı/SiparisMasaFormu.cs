@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -10,11 +11,33 @@ using System.Windows.Forms;
 using System.Globalization;
 using System.IO;
 using System.Data.SqlClient;
+using SPIA;
+using SPIA.Client;
 
 namespace ROPv1
 {
     public partial class SiparisMasaFormu : Form
     {
+        public bool GirisYapildi
+        {
+            get { return girisYapildi; }
+            set { girisYapildi = value; }
+        }
+        private bool girisYapildi = false;
+
+        /// SPIA kütüphanesini kullanarak SPIA sunucusuna bağlı olan istemci nesnesi        
+        private SPIAClient istemci;
+
+        /// Kullanıcının seçtiği nick
+        public string Nick
+        {
+            get { return nick; }
+            set { nick = value; }
+        }
+        private string nick;
+
+        /// Bağlı kullanıcı listesi        
+        private List<string> kullanicilar;
 
         int hangiButtonSecili = 0;
 
@@ -28,6 +51,7 @@ namespace ROPv1
 
         public SiparisMasaFormu()
         {
+            kullanicilar = new List<string>();
             InitializeComponent();
         }
 
@@ -70,65 +94,12 @@ namespace ROPv1
                         }
                         return;
                     }
-                    
-                    // Masa kullanımda mı bakıyoruz
-                    SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaId FROM IslemdekiMasalar WHERE DepartmanAdlari='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND MasaAdlari='" + ((Button)sender).Text + "'");
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        try
-                        {
-                            dr.GetInt32(0);
-
-                            using (KontrolFormu dialog = new KontrolFormu("DİKKAT!\nSeçtiğiniz masa şu anda kullanımda. Eğer masanın kullanımda olmadığından eminseniz Masayı AÇ tuşuna basarak masaya girişi açabilirsiniz.", true, 1))
-                            {
-                                DialogResult masaAcilsinMi = dialog.ShowDialog();
-
-                                if (masaAcilsinMi != DialogResult.Yes)
-                                {
-                                    using (KontrolFormu dialog2 = new KontrolFormu("DİKKAT!\nAçmak istediğiniz masa kullanımda ise bu masanın açılması hatalara neden olabilir. Yinede masayı açmak istiyor musunuz? ", true))
-                                    {
-                                        DialogResult masaAcilsinMi2 = dialog2.ShowDialog();
-
-                                        if (masaAcilsinMi2 == DialogResult.Yes)
-                                        {
-                                            cmd = SQLBaglantisi.getCommand("DELETE FROM IslemdekiMasalar WHERE MasaAdlari='" + (sender as Button).Text + "' AND DepartmanAdlari='" + restoranListesi[hangiButtonSecili].departmanAdi + "'");
-                                            cmd.ExecuteNonQuery();
-                                            cmd.Connection.Close();
-                                            cmd.Connection.Dispose();                                            
-                                        }
-                                        else
-                                        {
-                                            cmd.Connection.Close();
-                                            cmd.Connection.Dispose();
-                                            return;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    cmd.Connection.Close();
-                                    cmd.Connection.Dispose();
-                                    return;
-                                }
-                            }
-                        }
-                        catch
-                        { }
-                    }
-                    cmd.Connection.Close();
-                    cmd.Connection.Dispose();
 
                     PinKoduFormu pinForm = new PinKoduFormu("Masa Görüntüleme");
                     pinForm.ShowDialog();
 
                     if (pinForm.dogru) //pin doğru
                     {
-                        cmd = SQLBaglantisi.getCommand("INSERT INTO IslemdekiMasalar(MasaAdlari,DepartmanAdlari) values(@_MasaAdlari,@_DepartmanAdlari)");
-                        cmd.Parameters.AddWithValue("@_MasaAdlari", ((Button)sender).Text);
-                        cmd.Parameters.AddWithValue("@_DepartmanAdlari", restoranListesi[hangiButtonSecili].departmanAdi);
-                        cmd.ExecuteNonQuery();
-
                         SiparisMenuFormu siparisForm;
                         if (((Button)sender).BackColor == Color.White) // masa kapalı
                         {
@@ -137,11 +108,22 @@ namespace ROPv1
                         }
                         else // masa acik
                         {
-                            cmd = SQLBaglantisi.getCommand("SELECT ToplamHesap,KalanHesap FROM Adisyon WHERE MasaAdi='" + ((Button)sender).Text + "' AND DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND AcikMi=1");
-                            dr = cmd.ExecuteReader();
+                            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT ToplamHesap,KalanHesap FROM Adisyon WHERE MasaAdi='" + ((Button)sender).Text + "' AND DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND AcikMi=1");
+                            SqlDataReader dr = cmd.ExecuteReader();
                             dr.Read();
-                            toplamHesap = dr.GetDecimal(0);
-                            kalanHesap = dr.GetDecimal(1);
+                            try
+                            {
+                                toplamHesap = dr.GetDecimal(0);
+                                kalanHesap = dr.GetDecimal(1);
+                            }
+                            catch
+                            {
+                                using (KontrolFormu dialog = new KontrolFormu("Bir hata oluştu, lütfen tekrar deneyiniz", false))
+                                {
+                                    dialog.ShowDialog();
+                                }
+                                return;
+                            }
 
                             cmd.Connection.Close();
                             cmd.Connection.Dispose();
@@ -150,7 +132,7 @@ namespace ROPv1
                             siparisForm.ShowDialog();
                         }
 
-                        if(siparisForm.masaAcikMi2 != "")
+                        if (siparisForm.masaAcikMi2 != "")
                         {
                             Button tablebutton = tablePanel.Controls.Find(siparisForm.masaAcikMi2, false)[0] as Button;
                             tablebutton.ForeColor = Color.White;
@@ -178,7 +160,7 @@ namespace ROPv1
                                     break;
                                 default:
                                     break;
-                            }                            
+                            }
                         }
                         else
                         {
@@ -257,9 +239,13 @@ namespace ROPv1
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    Button tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
-                    tablebutton.BackColor = Color.Firebrick;
-                    tablebutton.ForeColor = Color.White;
+                    try
+                    {
+                        Button tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
+                        tablebutton.BackColor = Color.Firebrick;
+                        tablebutton.ForeColor = Color.White;
+                    }
+                    catch { }
                 }
 
                 cmd.Connection.Close();
@@ -380,41 +366,49 @@ namespace ROPv1
 
         private void SiparisMasaFormu_Load(object sender, EventArgs e)
         {
-            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
-            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
-            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
-            timerSaat.Start();
-
-            if(Properties.Settings.Default.Server != 2)
+            if (sender != null)
             {
-                dayButton.Visible = false;
-            }
-
-
-            //burada gün bilgisi alınacak ondan sonra devam edilecek
-
-
-            if (File.Exists("gunler.xml"))
-            {
-                XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
-                GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
-
-                //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
-                if (infoGunler[infoGunler.Count() - 1].gunSonuYapanKisi == null && infoGunler[infoGunler.Count() - 1].gunBasiYapanKisi != null)
+                if (Properties.Settings.Default.Server != 2)
                 {
-                    dayButton.Image = global::ROPv1.Properties.Resources.dayOn;
-                    hangiGun = infoGunler[infoGunler.Count() - 1].gunBasiVakti.Date;
+                    buttonConnection_Click(null, null);
                 }
                 else
                 {
-                    dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
-                }
-            }
-            else
-            {
-                dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
-            }
+                    buttonConnection.Visible = false;
+                    dayButton.Visible = true;
 
+                    //burada gün bilgisi alınacak ondan sonra devam edilecek
+
+                    if (File.Exists("gunler.xml"))
+                    {
+                        XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
+                        GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
+
+                        //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
+                        if (infoGunler[infoGunler.Count() - 1].gunSonuYapanKisi == null && infoGunler[infoGunler.Count() - 1].gunBasiYapanKisi != null)
+                        {
+                            dayButton.Image = global::ROPv1.Properties.Resources.dayOn;
+                            hangiGun = infoGunler[infoGunler.Count() - 1].gunBasiVakti.Date;
+                        }
+                        else
+                        {
+                            dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
+                        }
+                    }
+                    else
+                    {
+                        dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
+                    }
+                }
+
+                labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+                labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
+                labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
+                timerSaat.Start();
+
+                if (!girisYapildi && Properties.Settings.Default.Server != 2)
+                    return;
+            }
 
             if (File.Exists("restoran.xml"))
             {
@@ -496,9 +490,13 @@ namespace ROPv1
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    Button tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
-                    tablebutton.BackColor = Color.Firebrick;
-                    tablebutton.ForeColor = Color.White;
+                    try
+                    {
+                        Button tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
+                        tablebutton.BackColor = Color.Firebrick;
+                        tablebutton.ForeColor = Color.White;
+                    }
+                    catch { }
                 }
 
                 cmd.Connection.Close();
@@ -553,6 +551,280 @@ namespace ROPv1
             {
                 PortFormu portFormu = new PortFormu();
                 portFormu.ShowDialog();
+            }
+        }
+
+        void istemci_YeniMesajAlindi(MesajAlmaArgumanlari e)
+        {
+            Invoke(new dgYeniMesajAlindi(mesajAlindi), e);
+        }
+
+        private bool baglan()
+        {
+            try
+            {
+                //IP ve PORT bilgilerini al
+                string ip = Properties.Settings.Default.IP;
+                int port = Convert.ToInt32(Properties.Settings.Default.Port);
+                //Bir istemci nesnesi oluştur ve bağlan
+                istemci = new SPIAClient(ip, port);
+                return istemci.Baglan();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private void SiparisMasaFormu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Properties.Settings.Default.Server != 2)
+            {
+                //Form kapatılırken sunucuya olan bağlantıyı keselim
+                if (istemci != null)
+                {
+                    istemci.MesajYolla("komut=cikis");
+                    istemci.BaglantiyiKes();
+                }
+            }
+        }
+
+        /// Sunucudan bir mesaj alındığında buraya gelir        
+        /// <param name="e">Alınan mesajla ilgili bilgiler</param>
+        private void mesajAlindi(MesajAlmaArgumanlari e)
+        {
+            //Gelen mesajı & ve = işaretlerine göre ayrıştır
+            NameValueCollection parametreler = mesajCoz(e.Mesaj);
+            //Ayrıştırma başarısızsa çık
+            if (parametreler == null || parametreler.Count < 1)
+            {
+                return;
+            }
+            //Ayrıştırma sonucunda komuta göre gerekli işlemleri yap
+            try
+            {
+                switch (parametreler["komut"])
+                {
+                    case "giris": //Yolladığımız giris mesajına karşılık gelen mesaj
+                        komut_giris(parametreler["sonuc"]);
+                        break;
+                    case "toplumesaj": //Bir kişiden tüm gruba gelen mesaj
+                        komut_toplumesaj(parametreler["nick"], parametreler["mesaj"]);
+                        break;
+                    case "kullanicigiris": //Bir kişi girdiğinde bize gelen bilgi
+                        komut_kullanicigiris(parametreler["nick"]);
+                        break;
+                    case "kullanicicikis": //Bir kişi çıktığında bize gelen bilgi
+                        komut_kullanicicikis(parametreler["nick"]);
+                        break;
+                    case "kullanicilistesi": //Tüm kullanıcıların listesi
+                        komut_kullanicilistesi(parametreler["liste"]);
+                        break;
+                }
+            }
+            catch (Exception)
+            { }
+        }
+
+        /// giris komutunu uygulayan fonksyon        
+        /// <param name="sonuc">giriş sonucu</param>
+        private void komut_giris(string sonuc)
+        {
+            //giriş başarılıysa gerekli kontrolleri aktif yap
+            if (sonuc == "basarili")
+            {
+                buttonConnection.Image = Properties.Resources.baglantiOK;
+                buttonConnection.Text = "Bağlı";
+                if (timerSaat.Enabled)
+                    SiparisMasaFormu_Load(null, null);
+            }
+            //giriş başarısızsa (nick kullanımdaysa) sonuna 1-9 arası rastgele bir sayı ekleyip yeniden giriş yap
+            else
+            {
+                buttonConnection.Image = Properties.Resources.baglantiYOK;
+                buttonConnection.Text = "Bağlan";
+
+                if (Properties.Settings.Default.BilgisayarAdi == "")
+                {
+                    AdisyonNotuFormu nickForm = new AdisyonNotuFormu("Girilen bilgisayar adı kullanımda, lütfen başka bir bilgisayar adı giriniz");
+                    nickForm.ShowDialog();
+                    nick = nickForm.AdisyonNotu;
+                }
+                else
+                {
+                    nick = Properties.Settings.Default.BilgisayarAdi;
+                }
+
+                istemci.MesajYolla("komut=giris&nick=" + nick);
+
+            }
+        }
+
+        /// toplumesaj komutunu uygulayan fonksyon        
+        /// <param name="nick">Mesajı gönderen kullanıcının nick'i</param>
+        /// <param name="mesaj">Gönderilen mesaj</param>
+        private void komut_toplumesaj(string nick, string mesaj)
+        {
+            //gelen mesajı sohbet alanına ekle
+            /* henüz işe yaramaz, burada gönderilecek mesaj yok hesap kısmında olabilir
+            string mesajlar = txtTopluMesajlar.Text;
+            mesajlar += "\r\n" + nick + ": " + mesaj;
+            txtTopluMesajlar.Text = mesajlar;*/
+        }
+
+        /// kullanicigiris komutunu uygulayan fonksyon        
+        /// <param name="nick"></param>
+        private void komut_kullanicigiris(string nick)
+        {
+            //Eğer kullanıcı 'kullanıcılar' listesinde yoksa listeye ekle
+            lock (kullanicilar)
+            {
+                if (!kullanicilar.Contains(nick))
+                {
+                    kullanicilar.Add(nick);
+                }
+                kullanicilar.Sort();
+            }
+        }
+
+        /// kullanicicikis komutunu uygulayan fonksyon        
+        /// <param name="nick"></param>
+        private void komut_kullanicicikis(string nick)
+        {
+            //Eğer kullanıcı 'kullanıcılar' listesinde varsa listeden sil
+            lock (kullanicilar)
+            {
+                if (kullanicilar.Contains(nick))
+                {
+                    kullanicilar.Remove(nick);
+                }
+            }
+        }
+
+        /// kullanicilistesi komutunu uygulayan fonksyon        
+        /// <param name="liste">Sistemdeki kullanıcıların , ile ayırılmış listesi</param>
+        private void komut_kullanicilistesi(string liste)
+        {
+            //Tüm kullanıcıları temizle ve gelen listeye göre yeniden oluştur
+            try
+            {
+                //Gelen mesajı , ile ayır
+                string[] kullaniciDizisi = liste.Split(',');
+                lock (kullanicilar)
+                {
+                    //Mevcut listeyi temizle
+                    kullanicilar.Clear();
+                    //Gelen listeyi ekle
+                    kullanicilar.AddRange(kullaniciDizisi);
+                }
+            }
+            catch (Exception)
+            { }
+        }
+
+        /// Toplu mesaj yollamak için        
+        private void txtTopluMesajGonder()
+        {
+            //mesajı sunucuya yolla
+            //istemci.MesajYolla("komut=toplumesaj&mesaj=" + txtTopluMesaj.Text);
+        }
+
+        public NameValueCollection mesajCoz(string mesaj)
+        {
+            try
+            {
+                //& işaretine göre böl ve diziye at
+                string[] parametreler = mesaj.Split('&');
+                //dönüş değeri için bir NameValueCollection oluştur
+                NameValueCollection nvcParametreler = new NameValueCollection(parametreler.Length);
+                //bölünen her parametreyi = işaretine göre yeniden böl ve anahtar/değer çiftleri üret
+                foreach (string parametre in parametreler)
+                {
+                    string[] esitlik = parametre.Split('=');
+                    nvcParametreler.Add(esitlik[0], esitlik[1]);
+                }
+                //oluşturulan koleksiyonu dönder
+                return nvcParametreler;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private void buttonConnection_Click(object sender, EventArgs e)
+        {
+            if (girisYapildi)
+                return;
+            if(Properties.Settings.Default.BilgisayarAdi == "")
+            {
+                AdisyonNotuFormu nickForm = new AdisyonNotuFormu("Bilgisayar adını giriniz");
+                nickForm.ShowDialog();
+                nick = nickForm.AdisyonNotu;
+            }
+            else
+            {
+                nick = Properties.Settings.Default.BilgisayarAdi;
+            }
+
+            buttonConnection.Text = "Bağlanıyor";
+
+            if (!baglan())
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Sunucuya bağlanılamadı, ayarları kontrol edip tekrar deneyiniz", false))
+                {
+                    dialog.ShowDialog();
+                }
+                buttonConnection.Text = "Bağlan";
+                return;
+            }
+            else
+            {
+                girisYapildi = true;              
+            }
+
+            //Olaylara kaydol
+            istemci.YeniMesajAlindi += new dgYeniMesajAlindi(istemci_YeniMesajAlindi);
+            //Sunucuya giriş mesajı gönder
+            istemci.MesajYolla("komut=giris&nick=" + nick);
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            bool basarili = false;
+            
+            XMLAktarClient aktarimServeri = new XMLAktarClient();
+            for (int i = 0; i < 8; i++)
+            {
+                basarili = aktarimServeri.ClientTarafi();
+                if (!basarili)
+                    break;
+            }
+
+            if (basarili)
+            {
+                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("gunler.xml") || !File.Exists("restoran.xml"))
+                {
+                    using (KontrolFormu dialog2 = new KontrolFormu("Dosyalarda eksik var, lütfen serverdaki dosyaları kontrol ediniz", false))
+                    {
+                        dialog2.ShowDialog();
+                    }
+                }
+                else
+                {
+                    using (KontrolFormu dialog3 = new KontrolFormu("Dosya alımı başarılı, lütfen yeniden giriş yapınız", false))
+                    {
+                        dialog3.ShowDialog();
+                    }
+                }
+            }
+            else
+            {
+                using (KontrolFormu dialog4 = new KontrolFormu("Dosya alımı başarısız, server alıma ayarlanmamışsa ayarladıktan sonra lütfen tekrar deneyiniz", false))
+                {
+                    dialog4.ShowDialog();
+                }
             }
         }
     }

@@ -196,7 +196,6 @@
       <DependentUpon>AdisyonNotuFormu.cs</DependentUpon>
     </Compile>
     <Compile Include="GenelKullanılanlar\Helper.cs" />
-    <Compile Include="GenelKullanılanlar\ServerSPIA.cs" />
     <Compile Include="GenelKullanılanlar\SQLBaglantisi.cs" />
     <Compile Include="GenelKullanılanlar\XMLAktarClient.cs" />
     <Compile Include="GenelKullanılanlar\XMLAktarServer.cs" />
@@ -402,6 +401,9 @@
     <None Include="Resources\addBig.png" />
     <None Include="Resources\minus.png" />
     <None Include="Resources\indirim.png" />
+    <None Include="Resources\baglantiOK.png" />
+    <None Include="Resources\baglantiYOK.png" />
+    <None Include="Resources\dataUpdate.png" />
     <Content Include="ROP.ico" />
   </ItemGroup>
   <ItemGroup />

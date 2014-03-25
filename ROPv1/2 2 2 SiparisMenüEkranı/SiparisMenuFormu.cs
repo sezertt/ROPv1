@@ -305,11 +305,27 @@ namespace ROPv1
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    decimal yemeginFiyati = dr.GetDecimal(0);
-                    double kacPorsiyon = (double)dr.GetDecimal(1);
-                    string yemeginAdi = dr.GetString(2);
-                    bool ikramMi = dr.GetBoolean(3);
-                    string Garson = dr.GetString(4);
+                    decimal yemeginFiyati;
+                    double kacPorsiyon;
+                    string yemeginAdi;
+                    bool ikramMi;
+                    string Garson;
+                    try
+                    {
+                        yemeginFiyati = dr.GetDecimal(0);
+                        kacPorsiyon = (double)dr.GetDecimal(1);
+                        yemeginAdi = dr.GetString(2);
+                        ikramMi = dr.GetBoolean(3);
+                        Garson = dr.GetString(4);
+                    }
+                    catch
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Masa bilgileri alınırken hata oluştu, lütfen tekrar deneyiniz", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        break;
+                    }
 
                     int hangiGrup;
 
@@ -617,7 +633,7 @@ namespace ROPv1
             AdisyonNotuFormu notFormu;
 
             //Burada adisyonNotu'nu sql den al
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonNotu FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "'"); 
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonNotu FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
             SqlDataReader dr = cmd.ExecuteReader();
             dr.Read();
 
@@ -627,10 +643,14 @@ namespace ROPv1
             }
             catch
             {
-
+                using (KontrolFormu dialog = new KontrolFormu("Adisyon notunu oluştururken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                {
+                    dialog.ShowDialog();
+                }
+                return;
             }
 
-            string adisyonNotuDegistiMi = adisyonNotu;       
+            string adisyonNotuDegistiMi = adisyonNotu;
 
             if (adisyonNotu != "")
                 notFormu = new AdisyonNotuFormu(adisyonNotu); // varsa notu yolla 
@@ -712,13 +732,35 @@ namespace ROPv1
 
                     dr.Read();
 
-                    adisyonID = dr.GetInt32(1);
+                    try
+                    {
+                        adisyonID = dr.GetInt32(1);
+                    }
+                    catch
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        return;
+                    }
 
                     do
                     {
-                        siparisID = dr.GetInt32(0);
+                        try
+                        {
+                            siparisID = dr.GetInt32(0);
 
-                        porsiyon = dr.GetDecimal(2);
+                            porsiyon = dr.GetDecimal(2);
+                        }
+                        catch
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
 
                         if (porsiyon < istenilenikramSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
                         {
@@ -738,12 +780,6 @@ namespace ROPv1
 
                             istenilenikramSayisi = 0;
                         }
-
-                        if (istenilenikramSayisi == 0)
-                        {
-                            adisyonUpdateHesapveKalan(adisyonID);
-                            break;
-                        }
                     } while (dr.Read());
 
                     if (istenilenikramSayisi != 0)// ikram edilecekler daha bitmedi başka garsonların siparişlerinden ikram iptaline devam et
@@ -753,14 +789,34 @@ namespace ROPv1
                         dr = cmd.ExecuteReader();
 
                         dr.Read();
-
-                        adisyonID = dr.GetInt32(1);
-
+                        try
+                        {
+                            adisyonID = dr.GetInt32(1);
+                        }
+                        catch
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
                         do
                         {
-                            siparisID = dr.GetInt32(0);
+                            try
+                            {
+                                siparisID = dr.GetInt32(0);
 
-                            porsiyon = dr.GetDecimal(2);
+                                porsiyon = dr.GetDecimal(2);
+                            }
+                            catch
+                            {
+                                using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                                {
+                                    dialog.ShowDialog();
+                                }
+                                return;
+                            }
 
                             if (porsiyon < istenilenikramSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
                             {
@@ -780,14 +836,9 @@ namespace ROPv1
 
                                 istenilenikramSayisi = 0;
                             }
-
-                            if (istenilenikramSayisi == 0)
-                            {
-                                adisyonUpdateHesapveKalan(adisyonID);
-                                break;
-                            }
                         } while (dr.Read());
                     }
+                    adisyonUpdateHesapveKalan(adisyonID);
                     cmd.Connection.Close();
                     cmd.Connection.Dispose();
                 }
@@ -816,7 +867,20 @@ namespace ROPv1
                         dr = cmd.ExecuteReader();
 
                         dr.Read();
-                        int adisyonID = dr.GetInt32(0);
+                        int adisyonID;
+                        
+                        try
+                        {
+                            adisyonID = dr.GetInt32(0);
+                        }
+                        catch
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Hesabı oluştururken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
 
                         ikramInsert(adisyonID, dusulecekDeger, istenilenikramSayisi, listHesap.Items[siparisinIndexi].SubItems[1].Text);
                         masaAcikMi = true;
@@ -883,13 +947,34 @@ namespace ROPv1
 
                 dr.Read();
 
-                adisyonID = dr.GetInt32(1);
-
+                try
+                {
+                    adisyonID = dr.GetInt32(1);
+                }
+                catch
+                {
+                    using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                    {
+                        dialog.ShowDialog();
+                    }
+                    return;
+                }
                 do
                 {
-                    siparisID = dr.GetInt32(0);
+                    try
+                    {
+                        siparisID = dr.GetInt32(0);
 
-                    porsiyon = dr.GetDecimal(2);
+                        porsiyon = dr.GetDecimal(2);
+                    }
+                    catch
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        return;
+                    }
 
                     if (porsiyon < istenilenIkramiptalSayisi) // elimizdeki ikramlar iptali istenenden küçükse
                     {
@@ -909,12 +994,6 @@ namespace ROPv1
 
                         istenilenIkramiptalSayisi = 0;
                     }
-
-                    if (istenilenIkramiptalSayisi == 0)
-                    {
-                        adisyonUpdateHesapveKalan(adisyonID);
-                        break;
-                    }
                 } while (dr.Read());
 
                 if (istenilenIkramiptalSayisi != 0)// ikram edilecekler daha bitmedi başka garsonların siparişlerinden ikram iptaline devam et
@@ -924,14 +1003,35 @@ namespace ROPv1
                     dr = cmd.ExecuteReader();
 
                     dr.Read();
-
-                    adisyonID = dr.GetInt32(1);
+                    try
+                    {
+                        adisyonID = dr.GetInt32(1);
+                    }
+                    catch
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        return;
+                    }
 
                     do
                     {
-                        siparisID = dr.GetInt32(0);
+                        try
+                        {
+                            siparisID = dr.GetInt32(0);
 
-                        porsiyon = dr.GetDecimal(2);
+                            porsiyon = dr.GetDecimal(2);
+                        }
+                        catch
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
 
                         if (porsiyon < istenilenIkramiptalSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
                         {
@@ -951,14 +1051,10 @@ namespace ROPv1
 
                             istenilenIkramiptalSayisi = 0;
                         }
-
-                        if (istenilenIkramiptalSayisi == 0)
-                        {
-                            adisyonUpdateHesapveKalan(adisyonID);
-                            break;
-                        }
                     } while (dr.Read());
                 }
+
+                adisyonUpdateHesapveKalan(adisyonID);
 
                 if (listHesap.SelectedItems[0].Text == "0")
                 {
@@ -1040,14 +1136,35 @@ namespace ROPv1
                 decimal porsiyon;
 
                 dr.Read();
-
-                adisyonID = dr.GetInt32(1);
+                try
+                {
+                    adisyonID = dr.GetInt32(1);
+                }
+                catch
+                {
+                    using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                    {
+                        dialog.ShowDialog();
+                    }
+                    return;
+                }
 
                 do
                 {
-                    siparisID = dr.GetInt32(0);
+                    try
+                    {
+                        siparisID = dr.GetInt32(0);
 
-                    porsiyon = dr.GetDecimal(2);
+                        porsiyon = dr.GetDecimal(2);
+                    }
+                    catch
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        return;
+                    }
 
                     if (porsiyon < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
                     {
@@ -1067,12 +1184,6 @@ namespace ROPv1
 
                         istenilenSiparisiptalSayisi = 0;
                     }
-
-                    if (istenilenSiparisiptalSayisi == 0)
-                    {
-                        adisyonUpdateHesapveKalan(adisyonID);
-                        break;
-                    }
                 } while (dr.Read());
 
                 if (istenilenSiparisiptalSayisi != 0)// iptal edilecekler daha bitmedi başka garsonların siparişlerinden iptale devam et
@@ -1082,14 +1193,35 @@ namespace ROPv1
                     dr = cmd.ExecuteReader();
 
                     dr.Read();
-
-                    adisyonID = dr.GetInt32(1);
+                    try
+                    {
+                        adisyonID = dr.GetInt32(1);
+                    }
+                    catch
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        return;
+                    }
 
                     do
                     {
-                        siparisID = dr.GetInt32(0);
+                        try
+                        {
+                            siparisID = dr.GetInt32(0);
 
-                        porsiyon = dr.GetDecimal(2);
+                            porsiyon = dr.GetDecimal(2);
+                        }
+                        catch
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
 
                         if (porsiyon < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
                         {
@@ -1109,14 +1241,10 @@ namespace ROPv1
 
                             istenilenSiparisiptalSayisi = 0;
                         }
-
-                        if (istenilenSiparisiptalSayisi == 0)
-                        {
-                            adisyonUpdateHesapveKalan(adisyonID);
-                            break;
-                        }
                     } while (dr.Read());
                 }
+
+                adisyonUpdateHesapveKalan(adisyonID);
 
                 cmd.Connection.Close();
                 cmd.Connection.Dispose();
@@ -1268,15 +1396,6 @@ namespace ROPv1
                 buttonHesapOde.Enabled = true;
         }
 
-        private void masaIslemiBitti()
-        {
-            SqlCommand cmd = SQLBaglantisi.getCommand("DELETE FROM IslemdekiMasalar WHERE MasaAdlari='" + MasaAdi + "' AND DepartmanAdlari='" + hangiDepartman.departmanAdi + "'");
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
         // sipariş işlemleri bittiğinde basılan buton
         private void buttonTamam_Click(object sender, EventArgs e)
         {
@@ -1297,9 +1416,6 @@ namespace ROPv1
                 }
                 catch
                 {
-                    //Masa ile işimiz bitti işlemlerden kaldırıyoruz
-                    masaIslemiBitti();
-
                     this.Close();
                     return;
                 }
@@ -1318,9 +1434,6 @@ namespace ROPv1
                     adisyonIptal(adisyonID);
                 }
 
-                //Masa ile işimiz bitti işlemlerden kaldırıyoruz
-                masaIslemiBitti();
-
                 this.Close();
             }
             else
@@ -1334,7 +1447,7 @@ namespace ROPv1
                     dr.GetBoolean(0);
                     masaAcikMi = true;
                 }
-                catch // kapalı
+                catch// kapalı
                 {
                     adisyonOlustur();
                 }
@@ -1349,7 +1462,19 @@ namespace ROPv1
 
                     dr.Read();
 
-                    int adisyonID = dr.GetInt32(0);
+                    int adisyonID;
+                    try
+                    {
+                        adisyonID = dr.GetInt32(0);
+                    }
+                    catch
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Adisyon oluştururken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        return;
+                    }
 
                     adisyonUpdateHesapveKalan(adisyonID);
 
@@ -1357,10 +1482,6 @@ namespace ROPv1
                     cmd.Connection.Close();
                     cmd.Connection.Dispose();
                 }
-
-                //Masa ile işimiz bitti işlemlerden kaldırıyoruz
-                masaIslemiBitti();
-
                 this.Close();
             }
         }
@@ -1386,7 +1507,7 @@ namespace ROPv1
             buttonMasaDegistir.Enabled = true;
         }
 
-        public int bosAdisyonOlustur(string masaAdi,string departmanAdi)
+        public int bosAdisyonOlustur(string masaAdi, string departmanAdi)
         {
             SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Adisyon(AcikMi,AdisyonNotu,AcilisZamani,DepartmanAdi,MasaAdi,ToplamHesap,KalanHesap) VALUES(@_acikMi,@_AdisyonNotu,@_AcilisZamani,@_DepartmanAdi,@_MasaAdi,@_ToplamHesap,@_KalanHesap) SELECT SCOPE_IDENTITY()");
 
@@ -1403,11 +1524,6 @@ namespace ROPv1
             cmd.Connection.Dispose();
 
             return adisyonID;
-        }
-
-        private void SiparisMenuFormu_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            masaIslemiBitti();
         }
 
         //Masaların adisyonlarını değiştiren method
@@ -1495,7 +1611,7 @@ namespace ROPv1
                     SqlDataReader dr = cmd.ExecuteReader();
 
                     dr.Read();
-                    
+
                     try
                     {
                         aktarilacakMasaninAdisyonID = dr.GetInt32(0);
@@ -1511,7 +1627,7 @@ namespace ROPv1
                         if (masaDegistirForm.yeniDepartman == hangiDepartman.departmanAdi)
                             masaAcikMi2 = masaDegistirForm.yeniMasa;
                     }
-                    
+
 
                     decimal istenilenTasimaMiktari, aktarilanSiparislerinFiyati = 0, tumUrunlerinFiyati = 0;
                     int tasinacakUrunIkramMi;
@@ -1553,13 +1669,35 @@ namespace ROPv1
 
                         dr.Read();
 
-                        adisyonID = dr.GetInt32(1);
+                        try
+                        {
+                            adisyonID = dr.GetInt32(1);
+                        }
+                        catch
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Ürünü taşırken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
 
                         do
                         {
-                            siparisID = dr.GetInt32(0);
+                            try
+                            {
+                                siparisID = dr.GetInt32(0);
 
-                            porsiyon = dr.GetDecimal(2);
+                                porsiyon = dr.GetDecimal(2);
+                            }
+                            catch
+                            {
+                                using (KontrolFormu dialog = new KontrolFormu("Ürünü taşırken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                                {
+                                    dialog.ShowDialog();
+                                }
+                                return;
+                            }
 
                             if (porsiyon < istenilenTasimaMiktari) // elimizde ikram edilmemişler ikramı istenenden küçükse
                             {
@@ -1600,13 +1738,35 @@ namespace ROPv1
 
                             dr.Read();
 
-                            adisyonID = dr.GetInt32(1);
+                            try
+                            {
+                                adisyonID = dr.GetInt32(1);
+                            }
+                            catch
+                            {
+                                using (KontrolFormu dialog = new KontrolFormu("Ürünü taşırken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                                {
+                                    dialog.ShowDialog();
+                                }
+                                return;
+                            }
 
                             do
                             {
-                                siparisID = dr.GetInt32(0);
+                                try
+                                {
+                                    siparisID = dr.GetInt32(0);
 
-                                porsiyon = dr.GetDecimal(2);
+                                    porsiyon = dr.GetDecimal(2);
+                                }
+                                catch
+                                {
+                                    using (KontrolFormu dialog = new KontrolFormu("Ürünü taşırken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                                    {
+                                        dialog.ShowDialog();
+                                    }
+                                    return;
+                                }
 
                                 if (porsiyon < istenilenTasimaMiktari) // elimizde ikram edilmemişler ikramı istenenden küçükse
                                 {
@@ -1732,7 +1892,7 @@ namespace ROPv1
         {
             SqlCommand cmd;
 
-            if(adisyonNotu != "")
+            if (adisyonNotu != "")
             {
                 cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AdisyonNotu=@adisyonNotu, ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
                 cmd.Parameters.AddWithValue("@adisyonNotu", adisyonNotu);
@@ -1740,7 +1900,7 @@ namespace ROPv1
             else
             {
                 cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
-            }            
+            }
             cmd.Parameters.AddWithValue("@hesap", Convert.ToDecimal(labelToplamHesap.Text));
             cmd.Parameters.AddWithValue("@kalan", Convert.ToDecimal(labelKalanHesap.Text));
             cmd.Parameters.AddWithValue("@id", adisyonID);

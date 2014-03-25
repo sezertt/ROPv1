@@ -265,7 +265,7 @@ namespace ROPv1
         {
             if (ayarCheckBox.ForeColor == Color.White)
             {
-                if (e.Control && e.Shift && e.KeyCode == Keys.D3)
+                if (e.Control && e.Shift && e.KeyCode == Keys.D3 && leftPanelView.Nodes.Count < 1)
                 {
                     leftPanelView.Nodes.Add("Kullanıcılar");
                     leftPanelView.Nodes.Add("Departmanlar");
