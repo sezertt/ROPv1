@@ -958,5 +958,13 @@ namespace ROPv1
             if (treeUrunAdi.Nodes[0].GetNodeCount(false) > 0)
                 treeUrunAdi.SelectedNode = treeUrunAdi.Nodes[0].Nodes[0];
         }
+
+        private void textboxUrunName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == ',' || e.KeyChar == '-')
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

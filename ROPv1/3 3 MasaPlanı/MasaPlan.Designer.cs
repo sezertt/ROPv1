@@ -130,12 +130,14 @@
             // textTableDesignName
             // 
             this.textTableDesignName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textTableDesignName.ContextMenuStrip = this.contextMenuStrip1;
             this.textTableDesignName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textTableDesignName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textTableDesignName.Location = new System.Drawing.Point(9, 54);
             this.textTableDesignName.Name = "textTableDesignName";
             this.textTableDesignName.Size = new System.Drawing.Size(244, 32);
             this.textTableDesignName.TabIndex = 2;
+            this.textTableDesignName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textTableName_KeyPress);
             // 
             // label7
             // 

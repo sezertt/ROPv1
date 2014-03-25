@@ -890,5 +890,13 @@ namespace ROPv1
             }
             #endregion
         }
+
+        private void textBoxYeniKategori_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == ',' || e.KeyChar == '-')
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

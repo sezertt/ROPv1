@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.treeMenununUrunler = new System.Windows.Forms.TreeView();
             this.buttonDeleteUrun = new System.Windows.Forms.Button();
             this.buttonSaveMenu = new System.Windows.Forms.Button();
@@ -45,6 +46,7 @@
             this.buttonAddNewMenu = new System.Windows.Forms.Button();
             this.textboxUrunAra = new System.Windows.Forms.TextBox();
             this.lblUrunAra = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newUrunMenuForm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -187,6 +189,7 @@
             this.textboxFiyat.Size = new System.Drawing.Size(195, 32);
             this.textboxFiyat.TabIndex = 48;
             this.textboxFiyat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textboxFiyat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxFiyat_KeyPress);
             // 
             // lblFiyat
             // 
@@ -203,12 +206,14 @@
             // textboxMenuName
             // 
             this.textboxMenuName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxMenuName.ContextMenuStrip = this.contextMenuStrip1;
             this.textboxMenuName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxMenuName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textboxMenuName.Location = new System.Drawing.Point(6, 54);
             this.textboxMenuName.Name = "textboxMenuName";
             this.textboxMenuName.Size = new System.Drawing.Size(266, 32);
             this.textboxMenuName.TabIndex = 2;
+            this.textboxMenuName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxMenuName_KeyPress);
             // 
             // label5
             // 
@@ -313,6 +318,11 @@
             this.lblUrunAra.TabIndex = 54;
             this.lblUrunAra.Text = "Ürün Ara";
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // UrunMenuleri
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -354,6 +364,7 @@
         private System.Windows.Forms.Label lblFiyat;
         private System.Windows.Forms.TextBox textboxUrunAra;
         private System.Windows.Forms.Label lblUrunAra;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 
 
     }

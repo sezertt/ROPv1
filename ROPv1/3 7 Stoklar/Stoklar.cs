@@ -575,5 +575,13 @@ namespace ROPv1
             else
                 buttonSaveNewStok.Enabled = true;
         }
+
+        private void textboxUrunAdi_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == ',' || e.KeyChar == '-')
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

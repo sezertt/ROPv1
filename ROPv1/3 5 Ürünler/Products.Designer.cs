@@ -153,6 +153,7 @@
             // textboxUrunName
             // 
             this.textboxUrunName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxUrunName.ContextMenuStrip = this.contextMenuStrip1;
             this.textboxUrunName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxUrunName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textboxUrunName.Location = new System.Drawing.Point(8, 57);
@@ -160,6 +161,7 @@
             this.textboxUrunName.Name = "textboxUrunName";
             this.textboxUrunName.Size = new System.Drawing.Size(305, 32);
             this.textboxUrunName.TabIndex = 2;
+            this.textboxUrunName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxUrunName_KeyPress);
             // 
             // label7
             // 
@@ -181,7 +183,7 @@
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label5.Location = new System.Drawing.Point(4, 30);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(103, 24);
+            this.label5.Size = new System.Drawing.Size(104, 24);
             this.label5.TabIndex = 19;
             this.label5.Text = "Ürün Adı:";
             // 
@@ -254,7 +256,7 @@
             this.labelUrunSayisiYazisi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelUrunSayisiYazisi.Location = new System.Drawing.Point(218, 305);
             this.labelUrunSayisiYazisi.Name = "labelUrunSayisiYazisi";
-            this.labelUrunSayisiYazisi.Size = new System.Drawing.Size(141, 24);
+            this.labelUrunSayisiYazisi.Size = new System.Drawing.Size(142, 24);
             this.labelUrunSayisiYazisi.TabIndex = 43;
             this.labelUrunSayisiYazisi.Text = "Ürün Sayısı =";
             // 

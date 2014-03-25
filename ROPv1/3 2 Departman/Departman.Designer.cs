@@ -154,6 +154,7 @@
             this.comboNewDepName.Name = "comboNewDepName";
             this.comboNewDepName.Size = new System.Drawing.Size(360, 32);
             this.comboNewDepName.TabIndex = 2;
+            this.comboNewDepName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboNewDepName_KeyPress);
             // 
             // label7
             // 

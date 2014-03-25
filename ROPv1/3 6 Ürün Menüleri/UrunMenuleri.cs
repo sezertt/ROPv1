@@ -513,5 +513,27 @@ namespace ROPv1
                 treeMenununUrunler.Nodes.Add(UrunMenuListesi[treeMenuler.SelectedNode.Index].urun[i].urunAdi);
             }
         }
+
+        private void textboxMenuName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == ',' || e.KeyChar == '-')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textboxFiyat_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if (e.KeyChar == ',' && (sender as TextBox).Text.IndexOf(',') > -1)
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

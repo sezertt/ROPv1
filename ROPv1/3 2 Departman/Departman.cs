@@ -428,5 +428,13 @@ namespace ROPv1
             if (treeDepartman.Nodes.Count > 9)
                 buttonAddDepartment.Enabled = false;
         }
+
+        private void comboNewDepName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == ',' || e.KeyChar == '-')
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

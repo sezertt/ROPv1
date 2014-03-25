@@ -67,6 +67,7 @@
             // textboxUrunAdi
             // 
             this.textboxUrunAdi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxUrunAdi.ContextMenuStrip = this.contextMenuStrip1;
             this.textboxUrunAdi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxUrunAdi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textboxUrunAdi.Location = new System.Drawing.Point(12, 56);
@@ -74,6 +75,7 @@
             this.textboxUrunAdi.Size = new System.Drawing.Size(302, 32);
             this.textboxUrunAdi.TabIndex = 1;
             this.textboxUrunAdi.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxUrunAdi_KeyDown);
+            this.textboxUrunAdi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxUrunAdi_KeyPress);
             // 
             // labelUrunAdi
             // 
@@ -83,7 +85,7 @@
             this.labelUrunAdi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.labelUrunAdi.Location = new System.Drawing.Point(8, 29);
             this.labelUrunAdi.Name = "labelUrunAdi";
-            this.labelUrunAdi.Size = new System.Drawing.Size(103, 24);
+            this.labelUrunAdi.Size = new System.Drawing.Size(104, 24);
             this.labelUrunAdi.TabIndex = 19;
             this.labelUrunAdi.Text = "Ürün Adı:";
             // 
@@ -140,7 +142,7 @@
             this.labelUrunMiktari.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.labelUrunMiktari.Location = new System.Drawing.Point(8, 95);
             this.labelUrunMiktari.Name = "labelUrunMiktari";
-            this.labelUrunMiktari.Size = new System.Drawing.Size(137, 24);
+            this.labelUrunMiktari.Size = new System.Drawing.Size(138, 24);
             this.labelUrunMiktari.TabIndex = 19;
             this.labelUrunMiktari.Text = "Ürün Miktarı:";
             // 
@@ -245,7 +247,7 @@
             this.lblUrunAra.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.lblUrunAra.Location = new System.Drawing.Point(7, 11);
             this.lblUrunAra.Name = "lblUrunAra";
-            this.lblUrunAra.Size = new System.Drawing.Size(105, 24);
+            this.lblUrunAra.Size = new System.Drawing.Size(106, 24);
             this.lblUrunAra.TabIndex = 44;
             this.lblUrunAra.Text = "Ürün Ara:";
             // 

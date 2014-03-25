@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.newMenuForm = new System.Windows.Forms.GroupBox();
             this.buttonDeleteKategori = new System.Windows.Forms.Button();
             this.textboxMenuName = new System.Windows.Forms.TextBox();
@@ -48,6 +49,7 @@
             this.treeMenuKategori = new System.Windows.Forms.TreeView();
             this.buttonAddNewKategori = new System.Windows.Forms.Button();
             this.buttonAddNewMenu = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newMenuForm.SuspendLayout();
             this.newKategoriForm.SuspendLayout();
             this.SuspendLayout();
@@ -91,12 +93,14 @@
             // textboxMenuName
             // 
             this.textboxMenuName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxMenuName.ContextMenuStrip = this.contextMenuStrip1;
             this.textboxMenuName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxMenuName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textboxMenuName.Location = new System.Drawing.Point(6, 52);
             this.textboxMenuName.Name = "textboxMenuName";
             this.textboxMenuName.Size = new System.Drawing.Size(266, 32);
             this.textboxMenuName.TabIndex = 2;
+            this.textboxMenuName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxYeniKategori_KeyPress);
             // 
             // label5
             // 
@@ -258,12 +262,14 @@
             // textBoxYeniKategori
             // 
             this.textBoxYeniKategori.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxYeniKategori.ContextMenuStrip = this.contextMenuStrip1;
             this.textBoxYeniKategori.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxYeniKategori.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxYeniKategori.Location = new System.Drawing.Point(6, 52);
             this.textBoxYeniKategori.Name = "textBoxYeniKategori";
             this.textBoxYeniKategori.Size = new System.Drawing.Size(266, 32);
             this.textBoxYeniKategori.TabIndex = 2;
+            this.textBoxYeniKategori.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxYeniKategori_KeyPress);
             // 
             // label1
             // 
@@ -384,6 +390,11 @@
             this.buttonAddNewMenu.UseVisualStyleBackColor = false;
             this.buttonAddNewMenu.Click += new System.EventHandler(this.createNewMenuButtonPressed);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // MenuControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -429,6 +440,7 @@
         private System.Windows.Forms.Button buttonCancelNewKategori;
         private System.Windows.Forms.Button buttonAddKategori;
         private System.Windows.Forms.Button buttonDeleteKategori;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 
     }
 }
