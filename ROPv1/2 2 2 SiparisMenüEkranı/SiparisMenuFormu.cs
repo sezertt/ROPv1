@@ -75,7 +75,7 @@ namespace ROPv1
             }
             //yetkilerine göre işlemlere izin verme
 
-            if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciYeri].UIY[7]))
+            if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciYeri].UIY[4]))
             {
                 buttonUrunIkram.Enabled = false;
                 buttonUrunIptal.Enabled = false;

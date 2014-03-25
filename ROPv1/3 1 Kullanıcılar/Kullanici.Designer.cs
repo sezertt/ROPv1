@@ -33,10 +33,7 @@
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Raporlar");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Stoklar");
             System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Adisyonlar");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Ayarlar");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Gün İşlemleri");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Şifre/Pin İşlemleri");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Hesap İzinleri");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Hesap İzinleri");
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.label1 = new System.Windows.Forms.Label();
             this.comboNewTitle = new System.Windows.Forms.ComboBox();
@@ -317,24 +314,15 @@
             treeNode3.Text = "Stoklar";
             treeNode4.Name = "Adisyon";
             treeNode4.Text = "Adisyonlar";
-            treeNode5.Name = "Ayar";
-            treeNode5.Text = "Ayarlar";
-            treeNode6.Name = "GunIslemleri";
-            treeNode6.Text = "Gün İşlemleri";
-            treeNode7.Name = "PinPassword";
-            treeNode7.Text = "Şifre/Pin İşlemleri";
-            treeNode8.Name = "ikramIptal";
-            treeNode8.Text = "Hesap İzinleri";
-            treeNode8.ToolTipText = "İptal/İkram/İndirim İzinleri";
+            treeNode5.Name = "ikramIptal";
+            treeNode5.Text = "Hesap İzinleri";
+            treeNode5.ToolTipText = "İptal/İkram/İndirim İzinleri";
             this.treeYetkiler.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
             treeNode3,
             treeNode4,
-            treeNode5,
-            treeNode6,
-            treeNode7,
-            treeNode8});
+            treeNode5});
             this.treeYetkiler.ShowLines = false;
             this.treeYetkiler.ShowNodeToolTips = true;
             this.treeYetkiler.ShowPlusMinus = false;

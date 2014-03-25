@@ -19,7 +19,7 @@ namespace ROPv1
 
         public UItemp()
         {
-            UIY = new string[8];
+            UIY = new string[5];
         }
     }
 }

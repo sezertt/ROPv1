@@ -146,17 +146,10 @@ namespace ROPv1
             {
                 #region
                 case 0: //Kullanıcılar Seçildi
-                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[6]))
-                    {
-                        leftPanelView.SelectedNode = leftPanelView.Nodes[1];
-                    }
-                    else
-                    {
-                        leftPanelView.SelectedNode = leftPanelView.Nodes[0];
-                        Kullanici kullaniciView = new Kullanici();
-                        splitPanel.Panel2.Controls.Add(kullaniciView);
-                        kullaniciView.Dock = DockStyle.Fill;
-                    }
+                    leftPanelView.SelectedNode = leftPanelView.Nodes[0];
+                    Kullanici kullaniciView = new Kullanici();
+                    splitPanel.Panel2.Controls.Add(kullaniciView);
+                    kullaniciView.Dock = DockStyle.Fill;
                     break;
 
                 case 1: //Departmanlar Seçildi
@@ -189,7 +182,6 @@ namespace ROPv1
                         UrunMenuleri urunMenuView = new UrunMenuleri();
                         splitPanel.Panel2.Controls.Add(urunMenuView);
                         urunMenuView.Dock = DockStyle.Fill;
-                        
                     }
                     break;
                 case 6: //Stok Ayarları Seçildi
@@ -240,7 +232,7 @@ namespace ROPv1
                     }
                 }
                 //yetkilerine göre işlemlere izin verme
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[i]))
                     {
@@ -275,12 +267,7 @@ namespace ROPv1
                     leftPanelView.Nodes.Add("Ürün Menüleri");
                     leftPanelView.Nodes.Add("Stok Ayarları");
 
-                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[6]))
-                    {
-                        leftPanelView.SelectedNode = leftPanelView.Nodes[1];
-                    }
-                    else
-                        leftPanelView.SelectedNode = leftPanelView.Nodes[0];
+                    leftPanelView.SelectedNode = leftPanelView.Nodes[0];
                 }
             }
         }
@@ -289,17 +276,17 @@ namespace ROPv1
         {
             ShowWaitForm();
             bool basarili = true;
-            string[] xmlDosyalari = { "gunler.xml", "kategoriler.xml", "masaDizayn.xml", "menu.xml", "restoran.xml", "stoklar.xml", "tempfiles.xml", "urunler.xml", };
-                                        
+            string[] xmlDosyalari = { "kategoriler.xml", "masaDizayn.xml", "menu.xml", "restoran.xml", "stoklar.xml", "tempfiles.xml", "urunler.xml" };
+
             XMLAktarServer aktarimServeri = new XMLAktarServer();
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 7; i++)
             {
-               basarili = aktarimServeri.Server(xmlDosyalari[i]);
-               if (!basarili)
-               {
-                   break;
-               }
+                basarili = aktarimServeri.Server(xmlDosyalari[i]);
+                if (!basarili)
+                {
+                    break;
+                }
             }
             OnLoaded(null, null);
             if (basarili)

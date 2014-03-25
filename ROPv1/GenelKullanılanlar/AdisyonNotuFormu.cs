@@ -29,7 +29,7 @@ namespace ROPv1
             textboxNot.Text = eskiNot;
             textboxNot.Focus();
 
-            if(eskiNot == "Bilgisayar adını giriniz" || eskiNot == "Girilen bilgisayar adı kullanımda, lütfen başka bir bilgisayar adı giriniz")
+            if (eskiNot == "Bilgisayar adını giriniz" || eskiNot == "Girilen bilgisayar adı kullanımda, lütfen başka bir bilgisayar adı giriniz")
             {
                 alwaysFocus = true;
                 checkBoxSave.Visible = true;
@@ -62,7 +62,7 @@ namespace ROPv1
             AdisyonNotu = textboxNot.Text;
             if (alwaysFocus)
             {
-                if (textboxNot.Text == "")
+                if (string.IsNullOrWhiteSpace(textboxNot.Text))
                 {
                     using (KontrolFormu dialog = new KontrolFormu("Bilgisayar adı boş bırakılamaz", false))
                     {
@@ -94,7 +94,19 @@ namespace ROPv1
 
         private void textboxNot_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == ',' || e.KeyChar == '-')
+            {
+                e.Handled = true;
+            }
+        }
 
+        private void AdisyonNotuFormu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Determine if text has changed in the textbox by comparing to original text.
+            if (string.IsNullOrWhiteSpace(textboxNot.Text) && alwaysFocus)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

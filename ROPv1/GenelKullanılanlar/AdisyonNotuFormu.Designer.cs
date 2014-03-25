@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.buttonTamam = new System.Windows.Forms.Button();
             this.textboxNot = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.checkBoxSave = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
@@ -69,6 +71,7 @@
             // textboxNot
             // 
             this.textboxNot.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxNot.ContextMenuStrip = this.contextMenuStrip1;
             this.textboxNot.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxNot.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textboxNot.Location = new System.Drawing.Point(18, 12);
@@ -80,8 +83,14 @@
             this.textboxNot.Click += new System.EventHandler(this.textboxNot_Click);
             this.textboxNot.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxNot_KeyPress);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // checkBoxSave
             // 
+            this.checkBoxSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxSave.AutoSize = true;
             this.checkBoxSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBoxSave.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -115,6 +124,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AdisyonNotuFormu_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -126,5 +136,6 @@
         private System.Windows.Forms.Button buttonTamam;
         private System.Windows.Forms.TextBox textboxNot;
         private System.Windows.Forms.CheckBox checkBoxSave;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }

@@ -99,13 +99,6 @@
     <Compile Include="2 1 AdminGirisi\AdminGirisFormu.Designer.cs">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="2 2 1 SiparisMasaEkranı\GunBilgileri.cs" />
-    <Compile Include="2 2 1 SiparisMasaEkranı\GunFormu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="2 2 1 SiparisMasaEkranı\GunFormu.Designer.cs">
-      <DependentUpon>GunFormu.cs</DependentUpon>
-    </Compile>
     <Compile Include="2 2 1 SiparisMasaEkranı\PinKoduFormu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,11 +206,6 @@
       <DependentUpon>KontrolFormu.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Gereksizler\Settings.cs" />
     <Compile Include="3 2 Departman\Restoran.cs" />
     <Compile Include="GenelKullanılanlar\SaveLoadXml.cs" />
@@ -229,24 +217,27 @@
     </Compile>
     <EmbeddedResource Include="1 GirisEkranı\PortFormu.resx">
       <DependentUpon>PortFormu.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="2 1 AdminGirisi\AdminGirisFormu.resx">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="2 2 1 SiparisMasaEkranı\GunFormu.resx">
-      <DependentUpon>GunFormu.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="2 2 1 SiparisMasaEkranı\PinKoduFormu.resx">
       <DependentUpon>PinKoduFormu.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="2 2 2 SiparisMenüEkranı\MasaDegistirFormu.resx">
       <DependentUpon>MasaDegistirFormu.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="2 2 2 SiparisMenüEkranı\UrunDegistir.resx">
       <DependentUpon>UrunDegistir.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="2 2 2 SiparisMenüEkranı\SiparisMenuFormu.resx">
       <DependentUpon>SiparisMenuFormu.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="3 1 Kullanıcılar\Kullanici.resx">
       <DependentUpon>Kullanici.cs</DependentUpon>
@@ -259,6 +250,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="1 GirisEkranı\GirisEkrani.resx">
       <DependentUpon>GirisEkrani.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="1 GirisEkranı\MyWaitForm.resx">
       <DependentUpon>MyWaitForm.cs</DependentUpon>
@@ -288,6 +280,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="2 2 1 SiparisMasaEkranı\SiparisMasaFormu.resx">
       <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest" />
@@ -295,6 +288,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -326,12 +324,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\dayOff.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\dayOn.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logOut.png" />

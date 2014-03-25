@@ -47,7 +47,7 @@ namespace ROPv1
             }
             else //client
             {
-                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("gunler.xml") || !File.Exists("restoran.xml"))
+                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("restoran.xml"))
                 {
                     using (KontrolFormu dialog = new KontrolFormu("Bilgiler girilmemiş veri aktarımını başlatmak ister misiniz?", true))
                     {
@@ -57,7 +57,7 @@ namespace ROPv1
                         if (cevap == DialogResult.Yes)
                         {
                             XMLAktarClient aktarimServeri = new XMLAktarClient();
-                            for (int i = 0; i < 8; i++)
+                            for (int i = 0; i < 7; i++)
                             {
                                 basarili = aktarimServeri.ClientTarafi();
                                 if (!basarili)
@@ -66,7 +66,7 @@ namespace ROPv1
 
                             if (basarili)
                             {
-                                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("gunler.xml") || !File.Exists("restoran.xml"))
+                                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("restoran.xml"))
                                 {
                                     using (KontrolFormu dialog2 = new KontrolFormu("Dosyalarda eksik var, lütfen serverdaki dosyaları kontrol ediniz", false))
                                     {

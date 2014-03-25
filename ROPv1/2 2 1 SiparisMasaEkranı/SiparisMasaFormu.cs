@@ -45,8 +45,6 @@ namespace ROPv1
 
         List<MasaDizayn> masaDizaynListesi = new List<MasaDizayn>();
 
-        DateTime hangiGun;
-
         decimal toplamHesap = 0, kalanHesap = 0;
 
         public SiparisMasaFormu()
@@ -76,115 +74,77 @@ namespace ROPv1
 
         private void siparisButonuBasildi(object sender, EventArgs e)
         {
-            if (File.Exists("gunler.xml"))
+            PinKoduFormu pinForm = new PinKoduFormu("Masa Görüntüleme");
+            pinForm.ShowDialog();
+
+            if (pinForm.dogru) //pin doğru
             {
-                XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
-                GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
-
-                //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
-                if (infoGunler[infoGunler.Count() - 1].gunSonuYapanKisi == null && infoGunler[infoGunler.Count() - 1].gunBasiYapanKisi != null)
-                { //gün açık sipariş ekranına geçilebilir
-
-                    if (hangiGun != DateTime.Now.Date)
+                SiparisMenuFormu siparisForm;
+                if (((Button)sender).BackColor == Color.White) // masa kapalı
+                {
+                    siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi, false, 0, 0);//burada masa numarasını da yolla
+                    siparisForm.ShowDialog();
+                }
+                else // masa acik
+                {
+                    SqlCommand cmd = SQLBaglantisi.getCommand("SELECT ToplamHesap,KalanHesap FROM Adisyon WHERE MasaAdi='" + ((Button)sender).Text + "' AND DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND AcikMi=1");
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    dr.Read();
+                    try
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Gün değişti! Gün Sonu yapmanız gerekiyor", false))
+                        toplamHesap = dr.GetDecimal(0);
+                        kalanHesap = dr.GetDecimal(1);
+                    }
+                    catch
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Bir hata oluştu, lütfen tekrar deneyiniz", false))
                         {
                             dialog.ShowDialog();
-                            this.buttonGunIslemiPressed(null, null);
                         }
                         return;
                     }
 
-                    PinKoduFormu pinForm = new PinKoduFormu("Masa Görüntüleme");
-                    pinForm.ShowDialog();
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
 
-                    if (pinForm.dogru) //pin doğru
+                    siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi, true, toplamHesap, kalanHesap);//burada masa numarasını da yolla
+                    siparisForm.ShowDialog();
+                }
+
+                if (siparisForm.masaAcikMi2 != "")
+                {
+                    Button tablebutton = tablePanel.Controls.Find(siparisForm.masaAcikMi2, false)[0] as Button;
+                    tablebutton.ForeColor = Color.White;
+                    tablebutton.BackColor = Color.Firebrick;
+                }
+
+                if (siparisForm.masaAcikMi)
+                {
+                    ((Button)sender).ForeColor = Color.White;
+                    ((Button)sender).BackColor = Color.Firebrick;
+
+                    switch (siparisForm.masaDegisti)
                     {
-                        SiparisMenuFormu siparisForm;
-                        if (((Button)sender).BackColor == Color.White) // masa kapalı
-                        {
-                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi, false, 0, 0);//burada masa numarasını da yolla
-                            siparisForm.ShowDialog();
-                        }
-                        else // masa acik
-                        {
-                            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT ToplamHesap,KalanHesap FROM Adisyon WHERE MasaAdi='" + ((Button)sender).Text + "' AND DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND AcikMi=1");
-                            SqlDataReader dr = cmd.ExecuteReader();
-                            dr.Read();
-                            try
-                            {
-                                toplamHesap = dr.GetDecimal(0);
-                                kalanHesap = dr.GetDecimal(1);
-                            }
-                            catch
-                            {
-                                using (KontrolFormu dialog = new KontrolFormu("Bir hata oluştu, lütfen tekrar deneyiniz", false))
-                                {
-                                    dialog.ShowDialog();
-                                }
-                                return;
-                            }
-
-                            cmd.Connection.Close();
-                            cmd.Connection.Dispose();
-
-                            siparisForm = new SiparisMenuFormu(((Button)sender).Text, restoranListesi[hangiButtonSecili], pinForm.ayarYapanKisi, true, toplamHesap, kalanHesap);//burada masa numarasını da yolla
-                            siparisForm.ShowDialog();
-                        }
-
-                        if (siparisForm.masaAcikMi2 != "")
-                        {
-                            Button tablebutton = tablePanel.Controls.Find(siparisForm.masaAcikMi2, false)[0] as Button;
-                            tablebutton.ForeColor = Color.White;
-                            tablebutton.BackColor = Color.Firebrick;
-                        }
-
-                        if (siparisForm.masaAcikMi)
-                        {
-                            ((Button)sender).ForeColor = Color.White;
-                            ((Button)sender).BackColor = Color.Firebrick;
-
-                            switch (siparisForm.masaDegisti)
-                            {
-                                case 2: // departman değişmedi 1 masa açık
-                                    ((Button)sender).ForeColor = SystemColors.ActiveCaption;
-                                    ((Button)sender).BackColor = Color.White;
-
-                                    Button tablebutton = tablePanel.Controls.Find(siparisForm.yeniMasaninAdi, false)[0] as Button;
-                                    tablebutton.ForeColor = Color.White;
-                                    tablebutton.BackColor = Color.Firebrick;
-                                    break;
-                                case 3: // 1 masa açık departmanda değişti
-                                    ((Button)sender).ForeColor = SystemColors.ActiveCaption;
-                                    ((Button)sender).BackColor = Color.White;
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        else
-                        {
+                        case 2: // departman değişmedi 1 masa açık
                             ((Button)sender).ForeColor = SystemColors.ActiveCaption;
                             ((Button)sender).BackColor = Color.White;
-                        }
 
+                            Button tablebutton = tablePanel.Controls.Find(siparisForm.yeniMasaninAdi, false)[0] as Button;
+                            tablebutton.ForeColor = Color.White;
+                            tablebutton.BackColor = Color.Firebrick;
+                            break;
+                        case 3: // 1 masa açık departmanda değişti
+                            ((Button)sender).ForeColor = SystemColors.ActiveCaption;
+                            ((Button)sender).BackColor = Color.White;
+                            break;
+                        default:
+                            break;
                     }
                 }
                 else
-                { //gün başı yapılmalı
-                    using (KontrolFormu dialog = new KontrolFormu("Gün Başı yapmanız gerekiyor", false))
-                    {
-                        dialog.ShowDialog();
-                        this.buttonGunIslemiPressed(null, null);
-                    }
-                }
-            }
-            else
-            {
-                using (KontrolFormu dialog = new KontrolFormu("Gün Başı yapmanız gerekiyor", false))
                 {
-                    dialog.ShowDialog();
-                    this.buttonGunIslemiPressed(null, null);
+                    ((Button)sender).ForeColor = SystemColors.ActiveCaption;
+                    ((Button)sender).BackColor = Color.White;
                 }
             }
         }
@@ -307,41 +267,6 @@ namespace ROPv1
             }
         }
 
-        private void buttonGunIslemiPressed(object sender, EventArgs e)
-        {
-            PinKoduFormu pinForm = new PinKoduFormu("Gün İşlemi");
-            pinForm.ShowDialog();
-
-            if (pinForm.dogru)
-            {
-                GunFormu gunForm = new GunFormu(pinForm.ayarYapanKisi);
-                gunForm.ShowDialog();
-
-                XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
-
-                GunBilgileri[] infoGunler;
-
-                if (File.Exists("gunler.xml"))
-                    infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
-                else
-                {
-                    dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
-                    return;
-                }
-
-                //gün başı yapılmış mı bak
-                if (infoGunler[infoGunler.Count() - 1].gunSonuYapanKisi == null && infoGunler[infoGunler.Count() - 1].gunBasiYapanKisi != null)
-                {
-                    dayButton.Image = global::ROPv1.Properties.Resources.dayOn;
-                    hangiGun = infoGunler[infoGunler.Count() - 1].gunBasiVakti.Date;
-                }
-                else
-                {
-                    dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
-                }
-            }
-        }
-
         private void timerSaat_Tick(object sender, EventArgs e)
         {
             labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
@@ -375,30 +300,6 @@ namespace ROPv1
                 else
                 {
                     buttonConnection.Visible = false;
-                    dayButton.Visible = true;
-
-                    //burada gün bilgisi alınacak ondan sonra devam edilecek
-
-                    if (File.Exists("gunler.xml"))
-                    {
-                        XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
-                        GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
-
-                        //gün başı yapılmış mı bak yapılmışsa daybutton resmini set et            
-                        if (infoGunler[infoGunler.Count() - 1].gunSonuYapanKisi == null && infoGunler[infoGunler.Count() - 1].gunBasiYapanKisi != null)
-                        {
-                            dayButton.Image = global::ROPv1.Properties.Resources.dayOn;
-                            hangiGun = infoGunler[infoGunler.Count() - 1].gunBasiVakti.Date;
-                        }
-                        else
-                        {
-                            dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
-                        }
-                    }
-                    else
-                    {
-                        dayButton.Image = global::ROPv1.Properties.Resources.dayOff;
-                    }
                 }
 
                 labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
@@ -756,7 +657,7 @@ namespace ROPv1
         {
             if (girisYapildi)
                 return;
-            if(Properties.Settings.Default.BilgisayarAdi == "")
+            if (Properties.Settings.Default.BilgisayarAdi == "")
             {
                 AdisyonNotuFormu nickForm = new AdisyonNotuFormu("Bilgisayar adını giriniz");
                 nickForm.ShowDialog();
@@ -780,7 +681,7 @@ namespace ROPv1
             }
             else
             {
-                girisYapildi = true;              
+                girisYapildi = true;
             }
 
             //Olaylara kaydol
@@ -789,13 +690,12 @@ namespace ROPv1
             istemci.MesajYolla("komut=giris&nick=" + nick);
         }
 
-
         private void button1_Click(object sender, EventArgs e)
         {
             bool basarili = false;
-            
+
             XMLAktarClient aktarimServeri = new XMLAktarClient();
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 7; i++)
             {
                 basarili = aktarimServeri.ClientTarafi();
                 if (!basarili)
@@ -804,7 +704,7 @@ namespace ROPv1
 
             if (basarili)
             {
-                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("gunler.xml") || !File.Exists("restoran.xml"))
+                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("restoran.xml"))
                 {
                     using (KontrolFormu dialog2 = new KontrolFormu("Dosyalarda eksik var, lütfen serverdaki dosyaları kontrol ediniz", false))
                     {

@@ -71,24 +71,7 @@ namespace ROPv1
                         dogru = true;
                         ayarYapanKisi = (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIS);
                         this.Close();
-                    }
-                    else if (yapilacakIslem == "Gün İşlemi")
-                    {
-                        if (Helper.VerifyHash("true", "SHA512", infoKullanici[kullaniciAdi].UIY[5]))
-                        {
-                            //Gün Formuna Git 
-                            dogru = true;
-                            ayarYapanKisi = (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIS);
-                            this.Close();
-                        }
-                        else
-                        {
-                            using (KontrolFormu dialog = new KontrolFormu("Gün işlemi açma/kapama yetkiniz bulunmamaktadır", false))
-                            {
-                                dialog.ShowDialog();
-                            }
-                        }
-                    }
+                    }                   
                     else if (yapilacakIslem == "Adisyon Görüntüleme")
                     {
                         if (Helper.VerifyHash("true", "SHA512", infoKullanici[kullaniciAdi].UIY[3]))
