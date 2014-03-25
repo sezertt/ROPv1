@@ -27,7 +27,7 @@ namespace ROPv1
 
         public Products()
         {
-            InitializeComponent();           
+            InitializeComponent();
         }
 
         //Seçilen ürünün bilgileri comboboxlara aktarılır
@@ -40,7 +40,13 @@ namespace ROPv1
             }
             if (treeUrunAdi.SelectedNode.Parent != null)
             {
-                newProductForm.Enabled = true;
+                if (urunListesi[treeUrunAdi.SelectedNode.Parent.Index].kategorininAdi == "Ürün Menüleri")
+                {
+                    newProductForm.Enabled = false;
+                }
+                else
+                    newProductForm.Enabled = true;
+
                 if (buttonDeleteProduct.Visible)
                 {
                     textboxUrunName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[treeUrunAdi.SelectedNode.Index];
@@ -50,6 +56,7 @@ namespace ROPv1
                     comboKDV.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKDV[treeUrunAdi.SelectedNode.Index].ToString();
                     newProductForm.Text = textboxUrunName.Text;
                 }
+
             }
             else
             {
@@ -179,18 +186,18 @@ namespace ROPv1
         // ürün oluşturmayı iptal et
         private void cancelNewProduct(object sender, EventArgs e)
         {
-            if(treeUrunAdi.SelectedNode.Parent == null)
+            if (treeUrunAdi.SelectedNode.Parent == null)
             {
                 newProductForm.Enabled = false;
             }
-            else 
+            else
             {
                 textboxUrunName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[treeUrunAdi.SelectedNode.Index];
                 textboxUrunFiyat.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[treeUrunAdi.SelectedNode.Index];
                 comboNewKategoriName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[treeUrunAdi.SelectedNode.Index];
                 comboKDV.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKDV[treeUrunAdi.SelectedNode.Index].ToString();
                 newProductForm.Text = textboxUrunName.Text;
-            }            
+            }
 
             buttonDeleteProduct.Visible = true;
             buttonCancel.Visible = false;
@@ -555,7 +562,8 @@ namespace ROPv1
             for (int i = 0; i < kategoriListesi[0].kategoriler.Count; i++)
             {
                 treeUrunAdi.Nodes.Add(kategoriListesi[0].kategoriler[i]);
-                comboNewKategoriName.Items.Add(kategoriListesi[0].kategoriler[i]);
+                if (kategoriListesi[0].kategoriler[i] != "Ürün Menüleri")
+                    comboNewKategoriName.Items.Add(kategoriListesi[0].kategoriler[i]);
             }
 
             UrunOzellikleri[] infoUrun = new UrunOzellikleri[infoKategoriler[0].kategoriler.Count];

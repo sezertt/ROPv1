@@ -49,10 +49,10 @@ namespace ROPv1
             MenuBilgileri[] info = new MenuBilgileri[1];
             UrunOzellikleri[] info2 = new UrunOzellikleri[1];
 
-            if (File.Exists("Urunler.xml"))
+            if (File.Exists("urunler.xml"))
             {
                 XmlLoad<UrunOzellikleri> loadInfo2 = new XmlLoad<UrunOzellikleri>();
-                info2 = loadInfo2.LoadRestoran("Urunler.xml");
+                info2 = loadInfo2.LoadRestoran("urunler.xml");
                 UrunListesi.AddRange(info2);
                 UrunListesiGoster();
                 //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
@@ -252,6 +252,25 @@ namespace ROPv1
                 {
                     dialog.ShowDialog();
                 }
+
+                // Oluşturulan Menüyü ürün menülerine ekleyebilmek için ürün özellikleri cinsinden kaydediyoruz.
+                XmlLoad<UrunOzellikleri> loadInfo = new XmlLoad<UrunOzellikleri>();
+                UrunOzellikleri[] infoUrun = loadInfo.LoadRestoran("urunler.xml");
+                XmlLoad<TumKategoriler> loadInfoKategori = new XmlLoad<TumKategoriler>();
+                TumKategoriler[] infoKategori = loadInfoKategori.LoadRestoran("kategoriler.xml");
+
+                if (infoKategori[0].kategoriler[0] != "Ürün Menüleri")
+                {
+                    infoKategori[0].kategoriler.Insert(0, "Ürün Menüleri");
+                    XmlSave.SaveRestoran(infoKategori, "kategoriler.xml");
+                }
+                infoUrun[0].urunAdi.Add(UrunMenuListesi[UrunMenuListesi.Count - 1].menuAdi);
+                infoUrun[0].porsiyonFiyati.Add(UrunMenuListesi[UrunMenuListesi.Count - 1].menuFiyati.ToString("0.00"));
+                infoUrun[0].urunKategorisi.Add("Ürün Menüleri");
+                infoUrun[0].urunKDV.Add(8);
+                infoUrun[0].kategorininAdi = "Ürün Menüleri";
+                XmlSave.SaveRestoran(infoUrun, "urunler.xml");
+                //treeUrunler.Nodes.Insert(0, UrunMenuListesi[UrunMenuListesi.Count - 1].menuAdi);
             }
             else//menüde değişiklik yapıldıktan sonra basılan kaydet butonu.
             {
@@ -289,7 +308,10 @@ namespace ROPv1
 
                             UrunMenuListesi[bulunanindis].menuFiyati = Convert.ToDouble(textboxFiyat.Text);
                             XmlSave.SaveRestoran(UrunMenuListesi, "UrunMenuleri.xml");
-
+                            XmlLoad<UrunOzellikleri> loadInfo = new XmlLoad<UrunOzellikleri>();
+                            UrunOzellikleri[] infoUrun = loadInfo.LoadRestoran("urunler.xml");
+                            infoUrun[0].porsiyonFiyati[bulunanindis] = UrunMenuListesi[bulunanindis].menuFiyati.ToString("0.00");
+                            XmlSave.SaveRestoran(infoUrun, "urunler.xml");
                             using (KontrolFormu dialog = new KontrolFormu(UrunMenuListesi[bulunanindis].menuAdi + " adlı menü güncellenmiştir", false))
                             {
                                 dialog.ShowDialog();
@@ -328,25 +350,8 @@ namespace ROPv1
                     treeMenuler.Font = new Font(treeMenuler.Font.FontFamily, treeMenuler.Font.Size - 0.5f, treeMenuler.Font.Style);
                 }
             }
-            // Oluşturulan Menüyü kategorisiz ürünlere ekleyebilmek için ürün özellikleri cinsinden kaydediyoruz.
 
-            XmlLoad<UrunOzellikleri> loadInfo = new XmlLoad<UrunOzellikleri>();
-            UrunOzellikleri[] infoUrun = loadInfo.LoadRestoran("urunler.xml");
-            XmlLoad<TumKategoriler> loadInfoKategori = new XmlLoad<TumKategoriler>();
-            TumKategoriler[] infoKategori = loadInfoKategori.LoadRestoran("kategoriler.xml");
-
-            if (infoKategori[0].kategoriler[0] != "Ürün Menüleri")
-            {
-                infoKategori[0].kategoriler.Insert(0, "Ürün Menüleri");
-                XmlSave.SaveRestoran(infoKategori, "kategoriler.xml");
-            }
-            infoUrun[0].urunAdi.Add(UrunMenuListesi[UrunMenuListesi.Count-1].menuAdi);
-            infoUrun[0].porsiyonFiyati.Add(UrunMenuListesi[UrunMenuListesi.Count - 1].menuFiyati.ToString("0.00"));
-            infoUrun[0].urunKategorisi.Add("Ürün Menüleri");
-            infoUrun[0].urunKDV.Add(8);
-            infoUrun[0].kategorininAdi = "Ürün Menüleri";
-
-            XmlSave.SaveRestoran(infoUrun, "urunler.xml");
+            
         }
 
         //Menüye Sağdaki Ürün treesinde seçili olan ürünü ekler
@@ -469,9 +474,14 @@ namespace ROPv1
                 //listeden menüyü siliyoruz
                 UrunMenuListesi.RemoveAt(treeMenuler.SelectedNode.Index);
                 XmlSave.SaveRestoran(UrunMenuListesi, "UrunMenuleri.xml");
+                UrunListesi[0].urunAdi.RemoveAt(treeMenuler.SelectedNode.Index);
+                UrunListesi[0].urunKategorisi.RemoveAt(treeMenuler.SelectedNode.Index);
+                UrunListesi[0].porsiyonFiyati.RemoveAt(treeMenuler.SelectedNode.Index);
+                UrunListesi[0].urunKDV.RemoveAt(treeMenuler.SelectedNode.Index);
+                XmlSave.SaveRestoran(UrunListesi, "urunler.xml");
                 int selectedPlace = treeMenuler.SelectedNode.Index;
                 treeMenuler.SelectedNode.Remove();
-                treeMenununUrunler.Nodes.Clear();
+                //treeMenununUrunler.Nodes.Clear();
                 if (treeMenuler.Nodes.Count > 0)
                     treeMenuler.SelectedNode = treeMenuler.Nodes[0];
 
