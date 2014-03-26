@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Globalization;
 using System.Collections.Specialized;
+using System.Data.SqlClient;
 using SPIA;
 using SPIA.Server;
 
@@ -119,7 +120,11 @@ namespace ROPv1
                         break;
                     case "toplumesaj":
                         //parametreler: mesaj
-                        komut_toplumesaj(e.Client, parametreler["mesaj"]);
+                        komut_toplumesaj(parametreler["mesaj"]);
+                        break;
+                    case "departman":
+                        //parametreler: departman adı
+                        komut_departman(e.Client, parametreler["departmanAdi"]);
                         break;
                     case "cikis":
                         //parametreler: YOK
@@ -128,17 +133,67 @@ namespace ROPv1
                 }
             }
             catch (Exception)
-            {
+            { }
 
-            }
-
-            //Mesajı 'Son Gelen 26 Mesaj' listesinde en başa ekle
+            //Mesajı 'Son Gelen 25 Mesaj' listesinde en başa ekle
             son25Mesaj.Insert(0, "[" + e.Client.ClientID.ToString("0000") + "] " + e.Mesaj);
             //Listedeki mesaj sayısı 25'i geçmişse sondan sil.
             if (son25Mesaj.Count > 25)
             {
                 son25Mesaj.RemoveAt(25);
             }
+        }
+
+        // departman komutunu uygulayan fonksyon        
+        // <param name="client">Mesajı gönderen client</param>
+        // <param name="departman">Gönderilen departman adı</param>
+        private void komut_departman(ClientRef client, string departmanAdi)
+        {
+            //Kullanıcıları saklamak için değişkenler
+            BagliKullanicilar gonderenKullanici = null;
+            //Eşzamanlı erişimlere karşı koleksiyonu kilitleyelim
+            lock (kullanicilar)
+            {
+                //Tüm kullanıcıları tara, 
+                //mesajı gönderen kullanıcıyı bul
+                foreach (BagliKullanicilar kul in kullanicilar)
+                {
+                    //Gönderen kullanıcıyı Client nesnesine göre ayırt ediyoruz
+                    if (kul.Client == client)
+                    {
+                        gonderenKullanici = kul;
+                        break;
+                    }
+                }
+            }
+            //Gönderen kullanıcı bulunamadıysa fonksyonu sonlandıralım
+            if (gonderenKullanici == null)
+            {
+                return;
+            }
+
+            StringBuilder acikMasalar = new StringBuilder();
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + departmanAdi + "' AND AcikMi=1");
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                try
+                {                    
+                    acikMasalar.Append("," + dr.GetString(0));    
+                }
+                catch { }
+            }
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+
+            //İlk masanın başına konulan "," metnini kaldır
+            if (acikMasalar.Length >= 1)
+            {
+                acikMasalar.Remove(0, 1);
+            }
+
+            //Kullanıcıya istenilen departmanın açık kapalı masalarını gönderelim
+            client.MesajYolla("komut=departman&masa=" + acikMasalar);
         }
 
         // giris komutunu uygulayan fonksiyon        
@@ -190,15 +245,6 @@ namespace ROPv1
             //Kullanıcıya işlemin başarılı olduğu bilgisini gönder
             client.MesajYolla("komut=giris&sonuc=basarili");
 
-
-
-            #region Burası gerekmeyebilir, sonra karar ver
-            //Tüm kullanıcılara bu kullanıcının giriş yaptığı bilgisini gönder
-            tumKullanicilaraMesajYolla("komut=kullanicigiris&nick=" + nick);
-            //Bu kullanıcıya mevcut kullanıcı listesini gönder
-            kullaniciListesiniGonder(client);
-            #endregion
-
             //Kullanıcı listesini ekranda gösterelim
             kullaniciListesiniYenile();
         }
@@ -206,56 +252,10 @@ namespace ROPv1
         // toplumesaj komutunu uygulayan fonksyon        
         // <param name="client">Mesajı gönderen client</param>
         // <param name="mesaj">Gönderilen mesaj</param>
-        private void komut_toplumesaj(ClientRef client, string mesaj)
+        private void komut_toplumesaj(string mesaj)
         {
-            //Kullanıcıları saklamak için değişkenler
-            BagliKullanicilar gonderenKullanici = null;
-            //Eşzamanlı erişimlere karşı koleksiyonu kilitleyelim
-            lock (kullanicilar)
-            {
-                //Tüm kullanıcıları tara, 
-                //mesajı gönderen kullanıcıyı bul
-                foreach (BagliKullanicilar kul in kullanicilar)
-                {
-                    //Gönderen kullanıcıyı Client nesnesine göre ayırt ediyoruz
-                    if (kul.Client == client)
-                    {
-                        gonderenKullanici = kul;
-                        break;
-                    }
-                }
-            }
-            //Gönderen kullanıcı bulunamadıysa fonksyonu sonlandıralım
-            if (gonderenKullanici == null)
-            {
-                return;
-            }
             //Tüm kullanıcılara istenilen mesajı gönderelim
-            tumKullanicilaraMesajYolla("komut=toplumesaj&nick=" + gonderenKullanici.Nick + "&mesaj=" + mesaj);
-        }
-
-        // Bir clientye tüm kullanıcıların listesini gönderir        
-        // <param name="client"></param>
-        private void kullaniciListesiniGonder(ClientRef client)
-        {
-            //Kullanıcı listesini "," ile ayırarak birleştir
-            StringBuilder nickler = new StringBuilder();
-            //Eşzamanlı erişimlere karşı koleksiyonu kilitleyelim
-            lock (kullanicilar)
-            {
-                //Tüm kullanıcıları tara, nickleri birleştir
-                foreach (BagliKullanicilar kul in kullanicilar)
-                {
-                    nickler.Append("," + kul.Nick);
-                }
-                //İlk kullanıcının başına konulan "," metnini kaldır
-                if (nickler.Length >= 1)
-                {
-                    nickler.Remove(0, 1);
-                }
-            }
-            //Kullanıcıya listeyi gönder
-            client.MesajYolla("komut=kullanicilistesi&liste=" + nickler.ToString());
+            tumKullanicilaraMesajYolla("komut=toplumesaj&mesaj=" + mesaj);
         }
 
         // kullanıcılar listesindeki kullanıcıların nick'lerini ekranda gösterir.        
@@ -382,7 +382,7 @@ namespace ROPv1
                 this.nick = nick;
             }
         }
-        
+
         internal static class NativeMethods
         {
             //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
@@ -559,7 +559,7 @@ namespace ROPv1
         private void GirisEkrani_Load(object sender, EventArgs e)
         {
             buttonConnection_Click(null, null);
-            
+
             labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
             timerSaat.Start();
             labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
@@ -614,6 +614,7 @@ namespace ROPv1
             //Form kapatılırken, sunucu çalışıyorsa durduralım.
             if (sunucu != null)
             {
+                komut_toplumesaj("ServerKapandi");
                 sunucu.Durdur();
                 sunucu = null;
             }
@@ -621,7 +622,7 @@ namespace ROPv1
 
         private void buttonConnection_Click(object sender, EventArgs e)
         {
-            if(buttonConnection.Image != Properties.Resources.baglantiOK)
+            if (buttonConnection.Image != Properties.Resources.baglantiOK)
             {
                 if (baslat())
                 {

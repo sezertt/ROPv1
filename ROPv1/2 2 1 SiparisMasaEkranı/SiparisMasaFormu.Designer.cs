@@ -36,6 +36,7 @@
             this.timerSaat = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.tablePanel = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonName = new System.Windows.Forms.Button();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.buttonConnection = new System.Windows.Forms.Button();
             this.buttonAdisyon = new System.Windows.Forms.Button();
@@ -141,6 +142,24 @@
             this.tablePanel.Size = new System.Drawing.Size(1291, 636);
             this.tablePanel.TabIndex = 24;
             // 
+            // buttonName
+            // 
+            this.buttonName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonName.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonName.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonName.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonName.Image = global::ROPv1.Properties.Resources.kimlik;
+            this.buttonName.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.buttonName.Location = new System.Drawing.Point(567, 12);
+            this.buttonName.Name = "buttonName";
+            this.buttonName.Size = new System.Drawing.Size(282, 110);
+            this.buttonName.TabIndex = 29;
+            this.buttonName.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.buttonName.UseVisualStyleBackColor = false;
+            this.buttonName.Visible = false;
+            this.buttonName.Click += new System.EventHandler(this.buttonName_Click);
+            // 
             // buttonUpdate
             // 
             this.buttonUpdate.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -155,7 +174,7 @@
             this.buttonUpdate.Text = "Güncelle";
             this.buttonUpdate.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.buttonUpdate.UseVisualStyleBackColor = false;
-            this.buttonUpdate.Click += new System.EventHandler(this.button1_Click);
+            this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
             // buttonConnection
             // 
@@ -213,6 +232,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1313, 819);
+            this.Controls.Add(this.buttonName);
             this.Controls.Add(this.buttonUpdate);
             this.Controls.Add(this.buttonConnection);
             this.Controls.Add(this.buttonAdisyon);
@@ -248,5 +268,6 @@
         private System.Windows.Forms.Button buttonAdisyon;
         private System.Windows.Forms.Button buttonConnection;
         private System.Windows.Forms.Button buttonUpdate;
+        private System.Windows.Forms.Button buttonName;
     }
 }

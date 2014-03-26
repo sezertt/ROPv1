@@ -92,12 +92,13 @@
             // 
             this.checkBoxSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxSave.AutoSize = true;
-            this.checkBoxSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBoxSave.Checked = true;
+            this.checkBoxSave.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxSave.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.checkBoxSave.ForeColor = System.Drawing.SystemColors.Window;
-            this.checkBoxSave.Location = new System.Drawing.Point(636, 351);
+            this.checkBoxSave.Location = new System.Drawing.Point(633, 351);
             this.checkBoxSave.Name = "checkBoxSave";
-            this.checkBoxSave.Size = new System.Drawing.Size(222, 20);
+            this.checkBoxSave.Size = new System.Drawing.Size(225, 20);
             this.checkBoxSave.TabIndex = 36;
             this.checkBoxSave.Text = "İsmi Kaydet ve Bir Daha Sorma";
             this.checkBoxSave.UseVisualStyleBackColor = true;

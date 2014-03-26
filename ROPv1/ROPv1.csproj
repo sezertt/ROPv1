@@ -58,7 +58,8 @@
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SPIALIBRARY">
+    <Reference Include="SPIALIBRARY, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>dll dosyası\SPIALIBRARY.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -396,6 +397,7 @@
     <None Include="Resources\baglantiOK.png" />
     <None Include="Resources\baglantiYOK.png" />
     <None Include="Resources\dataUpdate.png" />
+    <None Include="Resources\kimlik.png" />
     <Content Include="ROP.ico" />
   </ItemGroup>
   <ItemGroup />
