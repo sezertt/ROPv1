@@ -30,23 +30,23 @@
         {
             this.components = new System.ComponentModel.Container();
             this.treeMenununUrunler = new System.Windows.Forms.TreeView();
-            this.buttonDeleteUrun = new System.Windows.Forms.Button();
-            this.buttonSaveMenu = new System.Windows.Forms.Button();
-            this.buttonDeleteMenu = new System.Windows.Forms.Button();
-            this.buttonAddUrun = new System.Windows.Forms.Button();
             this.treeUrunler = new System.Windows.Forms.TreeView();
             this.newUrunMenuForm = new System.Windows.Forms.GroupBox();
             this.textboxFiyat = new System.Windows.Forms.TextBox();
             this.lblFiyat = new System.Windows.Forms.Label();
             this.textboxMenuName = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.label5 = new System.Windows.Forms.Label();
-            this.buttonCancel = new System.Windows.Forms.Button();
             this.treeMenuler = new System.Windows.Forms.TreeView();
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
-            this.buttonAddNewMenu = new System.Windows.Forms.Button();
             this.textboxUrunAra = new System.Windows.Forms.TextBox();
             this.lblUrunAra = new System.Windows.Forms.Label();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.buttonAddUrun = new System.Windows.Forms.Button();
+            this.buttonDeleteUrun = new System.Windows.Forms.Button();
+            this.buttonSaveMenu = new System.Windows.Forms.Button();
+            this.buttonDeleteMenu = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.buttonAddNewMenu = new System.Windows.Forms.Button();
             this.newUrunMenuForm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,75 +68,6 @@
             this.treeMenununUrunler.ShowRootLines = false;
             this.treeMenununUrunler.Size = new System.Drawing.Size(224, 333);
             this.treeMenununUrunler.TabIndex = 52;
-            // 
-            // buttonDeleteUrun
-            // 
-            this.buttonDeleteUrun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonDeleteUrun.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonDeleteUrun.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonDeleteUrun.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonDeleteUrun.Image = global::ROPv1.Properties.Resources.righticon;
-            this.buttonDeleteUrun.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonDeleteUrun.Location = new System.Drawing.Point(6, 138);
-            this.buttonDeleteUrun.Name = "buttonDeleteUrun";
-            this.buttonDeleteUrun.Size = new System.Drawing.Size(266, 40);
-            this.buttonDeleteUrun.TabIndex = 43;
-            this.buttonDeleteUrun.TabStop = false;
-            this.buttonDeleteUrun.Text = "   Menüden Çıkar   ";
-            this.buttonDeleteUrun.UseVisualStyleBackColor = false;
-            this.buttonDeleteUrun.Click += new System.EventHandler(this.buttonDeleteUrun_Click);
-            // 
-            // buttonSaveMenu
-            // 
-            this.buttonSaveMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSaveMenu.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonSaveMenu.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonSaveMenu.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonSaveMenu.Image = global::ROPv1.Properties.Resources.icon;
-            this.buttonSaveMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSaveMenu.Location = new System.Drawing.Point(162, 184);
-            this.buttonSaveMenu.Name = "buttonSaveMenu";
-            this.buttonSaveMenu.Size = new System.Drawing.Size(110, 45);
-            this.buttonSaveMenu.TabIndex = 5;
-            this.buttonSaveMenu.Text = "Kaydet";
-            this.buttonSaveMenu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonSaveMenu.UseVisualStyleBackColor = false;
-            this.buttonSaveMenu.Click += new System.EventHandler(this.buttonSaveMenu_Click);
-            // 
-            // buttonDeleteMenu
-            // 
-            this.buttonDeleteMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonDeleteMenu.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonDeleteMenu.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonDeleteMenu.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonDeleteMenu.Image = global::ROPv1.Properties.Resources.delete;
-            this.buttonDeleteMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteMenu.Location = new System.Drawing.Point(6, 184);
-            this.buttonDeleteMenu.Name = "buttonDeleteMenu";
-            this.buttonDeleteMenu.Size = new System.Drawing.Size(124, 45);
-            this.buttonDeleteMenu.TabIndex = 31;
-            this.buttonDeleteMenu.TabStop = false;
-            this.buttonDeleteMenu.Text = "Menüyü Sil";
-            this.buttonDeleteMenu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonDeleteMenu.UseVisualStyleBackColor = false;
-            this.buttonDeleteMenu.Click += new System.EventHandler(this.buttonDeleteMenu_Click);
-            // 
-            // buttonAddUrun
-            // 
-            this.buttonAddUrun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddUrun.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonAddUrun.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonAddUrun.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonAddUrun.Image = global::ROPv1.Properties.Resources.lefticon;
-            this.buttonAddUrun.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddUrun.Location = new System.Drawing.Point(6, 92);
-            this.buttonAddUrun.Name = "buttonAddUrun";
-            this.buttonAddUrun.Size = new System.Drawing.Size(266, 40);
-            this.buttonAddUrun.TabIndex = 46;
-            this.buttonAddUrun.TabStop = false;
-            this.buttonAddUrun.Text = "Menüye Ekle";
-            this.buttonAddUrun.UseVisualStyleBackColor = false;
-            this.buttonAddUrun.Click += new System.EventHandler(this.buttonAddUrun_Click);
             // 
             // treeUrunler
             // 
@@ -215,6 +146,11 @@
             this.textboxMenuName.TabIndex = 2;
             this.textboxMenuName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxMenuName_KeyPress);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // label5
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -226,24 +162,6 @@
             this.label5.Size = new System.Drawing.Size(110, 24);
             this.label5.TabIndex = 19;
             this.label5.Text = "Menu Adı:";
-            // 
-            // buttonCancel
-            // 
-            this.buttonCancel.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.buttonCancel.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonCancel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
-            this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonCancel.Location = new System.Drawing.Point(6, 185);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(110, 44);
-            this.buttonCancel.TabIndex = 40;
-            this.buttonCancel.TabStop = false;
-            this.buttonCancel.Text = "İptal Et  ";
-            this.buttonCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonCancel.UseVisualStyleBackColor = false;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // treeMenuler
             // 
@@ -278,23 +196,6 @@
             this.keyboardcontrol1.TabIndex = 46;
             this.keyboardcontrol1.UserKeyPressed += new KeyboardClassLibrary.KeyboardDelegate(this.keyboardcontrol1_UserKeyPressed);
             // 
-            // buttonAddNewMenu
-            // 
-            this.buttonAddNewMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddNewMenu.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonAddNewMenu.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonAddNewMenu.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonAddNewMenu.Image = global::ROPv1.Properties.Resources.add;
-            this.buttonAddNewMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddNewMenu.Location = new System.Drawing.Point(481, 295);
-            this.buttonAddNewMenu.Name = "buttonAddNewMenu";
-            this.buttonAddNewMenu.Size = new System.Drawing.Size(278, 43);
-            this.buttonAddNewMenu.TabIndex = 45;
-            this.buttonAddNewMenu.TabStop = false;
-            this.buttonAddNewMenu.Text = "     Yeni Menü Oluştur";
-            this.buttonAddNewMenu.UseVisualStyleBackColor = false;
-            this.buttonAddNewMenu.Click += new System.EventHandler(this.buttonAddNewMenu_Click);
-            // 
             // textboxUrunAra
             // 
             this.textboxUrunAra.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -318,10 +219,109 @@
             this.lblUrunAra.TabIndex = 54;
             this.lblUrunAra.Text = "Ürün Ara";
             // 
-            // contextMenuStrip1
+            // buttonAddUrun
             // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            this.buttonAddUrun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddUrun.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonAddUrun.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonAddUrun.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonAddUrun.Image = global::ROPv1.Properties.Resources.lefticon;
+            this.buttonAddUrun.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAddUrun.Location = new System.Drawing.Point(6, 92);
+            this.buttonAddUrun.Name = "buttonAddUrun";
+            this.buttonAddUrun.Size = new System.Drawing.Size(266, 40);
+            this.buttonAddUrun.TabIndex = 46;
+            this.buttonAddUrun.TabStop = false;
+            this.buttonAddUrun.Text = "Menüye Ekle";
+            this.buttonAddUrun.UseVisualStyleBackColor = false;
+            this.buttonAddUrun.Click += new System.EventHandler(this.buttonAddUrun_Click);
+            // 
+            // buttonDeleteUrun
+            // 
+            this.buttonDeleteUrun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDeleteUrun.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonDeleteUrun.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonDeleteUrun.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonDeleteUrun.Image = global::ROPv1.Properties.Resources.righticon;
+            this.buttonDeleteUrun.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonDeleteUrun.Location = new System.Drawing.Point(6, 138);
+            this.buttonDeleteUrun.Name = "buttonDeleteUrun";
+            this.buttonDeleteUrun.Size = new System.Drawing.Size(266, 40);
+            this.buttonDeleteUrun.TabIndex = 43;
+            this.buttonDeleteUrun.TabStop = false;
+            this.buttonDeleteUrun.Text = "   Menüden Çıkar   ";
+            this.buttonDeleteUrun.UseVisualStyleBackColor = false;
+            this.buttonDeleteUrun.Click += new System.EventHandler(this.buttonDeleteUrun_Click);
+            // 
+            // buttonSaveMenu
+            // 
+            this.buttonSaveMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSaveMenu.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonSaveMenu.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonSaveMenu.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonSaveMenu.Image = global::ROPv1.Properties.Resources.icon;
+            this.buttonSaveMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSaveMenu.Location = new System.Drawing.Point(162, 184);
+            this.buttonSaveMenu.Name = "buttonSaveMenu";
+            this.buttonSaveMenu.Size = new System.Drawing.Size(110, 45);
+            this.buttonSaveMenu.TabIndex = 5;
+            this.buttonSaveMenu.Text = "Kaydet";
+            this.buttonSaveMenu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonSaveMenu.UseVisualStyleBackColor = false;
+            this.buttonSaveMenu.Click += new System.EventHandler(this.buttonSaveMenu_Click);
+            // 
+            // buttonDeleteMenu
+            // 
+            this.buttonDeleteMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDeleteMenu.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonDeleteMenu.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonDeleteMenu.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonDeleteMenu.Image = global::ROPv1.Properties.Resources.delete;
+            this.buttonDeleteMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonDeleteMenu.Location = new System.Drawing.Point(6, 184);
+            this.buttonDeleteMenu.Name = "buttonDeleteMenu";
+            this.buttonDeleteMenu.Size = new System.Drawing.Size(124, 45);
+            this.buttonDeleteMenu.TabIndex = 31;
+            this.buttonDeleteMenu.TabStop = false;
+            this.buttonDeleteMenu.Text = "Menüyü Sil";
+            this.buttonDeleteMenu.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonDeleteMenu.UseVisualStyleBackColor = false;
+            this.buttonDeleteMenu.Click += new System.EventHandler(this.buttonDeleteMenu_Click);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonCancel.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonCancel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
+            this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonCancel.Location = new System.Drawing.Point(6, 185);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(110, 44);
+            this.buttonCancel.TabIndex = 40;
+            this.buttonCancel.TabStop = false;
+            this.buttonCancel.Text = "İptal Et  ";
+            this.buttonCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonCancel.UseVisualStyleBackColor = false;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
+            // buttonAddNewMenu
+            // 
+            this.buttonAddNewMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddNewMenu.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonAddNewMenu.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonAddNewMenu.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonAddNewMenu.Image = global::ROPv1.Properties.Resources.add;
+            this.buttonAddNewMenu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAddNewMenu.Location = new System.Drawing.Point(481, 295);
+            this.buttonAddNewMenu.Name = "buttonAddNewMenu";
+            this.buttonAddNewMenu.Size = new System.Drawing.Size(278, 43);
+            this.buttonAddNewMenu.TabIndex = 45;
+            this.buttonAddNewMenu.TabStop = false;
+            this.buttonAddNewMenu.Text = "     Yeni Menü Oluştur";
+            this.buttonAddNewMenu.UseVisualStyleBackColor = false;
+            this.buttonAddNewMenu.Click += new System.EventHandler(this.buttonAddNewMenu_Click);
             // 
             // UrunMenuleri
             // 

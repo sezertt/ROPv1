@@ -190,7 +190,11 @@ namespace ROPv1
                     stokView.Dock = DockStyle.Fill;
 
                     break;
-
+                case 7: //Reçeteler Seçildi
+                    Receteler receteView = new Receteler();
+                    splitPanel.Panel2.Controls.Add(receteView);
+                    receteView.Dock = DockStyle.Fill;
+                    break;
                 default:
                     break;
                 #endregion
@@ -266,6 +270,7 @@ namespace ROPv1
                     leftPanelView.Nodes.Add("Ürünler");
                     leftPanelView.Nodes.Add("Ürün Menüleri");
                     leftPanelView.Nodes.Add("Stok Ayarları");
+                    leftPanelView.Nodes.Add("Reçeteler");
 
                     leftPanelView.SelectedNode = leftPanelView.Nodes[0];
                 }

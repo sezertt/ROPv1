@@ -31,10 +31,10 @@
             this.components = new System.ComponentModel.Container();
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.textboxUrunAdi = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.labelUrunAdi = new System.Windows.Forms.Label();
             this.newStokForm = new System.Windows.Forms.GroupBox();
             this.comboBoxMiktarTipi = new System.Windows.Forms.ComboBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.labelUrunMiktari = new System.Windows.Forms.Label();
             this.buttonSaveNewStok = new System.Windows.Forms.Button();
             this.buttonDeleteStok = new System.Windows.Forms.Button();
@@ -76,6 +76,11 @@
             this.textboxUrunAdi.TabIndex = 1;
             this.textboxUrunAdi.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxUrunAdi_KeyDown);
             this.textboxUrunAdi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxUrunAdi_KeyPress);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // labelUrunAdi
             // 
@@ -128,11 +133,6 @@
             this.comboBoxMiktarTipi.TabIndex = 3;
             this.comboBoxMiktarTipi.Click += new System.EventHandler(this.showMenu);
             this.comboBoxMiktarTipi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // labelUrunMiktari
             // 
