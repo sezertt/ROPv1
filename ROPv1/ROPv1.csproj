@@ -183,6 +183,13 @@
     <Compile Include="3 7 Stoklar\Stoklar.Designer.cs">
       <DependentUpon>Stoklar.cs</DependentUpon>
     </Compile>
+    <Compile Include="3 8 Reçeteler\ReceteBilgileri.cs" />
+    <Compile Include="3 8 Reçeteler\Receteler.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="3 8 Reçeteler\Receteler.Designer.cs">
+      <DependentUpon>Receteler.cs</DependentUpon>
+    </Compile>
     <Compile Include="GenelKullanılanlar\AdisyonNotuFormu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -267,6 +274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="3 7 Stoklar\Stoklar.resx">
       <DependentUpon>Stoklar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="3 8 Reçeteler\Receteler.resx">
+      <DependentUpon>Receteler.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GenelKullanılanlar\AdisyonNotuFormu.resx">
       <DependentUpon>AdisyonNotuFormu.cs</DependentUpon>
