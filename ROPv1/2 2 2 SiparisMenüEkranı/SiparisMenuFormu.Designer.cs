@@ -465,6 +465,7 @@
             this.Name = "SiparisMenuFormu";
             this.Text = "SiparisMenuFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SiparisMenuFormu_FormClosing);
             this.Load += new System.EventHandler(this.SiparisMenuFormu_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

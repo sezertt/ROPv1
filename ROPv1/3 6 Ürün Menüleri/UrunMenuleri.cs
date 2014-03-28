@@ -15,7 +15,7 @@ namespace ROPv1
 {
     public partial class UrunMenuleri : UserControl
     {
-        List<UrunOzellikleri> UrunListesi = new List<UrunOzellikleri>(); // Tüm ürünlerin listesi
+        List<KategorilerineGoreUrunler> UrunListesi = new List<KategorilerineGoreUrunler>(); // Tüm ürünlerin listesi
         List<MenuBilgileri> UrunMenuListesi = new List<MenuBilgileri>(); // Menülerin listesi    
         MenuBilgileri yeniMenu; // Tek Menü
         public UrunMenuleri()
@@ -47,11 +47,11 @@ namespace ROPv1
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
             MenuBilgileri[] info = new MenuBilgileri[1];
-            UrunOzellikleri[] info2 = new UrunOzellikleri[1];
+            KategorilerineGoreUrunler[] info2 = new KategorilerineGoreUrunler[1];
 
             if (File.Exists("urunler.xml"))
             {
-                XmlLoad<UrunOzellikleri> loadInfo2 = new XmlLoad<UrunOzellikleri>();
+                XmlLoad<KategorilerineGoreUrunler> loadInfo2 = new XmlLoad<KategorilerineGoreUrunler>();
                 info2 = loadInfo2.LoadRestoran("urunler.xml");
                 UrunListesi.AddRange(info2);
                 UrunListesiGoster();
@@ -254,8 +254,8 @@ namespace ROPv1
                 }
 
                 // Oluşturulan Menüyü ürün menülerine ekleyebilmek için ürün özellikleri cinsinden kaydediyoruz.
-                XmlLoad<UrunOzellikleri> loadInfo = new XmlLoad<UrunOzellikleri>();
-                UrunOzellikleri[] infoUrun = loadInfo.LoadRestoran("urunler.xml");
+                XmlLoad<KategorilerineGoreUrunler> loadInfo = new XmlLoad<KategorilerineGoreUrunler>();
+                KategorilerineGoreUrunler[] infoUrun = loadInfo.LoadRestoran("urunler.xml");
                 XmlLoad<TumKategoriler> loadInfoKategori = new XmlLoad<TumKategoriler>();
                 TumKategoriler[] infoKategori = loadInfoKategori.LoadRestoran("kategoriler.xml");
 
@@ -308,8 +308,8 @@ namespace ROPv1
 
                             UrunMenuListesi[bulunanindis].menuFiyati = Convert.ToDouble(textboxFiyat.Text);
                             XmlSave.SaveRestoran(UrunMenuListesi, "UrunMenuleri.xml");
-                            XmlLoad<UrunOzellikleri> loadInfo = new XmlLoad<UrunOzellikleri>();
-                            UrunOzellikleri[] infoUrun = loadInfo.LoadRestoran("urunler.xml");
+                            XmlLoad<KategorilerineGoreUrunler> loadInfo = new XmlLoad<KategorilerineGoreUrunler>();
+                            KategorilerineGoreUrunler[] infoUrun = loadInfo.LoadRestoran("urunler.xml");
                             infoUrun[0].porsiyonFiyati[bulunanindis] = UrunMenuListesi[bulunanindis].menuFiyati.ToString("0.00");
                             XmlSave.SaveRestoran(infoUrun, "urunler.xml");
                             using (KontrolFormu dialog = new KontrolFormu(UrunMenuListesi[bulunanindis].menuAdi + " adlı menü güncellenmiştir", false))

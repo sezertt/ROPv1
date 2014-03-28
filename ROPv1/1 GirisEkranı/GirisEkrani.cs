@@ -31,6 +31,8 @@ namespace ROPv1
         public WPF_UserControls.VerticalCenterTextBox userNameTextBox;
         public WPF_UserControls.VerticalCenterPasswordBox passwordTextBox;
 
+        public SiparisMasaFormu siparisForm;
+
         UItemp[] infoKullanici;
 
         public GirisEkrani()
@@ -51,7 +53,6 @@ namespace ROPv1
         }
 
         // SPIA sunucusunu başlatır        
-        // <returns>İşlemin başarı durumu</returns>
         private bool baslat()
         {
             //Port numarasını Settings'den al
@@ -92,14 +93,12 @@ namespace ROPv1
         }
 
         // Bir client bağlantısı kapatıldığında ilgili olay bu fonksyonu çağırır        
-        // <param name="e">Kapanan clientyle ilgili bilgiler</param>
         private void clientKapandi(ClientBaglantiArgumanlari e)
         {
             komut_cikis(e.Client);
         }
 
         // Bir clientden mesaj alındığında ilgili olay bu fonksyonu çağırır        
-        // <param name="e">Mesaj ve Client parametreleri</param>
         private void mesajAlindi(ClientdanMesajAlmaArgumanlari e)
         {
             //Gelen mesajı & ve = işaretlerine göre ayrıştır
@@ -118,17 +117,25 @@ namespace ROPv1
                         //parametreler: nick
                         komut_giris(e.Client, parametreler["nick"]);
                         break;
-                    case "toplumesaj":
-                        //parametreler: mesaj
-                        komut_toplumesaj(parametreler["mesaj"]);
+                    case "LoadSiparis": 
+                        komut_loadSiparis(e.Client, parametreler["mesaj"]); // burada ki parametler ayarkalcak
                         break;
                     case "departman":
-                        //parametreler: departman adı
+                        //parametreler: departman adı - açık masa bilgilerini alan fonksiyon       
                         komut_departman(e.Client, parametreler["departmanAdi"]);
                         break;
                     case "cikis":
                         //parametreler: YOK
                         komut_cikis(e.Client);
+                        break;
+                    case "masaGirisi":
+                        komut_masaGirisi(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
+                        break;
+                    case "masaAcildi":
+                        komut_masaAcildi(parametreler["masa"], parametreler["departmanAdi"]);
+                        break;
+                    case "masaKapandi":
+                        komut_masaKapandi(parametreler["masa"], parametreler["departmanAdi"]);
                         break;
                 }
             }
@@ -136,7 +143,7 @@ namespace ROPv1
             { }
 
             //Mesajı 'Son Gelen 25 Mesaj' listesinde en başa ekle
-            son25Mesaj.Insert(0, "[" + e.Client.ClientID.ToString("0000") + "] " + e.Mesaj);
+            son25Mesaj.Insert(0, "" + e.Mesaj);
             //Listedeki mesaj sayısı 25'i geçmişse sondan sil.
             if (son25Mesaj.Count > 25)
             {
@@ -144,42 +151,72 @@ namespace ROPv1
             }
         }
 
-        // departman komutunu uygulayan fonksyon        
-        // <param name="client">Mesajı gönderen client</param>
-        // <param name="departman">Gönderilen departman adı</param>
+        #region Komutlar
+        //siparis ekranı load olurken hesaba dair bilgileri gönderen method
+        private void komut_loadSiparis(ClientRef client, string mesaj)
+        {
+            client.MesajYolla("komut=LoadSiparis&mesaj=Gönderdi");
+        }
+
+        private void komut_masaAcildi(string masa, string departmanAdi)
+        {
+            if (siparisForm != null)
+            {
+                Button tablebutton = siparisForm.tablePanel.Controls[masa] as Button;
+                tablebutton.ForeColor = Color.White;
+                tablebutton.BackColor = Color.Firebrick;
+            }
+            //Tüm kullanıcılara açılmak istenilen masayı gönderelim
+            tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + masa + "&departmanAdi=" + departmanAdi);
+        }
+
+        private void komut_masaKapandi(string masa, string departmanAdi)
+        {
+            if (siparisForm != null)
+            {
+                Button tablebutton = siparisForm.tablePanel.Controls[masa] as Button;
+                tablebutton.ForeColor = SystemColors.ActiveCaption;
+                tablebutton.BackColor = Color.White;
+            }
+            //Tüm kullanıcılara kapatılmak istenilen masayı gönderelim
+            tumKullanicilaraMesajYolla("komut=masaKapandi&masa=" + masa + "&departmanAdi=" + departmanAdi);
+        }
+
+        // masaya girilirken hesap bilgilerini isteyen clienta veren fonksiyon
+        private void komut_masaGirisi(ClientRef client, string masa, string departmanAdi)
+        {
+            decimal toplamHesap, kalanHesap;
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT ToplamHesap,KalanHesap FROM Adisyon WHERE MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "' AND AcikMi=1");
+            SqlDataReader dr = cmd.ExecuteReader();
+            dr.Read();
+            try
+            {
+                toplamHesap = dr.GetDecimal(0);
+                kalanHesap = dr.GetDecimal(1);
+            }
+            catch
+            {
+                toplamHesap = 0;
+                kalanHesap = 0;
+            }
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+
+            //Kullanıcıya istenilen departmanın açık kapalı masalarını gönderelim
+            client.MesajYolla("komut=masaGirisi&kalanHesap=" + kalanHesap + "&toplamHesap=" + toplamHesap);
+        }
+
+        // departman komutu- açık masa bilgilerini alan fonksiyon       
         private void komut_departman(ClientRef client, string departmanAdi)
         {
-            //Kullanıcıları saklamak için değişkenler
-            BagliKullanicilar gonderenKullanici = null;
-            //Eşzamanlı erişimlere karşı koleksiyonu kilitleyelim
-            lock (kullanicilar)
-            {
-                //Tüm kullanıcıları tara, 
-                //mesajı gönderen kullanıcıyı bul
-                foreach (BagliKullanicilar kul in kullanicilar)
-                {
-                    //Gönderen kullanıcıyı Client nesnesine göre ayırt ediyoruz
-                    if (kul.Client == client)
-                    {
-                        gonderenKullanici = kul;
-                        break;
-                    }
-                }
-            }
-            //Gönderen kullanıcı bulunamadıysa fonksyonu sonlandıralım
-            if (gonderenKullanici == null)
-            {
-                return;
-            }
-
             StringBuilder acikMasalar = new StringBuilder();
             SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + departmanAdi + "' AND AcikMi=1");
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
                 try
-                {                    
-                    acikMasalar.Append("," + dr.GetString(0));    
+                {
+                    acikMasalar.Append("," + dr.GetString(0));
                 }
                 catch { }
             }
@@ -197,8 +234,6 @@ namespace ROPv1
         }
 
         // giris komutunu uygulayan fonksiyon        
-        // <param name="client">Girşi yapan client</param>
-        // <param name="nick">Seçilen nick</param>
         private void komut_giris(ClientRef client, string nick)
         {
             //Eşzamanlı erişimlere karşı koleksiyonu kilitleyelim
@@ -250,8 +285,6 @@ namespace ROPv1
         }
 
         // toplumesaj komutunu uygulayan fonksyon        
-        // <param name="client">Mesajı gönderen client</param>
-        // <param name="mesaj">Gönderilen mesaj</param>
         private void komut_toplumesaj(string mesaj)
         {
             //Tüm kullanıcılara istenilen mesajı gönderelim
@@ -281,7 +314,6 @@ namespace ROPv1
         }
 
         // kullanıcılar listesindeki tüm kullanıcılara istenilen bir mesajı iletir        
-        // <param name="mesaj"></param>
         private void tumKullanicilaraMesajYolla(string mesaj)
         {
             BagliKullanicilar[] kullaniciDizisi = null;
@@ -299,7 +331,6 @@ namespace ROPv1
         }
 
         // cikis komutunu uygulayan fonksyon        
-        // <param name="client">Çıkış yapan client</param>
         private void komut_cikis(ClientRef client)
         {
             BagliKullanicilar kullanici = null;
@@ -331,6 +362,7 @@ namespace ROPv1
             //Kullanıcı listesini ekranda gösterelim
             kullaniciListesiniYenile();
         }
+        #endregion
 
         private NameValueCollection mesajCoz(string mesaj)
         {
@@ -355,7 +387,7 @@ namespace ROPv1
             }
         }
 
-        private class BagliKullanicilar
+        public class BagliKullanicilar
         {
             // SPIA kütüphanesindeki Client nesnesine referans            
             public ClientRef Client
@@ -477,7 +509,7 @@ namespace ROPv1
             //sipariş ekranına geçilecek
             ShowWaitForm();
 
-            SiparisMasaFormu siparisForm = new SiparisMasaFormu();
+            siparisForm = new SiparisMasaFormu(kullanicilar);
             siparisForm.Show();
             //this.Close();
         }

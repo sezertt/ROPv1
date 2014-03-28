@@ -629,11 +629,11 @@ namespace ROPv1
             #region ürünlerin ilk tanımlaması
             if (!File.Exists("urunler.xml"))
             {
-                UrunOzellikleri[] infoUrun = new UrunOzellikleri[kategoriListesi[0].kategoriler.Count];
+                KategorilerineGoreUrunler[] infoUrun = new KategorilerineGoreUrunler[kategoriListesi[0].kategoriler.Count];
 
                 for (int i = 0; i < kategoriListesi[0].kategoriler.Count; i++)
                 {
-                    infoUrun[i] = new UrunOzellikleri();
+                    infoUrun[i] = new KategorilerineGoreUrunler();
                     infoUrun[i].urunAdi = new List<string>();
                     infoUrun[i].porsiyonFiyati = new List<string>();
                     infoUrun[i].urunKategorisi = new List<string>();

@@ -143,7 +143,7 @@
     <Compile Include="3 4 Menüler\Menuler.cs" />
     <Compile Include="3 4 Menüler\TumKategoriler.cs" />
     <Compile Include="3 6 Ürün Menüleri\MenuUrunuBilgisi.cs" />
-    <Compile Include="3 5 Ürünler\UrunOzellikleri.cs" />
+    <Compile Include="3 5 Ürünler\KategorilerineGoreUrunler.cs" />
     <Compile Include="3 3 MasaPlanı\MasaDizayn.cs" />
     <Compile Include="3 3 MasaPlanı\MasaPlan.cs">
       <SubType>UserControl</SubType>

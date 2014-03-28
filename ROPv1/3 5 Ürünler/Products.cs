@@ -15,7 +15,7 @@ namespace ROPv1
 {
     public partial class Products : UserControl
     {
-        List<UrunOzellikleri> urunListesi = new List<UrunOzellikleri>();
+        List<KategorilerineGoreUrunler> urunListesi = new List<KategorilerineGoreUrunler>();
 
         List<TumKategoriler> kategoriListesi = new List<TumKategoriler>(); // kategorileri tutacak liste
 
@@ -354,7 +354,7 @@ namespace ROPv1
                     }
 
                     //eski ürünü, yeni yerine koyarız
-                    urunListesi[kategoriYeri].urunAdi.Add(urunAdi);// burayı düzenle
+                    urunListesi[kategoriYeri].urunAdi.Add(urunAdi);
                     urunListesi[kategoriYeri].urunKategorisi.Add(urunKategorisi);
                     urunListesi[kategoriYeri].porsiyonFiyati.Add(urunFiyati);
                     urunListesi[kategoriYeri].urunKDV.Add(urunKDV);
@@ -417,7 +417,7 @@ namespace ROPv1
 
                 // urun listesindeki kategorinin ve ürünlerin beraber yerini değiştir ve kaydet
 
-                UrunOzellikleri geciciUrun = new UrunOzellikleri();
+                KategorilerineGoreUrunler geciciUrun = new KategorilerineGoreUrunler();
                 geciciUrun = urunListesi[index - 1];
                 urunListesi[index - 1] = urunListesi[index];
                 urunListesi[index] = geciciUrun;
@@ -485,7 +485,7 @@ namespace ROPv1
 
                 // urun listesindeki kategorinin ve ürünlerin beraber yerini değiştir ve kaydet
 
-                UrunOzellikleri geciciUrun = new UrunOzellikleri();
+                KategorilerineGoreUrunler geciciUrun = new KategorilerineGoreUrunler();
                 geciciUrun = urunListesi[index + 1];
                 urunListesi[index + 1] = urunListesi[index];
                 urunListesi[index] = geciciUrun;
@@ -566,14 +566,14 @@ namespace ROPv1
                     comboNewKategoriName.Items.Add(kategoriListesi[0].kategoriler[i]);
             }
 
-            UrunOzellikleri[] infoUrun = new UrunOzellikleri[infoKategoriler[0].kategoriler.Count];
+            KategorilerineGoreUrunler[] infoUrun = new KategorilerineGoreUrunler[infoKategoriler[0].kategoriler.Count];
 
             #region ürünlerin ilk tanımlaması
             if (!File.Exists("urunler.xml"))
             {
                 for (int i = 0; i < infoKategoriler[0].kategoriler.Count; i++)
                 {
-                    infoUrun[i] = new UrunOzellikleri();
+                    infoUrun[i] = new KategorilerineGoreUrunler();
                     infoUrun[i].urunAdi = new List<string>();
                     infoUrun[i].porsiyonFiyati = new List<string>();
                     infoUrun[i].urunKategorisi = new List<string>();
@@ -830,10 +830,10 @@ namespace ROPv1
             }
             #endregion
 
-            XmlLoad<UrunOzellikleri> loadInfoUrun = new XmlLoad<UrunOzellikleri>();
+            XmlLoad<KategorilerineGoreUrunler> loadInfoUrun = new XmlLoad<KategorilerineGoreUrunler>();
             infoUrun = loadInfoUrun.LoadRestoran("urunler.xml");
 
-            UrunOzellikleri[] infoUrun2 = new UrunOzellikleri[infoKategoriler[0].kategoriler.Count];
+            KategorilerineGoreUrunler[] infoUrun2 = new KategorilerineGoreUrunler[infoKategoriler[0].kategoriler.Count];
 
             int count = infoUrun.Count(); // yeni eklenen kategoriler yokken toplam kategori sayısı
 
@@ -850,7 +850,7 @@ namespace ROPv1
             //eklenen ürün var ise onlara yer açıyoruz 
             for (int i = infoUrun.Count(); i < infoUrun2.Count(); i++)
             {
-                infoUrun2[i] = new UrunOzellikleri();
+                infoUrun2[i] = new KategorilerineGoreUrunler();
                 infoUrun2[i].urunAdi = new List<string>();
                 infoUrun2[i].porsiyonFiyati = new List<string>();
                 infoUrun2[i].urunKategorisi = new List<string>();
@@ -863,7 +863,7 @@ namespace ROPv1
                 infoUrun2[i].kategorininAdi = kategoriListesi[0].kategoriler[i];
             }
 
-            List<UrunOzellikleri> urunListesiGecici = new List<UrunOzellikleri>();
+            List<KategorilerineGoreUrunler> urunListesiGecici = new List<KategorilerineGoreUrunler>();
 
             urunListesiGecici.AddRange(infoUrun2);
 

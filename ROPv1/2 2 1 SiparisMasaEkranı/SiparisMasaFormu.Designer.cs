@@ -264,10 +264,10 @@
         private System.Windows.Forms.Label labelSaat;
         private System.Windows.Forms.Timer timerSaat;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TableLayoutPanel tablePanel;
         private System.Windows.Forms.Button buttonAdisyon;
         private System.Windows.Forms.Button buttonConnection;
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Button buttonName;
+        public System.Windows.Forms.TableLayoutPanel tablePanel;
     }
 }

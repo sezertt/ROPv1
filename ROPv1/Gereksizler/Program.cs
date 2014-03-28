@@ -105,11 +105,11 @@ namespace ROPv1
                         // Application.Run(new MutfakFormu());
 
                         //BURAYI DÜZELT MUTFAK EKRANI GELİNCE DEĞİŞTİR ÜSTTEKİYLE
-                        Application.Run(new SiparisMasaFormu());
+                        Application.Run(new SiparisMasaFormu(null));
                     }
                     else// garson girişi
                     {
-                        Application.Run(new SiparisMasaFormu());
+                        Application.Run(new SiparisMasaFormu(null));
                     }
                 }
             }

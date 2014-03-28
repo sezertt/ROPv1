@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ROPv1
 {
     [Serializable]
-    public class UrunOzellikleri
+    public class KategorilerineGoreUrunler
     {
         public List<string> urunAdi;
         public List<string> porsiyonFiyati;
@@ -15,7 +15,7 @@ namespace ROPv1
         public List<int> urunKDV;
         public string kategorininAdi;
 
-        public UrunOzellikleri()
+        public KategorilerineGoreUrunler()
         {
             urunAdi = new List<string>();
             porsiyonFiyati = new List<string>();

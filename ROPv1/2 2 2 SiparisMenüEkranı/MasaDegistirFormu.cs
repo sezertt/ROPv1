@@ -193,7 +193,7 @@ namespace ROPv1
                     Button tablebutton;
                     try
                     {
-                        tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
+                        tablebutton = tablePanel.Controls[dr.GetString(0)] as Button;
                         tablebutton.BackColor = Color.Firebrick;
                         tablebutton.ForeColor = Color.White;
                     }
@@ -297,7 +297,7 @@ namespace ROPv1
                 {
                     try
                     {
-                        Button tablebutton = tablePanel.Controls.Find(dr.GetString(0), false)[0] as Button;
+                        Button tablebutton = tablePanel.Controls[dr.GetString(0)] as Button;
                         tablebutton.BackColor = Color.Firebrick;
                         tablebutton.ForeColor = Color.White;
                     }

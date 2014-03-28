@@ -51,7 +51,7 @@ namespace ROPv1
                 {
                     for (int j = 0; j < 7; j++)
                     {
-                        Button tablebutton = tablePanel.Controls.Find("" + i + j, false)[0] as Button;
+                        Button tablebutton = tablePanel.Controls["" + i + j] as Button;
                         if (masaDizaynListesi[treeMasaPlanName.SelectedNode.Index].masaYerleri[i][j] != null)
                         {
                             tablebutton.Text = masaDizaynListesi[treeMasaPlanName.SelectedNode.Index].masaYerleri[i][j];
@@ -173,7 +173,7 @@ namespace ROPv1
                 {
                     for (int j = 0; j < 7; j++)
                     {
-                        Button tablebutton = tablePanel.Controls.Find("" + i + j, false)[0] as Button;
+                        Button tablebutton = tablePanel.Controls["" + i + j] as Button;
                         if (refresher2[i][j] != null)
                         {
                             tablebutton.BackColor = SystemColors.ActiveCaption;
@@ -204,7 +204,7 @@ namespace ROPv1
             {
                 for (int j = 0; j < 7; j++)
                 {
-                    Button tablebutton = tablePanel.Controls.Find("" + i + j, false)[0] as Button;
+                    Button tablebutton = tablePanel.Controls["" + i + j] as Button;
                     if (masaDizaynListesi[treeMasaPlanName.SelectedNode.Index].masaYerleri[i][j] != null)
                     {
                         tablebutton.Text = masaDizaynListesi[treeMasaPlanName.SelectedNode.Index].masaYerleri[i][j];
@@ -300,7 +300,7 @@ namespace ROPv1
                 {
                     for (int j = 0; j < 7; j++)
                     {
-                        Button tablebutton = tablePanel.Controls.Find("" + i + j, false)[0] as Button;
+                        Button tablebutton = tablePanel.Controls["" + i + j] as Button;
                         if (masaDizaynListesi[treeMasaPlanName.SelectedNode.Index].masaYerleri[i][j] != null)
                         {
                             tablebutton.Text = buttonText + masaSayisi;
@@ -366,7 +366,7 @@ namespace ROPv1
                 {
                     for (int j = 0; j < 7; j++)
                     {
-                        Button tablebutton = tablePanel.Controls.Find("" + i + j, false)[0] as Button;
+                        Button tablebutton = tablePanel.Controls["" + i + j] as Button;
                         if (masaDizaynListesi[treeMasaPlanName.SelectedNode.Index].masaYerleri[i][j] != null)
                         {
                             tablebutton.Text = masaDizaynListesi[treeMasaPlanName.SelectedNode.Index].masaYerleri[i][j];
@@ -469,7 +469,7 @@ namespace ROPv1
         {
             if (textTableName.Enabled)
             {
-                Button tablebutton = tablePanel.Controls.Find("" + textTableName.Tag, false)[0] as Button;
+                Button tablebutton = tablePanel.Controls["" + textTableName.Tag] as Button;
                 tablebutton.Text = textTableName.Text;
                 masaDizaynListesi[treeMasaPlanName.SelectedNode.Index].masaYerleri[Convert.ToInt32(textTableName.Tag) / 10][Convert.ToInt32(textTableName.Tag) % 10] = textTableName.Text;
                 shouldSaveTableName = true;
