@@ -27,7 +27,7 @@ namespace ROPv1
             //açılışta capslock açıksa kapatıyoruz.
             ToggleCapsLock(false);
             textboxNot.Text = eskiNot;
-            textboxNot.Focus();
+            textboxNot.Select();
 
             if (eskiNot == "Bilgisayar adını giriniz" || eskiNot == "Girilen bilgisayar adı kullanımda, lütfen başka bir bilgisayar adı giriniz")
             {
@@ -53,7 +53,7 @@ namespace ROPv1
         //sanal klayvemize basıldığında touchscreenkeyboard dll mize basılan key i yolluyoruz
         private void keyboardcontrol1_UserKeyPressed(object sender, KeyboardClassLibrary.KeyboardEventArgs e)
         {
-            textboxNot.Focus();
+            textboxNot.Select();
             SendKeys.Send(e.KeyboardKeyPressed);
         }
 
@@ -94,7 +94,7 @@ namespace ROPv1
 
         private void textboxNot_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == ',' || e.KeyChar == '-')
+            if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == '*' || e.KeyChar == '-')
             {
                 e.Handled = true;
             }

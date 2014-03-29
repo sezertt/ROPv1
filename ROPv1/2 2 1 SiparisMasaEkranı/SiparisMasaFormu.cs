@@ -120,7 +120,7 @@ namespace ROPv1
                     cmd.Connection.Dispose();
 
                     siparisMenuForm = new SiparisMenuFormu(this, ((Button)sender).Text, restoranListesi[hangiDepartmanButonu], pinForm.ayarYapanKisi, masaAcikMi, toplamHesap, kalanHesap);
-                    siparisMenuForm.Show();                    
+                    siparisMenuForm.Show();
                 }
                 else
                 {
@@ -479,7 +479,6 @@ namespace ROPv1
         // Sunucudan bir mesaj alındığında buraya gelir        
         private void mesajAlindi(MesajAlmaArgumanlari e)
         {
-            //Gelen mesajı & ve = işaretlerine göre ayrıştır
             NameValueCollection parametreler = mesajCoz(e.Mesaj);
             //Ayrıştırma başarısızsa çık
             if (parametreler == null || parametreler.Count < 1)
@@ -495,7 +494,7 @@ namespace ROPv1
                         komut_giris(parametreler["sonuc"]);
                         break;
                     case "LoadSiparis":
-                        komut_loadSiparis(parametreler["mesaj"]); // parametreler ayarlanacak
+                        komut_loadSiparis(parametreler["siparisBilgileri"]);
                         break;
                     case "toplumesaj": //tüm gruba gelen mesaj
                         komut_topluMesaj(parametreler["mesaj"]);
@@ -511,6 +510,9 @@ namespace ROPv1
                         break;
                     case "masaKapandi":
                         komut_masaKapandi(parametreler["masa"], parametreler["departmanAdi"]);
+                        break;
+                    case "AdisyonNotu":
+                        komut_adisyonNotu(parametreler["adisyonNotu"]);
                         break;
                 }
             }
@@ -538,20 +540,28 @@ namespace ROPv1
             }
         }
 
-        private void komut_loadSiparis(string mesaj)
+        private void komut_loadSiparis(string siparisBilgileri)
         {
-            //Bu kişiyle bir sohbet penceresi açık değilse önce sohbet penceresini oluşturup açalım
             if (siparisMenuForm != null)
             {
-                //Mesajı bu pencereye yönlendirelim
-                siparisMenuForm.LoadSiparis(mesaj);
+                //Mesajı yönlendirelim
+                siparisMenuForm.LoadSiparis(siparisBilgileri);
+            }
+        }
+
+        private void komut_adisyonNotu(string adisyonNotu)
+        {
+            if (siparisMenuForm != null)
+            {
+                //Mesajı yönlendirelim
+                siparisMenuForm.AdisyonNotuGeldi(adisyonNotu);
             }
         }
 
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
-        public void SiparisLoadYolla(string mesaj)
+        public void MenuFormundanServeraYolla(string masa, string departman, string komut)
         {
-            client.MesajYolla("komut=LoadSiparis&mesaj=" + mesaj);
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman);
         }
 
         // Masa girişi sırasında masanın hesap bilgileri geldiğinde çalışan fonksiyon
@@ -687,12 +697,18 @@ namespace ROPv1
             masalar.Clear();
             try
             {
-                //Gelen mesajı , ile ayır
-                string[] kullaniciDizisi = acikMasalar.Split(',');
+                //Gelen mesajı * ile ayır
+                string[] kullaniciDizisi = acikMasalar.Split('*');
                 masalar.AddRange(kullaniciDizisi);
             }
             catch (Exception)
-            { }
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Masa durumlarını alırken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                {
+                    dialog.ShowDialog();
+                }
+                return;
+            }
 
             tablePanel.RowCount = 6;
             tablePanel.ColumnCount = 7;

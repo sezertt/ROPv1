@@ -961,7 +961,7 @@ namespace ROPv1
 
         private void textboxUrunName_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == ',' || e.KeyChar == '-')
+            if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == '*' || e.KeyChar == '-')
             {
                 e.Handled = true;
             }

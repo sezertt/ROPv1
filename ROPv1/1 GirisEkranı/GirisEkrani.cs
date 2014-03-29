@@ -117,8 +117,11 @@ namespace ROPv1
                         //parametreler: nick
                         komut_giris(e.Client, parametreler["nick"]);
                         break;
-                    case "LoadSiparis": 
-                        komut_loadSiparis(e.Client, parametreler["mesaj"]); // burada ki parametler ayarkalcak
+                    case "LoadSiparis":
+                        komut_loadSiparis(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
+                        break;
+                    case "AdisyonNotu":
+                        komut_adisyonNotu(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
                         break;
                     case "departman":
                         //parametreler: departman adı - açık masa bilgilerini alan fonksiyon       
@@ -152,10 +155,56 @@ namespace ROPv1
         }
 
         #region Komutlar
-        //siparis ekranı load olurken hesaba dair bilgileri gönderen method
-        private void komut_loadSiparis(ClientRef client, string mesaj)
+        //Adisyonun notunu değiştirme fonksiyonu
+        private void komut_adisyonNotu(ClientRef client, string masa, string departmanAdi)
         {
-            client.MesajYolla("komut=LoadSiparis&mesaj=Gönderdi");
+            string adisyonNotu = "";
+
+            //Burada adisyonNotu'nu sql den al
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonNotu FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "'");
+            SqlDataReader dr = cmd.ExecuteReader();
+            dr.Read();
+
+            try
+            {
+                adisyonNotu = dr.GetString(0);
+            }
+            catch
+            {
+                adisyonNotu = "1";
+            }
+
+            client.MesajYolla("komut=AdisyonNotu&adisyonNotu=" + adisyonNotu);
+        }
+
+        //siparis ekranı load olurken hesaba dair bilgileri gönderen method
+        private void komut_loadSiparis(ClientRef client, string masa, string departmanAdi)
+        {
+            StringBuilder siparisBilgileri = new StringBuilder();
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Porsiyon, YemekAdi, IkramMi, Garsonu from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' and Adisyon.DepartmanAdi='" + departmanAdi + "' and Siparis.IptalMi=0 ORDER BY Porsiyon DESC");
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                try
+                {
+                    siparisBilgileri.Append("*" + dr.GetDecimal(0).ToString() + "-" + dr.GetDecimal(1).ToString() + "-" + dr.GetString(2) + "-" + dr.GetBoolean(3) + "-" + dr.GetString(4));
+                }
+                catch
+                {
+                    using (KontrolFormu dialog = new KontrolFormu("Masa bilgileri alınırken hata oluştu, lütfen tekrar deneyiniz", false))
+                    {
+                        dialog.ShowDialog();
+                    }
+                    siparisBilgileri.Clear();
+                }
+            }
+
+            if (siparisBilgileri.Length >= 1)
+            {
+                siparisBilgileri.Remove(0, 1);
+            }
+
+            client.MesajYolla("komut=LoadSiparis&siparisBilgileri=" + siparisBilgileri);
         }
 
         private void komut_masaAcildi(string masa, string departmanAdi)
@@ -216,14 +265,17 @@ namespace ROPv1
             {
                 try
                 {
-                    acikMasalar.Append("," + dr.GetString(0));
+                    acikMasalar.Append("*" + dr.GetString(0));
                 }
-                catch { }
+                catch 
+                {
+                    acikMasalar.Clear();
+                }
             }
             cmd.Connection.Close();
             cmd.Connection.Dispose();
 
-            //İlk masanın başına konulan "," metnini kaldır
+            //İlk masanın başına konulan "*" metnini kaldır
             if (acikMasalar.Length >= 1)
             {
                 acikMasalar.Remove(0, 1);
@@ -307,9 +359,9 @@ namespace ROPv1
                 if (nickler.Length >= 2)
                 {
                     nickler.Remove(0, 2);
+                    //Nickleri göster
+                    textboxOnlineKullanicilar.Text = nickler.ToString();
                 }
-                //Nickleri göster
-                textboxOnlineKullanicilar.Text = nickler.ToString();
             }
         }
 
