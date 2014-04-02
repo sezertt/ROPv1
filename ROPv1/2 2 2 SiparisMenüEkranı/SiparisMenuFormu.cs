@@ -385,9 +385,6 @@ namespace ROPv1
                 labelKalanHesap.Text = (Convert.ToDecimal(labelKalanHesap.Text) + (decimal)kacPorsiyon * Convert.ToDecimal(urunListesi[hangiMenuSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)])).ToString("0.00");
             }
             textNumberOfItem.Text = ""; // çarpanı sil
-
-            if (labelToplamHesap.Text != "0,00") //hesapta para varsa butonu enable et
-                buttonHesapOde.Enabled = true;
         }
 
         //çarpan özellikleri
@@ -607,9 +604,6 @@ namespace ROPv1
                 labelKalanHesap.Text = (Convert.ToDecimal(labelKalanHesap.Text) + (decimal)kacPorsiyon * eklenecekDeger).ToString("0.00");
             }
             textNumberOfItem.Text = ""; // çarpanı sil
-
-            if (labelToplamHesap.Text != "0,00") //hesapta para varsa butonu enable et
-                buttonHesapOde.Enabled = true;
         }
 
         //Bu form kapandığında masanın son durumunu düzenlemesi için masa formunu uyar
@@ -746,20 +740,12 @@ namespace ROPv1
                         }
                     }
                 }
-
-                if (labelToplamHesap.Text == "0,00") //hesapta para varsa butonu enable et
-                    buttonHesapOde.Enabled = false;
             }
             else
             {
                 if (masaAcikMi)
                 {
                     masaFormu.MenuFormundanServeraYolla(MasaAdi, hangiDepartman.departmanAdi, "LoadSiparis");
-                }
-                else
-                {
-                    if (labelToplamHesap.Text == "0,00") //hesapta para varsa butonu enable et
-                        buttonHesapOde.Enabled = false;
                 }
             }
         }
@@ -901,9 +887,6 @@ namespace ROPv1
                     listHesap.Columns[2].Width = fiyatBoyu;
                 }
             }
-
-            if (labelToplamHesap.Text == "0,00") //hesapta para varsa butonu enable et
-                buttonHesapOde.Enabled = false;
         }
 
         //adisyon notu ekleme butonu
@@ -963,6 +946,832 @@ namespace ROPv1
             adisyonNotu = notFormu.AdisyonNotu;
         }
 
+        public void ikramGeldi(string miktar, string yemekAdi, string dusulecekDegerGelen)
+        {
+            double carpan = Convert.ToDouble(miktar);
+
+            // ürünün değerini istenilen kadar azalt, kalan hesaptan düş
+            double dusulecekDeger = Convert.ToDouble(dusulecekDegerGelen);
+
+            int degisecekSiparisIndexi = -1;
+            for (int i = 0; i < listHesap.Groups[eskiSiparisler].Items.Count; i++)
+            {
+                if (listHesap.Groups[eskiSiparisler].Items[i].SubItems[1].Text == yemekAdi)
+                {
+                    degisecekSiparisIndexi = i;
+                    break;
+                }
+            }
+
+            if (degisecekSiparisIndexi == -1)
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Siparişlerde değişiklik oldu, lütfen masaya tekrar giriniz", false))
+                {
+                    dialog.ShowDialog();
+                    this.Close();
+                    return;
+                }
+            }
+
+            listHesap.Groups[eskiSiparisler].Items[degisecekSiparisIndexi].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[eskiSiparisler].Items[degisecekSiparisIndexi].SubItems[2].Text) - carpan * dusulecekDeger).ToString("0.00");
+
+            listHesap.Groups[eskiSiparisler].Items[degisecekSiparisIndexi].SubItems[0].Text = (Convert.ToDouble(listHesap.Groups[eskiSiparisler].Items[degisecekSiparisIndexi].SubItems[0].Text) - carpan).ToString();
+
+            labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+
+            bool ikramYok = true; // ikram  yeni ikramlar listesinde var mı diye bak 
+
+            for (int i = 0; i < listHesap.Groups[yeniIkramlar].Items.Count; i++) // varsa yeni ikramı olana ekle
+            {
+                if (listHesap.Groups[yeniIkramlar].Items[i].SubItems[1].Text == yemekAdi)
+                {
+                    listHesap.Groups[yeniIkramlar].Items[i].Text = (Convert.ToDouble(listHesap.Groups[yeniIkramlar].Items[i].Text) + carpan).ToString();
+                    listHesap.Groups[yeniIkramlar].Items[i].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[yeniIkramlar].Items[i].SubItems[2].Text) + (dusulecekDeger * carpan)).ToString("0.00");
+
+                    ikramYok = false;
+                    break;
+                }
+            }
+
+            if (ikramYok) // yok yeni ikramı listeye ekle
+            {
+                listHesap.Items.Insert(0, carpan.ToString());
+                listHesap.Items[0].SubItems.Add(yemekAdi);
+                listHesap.Items[0].SubItems.Add((dusulecekDeger * carpan).ToString("0.00"));
+
+                listHesap.Items[0].Group = listHesap.Groups[yeniIkramlar];
+                listHesap.Items[0].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
+                listedeSeciliOlanItemlar.Insert(0, false);
+            }
+
+            if (listHesap.Groups[eskiSiparisler].Items[degisecekSiparisIndexi].Text == "0")
+            {
+                listedeSeciliOlanItemlar.RemoveAt(listHesap.Groups[eskiSiparisler].Items[degisecekSiparisIndexi].Index);
+                listHesap.Groups[eskiSiparisler].Items[degisecekSiparisIndexi].Remove();
+            }
+
+            buttonTemizle_Click(null, null);
+            this.Enabled = true;
+        }
+
+        public void ikramIptaliGeldi(string miktar, string yemekAdi, string dusulecekDegerGelen, string ikramYeniMiEskiMiGelen)
+        {
+            int ikramYeniMiEskiMi = Convert.ToInt32(ikramYeniMiEskiMiGelen);
+
+            double carpan = Convert.ToDouble(miktar);
+
+            // ürünün değerini bul ve hesaba ekle
+            double dusulecekDeger = Convert.ToDouble(dusulecekDegerGelen);
+
+            int degisecekSiparisIndexi = -1;
+            for (int i = 0; i < listHesap.Groups[ikramYeniMiEskiMi].Items.Count; i++)
+            {
+                if (listHesap.Groups[ikramYeniMiEskiMi].Items[i].SubItems[1].Text == yemekAdi)
+                {
+                    degisecekSiparisIndexi = i;
+                    break;
+                }
+            }
+
+            if (degisecekSiparisIndexi == -1)
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Siparişlerde değişiklik oldu, lütfen masaya tekrar giriniz", false))
+                {
+                    dialog.ShowDialog();
+                    this.Close();
+                    return;
+                }
+            }
+
+            listHesap.Groups[ikramYeniMiEskiMi].Items[degisecekSiparisIndexi].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[ikramYeniMiEskiMi].Items[degisecekSiparisIndexi].SubItems[2].Text) - dusulecekDeger * carpan).ToString("0.00");
+
+            listHesap.Groups[ikramYeniMiEskiMi].Items[degisecekSiparisIndexi].SubItems[0].Text = (Convert.ToDouble(listHesap.Groups[ikramYeniMiEskiMi].Items[degisecekSiparisIndexi].SubItems[0].Text) - carpan).ToString();
+
+            labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) + (dusulecekDeger * carpan)).ToString("0.00");
+
+            bool urunYok = true;
+
+            for (int i = 0; i < listHesap.Groups[eskiSiparisler].Items.Count; i++)
+            {
+                if (listHesap.Groups[eskiSiparisler].Items[i].SubItems[1].Text == yemekAdi)
+                {
+                    listHesap.Groups[eskiSiparisler].Items[i].Text = (Convert.ToDouble(listHesap.Groups[eskiSiparisler].Items[i].Text) + carpan).ToString();
+                    listHesap.Groups[eskiSiparisler].Items[i].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[eskiSiparisler].Items[i].SubItems[2].Text) + (dusulecekDeger * carpan)).ToString("0.00");
+
+                    urunYok = false;
+                    break;
+                }
+            }
+
+            if (urunYok)
+            {
+                listHesap.Items.Add(carpan.ToString());
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(yemekAdi);
+                listHesap.Items[listHesap.Items.Count - 1].SubItems.Add((dusulecekDeger * carpan).ToString("0.00"));
+
+                listHesap.Items[listHesap.Items.Count - 1].Group = listHesap.Groups[eskiSiparisler];
+                listHesap.Items[listHesap.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
+                listedeSeciliOlanItemlar.Add(false);
+            }
+
+            if (listHesap.Groups[ikramYeniMiEskiMi].Items[degisecekSiparisIndexi].Text == "0")
+            {
+                listedeSeciliOlanItemlar.RemoveAt(listHesap.Groups[ikramYeniMiEskiMi].Items[degisecekSiparisIndexi].Index);
+                listHesap.Groups[ikramYeniMiEskiMi].Items[degisecekSiparisIndexi].Remove();
+            }
+
+            buttonTemizle_Click(null, null);
+            this.Enabled = true;
+        }
+
+        // ürün ikram etme ve ikramı iptal etme butonu
+        private void buttonUrunIkram_Click(object sender, EventArgs e)
+        {
+            double carpan;
+            if (textNumberOfItem.Text != "")
+                carpan = Convert.ToDouble(textNumberOfItem.Text);
+            else
+                carpan = 1;
+
+            if (carpan == 0)
+                return;
+
+            if (carpan > Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text))
+                carpan = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
+
+            double dusulecekDeger = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) / Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
+
+            if (Properties.Settings.Default.Server == 2) //server - diğer tüm clientlara söylemeli yaptığı ikram vs. neyse
+            {
+                // ikram et
+                if (buttonUrunIkram.Text == "  İkram")
+                {
+                    decimal istenilenikramSayisi = (decimal)carpan;
+
+                    // ürünün değerini istenilen kadar azalt, kalan hesaptan düş
+                    listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) - carpan * dusulecekDeger).ToString("0.00");
+
+                    listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) - carpan).ToString();
+
+                    labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+
+                    bool ikramYok = true; // ikram  yeni ikramlar listesinde var mı diye bak 
+
+                    for (int i = 0; i < listHesap.Groups[yeniIkramlar].Items.Count; i++) // varsa yeni ikramı olana ekle
+                    {
+                        if (listHesap.Groups[yeniIkramlar].Items[i].SubItems[1].Text == listHesap.SelectedItems[0].SubItems[1].Text)
+                        {
+                            listHesap.Groups[yeniIkramlar].Items[i].Text = (Convert.ToDouble(listHesap.Groups[yeniIkramlar].Items[i].Text) + carpan).ToString();
+                            listHesap.Groups[yeniIkramlar].Items[i].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[yeniIkramlar].Items[i].SubItems[2].Text) + (dusulecekDeger * carpan)).ToString("0.00");
+
+                            ikramYok = false;
+                            break;
+                        }
+                    }
+
+                    if (ikramYok) // yok yeni ikramı listeye ekle
+                    {
+                        listHesap.Items.Insert(0, carpan.ToString());
+                        listHesap.Items[0].SubItems.Add(listHesap.SelectedItems[0].SubItems[1].Text);
+                        listHesap.Items[0].SubItems.Add((dusulecekDeger * carpan).ToString("0.00"));
+
+                        listHesap.Items[0].Group = listHesap.Groups[yeniIkramlar];
+                        listHesap.Items[0].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
+                        listedeSeciliOlanItemlar.Insert(0, false);
+                    }
+
+                    //İkram edildiğinde önce hangi grupta olduğuna bakılacak, eğer yeni eklenenler grubunda (yani 3 indeksli grup) ise SQL o grubu update etmeye gerek yok direk ikram kaldırılacak
+                    //Eğer eskiden ekli olanlarda ise (yani 1 indeksli grup) ikram adedine ulaşana kadar update yaparak sipariş sayısını azaltacaz
+                    //Eğer iptal edilen adedi tam olarak siparişlerde bulunamazsa örneğin 4 iptal var 2 tane 3 adetlik sipariş var yani toplam 6
+                    //İlk gelen siparişin ikram özelliği true(1) yapılacak diğerinin adedi update edilerek azaltılacak ikramın kalanı kadarıyla yeni ikram siparişi oluşturulacak
+
+
+                    SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
+
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    int siparisID, adisyonID;
+                    decimal porsiyon;
+
+                    dr.Read();
+
+                    try
+                    {
+                        adisyonID = dr.GetInt32(1);
+                    }
+                    catch
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        return;
+                    }
+
+                    do
+                    {
+                        try
+                        {
+                            siparisID = dr.GetInt32(0);
+
+                            porsiyon = dr.GetDecimal(2);
+                        }
+                        catch
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
+
+                        if (porsiyon < istenilenikramSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
+                        {
+                            ikramUpdateTam(siparisID, 1);
+
+                            istenilenikramSayisi -= porsiyon;
+                        }
+                        else if (porsiyon > istenilenikramSayisi) // den büyükse
+                        {
+                            ikramUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenikramSayisi, listHesap.SelectedItems[0].SubItems[1].Text, 1);
+
+                            istenilenikramSayisi = 0;
+                        }
+                        else // elimizde ikram edilmemişler ikramı istenene eşitse
+                        {
+                            ikramUpdateTam(siparisID, 1);
+
+                            istenilenikramSayisi = 0;
+                        }
+                    } while (dr.Read());
+
+                    if (istenilenikramSayisi != 0)// ikram edilecekler daha bitmedi başka garsonların siparişlerinden ikram iptaline devam et
+                    {
+                        cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu!='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
+
+                        dr = cmd.ExecuteReader();
+
+                        dr.Read();
+                        try
+                        {
+                            adisyonID = dr.GetInt32(1);
+                        }
+                        catch
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
+                        do
+                        {
+                            try
+                            {
+                                siparisID = dr.GetInt32(0);
+
+                                porsiyon = dr.GetDecimal(2);
+                            }
+                            catch
+                            {
+                                using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                                {
+                                    dialog.ShowDialog();
+                                }
+                                return;
+                            }
+
+                            if (porsiyon < istenilenikramSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
+                            {
+                                ikramUpdateTam(siparisID, 1);
+
+                                istenilenikramSayisi -= porsiyon;
+                            }
+                            else if (porsiyon > istenilenikramSayisi) // den büyükse
+                            {
+                                ikramUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenikramSayisi, listHesap.SelectedItems[0].SubItems[1].Text, 1);
+
+                                istenilenikramSayisi = 0;
+                            }
+                            else // elimizde ikram edilmemişler ikramı istenene eşitse
+                            {
+                                ikramUpdateTam(siparisID, 1);
+
+                                istenilenikramSayisi = 0;
+                            }
+                        } while (dr.Read());
+                    }
+                    adisyonUpdateHesapveKalan(adisyonID);
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+
+                    masaFormu.serverdanIkramVeyaIkramIptali(MasaAdi, hangiDepartman.departmanAdi, "ikram", carpan.ToString(), listHesap.SelectedItems[0].SubItems[1].Text, dusulecekDeger.ToString(), null);
+
+                    if (listHesap.SelectedItems[0].Text == "0")
+                    {
+                        listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
+                        listHesap.SelectedItems[0].Remove();
+                    }
+                }
+                else // ikramı iptal et
+                {
+                    decimal istenilenIkramiptalSayisi = (decimal)carpan;
+                    // ürünün değerini bul ve hesaba ekle
+                    listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) - dusulecekDeger * carpan).ToString("0.00");
+
+                    listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) - carpan).ToString();
+
+                    // labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) + (dusulecekDeger * carpan)).ToString("0.00");
+
+                    labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) + (dusulecekDeger * carpan)).ToString("0.00");
+
+                    bool urunYok = true;
+
+                    for (int i = 0; i < listHesap.Groups[eskiSiparisler].Items.Count; i++)
+                    {
+                        if (listHesap.Groups[eskiSiparisler].Items[i].SubItems[1].Text == listHesap.SelectedItems[0].SubItems[1].Text)
+                        {
+                            listHesap.Groups[eskiSiparisler].Items[i].Text = (Convert.ToDouble(listHesap.Groups[eskiSiparisler].Items[i].Text) + carpan).ToString();
+                            listHesap.Groups[eskiSiparisler].Items[i].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[eskiSiparisler].Items[i].SubItems[2].Text) + (dusulecekDeger * carpan)).ToString("0.00");
+
+                            urunYok = false;
+                            break;
+                        }
+                    }
+
+                    if (urunYok)
+                    {
+                        listHesap.Items.Add(carpan.ToString());
+                        listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(listHesap.SelectedItems[0].SubItems[1].Text);
+                        listHesap.Items[listHesap.Items.Count - 1].SubItems.Add((dusulecekDeger * carpan).ToString("0.00"));
+
+                        listHesap.Items[listHesap.Items.Count - 1].Group = listHesap.Groups[eskiSiparisler];
+                        listHesap.Items[listHesap.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
+                        listedeSeciliOlanItemlar.Add(false);
+                    }
+
+                    //İkram iptal edildiğinde önce hangi grupta olduğuna bakılacak, eğer yeni eklenenler grubunda (yani 2. grup) ise SQL de o grubu update etmeye gerek yok
+                    //Eğer eskiden ekli olanlarda ise ikram adedine ulaşana kadar update yaparak sipariş sayısını azaltacaz
+                    //Eğer iptal edilen adedi tam olarak siparişlerde bulunamazsa örneğin 4 iptal var 2 tane 3 adetlik sipariş var yani toplam 6
+                    //İlk gelen siparişin ikram özelliği true(1) yapılacak diğerinin adedi update edilerek azaltılacak ikramın kalanı kadarıyla yeni ikram siparişi oluşturulacak
+
+
+                    SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi=1 AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
+
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    int siparisID, adisyonID;
+                    decimal porsiyon;
+
+                    dr.Read();
+
+                    try
+                    {
+                        adisyonID = dr.GetInt32(1);
+                    }
+                    catch
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        return;
+                    }
+                    do
+                    {
+                        try
+                        {
+                            siparisID = dr.GetInt32(0);
+
+                            porsiyon = dr.GetDecimal(2);
+                        }
+                        catch
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
+
+                        if (porsiyon < istenilenIkramiptalSayisi) // elimizdeki ikramlar iptali istenenden küçükse
+                        {
+                            ikramUpdateTam(siparisID, 0);
+
+                            istenilenIkramiptalSayisi -= porsiyon;
+                        }
+                        else if (porsiyon > istenilenIkramiptalSayisi) // den büyükse
+                        {
+                            ikramUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenIkramiptalSayisi, listHesap.SelectedItems[0].SubItems[1].Text, 0);
+
+                            istenilenIkramiptalSayisi = 0;
+                        }
+                        else // elimizde ikram edilmemişler ikramı istenene eşitse
+                        {
+                            ikramUpdateTam(siparisID, 0);
+
+                            istenilenIkramiptalSayisi = 0;
+                        }
+                    } while (dr.Read());
+
+                    if (istenilenIkramiptalSayisi != 0)// ikram edilecekler daha bitmedi başka garsonların siparişlerinden ikram iptaline devam et
+                    {
+                        cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu!='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
+
+                        dr = cmd.ExecuteReader();
+
+                        dr.Read();
+                        try
+                        {
+                            adisyonID = dr.GetInt32(1);
+                        }
+                        catch
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
+
+                        do
+                        {
+                            try
+                            {
+                                siparisID = dr.GetInt32(0);
+
+                                porsiyon = dr.GetDecimal(2);
+                            }
+                            catch
+                            {
+                                using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                                {
+                                    dialog.ShowDialog();
+                                }
+                                return;
+                            }
+
+                            if (porsiyon < istenilenIkramiptalSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
+                            {
+                                ikramUpdateTam(siparisID, 0);
+
+                                istenilenIkramiptalSayisi -= porsiyon;
+                            }
+                            else if (porsiyon > istenilenIkramiptalSayisi) // den büyükse
+                            {
+                                ikramUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenIkramiptalSayisi, listHesap.SelectedItems[0].SubItems[1].Text, 0);
+
+                                istenilenIkramiptalSayisi = 0;
+                            }
+                            else // elimizde ikram edilmemişler ikramı istenene eşitse
+                            {
+                                ikramUpdateTam(siparisID, 0);
+
+                                istenilenIkramiptalSayisi = 0;
+                            }
+                        } while (dr.Read());
+                    }
+
+                    adisyonUpdateHesapveKalan(adisyonID);
+
+                    masaFormu.serverdanIkramVeyaIkramIptali(MasaAdi, hangiDepartman.departmanAdi, "ikramIptal", carpan.ToString(), listHesap.SelectedItems[0].SubItems[1].Text, dusulecekDeger.ToString(), listHesap.SelectedItems[0].Group.Tag.ToString());
+
+                    if (listHesap.SelectedItems[0].Text == "0")
+                    {
+                        listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
+                        listHesap.SelectedItems[0].Remove();
+                    }
+
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                }
+            }
+            else //client 
+            {
+                // ikram et
+                if (buttonUrunIkram.Text == "  İkram")
+                {
+                    masaFormu.MenuFormundanServeraSiparisYolla(MasaAdi, hangiDepartman.departmanAdi, "ikram", carpan.ToString(), listHesap.SelectedItems[0].SubItems[1].Text, siparisiKimGirdi, dusulecekDeger.ToString(), adisyonNotu, labelToplamHesap.Text, labelKalanHesap.Text, null);
+                }
+                else // ikramı iptal et
+                {
+                    masaFormu.MenuFormundanServeraSiparisYolla(MasaAdi, hangiDepartman.departmanAdi, "ikramIptal", carpan.ToString(), listHesap.SelectedItems[0].SubItems[1].Text, siparisiKimGirdi, dusulecekDeger.ToString(), adisyonNotu, labelToplamHesap.Text, labelKalanHesap.Text, listHesap.SelectedItems[0].Group.Tag.ToString());
+                }
+                this.Enabled = false;
+            }
+        }
+
+        public void iptalGeldi(string miktar, string yemekAdi, string dusulecekDegerGelen, string ikramMiGelen)
+        {
+            int ikraminGrubu = Convert.ToInt32(ikramMiGelen);
+
+            double carpan = Convert.ToDouble(miktar);
+
+            double dusulecekDeger = Convert.ToDouble(dusulecekDegerGelen);
+
+            int degisecekSiparisIndexi = -1;
+
+            for (int i = 0; i < listHesap.Groups[ikraminGrubu].Items.Count; i++)
+            {
+                if (listHesap.Groups[ikraminGrubu].Items[i].SubItems[1].Text == yemekAdi)
+                {
+                    degisecekSiparisIndexi = i;
+                    break;
+                }
+            }
+
+            if (degisecekSiparisIndexi == -1)
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Siparişlerde değişiklik oldu, lütfen masaya tekrar giriniz", false))
+                {
+                    dialog.ShowDialog();
+                    this.Close();
+                    return;
+                }
+            }
+
+            listHesap.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].SubItems[0].Text = (Convert.ToDouble(listHesap.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].SubItems[0].Text) - carpan).ToString();
+
+            listHesap.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].SubItems[2].Text) - dusulecekDeger * carpan).ToString("0.00");
+
+            if (ikraminGrubu == 2) // iptali istenilen ürün ikram değilse kalan hesaptan da düşülmeli
+            {
+                labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+            }
+
+            labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+
+            if (listHesap.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].Text == "0")
+            {
+                listedeSeciliOlanItemlar.RemoveAt(listHesap.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].Index);
+                listHesap.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].Remove();
+            }
+
+            if (this.listHesap.Items.Count > 0)
+            {
+                int itemsCount = this.listHesap.Items.Count + 3;// 3 aslında grup sayısı -1
+                int itemHeight = this.listHesap.Items[0].Bounds.Height;
+                int VisiableItem = (int)this.listHesap.ClientRectangle.Height / itemHeight;
+                if (itemsCount < VisiableItem)
+                {
+                    listHesap.Columns[1].Width = urunBoyu + 10;
+                    listHesap.Columns[2].Width = fiyatBoyu + 10;
+                }
+            }
+
+            buttonTemizle_Click(null, null);
+            this.Enabled = true;
+        }
+
+        // ürün iptal etme butonu
+        private void buttonUrunIptal_Click(object sender, EventArgs e)
+        {
+            double carpan;
+            if (textNumberOfItem.Text != "")
+            {
+                carpan = Convert.ToDouble(textNumberOfItem.Text);
+                if (carpan > Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text))
+                    carpan = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
+            }
+            else
+                carpan = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
+
+            if (carpan == 0)
+                return;
+
+            DialogResult eminMisiniz;
+
+            using (KontrolFormu dialog = new KontrolFormu(carpan + " adet " + listHesap.SelectedItems[0].SubItems[1].Text + " iptal edilecek. Emin misiniz?", true))
+            {
+                eminMisiniz = dialog.ShowDialog();
+            }
+
+            if (eminMisiniz == DialogResult.No)
+            {
+                return;
+            }
+
+            double dusulecekDeger = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) / Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
+
+            if (Properties.Settings.Default.Server == 2) //server - diğer tüm clientlara söylemeli yaptığı ikram vs. neyse
+            {
+                listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) - carpan).ToString();
+
+                listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) - dusulecekDeger * carpan).ToString("0.00");
+
+                if (listHesap.SelectedItems[0].Group == listHesap.Groups[2] || listHesap.SelectedItems[0].Group == listHesap.Groups[3])
+                {
+                    labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+                }
+
+                labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+
+                if (listHesap.SelectedItems[0].Group != listHesap.Groups[yeniSiparisler])
+                {
+                    decimal istenilenSiparisiptalSayisi = (decimal)carpan;
+
+                    SqlCommand cmd;
+
+                    string ikramSQLGirdisi;
+
+                    if (listHesap.SelectedItems[0].Group == listHesap.Groups[eskiSiparisler])
+                    {
+                        ikramSQLGirdisi = "0";
+                    }
+                    else
+                    {
+                        ikramSQLGirdisi = "1";
+                    }
+
+                    cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi='" + ikramSQLGirdisi + "' AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
+
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    int siparisID, adisyonID;
+                    decimal porsiyon;
+
+                    dr.Read();
+                    try
+                    {
+                        adisyonID = dr.GetInt32(1);
+                    }
+                    catch
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                        {
+                            dialog.ShowDialog();
+                        }
+                        return;
+                    }
+
+                    do
+                    {
+                        try
+                        {
+                            siparisID = dr.GetInt32(0);
+
+                            porsiyon = dr.GetDecimal(2);
+                        }
+                        catch
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
+
+                        if (porsiyon < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
+                        {
+                            iptalUpdateTam(siparisID);
+
+                            istenilenSiparisiptalSayisi -= porsiyon;
+                        }
+                        else if (porsiyon > istenilenSiparisiptalSayisi) // den büyükse
+                        {
+                            iptalUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenSiparisiptalSayisi, listHesap.SelectedItems[0].SubItems[1].Text);
+
+                            istenilenSiparisiptalSayisi = 0;
+                        }
+                        else // elimizdeki siparişler iptali istenene eşitse
+                        {
+                            iptalUpdateTam(siparisID);
+
+                            istenilenSiparisiptalSayisi = 0;
+                        }
+                    } while (dr.Read());
+
+                    if (istenilenSiparisiptalSayisi != 0)// iptal edilecekler daha bitmedi başka garsonların siparişlerinden iptale devam et
+                    {
+                        cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi='" + ikramSQLGirdisi + "' AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu!='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
+
+                        dr = cmd.ExecuteReader();
+
+                        dr.Read();
+                        try
+                        {
+                            adisyonID = dr.GetInt32(1);
+                        }
+                        catch
+                        {
+                            using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                            {
+                                dialog.ShowDialog();
+                            }
+                            return;
+                        }
+
+                        do
+                        {
+                            try
+                            {
+                                siparisID = dr.GetInt32(0);
+
+                                porsiyon = dr.GetDecimal(2);
+                            }
+                            catch
+                            {
+                                using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                                {
+                                    dialog.ShowDialog();
+                                }
+                                return;
+                            }
+
+                            if (porsiyon < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
+                            {
+                                iptalUpdateTam(siparisID);
+
+                                istenilenSiparisiptalSayisi -= porsiyon;
+                            }
+                            else if (porsiyon > istenilenSiparisiptalSayisi) // den büyükse
+                            {
+                                iptalUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenSiparisiptalSayisi, listHesap.SelectedItems[0].SubItems[1].Text);
+
+                                istenilenSiparisiptalSayisi = 0;
+                            }
+                            else // elimizdeki siparişler iptali istenene eşitse
+                            {
+                                iptalUpdateTam(siparisID);
+
+                                istenilenSiparisiptalSayisi = 0;
+                            }
+                        } while (dr.Read());
+                    }
+
+                    adisyonUpdateHesapveKalan(adisyonID);
+
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                }
+
+                masaFormu.serverdanIkramVeyaIkramIptali(MasaAdi, hangiDepartman.departmanAdi, "iptal", carpan.ToString(), listHesap.SelectedItems[0].SubItems[1].Text, dusulecekDeger.ToString(), listHesap.SelectedItems[0].Group.Tag.ToString());
+
+                if (listHesap.SelectedItems[0].Text == "0")
+                {
+                    listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
+                    listHesap.SelectedItems[0].Remove();
+                }
+
+                if (this.listHesap.Items.Count > 0)
+                {
+                    int itemsCount = this.listHesap.Items.Count + 3;// 3 aslında grup sayısı -1
+                    int itemHeight = this.listHesap.Items[0].Bounds.Height;
+                    int VisiableItem = (int)this.listHesap.ClientRectangle.Height / itemHeight;
+                    if (itemsCount < VisiableItem)
+                    {
+                        listHesap.Columns[1].Width = urunBoyu + 10;
+                        listHesap.Columns[2].Width = fiyatBoyu + 10;
+                    }
+                }
+
+                buttonTemizle_Click(null, null);
+            }
+            else //client 
+            {
+                if (listHesap.SelectedItems[0].Group == listHesap.Groups[yeniSiparisler]) //eğer sipariş yeni verilenlerdense henüz sisteme girişi yapılmamış demektir
+                {
+                    listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) - carpan).ToString();
+
+                    listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) - dusulecekDeger * carpan).ToString("0.00");
+
+                    if (listHesap.SelectedItems[0].Group == listHesap.Groups[2] || listHesap.SelectedItems[0].Group == listHesap.Groups[3])
+                    {
+                        labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+                    }
+
+                    labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+
+                    if (listHesap.SelectedItems[0].Text == "0")
+                    {
+                        listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
+                        listHesap.SelectedItems[0].Remove();
+                    }
+
+                    if (this.listHesap.Items.Count > 0)
+                    {
+                        int itemsCount = this.listHesap.Items.Count + 3;// 3 aslında grup sayısı -1
+                        int itemHeight = this.listHesap.Items[0].Bounds.Height;
+                        int VisiableItem = (int)this.listHesap.ClientRectangle.Height / itemHeight;
+                        if (itemsCount < VisiableItem)
+                        {
+                            listHesap.Columns[1].Width = urunBoyu + 10;
+                            listHesap.Columns[2].Width = fiyatBoyu + 10;
+                        }
+                    }
+
+                    buttonTemizle_Click(null, null);
+                }
+                else // yeni sipariş değilse sisteme girişi yapılmıştır ve diğer makinalara bilgi verilmelidir
+                {
+                    string ikramMi = listHesap.SelectedItems[0].Group.Tag.ToString();
+
+                    masaFormu.MenuFormundanServeraSiparisYolla(MasaAdi, hangiDepartman.departmanAdi, "iptal", carpan.ToString(), listHesap.SelectedItems[0].SubItems[1].Text, siparisiKimGirdi, dusulecekDeger.ToString(), adisyonNotu, labelToplamHesap.Text, labelKalanHesap.Text, ikramMi);
+                    this.Enabled = false;
+                }
+            }
+        } 
+
         //ödeme kısmına geçiş butonu
         private void paymentButton_Click(object sender, EventArgs e)
         {
@@ -1009,67 +1818,218 @@ namespace ROPv1
             return adisyonID;
         }
 
-        //Masaların adisyonlarını değiştiren butonun methodu
-        private void changeTablesButton_Click(object sender, EventArgs e)
+        public void siparisOlustur(int adisyonID, ListViewItem siparis)
         {
-            MasaDegistirFormu masaDegistirForm = new MasaDegistirFormu(MasaAdi, hangiDepartman.departmanAdi, true);
-            masaDegistirForm.ShowDialog();
+            SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,VerilisTarihi) VALUES(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_VerilisTarihi)");
+            cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
+            cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
+            cmd.Parameters.AddWithValue("@_Fiyatı", Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text));
+            cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(siparis.SubItems[0].Text));
+            cmd.Parameters.AddWithValue("@_YemekAdi", siparis.SubItems[1].Text);
+            cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
 
-            if (masaDegistirForm.yeniMasa == "iptalEdildi")
-                return;
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void ikramUpdateInsert(int siparisID, int adisyonID, decimal porsiyon, double dusulecekDeger, decimal ikramAdedi, string yemekAdi, int ikramMi)
+        {
+            decimal yeniPorsiyonAdetiSiparis = porsiyon - ikramAdedi;
+
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@Porsiyonu", yeniPorsiyonAdetiSiparis);
+            cmd.Parameters.AddWithValue("@id", siparisID);
+            cmd.ExecuteNonQuery();
+
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,IkramMi,VerilisTarihi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IkramMi,@_VerilisTarihi)");
+            cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
+            cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
+            cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
+            cmd.Parameters.AddWithValue("@_Porsiyon", ikramAdedi);
+            cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
+            cmd.Parameters.AddWithValue("@_IkramMi", ikramMi);
+            cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void ikramUpdateTam(int siparisID, int ikramMi)
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET IkramMi=@ikram, Garsonu=@Garson WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@ikram", ikramMi);
+            cmd.Parameters.AddWithValue("@Garson", siparisiKimGirdi);
+            cmd.Parameters.AddWithValue("@id", siparisID);
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void ikramInsert(int adisyonID, double dusulecekDeger, decimal ikramAdedi, string yemekAdi)
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,IkramMi,VerilisTarihi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IkramMi,@_VerilisTarihi)");
+            cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
+            cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
+            cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
+            cmd.Parameters.AddWithValue("@_Porsiyon", ikramAdedi);
+            cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
+            cmd.Parameters.AddWithValue("@_IkramMi", 1);
+            cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void adisyonUpdateHesapveKalan(int adisyonID)
+        {
+            SqlCommand cmd;
+
+            if (adisyonNotu != "")
+            {
+                cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AdisyonNotu=@adisyonNotu, ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
+                cmd.Parameters.AddWithValue("@adisyonNotu", adisyonNotu);
+            }
             else
             {
-                SqlCommand cmd;
-                switch (masaDegistirForm.yapilmasiGerekenIslem)
-                {
-                    case 0: // departman değişmedi ve masaların ikisi de açık
-                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi = CASE MasaAdi WHEN @masaninAdiEski THEN @masaninAdiYeni WHEN @masaninAdiYeni THEN @masaninAdiEski END WHERE MasaAdi in (@masaninAdiEski,@masaninAdiYeni) AND AcikMi=1 AND DepartmanAdi=@departmanAdiEski");
-
-                        cmd.Parameters.AddWithValue("@masaninAdiEski", MasaAdi);
-                        cmd.Parameters.AddWithValue("@masaninAdiYeni", masaDegistirForm.yeniMasa);
-                        cmd.Parameters.AddWithValue("@departmanAdiEski", hangiDepartman.departmanAdi);
-                        cmd.ExecuteNonQuery();
-
-                        cmd.Connection.Close();
-                        cmd.Connection.Dispose();
-                        break;
-                    case 1: // masalar açık departman değişti
-                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi = CASE MasaAdi WHEN @masaninAdiEski THEN @masaninAdiYeni WHEN @masaninAdiYeni THEN @masaninAdiEski END, DepartmanAdi = CASE DepartmanAdi WHEN @departmanAdiEski THEN @departmanAdiYeni WHEN @departmanAdiYeni THEN @departmanAdiEski END WHERE MasaAdi in (@masaninAdiEski,@masaninAdiYeni) AND AcikMi=1 AND DepartmanAdi in (@departmanAdiEski,@departmanAdiYeni)");
-
-                        cmd.Parameters.AddWithValue("@masaninAdiEski", MasaAdi);
-                        cmd.Parameters.AddWithValue("@masaninAdiYeni", masaDegistirForm.yeniMasa);
-                        cmd.Parameters.AddWithValue("@departmanAdiEski", hangiDepartman.departmanAdi);
-                        cmd.Parameters.AddWithValue("@departmanAdiYeni", masaDegistirForm.yeniDepartman);
-                        cmd.ExecuteNonQuery();
-
-                        cmd.Connection.Close();
-                        cmd.Connection.Dispose();
-                        break;
-                    case 2: // departman değişmedi 1 masa açık
-                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi=@masaninAdi WHERE MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND AcikMi=1");
-                        cmd.Parameters.AddWithValue("@masaninAdi", masaDegistirForm.yeniMasa);
-                        cmd.ExecuteNonQuery();
-
-                        cmd.Connection.Close();
-                        cmd.Connection.Dispose();
-                        break;
-                    case 3: // departman değişti 1 masa açık
-                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi=@masaninAdi, DepartmanAdi=@departmanAdi  WHERE MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND AcikMi=1");
-                        cmd.Parameters.AddWithValue("@masaninAdi", masaDegistirForm.yeniMasa);
-                        cmd.Parameters.AddWithValue("@departmanAdi", masaDegistirForm.yeniDepartman);
-                        cmd.ExecuteNonQuery();
-
-                        cmd.Connection.Close();
-                        cmd.Connection.Dispose();
-                        break;
-                    default:
-                        break;
-                }
-                yeniMasaninAdi = masaDegistirForm.yeniMasa;
-                masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
-                this.Close();
+                cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
             }
+            cmd.Parameters.AddWithValue("@hesap", Convert.ToDecimal(labelToplamHesap.Text));
+            cmd.Parameters.AddWithValue("@kalan", Convert.ToDecimal(labelKalanHesap.Text));
+            cmd.Parameters.AddWithValue("@id", adisyonID);
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
         }
+
+        public void adisyonNotuUpdate(int adisyonID)
+        {
+            SqlCommand cmd;
+
+            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AdisyonNotu=@adisyonNotu WHERE AdisyonID=@id");
+
+            cmd.Parameters.AddWithValue("@adisyonNotu", adisyonNotu);
+            cmd.Parameters.AddWithValue("@id", adisyonID);
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void adisyonIptal(int adisyonID)
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=@acik, IptalMi=@iptal WHERE AdisyonID=@id");
+            cmd.Parameters.AddWithValue("@acik", 0);
+            cmd.Parameters.AddWithValue("@iptal", 1);
+            cmd.Parameters.AddWithValue("@id", adisyonID);
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void iptalUpdateInsert(int siparisID, int adisyonID, decimal porsiyon, double dusulecekDeger, decimal iptalAdedi, string yemekAdi)
+        {
+            decimal yeniPorsiyonAdetiSiparis = porsiyon - iptalAdedi;
+
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@Porsiyonu", yeniPorsiyonAdetiSiparis);
+            cmd.Parameters.AddWithValue("@id", siparisID);
+            cmd.ExecuteNonQuery();
+
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,IptalMi,VerilisTarihi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IptalMi,@_VerilisTarihi)");
+            cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
+            cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
+            cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
+            cmd.Parameters.AddWithValue("@_Porsiyon", iptalAdedi);
+            cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
+            cmd.Parameters.AddWithValue("@_IptalMi", 1);
+            cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void iptalUpdateTam(int siparisID)
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET IptalMi=@iptal, Garsonu=@Garson WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@iptal", 1);
+            cmd.Parameters.AddWithValue("@Garson", siparisiKimGirdi);
+            cmd.Parameters.AddWithValue("@id", siparisID);
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void urunTasimaUpdateTam(int siparisID, int aktarimYapilacakMasaninAdisyonID)
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Garsonu=@Garson, AdisyonID=@adisyonId WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@Garson", siparisiKimGirdi);
+            cmd.Parameters.AddWithValue("@adisyonId", aktarimYapilacakMasaninAdisyonID);
+            cmd.Parameters.AddWithValue("@id", siparisID);
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void urunTasimaUpdateInsert(int siparisID, int aktarimYapilacakMasaninAdisyonID, decimal porsiyon, double dusulecekDeger, decimal tasinacakMiktar, string yemekAdi, int ikramMi)
+        {
+            decimal yeniPorsiyonAdetiSiparis = porsiyon - tasinacakMiktar;
+
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@Porsiyonu", yeniPorsiyonAdetiSiparis);
+            cmd.Parameters.AddWithValue("@id", siparisID);
+            cmd.ExecuteNonQuery();
+
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,IkramMi,VerilisTarihi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IkramMi,@_VerilisTarihi)");
+            cmd.Parameters.AddWithValue("@_AdisyonID", aktarimYapilacakMasaninAdisyonID);
+            cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
+            cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
+            cmd.Parameters.AddWithValue("@_Porsiyon", tasinacakMiktar);
+            cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
+            cmd.Parameters.AddWithValue("@_IkramMi", ikramMi);
+            cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void adisyonUpdateHesapveKalanVeDigerAdisyonİcin(int adisyonID, int aktarimYapilacakMasaninAdisyonID, decimal yeniToplamMasaHesabi, decimal yeniKalanMasaHesabi)
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
+            cmd.Parameters.AddWithValue("@id", adisyonID);
+            cmd.Parameters.AddWithValue("@hesap", Convert.ToDecimal(labelToplamHesap.Text));
+            cmd.Parameters.AddWithValue("@kalan", Convert.ToDecimal(labelKalanHesap.Text));
+            cmd.ExecuteNonQuery();
+
+            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
+            cmd.Parameters.AddWithValue("@id", aktarimYapilacakMasaninAdisyonID);
+            cmd.Parameters.AddWithValue("@hesap", yeniToplamMasaHesabi);
+            cmd.Parameters.AddWithValue("@kalan", yeniKalanMasaHesabi);
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        #endregion
+
+
+
 
         //Seçili siparişlerin adisyonunu değiştiren butonun methodu -- Yeni Siparişler taşınamaz
         private void buttonTasi_Click(object sender, EventArgs e)
@@ -1294,846 +2254,70 @@ namespace ROPv1
                     }
 
                     buttonTemizle_Click(null, null);
-
-                    if (labelToplamHesap.Text != "0,00") //hesapta para varsa butonu enable et
-                        buttonHesapOde.Enabled = true;
-                    else
-                        buttonHesapOde.Enabled = false; //yoksa disable et
                 }
             }
-        }
-
-        public void siparisOlustur(int adisyonID, ListViewItem siparis)
-        {
-            SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,VerilisTarihi) VALUES(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_VerilisTarihi)");
-            cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
-            cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
-            cmd.Parameters.AddWithValue("@_Fiyatı", Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text));
-            cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(siparis.SubItems[0].Text));
-            cmd.Parameters.AddWithValue("@_YemekAdi", siparis.SubItems[1].Text);
-            cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
-
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
-        public void ikramUpdateInsert(int siparisID, int adisyonID, decimal porsiyon, double dusulecekDeger, decimal ikramAdedi, string yemekAdi, int ikramMi)
-        {
-            decimal yeniPorsiyonAdetiSiparis = porsiyon - ikramAdedi;
-
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu WHERE SiparisID=@id");
-            cmd.Parameters.AddWithValue("@Porsiyonu", yeniPorsiyonAdetiSiparis);
-            cmd.Parameters.AddWithValue("@id", siparisID);
-            cmd.ExecuteNonQuery();
-
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,IkramMi,VerilisTarihi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IkramMi,@_VerilisTarihi)");
-            cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
-            cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
-            cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
-            cmd.Parameters.AddWithValue("@_Porsiyon", ikramAdedi);
-            cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
-            cmd.Parameters.AddWithValue("@_IkramMi", ikramMi);
-            cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
-
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
-        public void ikramUpdateTam(int siparisID, int ikramMi)
-        {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET IkramMi=@ikram, Garsonu=@Garson WHERE SiparisID=@id");
-            cmd.Parameters.AddWithValue("@ikram", ikramMi);
-            cmd.Parameters.AddWithValue("@Garson", siparisiKimGirdi);
-            cmd.Parameters.AddWithValue("@id", siparisID);
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
-        public void ikramInsert(int adisyonID, double dusulecekDeger, decimal ikramAdedi, string yemekAdi)
-        {
-            SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,IkramMi,VerilisTarihi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IkramMi,@_VerilisTarihi)");
-            cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
-            cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
-            cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
-            cmd.Parameters.AddWithValue("@_Porsiyon", ikramAdedi);
-            cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
-            cmd.Parameters.AddWithValue("@_IkramMi", 1);
-            cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
-        public void adisyonUpdateHesapveKalan(int adisyonID)
-        {
-            SqlCommand cmd;
-
-            if (adisyonNotu != "")
-            {
-                cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AdisyonNotu=@adisyonNotu, ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
-                cmd.Parameters.AddWithValue("@adisyonNotu", adisyonNotu);
-            }
-            else
-            {
-                cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
-            }
-            cmd.Parameters.AddWithValue("@hesap", Convert.ToDecimal(labelToplamHesap.Text));
-            cmd.Parameters.AddWithValue("@kalan", Convert.ToDecimal(labelKalanHesap.Text));
-            cmd.Parameters.AddWithValue("@id", adisyonID);
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
-        public void adisyonNotuUpdate(int adisyonID)
-        {
-            SqlCommand cmd;
-
-            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AdisyonNotu=@adisyonNotu WHERE AdisyonID=@id");
-
-            cmd.Parameters.AddWithValue("@adisyonNotu", adisyonNotu);
-            cmd.Parameters.AddWithValue("@id", adisyonID);
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
-        public void adisyonIptal(int adisyonID)
-        {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=@acik, IptalMi=@iptal WHERE AdisyonID=@id");
-            cmd.Parameters.AddWithValue("@acik", 0);
-            cmd.Parameters.AddWithValue("@iptal", 1);
-            cmd.Parameters.AddWithValue("@id", adisyonID);
-
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
-        public void iptalUpdateInsert(int siparisID, int adisyonID, decimal porsiyon, double dusulecekDeger, decimal iptalAdedi, string yemekAdi)
-        {
-            decimal yeniPorsiyonAdetiSiparis = porsiyon - iptalAdedi;
-
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu WHERE SiparisID=@id");
-            cmd.Parameters.AddWithValue("@Porsiyonu", yeniPorsiyonAdetiSiparis);
-            cmd.Parameters.AddWithValue("@id", siparisID);
-            cmd.ExecuteNonQuery();
-
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,IptalMi,VerilisTarihi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IptalMi,@_VerilisTarihi)");
-            cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
-            cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
-            cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
-            cmd.Parameters.AddWithValue("@_Porsiyon", iptalAdedi);
-            cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
-            cmd.Parameters.AddWithValue("@_IptalMi", 1);
-            cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
-
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
-        public void iptalUpdateTam(int siparisID)
-        {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET IptalMi=@iptal, Garsonu=@Garson WHERE SiparisID=@id");
-            cmd.Parameters.AddWithValue("@iptal", 1);
-            cmd.Parameters.AddWithValue("@Garson", siparisiKimGirdi);
-            cmd.Parameters.AddWithValue("@id", siparisID);
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
-        public void urunTasimaUpdateTam(int siparisID, int aktarimYapilacakMasaninAdisyonID)
-        {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Garsonu=@Garson, AdisyonID=@adisyonId WHERE SiparisID=@id");
-            cmd.Parameters.AddWithValue("@Garson", siparisiKimGirdi);
-            cmd.Parameters.AddWithValue("@adisyonId", aktarimYapilacakMasaninAdisyonID);
-            cmd.Parameters.AddWithValue("@id", siparisID);
-
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
-        public void urunTasimaUpdateInsert(int siparisID, int aktarimYapilacakMasaninAdisyonID, decimal porsiyon, double dusulecekDeger, decimal tasinacakMiktar, string yemekAdi, int ikramMi)
-        {
-            decimal yeniPorsiyonAdetiSiparis = porsiyon - tasinacakMiktar;
-
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu WHERE SiparisID=@id");
-            cmd.Parameters.AddWithValue("@Porsiyonu", yeniPorsiyonAdetiSiparis);
-            cmd.Parameters.AddWithValue("@id", siparisID);
-            cmd.ExecuteNonQuery();
-
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,IkramMi,VerilisTarihi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IkramMi,@_VerilisTarihi)");
-            cmd.Parameters.AddWithValue("@_AdisyonID", aktarimYapilacakMasaninAdisyonID);
-            cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
-            cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
-            cmd.Parameters.AddWithValue("@_Porsiyon", tasinacakMiktar);
-            cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
-            cmd.Parameters.AddWithValue("@_IkramMi", ikramMi);
-            cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
-
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
-        public void adisyonUpdateHesapveKalanVeDigerAdisyonİcin(int adisyonID, int aktarimYapilacakMasaninAdisyonID, decimal yeniToplamMasaHesabi, decimal yeniKalanMasaHesabi)
-        {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
-            cmd.Parameters.AddWithValue("@id", adisyonID);
-            cmd.Parameters.AddWithValue("@hesap", Convert.ToDecimal(labelToplamHesap.Text));
-            cmd.Parameters.AddWithValue("@kalan", Convert.ToDecimal(labelKalanHesap.Text));
-            cmd.ExecuteNonQuery();
-
-            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET ToplamHesap=@hesap, KalanHesap=@kalan WHERE AdisyonID=@id");
-            cmd.Parameters.AddWithValue("@id", aktarimYapilacakMasaninAdisyonID);
-            cmd.Parameters.AddWithValue("@hesap", yeniToplamMasaHesabi);
-            cmd.Parameters.AddWithValue("@kalan", yeniKalanMasaHesabi);
-            cmd.ExecuteNonQuery();
-
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
-        }
-
-        #endregion
-
-        // ürün ikram etme ve ikramı iptal etme butonu
-        private void buttonUrunIkram_Click(object sender, EventArgs e)
-        {
-            double carpan;
-            if (textNumberOfItem.Text != "")
-                carpan = Convert.ToDouble(textNumberOfItem.Text);
-            else
-                carpan = 1;
-
-            if (carpan == 0)
-                return;
-
-            if (carpan > Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text))
-                carpan = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
-
-            // ikram et
-            if (buttonUrunIkram.Text == "  İkram")
-            {
-                decimal istenilenikramSayisi = (decimal)carpan;
-
-                // ürünün değerini istenilen kadar azalt, tüm hesaptan düş
-                double dusulecekDeger = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) / Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
-                listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) - carpan * dusulecekDeger).ToString("0.00");
-
-                listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) - carpan).ToString();
-
-                // labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
-
-                labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
-
-                bool ikramYok = true;
-
-                for (int i = 0; i < listHesap.Groups[yeniIkramlar].Items.Count; i++)
-                {
-                    if (listHesap.Groups[yeniIkramlar].Items[i].SubItems[1].Text == listHesap.SelectedItems[0].SubItems[1].Text)
-                    {
-                        listHesap.Groups[yeniIkramlar].Items[i].Text = (Convert.ToDouble(listHesap.Groups[yeniIkramlar].Items[i].Text) + carpan).ToString();
-                        listHesap.Groups[yeniIkramlar].Items[i].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[yeniIkramlar].Items[i].SubItems[2].Text) + (dusulecekDeger * carpan)).ToString("0.00");
-
-                        ikramYok = false;
-                    }
-                }
-
-                if (ikramYok)
-                {
-                    listHesap.Items.Insert(0, carpan.ToString());
-                    listHesap.Items[0].SubItems.Add(listHesap.SelectedItems[0].SubItems[1].Text);
-                    listHesap.Items[0].SubItems.Add((dusulecekDeger * carpan).ToString("0.00"));
-
-                    listHesap.Items[0].Group = listHesap.Groups[yeniIkramlar];
-                    listHesap.Items[0].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
-                    listedeSeciliOlanItemlar.Insert(0, false);
-                }
-
-                //İkram edildiğinde önce hangi grupta olduğuna bakılacak, eğer yeni eklenenler grubunda (yani 3 indeksli grup) ise SQL o grubu update etmeye gerek yok direk ikram kaldırılacak
-                //Eğer eskiden ekli olanlarda ise (yani 1 indeksli grup) ikram adedine ulaşana kadar update yaparak sipariş sayısını azaltacaz
-                //Eğer iptal edilen adedi tam olarak siparişlerde bulunamazsa örneğin 4 iptal var 2 tane 3 adetlik sipariş var yani toplam 6
-                //İlk gelen siparişin ikram özelliği true(1) yapılacak diğerinin adedi update edilerek azaltılacak ikramın kalanı kadarıyla yeni ikram siparişi oluşturulacak
-
-                if (listHesap.SelectedItems[0].Group == listHesap.Groups[eskiSiparisler]) //eski siparişlerle ilgili ikram
-                {
-                    SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
-
-                    SqlDataReader dr = cmd.ExecuteReader();
-
-                    int siparisID, adisyonID;
-                    decimal porsiyon;
-
-                    dr.Read();
-
-                    try
-                    {
-                        adisyonID = dr.GetInt32(1);
-                    }
-                    catch
-                    {
-                        using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                        {
-                            dialog.ShowDialog();
-                        }
-                        return;
-                    }
-
-                    do
-                    {
-                        try
-                        {
-                            siparisID = dr.GetInt32(0);
-
-                            porsiyon = dr.GetDecimal(2);
-                        }
-                        catch
-                        {
-                            using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                            {
-                                dialog.ShowDialog();
-                            }
-                            return;
-                        }
-
-                        if (porsiyon < istenilenikramSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
-                        {
-                            ikramUpdateTam(siparisID, 1);
-
-                            istenilenikramSayisi -= porsiyon;
-                        }
-                        else if (porsiyon > istenilenikramSayisi) // den büyükse
-                        {
-                            ikramUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenikramSayisi, listHesap.SelectedItems[0].SubItems[1].Text, 1);
-
-                            istenilenikramSayisi = 0;
-                        }
-                        else // elimizde ikram edilmemişler ikramı istenene eşitse
-                        {
-                            ikramUpdateTam(siparisID, 1);
-
-                            istenilenikramSayisi = 0;
-                        }
-                    } while (dr.Read());
-
-                    if (istenilenikramSayisi != 0)// ikram edilecekler daha bitmedi başka garsonların siparişlerinden ikram iptaline devam et
-                    {
-                        cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu!='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
-
-                        dr = cmd.ExecuteReader();
-
-                        dr.Read();
-                        try
-                        {
-                            adisyonID = dr.GetInt32(1);
-                        }
-                        catch
-                        {
-                            using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                            {
-                                dialog.ShowDialog();
-                            }
-                            return;
-                        }
-                        do
-                        {
-                            try
-                            {
-                                siparisID = dr.GetInt32(0);
-
-                                porsiyon = dr.GetDecimal(2);
-                            }
-                            catch
-                            {
-                                using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                                {
-                                    dialog.ShowDialog();
-                                }
-                                return;
-                            }
-
-                            if (porsiyon < istenilenikramSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
-                            {
-                                ikramUpdateTam(siparisID, 1);
-
-                                istenilenikramSayisi -= porsiyon;
-                            }
-                            else if (porsiyon > istenilenikramSayisi) // den büyükse
-                            {
-                                ikramUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenikramSayisi, listHesap.SelectedItems[0].SubItems[1].Text, 1);
-
-                                istenilenikramSayisi = 0;
-                            }
-                            else // elimizde ikram edilmemişler ikramı istenene eşitse
-                            {
-                                ikramUpdateTam(siparisID, 1);
-
-                                istenilenikramSayisi = 0;
-                            }
-                        } while (dr.Read());
-                    }
-                    adisyonUpdateHesapveKalan(adisyonID);
-                    cmd.Connection.Close();
-                    cmd.Connection.Dispose();
-                }
-                else //yeni siparişlerle ilgili ikram
-                {
-                    int siparisinIndexi = listHesap.SelectedItems[0].Index;
-
-                    SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
-
-                    SqlDataReader dr = cmd.ExecuteReader();
-
-                    dr.Read();
-
-                    try // açık
-                    {
-                        int adisyonID = dr.GetInt32(0);
-
-                        ikramInsert(adisyonID, dusulecekDeger, istenilenikramSayisi, listHesap.Items[siparisinIndexi].SubItems[1].Text);
-                        masaAcikMi = true;
-                    }
-                    catch // kapalı
-                    {
-                        adisyonOlustur();
-                        cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
-
-                        dr = cmd.ExecuteReader();
-
-                        dr.Read();
-                        int adisyonID;
-
-                        try
-                        {
-                            adisyonID = dr.GetInt32(0);
-                        }
-                        catch
-                        {
-                            using (KontrolFormu dialog = new KontrolFormu("Hesabı oluştururken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                            {
-                                dialog.ShowDialog();
-                            }
-                            return;
-                        }
-
-                        ikramInsert(adisyonID, dusulecekDeger, istenilenikramSayisi, listHesap.Items[siparisinIndexi].SubItems[1].Text);
-                        masaAcikMi = true;
-                    }
-                    cmd.Connection.Close();
-                    cmd.Connection.Dispose();
-                }
-
-                if (listHesap.SelectedItems[0].Text == "0")
-                {
-                    listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
-                    listHesap.SelectedItems[0].Remove();
-                }
-            }
-            else // ikramı iptal et
-            {
-                decimal istenilenIkramiptalSayisi = (decimal)carpan;
-                // ürünün değerini bul ve hesaba ekle
-                double dusulecekDeger = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) / Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
-                listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) - dusulecekDeger * carpan).ToString("0.00");
-
-                listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) - carpan).ToString();
-
-                // labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) + (dusulecekDeger * carpan)).ToString("0.00");
-
-                labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) + (dusulecekDeger * carpan)).ToString("0.00");
-
-                bool urunYok = true;
-
-                for (int i = 0; i < listHesap.Groups[eskiSiparisler].Items.Count; i++)
-                {
-                    if (listHesap.Groups[eskiSiparisler].Items[i].SubItems[1].Text == listHesap.SelectedItems[0].SubItems[1].Text)
-                    {
-                        listHesap.Groups[eskiSiparisler].Items[i].Text = (Convert.ToDouble(listHesap.Groups[eskiSiparisler].Items[i].Text) + carpan).ToString();
-                        listHesap.Groups[eskiSiparisler].Items[i].SubItems[2].Text = (Convert.ToDouble(listHesap.Groups[eskiSiparisler].Items[i].SubItems[2].Text) + (dusulecekDeger * carpan)).ToString("0.00");
-
-                        urunYok = false;
-                    }
-                }
-
-                if (urunYok)
-                {
-                    listHesap.Items.Add(carpan.ToString());
-                    listHesap.Items[listHesap.Items.Count - 1].SubItems.Add(listHesap.SelectedItems[0].SubItems[1].Text);
-                    listHesap.Items[listHesap.Items.Count - 1].SubItems.Add((dusulecekDeger * carpan).ToString("0.00"));
-
-                    listHesap.Items[listHesap.Items.Count - 1].Group = listHesap.Groups[eskiSiparisler];
-                    listHesap.Items[listHesap.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
-                    listedeSeciliOlanItemlar.Add(false);
-                }
-
-                //İkram iptal edildiğinde önce hangi grupta olduğuna bakılacak, eğer yeni eklenenler grubunda (yani 2. grup) ise SQL de o grubu update etmeye gerek yok
-                //Eğer eskiden ekli olanlarda ise ikram adedine ulaşana kadar update yaparak sipariş sayısını azaltacaz
-                //Eğer iptal edilen adedi tam olarak siparişlerde bulunamazsa örneğin 4 iptal var 2 tane 3 adetlik sipariş var yani toplam 6
-                //İlk gelen siparişin ikram özelliği true(1) yapılacak diğerinin adedi update edilerek azaltılacak ikramın kalanı kadarıyla yeni ikram siparişi oluşturulacak
-
-
-                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi=1 AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
-
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                int siparisID, adisyonID;
-                decimal porsiyon;
-
-                dr.Read();
-
-                try
-                {
-                    adisyonID = dr.GetInt32(1);
-                }
-                catch
-                {
-                    using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                    {
-                        dialog.ShowDialog();
-                    }
-                    return;
-                }
-                do
-                {
-                    try
-                    {
-                        siparisID = dr.GetInt32(0);
-
-                        porsiyon = dr.GetDecimal(2);
-                    }
-                    catch
-                    {
-                        using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                        {
-                            dialog.ShowDialog();
-                        }
-                        return;
-                    }
-
-                    if (porsiyon < istenilenIkramiptalSayisi) // elimizdeki ikramlar iptali istenenden küçükse
-                    {
-                        ikramUpdateTam(siparisID, 0);
-
-                        istenilenIkramiptalSayisi -= porsiyon;
-                    }
-                    else if (porsiyon > istenilenIkramiptalSayisi) // den büyükse
-                    {
-                        ikramUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenIkramiptalSayisi, listHesap.SelectedItems[0].SubItems[1].Text, 0);
-
-                        istenilenIkramiptalSayisi = 0;
-                    }
-                    else // elimizde ikram edilmemişler ikramı istenene eşitse
-                    {
-                        ikramUpdateTam(siparisID, 0);
-
-                        istenilenIkramiptalSayisi = 0;
-                    }
-                } while (dr.Read());
-
-                if (istenilenIkramiptalSayisi != 0)// ikram edilecekler daha bitmedi başka garsonların siparişlerinden ikram iptaline devam et
-                {
-                    cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu!='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
-
-                    dr = cmd.ExecuteReader();
-
-                    dr.Read();
-                    try
-                    {
-                        adisyonID = dr.GetInt32(1);
-                    }
-                    catch
-                    {
-                        using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                        {
-                            dialog.ShowDialog();
-                        }
-                        return;
-                    }
-
-                    do
-                    {
-                        try
-                        {
-                            siparisID = dr.GetInt32(0);
-
-                            porsiyon = dr.GetDecimal(2);
-                        }
-                        catch
-                        {
-                            using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                            {
-                                dialog.ShowDialog();
-                            }
-                            return;
-                        }
-
-                        if (porsiyon < istenilenIkramiptalSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
-                        {
-                            ikramUpdateTam(siparisID, 0);
-
-                            istenilenIkramiptalSayisi -= porsiyon;
-                        }
-                        else if (porsiyon > istenilenIkramiptalSayisi) // den büyükse
-                        {
-                            ikramUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenIkramiptalSayisi, listHesap.SelectedItems[0].SubItems[1].Text, 0);
-
-                            istenilenIkramiptalSayisi = 0;
-                        }
-                        else // elimizde ikram edilmemişler ikramı istenene eşitse
-                        {
-                            ikramUpdateTam(siparisID, 0);
-
-                            istenilenIkramiptalSayisi = 0;
-                        }
-                    } while (dr.Read());
-                }
-
-                adisyonUpdateHesapveKalan(adisyonID);
-
-                if (listHesap.SelectedItems[0].Text == "0")
-                {
-                    listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
-                    listHesap.SelectedItems[0].Remove();
-                }
-
-                cmd.Connection.Close();
-                cmd.Connection.Dispose();
-            }
-
-            buttonTemizle_Click(null, null);
-
-            if (labelToplamHesap.Text != "0,00") //hesapta para varsa butonu enable et
-                buttonHesapOde.Enabled = true;
-            else
-                buttonHesapOde.Enabled = false; //yoksa disable et
         } // düzenlenecek
 
-        // ürün iptal etme butonu
-        private void buttonUrunIptal_Click(object sender, EventArgs e)
+        //Masaların adisyonlarını değiştiren butonun methodu
+        private void changeTablesButton_Click(object sender, EventArgs e)
         {
-            double carpan;
-            if (textNumberOfItem.Text != "")
-            {
-                carpan = Convert.ToDouble(textNumberOfItem.Text);
-                if (carpan > Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text))
-                    carpan = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
-            }
+            MasaDegistirFormu masaDegistirForm = new MasaDegistirFormu(MasaAdi, hangiDepartman.departmanAdi, true);
+            masaDegistirForm.ShowDialog();
+
+            if (masaDegistirForm.yeniMasa == "iptalEdildi")
+                return;
             else
-                carpan = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
-
-            if (carpan == 0)
-                return;
-
-            DialogResult eminMisiniz;
-
-            using (KontrolFormu dialog = new KontrolFormu(carpan + " adet " + listHesap.SelectedItems[0].SubItems[1].Text + " iptal edilecek. Emin misiniz?", true))
             {
-                eminMisiniz = dialog.ShowDialog();
-            }
-
-            if (eminMisiniz == DialogResult.No)
-            {
-                return;
-            }
-
-            double dusulecekDeger = Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) / Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text);
-
-            listHesap.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[0].Text) - carpan).ToString();
-
-            listHesap.SelectedItems[0].SubItems[2].Text = (Convert.ToDouble(listHesap.SelectedItems[0].SubItems[2].Text) - dusulecekDeger * carpan).ToString("0.00");
-
-            if (listHesap.SelectedItems[0].Group == listHesap.Groups[2] || listHesap.SelectedItems[0].Group == listHesap.Groups[3])
-            {
-                labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
-            }
-
-            labelToplamHesap.Text = (Convert.ToDouble(labelToplamHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
-
-
-            if (listHesap.SelectedItems[0].Group != listHesap.Groups[yeniSiparisler])
-            {
-                decimal istenilenSiparisiptalSayisi = (decimal)carpan;
-
                 SqlCommand cmd;
-                if (listHesap.SelectedItems[0].Group == listHesap.Groups[eskiSiparisler])
+                switch (masaDegistirForm.yapilmasiGerekenIslem)
                 {
-                    cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
+                    case 0: // departman değişmedi ve masaların ikisi de açık
+                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi = CASE MasaAdi WHEN @masaninAdiEski THEN @masaninAdiYeni WHEN @masaninAdiYeni THEN @masaninAdiEski END WHERE MasaAdi in (@masaninAdiEski,@masaninAdiYeni) AND AcikMi=1 AND DepartmanAdi=@departmanAdiEski");
+
+                        cmd.Parameters.AddWithValue("@masaninAdiEski", MasaAdi);
+                        cmd.Parameters.AddWithValue("@masaninAdiYeni", masaDegistirForm.yeniMasa);
+                        cmd.Parameters.AddWithValue("@departmanAdiEski", hangiDepartman.departmanAdi);
+                        cmd.ExecuteNonQuery();
+
+                        cmd.Connection.Close();
+                        cmd.Connection.Dispose();
+                        break;
+                    case 1: // masalar açık departman değişti
+                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi = CASE MasaAdi WHEN @masaninAdiEski THEN @masaninAdiYeni WHEN @masaninAdiYeni THEN @masaninAdiEski END, DepartmanAdi = CASE DepartmanAdi WHEN @departmanAdiEski THEN @departmanAdiYeni WHEN @departmanAdiYeni THEN @departmanAdiEski END WHERE MasaAdi in (@masaninAdiEski,@masaninAdiYeni) AND AcikMi=1 AND DepartmanAdi in (@departmanAdiEski,@departmanAdiYeni)");
+
+                        cmd.Parameters.AddWithValue("@masaninAdiEski", MasaAdi);
+                        cmd.Parameters.AddWithValue("@masaninAdiYeni", masaDegistirForm.yeniMasa);
+                        cmd.Parameters.AddWithValue("@departmanAdiEski", hangiDepartman.departmanAdi);
+                        cmd.Parameters.AddWithValue("@departmanAdiYeni", masaDegistirForm.yeniDepartman);
+                        cmd.ExecuteNonQuery();
+
+                        cmd.Connection.Close();
+                        cmd.Connection.Dispose();
+                        break;
+                    case 2: // departman değişmedi 1 masa açık
+                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi=@masaninAdi WHERE MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND AcikMi=1");
+                        cmd.Parameters.AddWithValue("@masaninAdi", masaDegistirForm.yeniMasa);
+                        cmd.ExecuteNonQuery();
+
+                        cmd.Connection.Close();
+                        cmd.Connection.Dispose();
+                        break;
+                    case 3: // departman değişti 1 masa açık
+                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi=@masaninAdi, DepartmanAdi=@departmanAdi  WHERE MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND AcikMi=1");
+                        cmd.Parameters.AddWithValue("@masaninAdi", masaDegistirForm.yeniMasa);
+                        cmd.Parameters.AddWithValue("@departmanAdi", masaDegistirForm.yeniDepartman);
+                        cmd.ExecuteNonQuery();
+
+                        cmd.Connection.Close();
+                        cmd.Connection.Dispose();
+                        break;
+                    default:
+                        break;
                 }
-                else
-                {
-                    cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi=1 AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
-                }
-
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                int siparisID, adisyonID;
-                decimal porsiyon;
-
-                dr.Read();
-                try
-                {
-                    adisyonID = dr.GetInt32(1);
-                }
-                catch
-                {
-                    using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                    {
-                        dialog.ShowDialog();
-                    }
-                    return;
-                }
-
-                do
-                {
-                    try
-                    {
-                        siparisID = dr.GetInt32(0);
-
-                        porsiyon = dr.GetDecimal(2);
-                    }
-                    catch
-                    {
-                        using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                        {
-                            dialog.ShowDialog();
-                        }
-                        return;
-                    }
-
-                    if (porsiyon < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
-                    {
-                        iptalUpdateTam(siparisID);
-
-                        istenilenSiparisiptalSayisi -= porsiyon;
-                    }
-                    else if (porsiyon > istenilenSiparisiptalSayisi) // den büyükse
-                    {
-                        iptalUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenSiparisiptalSayisi, listHesap.SelectedItems[0].SubItems[1].Text);
-
-                        istenilenSiparisiptalSayisi = 0;
-                    }
-                    else // elimizdeki siparişler iptali istenene eşitse
-                    {
-                        iptalUpdateTam(siparisID);
-
-                        istenilenSiparisiptalSayisi = 0;
-                    }
-                } while (dr.Read());
-
-                if (istenilenSiparisiptalSayisi != 0)// iptal edilecekler daha bitmedi başka garsonların siparişlerinden iptale devam et
-                {
-                    cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.YemekAdi='" + listHesap.SelectedItems[0].SubItems[1].Text + "' AND Siparis.Garsonu!='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
-
-                    dr = cmd.ExecuteReader();
-
-                    dr.Read();
-                    try
-                    {
-                        adisyonID = dr.GetInt32(1);
-                    }
-                    catch
-                    {
-                        using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                        {
-                            dialog.ShowDialog();
-                        }
-                        return;
-                    }
-
-                    do
-                    {
-                        try
-                        {
-                            siparisID = dr.GetInt32(0);
-
-                            porsiyon = dr.GetDecimal(2);
-                        }
-                        catch
-                        {
-                            using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                            {
-                                dialog.ShowDialog();
-                            }
-                            return;
-                        }
-
-                        if (porsiyon < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
-                        {
-                            iptalUpdateTam(siparisID);
-
-                            istenilenSiparisiptalSayisi -= porsiyon;
-                        }
-                        else if (porsiyon > istenilenSiparisiptalSayisi) // den büyükse
-                        {
-                            iptalUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenSiparisiptalSayisi, listHesap.SelectedItems[0].SubItems[1].Text);
-
-                            istenilenSiparisiptalSayisi = 0;
-                        }
-                        else // elimizdeki siparişler iptali istenene eşitse
-                        {
-                            iptalUpdateTam(siparisID);
-
-                            istenilenSiparisiptalSayisi = 0;
-                        }
-                    } while (dr.Read());
-                }
-
-                adisyonUpdateHesapveKalan(adisyonID);
-
-                cmd.Connection.Close();
-                cmd.Connection.Dispose();
+                yeniMasaninAdi = masaDegistirForm.yeniMasa;
+                masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
+                this.Close();
             }
-
-            if (listHesap.SelectedItems[0].Text == "0")
-            {
-                listedeSeciliOlanItemlar.RemoveAt(listHesap.SelectedItems[0].Index);
-                listHesap.SelectedItems[0].Remove();
-            }
-
-            if (labelToplamHesap.Text == "0,00")
-                buttonHesapOde.Enabled = false;
-
-            if (this.listHesap.Items.Count > 0)
-            {
-                int itemsCount = this.listHesap.Items.Count + 3;// 3 aslında grup sayısı -1
-                int itemHeight = this.listHesap.Items[0].Bounds.Height;
-                int VisiableItem = (int)this.listHesap.ClientRectangle.Height / itemHeight;
-                if (itemsCount < VisiableItem)
-                {
-                    listHesap.Columns[1].Width = urunBoyu + 10;
-                    listHesap.Columns[2].Width = fiyatBoyu + 10;
-                }
-            }
-
-            for (int i = 0; i < listedeSeciliOlanItemlar.Count; i++)
-            {
-                listedeSeciliOlanItemlar[i] = false;
-                listHesap.Items[i].Selected = false;
-            }
-
-            textNumberOfItem.Text = "";
-            buttonUrunIkram.Enabled = false;
-            buttonTasi.Enabled = false;
-            buttonUrunIptal.Enabled = false;
-            buttonAdd.Enabled = false;
-
         } // düzenlenecek
 
         // sipariş işlemleri bittiğinde basılan buton

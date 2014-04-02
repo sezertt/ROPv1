@@ -11,9 +11,21 @@ namespace ROPv1
     {
         public static SqlConnection getConnection()
         {
-            SqlConnection cnn = new SqlConnection("server=.;database=ropv1;integrated security=true");
+            SqlConnection cnn;
+            try
+            {
+                cnn = new SqlConnection("server=.;database=ropv1;integrated security=true");
+                cnn.Open();
+            }
+            catch
+            {
+                using (KontrolFormu dialog = new KontrolFormu("SQL Servera bağlanırken bir sorun oluştu", false))
+                {
+                    dialog.ShowDialog();
+                }
+                cnn = null;
+            }           
             
-            cnn.Open();
             return cnn;
         }
 
