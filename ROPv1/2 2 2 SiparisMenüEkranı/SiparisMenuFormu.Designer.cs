@@ -227,7 +227,7 @@
             this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonAdd.Location = new System.Drawing.Point(772, 266);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Padding = new System.Windows.Forms.Padding(8);
+            this.buttonAdd.Padding = new System.Windows.Forms.Padding(5);
             this.buttonAdd.Size = new System.Drawing.Size(190, 100);
             this.buttonAdd.TabIndex = 84;
             this.buttonAdd.Text = "  Ekle";
@@ -245,7 +245,7 @@
             this.buttonUrunIptal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonUrunIptal.Location = new System.Drawing.Point(772, 372);
             this.buttonUrunIptal.Name = "buttonUrunIptal";
-            this.buttonUrunIptal.Padding = new System.Windows.Forms.Padding(8);
+            this.buttonUrunIptal.Padding = new System.Windows.Forms.Padding(5);
             this.buttonUrunIptal.Size = new System.Drawing.Size(190, 100);
             this.buttonUrunIptal.TabIndex = 81;
             this.buttonUrunIptal.Text = "  İptal Et";
@@ -263,7 +263,7 @@
             this.buttonUrunIkram.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonUrunIkram.Location = new System.Drawing.Point(772, 478);
             this.buttonUrunIkram.Name = "buttonUrunIkram";
-            this.buttonUrunIkram.Padding = new System.Windows.Forms.Padding(8);
+            this.buttonUrunIkram.Padding = new System.Windows.Forms.Padding(5);
             this.buttonUrunIkram.Size = new System.Drawing.Size(190, 100);
             this.buttonUrunIkram.TabIndex = 80;
             this.buttonUrunIkram.Text = "  İkram";
@@ -281,7 +281,7 @@
             this.buttonTasi.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonTasi.Location = new System.Drawing.Point(772, 161);
             this.buttonTasi.Name = "buttonTasi";
-            this.buttonTasi.Padding = new System.Windows.Forms.Padding(8);
+            this.buttonTasi.Padding = new System.Windows.Forms.Padding(5);
             this.buttonTasi.Size = new System.Drawing.Size(190, 100);
             this.buttonTasi.TabIndex = 83;
             this.buttonTasi.Text = "      Ürünleri       Taşı";

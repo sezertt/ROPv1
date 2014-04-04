@@ -135,7 +135,7 @@ namespace ROPv1
             }
         }
 
-        public void serverdanIkramVeyaIkramIptali(string masa, string departman, string komut, string miktar, string yemekAdi, string dusulecekDeger, string ikramYeniMiEskiMi)
+        public void serverdanSiparisIkramVeyaIptal(string masa, string departman, string komut, string miktar, string yemekAdi, string dusulecekDeger, string ikramYeniMiEskiMi)
         {
             if (ikramYeniMiEskiMi == null)
             {
@@ -506,7 +506,10 @@ namespace ROPv1
             try
             {
                 switch (parametreler["komut"])
-                {                    
+                {
+                    case "siparis":
+                        komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"]);
+                        break;
                     case "iptal": // serverdan iptal isteğinin sonucu geldiğinde
                         komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["ikramYeniMiEskiMi"]);
                         break;
@@ -632,6 +635,15 @@ namespace ROPv1
             }
         }
 
+        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string fiyat)
+        {
+            // Eğer clientta da aynı departmanın aynı masası açıksa mesajı yönlendirelim
+            if (siparisMenuForm != null && restoranListesi[hangiDepartmanButonu].departmanAdi == departmanAdi && hangiMasaButonunaBasildi.Text == masa)
+            {
+                siparisMenuForm.siparisOnayiGeldi(miktar, yemekAdi, fiyat);
+            }
+        }
+
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
         public void MenuFormundanServeraYolla(string masa, string departman, string komut)
         {
@@ -645,6 +657,23 @@ namespace ROPv1
                 client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&labelToplamHesap=" + labelToplamHesap + "&labelKalanHesap=" + labelKalanHesap);
             else
                 client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&labelToplamHesap=" + labelToplamHesap + "&labelKalanHesap=" + labelKalanHesap + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi);
+        }
+
+        /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
+        public void siparisListesiBos(string masa, string departman, string komut)
+        {
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman);
+        }
+
+        /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
+        public void serveraSiparis(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu)
+        {
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu);
+        }
+
+        public void serveraNotuYolla(string masa, string departman, string komut, string adisyonNotu)
+        {
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&adisyonNotu=" + adisyonNotu);
         }
 
         // Masa girişi sırasında masanın hesap bilgileri geldiğinde çalışan fonksiyon
@@ -736,7 +765,7 @@ namespace ROPv1
                     tumKullanicilaraMesajYolla("komut=masaKapandi&masa=" + hangiMasaButonunaBasildi.Text + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                 }
             }
-            siparisMenuForm = null;            
+            siparisMenuForm = null;
             acikMasaVarsaYapma = false;
         }
 
