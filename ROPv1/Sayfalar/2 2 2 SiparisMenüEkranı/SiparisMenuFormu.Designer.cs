@@ -35,8 +35,6 @@
             System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Yeni Siparişler", System.Windows.Forms.HorizontalAlignment.Left);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SiparisMenuFormu));
             this.flowPanelUrunler = new System.Windows.Forms.FlowLayoutPanel();
-            this.labelToplam = new System.Windows.Forms.Label();
-            this.labelToplamHesap = new System.Windows.Forms.Label();
             this.textNumberOfItem = new System.Windows.Forms.TextBox();
             this.buttonDeleteText = new System.Windows.Forms.Button();
             this.pinboardcontrol21 = new PinboardClassLibrary.Pinboardcontrol2();
@@ -55,7 +53,7 @@
             this.buttonTamam = new System.Windows.Forms.Button();
             this.buttonHesapOde = new System.Windows.Forms.Button();
             this.buttonTemizle = new System.Windows.Forms.Button();
-            this.listHesap = new ROPv1.MyListView();
+            this.listUrunFiyat = new ROPv1.MyListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -71,34 +69,6 @@
             this.flowPanelUrunler.Size = new System.Drawing.Size(504, 454);
             this.flowPanelUrunler.TabIndex = 0;
             this.flowPanelUrunler.SizeChanged += new System.EventHandler(this.urunPanelSizeChanged);
-            // 
-            // labelToplam
-            // 
-            this.labelToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelToplam.AutoSize = true;
-            this.labelToplam.BackColor = System.Drawing.Color.Transparent;
-            this.labelToplam.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelToplam.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelToplam.Location = new System.Drawing.Point(769, 670);
-            this.labelToplam.Name = "labelToplam";
-            this.labelToplam.Size = new System.Drawing.Size(179, 33);
-            this.labelToplam.TabIndex = 64;
-            this.labelToplam.Text = "Toplam Hesap:";
-            this.labelToplam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelToplamHesap
-            // 
-            this.labelToplamHesap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelToplamHesap.BackColor = System.Drawing.Color.Transparent;
-            this.labelToplamHesap.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelToplamHesap.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelToplamHesap.Location = new System.Drawing.Point(938, 670);
-            this.labelToplamHesap.Margin = new System.Windows.Forms.Padding(0);
-            this.labelToplamHesap.Name = "labelToplamHesap";
-            this.labelToplamHesap.Size = new System.Drawing.Size(139, 33);
-            this.labelToplamHesap.TabIndex = 65;
-            this.labelToplamHesap.Text = "0,00";
-            this.labelToplamHesap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textNumberOfItem
             // 
@@ -194,13 +164,13 @@
             this.labelKalanHesap.BackColor = System.Drawing.Color.Transparent;
             this.labelKalanHesap.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelKalanHesap.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelKalanHesap.Location = new System.Drawing.Point(1221, 670);
+            this.labelKalanHesap.Location = new System.Drawing.Point(935, 670);
             this.labelKalanHesap.Margin = new System.Windows.Forms.Padding(0);
             this.labelKalanHesap.Name = "labelKalanHesap";
-            this.labelKalanHesap.Size = new System.Drawing.Size(139, 33);
+            this.labelKalanHesap.Size = new System.Drawing.Size(419, 33);
             this.labelKalanHesap.TabIndex = 86;
             this.labelKalanHesap.Text = "0,00";
-            this.labelKalanHesap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelKalanHesap.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // labelKalan
             // 
@@ -209,7 +179,7 @@
             this.labelKalan.BackColor = System.Drawing.Color.Transparent;
             this.labelKalan.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelKalan.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelKalan.Location = new System.Drawing.Point(1071, 670);
+            this.labelKalan.Location = new System.Drawing.Point(773, 670);
             this.labelKalan.Name = "labelKalan";
             this.labelKalan.Size = new System.Drawing.Size(159, 33);
             this.labelKalan.TabIndex = 85;
@@ -374,19 +344,19 @@
             this.buttonTemizle.UseVisualStyleBackColor = false;
             this.buttonTemizle.Click += new System.EventHandler(this.buttonTemizle_Click);
             // 
-            // listHesap
+            // listUrunFiyat
             // 
-            this.listHesap.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.listHesap.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-            this.listHesap.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listUrunFiyat.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listUrunFiyat.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.listUrunFiyat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listHesap.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listUrunFiyat.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3});
-            this.listHesap.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.listHesap.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.listHesap.FullRowSelect = true;
+            this.listUrunFiyat.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.listUrunFiyat.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.listUrunFiyat.FullRowSelect = true;
             listViewGroup1.Header = "Eski İkramlar";
             listViewGroup1.Name = "ikramGrubu";
             listViewGroup1.Tag = "0";
@@ -399,23 +369,23 @@
             listViewGroup4.Header = "Yeni Siparişler";
             listViewGroup4.Name = "YeniSiparisGrubu";
             listViewGroup4.Tag = "3";
-            this.listHesap.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            this.listUrunFiyat.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
             listViewGroup1,
             listViewGroup2,
             listViewGroup3,
             listViewGroup4});
-            this.listHesap.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.listHesap.HideSelection = false;
-            this.listHesap.LabelWrap = false;
-            this.listHesap.Location = new System.Drawing.Point(969, 161);
-            this.listHesap.Margin = new System.Windows.Forms.Padding(0);
-            this.listHesap.Name = "listHesap";
-            this.listHesap.Size = new System.Drawing.Size(385, 504);
-            this.listHesap.SmallImageList = this.ımageList1;
-            this.listHesap.TabIndex = 0;
-            this.listHesap.UseCompatibleStateImageBehavior = false;
-            this.listHesap.View = System.Windows.Forms.View.Details;
-            this.listHesap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listHesap_Click);
+            this.listUrunFiyat.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.listUrunFiyat.HideSelection = false;
+            this.listUrunFiyat.LabelWrap = false;
+            this.listUrunFiyat.Location = new System.Drawing.Point(969, 161);
+            this.listUrunFiyat.Margin = new System.Windows.Forms.Padding(0);
+            this.listUrunFiyat.Name = "listUrunFiyat";
+            this.listUrunFiyat.Size = new System.Drawing.Size(385, 504);
+            this.listUrunFiyat.SmallImageList = this.ımageList1;
+            this.listUrunFiyat.TabIndex = 0;
+            this.listUrunFiyat.UseCompatibleStateImageBehavior = false;
+            this.listUrunFiyat.View = System.Windows.Forms.View.Details;
+            this.listUrunFiyat.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listHesap_Click);
             // 
             // columnHeader1
             // 
@@ -445,7 +415,7 @@
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.buttonUrunIptal);
             this.Controls.Add(this.buttonUrunIkram);
-            this.Controls.Add(this.listHesap);
+            this.Controls.Add(this.listUrunFiyat);
             this.Controls.Add(this.buttonTasi);
             this.Controls.Add(this.labelDepartman);
             this.Controls.Add(this.labelMasa);
@@ -454,8 +424,6 @@
             this.Controls.Add(this.textNumberOfItem);
             this.Controls.Add(this.buttonMasaDegistir);
             this.Controls.Add(this.buttonNotEkle);
-            this.Controls.Add(this.labelToplamHesap);
-            this.Controls.Add(this.labelToplam);
             this.Controls.Add(this.flowPanelMenuBasliklari);
             this.Controls.Add(this.buttonTamam);
             this.Controls.Add(this.buttonHesapOde);
@@ -477,8 +445,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowPanelUrunler;
         private System.Windows.Forms.Button buttonHesapOde;
         private System.Windows.Forms.Button buttonTamam;
-        private System.Windows.Forms.Label labelToplam;
-        private System.Windows.Forms.Label labelToplamHesap;
         private System.Windows.Forms.Button buttonNotEkle;
         private System.Windows.Forms.Button buttonMasaDegistir;
         private System.Windows.Forms.TextBox textNumberOfItem;
@@ -491,7 +457,7 @@
         private System.Windows.Forms.Button buttonUrunIptal;
         private System.Windows.Forms.Button buttonTasi;
         private System.Windows.Forms.ImageList ımageList1;
-        private MyListView listHesap;
+        private MyListView listUrunFiyat;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;

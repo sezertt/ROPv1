@@ -44,15 +44,13 @@ namespace ROPv1
 
         int hangiDepartmanButonu = 0, hangiMasaDizayni = 200;
 
-        string hangiMasa, pinGirenKisi;
+        string hangiMasa;
 
         List<Restoran> restoranListesi = new List<Restoran>();
 
         List<MasaDizayn> masaDizaynListesi = new List<MasaDizayn>();
 
         List<ROPv1.GirisEkrani.BagliKullanicilar> kullanicilar;
-
-        decimal toplamHesap = 0, kalanHesap = 0;
 
         public Button hangiMasaButonunaBasildi;
 
@@ -99,39 +97,23 @@ namespace ROPv1
             if (pinForm.dogru) //pin doğru
             {
                 hangiMasaButonunaBasildi = sender as Button;
+                hangiMasa = ((Button)sender).Text;
+
+                bool masaAcikMi = false;
+
+                if (hangiMasaButonunaBasildi.ForeColor == Color.White)
+                    masaAcikMi = true;
 
                 if (Properties.Settings.Default.Server == 2)
                 {
-                    bool masaAcikMi = false;
-                    SqlCommand cmd = SQLBaglantisi.getCommand("SELECT ToplamHesap,KalanHesap FROM Adisyon WHERE MasaAdi='" + ((Button)sender).Text + "' AND DepartmanAdi='" + restoranListesi[hangiDepartmanButonu].departmanAdi + "' AND AcikMi=1");
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    dr.Read();
-                    try
-                    {
-                        toplamHesap = dr.GetDecimal(0);
-                        kalanHesap = dr.GetDecimal(1);
-                        masaAcikMi = true;
-                    }
-                    catch
-                    {
-                        toplamHesap = 0;
-                        kalanHesap = 0;
-                    }
-
-                    cmd.Connection.Close();
-                    cmd.Connection.Dispose();
-
-                    siparisMenuForm = new SiparisMenuFormu(this, ((Button)sender).Text, restoranListesi[hangiDepartmanButonu], pinForm.ayarYapanKisi, masaAcikMi, toplamHesap, kalanHesap);
-                    siparisMenuForm.Show();
-                    acikMasaVarsaYapma = true;
+                    siparisMenuForm = new SiparisMenuFormu(this, ((Button)sender).Text, restoranListesi[hangiDepartmanButonu], pinForm.ayarYapanKisi, masaAcikMi);                    
                 }
                 else
                 {
-                    hangiMasa = ((Button)sender).Text;
-                    pinGirenKisi = pinForm.ayarYapanKisi;
-                    //masa adı ve departman adı servera gönderilir
-                    client.MesajYolla("komut=masaGirisi&masa=" + ((Button)sender).Text + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
+                    siparisMenuForm = new SiparisMenuFormu(this, hangiMasa, restoranListesi[hangiDepartmanButonu], pinForm.ayarYapanKisi, masaAcikMi);
                 }
+                siparisMenuForm.Show();
+                acikMasaVarsaYapma = true;
             }
         }
 
@@ -531,9 +513,6 @@ namespace ROPv1
                     case "departman": //açık masa bilgilerini geldiğinde     
                         komut_departman(parametreler["masa"]);
                         break;
-                    case "masaGirisi": // masaya girerken istenilen hesap bilgileri geldiğinde
-                        komut_masaGirisi(parametreler["kalanHesap"], parametreler["toplamHesap"]);
-                        break;
                     case "masaAcildi": // yeni masa açıldığı bilgisi geldiğinde
                         komut_masaAcildi(parametreler["masa"], parametreler["departmanAdi"]);
                         break;
@@ -651,12 +630,12 @@ namespace ROPv1
         }
 
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
-        public void MenuFormundanServeraSiparisYolla(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, string labelToplamHesap, string labelKalanHesap, string ikramYeniMiEskiMi)
+        public void MenuFormundanServeraSiparisYolla(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, string ikramYeniMiEskiMi)
         {
             if (ikramYeniMiEskiMi == null)
-                client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&labelToplamHesap=" + labelToplamHesap + "&labelKalanHesap=" + labelKalanHesap);
+                client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu);
             else
-                client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&labelToplamHesap=" + labelToplamHesap + "&labelKalanHesap=" + labelKalanHesap + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi);
+                client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi);
         }
 
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
@@ -674,18 +653,6 @@ namespace ROPv1
         public void serveraNotuYolla(string masa, string departman, string komut, string adisyonNotu)
         {
             client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&adisyonNotu=" + adisyonNotu);
-        }
-
-        // Masa girişi sırasında masanın hesap bilgileri geldiğinde çalışan fonksiyon
-        private void komut_masaGirisi(string kalanHesap, string toplamHesap)
-        {
-            bool masaAcikmi = false;
-            if (hangiMasaButonunaBasildi.ForeColor == Color.White)
-                masaAcikmi = true;
-
-            siparisMenuForm = new SiparisMenuFormu(this, hangiMasa, restoranListesi[hangiDepartmanButonu], pinGirenKisi, masaAcikmi, Convert.ToDecimal(toplamHesap), Convert.ToDecimal(kalanHesap));//burada masa numarasını da yolla
-            siparisMenuForm.Show();
-            acikMasaVarsaYapma = true;
         }
 
         //siparis masa formu kapatılırken bu method çalışıyor
