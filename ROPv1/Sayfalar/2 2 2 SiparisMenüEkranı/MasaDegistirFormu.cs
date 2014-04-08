@@ -15,7 +15,7 @@ namespace ROPv1
 {
     public partial class MasaDegistirFormu : Form
     {
-        int hangiButtonSecili = 0;
+        int hangiMasaDizayni = 200, hangiDepartmanButonu = 0;
 
         List<Restoran> restoranListesi = new List<Restoran>();
 
@@ -29,12 +29,19 @@ namespace ROPv1
 
         string eskiMasa, eskiDepartman;
 
+        // Açık masaların listesi        
+        private List<string> masalar;
+
+        SiparisMenuFormu gelenSiparisFormu;
+
         bool MasaMi;
 
-        public MasaDegistirFormu(string masaAdi, string DepartmanAdi, bool MasaMiUrunMu)
+        public MasaDegistirFormu(string masaAdi, string DepartmanAdi, bool MasaMiUrunMu, SiparisMenuFormu gelenSiparisFormu)
         {
+            masalar = new List<string>();
             InitializeComponent();
 
+            this.gelenSiparisFormu = gelenSiparisFormu;
             eskiMasa = masaAdi;
             eskiDepartman = DepartmanAdi;
             MasaMi = MasaMiUrunMu;
@@ -108,7 +115,6 @@ namespace ROPv1
 
         private void SiparisMasaFormu_Load(object sender, EventArgs e)
         {
-
             if (File.Exists("restoran.xml"))
             {
                 XmlLoad<Restoran> loadInfo = new XmlLoad<Restoran>();
@@ -116,35 +122,46 @@ namespace ROPv1
 
                 restoranListesi.AddRange(info);
 
-                int a = 0, departmanYeri = 0;
+                XmlLoad<MasaDizayn> loadInfoMasa = new XmlLoad<MasaDizayn>();
+                MasaDizayn[] infoMasa = loadInfoMasa.LoadRestoran("masaDizayn.xml");
+
+                //kendi listemize atıyoruz
+                masaDizaynListesi.AddRange(infoMasa);
 
                 for (int i = 0; i < restoranListesi.Count; i++)
                 {
                     Button departmanButton = new Button();
                     departmanButton.Text = restoranListesi[i].departmanAdi;
+
                     if (departmanButton.Text == eskiDepartman)
                     {
                         departmanButton.BackColor = SystemColors.ActiveCaption;
                         departmanButton.ForeColor = Color.White;
-                        departmanYeri = i;
-                        hangiButtonSecili = i;
                     }
                     else
                     {
                         departmanButton.BackColor = Color.White;
                         departmanButton.ForeColor = SystemColors.ActiveCaption;
                     }
+
                     departmanButton.Font = new Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
                     departmanButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
                     departmanButton.UseVisualStyleBackColor = false;
                     departmanButton.Name = "" + i;
 
-                    if (restoranListesi[i].departmanEkrani == "")
-                        departmanButton.Tag = 200;
-                    else
+                    departmanButton.Tag = 200;
+
+                    for (int j = 0; j < masaDizaynListesi.Count; j++)
                     {
-                        departmanButton.Tag = a;
-                        a++;
+                        if (restoranListesi[i].departmanEkrani == masaDizaynListesi[j].masaPlanIsmi)
+                        {
+                            if (eskiDepartman == restoranListesi[i].departmanAdi)
+                            {
+                                hangiMasaDizayni = j;
+                            }
+                            departmanButton.Tag = j;
+                            break;
+                        }
                     }
 
                     departmanButton.Height = panel1.Height;
@@ -153,200 +170,150 @@ namespace ROPv1
                     departmanButton.Click += changeTableView;
                     panel1.Controls.Add(departmanButton);
                 }
+                tablePanel.Tag = -1;
 
-                XmlLoad<MasaDizayn> loadInfoMasa = new XmlLoad<MasaDizayn>();
-                MasaDizayn[] infoMasa = loadInfoMasa.LoadRestoran("masaDizayn.xml");
-
-                //kendi listemize atıyoruz
-                masaDizaynListesi.AddRange(infoMasa);
-
-                for (int i = 0; i < 6; i++)
+                //Masa butonlarını eklemek için serversa direk ilk departman butonuna kod ile basıyoruz, clientsa servera sorarak açık masa bilgileriyle birlikte alıyoruz
+                if (Properties.Settings.Default.Server == 2)
                 {
-                    if (masaDizaynListesi[departmanYeri].masaPlanIsmi == "")
-                        break;
-
-                    for (int j = 0; j < 7; j++)
-                    {
-                        if (masaDizaynListesi[departmanYeri].masaYerleri[i][j] != null)
-                        {
-                            Button buttonTable = new Button();
-                            buttonTable.Text = masaDizaynListesi[departmanYeri].masaYerleri[i][j];
-                            buttonTable.UseVisualStyleBackColor = false;
-
-                            buttonTable.Font = new Font("Arial", 21.75F, FontStyle.Bold);
-                            buttonTable.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                            tablePanel.Controls.Add(buttonTable, j, i);
-                            buttonTable.Click += siparisButonuBasildi;
-                            tablePanel.Tag = departmanYeri;
-                            buttonTable.Name = buttonTable.Text;
-
-                            buttonTable.BackColor = Color.White;
-                            buttonTable.ForeColor = SystemColors.ActiveCaption;
-                        }
-                    }
+                    Button birinciDepartman = panel1.Controls["" + hangiDepartmanButonu] as Button;
+                    birinciDepartman.PerformClick();
                 }
-
-                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND AcikMi=1");
-                SqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
+                else
                 {
-                    Button tablebutton;
-                    try
-                    {
-                        tablebutton = tablePanel.Controls[dr.GetString(0)] as Button;
-                        tablebutton.BackColor = Color.Firebrick;
-                        tablebutton.ForeColor = Color.White;
-                    }
-                    catch
-                    { }
-                }
-                cmd.Connection.Close();
-                cmd.Connection.Dispose();
-
-                for (int j = 6; j > 0; j--)
-                {
-                    if (masaDizaynListesi[departmanYeri].masaPlanIsmi == "")
-                        break;
-
-                    bool sutunBos = true;
-                    for (int i = 5; i > 0; i--)
-                    {
-                        if (masaDizaynListesi[departmanYeri].masaYerleri[i][j] != null)
-                        {
-                            sutunBos = false;
-                            break;
-                        }
-                    }
-                    if (sutunBos)
-                        tablePanel.ColumnCount--;
-                    else
-                        break;
-                }
-
-                for (int j = 5; j > 0; j--)
-                {
-                    if (masaDizaynListesi[departmanYeri].masaPlanIsmi == "")
-                        break;
-
-                    bool sutunBos = true;
-                    for (int i = 6; i > 0; i--)
-                    {
-                        if (masaDizaynListesi[departmanYeri].masaYerleri[j][i] != null)
-                        {
-                            sutunBos = false;
-                            break;
-                        }
-                    }
-                    if (sutunBos)
-                        tablePanel.RowCount--;
-                    else
-                        break;
+                    gelenSiparisFormu.masaDegisikligiFormundanAcikMasaBilgisiIstegiGeldiMasaFormunaIlet("komut=departman&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                 }
             }
         }
 
         private void changeTableView(object sender, EventArgs e)
         {
-            panel1.Controls[hangiButtonSecili].BackColor = Color.White;
-            panel1.Controls[hangiButtonSecili].ForeColor = SystemColors.ActiveCaption;
+            panel1.Controls[hangiDepartmanButonu].BackColor = Color.White;
+            panel1.Controls[hangiDepartmanButonu].ForeColor = SystemColors.ActiveCaption;
             panel1.Controls[Convert.ToInt32(((Button)sender).Name)].BackColor = SystemColors.ActiveCaption;
             panel1.Controls[Convert.ToInt32(((Button)sender).Name)].ForeColor = Color.White;
-            hangiButtonSecili = Convert.ToInt32(((Button)sender).Name);
+            hangiDepartmanButonu = Convert.ToInt32(((Button)sender).Name);
+            hangiMasaDizayni = Convert.ToInt32(((Button)sender).Tag);
 
-            if ((int)((Button)sender).Tag > masaDizaynListesi.Count - 1)
+            if (Properties.Settings.Default.Server == 2)
             {
-                tablePanel.Controls.Clear();
-                tablePanel.Tag = -1;
-                return;
+                if (hangiMasaDizayni > masaDizaynListesi.Count - 1)
+                {
+                    tablePanel.Controls.Clear();
+                    tablePanel.Tag = -1;
+                    return;
+                }
+                else if ((int)tablePanel.Tag != hangiMasaDizayni) //eğer seçili masa planı zaten ekrandaysa yenisi koyulmasın, ekranda değilse eskiler silinip yenisi eklensin
+                {
+                    tablePanel.RowCount = 6;
+                    tablePanel.ColumnCount = 7;
+                    tablePanel.Controls.Clear();
+                    masalar.Clear(); // acik masalari tutan listeyi sıfırlıyoruz, önceki açık masalardan kurtuluyoruz
+
+                    SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiDepartmanButonu].departmanAdi + "' AND AcikMi=1");
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        try
+                        {
+                            masalar.Add(dr.GetString(0));
+                        }
+                        catch { }
+                    }
+
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (masaDizaynListesi[hangiMasaDizayni].masaPlanIsmi == "")
+                            break;
+                        for (int j = 0; j < 7; j++)
+                        {
+                            if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[i][j] != null)
+                            {
+                                Button buttonTable = new Button();
+                                buttonTable.Text = masaDizaynListesi[hangiMasaDizayni].masaYerleri[i][j];
+
+                                buttonTable.UseVisualStyleBackColor = false;
+
+                                buttonTable.Font = new Font("Arial", 21.75F, FontStyle.Bold);
+                                buttonTable.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                                buttonTable.Click += siparisButonuBasildi;
+                                tablePanel.Controls.Add(buttonTable, j, i);
+                                tablePanel.Tag = hangiMasaDizayni;
+
+                                buttonTable.Name = buttonTable.Text;
+
+                                bool masaAcikMi = false;
+                                for (int x = 0; x < masalar.Count; x++)
+                                {
+                                    if (buttonTable.Text == masalar[x])
+                                    {
+                                        masaAcikMi = true;
+                                        break;
+                                    }
+                                }
+                                if (masaAcikMi)
+                                {
+                                    buttonTable.BackColor = Color.Firebrick;
+                                    buttonTable.ForeColor = Color.White;
+                                }
+                                else
+                                {
+                                    buttonTable.BackColor = Color.White;
+                                    buttonTable.ForeColor = SystemColors.ActiveCaption;
+                                }
+                            }
+                        }
+                    }
+
+                    for (int j = 6; j > 0; j--)
+                    {
+                        if (masaDizaynListesi[hangiMasaDizayni].masaPlanIsmi == "")
+                            break;
+
+                        bool sutunBos = true;
+                        for (int i = 5; i > 0; i--)
+                        {
+                            if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[i][j] != null)
+                            {
+                                sutunBos = false;
+                                break;
+                            }
+                        }
+                        if (sutunBos)
+                            tablePanel.ColumnCount--;
+                        else
+                            break;
+                    }
+
+                    for (int j = 5; j > 0; j--)
+                    {
+                        if (masaDizaynListesi[hangiMasaDizayni].masaPlanIsmi == "")
+                            break;
+                        bool sutunBos = true;
+                        for (int i = 6; i > 0; i--)
+                        {
+                            if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[j][i] != null)
+                            {
+                                sutunBos = false;
+                                break;
+                            }
+                        }
+                        if (sutunBos)
+                            tablePanel.RowCount--;
+                        else
+                            break;
+                    }
+                    yeniDepartman = restoranListesi[hangiDepartmanButonu].departmanAdi;
+                }
             }
-            else if ((int)tablePanel.Tag != (int)((Button)sender).Tag) //eğer seçili masa planı zaten ekrandaysa yenisi koyulmasın, ekranda değilse eskiler silinip yenisi eklensin
+            else
             {
-                tablePanel.RowCount = 6;
-                tablePanel.ColumnCount = 7;
-                tablePanel.Controls.Clear();
-                for (int i = 0; i < 6; i++)
+                if ((int)tablePanel.Tag != hangiMasaDizayni) //eğer seçili masa planı zaten ekrandaysa yenisi koyulmasın, ekranda değilse eskiler silinip yenisi eklensin
                 {
-                    if (masaDizaynListesi[(int)((Button)sender).Tag].masaPlanIsmi == "")
-                        break;
-                    for (int j = 0; j < 7; j++)
-                    {
-                        if (masaDizaynListesi[(int)((Button)sender).Tag].masaYerleri[i][j] != null)
-                        {
-                            Button buttonTable = new Button();
-                            buttonTable.Text = masaDizaynListesi[(int)((Button)sender).Tag].masaYerleri[i][j];
-
-                            buttonTable.UseVisualStyleBackColor = false;
-
-                            buttonTable.Font = new Font("Arial", 21.75F, FontStyle.Bold);
-                            buttonTable.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                            buttonTable.Click += siparisButonuBasildi;
-                            tablePanel.Controls.Add(buttonTable, j, i);
-                            tablePanel.Tag = (int)((Button)sender).Tag;
-
-                            buttonTable.Name = buttonTable.Text;
-
-                            buttonTable.BackColor = Color.White;
-                            buttonTable.ForeColor = SystemColors.ActiveCaption;
-                        }
-                    }
+                    gelenSiparisFormu.masaDegisikligiFormundanAcikMasaBilgisiIstegiGeldiMasaFormunaIlet("komut=departman&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                 }
-
-                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + restoranListesi[hangiButtonSecili].departmanAdi + "' AND AcikMi=1");
-                SqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    try
-                    {
-                        Button tablebutton = tablePanel.Controls[dr.GetString(0)] as Button;
-                        tablebutton.BackColor = Color.Firebrick;
-                        tablebutton.ForeColor = Color.White;
-                    }
-                    catch
-                    { }
-                }
-
-                cmd.Connection.Close();
-                cmd.Connection.Dispose();
-
-                for (int j = 6; j > 0; j--)
-                {
-                    if (masaDizaynListesi[(int)((Button)sender).Tag].masaPlanIsmi == "")
-                        break;
-
-                    bool sutunBos = true;
-                    for (int i = 5; i > 0; i--)
-                    {
-                        if (masaDizaynListesi[(int)((Button)sender).Tag].masaYerleri[i][j] != null)
-                        {
-                            sutunBos = false;
-                            break;
-                        }
-                    }
-                    if (sutunBos)
-                        tablePanel.ColumnCount--;
-                    else
-                        break;
-                }
-
-                for (int j = 5; j > 0; j--)
-                {
-                    if (masaDizaynListesi[(int)((Button)sender).Tag].masaPlanIsmi == "")
-                        break;
-                    bool sutunBos = true;
-                    for (int i = 6; i > 0; i--)
-                    {
-                        if (masaDizaynListesi[(int)((Button)sender).Tag].masaYerleri[j][i] != null)
-                        {
-                            sutunBos = false;
-                            break;
-                        }
-                    }
-                    if (sutunBos)
-                        tablePanel.RowCount--;
-                    else
-                        break;
-                }
-                yeniDepartman = restoranListesi[(int)((Button)sender).Tag].departmanAdi;
             }
         }
 
@@ -354,6 +321,130 @@ namespace ROPv1
         {
             yeniMasa = "iptalEdildi";
             this.Close();
+        }
+
+        // Departmandaki dolu masa bilgisini alan fonksiyon  
+        public void komut_departman(string acikMasalar)
+        {
+            masalar.Clear();
+            try
+            {
+                //Gelen mesajı * ile ayır
+                string[] masaDizisi = acikMasalar.Split('*');
+                masalar.AddRange(masaDizisi);
+            }
+            catch (Exception)
+            {
+                using (KontrolFormu dialog = new KontrolFormu("Masa durumlarını alırken bir hata oluştu, lütfen tekrar deneyiniz", false))
+                {
+                    dialog.ShowDialog();
+                }
+                return;
+            }
+
+            tablePanel.RowCount = 6;
+            tablePanel.ColumnCount = 7;
+            tablePanel.Controls.Clear();
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[i][j] != null)
+                    {
+                        Button buttonTable = new Button();
+                        buttonTable.Text = masaDizaynListesi[hangiMasaDizayni].masaYerleri[i][j];
+
+                        buttonTable.UseVisualStyleBackColor = false;
+
+                        buttonTable.Font = new Font("Arial", 21.75F, FontStyle.Bold);
+                        buttonTable.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                        buttonTable.Click += siparisButonuBasildi;
+                        tablePanel.Controls.Add(buttonTable, j, i);
+                        tablePanel.Tag = hangiMasaDizayni;
+
+                        buttonTable.Name = buttonTable.Text;
+
+                        bool masaAcikMi = false;
+                        for (int x = 0; x < masalar.Count; x++)
+                        {
+                            if (buttonTable.Text == masalar[x])
+                            {
+                                masaAcikMi = true;
+                                break;
+                            }
+                        }
+                        if (masaAcikMi)
+                        {
+                            buttonTable.BackColor = Color.Firebrick;
+                            buttonTable.ForeColor = Color.White;
+                        }
+                        else
+                        {
+                            buttonTable.BackColor = Color.White;
+                            buttonTable.ForeColor = SystemColors.ActiveCaption;
+                        }
+                    }
+                }
+            }
+
+            for (int j = 6; j > 0; j--)
+            {
+                if (masaDizaynListesi[hangiMasaDizayni].masaPlanIsmi == "")
+                    break;
+
+                bool sutunBos = true;
+                for (int i = 5; i > 0; i--)
+                {
+                    if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[i][j] != null)
+                    {
+                        sutunBos = false;
+                        break;
+                    }
+                }
+                if (sutunBos)
+                    tablePanel.ColumnCount--;
+                else
+                    break;
+            }
+
+            for (int j = 5; j > 0; j--)
+            {
+                if (masaDizaynListesi[hangiMasaDizayni].masaPlanIsmi == "")
+                    break;
+                bool sutunBos = true;
+                for (int i = 6; i > 0; i--)
+                {
+                    if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[j][i] != null)
+                    {
+                        sutunBos = false;
+                        break;
+                    }
+                }
+                if (sutunBos)
+                    tablePanel.RowCount--;
+                else
+                    break;
+            }
+        }
+
+        public void komut_masaAcildi(string masa, string departmanAdi)
+        {
+            if (restoranListesi[hangiDepartmanButonu].departmanAdi == departmanAdi)
+            {
+                Button tablebutton = tablePanel.Controls[masa] as Button;
+                tablebutton.ForeColor = Color.White;
+                tablebutton.BackColor = Color.Firebrick;
+            }
+        }
+
+        public void komut_masaKapandi(string masa, string departmanAdi)
+        {
+            if (restoranListesi[hangiDepartmanButonu].departmanAdi == departmanAdi)
+            {
+                Button tablebutton = tablePanel.Controls[masa] as Button;
+                tablebutton.ForeColor = SystemColors.ActiveCaption;
+                tablebutton.BackColor = Color.White;
+            }
         }
     }
 }

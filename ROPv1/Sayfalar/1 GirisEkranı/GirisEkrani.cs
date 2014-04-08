@@ -120,15 +120,18 @@ namespace ROPv1
                     case "siparis":
                         komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"]);
                         break;
+                    case "iptal": // ürün iptal edildiği bilgisini dağıtmak için
+                        komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"]);
+                        break;
+                    case "masaDegistir": // Masa değiştirmek ve bu bilgiyi diğer kullanıcılara bildirmek için
+                        komut_masaDegistir(parametreler["yeniMasa"], parametreler["yeniDepartmanAdi"], parametreler["eskiMasa"], parametreler["eskiDepartmanAdi"], parametreler["yapilmasiGereken"]);
+                        break;
                     case "ikram": // ürün ikram edildiği bilgisini dağıtmak için
                         komut_ikram(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"]);
                         break;
                     case "ikramIptal": // ikramın iptal edildiği bilgisini dağıtmak için
                         komut_ikramIptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"]);
-                        break;
-                    case "iptal": // ürün iptal edildiği bilgisini dağıtmak için
-                        komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"]);
-                        break;
+                        break;                    
                     case "giris": // bir kullanıcı servera bağlandığında
                         komut_giris(e.Client, parametreler["nick"]);
                         break;
@@ -177,6 +180,64 @@ namespace ROPv1
         }
 
         #region Komutlar
+
+        private void komut_masaDegistir(string yeniMasa, string yeniDepartmanAdi, string eskiMasa, string eskiDepartmanAdi, string yapilmasiGereken)
+        {            
+            SqlCommand cmd;
+            switch (Convert.ToInt32(yapilmasiGereken))
+            {
+                case 0: // departman değişmedi ve masaların ikisi de açık
+                    cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi = CASE MasaAdi WHEN @masaninAdiEski THEN @masaninAdiYeni WHEN @masaninAdiYeni THEN @masaninAdiEski END WHERE MasaAdi in (@masaninAdiEski,@masaninAdiYeni) AND AcikMi=1 AND DepartmanAdi=@departmanAdiEski");
+
+                    cmd.Parameters.AddWithValue("@masaninAdiEski", eskiMasa);
+                    cmd.Parameters.AddWithValue("@masaninAdiYeni", yeniMasa);
+                    cmd.Parameters.AddWithValue("@departmanAdiEski", eskiDepartmanAdi);
+                    cmd.ExecuteNonQuery();
+
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                    break;
+                case 1: // masalar açık departman değişti
+                    cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi = CASE MasaAdi WHEN @masaninAdiEski THEN @masaninAdiYeni WHEN @masaninAdiYeni THEN @masaninAdiEski END, DepartmanAdi = CASE DepartmanAdi WHEN @departmanAdiEski THEN @departmanAdiYeni WHEN @departmanAdiYeni THEN @departmanAdiEski END WHERE MasaAdi in (@masaninAdiEski,@masaninAdiYeni) AND AcikMi=1 AND DepartmanAdi in (@departmanAdiEski,@departmanAdiYeni)");
+
+                    cmd.Parameters.AddWithValue("@masaninAdiEski", eskiMasa);
+                    cmd.Parameters.AddWithValue("@masaninAdiYeni", yeniMasa);
+                    cmd.Parameters.AddWithValue("@departmanAdiEski", eskiDepartmanAdi);
+                    cmd.Parameters.AddWithValue("@departmanAdiYeni", yeniDepartmanAdi);
+                    cmd.ExecuteNonQuery();
+
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                    break;
+                case 2: // departman değişmedi 1 masa açık
+                    cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi=@masaninAdi WHERE MasaAdi='" + eskiMasa + "' AND DepartmanAdi='" + eskiDepartmanAdi + "' AND AcikMi=1");
+                    cmd.Parameters.AddWithValue("@masaninAdi", yeniMasa);
+                    cmd.ExecuteNonQuery();
+
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                    break;
+                case 3: // departman değişti 1 masa açık
+                    cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi=@masaninAdi, DepartmanAdi=@departmanAdi  WHERE MasaAdi='" + eskiMasa + "' AND DepartmanAdi='" + eskiDepartmanAdi + "' AND AcikMi=1");
+                    cmd.Parameters.AddWithValue("@masaninAdi", yeniMasa);
+                    cmd.Parameters.AddWithValue("@departmanAdi", yeniDepartmanAdi);
+                    cmd.ExecuteNonQuery();
+
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                    break;
+                default:
+                    break;
+            }
+
+            if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == eskiDepartmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == eskiMasa)
+            {
+                siparisForm.komut_masaDegisti(eskiMasa, eskiDepartmanAdi, yeniMasa, yeniDepartmanAdi);
+            }
+
+            //Tüm kullanıcılara masa değiştir mesajı gönderelim
+            tumKullanicilaraMesajYolla("komut=masaDegistir&masa=" + eskiMasa + "&departmanAdi=" + eskiDepartmanAdi + "&yeniMasa=" + yeniMasa + "&yeniDepartmanAdi=" + yeniDepartmanAdi);
+        }
 
         private void komut_adisyonNotunuGuncelle(string masa, string departmanAdi, string adisyonNotuGelen)
         {
@@ -981,24 +1042,6 @@ namespace ROPv1
 
         private void girisButtonPressed(object sender, EventArgs e)
         {
-
-
-            //TODO:  How to data transfer on multilayer 
-            //
-            //     ==START
-
-            entGarson yeniGArson = new entGarson();
-            yeniGArson.Adi = "Kemal";
-            yeniGArson.Pin = 1212;
-
-
-            if (bllGarson.denemeEkle(yeniGArson))
-                MessageBox.Show("Eklendi");
-            else
-                MessageBox.Show("Sistemde bi hata oluştu");
-
-            // =========== BİTTİ
-
             string[] username = new string[1];
             username[0] = userNameTextBox.getNameText(); //name lazım olduğunda al
             string password = passwordTextBox.getPasswordText(); //password lazım olduğunda al 

@@ -16,6 +16,8 @@ namespace ROPv1
     {
         private SiparisMasaFormu masaFormu;
 
+        public MasaDegistirFormu masaDegistirForm;
+
         Restoran hangiDepartman;
 
         int hangiMenuSecili = 555;
@@ -730,7 +732,7 @@ namespace ROPv1
             {
                 if (masaAcikMi)
                 {
-                    masaFormu.MenuFormundanServeraYolla(MasaAdi, hangiDepartman.departmanAdi, "LoadSiparis");
+                    masaFormu.menuFormundanServeraYolla(MasaAdi, hangiDepartman.departmanAdi, "LoadSiparis");
                 }
             }
         }
@@ -907,7 +909,7 @@ namespace ROPv1
             }
             else
             {
-                masaFormu.MenuFormundanServeraYolla(MasaAdi, hangiDepartman.departmanAdi, "AdisyonNotu");
+                masaFormu.menuFormundanServeraYolla(MasaAdi, hangiDepartman.departmanAdi, "AdisyonNotu");
             }
         }
 
@@ -1407,11 +1409,11 @@ namespace ROPv1
                 // ikram et
                 if (buttonUrunIkram.Text == "  İkram")
                 {
-                    masaFormu.MenuFormundanServeraSiparisYolla(MasaAdi, hangiDepartman.departmanAdi, "ikram", carpan.ToString(), listUrunFiyat.SelectedItems[0].SubItems[1].Text, siparisiKimGirdi, dusulecekDeger.ToString(), adisyonNotu, null);
+                    masaFormu.menuFormundanServeraSiparisYolla(MasaAdi, hangiDepartman.departmanAdi, "ikram", carpan.ToString(), listUrunFiyat.SelectedItems[0].SubItems[1].Text, siparisiKimGirdi, dusulecekDeger.ToString(), adisyonNotu, null);
                 }
                 else // ikramı iptal et
                 {
-                    masaFormu.MenuFormundanServeraSiparisYolla(MasaAdi, hangiDepartman.departmanAdi, "ikramIptal", carpan.ToString(), listUrunFiyat.SelectedItems[0].SubItems[1].Text, siparisiKimGirdi, dusulecekDeger.ToString(), adisyonNotu, listUrunFiyat.SelectedItems[0].Group.Tag.ToString());
+                    masaFormu.menuFormundanServeraSiparisYolla(MasaAdi, hangiDepartman.departmanAdi, "ikramIptal", carpan.ToString(), listUrunFiyat.SelectedItems[0].SubItems[1].Text, siparisiKimGirdi, dusulecekDeger.ToString(), adisyonNotu, listUrunFiyat.SelectedItems[0].Group.Tag.ToString());
                 }
                 this.Enabled = false;
             }
@@ -1702,7 +1704,7 @@ namespace ROPv1
                 {
                     string ikramMi = listUrunFiyat.SelectedItems[0].Group.Tag.ToString();
 
-                    masaFormu.MenuFormundanServeraSiparisYolla(MasaAdi, hangiDepartman.departmanAdi, "iptal", carpan.ToString(), listUrunFiyat.SelectedItems[0].SubItems[1].Text, siparisiKimGirdi, dusulecekDeger.ToString(), adisyonNotu, ikramMi);
+                    masaFormu.menuFormundanServeraSiparisYolla(MasaAdi, hangiDepartman.departmanAdi, "iptal", carpan.ToString(), listUrunFiyat.SelectedItems[0].SubItems[1].Text, siparisiKimGirdi, dusulecekDeger.ToString(), adisyonNotu, ikramMi);
                     this.Enabled = false;
                 }
             }
@@ -1750,7 +1752,7 @@ namespace ROPv1
                     catch// kapalı
                     {
                         adisyonID = adisyonOlustur();
-                    }                   
+                    }
 
                     foreach (ListViewItem siparis in listUrunFiyat.Groups[yeniSiparisler].Items)
                     {
@@ -2053,8 +2055,88 @@ namespace ROPv1
         }
 
         #endregion
+        
+        //Masaların adisyonlarını değiştiren butonun methodu
+        private void changeTablesButton_Click(object sender, EventArgs e)
+        {
+            masaDegistirForm = new MasaDegistirFormu(MasaAdi, hangiDepartman.departmanAdi, true, this);
+            masaDegistirForm.ShowDialog();
 
+            if (masaDegistirForm.yeniMasa == "iptalEdildi")
+                return;
+            else
+            {
+                if (Properties.Settings.Default.Server == 2) // server
+                {
+                    SqlCommand cmd;
+                    switch (masaDegistirForm.yapilmasiGerekenIslem)
+                    {
+                        case 0: // departman değişmedi ve masaların ikisi de açık
+                            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi = CASE MasaAdi WHEN @masaninAdiEski THEN @masaninAdiYeni WHEN @masaninAdiYeni THEN @masaninAdiEski END WHERE MasaAdi in (@masaninAdiEski,@masaninAdiYeni) AND AcikMi=1 AND DepartmanAdi=@departmanAdiEski");
 
+                            cmd.Parameters.AddWithValue("@masaninAdiEski", MasaAdi);
+                            cmd.Parameters.AddWithValue("@masaninAdiYeni", masaDegistirForm.yeniMasa);
+                            cmd.Parameters.AddWithValue("@departmanAdiEski", hangiDepartman.departmanAdi);
+                            cmd.ExecuteNonQuery();
+
+                            cmd.Connection.Close();
+                            cmd.Connection.Dispose();
+                            break;
+                        case 1: // masalar açık departman değişti
+                            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi = CASE MasaAdi WHEN @masaninAdiEski THEN @masaninAdiYeni WHEN @masaninAdiYeni THEN @masaninAdiEski END, DepartmanAdi = CASE DepartmanAdi WHEN @departmanAdiEski THEN @departmanAdiYeni WHEN @departmanAdiYeni THEN @departmanAdiEski END WHERE MasaAdi in (@masaninAdiEski,@masaninAdiYeni) AND AcikMi=1 AND DepartmanAdi in (@departmanAdiEski,@departmanAdiYeni)");
+
+                            cmd.Parameters.AddWithValue("@masaninAdiEski", MasaAdi);
+                            cmd.Parameters.AddWithValue("@masaninAdiYeni", masaDegistirForm.yeniMasa);
+                            cmd.Parameters.AddWithValue("@departmanAdiEski", hangiDepartman.departmanAdi);
+                            cmd.Parameters.AddWithValue("@departmanAdiYeni", masaDegistirForm.yeniDepartman);
+                            cmd.ExecuteNonQuery();
+
+                            cmd.Connection.Close();
+                            cmd.Connection.Dispose();
+                            break;
+                        case 2: // departman değişmedi 1 masa açık
+                            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi=@masaninAdi WHERE MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND AcikMi=1");
+                            cmd.Parameters.AddWithValue("@masaninAdi", masaDegistirForm.yeniMasa);
+                            cmd.ExecuteNonQuery();
+
+                            cmd.Connection.Close();
+                            cmd.Connection.Dispose();
+                            break;
+                        case 3: // departman değişti 1 masa açık
+                            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi=@masaninAdi, DepartmanAdi=@departmanAdi  WHERE MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND AcikMi=1");
+                            cmd.Parameters.AddWithValue("@masaninAdi", masaDegistirForm.yeniMasa);
+                            cmd.Parameters.AddWithValue("@departmanAdi", masaDegistirForm.yeniDepartman);
+                            cmd.ExecuteNonQuery();
+
+                            cmd.Connection.Close();
+                            cmd.Connection.Dispose();
+                            break;
+                        default:
+                            break;
+                    }
+                    yeniMasaninAdi = masaDegistirForm.yeniMasa;
+                    masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
+
+                    masaFormu.serverdanMasaDegisikligi(MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman);
+                    masaDegistirForm = null;
+                    this.Close();
+                }
+                else // client
+                {
+                    masaFormu.menuFormundanServeraMasaDegisikligi(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yapilmasiGerekenIslem,"masaDegistir");
+
+                    yeniMasaninAdi = masaDegistirForm.yeniMasa;
+                    masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
+                    masaDegistirForm = null;
+                    this.Close();
+                }
+            }            
+        } // düzenlenecek
+
+        public void masaDegisikligiFormundanAcikMasaBilgisiIstegiGeldiMasaFormunaIlet(string mesaj)
+        {
+            masaFormu.masaDegisikligiFormundanAcikMasaBilgisiIstegi(mesaj);
+        }
 
         //Seçili siparişlerin adisyonunu değiştiren butonun methodu -- Yeni Siparişler taşınamaz
         private void buttonTasi_Click(object sender, EventArgs e)
@@ -2064,7 +2146,7 @@ namespace ROPv1
 
             if (urunDegissinMi == DialogResult.OK)
             {
-                MasaDegistirFormu masaDegistirForm = new MasaDegistirFormu(MasaAdi, hangiDepartman.departmanAdi, false);
+                masaDegistirForm = new MasaDegistirFormu(MasaAdi, hangiDepartman.departmanAdi, false, this);
                 masaDegistirForm.ShowDialog();
 
                 if (masaDegistirForm.yeniMasa == "iptalEdildi")
@@ -2247,68 +2329,6 @@ namespace ROPv1
 
                     buttonTemizle_Click(null, null);
                 }
-            }
-        } // düzenlenecek
-
-        //Masaların adisyonlarını değiştiren butonun methodu
-        private void changeTablesButton_Click(object sender, EventArgs e)
-        {
-            MasaDegistirFormu masaDegistirForm = new MasaDegistirFormu(MasaAdi, hangiDepartman.departmanAdi, true);
-            masaDegistirForm.ShowDialog();
-
-            if (masaDegistirForm.yeniMasa == "iptalEdildi")
-                return;
-            else
-            {
-                SqlCommand cmd;
-                switch (masaDegistirForm.yapilmasiGerekenIslem)
-                {
-                    case 0: // departman değişmedi ve masaların ikisi de açık
-                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi = CASE MasaAdi WHEN @masaninAdiEski THEN @masaninAdiYeni WHEN @masaninAdiYeni THEN @masaninAdiEski END WHERE MasaAdi in (@masaninAdiEski,@masaninAdiYeni) AND AcikMi=1 AND DepartmanAdi=@departmanAdiEski");
-
-                        cmd.Parameters.AddWithValue("@masaninAdiEski", MasaAdi);
-                        cmd.Parameters.AddWithValue("@masaninAdiYeni", masaDegistirForm.yeniMasa);
-                        cmd.Parameters.AddWithValue("@departmanAdiEski", hangiDepartman.departmanAdi);
-                        cmd.ExecuteNonQuery();
-
-                        cmd.Connection.Close();
-                        cmd.Connection.Dispose();
-                        break;
-                    case 1: // masalar açık departman değişti
-                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi = CASE MasaAdi WHEN @masaninAdiEski THEN @masaninAdiYeni WHEN @masaninAdiYeni THEN @masaninAdiEski END, DepartmanAdi = CASE DepartmanAdi WHEN @departmanAdiEski THEN @departmanAdiYeni WHEN @departmanAdiYeni THEN @departmanAdiEski END WHERE MasaAdi in (@masaninAdiEski,@masaninAdiYeni) AND AcikMi=1 AND DepartmanAdi in (@departmanAdiEski,@departmanAdiYeni)");
-
-                        cmd.Parameters.AddWithValue("@masaninAdiEski", MasaAdi);
-                        cmd.Parameters.AddWithValue("@masaninAdiYeni", masaDegistirForm.yeniMasa);
-                        cmd.Parameters.AddWithValue("@departmanAdiEski", hangiDepartman.departmanAdi);
-                        cmd.Parameters.AddWithValue("@departmanAdiYeni", masaDegistirForm.yeniDepartman);
-                        cmd.ExecuteNonQuery();
-
-                        cmd.Connection.Close();
-                        cmd.Connection.Dispose();
-                        break;
-                    case 2: // departman değişmedi 1 masa açık
-                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi=@masaninAdi WHERE MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND AcikMi=1");
-                        cmd.Parameters.AddWithValue("@masaninAdi", masaDegistirForm.yeniMasa);
-                        cmd.ExecuteNonQuery();
-
-                        cmd.Connection.Close();
-                        cmd.Connection.Dispose();
-                        break;
-                    case 3: // departman değişti 1 masa açık
-                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi=@masaninAdi, DepartmanAdi=@departmanAdi  WHERE MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND AcikMi=1");
-                        cmd.Parameters.AddWithValue("@masaninAdi", masaDegistirForm.yeniMasa);
-                        cmd.Parameters.AddWithValue("@departmanAdi", masaDegistirForm.yeniDepartman);
-                        cmd.ExecuteNonQuery();
-
-                        cmd.Connection.Close();
-                        cmd.Connection.Dispose();
-                        break;
-                    default:
-                        break;
-                }
-                yeniMasaninAdi = masaDegistirForm.yeniMasa;
-                masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
-                this.Close();
             }
         } // düzenlenecek
     }
