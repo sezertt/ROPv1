@@ -42,6 +42,8 @@ namespace ROPv1
         // Açık masaların listesi        
         private List<string> masalar;
 
+        KontrolFormu dialog2;
+
         bool loadYapildiMi = false, acikMasaVarsaYapma = false;
 
         int hangiDepartmanButonu = 0, hangiMasaDizayni = 200;
@@ -536,10 +538,10 @@ namespace ROPv1
             }
         }
 
-        public void serverdanMasaDegisikligi(string masa, string departmanAdi, string yeniMasa, string yeniDepartmanAdi)
+        public void serverdanMasaDegisikligi(string masa, string departmanAdi, string yeniMasa, string yeniDepartmanAdi, string komut)
         {
             //Tüm kullanıcılara masa değiştir mesajı gönderelim
-            tumKullanicilaraMesajYolla("komut=masaDegistir&masa=" + masa + "&departmanAdi=" + departmanAdi + "&yeniMasa=" + yeniMasa + "&yeniDepartmanAdi=" + yeniDepartmanAdi);
+            tumKullanicilaraMesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departmanAdi + "&yeniMasa=" + yeniMasa + "&yeniDepartmanAdi=" + yeniDepartmanAdi);
         }
 
         public void tumKullanicilaraMesajYolla(string mesaj)
@@ -615,8 +617,9 @@ namespace ROPv1
                     case "iptal": // serverdan iptal isteğinin sonucu geldiğinde
                         komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["ikramYeniMiEskiMi"]);
                         break;
-                    case "masaDegistir": // masa değişikliği bilgisi geldiğinde eğer o masa bizde açıksa kapatmalıyız
-                        komut_masaDegisti(parametreler["masa"], parametreler["departmanAdi"], parametreler["yeniMasa"], parametreler["yeniDepartmanAdi"]);
+                    case "masaDegistir": // masa değişikliği bilgisi geldiğinde eğer o masalar bizde açıksa kapatmalıyız
+                    case "urunTasindi": // ürün aktarma bilgisi geldiğinde eğer o masalar bizde açıksa kapatmalıyız
+                        komut_masaDegisti(parametreler["masa"], parametreler["departmanAdi"], parametreler["yeniMasa"], parametreler["yeniDepartmanAdi"], parametreler["komut"]);
                         break;
                     case "ikram": // serverdan ikram isteğinin sonucu geldiğinde
                         komut_ikram(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"]);
@@ -695,6 +698,12 @@ namespace ROPv1
         }
 
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
+        public void menuFormundanServeraUrunTasinacakBilgisiGonder(string masa, string departman, string komut, string yeniMasa, string yeniDepartman, string siparisiGirenKisi, StringBuilder aktarmaBilgileri)
+        {
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&yeniMasa=" + yeniMasa + "&yeniDepartmanAdi=" + yeniDepartman + "&siparisiGirenKisi=" + siparisiGirenKisi + "&aktarmaBilgileri=" + aktarmaBilgileri);
+        }
+
+        /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
         public void siparisListesiBos(string masa, string departman, string komut)
         {
             client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman);
@@ -725,11 +734,6 @@ namespace ROPv1
             {
                 if (Properties.Settings.Default.Server != 2) // client
                 {
-                    if (siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi != "")
-                    {
-                        client.MesajYolla("komut=masaAcildi&masa=" + siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
-                    }
-
                     if (siparisMenuForm.masaAcikMi)
                     {
                         switch (siparisMenuForm.masaDegisti)
@@ -743,7 +747,7 @@ namespace ROPv1
                                 client.MesajYolla("komut=masaKapandi&masa=" + hangiMasa + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                                 break;
                             default:
-                                client.MesajYolla("komut=masaAcildi&masa=" + hangiMasa + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
+                                //client.MesajYolla("komut=masaAcildi&masa=" + hangiMasa + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                                 break;
                         }
                     }
@@ -802,22 +806,37 @@ namespace ROPv1
             {
                 masayiIslemYapmadanKapat = false;
             }
-            
+
             siparisMenuForm = null;
             acikMasaVarsaYapma = false;
         }
 
         #region Komutlar
 
-        public void komut_masaDegisti(string masa, string departmanAdi, string yeniMasa, string yeniDepartmanAdi)
+        public void komut_masaDegisti(string masa, string departmanAdi, string yeniMasa, string yeniDepartmanAdi, string komut)
         {
-            if (siparisMenuForm != null && restoranListesi[hangiDepartmanButonu].departmanAdi == departmanAdi && hangiMasaButonunaBasildi.Text == masa)
+            if (siparisMenuForm != null && ((restoranListesi[hangiDepartmanButonu].departmanAdi == departmanAdi && hangiMasaButonunaBasildi.Text == masa) || (restoranListesi[hangiDepartmanButonu].departmanAdi == yeniDepartmanAdi && hangiMasaButonunaBasildi.Text == yeniMasa)))
             {
-                masayiIslemYapmadanKapat = true;
-                siparisMenuForm.Close();
-                using (KontrolFormu dialog = new KontrolFormu("Masanın(" + masa + ") hesabı " + yeniDepartmanAdi + " departmanının, " + yeniMasa + " masasıyla değiştirildi, masaya yeniden giriş yapınız", false))
+                if (komut == "masaDegistir")
                 {
-                    dialog.ShowDialog();
+                    masayiIslemYapmadanKapat = true;
+                    siparisMenuForm.Close();
+                    using (KontrolFormu dialog = new KontrolFormu("Masanın(" + masa + ") hesabı " + yeniDepartmanAdi + " departmanının, " + yeniMasa + " masasıyla değiştirildi, masaya yeniden giriş yapınız", false))
+                    {
+                        dialog.ShowDialog();
+                    }
+                }
+                else
+                {
+                    masayiIslemYapmadanKapat = false;
+                    siparisMenuForm.Close();
+
+                    using (dialog2 = new KontrolFormu("Masada(" + masa + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler" + yeniDepartmanAdi + " departmanındaki, " + yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false))
+                    {
+                        timerDialogClose.Start();
+                        dialog2.ShowDialog();
+                        timerDialogClose.Stop();
+                    }
                 }
             }
         }
@@ -1110,6 +1129,11 @@ namespace ROPv1
                 dialog.ShowDialog();
             }
             siparisMenuForm.BringToFront();
+        }
+
+        private void timerDialogClose_Tick(object sender, EventArgs e)
+        {
+            dialog2.Close();
         }
     }
 }

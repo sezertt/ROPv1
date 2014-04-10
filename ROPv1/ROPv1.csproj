@@ -94,6 +94,7 @@
     <Compile Include="DBHelpers\SqlDataReaderHelper.cs" />
     <Compile Include="DBHelpers\SqlHelper.cs" />
     <Compile Include="Entity\entGarson.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Sayfalar\1 GirisEkranı\PortFormu.cs">
       <SubType>Form</SubType>
     </Compile>

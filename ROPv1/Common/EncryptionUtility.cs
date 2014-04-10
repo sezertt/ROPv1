@@ -15,6 +15,7 @@ namespace ROPv1.Common
         private static readonly byte[] iv = new byte[] { 54, 148, 32, 84, 21, 250, 176, 253, 55, 167, 254, 58, 69, 68, 82, 52 };
 
         // Methods
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
         public static string Decrypt(string StringToDecrypt)
         {
             RijndaelManaged aesAlg = null;

@@ -34,6 +34,7 @@
             this.textboxNot = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.checkBoxSave = new System.Windows.Forms.CheckBox();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // keyboardcontrol1
@@ -104,6 +105,23 @@
             this.checkBoxSave.UseVisualStyleBackColor = true;
             this.checkBoxSave.Visible = false;
             // 
+            // buttonCancel
+            // 
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonCancel.Image = global::ROPv1.Properties.Resources.deleteBig;
+            this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonCancel.Location = new System.Drawing.Point(16, 334);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(125, 50);
+            this.buttonCancel.TabIndex = 37;
+            this.buttonCancel.Text = "Vazgeç";
+            this.buttonCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonCancel.UseVisualStyleBackColor = false;
+            // 
             // AdisyonNotuFormu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -112,6 +130,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1019, 396);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.checkBoxSave);
             this.Controls.Add(this.buttonTamam);
             this.Controls.Add(this.textboxNot);
@@ -138,5 +157,6 @@
         private System.Windows.Forms.TextBox textboxNot;
         private System.Windows.Forms.CheckBox checkBoxSave;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Button buttonCancel;
     }
 }

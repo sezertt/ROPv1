@@ -57,6 +57,7 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.timerDialogClose = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // flowPanelUrunler
@@ -181,9 +182,9 @@
             this.labelKalan.ForeColor = System.Drawing.SystemColors.Window;
             this.labelKalan.Location = new System.Drawing.Point(773, 670);
             this.labelKalan.Name = "labelKalan";
-            this.labelKalan.Size = new System.Drawing.Size(159, 33);
+            this.labelKalan.Size = new System.Drawing.Size(91, 33);
             this.labelKalan.TabIndex = 85;
-            this.labelKalan.Text = "Kalan Hesap:";
+            this.labelKalan.Text = "Hesap:";
             this.labelKalan.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // buttonAdd
@@ -403,6 +404,11 @@
             this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.columnHeader3.Width = 100;
             // 
+            // timerDialogClose
+            // 
+            this.timerDialogClose.Interval = 3000;
+            this.timerDialogClose.Tick += new System.EventHandler(this.timerDialogClose_Tick);
+            // 
             // SiparisMenuFormu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -465,5 +471,6 @@
         private System.Windows.Forms.Label labelKalanHesap;
         private System.Windows.Forms.Label labelKalan;
         private System.Windows.Forms.Button buttonTemizle;
+        private System.Windows.Forms.Timer timerDialogClose;
     }
 }

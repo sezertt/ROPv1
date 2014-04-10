@@ -46,6 +46,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.textboxOnlineKullanicilar = new System.Windows.Forms.TextBox();
             this.buttonConnection = new System.Windows.Forms.Button();
+            this.timerDialogClose = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -261,6 +262,11 @@
             this.buttonConnection.UseVisualStyleBackColor = false;
             this.buttonConnection.Click += new System.EventHandler(this.buttonConnection_Click);
             // 
+            // timerDialogClose
+            // 
+            this.timerDialogClose.Interval = 3000;
+            this.timerDialogClose.Tick += new System.EventHandler(this.timerDialogClose_Tick);
+            // 
             // GirisEkrani
             // 
             this.AcceptButton = this.girisButton;
@@ -319,6 +325,7 @@
         private System.Windows.Forms.Button buttonMutfak;
         private System.Windows.Forms.TextBox textboxOnlineKullanicilar;
         private System.Windows.Forms.Button buttonConnection;
+        private System.Windows.Forms.Timer timerDialogClose;
     }
 }
 

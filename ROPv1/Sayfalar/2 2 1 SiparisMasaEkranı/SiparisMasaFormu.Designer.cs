@@ -41,6 +41,7 @@
             this.buttonConnection = new System.Windows.Forms.Button();
             this.buttonAdisyon = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
+            this.timerDialogClose = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // labelGun
@@ -226,6 +227,11 @@
             this.exitButton.UseVisualStyleBackColor = false;
             this.exitButton.Click += new System.EventHandler(this.exitPressed);
             // 
+            // timerDialogClose
+            // 
+            this.timerDialogClose.Interval = 3000;
+            this.timerDialogClose.Tick += new System.EventHandler(this.timerDialogClose_Tick);
+            // 
             // SiparisMasaFormu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -269,5 +275,6 @@
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Button buttonName;
         public System.Windows.Forms.TableLayoutPanel tablePanel;
+        private System.Windows.Forms.Timer timerDialogClose;
     }
 }
