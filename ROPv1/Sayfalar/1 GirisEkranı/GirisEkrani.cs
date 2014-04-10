@@ -346,7 +346,6 @@ namespace ROPv1
 
             //clientları bilgilendir 
             //kapatma mesajını ve urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi bilgisini gönder
-
             if (siparisForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi)
             {
                 if (urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi != null)
@@ -367,8 +366,6 @@ namespace ROPv1
                     }
                 }
             }
-
-
             //Tüm kullanıcılara ürün taşındı mesajı gönderelim
             tumKullanicilaraMesajYolla("komut=urunTasindi&masa=" + MasaAdi + "&departmanAdi=" + departmanAdi + "&yeniMasa=" + yeniMasa + "&yeniDepartmanAdi=" + yeniDepartmanAdi);
         }

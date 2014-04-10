@@ -113,26 +113,32 @@
     <Compile Include="Sayfalar\2 2 1 SiparisMasaEkranı\PinKoduFormu.Designer.cs">
       <DependentUpon>PinKoduFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 2 2 SiparisMenüEkranı\MyListView.cs">
+    <Compile Include="Sayfalar\2 2 2 1 SiparisMenüEkranı\MyListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 2 2 SiparisMenüEkranı\MasaDegistirFormu.cs">
+    <Compile Include="Sayfalar\2 2 2 1 SiparisMenüEkranı\MasaDegistirFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 2 2 SiparisMenüEkranı\MasaDegistirFormu.Designer.cs">
+    <Compile Include="Sayfalar\2 2 2 1 SiparisMenüEkranı\MasaDegistirFormu.Designer.cs">
       <DependentUpon>MasaDegistirFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 2 2 SiparisMenüEkranı\UrunDegistir.cs">
+    <Compile Include="Sayfalar\2 2 2 1 SiparisMenüEkranı\UrunDegistir.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 2 2 SiparisMenüEkranı\UrunDegistir.Designer.cs">
+    <Compile Include="Sayfalar\2 2 2 1 SiparisMenüEkranı\UrunDegistir.Designer.cs">
       <DependentUpon>UrunDegistir.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 2 2 SiparisMenüEkranı\SiparisMenuFormu.cs">
+    <Compile Include="Sayfalar\2 2 2 1 SiparisMenüEkranı\SiparisMenuFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 2 2 SiparisMenüEkranı\SiparisMenuFormu.Designer.cs">
+    <Compile Include="Sayfalar\2 2 2 1 SiparisMenüEkranı\SiparisMenuFormu.Designer.cs">
       <DependentUpon>SiparisMenuFormu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sayfalar\2 2 2 2 HesapOdemeEkrani\HesapFormu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\2 2 2 2 HesapOdemeEkrani\HesapFormu.Designer.cs">
+      <DependentUpon>HesapFormu.cs</DependentUpon>
     </Compile>
     <Compile Include="Sayfalar\3 1 Kullanıcılar\Kullanici.cs">
       <SubType>UserControl</SubType>
@@ -242,16 +248,20 @@
       <DependentUpon>PinKoduFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 2 2 SiparisMenüEkranı\MasaDegistirFormu.resx">
+    <EmbeddedResource Include="Sayfalar\2 2 2 1 SiparisMenüEkranı\MasaDegistirFormu.resx">
       <DependentUpon>MasaDegistirFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 2 2 SiparisMenüEkranı\UrunDegistir.resx">
+    <EmbeddedResource Include="Sayfalar\2 2 2 1 SiparisMenüEkranı\UrunDegistir.resx">
       <DependentUpon>UrunDegistir.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 2 2 SiparisMenüEkranı\SiparisMenuFormu.resx">
+    <EmbeddedResource Include="Sayfalar\2 2 2 1 SiparisMenüEkranı\SiparisMenuFormu.resx">
       <DependentUpon>SiparisMenuFormu.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\2 2 2 2 HesapOdemeEkrani\HesapFormu.resx">
+      <DependentUpon>HesapFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\3 1 Kullanıcılar\Kullanici.resx">
@@ -425,6 +435,7 @@
       <Name>SPIA</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
