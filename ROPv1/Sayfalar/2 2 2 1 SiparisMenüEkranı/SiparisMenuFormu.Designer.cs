@@ -65,7 +65,7 @@
             this.flowPanelUrunler.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.flowPanelUrunler.AutoScroll = true;
-            this.flowPanelUrunler.Location = new System.Drawing.Point(12, 12);
+            this.flowPanelUrunler.Location = new System.Drawing.Point(850, 12);
             this.flowPanelUrunler.Name = "flowPanelUrunler";
             this.flowPanelUrunler.Size = new System.Drawing.Size(504, 454);
             this.flowPanelUrunler.TabIndex = 0;
@@ -76,10 +76,10 @@
             this.textNumberOfItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textNumberOfItem.Font = new System.Drawing.Font("Arial", 39F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textNumberOfItem.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textNumberOfItem.Location = new System.Drawing.Point(377, 617);
+            this.textNumberOfItem.Location = new System.Drawing.Point(850, 617);
             this.textNumberOfItem.MaxLength = 3;
             this.textNumberOfItem.Name = "textNumberOfItem";
-            this.textNumberOfItem.Size = new System.Drawing.Size(122, 67);
+            this.textNumberOfItem.Size = new System.Drawing.Size(143, 67);
             this.textNumberOfItem.TabIndex = 68;
             this.textNumberOfItem.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textNumberOfItem.TextChanged += new System.EventHandler(this.textNumberOfItem_TextChanged);
@@ -92,9 +92,9 @@
             this.buttonDeleteText.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonDeleteText.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteText.Location = new System.Drawing.Point(377, 688);
+            this.buttonDeleteText.Location = new System.Drawing.Point(850, 689);
             this.buttonDeleteText.Name = "buttonDeleteText";
-            this.buttonDeleteText.Size = new System.Drawing.Size(122, 68);
+            this.buttonDeleteText.Size = new System.Drawing.Size(143, 68);
             this.buttonDeleteText.TabIndex = 69;
             this.buttonDeleteText.TabStop = false;
             this.buttonDeleteText.Text = "SİL";
@@ -105,7 +105,7 @@
             // 
             this.pinboardcontrol21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pinboardcontrol21.KeyboardType = PinboardClassLibrary.BoW.Standard;
-            this.pinboardcontrol21.Location = new System.Drawing.Point(5, 467);
+            this.pinboardcontrol21.Location = new System.Drawing.Point(999, 467);
             this.pinboardcontrol21.Name = "pinboardcontrol21";
             this.pinboardcontrol21.Size = new System.Drawing.Size(362, 297);
             this.pinboardcontrol21.TabIndex = 74;
@@ -118,7 +118,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowPanelMenuBasliklari.AutoScroll = true;
             this.flowPanelMenuBasliklari.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowPanelMenuBasliklari.Location = new System.Drawing.Point(517, 12);
+            this.flowPanelMenuBasliklari.Location = new System.Drawing.Point(596, 12);
             this.flowPanelMenuBasliklari.Name = "flowPanelMenuBasliklari";
             this.flowPanelMenuBasliklari.Size = new System.Drawing.Size(250, 744);
             this.flowPanelMenuBasliklari.TabIndex = 63;
@@ -132,7 +132,7 @@
             this.labelMasa.BackColor = System.Drawing.Color.Transparent;
             this.labelMasa.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelMasa.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelMasa.Location = new System.Drawing.Point(767, 125);
+            this.labelMasa.Location = new System.Drawing.Point(7, 125);
             this.labelMasa.Name = "labelMasa";
             this.labelMasa.Size = new System.Drawing.Size(83, 33);
             this.labelMasa.TabIndex = 76;
@@ -145,7 +145,7 @@
             this.labelDepartman.BackColor = System.Drawing.Color.Transparent;
             this.labelDepartman.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelDepartman.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelDepartman.Location = new System.Drawing.Point(1046, 125);
+            this.labelDepartman.Location = new System.Drawing.Point(280, 125);
             this.labelDepartman.Margin = new System.Windows.Forms.Padding(0);
             this.labelDepartman.Name = "labelDepartman";
             this.labelDepartman.Size = new System.Drawing.Size(314, 33);
@@ -165,7 +165,7 @@
             this.labelKalanHesap.BackColor = System.Drawing.Color.Transparent;
             this.labelKalanHesap.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelKalanHesap.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelKalanHesap.Location = new System.Drawing.Point(935, 670);
+            this.labelKalanHesap.Location = new System.Drawing.Point(175, 670);
             this.labelKalanHesap.Margin = new System.Windows.Forms.Padding(0);
             this.labelKalanHesap.Name = "labelKalanHesap";
             this.labelKalanHesap.Size = new System.Drawing.Size(419, 33);
@@ -180,7 +180,7 @@
             this.labelKalan.BackColor = System.Drawing.Color.Transparent;
             this.labelKalan.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelKalan.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelKalan.Location = new System.Drawing.Point(773, 670);
+            this.labelKalan.Location = new System.Drawing.Point(13, 670);
             this.labelKalan.Name = "labelKalan";
             this.labelKalan.Size = new System.Drawing.Size(91, 33);
             this.labelKalan.TabIndex = 85;
@@ -196,7 +196,7 @@
             this.buttonAdd.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonAdd.Image = global::ROPv1.Properties.Resources.addBig;
             this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAdd.Location = new System.Drawing.Point(772, 266);
+            this.buttonAdd.Location = new System.Drawing.Point(12, 266);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Padding = new System.Windows.Forms.Padding(5);
             this.buttonAdd.Size = new System.Drawing.Size(190, 100);
@@ -214,7 +214,7 @@
             this.buttonUrunIptal.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonUrunIptal.Image = global::ROPv1.Properties.Resources.deleteBig;
             this.buttonUrunIptal.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonUrunIptal.Location = new System.Drawing.Point(772, 372);
+            this.buttonUrunIptal.Location = new System.Drawing.Point(12, 372);
             this.buttonUrunIptal.Name = "buttonUrunIptal";
             this.buttonUrunIptal.Padding = new System.Windows.Forms.Padding(5);
             this.buttonUrunIptal.Size = new System.Drawing.Size(190, 100);
@@ -232,7 +232,7 @@
             this.buttonUrunIkram.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonUrunIkram.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonUrunIkram.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonUrunIkram.Location = new System.Drawing.Point(772, 478);
+            this.buttonUrunIkram.Location = new System.Drawing.Point(12, 478);
             this.buttonUrunIkram.Name = "buttonUrunIkram";
             this.buttonUrunIkram.Padding = new System.Windows.Forms.Padding(5);
             this.buttonUrunIkram.Size = new System.Drawing.Size(190, 100);
@@ -250,7 +250,7 @@
             this.buttonTasi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonTasi.Image = global::ROPv1.Properties.Resources.tableSmall;
             this.buttonTasi.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTasi.Location = new System.Drawing.Point(772, 161);
+            this.buttonTasi.Location = new System.Drawing.Point(12, 161);
             this.buttonTasi.Name = "buttonTasi";
             this.buttonTasi.Padding = new System.Windows.Forms.Padding(5);
             this.buttonTasi.Size = new System.Drawing.Size(190, 100);
@@ -268,7 +268,7 @@
             this.buttonMasaDegistir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonMasaDegistir.Image = global::ROPv1.Properties.Resources.swap;
             this.buttonMasaDegistir.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonMasaDegistir.Location = new System.Drawing.Point(772, 12);
+            this.buttonMasaDegistir.Location = new System.Drawing.Point(12, 12);
             this.buttonMasaDegistir.Name = "buttonMasaDegistir";
             this.buttonMasaDegistir.Size = new System.Drawing.Size(190, 110);
             this.buttonMasaDegistir.TabIndex = 67;
@@ -285,7 +285,7 @@
             this.buttonNotEkle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonNotEkle.Image = global::ROPv1.Properties.Resources.adisyon;
             this.buttonNotEkle.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonNotEkle.Location = new System.Drawing.Point(968, 12);
+            this.buttonNotEkle.Location = new System.Drawing.Point(208, 12);
             this.buttonNotEkle.Name = "buttonNotEkle";
             this.buttonNotEkle.Size = new System.Drawing.Size(190, 110);
             this.buttonNotEkle.TabIndex = 66;
@@ -303,7 +303,7 @@
             this.buttonTamam.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonTamam.Image = global::ROPv1.Properties.Resources.checkmark;
             this.buttonTamam.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonTamam.Location = new System.Drawing.Point(1164, 12);
+            this.buttonTamam.Location = new System.Drawing.Point(404, 12);
             this.buttonTamam.Name = "buttonTamam";
             this.buttonTamam.Size = new System.Drawing.Size(190, 110);
             this.buttonTamam.TabIndex = 60;
@@ -320,7 +320,7 @@
             this.buttonHesapOde.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonHesapOde.Image = global::ROPv1.Properties.Resources.pay;
             this.buttonHesapOde.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonHesapOde.Location = new System.Drawing.Point(772, 708);
+            this.buttonHesapOde.Location = new System.Drawing.Point(12, 708);
             this.buttonHesapOde.Name = "buttonHesapOde";
             this.buttonHesapOde.Size = new System.Drawing.Size(582, 48);
             this.buttonHesapOde.TabIndex = 57;
@@ -336,7 +336,7 @@
             this.buttonTemizle.Font = new System.Drawing.Font("Arial", 16.5F, System.Drawing.FontStyle.Bold);
             this.buttonTemizle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonTemizle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTemizle.Location = new System.Drawing.Point(772, 582);
+            this.buttonTemizle.Location = new System.Drawing.Point(12, 582);
             this.buttonTemizle.Name = "buttonTemizle";
             this.buttonTemizle.Padding = new System.Windows.Forms.Padding(8);
             this.buttonTemizle.Size = new System.Drawing.Size(190, 83);
@@ -378,7 +378,7 @@
             this.listUrunFiyat.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listUrunFiyat.HideSelection = false;
             this.listUrunFiyat.LabelWrap = false;
-            this.listUrunFiyat.Location = new System.Drawing.Point(969, 161);
+            this.listUrunFiyat.Location = new System.Drawing.Point(209, 161);
             this.listUrunFiyat.Margin = new System.Windows.Forms.Padding(0);
             this.listUrunFiyat.Name = "listUrunFiyat";
             this.listUrunFiyat.Size = new System.Drawing.Size(385, 504);
