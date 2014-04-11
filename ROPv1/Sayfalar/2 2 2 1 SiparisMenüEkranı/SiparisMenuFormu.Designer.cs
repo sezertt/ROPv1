@@ -53,19 +53,19 @@
             this.buttonTamam = new System.Windows.Forms.Button();
             this.buttonHesapOde = new System.Windows.Forms.Button();
             this.buttonTemizle = new System.Windows.Forms.Button();
+            this.timerDialogClose = new System.Windows.Forms.Timer(this.components);
             this.listUrunFiyat = new ROPv1.MyListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.timerDialogClose = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // flowPanelUrunler
             // 
             this.flowPanelUrunler.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.flowPanelUrunler.AutoScroll = true;
-            this.flowPanelUrunler.Location = new System.Drawing.Point(850, 12);
+            this.flowPanelUrunler.Location = new System.Drawing.Point(865, 12);
             this.flowPanelUrunler.Name = "flowPanelUrunler";
             this.flowPanelUrunler.Size = new System.Drawing.Size(504, 454);
             this.flowPanelUrunler.TabIndex = 0;
@@ -73,13 +73,13 @@
             // 
             // textNumberOfItem
             // 
-            this.textNumberOfItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textNumberOfItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textNumberOfItem.Font = new System.Drawing.Font("Arial", 39F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textNumberOfItem.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textNumberOfItem.Location = new System.Drawing.Point(850, 617);
+            this.textNumberOfItem.Location = new System.Drawing.Point(865, 617);
             this.textNumberOfItem.MaxLength = 3;
             this.textNumberOfItem.Name = "textNumberOfItem";
-            this.textNumberOfItem.Size = new System.Drawing.Size(143, 67);
+            this.textNumberOfItem.Size = new System.Drawing.Size(126, 67);
             this.textNumberOfItem.TabIndex = 68;
             this.textNumberOfItem.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textNumberOfItem.TextChanged += new System.EventHandler(this.textNumberOfItem_TextChanged);
@@ -87,14 +87,14 @@
             // 
             // buttonDeleteText
             // 
-            this.buttonDeleteText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonDeleteText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDeleteText.BackColor = System.Drawing.SystemColors.Window;
             this.buttonDeleteText.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonDeleteText.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteText.Location = new System.Drawing.Point(850, 689);
+            this.buttonDeleteText.Location = new System.Drawing.Point(863, 689);
             this.buttonDeleteText.Name = "buttonDeleteText";
-            this.buttonDeleteText.Size = new System.Drawing.Size(143, 68);
+            this.buttonDeleteText.Size = new System.Drawing.Size(130, 68);
             this.buttonDeleteText.TabIndex = 69;
             this.buttonDeleteText.TabStop = false;
             this.buttonDeleteText.Text = "SİL";
@@ -103,7 +103,7 @@
             // 
             // pinboardcontrol21
             // 
-            this.pinboardcontrol21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pinboardcontrol21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pinboardcontrol21.KeyboardType = PinboardClassLibrary.BoW.Standard;
             this.pinboardcontrol21.Location = new System.Drawing.Point(999, 467);
             this.pinboardcontrol21.Name = "pinboardcontrol21";
@@ -118,7 +118,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowPanelMenuBasliklari.AutoScroll = true;
             this.flowPanelMenuBasliklari.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowPanelMenuBasliklari.Location = new System.Drawing.Point(596, 12);
+            this.flowPanelMenuBasliklari.Location = new System.Drawing.Point(615, 12);
             this.flowPanelMenuBasliklari.Name = "flowPanelMenuBasliklari";
             this.flowPanelMenuBasliklari.Size = new System.Drawing.Size(250, 744);
             this.flowPanelMenuBasliklari.TabIndex = 63;
@@ -127,7 +127,6 @@
             // 
             // labelMasa
             // 
-            this.labelMasa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelMasa.AutoSize = true;
             this.labelMasa.BackColor = System.Drawing.Color.Transparent;
             this.labelMasa.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -141,7 +140,6 @@
             // 
             // labelDepartman
             // 
-            this.labelDepartman.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDepartman.BackColor = System.Drawing.Color.Transparent;
             this.labelDepartman.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelDepartman.ForeColor = System.Drawing.SystemColors.Window;
@@ -161,7 +159,7 @@
             // 
             // labelKalanHesap
             // 
-            this.labelKalanHesap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelKalanHesap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelKalanHesap.BackColor = System.Drawing.Color.Transparent;
             this.labelKalanHesap.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelKalanHesap.ForeColor = System.Drawing.SystemColors.Window;
@@ -175,7 +173,7 @@
             // 
             // labelKalan
             // 
-            this.labelKalan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelKalan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelKalan.AutoSize = true;
             this.labelKalan.BackColor = System.Drawing.Color.Transparent;
             this.labelKalan.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -189,7 +187,6 @@
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAdd.BackColor = System.Drawing.SystemColors.Window;
             this.buttonAdd.Enabled = false;
             this.buttonAdd.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -207,7 +204,6 @@
             // 
             // buttonUrunIptal
             // 
-            this.buttonUrunIptal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonUrunIptal.BackColor = System.Drawing.SystemColors.Window;
             this.buttonUrunIptal.Enabled = false;
             this.buttonUrunIptal.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -225,7 +221,6 @@
             // 
             // buttonUrunIkram
             // 
-            this.buttonUrunIkram.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonUrunIkram.BackColor = System.Drawing.SystemColors.Window;
             this.buttonUrunIkram.Enabled = false;
             this.buttonUrunIkram.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -243,7 +238,6 @@
             // 
             // buttonTasi
             // 
-            this.buttonTasi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonTasi.BackColor = System.Drawing.SystemColors.Window;
             this.buttonTasi.Enabled = false;
             this.buttonTasi.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -261,14 +255,13 @@
             // 
             // buttonMasaDegistir
             // 
-            this.buttonMasaDegistir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonMasaDegistir.BackColor = System.Drawing.SystemColors.Window;
             this.buttonMasaDegistir.Enabled = false;
             this.buttonMasaDegistir.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonMasaDegistir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonMasaDegistir.Image = global::ROPv1.Properties.Resources.swap;
             this.buttonMasaDegistir.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonMasaDegistir.Location = new System.Drawing.Point(12, 12);
+            this.buttonMasaDegistir.Location = new System.Drawing.Point(404, 12);
             this.buttonMasaDegistir.Name = "buttonMasaDegistir";
             this.buttonMasaDegistir.Size = new System.Drawing.Size(190, 110);
             this.buttonMasaDegistir.TabIndex = 67;
@@ -279,7 +272,6 @@
             // 
             // buttonNotEkle
             // 
-            this.buttonNotEkle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonNotEkle.BackColor = System.Drawing.SystemColors.Window;
             this.buttonNotEkle.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonNotEkle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
@@ -296,14 +288,13 @@
             // 
             // buttonTamam
             // 
-            this.buttonTamam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonTamam.BackColor = System.Drawing.SystemColors.Window;
             this.buttonTamam.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.buttonTamam.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonTamam.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonTamam.Image = global::ROPv1.Properties.Resources.checkmark;
             this.buttonTamam.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonTamam.Location = new System.Drawing.Point(404, 12);
+            this.buttonTamam.Location = new System.Drawing.Point(12, 12);
             this.buttonTamam.Name = "buttonTamam";
             this.buttonTamam.Size = new System.Drawing.Size(190, 110);
             this.buttonTamam.TabIndex = 60;
@@ -314,7 +305,7 @@
             // 
             // buttonHesapOde
             // 
-            this.buttonHesapOde.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonHesapOde.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonHesapOde.BackColor = System.Drawing.SystemColors.Window;
             this.buttonHesapOde.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonHesapOde.ForeColor = System.Drawing.SystemColors.ActiveCaption;
@@ -331,7 +322,6 @@
             // 
             // buttonTemizle
             // 
-            this.buttonTemizle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonTemizle.BackColor = System.Drawing.SystemColors.Window;
             this.buttonTemizle.Font = new System.Drawing.Font("Arial", 16.5F, System.Drawing.FontStyle.Bold);
             this.buttonTemizle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
@@ -345,12 +335,17 @@
             this.buttonTemizle.UseVisualStyleBackColor = false;
             this.buttonTemizle.Click += new System.EventHandler(this.buttonTemizle_Click);
             // 
+            // timerDialogClose
+            // 
+            this.timerDialogClose.Interval = 3000;
+            this.timerDialogClose.Tick += new System.EventHandler(this.timerDialogClose_Tick);
+            // 
             // listUrunFiyat
             // 
             this.listUrunFiyat.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.listUrunFiyat.Alignment = System.Windows.Forms.ListViewAlignment.Left;
             this.listUrunFiyat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.listUrunFiyat.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
@@ -404,17 +399,13 @@
             this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.columnHeader3.Width = 100;
             // 
-            // timerDialogClose
-            // 
-            this.timerDialogClose.Interval = 3000;
-            this.timerDialogClose.Tick += new System.EventHandler(this.timerDialogClose_Tick);
-            // 
             // SiparisMenuFormu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 768);
+            this.Controls.Add(this.flowPanelUrunler);
             this.Controls.Add(this.buttonTemizle);
             this.Controls.Add(this.labelKalanHesap);
             this.Controls.Add(this.labelKalan);
@@ -433,7 +424,6 @@
             this.Controls.Add(this.flowPanelMenuBasliklari);
             this.Controls.Add(this.buttonTamam);
             this.Controls.Add(this.buttonHesapOde);
-            this.Controls.Add(this.flowPanelUrunler);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SiparisMenuFormu";
