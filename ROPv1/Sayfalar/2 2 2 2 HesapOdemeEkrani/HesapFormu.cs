@@ -16,31 +16,15 @@ namespace ROPv1
     {
         private SiparisMenuFormu menuFormu;
 
-        public MasaDegistirFormu masaDegistirForm;
-
         const int eskiIkramlar = 0, yeniIkramlar = 1, eskiSiparisler = 2, yeniSiparisler = 3;
 
-        const int urunBoyu = 220, fiyatBoyu = 90;
-
-        List<Menuler> menuListesi = new List<Menuler>();  // menüleri tutacak liste
-
-        List<KategorilerineGoreUrunler> urunListesi = new List<KategorilerineGoreUrunler>();
-
         List<bool> listedeSeciliOlanItemlar = new List<bool>();
-
-        public bool masaAcikMi = false;
-
-        public int masaDegisti = -1;
-
-        public string yeniMasaninAdi = "", urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi = "";
 
         public HesapFormu(SiparisMenuFormu menuFormu, string masaninAdi, Restoran butonBilgileri, string siparisiGirenKisi, bool masaAcikmi)
         {
             InitializeComponent();
 
-            this.menuFormu = menuFormu;
-
-            
+            this.menuFormu = menuFormu;            
         }
 
         //keypadin methodu

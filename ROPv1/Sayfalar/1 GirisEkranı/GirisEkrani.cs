@@ -1263,6 +1263,7 @@ namespace ROPv1
                         ShowWaitForm();
                         AdminGirisFormu adminForm = new AdminGirisFormu();
                         adminForm.Show();
+
                         //this.Close();
                     }
                     else
