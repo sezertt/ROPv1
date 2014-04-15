@@ -1755,6 +1755,50 @@ namespace ROPv1
             }
         }
 
+
+        private void masaAktarmaIslemlerindenSonraCik(string yeniMasaAdi, string yeniDepartmanAdi)
+        {
+            if (Properties.Settings.Default.Server == 2) //server - diğer tüm clientlara söylemeli yaptığı ikram vs. neyse
+            {
+                SqlCommand cmd;
+
+                int adisyonID;
+
+                cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE MasaAdi='" + yeniMasaAdi + "' AND DepartmanAdi='" + yeniDepartmanAdi + "' AND AcikMi=1");
+                SqlDataReader dr = cmd.ExecuteReader();
+                dr.Read();
+
+                adisyonID = dr.GetInt32(0);
+
+                foreach (ListViewItem siparis in listUrunFiyat.Groups[yeniSiparisler].Items)
+                {
+                    siparisOlustur(adisyonID, siparis);
+
+                    masaFormu.serverdanSiparisIkramVeyaIptal(yeniMasaAdi, yeniDepartmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), null);
+                }
+
+                if (adisyonNotuGuncellenmeliMi) // eğer sipariş notuna dokunulmuşsa not update edilsin
+                {
+                    adisyonNotuUpdate(adisyonID);
+                }
+                this.Close();
+            }
+            else //client
+            {
+                foreach (ListViewItem siparis in listUrunFiyat.Groups[yeniSiparisler].Items)
+                {
+                    masaFormu.serveraSiparis(yeniMasaAdi, yeniDepartmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, siparisiKimGirdi, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), adisyonNotu);
+                    adisyonNotuGuncellenmeliMi = false;
+                }
+
+                if (adisyonNotuGuncellenmeliMi)
+                {
+                    masaFormu.serveraNotuYolla(yeniMasaAdi, yeniDepartmanAdi, "adisyonNotunuGuncelle", adisyonNotu);
+                }
+                this.Close();
+            }
+        }
+
         //her yeni gelen sipariş için çalışan kısım
         public void siparisOnayiGeldi(string miktar, string yemekAdi, string fiyatGelen)
         {
@@ -1882,8 +1926,8 @@ namespace ROPv1
                     masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
 
                     masaFormu.serverdanMasaDegisikligi(MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, "masaDegistir");
-                    masaDegistirForm = null;
-                    this.Close();
+
+                    //this.Close();
                 }
                 else // client
                 {
@@ -1891,9 +1935,10 @@ namespace ROPv1
 
                     yeniMasaninAdi = masaDegistirForm.yeniMasa;
                     masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
-                    masaDegistirForm = null;
-                    this.Close();
+                    //this.Close();
                 }
+                masaAktarmaIslemlerindenSonraCik(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman);
+                masaDegistirForm = null;
             }
         }
 
@@ -2299,6 +2344,8 @@ namespace ROPv1
 
                         masaFormu.serverdanMasaDegisikligi(MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, "urunTasindi");
 
+                        masaAktarmaIslemlerindenSonraSiparisleriGir(MasaAdi, hangiDepartman.departmanAdi);
+
                         dialog2 = new KontrolFormu("Masa(" + MasaAdi + ")'dan seçilen ürünler " + masaDegistirForm.yeniDepartman + "\ndepartmanındaki, " + masaDegistirForm.yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false, this);
                         timerDialogClose.Start();
                         dialog2.Show();
@@ -2337,6 +2384,8 @@ namespace ROPv1
                             aktarmaBilgileri.Remove(0, 1);
                         }
 
+                        masaAktarmaIslemlerindenSonraSiparisleriGir(MasaAdi, hangiDepartman.departmanAdi);
+
                         masaFormu.menuFormundanServeraUrunTasinacakBilgisiGonder(MasaAdi, hangiDepartman.departmanAdi, "urunuTasi", masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, siparisiKimGirdi, aktarmaBilgileri);
 
                         if (!masaAcikMi)
@@ -2348,11 +2397,52 @@ namespace ROPv1
             }
         }
 
+        private void masaAktarmaIslemlerindenSonraSiparisleriGir(string yeniMasaAdi, string yeniDepartmanAdi)
+        {
+            if (Properties.Settings.Default.Server == 2) //server - diğer tüm clientlara söylemeli yaptığı ikram vs. neyse
+            {
+                SqlCommand cmd;
+
+                int adisyonID;
+
+                cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE MasaAdi='" + yeniMasaAdi + "' AND DepartmanAdi='" + yeniDepartmanAdi + "' AND AcikMi=1");
+                SqlDataReader dr = cmd.ExecuteReader();
+                dr.Read();
+
+                adisyonID = dr.GetInt32(0);
+
+                foreach (ListViewItem siparis in listUrunFiyat.Groups[yeniSiparisler].Items)
+                {
+                    siparisOlustur(adisyonID, siparis);
+
+                    masaFormu.serverdanSiparisIkramVeyaIptal(yeniMasaAdi, yeniDepartmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), null);
+                }
+
+                if (adisyonNotuGuncellenmeliMi) // eğer sipariş notuna dokunulmuşsa not update edilsin
+                {
+                    adisyonNotuUpdate(adisyonID);
+                }
+            }
+            else //client
+            {
+                foreach (ListViewItem siparis in listUrunFiyat.Groups[yeniSiparisler].Items)
+                {
+                    masaFormu.serveraSiparis(yeniMasaAdi, yeniDepartmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, siparisiKimGirdi, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), adisyonNotu);
+                    adisyonNotuGuncellenmeliMi = false;
+                }
+
+                if (adisyonNotuGuncellenmeliMi)
+                {
+                    masaFormu.serveraNotuYolla(yeniMasaAdi, yeniDepartmanAdi, "adisyonNotunuGuncelle", adisyonNotu);
+                }
+            }
+        }
+
         private void timerDialogClose_Tick(object sender, EventArgs e)
         {
             dialog2.Close();
             timerDialogClose.Stop();
             this.Close();
-        }        
+        }
     }
 }
