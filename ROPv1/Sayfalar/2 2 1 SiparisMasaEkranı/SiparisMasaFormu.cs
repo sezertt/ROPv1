@@ -1096,5 +1096,13 @@ namespace ROPv1
         {
             siparisMenuForm.BringToFront();
         }
+
+        public void menuFormunuKapat(string masaAdi, string yeniDepartmanAdi, string yeniMasa)
+        {
+            siparisMenuForm.Close();
+
+            dialog2 = new KontrolFormu("Masada(" + masaAdi + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler" + yeniDepartmanAdi + " departmanındaki, " + yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false);
+            dialog2.Show();
+        }
     }
 }

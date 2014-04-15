@@ -1687,9 +1687,8 @@ namespace ROPv1
                         cmd.Connection.Close();
                         cmd.Connection.Dispose();
                     }
-                    catch (Exception ex) // masaya ait adisyon yok, çık
+                    catch (Exception) // masaya ait adisyon yok, çık
                     {
-                        MessageBox.Show(ex.ToString());
                         this.Close();
                         return;
                     }
@@ -1834,7 +1833,7 @@ namespace ROPv1
         private void changeTablesButton_Click(object sender, EventArgs e)
         {
             masaDegistirForm = new MasaDegistirFormu(MasaAdi, hangiDepartman.departmanAdi, this);
-            masaDegistirForm.Show();
+            masaDegistirForm.ShowDialog();
 
             if (masaDegistirForm.yeniMasa == "iptalEdildi")
                 return;
@@ -2354,11 +2353,6 @@ namespace ROPv1
             dialog2.Close();
             timerDialogClose.Stop();
             this.Close();
-        }
-        
-        public void menuFormunuKapat()
-        {
-            this.Close();
-        }
+        }        
     }
 }

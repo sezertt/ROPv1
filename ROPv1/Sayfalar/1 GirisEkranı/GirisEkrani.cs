@@ -354,11 +354,12 @@ namespace ROPv1
                     tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi + "&departmanAdi=" + departmanAdi);
                 }
                 if (siparisForm.siparisMenuForm != null && siparisForm.hangiMasaButonunaBasildi.Text == MasaAdi)
-                {                         
-                    siparisForm.siparisMenuForm.menuFormunuKapat();
-
-                    siparisForm.dialog2 = new KontrolFormu("Masada(" + MasaAdi + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler" + yeniDepartmanAdi + " departmanındaki, " + yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false);
-                    siparisForm.dialog2.Show();
+                {
+                    //invoke thread ler arası haberleşme
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        siparisForm.menuFormunuKapat(MasaAdi,yeniDepartmanAdi,yeniMasa);
+                    });
                 }
             }
             //Tüm kullanıcılara ürün taşındı mesajı gönderelim
