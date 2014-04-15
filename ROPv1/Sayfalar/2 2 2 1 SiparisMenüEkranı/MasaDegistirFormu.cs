@@ -34,9 +34,8 @@ namespace ROPv1
 
         SiparisMenuFormu gelenSiparisFormu;
 
-        bool MasaMi;
 
-        public MasaDegistirFormu(string masaAdi, string DepartmanAdi, bool MasaMiUrunMu, SiparisMenuFormu gelenSiparisFormu)
+        public MasaDegistirFormu(string masaAdi, string DepartmanAdi, SiparisMenuFormu gelenSiparisFormu)
         {
             masalar = new List<string>();
             InitializeComponent();
@@ -44,7 +43,6 @@ namespace ROPv1
             this.gelenSiparisFormu = gelenSiparisFormu;
             eskiMasa = masaAdi;
             eskiDepartman = DepartmanAdi;
-            MasaMi = MasaMiUrunMu;
         }
 
         private void myPannel_SizeChanged(object sender, EventArgs e)
@@ -73,45 +71,25 @@ namespace ROPv1
             if (yeniDepartman == "" || yeniDepartman == null) // departman değişmemiş demektir
                 yeniDepartman = eskiDepartman;
 
-            DialogResult eminMisiniz;
-
-            if (MasaMi) //masa değişimi
+            if (((Button)sender).BackColor == Color.Firebrick && yeniDepartman == eskiDepartman) // departman değişmedi ve masaların ikisi de açık
             {
-                using (KontrolFormu dialog = new KontrolFormu(eskiDepartman + " departmanındaki, " + eskiMasa + " adlı masanın hesabı " + yeniDepartman + " departmanındaki " + yeniMasa + " adlı masanın hesabı ile yer değiştirilsin mi ?", true))
-                {
-                    eminMisiniz = dialog.ShowDialog();
-                }
+                yapilmasiGerekenIslem = 0;
             }
-            else // ürün kaydırma
+            else if (((Button)sender).BackColor == Color.Firebrick) // masalar açık departman değişti
             {
-                using (KontrolFormu dialog = new KontrolFormu("Ürünler " + eskiDepartman + " departmanındaki, " + eskiMasa + " masasından " + yeniDepartman + " departmanındaki " + yeniMasa + " masasına aktarılsın mı ?", true))
-                {
-                    eminMisiniz = dialog.ShowDialog();
-                }
+                yapilmasiGerekenIslem = 1;
             }
-
-            if (eminMisiniz == DialogResult.Yes)
+            else if (yeniDepartman == eskiDepartman) // departman değişmedi 1 masa açık
             {
-
-                if (((Button)sender).BackColor == Color.Firebrick && yeniDepartman == eskiDepartman) // departman değişmedi ve masaların ikisi de açık
-                {
-                    yapilmasiGerekenIslem = 0;
-                }
-                else if (((Button)sender).BackColor == Color.Firebrick) // masalar açık departman değişti
-                {
-                    yapilmasiGerekenIslem = 1;
-                }
-                else if (yeniDepartman == eskiDepartman) // departman değişmedi 1 masa açık
-                {
-                    yapilmasiGerekenIslem = 2;
-                }
-                else // departmanda değişti 1 masa açık 
-                {
-                    yapilmasiGerekenIslem = 3;
-                }
-                this.Close();
+                yapilmasiGerekenIslem = 2;
             }
+            else // departmanda değişti 1 masa açık 
+            {
+                yapilmasiGerekenIslem = 3;
+            }
+            this.Close();
         }
+
 
         private void SiparisMasaFormu_Load(object sender, EventArgs e)
         {
@@ -335,10 +313,8 @@ namespace ROPv1
             }
             catch (Exception)
             {
-                using (KontrolFormu dialog = new KontrolFormu("Masa durumlarını alırken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Masa durumlarını alırken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                dialog.Show();
                 return;
             }
 

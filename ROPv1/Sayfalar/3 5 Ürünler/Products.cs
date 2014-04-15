@@ -234,15 +234,15 @@ namespace ROPv1
         // ürünü kaydetme butonuna basıldı 
         private void saveProductButtonPressed(object sender, EventArgs e)
         {
+            KontrolFormu dialog;
+
             if (treeUrunAdi.SelectedNode == null)
                 return;
 
             if (textboxUrunName.Text == "Yeni Ürün" || textboxUrunName.Text == "")
             {
-                using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false);
+                dialog.Show();
                 return;
             }
 
@@ -274,10 +274,8 @@ namespace ROPv1
                     {
                         if (string.Equals(urunAdi, urunListesi[i].urunAdi[j], StringComparison.CurrentCultureIgnoreCase))
                         {
-                            using (KontrolFormu dialog = new KontrolFormu("Aynı isimde bir ürün bulunmaktadır, lütfen ürün ismini değiştirin", false))
-                            {
-                                dialog.ShowDialog();
-                            }
+                            dialog = new KontrolFormu("Aynı isimde bir ürün bulunmaktadır, lütfen ürün ismini değiştirin", false);
+                            dialog.Show();
                             return;
                         }
                     }
@@ -307,10 +305,8 @@ namespace ROPv1
 
                 urunSayisi++;
                 labelUrunSayisi.Text = urunSayisi.ToString();
-                using (KontrolFormu dialog = new KontrolFormu("Yeni Ürün Bilgileri Kaydedilmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Yeni Ürün Bilgileri Kaydedilmiştir", false);
+                dialog.Show();
             }
             else // eski ürün düzenleniyor
             {
@@ -322,10 +318,8 @@ namespace ROPv1
                             continue;
                         if (string.Equals(urunAdi, urunListesi[i].urunAdi[j], StringComparison.CurrentCultureIgnoreCase))
                         {
-                            using (KontrolFormu dialog = new KontrolFormu("Aynı isimde bir ürün bulunmaktadır, lütfen ürün ismini değiştirin", false))
-                            {
-                                dialog.ShowDialog();
-                            }
+                            dialog = new KontrolFormu("Aynı isimde bir ürün bulunmaktadır, lütfen ürün ismini değiştirin", false);
+                            dialog.Show();
                             return;
                         }
                     }
@@ -378,10 +372,8 @@ namespace ROPv1
 
                 //eski ürünün görünümdeki ismi güncellenir
                 newProductForm.Text = urunAdi;
-                using (KontrolFormu dialog = new KontrolFormu("Ürün Bilgileri Güncellenmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Ürün Bilgileri Güncellenmiştir", false);
+                dialog.Show();
             }
         }
 

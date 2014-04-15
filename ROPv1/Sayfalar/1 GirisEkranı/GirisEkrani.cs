@@ -37,8 +37,6 @@ namespace ROPv1
 
         string siparisiKimGirdi, adisyonNotu;
 
-        KontrolFormu dialog2;
-
         UItemp[] infoKullanici;
 
         public GirisEkrani()
@@ -356,14 +354,11 @@ namespace ROPv1
                     tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi + "&departmanAdi=" + departmanAdi);
                 }
                 if (siparisForm.siparisMenuForm != null && siparisForm.hangiMasaButonunaBasildi.Text == MasaAdi)
-                {
-                    siparisForm.siparisMenuForm.Close();
-                    using (dialog2 = new KontrolFormu("Masada(" + MasaAdi + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler" + yeniDepartmanAdi + " departmanındaki, " + yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false))
-                    {
-                        timerDialogClose.Start();
-                        dialog2.ShowDialog();
-                        timerDialogClose.Stop();
-                    }
+                {                         
+                    siparisForm.siparisMenuForm.menuFormunuKapat();
+
+                    siparisForm.dialog2 = new KontrolFormu("Masada(" + MasaAdi + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler" + yeniDepartmanAdi + " departmanındaki, " + yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false);
+                    siparisForm.dialog2.Show();
                 }
             }
             //Tüm kullanıcılara ürün taşındı mesajı gönderelim
@@ -507,7 +502,8 @@ namespace ROPv1
 
         private void komut_listeBos(string masa, string departmanAdi)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0, IptalMi=1, KapanisZamani='" + DateTime.Now + "' WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0, IptalMi=1, KapanisZamani=@date WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
+            cmd.Parameters.AddWithValue("@date", DateTime.Now);
 
             cmd.ExecuteNonQuery();
 
@@ -1230,169 +1226,6 @@ namespace ROPv1
 
         private void girisButtonPressed(object sender, EventArgs e)
         {
-            string[] username = new string[1];
-            username[0] = userNameTextBox.getNameText(); //name lazım olduğunda al
-            string password = passwordTextBox.getPasswordText(); //password lazım olduğunda al 
-
-            int kullaniciAdi = -5;
-
-            if (username[0] == "ropisimiz" && password == "roproprop")
-            {
-                XmlSave.SaveRestoran(username, "sonKullanici.xml");
-                ShowWaitForm();
-                AdminGirisFormu adminForm = new AdminGirisFormu();
-                adminForm.Show();
-                //this.Close();
-            }
-            else
-            {
-                for (int i = 0; i < infoKullanici.Count(); i++)
-                {
-                    if (username[0] == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
-                    {
-                        kullaniciAdi = i;
-                        break;
-                    }
-                }
-                if (kullaniciAdi != -5)
-                {
-                    bool flag = Helper.VerifyHash(password, "SHA512", infoKullanici[kullaniciAdi].UIPW);
-                    if (flag == true)
-                    { //şifre doğru
-                        XmlSave.SaveRestoran(username, "sonKullanici.xml");
-                        ShowWaitForm();
-                        AdminGirisFormu adminForm = new AdminGirisFormu();
-                        adminForm.Show();
-
-                        //this.Close();
-                    }
-                    else
-                    {
-                        using (KontrolFormu dialog = new KontrolFormu("Yanlış kullanıcı adı/şifre girdiniz", false))
-                        {
-                            dialog.ShowDialog();
-                        }
-                    }
-                }
-                else
-                {
-                    using (KontrolFormu dialog = new KontrolFormu("Yanlış kullanıcı adı/şifre girdiniz", false))
-                    {
-                        dialog.ShowDialog();
-                    }
-                }
-            }
-            userNameTextBox = new WPF_UserControls.VerticalCenterTextBox();
-            usernameBoxHost.Child = userNameTextBox;
-            passwordTextBox = new WPF_UserControls.VerticalCenterPasswordBox();
-            passwordBoxHost.Child = passwordTextBox;
-        }
-
-        private void siparisButtonPressed(object sender, EventArgs e)
-        {
-            if (!File.Exists("restoran.xml") || !File.Exists("sonKullanici.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml"))
-            {
-                using (KontrolFormu dialog = new KontrolFormu("Lütfen önce programı ayarları kullanarak yapılandırın", false))
-                {
-                    dialog.ShowDialog();
-                    return;
-                }
-            }
-
-            //sipariş ekranına geçilecek
-            ShowWaitForm();
-
-            siparisForm = new SiparisMasaFormu(kullanicilar);
-            siparisForm.Show();
-            //this.Close();
-        }
-
-        private MyWaitForm _waitForm;
-
-        //girişe basıldığında id kontrolü sırasında lütfen bekleyiniz yazan bir form göstermek için
-        protected void ShowWaitForm()
-        {
-            // don't display more than one wait form at a time
-            if (_waitForm != null && !_waitForm.IsDisposed)
-            {
-                return;
-            }
-
-            _waitForm = new MyWaitForm();
-            _waitForm.TopMost = true;
-            _waitForm.StartPosition = FormStartPosition.CenterScreen;
-            _waitForm.Show();
-            _waitForm.Refresh();
-
-            // force the wait window to display for at least 700ms so it doesn't just flash on the screen
-            System.Threading.Thread.Sleep(500);
-            Application.Idle += OnLoaded;
-        }
-
-        private void OnLoaded(object sender, EventArgs e)
-        {
-            Application.Idle -= OnLoaded;
-            _waitForm.Close();
-        }
-
-        private void exitButtonPressed(object sender, EventArgs e)
-        {
-            DialogResult eminMisiniz;
-            if (Properties.Settings.Default.Server == 2)//server
-            {
-                using (KontrolFormu dialog = new KontrolFormu("DİKKAT!\nÇıkarsanız Server kapatılacak!\nÇıkmak istediğinizden emin misiniz?", true))
-                {
-                    eminMisiniz = dialog.ShowDialog();
-                }
-            }
-            else
-            {
-                using (KontrolFormu dialog = new KontrolFormu("Çıkmak istediğinizden emin misiniz?", true))
-                {
-                    eminMisiniz = dialog.ShowDialog();
-                }
-            }
-
-            if (eminMisiniz == DialogResult.Yes)
-                this.Close();
-        }
-
-        private void timerSaat_Tick(object sender, EventArgs e)
-        {
-            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
-        }
-
-        private void buttonMutfak_Click(object sender, EventArgs e)
-        {
-            if (!File.Exists("restoran.xml") || !File.Exists("sonKullanici.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("sonKullanici.xml") || !File.Exists("urunler.xml"))
-            {
-                using (KontrolFormu dialog = new KontrolFormu("Lütfen önce programı ayarları kullanarak yapılandırın", false))
-                {
-                    dialog.ShowDialog();
-                    return;
-                }
-            }
-            //mutfak ekranına geçilecek
-            ShowWaitForm();
-
-            //MutfakFormu mutfakForm = new MutfakFormu();
-            //mutfakForm.Show();
-            //this.Close();
-        } // düzenlenecek
-
-        //Form Load
-        private void GirisEkrani_Load(object sender, EventArgs e)
-        {
-            buttonConnection_Click(null, null);
-
-            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
-            timerSaat.Start();
-            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
-            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
-
-            //açılışta capslock açıksa kapatıyoruz.
-            ToggleCapsLock(false);
-
             if (!File.Exists("tempfiles.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default kategorilerimizi giriyoruz.
             {
                 infoKullanici = new UItemp[1];
@@ -1417,6 +1250,99 @@ namespace ROPv1
             XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
             infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
 
+
+            string[] username = new string[1];
+            username[0] = userNameTextBox.getNameText(); //name lazım olduğunda al
+            string password = passwordTextBox.getPasswordText(); //password lazım olduğunda al 
+
+            int kullaniciAdi = -5;
+
+            if (username[0] == "ropisimiz" && password == "roproprop")
+            {
+                XmlSave.SaveRestoran(username, "sonKullanici.xml");
+
+                AdminGirisFormu adminForm = new AdminGirisFormu();
+                Task.Factory.StartNew(() => adminForm.ShowDialog());
+                //adminForm.Show();
+            }
+            else
+            {
+                for (int i = 0; i < infoKullanici.Count(); i++)
+                {
+                    if (username[0] == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
+                    {
+                        kullaniciAdi = i;
+                        break;
+                    }
+                }
+                if (kullaniciAdi != -5)
+                {
+                    bool flag = Helper.VerifyHash(password, "SHA512", infoKullanici[kullaniciAdi].UIPW);
+                    if (flag == true)
+                    { //şifre doğru
+                        XmlSave.SaveRestoran(username, "sonKullanici.xml");
+
+                        AdminGirisFormu adminForm = new AdminGirisFormu();
+                        Task.Factory.StartNew(() => adminForm.ShowDialog());
+                        //adminForm.Show();
+                    }
+                    else
+                    {
+                        KontrolFormu dialog2 = new KontrolFormu("Yanlış kullanıcı adı/şifre girdiniz", false);
+                        dialog2.Show();
+                    }
+                }
+                else
+                {
+                    KontrolFormu dialog2 = new KontrolFormu("Yanlış kullanıcı adı/şifre girdiniz", false);
+                    dialog2.Show();
+                }
+            }
+            userNameTextBox = new WPF_UserControls.VerticalCenterTextBox();
+            usernameBoxHost.Child = userNameTextBox;
+            passwordTextBox = new WPF_UserControls.VerticalCenterPasswordBox();
+            passwordBoxHost.Child = passwordTextBox;
+        }
+
+        private void siparisButtonPressed(object sender, EventArgs e)
+        {
+            if (!File.Exists("restoran.xml") || !File.Exists("sonKullanici.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml"))
+            {
+                KontrolFormu dialog2 = new KontrolFormu("Lütfen önce programı ayarları kullanarak yapılandırın", false);
+                dialog2.Show();
+                return;
+            }
+
+            //sipariş ekranına geçilecek
+            siparisForm = new SiparisMasaFormu(kullanicilar);
+
+            Task.Factory.StartNew(() => siparisForm.ShowDialog());
+            //siparisForm.Show();
+        }
+
+        private void exitButtonPressed(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void timerSaat_Tick(object sender, EventArgs e)
+        {
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+        }
+
+        //Form Load
+        private void GirisEkrani_Load(object sender, EventArgs e)
+        {
+            buttonConnection_Click(null, null);
+
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+            timerSaat.Start();
+            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
+            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
+
+            //açılışta capslock açıksa kapatıyoruz.
+            ToggleCapsLock(false);
+
             //wpflerimizi oluşturduğumuz elementhostların childına atıyoruz
             userNameTextBox = new WPF_UserControls.VerticalCenterTextBox();
             usernameBoxHost.Child = userNameTextBox;
@@ -1430,7 +1356,7 @@ namespace ROPv1
             if (e.Control && e.Shift && e.KeyCode == Keys.D3) //Kısayol Tuşları ile ekranı açıyoruz ctrl+shift+3
             {
                 PortFormu portFormu = new PortFormu();
-                portFormu.ShowDialog();
+                portFormu.Show();
             }
         }
 
@@ -1456,10 +1382,8 @@ namespace ROPv1
                 else
                 {
                     buttonConnection.Image = Properties.Resources.baglantiYOK;
-                    using (KontrolFormu dialog = new KontrolFormu("Hata! Sunucu başlatılamadı!", false))
-                    {
-                        dialog.ShowDialog();
-                    }
+                    KontrolFormu dialog2 = new KontrolFormu("Hata! Sunucu başlatılamadı!", false);
+                    dialog2.Show();
                     buttonConnection.Image = Properties.Resources.baglantiYOK;
                 }
             }
@@ -1592,10 +1516,5 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
         #endregion
-
-        private void timerDialogClose_Tick(object sender, EventArgs e)
-        {
-            dialog2.Close();
-        }
     }
 }

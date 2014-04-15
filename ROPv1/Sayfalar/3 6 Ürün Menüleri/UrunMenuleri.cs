@@ -177,13 +177,12 @@ namespace ROPv1
         //Yeni menü eklemeyi veya menü düzenlemeyi kaydeder
         private void buttonSaveMenu_Click(object sender, EventArgs e)
         {
+            KontrolFormu dialog;
+
             if (textboxMenuName.Text == "" || treeMenununUrunler.Nodes.Count < 1)
             {
-                using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
-                {
-                    dialog.ShowDialog();
-                }
-                textboxMenuName.Focus();
+                dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false);
+                dialog.Show();
                 return;
             }
             if (newUrunMenuForm.Text == "Yeni Menü")
@@ -210,7 +209,7 @@ namespace ROPv1
                 {
                     DialogResult eminMisiniz;
 
-                    using (KontrolFormu dialog = new KontrolFormu("Eklemek istediğiniz menü listede bulunmaktadır. Ancak ürün fiyatı farklı girilmiş, ürün fiyatını değiştirmek ister misiniz?", true))
+                    using (dialog = new KontrolFormu("Eklemek istediğiniz menü listede bulunmaktadır. Ancak ürün fiyatı farklı girilmiş, ürün fiyatını değiştirmek ister misiniz?", true))
                     {
                         eminMisiniz = dialog.ShowDialog();
                     }
@@ -220,10 +219,8 @@ namespace ROPv1
                         UrunMenuListesi[bulunanindis].menuFiyati = Convert.ToDouble(textboxFiyat.Text);
                         XmlSave.SaveRestoran(UrunMenuListesi, "UrunMenuleri.xml");
 
-                        using (KontrolFormu dialog = new KontrolFormu(UrunMenuListesi[bulunanindis].menuAdi + " adlı menü güncellenmiştir", false))
-                        {
-                            dialog.ShowDialog();
-                        }
+                        dialog = new KontrolFormu(UrunMenuListesi[bulunanindis].menuAdi + " adlı menü güncellenmiştir", false);
+                        dialog.Show();
                     }
                     else
                     {
@@ -233,11 +230,8 @@ namespace ROPv1
                 }
                 else if (varmi)
                 {
-                    using (KontrolFormu dialog = new KontrolFormu(UrunMenuListesi[bulunanindis].menuAdi + "Eklemek istediğiniz menü zaten aynı fiyatla listede bulunmaktadır.Lütfen menü ismini değiştiriniz", false))
-                    {
-                        dialog.ShowDialog();
-                    }
-                    textboxMenuName.Focus();
+                    dialog = new KontrolFormu(UrunMenuListesi[bulunanindis].menuAdi + "Eklemek istediğiniz menü zaten aynı fiyatla listede bulunmaktadır.Lütfen menü ismini değiştiriniz", false);
+                    dialog.Show();
                     return;
                 }
                 newUrunMenuForm.Text = textboxMenuName.Text;
@@ -248,10 +242,8 @@ namespace ROPv1
                 treeMenuler.SelectedNode = treeMenuler.Nodes[treeMenuler.Nodes.Count - 1];
                 buttonCancel.Visible = false;
                 buttonDeleteMenu.Visible = true;
-                using (KontrolFormu dialog = new KontrolFormu("Yeni Menü Bilgileri Kaydedilmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Yeni Menü Bilgileri Kaydedilmiştir", false);
+                dialog.Show();
 
                 // Oluşturulan Menüyü ürün menülerine ekleyebilmek için ürün özellikleri cinsinden kaydediyoruz.
                 XmlLoad<KategorilerineGoreUrunler> loadInfo = new XmlLoad<KategorilerineGoreUrunler>();
@@ -298,7 +290,7 @@ namespace ROPv1
                     {
                         DialogResult eminMisiniz;
 
-                        using (KontrolFormu dialog = new KontrolFormu("Eklemek istediğiniz menü listede bulunmaktadır. Ancak ürün fiyatı farklı girilmiş, ürün fiyatını değiştirmek ister misiniz?", true))
+                        using (dialog = new KontrolFormu("Eklemek istediğiniz menü listede bulunmaktadır. Ancak ürün fiyatı farklı girilmiş, ürün fiyatını değiştirmek ister misiniz?", true))
                         {
                             eminMisiniz = dialog.ShowDialog();
                         }
@@ -312,10 +304,8 @@ namespace ROPv1
                             KategorilerineGoreUrunler[] infoUrun = loadInfo.LoadRestoran("urunler.xml");
                             infoUrun[0].porsiyonFiyati[bulunanindis] = UrunMenuListesi[bulunanindis].menuFiyati.ToString("0.00");
                             XmlSave.SaveRestoran(infoUrun, "urunler.xml");
-                            using (KontrolFormu dialog = new KontrolFormu(UrunMenuListesi[bulunanindis].menuAdi + " adlı menü güncellenmiştir", false))
-                            {
-                                dialog.ShowDialog();
-                            }
+                            dialog = new KontrolFormu(UrunMenuListesi[bulunanindis].menuAdi + " adlı menü güncellenmiştir", false);
+                            dialog.Show();
                         }
                         else
                         {
@@ -325,19 +315,14 @@ namespace ROPv1
                     }
                     else if (varmi)
                     {
-                        using (KontrolFormu dialog = new KontrolFormu(UrunMenuListesi[bulunanindis].menuAdi + "Eklemek istediğiniz menü zaten aynı fiyatla listede bulunmaktadır.Lütfen menü ismini değiştiriniz", false))
-                        {
-                            dialog.ShowDialog();
-                        }
-                        textboxMenuName.Focus();
+                        dialog = new KontrolFormu(UrunMenuListesi[bulunanindis].menuAdi + "Eklemek istediğiniz menü zaten aynı fiyatla listede bulunmaktadır.Lütfen menü ismini değiştiriniz", false);
+                        dialog.Show();
                         return;
                     }
                 }
 
-                using (KontrolFormu dialog = new KontrolFormu("Menü Bilgileri Güncellenmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Menü Bilgileri Güncellenmiştir", false);
+                dialog.Show();
             }
 
             XmlSave.SaveRestoran(UrunMenuListesi, "UrunMenuleri.xml");
@@ -351,7 +336,7 @@ namespace ROPv1
                 }
             }
 
-            
+
         }
 
         //Menüye Sağdaki Ürün treesinde seçili olan ürünü ekler
@@ -408,12 +393,9 @@ namespace ROPv1
             }
             else
             {
-                using (KontrolFormu dialog = new KontrolFormu("Lütfen menüye eklemek istediğiniz ürünü seçiniz", false))
-                {
-                    dialog.ShowDialog();
-                    return;
-                }
-
+                KontrolFormu dialog = new KontrolFormu("Lütfen menüye eklemek istediğiniz ürünü seçiniz", false);                
+                    dialog.Show();
+                    return;             
             }
 
         }

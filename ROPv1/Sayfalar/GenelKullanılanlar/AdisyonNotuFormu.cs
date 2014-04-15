@@ -64,10 +64,8 @@ namespace ROPv1
             {
                 if (string.IsNullOrWhiteSpace(textboxNot.Text))
                 {
-                    using (KontrolFormu dialog = new KontrolFormu("Bilgisayar adı boş bırakılamaz", false))
-                    {
-                        dialog.ShowDialog();
-                    }
+                    KontrolFormu dialog = new KontrolFormu("Bilgisayar adı boş bırakılamaz", false);
+                    dialog.ShowDialog();
                     textboxNot.Focus();
                     return;
                 }

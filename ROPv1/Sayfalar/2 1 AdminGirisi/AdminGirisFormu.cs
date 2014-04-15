@@ -25,17 +25,7 @@ namespace ROPv1
 
         private void exitPressed(object sender, EventArgs e)
         {
-            DialogResult eminMisiniz;
-
-            using (KontrolFormu dialog = new KontrolFormu("Çıkmak istediğinizden emin misiniz?", true))
-            {
-                eminMisiniz = dialog.ShowDialog();
-            }
-
-            if (eminMisiniz == DialogResult.Yes)
-            {
-                this.Close();
-            }
+            this.Close();
         }
 
         private void saleCheckChanged(object sender, EventArgs e)
@@ -296,17 +286,13 @@ namespace ROPv1
             OnLoaded(null, null);
             if (basarili)
             {
-                using (KontrolFormu dialog = new KontrolFormu("Dosya gönderimi başarılı", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Dosya gönderimi başarılı", false);
+                dialog.Show();
             }
             else
             {
-                using (KontrolFormu dialog = new KontrolFormu("Dosya gönderimi başarısız", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Dosya gönderimi başarısız", false);
+                dialog.Show();
             }
         }
 

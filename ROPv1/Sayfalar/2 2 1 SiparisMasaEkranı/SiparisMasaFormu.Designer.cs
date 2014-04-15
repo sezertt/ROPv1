@@ -41,7 +41,6 @@
             this.buttonConnection = new System.Windows.Forms.Button();
             this.buttonAdisyon = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
-            this.timerDialogClose = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // labelGun
@@ -227,17 +226,13 @@
             this.exitButton.UseVisualStyleBackColor = false;
             this.exitButton.Click += new System.EventHandler(this.exitPressed);
             // 
-            // timerDialogClose
-            // 
-            this.timerDialogClose.Interval = 3000;
-            this.timerDialogClose.Tick += new System.EventHandler(this.timerDialogClose_Tick);
-            // 
             // SiparisMasaFormu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1313, 819);
+            this.ControlBox = false;
             this.Controls.Add(this.buttonName);
             this.Controls.Add(this.buttonUpdate);
             this.Controls.Add(this.buttonConnection);
@@ -251,7 +246,11 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SiparisMasaFormu";
+            this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "SiparisFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SiparisMasaFormu_FormClosing);
@@ -275,6 +274,5 @@
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Button buttonName;
         public System.Windows.Forms.TableLayoutPanel tablePanel;
-        private System.Windows.Forms.Timer timerDialogClose;
     }
 }

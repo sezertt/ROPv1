@@ -29,11 +29,11 @@ namespace ROPv1
             {
                 int i = treeUserName.SelectedNode.Index;
                 textboxName.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIN);
-                textboxSurname.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIS); 
-                textboxUserName.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIUN); 
+                textboxSurname.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIS);
+                textboxUserName.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIUN);
                 textboxPin.Text = "";
                 textBoxPassword.Text = "";
-                comboNewTitle.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIU); 
+                comboNewTitle.Text = (new UnicodeEncoding()).GetString(kullaniciListesi[i].UIU);
                 newUserForm.Text = textboxUserName.Text;
 
                 for (int j = 0; j < 5; j++)
@@ -100,12 +100,12 @@ namespace ROPv1
         //yeni kullanıcı ekle veya kullanıcıyı güncelle butonu
         private void buttonSaveNewUserPressed(object sender, EventArgs e)
         {
+            KontrolFormu dialog;
             if (textboxUserName.Text == "Yeni Kullanıcı" || textboxUserName.Text == "" || textboxSurname.Text == "" || textboxName.Text == "")
             {
-                using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false);
+                dialog.Show();
+
                 return;
             }
 
@@ -113,10 +113,8 @@ namespace ROPv1
             {// yeni Kullanıcı kaydetme
                 if (textboxPin.Text == "" || textBoxPassword.Text == "")
                 {
-                    using (KontrolFormu dialog = new KontrolFormu("Pin/Şifre girmediniz, lütfen kontrol edin", false))
-                    {
-                        dialog.ShowDialog();
-                    }
+                    dialog = new KontrolFormu("Pin/Şifre girmediniz, lütfen kontrol edin", false);
+                    dialog.Show();
                     return;
                 }
 
@@ -124,18 +122,14 @@ namespace ROPv1
                 {
                     if (textboxUserName.Text == (new UnicodeEncoding()).GetString(kullaniciListesi[j].UIUN))
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Kullanımda olan bir kullanıcı adı girdiniz, lütfen kontrol edin", false))
-                        {
-                            dialog.ShowDialog();
-                        }
+                        dialog = new KontrolFormu("Kullanımda olan bir kullanıcı adı girdiniz, lütfen kontrol edin", false);
+                        dialog.Show();
                         return;
                     }
                     else if (Helper.VerifyHash(textboxPin.Text, "SHA512", kullaniciListesi[j].UIPN))
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Kullanımda olan bir pin girdiniz, lütfen kontrol edin", false))
-                        {
-                            dialog.ShowDialog();
-                        }
+                        dialog = new KontrolFormu("Kullanımda olan bir pin girdiniz, lütfen kontrol edin", false);
+                        dialog.Show();
                         return;
                     }
                 }
@@ -155,7 +149,7 @@ namespace ROPv1
                 temp.UIU = (new UnicodeEncoding()).GetBytes(comboNewTitle.Text);
                 for (int i = 0; i < 5; i++)
                 {
-                    if(treeYetkiler.Nodes[i].Checked)
+                    if (treeYetkiler.Nodes[i].Checked)
                         temp.UIY[i] = Helper.ComputeHash("true", "SHA512", null);
                     else
                         temp.UIY[i] = Helper.ComputeHash("false", "SHA512", null);
@@ -179,10 +173,8 @@ namespace ROPv1
                 buttonAddNewUser.Enabled = true;
                 buttonCancel.Visible = false;
 
-                using (KontrolFormu dialog = new KontrolFormu("Yeni Kullanıcı Bilgileri Kaydedilmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Yeni Kullanıcı Bilgileri Kaydedilmiştir", false);
+                dialog.Show();
             }
             else // Kullanıcı düzenleme
             {
@@ -190,7 +182,7 @@ namespace ROPv1
                 {
                     DialogResult eminMisiniz;
 
-                    using (KontrolFormu dialog = new KontrolFormu(treeUserName.SelectedNode.Text + " adlı kullanıcının pinini değiştirmek istediğinize emin misiniz?", true))
+                    dialog = new KontrolFormu(treeUserName.SelectedNode.Text + " adlı kullanıcının pinini değiştirmek istediğinize emin misiniz?", true);
                     {
                         eminMisiniz = dialog.ShowDialog();
                     }
@@ -198,6 +190,7 @@ namespace ROPv1
                     if (eminMisiniz == DialogResult.No)
                     {
                         textboxPin.Text = "";
+                        return;
                     }
                 }
 
@@ -205,18 +198,19 @@ namespace ROPv1
                 {
                     DialogResult eminMisiniz;
 
-                    using (KontrolFormu dialog = new KontrolFormu(treeUserName.SelectedNode.Text + " adlı kullanıcının şifresini değiştirmek istediğinize emin misiniz?", true))
-                    {
-                        eminMisiniz = dialog.ShowDialog();
-                    }
+                    dialog = new KontrolFormu(treeUserName.SelectedNode.Text + " adlı kullanıcının şifresini değiştirmek istediğinize emin misiniz?", true);
+
+                    eminMisiniz = dialog.ShowDialog();
+
 
                     if (eminMisiniz == DialogResult.No)
                     {
                         textBoxPassword.Text = "";
+                        return;
                     }
                 }
-                                
-                int kacTane = 0,kacTane1 = 0;
+
+                int kacTane = 0, kacTane1 = 0;
 
                 for (int j = 0; j < kullaniciListesi.Count(); j++)
                 {
@@ -229,10 +223,8 @@ namespace ROPv1
 
                     if (kacTane == 2 || kacTane1 == 2)
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Hatalı kullanıcı adı veya pin girdiniz, lütfen kontrol edin", false))
-                        {
-                            dialog.ShowDialog();
-                        }
+                        dialog = new KontrolFormu("Hatalı kullanıcı adı veya pin girdiniz, lütfen kontrol edin", false);
+                        dialog.Show();
                         return;
                     }
                 }
@@ -245,7 +237,7 @@ namespace ROPv1
                 kullaniciListesi[i].UIUN = (new UnicodeEncoding()).GetBytes(textboxUserName.Text);
 
                 if (textboxPin.Text != "")
-                    kullaniciListesi[i].UIPN = Helper.ComputeHash(textboxPin.Text, "SHA512", null); 
+                    kullaniciListesi[i].UIPN = Helper.ComputeHash(textboxPin.Text, "SHA512", null);
 
                 if (textBoxPassword.Text != "")
                     kullaniciListesi[i].UIPW = Helper.ComputeHash(textBoxPassword.Text, "SHA512", null);
@@ -270,12 +262,10 @@ namespace ROPv1
                 File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
 
                 //görünümdeki isimleri güncelliyoruz
-                treeUserName.SelectedNode.Text = textboxName.Text +" "+textboxSurname.Text;
+                treeUserName.SelectedNode.Text = textboxName.Text + " " + textboxSurname.Text;
                 newUserForm.Text = textboxUserName.Text;
-                using (KontrolFormu dialog = new KontrolFormu("Kullanıcı Bilgileri Güncellenmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Kullanıcı Bilgileri Güncellenmiştir", false);
+                dialog.Show();
             }
         }
 
@@ -284,10 +274,9 @@ namespace ROPv1
         {
             DialogResult eminMisiniz;
 
-            using (KontrolFormu dialog = new KontrolFormu(treeUserName.SelectedNode.Text + " adlı kullanıcıyı silmek istediğinize emin misiniz?", true))
-            {
-                eminMisiniz = dialog.ShowDialog();
-            }
+            KontrolFormu dialog = new KontrolFormu(treeUserName.SelectedNode.Text + " adlı kullanıcıyı silmek istediğinize emin misiniz?", true);            
+            eminMisiniz = dialog.ShowDialog();
+            
 
             if (eminMisiniz == DialogResult.Yes)
             {

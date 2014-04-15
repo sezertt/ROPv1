@@ -20,7 +20,7 @@ namespace ROPv1
 
         public MenuControl()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         internal static class NativeMethods
@@ -118,12 +118,9 @@ namespace ROPv1
         {
             DialogResult eminMisiniz;
 
-            using (KontrolFormu dialog = new KontrolFormu(treeMenuName.SelectedNode.Text + " adlı menüyü silmek istediğinize emin misiniz?", true))
-            {
-                eminMisiniz = dialog.ShowDialog();
+            KontrolFormu dialog = new KontrolFormu(treeMenuName.SelectedNode.Text + " adlı menüyü silmek istediğinize emin misiniz?", true);
 
-            }
-
+            eminMisiniz = dialog.ShowDialog();
 
             if (eminMisiniz == DialogResult.Yes)
             {
@@ -201,12 +198,11 @@ namespace ROPv1
         // Tüm kategoriler içinde değiştirilen kategoriyi kaydetme butonuna basıldı
         private void saveNewKategoriPressed(object sender, EventArgs e)
         {
+            KontrolFormu dialog;
             if (textBoxYeniKategori.Text == "Yeni Kategori" || textBoxYeniKategori.Text == "" || textBoxYeniKategori.Text == "Kategorisiz Ürünler")
             {
-                using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false);
+                dialog.Show();
                 return;
             }
 
@@ -216,10 +212,8 @@ namespace ROPv1
                 {
                     if (kategoriListesi[0].kategoriler[j] == textBoxYeniKategori.Text)
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
-                        {
-                            dialog.ShowDialog();
-                        }
+                        dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false);
+                        dialog.Show();
                         return;
                     }
                 }
@@ -246,35 +240,29 @@ namespace ROPv1
 
                 if (kategoriListesi[0].kategoriler.Count > 1)
                     buttonDeleteNewKategori.Enabled = true;
-                using (KontrolFormu dialog = new KontrolFormu("Yeni Kategori Kaydedilmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Yeni Kategori Kaydedilmiştir", false);
+                dialog.Show();
             }
             else // kategori düzenleme
             {
                 if (treeNewKategori.SelectedNode.Text == "Kategorisiz Ürünler")
                 {
-                    using (KontrolFormu dialog = new KontrolFormu("Kategorisiz ürünler değiştirilemez", false))
-                    {
-                        dialog.ShowDialog();
-                    }
+                    dialog = new KontrolFormu("Kategorisiz ürünler değiştirilemez", false);
+                    dialog.Show();
                     return;
                 }
                 int kacTane = 0;
 
                 for (int j = 0; j < kategoriListesi[0].kategoriler.Count(); j++)
                 {
-                    if (string.Equals(kategoriListesi[0].kategoriler[j], textBoxYeniKategori.Text, StringComparison.CurrentCultureIgnoreCase) )
+                    if (string.Equals(kategoriListesi[0].kategoriler[j], textBoxYeniKategori.Text, StringComparison.CurrentCultureIgnoreCase))
                     {
                         kacTane++;
                     }
                     if (kacTane == 2)
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Aynı isimde bir kategori bulunmaktadır", false))
-                        {
-                            dialog.ShowDialog();
-                        }
+                        dialog = new KontrolFormu("Aynı isimde bir kategori bulunmaktadır", false);
+                        dialog.Show();
                         return;
                     }
                 }
@@ -310,10 +298,8 @@ namespace ROPv1
                     }
                 }
                 XmlSave.SaveRestoran(menuListesi, "menu.xml");
-                using (KontrolFormu dialog = new KontrolFormu("Kategori Güncellenmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Kategori Güncellenmiştir", false);
+                dialog.Show();
             }
         }
 
@@ -322,10 +308,8 @@ namespace ROPv1
         {
             if (treeNewKategori.SelectedNode.Text == "Kategorisiz Ürünler")
             {
-                using (KontrolFormu dialog = new KontrolFormu("Kategorisiz ürünler silinemez", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog2 = new KontrolFormu("Kategorisiz ürünler silinemez", false);
+                dialog2.Show();
                 return;
             }
 
@@ -335,10 +319,8 @@ namespace ROPv1
                 {
                     if (menuListesi[i].menukategorileri[j] == treeNewKategori.SelectedNode.Text)
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Kategoriyi silmeden önce bulunduğu menülerden çıkarmalısınız", false))
-                        {
-                            dialog.ShowDialog();
-                        }
+                        KontrolFormu dialog = new KontrolFormu("Kategoriyi silmeden önce bulunduğu menülerden çıkarmalısınız", false);
+                        dialog.Show();
                         return;
                     }
                 }
@@ -347,10 +329,8 @@ namespace ROPv1
             //Kategoriyi tamamen silme uyarısı
             DialogResult eminMisiniz;
 
-            using (KontrolFormu dialog = new KontrolFormu(treeNewKategori.SelectedNode.Text + " adlı kategoriyi silmek istediğinize emin misiniz?", true))
-            {
-                eminMisiniz = dialog.ShowDialog();
-            }
+            KontrolFormu dialog22 = new KontrolFormu(treeNewKategori.SelectedNode.Text + " adlı kategoriyi silmek istediğinize emin misiniz?", true);
+            eminMisiniz = dialog22.ShowDialog();
 
             if (eminMisiniz == DialogResult.Yes)
             {
@@ -371,10 +351,8 @@ namespace ROPv1
         {
             if (textboxMenuName.Text == "Yeni Menü" || textboxMenuName.Text == "")
             {
-                using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false);
+                dialog.Show();
                 return;
             }
             //Yeni menüyü kaydet tuşu. ekle tuşuna basıp bilgileri girdikten sonra kaydete basıyoruz önce girilen bilgilerin doğruluğu
@@ -405,10 +383,8 @@ namespace ROPv1
 
                 if (treeMenuName.Nodes.Count > 1)
                     buttonDeleteMenu.Enabled = true;
-                using (KontrolFormu dialog = new KontrolFormu("Yeni Menü Kaydedilmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Yeni Menü Kaydedilmiştir", false);
+                dialog.Show();
             }
             else // eski menü düzenleniyor
             {
@@ -419,10 +395,8 @@ namespace ROPv1
                 //eski menünün görünümdeki ismi güncellenir
                 treeMenuName.Nodes[treeMenuName.SelectedNode.Index].Text = textboxMenuName.Text;
                 newMenuForm.Text = textboxMenuName.Text;
-                using (KontrolFormu dialog = new KontrolFormu("Menü Güncellenmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Menü Güncellenmiştir", false);
+                dialog.Show();
             }
             buttonDeleteKategori.Enabled = true;
             //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz

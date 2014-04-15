@@ -12,13 +12,17 @@ namespace ROPv1
 {
     public partial class PinKoduFormu : Form
     {
-        public bool dogru = false;
-        public string ayarYapanKisi;
+        bool dogru = false;
+        string ayarYapanKisi;
         string yapilacakIslem;
 
-        public PinKoduFormu(string yapilacakIslemNe)
+        SiparisMasaFormu gelenForm;
+
+        public PinKoduFormu(string yapilacakIslemNe, SiparisMasaFormu gelenForm)
         {
             InitializeComponent();
+
+            this.gelenForm = gelenForm;
 
             yapilacakIslem = yapilacakIslemNe;
 
@@ -47,11 +51,11 @@ namespace ROPv1
                 //Gün Formuna Git 
                 //Gün formu oluştur ve o forma git
                 dogru = true;
-                ayarYapanKisi = "-----";            
+                ayarYapanKisi = "-----";
                 this.Close();
             }
             else // kullanıcıların girişi
-            {                
+            {
                 //kullanıcının yerini bul
                 for (int i = 0; i < infoKullanici.Count(); i++)
                 {
@@ -67,42 +71,29 @@ namespace ROPv1
                 {
                     if (yapilacakIslem == "Masa Görüntüleme")
                     {
-                        //Gün Formuna Git 
                         dogru = true;
                         ayarYapanKisi = (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIS);
                         this.Close();
-                    }                   
+                    }
                     else if (yapilacakIslem == "Adisyon Görüntüleme")
                     {
                         if (Helper.VerifyHash("true", "SHA512", infoKullanici[kullaniciAdi].UIY[3]))
                         {
-                            //Gün Formuna Git 
                             dogru = true;
                             ayarYapanKisi = (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIS);
                             this.Close();
                         }
                         else
                         {
-                            using (KontrolFormu dialog = new KontrolFormu("Adisyon görüntüleme yetkiniz bulunmamaktadır", false))
-                            {
-                                dialog.ShowDialog();
-                            }
+                            KontrolFormu dialog = new KontrolFormu("Adisyon görüntüleme yetkiniz bulunmamaktadır", false);
+                            dialog.Show();
                         }
-                    }       
-                    else if (yapilacakIslem == "Kullanici Bilgisi Alma")
-                    {
-                        //Gün Formuna Git 
-                        dogru = true;
-                        ayarYapanKisi = (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIS);
-                        this.Close();
                     }
                 }
                 else
                 {
-                    using (KontrolFormu dialog = new KontrolFormu("Yanlış pin kodu girdiniz", false))
-                    {
-                        dialog.ShowDialog();
-                    }                    
+                    KontrolFormu dialog = new KontrolFormu("Yanlış pin kodu girdiniz", false);
+                    dialog.Show();
                 }
                 textboxPin.Text = "";
             }
@@ -120,6 +111,11 @@ namespace ROPv1
         private void buttonNO_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void PinKoduFormu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            gelenForm.gelenPinDogruMu(dogru, ayarYapanKisi, yapilacakIslem);
         }
     }
 }

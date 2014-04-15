@@ -74,6 +74,7 @@
             this.buttonTamam.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonTamam.UseVisualStyleBackColor = false;
             this.buttonTamam.Visible = false;
+            this.buttonTamam.Click += new System.EventHandler(this.buttonTamam_Click);
             // 
             // buttonNO
             // 
@@ -91,6 +92,7 @@
             this.buttonNO.Text = "Hayır   ";
             this.buttonNO.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonNO.UseVisualStyleBackColor = false;
+            this.buttonNO.Click += new System.EventHandler(this.buttonTamam_Click);
             // 
             // buttonYES
             // 
@@ -108,6 +110,7 @@
             this.buttonYES.Text = "Evet   ";
             this.buttonYES.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonYES.UseVisualStyleBackColor = false;
+            this.buttonYES.Click += new System.EventHandler(this.buttonTamam_Click);
             // 
             // KontrolFormu
             // 
@@ -133,6 +136,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.KontrolFormu_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KontrolFormu_KeyDown);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

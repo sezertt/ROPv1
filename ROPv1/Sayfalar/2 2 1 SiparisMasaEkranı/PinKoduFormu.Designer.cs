@@ -139,6 +139,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PinKoduFormu_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

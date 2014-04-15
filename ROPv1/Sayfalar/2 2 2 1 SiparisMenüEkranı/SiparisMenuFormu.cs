@@ -618,10 +618,8 @@ namespace ROPv1
                         }
                         catch
                         {
-                            using (KontrolFormu dialog = new KontrolFormu("Masa bilgileri alınırken hata oluştu, lütfen tekrar deneyiniz", false))
-                            {
-                                dialog.ShowDialog();
-                            }
+                            KontrolFormu dialog = new KontrolFormu("Masa bilgileri alınırken hata oluştu, lütfen tekrar deneyiniz", false);
+                            dialog.Show();
                             break;
                         }
 
@@ -745,10 +743,8 @@ namespace ROPv1
             }
             catch
             {
-                using (KontrolFormu dialog = new KontrolFormu("Masa bilgileri alınırken hata oluştu, lütfen tekrar deneyiniz", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Masa bilgileri alınırken hata oluştu, lütfen tekrar deneyiniz", false);
+                dialog.Show();
                 return;
             }
 
@@ -880,10 +876,8 @@ namespace ROPv1
                 }
                 catch
                 {
-                    using (KontrolFormu dialog = new KontrolFormu("Adisyon notunu oluştururken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                    {
-                        dialog.ShowDialog();
-                    }
+                    KontrolFormu dialog = new KontrolFormu("Adisyon notunu oluştururken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                    dialog.Show();
                     return;
                 }
 
@@ -903,10 +897,8 @@ namespace ROPv1
         {
             if (gelenAdisyonNotu == "1")
             {
-                using (KontrolFormu dialog = new KontrolFormu("Adisyon notunu oluştururken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Adisyon notunu oluştururken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                dialog.Show();
                 return;
             }
             AdisyonNotuFormu notFormu;
@@ -937,12 +929,11 @@ namespace ROPv1
 
             if (degisecekSiparisIndexi == -1)
             {
-                using (KontrolFormu dialog = new KontrolFormu("Siparişlerde değişiklik oldu, lütfen masaya tekrar giriniz", false))
-                {
-                    dialog.ShowDialog();
-                    this.Close();
-                    return;
-                }
+                dialog2 = new KontrolFormu("Siparişlerde değişiklik oldu, lütfen masaya tekrar giriniz", false, this);
+                this.Enabled = false;
+                timerDialogClose.Start();
+                dialog2.Show();
+                return;
             }
 
             listUrunFiyat.Groups[eskiSiparisler].Items[degisecekSiparisIndexi].SubItems[2].Text = (Convert.ToDouble(listUrunFiyat.Groups[eskiSiparisler].Items[degisecekSiparisIndexi].SubItems[2].Text) - carpan * dusulecekDeger).ToString("0.00");
@@ -1007,12 +998,12 @@ namespace ROPv1
 
             if (degisecekSiparisIndexi == -1)
             {
-                using (KontrolFormu dialog = new KontrolFormu("Siparişlerde değişiklik oldu, lütfen masaya tekrar giriniz", false))
-                {
-                    dialog.ShowDialog();
-                    this.Close();
-                    return;
-                }
+                dialog2 = new KontrolFormu("Siparişlerde değişiklik oldu, lütfen masaya tekrar giriniz", false, this);
+
+                timerDialogClose.Start();
+                this.Enabled = false;
+                dialog2.Show();
+                return;
             }
 
             listUrunFiyat.Groups[ikramYeniMiEskiMi].Items[degisecekSiparisIndexi].SubItems[2].Text = (Convert.ToDouble(listUrunFiyat.Groups[ikramYeniMiEskiMi].Items[degisecekSiparisIndexi].SubItems[2].Text) - dusulecekDeger * carpan).ToString("0.00");
@@ -1133,10 +1124,8 @@ namespace ROPv1
                     }
                     catch
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                        {
-                            dialog.ShowDialog();
-                        }
+                        KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                        dialog.Show();
                         return;
                     }
 
@@ -1150,10 +1139,8 @@ namespace ROPv1
                         }
                         catch
                         {
-                            using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                            {
-                                dialog.ShowDialog();
-                            }
+                            KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                            dialog.Show();
                             return;
                         }
 
@@ -1193,10 +1180,8 @@ namespace ROPv1
                             }
                             catch
                             {
-                                using (KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                                {
-                                    dialog.ShowDialog();
-                                }
+                                KontrolFormu dialog = new KontrolFormu("Ürünü ikram ederken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                                dialog.Show();
                                 return;
                             }
 
@@ -1288,10 +1273,8 @@ namespace ROPv1
                     }
                     catch
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                        {
-                            dialog.ShowDialog();
-                        }
+                        KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                        dialog.Show();
                         return;
                     }
                     do
@@ -1304,10 +1287,8 @@ namespace ROPv1
                         }
                         catch
                         {
-                            using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                            {
-                                dialog.ShowDialog();
-                            }
+                            KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                            dialog.Show();
                             return;
                         }
 
@@ -1347,10 +1328,8 @@ namespace ROPv1
                             }
                             catch
                             {
-                                using (KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                                {
-                                    dialog.ShowDialog();
-                                }
+                                KontrolFormu dialog = new KontrolFormu("İkramı iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                                dialog.Show();
                                 return;
                             }
 
@@ -1426,12 +1405,12 @@ namespace ROPv1
 
             if (degisecekSiparisIndexi == -1)
             {
-                using (KontrolFormu dialog = new KontrolFormu("Siparişlerde değişiklik oldu, lütfen masaya tekrar giriniz", false))
-                {
-                    dialog.ShowDialog();
-                    this.Close();
-                    return;
-                }
+                dialog2 = new KontrolFormu("Siparişlerde değişiklik oldu, lütfen masaya tekrar giriniz", false, this);
+                timerDialogClose.Start();
+                this.Enabled = false;
+                dialog2.Show();
+                return;
+
             }
 
             listUrunFiyat.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].SubItems[0].Text = (Convert.ToDouble(listUrunFiyat.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].SubItems[0].Text) - carpan).ToString();
@@ -1537,10 +1516,8 @@ namespace ROPv1
                     }
                     catch
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                        {
-                            dialog.ShowDialog();
-                        }
+                        KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                        dialog.Show();
                         return;
                     }
 
@@ -1554,10 +1531,8 @@ namespace ROPv1
                         }
                         catch
                         {
-                            using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                            {
-                                dialog.ShowDialog();
-                            }
+                            KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                            dialog.Show();
                             return;
                         }
 
@@ -1597,10 +1572,8 @@ namespace ROPv1
                             }
                             catch
                             {
-                                using (KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                                {
-                                    dialog.ShowDialog();
-                                }
+                                KontrolFormu dialog = new KontrolFormu("Ürünü iptal ederken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                                dialog.Show();
                                 return;
                             }
 
@@ -1705,7 +1678,8 @@ namespace ROPv1
 
                 if (listUrunFiyat.Items.Count == 0)
                 {
-                    cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0, IptalMi=1, KapanisZamani='" + DateTime.Now + "' WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "')");
+                    cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0, IptalMi=1, KapanisZamani=@date WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "')");
+                    cmd.Parameters.AddWithValue("@date", DateTime.Now);
 
                     try //adisyonID alınabilirse adisyon var demektir, ancak sipariş yok - o zaman adisyon kapatılır
                     {
@@ -1713,8 +1687,9 @@ namespace ROPv1
                         cmd.Connection.Close();
                         cmd.Connection.Dispose();
                     }
-                    catch // masaya ait adisyon yok, çık
+                    catch (Exception ex) // masaya ait adisyon yok, çık
                     {
+                        MessageBox.Show(ex.ToString());
                         this.Close();
                         return;
                     }
@@ -1858,8 +1833,8 @@ namespace ROPv1
         //Masaların adisyonlarını değiştiren butonun methodu
         private void changeTablesButton_Click(object sender, EventArgs e)
         {
-            masaDegistirForm = new MasaDegistirFormu(MasaAdi, hangiDepartman.departmanAdi, true, this);
-            masaDegistirForm.ShowDialog();
+            masaDegistirForm = new MasaDegistirFormu(MasaAdi, hangiDepartman.departmanAdi, this);
+            masaDegistirForm.Show();
 
             if (masaDegistirForm.yeniMasa == "iptalEdildi")
                 return;
@@ -1907,7 +1882,7 @@ namespace ROPv1
                     yeniMasaninAdi = masaDegistirForm.yeniMasa;
                     masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
 
-                    masaFormu.serverdanMasaDegisikligi(MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman,"masaDegistir");
+                    masaFormu.serverdanMasaDegisikligi(MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, "masaDegistir");
                     masaDegistirForm = null;
                     this.Close();
                 }
@@ -1932,7 +1907,7 @@ namespace ROPv1
         private void paymentButton_Click(object sender, EventArgs e)
         {
             //ödendiğinde sql de ödendi flagini 1 yap 
-        }    // şu an boş, yapılacak
+        } // şu an boş, yapılacak
 
         #region SQL İşlemleri
         public int adisyonOlustur()
@@ -2027,7 +2002,7 @@ namespace ROPv1
 
         public void adisyonNotuUpdate(int adisyonID)
         {
-            if (adisyonNotu != "")
+            if (adisyonNotu != "" && adisyonNotu != null)
             {
                 SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AdisyonNotu=@adisyonNotu WHERE AdisyonID=@id");
 
@@ -2123,7 +2098,7 @@ namespace ROPv1
 
             if (urunDegissinMi == DialogResult.OK)
             {
-                masaDegistirForm = new MasaDegistirFormu(MasaAdi, hangiDepartman.departmanAdi, false, this);
+                masaDegistirForm = new MasaDegistirFormu(MasaAdi, hangiDepartman.departmanAdi, this);
                 masaDegistirForm.ShowDialog();
 
                 if (masaDegistirForm.yeniMasa == "iptalEdildi")
@@ -2139,11 +2114,13 @@ namespace ROPv1
                             listUrunFiyat.Items[listUrunFiyat.SelectedItems[i].Index].Selected = false;
                         }
                     }
-                    //Eğer 0 yapılanlar dışında taşınacak ürün yoksa, ürün taşıma
+
+                    //Eğer taşınması gereken ürün sayılarında 0 yapılanlar varsa ve onların dışında taşınacak ürün yoksa, ürün taşıma
                     if (urunDegistirForm.miktarlar.Count < 1)
                         return;
 
                     decimal istenilenTasimaMiktari;
+
                     int tasinacakUrunIkramMi;
 
                     StringBuilder aktarmaBilgileri = new StringBuilder();
@@ -2207,10 +2184,8 @@ namespace ROPv1
                             }
                             catch
                             {
-                                using (KontrolFormu dialog = new KontrolFormu("Ürünü taşırken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                                {
-                                    dialog.ShowDialog();
-                                }
+                                KontrolFormu dialog = new KontrolFormu("Ürünü taşırken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                                dialog.Show();
                                 return;
                             }
 
@@ -2224,10 +2199,8 @@ namespace ROPv1
                                 }
                                 catch
                                 {
-                                    using (KontrolFormu dialog = new KontrolFormu("Ürünü taşırken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                                    {
-                                        dialog.ShowDialog();
-                                    }
+                                    KontrolFormu dialog = new KontrolFormu("Ürünü taşırken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                                    dialog.Show();
                                     return;
                                 }
 
@@ -2272,10 +2245,8 @@ namespace ROPv1
                                     }
                                     catch
                                     {
-                                        using (KontrolFormu dialog = new KontrolFormu("Ürünü taşırken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                                        {
-                                            dialog.ShowDialog();
-                                        }
+                                        KontrolFormu dialog = new KontrolFormu("Ürünü taşırken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                                        dialog.Show();
                                         return;
                                     }
 
@@ -2309,9 +2280,10 @@ namespace ROPv1
                             cmd.Connection.Dispose();
                         }
 
-                        if(!masaAcikMi)
+                        if (!masaAcikMi)
                         {
-                            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0, IptalMi=1, KapanisZamani='" + DateTime.Now + "' WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "')");
+                            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0, IptalMi=1, KapanisZamani=@date WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "')");
+                            cmd.Parameters.AddWithValue("@date", DateTime.Now);
 
                             try //adisyonID alınabilirse adisyon var demektir, ancak sipariş yok - o zaman adisyon kapatılır
                             {
@@ -2328,14 +2300,10 @@ namespace ROPv1
 
                         masaFormu.serverdanMasaDegisikligi(MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, "urunTasindi");
 
-                        using (dialog2 = new KontrolFormu("Masada(" + MasaAdi + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler" + masaDegistirForm.yeniDepartman + " departmanındaki, " + masaDegistirForm.yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false))
-                        {
-                            timerDialogClose.Start();
-                            dialog2.ShowDialog();
-                            timerDialogClose.Stop();
-                        }
-
-                        this.Close();
+                        dialog2 = new KontrolFormu("Masa(" + MasaAdi + ")'dan seçilen ürünler " + masaDegistirForm.yeniDepartman + "\ndepartmanındaki, " + masaDegistirForm.yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false, this);
+                        timerDialogClose.Start();
+                        dialog2.Show();
+                        this.Enabled = false;
                     }
                     else //client
                     {
@@ -2384,6 +2352,13 @@ namespace ROPv1
         private void timerDialogClose_Tick(object sender, EventArgs e)
         {
             dialog2.Close();
-        } 
+            timerDialogClose.Stop();
+            this.Close();
+        }
+        
+        public void menuFormunuKapat()
+        {
+            this.Close();
+        }
     }
 }

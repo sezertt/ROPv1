@@ -142,10 +142,8 @@ namespace ROPv1
 
             if (textboxUrunAdi.Text == "Yeni Ürün" || textboxUrunAdi.Text == "" || textBoxUrunMiktari.Text == "" || comboBoxMiktarTipi.Text == "")
             {
-                using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false);
+                dialog.Show();
                 textboxUrunAdi.Focus();
                 return;
             }
@@ -154,11 +152,13 @@ namespace ROPv1
             //Yeni ürün kaydet tuşu. ekle tuşuna basıp bilgileri girdikten sonra kaydete basıyoruz
             if (newStokForm.Text == "Yeni Ürün")
             {
+                KontrolFormu dialog;
+
                 bool varmi = false, ayniMi = false;
                 int bulunanindis = 0;
                 for (int i = 0; i < stokListesi.Count; i++)
                 {
-                    if ( string.Equals( stokListesi[i].StokAdi, textboxUrunAdi.Text, StringComparison.CurrentCultureIgnoreCase)  && stokListesi[i].MiktarTipi != comboBoxMiktarTipi.Text)
+                    if (string.Equals(stokListesi[i].StokAdi, textboxUrunAdi.Text, StringComparison.CurrentCultureIgnoreCase) && stokListesi[i].MiktarTipi != comboBoxMiktarTipi.Text)
                     {
                         ayniMi = true;
                         bulunanindis = i;
@@ -177,7 +177,7 @@ namespace ROPv1
                 {
                     DialogResult eminMisiniz;
 
-                    using (KontrolFormu dialog = new KontrolFormu("Eklemek istediğiniz ürün stoklarda bulunmaktadır. Ancak ürün miktarı tipi farklı girilmiş, ürün miktarını varolan stoğa eklemek ister misiniz?", true))
+                    using (dialog = new KontrolFormu("Eklemek istediğiniz ürün stoklarda bulunmaktadır. Ancak ürün miktarı tipi farklı girilmiş, ürün miktarını varolan stoğa eklemek ister misiniz?", true))
                     {
                         eminMisiniz = dialog.ShowDialog();
                     }
@@ -188,10 +188,8 @@ namespace ROPv1
                         myListUrunler.Items[bulunanindis].SubItems[1].Text = (stokListesi[bulunanindis].StokMiktari).ToString();
                         XmlSave.SaveRestoran(stokListesi, "stoklar.xml");
 
-                        using (KontrolFormu dialog = new KontrolFormu(stokListesi[bulunanindis].StokAdi + " adlı ürün güncellenmiştir", false))
-                        {
-                            dialog.ShowDialog();
-                        }
+                        dialog = new KontrolFormu(stokListesi[bulunanindis].StokAdi + " adlı ürün güncellenmiştir", false);
+                        dialog.Show();
                     }
                     else
                     {
@@ -203,7 +201,7 @@ namespace ROPv1
                 {
                     DialogResult eminMisiniz;
 
-                    using (KontrolFormu dialog = new KontrolFormu("Eklemek istediğiniz ürün stoklarda bulunmaktadır. Ürün miktarını varolan stoğa eklemek ister misiniz?", true))
+                    using (dialog = new KontrolFormu("Eklemek istediğiniz ürün stoklarda bulunmaktadır. Ürün miktarını varolan stoğa eklemek ister misiniz?", true))
                     {
                         eminMisiniz = dialog.ShowDialog();
                     }
@@ -214,10 +212,8 @@ namespace ROPv1
                         myListUrunler.Items[bulunanindis].SubItems[1].Text = (stokListesi[bulunanindis].StokMiktari).ToString();
                         XmlSave.SaveRestoran(stokListesi, "stoklar.xml");
 
-                        using (KontrolFormu dialog = new KontrolFormu(stokListesi[bulunanindis].StokAdi + " adlı ürün güncellenmiştir", false))
-                        {
-                            dialog.ShowDialog();
-                        }
+                        dialog = new KontrolFormu(stokListesi[bulunanindis].StokAdi + " adlı ürün güncellenmiştir", false);
+                        dialog.Show();
                     }
                     else
                     {
@@ -254,13 +250,13 @@ namespace ROPv1
                 buttonDeleteStok.Visible = true;
                 buttonCancel.Visible = false;
 
-                using (KontrolFormu dialog = new KontrolFormu("Yeni Ürün Bilgileri Kaydedilmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Yeni Ürün Bilgileri Kaydedilmiştir", false);
+                dialog.Show();
             }
             else //üründe değişiklik yapıldıktan sonra basılan kaydet butonu.
             {
+                KontrolFormu dialog;
+
                 if (sender != null)
                 {
                     bool varmi = false, ayniMi = false;
@@ -290,7 +286,7 @@ namespace ROPv1
                     {
                         DialogResult eminMisiniz;
 
-                        using (KontrolFormu dialog = new KontrolFormu("Güncellemek istediğiniz ürün stoklarda bulunmaktadır, ancak ürün miktarı tipi farklı. Ürün miktarını varolan stoğa eklemek ister misiniz?", true))
+                        using (dialog = new KontrolFormu("Güncellemek istediğiniz ürün stoklarda bulunmaktadır, ancak ürün miktarı tipi farklı. Ürün miktarını varolan stoğa eklemek ister misiniz?", true))
                         {
                             eminMisiniz = dialog.ShowDialog();
                         }
@@ -308,10 +304,8 @@ namespace ROPv1
 
                             myListUrunler.SelectedItems[0].Remove();
 
-                            using (KontrolFormu dialog = new KontrolFormu(silinen + " adlı ürün silinmiş ve miktarı " + guncellenen + " adlı ürüne eklenmiştir", false))
-                            {
-                                dialog.ShowDialog();
-                            }
+                            dialog = new KontrolFormu(silinen + " adlı ürün silinmiş ve miktarı " + guncellenen + " adlı ürüne eklenmiştir", false);
+                            dialog.Show();
                         }
                         else
                         {
@@ -323,7 +317,7 @@ namespace ROPv1
                     {
                         DialogResult eminMisiniz;
 
-                        using (KontrolFormu dialog = new KontrolFormu("Güncellemek istediğiniz ürün stoklarda bulunmaktadır. Ürün miktarını varolan stoğa eklemek ister misiniz?", true))
+                        using (dialog = new KontrolFormu("Güncellemek istediğiniz ürün stoklarda bulunmaktadır. Ürün miktarını varolan stoğa eklemek ister misiniz?", true))
                         {
                             eminMisiniz = dialog.ShowDialog();
                         }
@@ -341,10 +335,8 @@ namespace ROPv1
 
                             myListUrunler.SelectedItems[0].Remove();
 
-                            using (KontrolFormu dialog = new KontrolFormu(silinen + " adlı ürün silinmiş ve miktarı " + guncellenen + " adlı ürüne eklenmiştir", false))
-                            {
-                                dialog.ShowDialog();
-                            }
+                            dialog = new KontrolFormu(silinen + " adlı ürün silinmiş ve miktarı " + guncellenen + " adlı ürüne eklenmiştir", false);
+                            dialog.Show();
                         }
                         else
                         {
@@ -365,10 +357,8 @@ namespace ROPv1
                 myListUrunler.Items[myListUrunler.SelectedIndices[0]].SubItems[2].Text = comboBoxMiktarTipi.Text;
                 newStokForm.Text = textboxUrunAdi.Text;
 
-                using (KontrolFormu dialog = new KontrolFormu("Ürün Bilgileri Güncellenmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Ürün Bilgileri Güncellenmiştir", false);
+                dialog.Show();
             }
             btnStogaEkle.Enabled = true;
         }
@@ -524,10 +514,8 @@ namespace ROPv1
         {
             if (txtStogaEkle.Text == String.Empty)
             {
-                using (KontrolFormu dialog = new KontrolFormu("Lütfen eklenecek stok miktarını giriniz.", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Lütfen eklenecek stok miktarını giriniz.", false);
+                dialog.Show();
                 textboxUrunAdi.Focus();
                 return;
             }

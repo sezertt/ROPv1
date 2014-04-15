@@ -26,7 +26,7 @@ namespace ROPv1
 
         public MasaPlan()
         {
-            InitializeComponent();           
+            InitializeComponent();
         }
 
         //Seçilen masa dizaynının bilgileri aktarılır
@@ -238,10 +238,8 @@ namespace ROPv1
         {
             if (textTableDesignName.Text == "Yeni Masa Planı" || textTableDesignName.Text == "")
             {
-                using (KontrolFormu dialog = new KontrolFormu("İzin verilmeyen bir masa planı ismi girdiniz, lütfen kontrol edin", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("İzin verilmeyen bir masa planı ismi girdiniz, lütfen kontrol edin", false);
+                dialog.Show();
                 return;
             }
 
@@ -331,10 +329,8 @@ namespace ROPv1
                 //eğer 10dan fazla dizayn olmuşsa ekleme butonu devredışı duruma  getirilir
                 if (treeMasaPlanName.Nodes.Count > 9)
                     buttonAddTableDesign.Enabled = false;
-                using (KontrolFormu dialog = new KontrolFormu("Yeni Masa Planı Bilgileri Kaydedilmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Yeni Masa Planı Bilgileri Kaydedilmiştir", false);
+                dialog.Show();
             }
             else
             {
@@ -381,10 +377,8 @@ namespace ROPv1
                         tablebutton.BackColor = Color.White;
                     }
                 }
-                using (KontrolFormu dialog = new KontrolFormu("Masa Planı Bilgileri Güncellenmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Masa Planı Bilgileri Güncellenmiştir", false);
+                dialog.Show();
             }
             //kısıtlanan butonların kısıtları kaldırılır, düzen ekranı devredışı bırakılır, düzenlemenin bittiği belirtilir
             newTableForm.Text = textTableDesignName.Text;

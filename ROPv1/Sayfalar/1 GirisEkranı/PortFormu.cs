@@ -33,8 +33,6 @@ namespace ROPv1
                 Properties.Settings.Default.Server = 2;
                 Properties.Settings.Default.IP = "127.0.0.1"; // localhost olmak zorunda server için
             }
-            else if (comboServer.Text == "Mutfak")
-                Properties.Settings.Default.Server = 1;
             else
                 Properties.Settings.Default.Server = 0;
             Properties.Settings.Default.Save();
@@ -47,10 +45,8 @@ namespace ROPv1
             textBoxPort.Text = Properties.Settings.Default.Port.ToString();
             if (Properties.Settings.Default.Server == 2)//server
                 comboServer.Text = "Server";
-            else if (Properties.Settings.Default.Server == 1)//mutfak
-                comboServer.Text = "Mutfak";
             else
-                comboServer.Text = "Masa";
+                comboServer.Text = "Client";
         }
 
         private void comboBoxKeyPressed(object sender, KeyPressEventArgs e)

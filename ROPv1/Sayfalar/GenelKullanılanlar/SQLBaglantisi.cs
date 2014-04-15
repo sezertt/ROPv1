@@ -19,20 +19,18 @@ namespace ROPv1
             }
             catch
             {
-                using (KontrolFormu dialog = new KontrolFormu("SQL Servera bağlanırken bir sorun oluştu", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("SQL Servera bağlanırken bir sorun oluştu", false);
+                dialog.Show();
                 cnn = null;
-            }           
-            
+            }
+
             return cnn;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
-        public static SqlCommand getCommand (string query)
+        public static SqlCommand getCommand(string query)
         {
-            SqlCommand cmd = new SqlCommand(query,getConnection());
+            SqlCommand cmd = new SqlCommand(query, getConnection());
             return cmd;
         }
     }

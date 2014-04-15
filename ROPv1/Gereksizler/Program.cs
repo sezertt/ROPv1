@@ -98,19 +98,9 @@ namespace ROPv1
                         }
                     }
                 }
-                else
+                else // client
                 {
-                    if (Properties.Settings.Default.Server == 1) // bu makina mutfak
-                    {
-                        // Application.Run(new MutfakFormu());
-
-                        //BURAYI DÜZELT MUTFAK EKRANI GELİNCE DEĞİŞTİR ÜSTTEKİYLE
-                        Application.Run(new SiparisMasaFormu(null));
-                    }
-                    else// garson girişi
-                    {
-                        Application.Run(new SiparisMasaFormu(null));
-                    }
+                    Application.Run(new SiparisMasaFormu(null));
                 }
             }
         }

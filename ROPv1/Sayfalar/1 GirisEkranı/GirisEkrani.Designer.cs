@@ -42,11 +42,9 @@
             this.labelSaat = new System.Windows.Forms.Label();
             this.timerSaat = new System.Windows.Forms.Timer(this.components);
             this.exitButton = new System.Windows.Forms.Button();
-            this.buttonMutfak = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.textboxOnlineKullanicilar = new System.Windows.Forms.TextBox();
             this.buttonConnection = new System.Windows.Forms.Button();
-            this.timerDialogClose = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -199,23 +197,6 @@
             this.exitButton.UseVisualStyleBackColor = false;
             this.exitButton.Click += new System.EventHandler(this.exitButtonPressed);
             // 
-            // buttonMutfak
-            // 
-            this.buttonMutfak.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonMutfak.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonMutfak.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonMutfak.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonMutfak.Image = global::ROPv1.Properties.Resources.kitchen;
-            this.buttonMutfak.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonMutfak.Location = new System.Drawing.Point(1154, 256);
-            this.buttonMutfak.Name = "buttonMutfak";
-            this.buttonMutfak.Size = new System.Drawing.Size(200, 110);
-            this.buttonMutfak.TabIndex = 16;
-            this.buttonMutfak.Text = "Mutfak";
-            this.buttonMutfak.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.buttonMutfak.UseVisualStyleBackColor = false;
-            this.buttonMutfak.Click += new System.EventHandler(this.buttonMutfak_Click);
-            // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -262,11 +243,6 @@
             this.buttonConnection.UseVisualStyleBackColor = false;
             this.buttonConnection.Click += new System.EventHandler(this.buttonConnection_Click);
             // 
-            // timerDialogClose
-            // 
-            this.timerDialogClose.Interval = 3000;
-            this.timerDialogClose.Tick += new System.EventHandler(this.timerDialogClose_Tick);
-            // 
             // GirisEkrani
             // 
             this.AcceptButton = this.girisButton;
@@ -279,7 +255,6 @@
             this.Controls.Add(this.buttonConnection);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textboxOnlineKullanicilar);
-            this.Controls.Add(this.buttonMutfak);
             this.Controls.Add(this.labelGun);
             this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.labelSaat);
@@ -293,6 +268,7 @@
             this.MinimizeBox = false;
             this.Name = "GirisEkrani";
             this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GirisEkrani";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -322,10 +298,8 @@
         private System.Windows.Forms.Label labelTarih;
         private System.Windows.Forms.Label labelSaat;
         private System.Windows.Forms.Timer timerSaat;
-        private System.Windows.Forms.Button buttonMutfak;
         private System.Windows.Forms.TextBox textboxOnlineKullanicilar;
         private System.Windows.Forms.Button buttonConnection;
-        private System.Windows.Forms.Timer timerDialogClose;
     }
 }
 

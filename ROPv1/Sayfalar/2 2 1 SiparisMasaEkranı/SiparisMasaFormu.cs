@@ -42,7 +42,7 @@ namespace ROPv1
         // Açık masaların listesi        
         private List<string> masalar;
 
-        KontrolFormu dialog2;
+        public KontrolFormu dialog2;
 
         bool loadYapildiMi = false, acikMasaVarsaYapma = false;
 
@@ -97,30 +97,11 @@ namespace ROPv1
                 return;
             }
 
-            PinKoduFormu pinForm = new PinKoduFormu("Masa Görüntüleme");
-            pinForm.ShowDialog();
+            PinKoduFormu pinForm = new PinKoduFormu("Masa Görüntüleme", this);
+            pinForm.Show();
 
-            if (pinForm.dogru) //pin doğru
-            {
-                hangiMasaButonunaBasildi = sender as Button;
-                hangiMasa = ((Button)sender).Text;
-
-                bool masaAcikMi = false;
-
-                if (hangiMasaButonunaBasildi.ForeColor == Color.White)
-                    masaAcikMi = true;
-
-                if (Properties.Settings.Default.Server == 2)
-                {
-                    siparisMenuForm = new SiparisMenuFormu(this, ((Button)sender).Text, restoranListesi[hangiDepartmanButonu], pinForm.ayarYapanKisi, masaAcikMi);
-                }
-                else
-                {
-                    siparisMenuForm = new SiparisMenuFormu(this, hangiMasa, restoranListesi[hangiDepartmanButonu], pinForm.ayarYapanKisi, masaAcikMi);
-                }
-                siparisMenuForm.Show();
-                acikMasaVarsaYapma = true;
-            }
+            hangiMasaButonunaBasildi = sender as Button;
+            hangiMasa = ((Button)sender).Text;
         }
 
         //departman değiştirme butonlarından birine basıldıysa
@@ -269,17 +250,11 @@ namespace ROPv1
                 acikMasaVarsaUyariVerFormuOneGetir();
                 return;
             }
-            DialogResult eminMisiniz;
 
-            using (KontrolFormu dialog = new KontrolFormu("Çıkmak istediğinizden emin misiniz?", true))
-            {
-                eminMisiniz = dialog.ShowDialog();
-            }
-
-            if (eminMisiniz == DialogResult.Yes)
-            {
+            if (Properties.Settings.Default.Server == 2) // bu makina server
                 this.Close();
-            }
+            else
+                Application.Exit();
         }
 
         private void timerSaat_Tick(object sender, EventArgs e)
@@ -295,20 +270,31 @@ namespace ROPv1
                 return;
             }
 
-            PinKoduFormu pinForm = new PinKoduFormu("Adisyon Görüntüleme");
-            pinForm.ShowDialog();
-
-            if (pinForm.dogru) // burada adisyon sayfası oluşturulacak ve ona geçilecek
-            {
-                /*
-                GunFormu gunForm = new GunFormu(pinForm.ayarYapanKisi);
-                gunForm.ShowDialog();
-
-                XmlLoad<GunBilgileri> loadInfoGunler = new XmlLoad<GunBilgileri>();
-                GunBilgileri[] infoGunler = loadInfoGunler.LoadRestoran("gunler.xml");
-                */
-            }
+            PinKoduFormu pinForm = new PinKoduFormu("Adisyon Görüntüleme", this);
+            pinForm.Show();
         } // düzenlenecek
+
+        public void gelenPinDogruMu(bool pinDogruMu, string ayarYapanKisi, string yapilacakIslemNe)
+        {
+            if (pinDogruMu)
+            {
+                if (yapilacakIslemNe == "Masa Görüntüleme")
+                {
+                    bool masaAcikMi = false;
+
+                    if (hangiMasaButonunaBasildi.ForeColor == Color.White)
+                        masaAcikMi = true;
+
+                    siparisMenuForm = new SiparisMenuFormu(this, hangiMasa, restoranListesi[hangiDepartmanButonu], ayarYapanKisi, masaAcikMi);
+                    siparisMenuForm.Show();
+                    acikMasaVarsaYapma = true;
+                }
+                else if (yapilacakIslemNe == "Adisyon Görüntüleme")  // burada adisyon sayfası oluşturulacak ve ona geçilecek
+                {
+
+                }
+            }
+        }
 
         //form load
         private void SiparisMasaFormu_Load(object sender, EventArgs e)
@@ -416,7 +402,7 @@ namespace ROPv1
             if (e.Control && e.Shift && e.KeyCode == Keys.D3) //Kısayol Tuşları ile ekranı açıyoruz ctrl+shift+3
             {
                 PortFormu portFormu = new PortFormu();
-                portFormu.ShowDialog();
+                portFormu.Show();
             }
         }
 
@@ -446,10 +432,9 @@ namespace ROPv1
 
             if (!baglan())
             {
-                using (KontrolFormu dialog = new KontrolFormu("Sunucuya bağlanılamadı, ayarları kontrol edip tekrar deneyiniz", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Sunucuya bağlanılamadı, ayarları kontrol edip tekrar deneyiniz", false);
+                dialog.Show();
+
                 buttonConnection.Image = Properties.Resources.baglantiYOK;
                 buttonConnection.Text = "Bağlan";
                 return;
@@ -500,25 +485,20 @@ namespace ROPv1
             {
                 if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("restoran.xml"))
                 {
-                    using (KontrolFormu dialog2 = new KontrolFormu("Dosyalarda eksik var, lütfen serverdaki dosyaları kontrol ediniz", false))
-                    {
-                        dialog2.ShowDialog();
-                    }
+                    dialog2 = new KontrolFormu("Dosyalarda eksik var, lütfen serverdaki dosyaları kontrol ediniz", false);
+                    dialog2.Show();
                 }
                 else
                 {
-                    using (KontrolFormu dialog3 = new KontrolFormu("Dosya alımı başarılı, lütfen yeniden giriş yapınız", false))
-                    {
-                        dialog3.ShowDialog();
-                    }
+                    dialog2 = new KontrolFormu("Dosya alımı başarılı, lütfen yeniden giriş yapınız", false);
+                    dialog2.Show();
                 }
             }
             else
             {
-                using (KontrolFormu dialog4 = new KontrolFormu("Dosya alımı başarısız, server alıma ayarlanmamışsa ayarladıktan sonra lütfen tekrar deneyiniz", false))
-                {
-                    dialog4.ShowDialog();
-                }
+                KontrolFormu dialog4 = new KontrolFormu("Dosya alımı başarısız, server alıma ayarlanmamışsa ayarladıktan sonra lütfen tekrar deneyiniz", false);
+                dialog4.Show();
+
             }
         }
 
@@ -747,7 +727,9 @@ namespace ROPv1
                                 client.MesajYolla("komut=masaKapandi&masa=" + hangiMasa + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                                 break;
                             default:
-                                //client.MesajYolla("komut=masaAcildi&masa=" + hangiMasa + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
+                                Button tablebutton = tablePanel.Controls[hangiMasa] as Button;
+                                if (tablebutton.BackColor != Color.Firebrick)
+                                    client.MesajYolla("komut=masaAcildi&masa=" + hangiMasa + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                                 break;
                         }
                     }
@@ -821,22 +803,16 @@ namespace ROPv1
                 {
                     masayiIslemYapmadanKapat = true;
                     siparisMenuForm.Close();
-                    using (KontrolFormu dialog = new KontrolFormu("Masanın(" + masa + ") hesabı " + yeniDepartmanAdi + " departmanının, " + yeniMasa + " masasıyla değiştirildi, masaya yeniden giriş yapınız", false))
-                    {
-                        dialog.ShowDialog();
-                    }
+                    dialog2 = new KontrolFormu("Masanın(" + masa + ") hesabı " + yeniDepartmanAdi + " departmanının, " + yeniMasa + " masasıyla değiştirildi, masaya yeniden giriş yapınız", false);
+                    dialog2.Show();
                 }
                 else
                 {
                     masayiIslemYapmadanKapat = false;
                     siparisMenuForm.Close();
 
-                    using (dialog2 = new KontrolFormu("Masada(" + masa + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler" + yeniDepartmanAdi + " departmanındaki, " + yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false))
-                    {
-                        timerDialogClose.Start();
-                        dialog2.ShowDialog();
-                        timerDialogClose.Stop();
-                    }
+                    dialog2 = new KontrolFormu("Masada(" + masa + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler" + yeniDepartmanAdi + " departmanındaki, " + yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false);
+                    dialog2.Show();
                 }
             }
         }
@@ -888,10 +864,8 @@ namespace ROPv1
             }
             catch (Exception)
             {
-                using (KontrolFormu dialog = new KontrolFormu("Masa durumlarını alırken bir hata oluştu, lütfen tekrar deneyiniz", false))
-                {
-                    dialog.ShowDialog();
-                }
+                KontrolFormu dialog = new KontrolFormu("Masa durumlarını alırken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                dialog.Show();
                 return;
             }
 
@@ -993,10 +967,8 @@ namespace ROPv1
                     girisYapildi = false;
                     buttonConnection.Image = Properties.Resources.baglantiYOK;
                     buttonConnection.Text = "Bağlan";
-                    using (KontrolFormu dialog = new KontrolFormu("Dikkat!\nSunucu bağlantısı koptu!", false))
-                    {
-                        dialog.ShowDialog();
-                    }
+                    KontrolFormu dialog = new KontrolFormu("Dikkat!\nSunucu bağlantısı koptu!", false);
+                    dialog.Show();
 
                     break;
             }
@@ -1035,13 +1007,11 @@ namespace ROPv1
             if (hata == "" || hata == null)
                 hata = "İstenilen işlem gerçekleştirilemedi, lütfen tekrar deneyiniz";
 
-            using (KontrolFormu dialog = new KontrolFormu(hata, false))
+            KontrolFormu dialog = new KontrolFormu(hata, false);
+            dialog.Show();
+            if (siparisMenuForm != null)
             {
-                dialog.ShowDialog();
-                if (siparisMenuForm != null)
-                {
-                    siparisMenuForm.Close();
-                }
+                siparisMenuForm.Close();
             }
         }
 
@@ -1124,16 +1094,7 @@ namespace ROPv1
         //eğer açık masa varsa işlem yapma o formu öne getir ve uyarı ver
         public void acikMasaVarsaUyariVerFormuOneGetir()
         {
-            using (KontrolFormu dialog = new KontrolFormu("Önce açık olan masanın işlemlerinizi tamamlamanız lazım", false))
-            {
-                dialog.ShowDialog();
-            }
             siparisMenuForm.BringToFront();
-        }
-
-        private void timerDialogClose_Tick(object sender, EventArgs e)
-        {
-            dialog2.Close();
         }
     }
 }

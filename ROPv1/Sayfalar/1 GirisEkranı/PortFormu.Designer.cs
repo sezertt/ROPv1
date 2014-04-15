@@ -151,15 +151,14 @@
             this.comboServer.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.comboServer.FormattingEnabled = true;
             this.comboServer.Items.AddRange(new object[] {
-            "Masa",
-            "Mutfak",
+            "Client",
             "Server"});
             this.comboServer.Location = new System.Drawing.Point(305, 148);
             this.comboServer.MaxDropDownItems = 20;
             this.comboServer.Name = "comboServer";
             this.comboServer.Size = new System.Drawing.Size(179, 32);
             this.comboServer.TabIndex = 85;
-            this.comboServer.Text = "Masa";
+            this.comboServer.Text = "Client";
             this.comboServer.Click += new System.EventHandler(this.showMenu);
             this.comboServer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
             // 

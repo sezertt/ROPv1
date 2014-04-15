@@ -12,9 +12,14 @@ namespace ROPv1
 {
     public partial class KontrolFormu : Form
     {
-        public KontrolFormu(string textboxText,bool BoxType)
+        SiparisMenuFormu menuFormu;
+
+        public KontrolFormu(string textboxText,bool BoxType, SiparisMenuFormu menuFormu = null)
         {
             InitializeComponent();
+
+            if(menuFormu != null)
+                this.menuFormu = menuFormu;
 
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
@@ -33,8 +38,19 @@ namespace ROPv1
             if (e.Control && e.Shift && e.KeyCode == Keys.D3) //Kısayol Tuşları ile ekranı açıyoruz ctrl+shift+3
             {
                 PortFormu portFormu = new PortFormu();
-                portFormu.ShowDialog();
+                portFormu.Show();
             }
+        }
+
+        private void buttonTamam_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void KontrolFormu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (menuFormu != null)
+                menuFormu.Close();
         }
     }
 }

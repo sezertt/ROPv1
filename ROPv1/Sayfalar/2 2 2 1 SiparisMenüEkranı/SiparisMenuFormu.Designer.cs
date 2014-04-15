@@ -337,7 +337,7 @@
             // 
             // timerDialogClose
             // 
-            this.timerDialogClose.Interval = 3000;
+            this.timerDialogClose.Interval = 4000;
             this.timerDialogClose.Tick += new System.EventHandler(this.timerDialogClose_Tick);
             // 
             // listUrunFiyat
@@ -405,6 +405,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 768);
+            this.ControlBox = false;
             this.Controls.Add(this.flowPanelUrunler);
             this.Controls.Add(this.buttonTemizle);
             this.Controls.Add(this.labelKalanHesap);
@@ -426,7 +427,10 @@
             this.Controls.Add(this.buttonHesapOde);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SiparisMenuFormu";
+            this.ShowInTaskbar = false;
             this.Text = "SiparisMenuFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SiparisMenuFormu_FormClosing);

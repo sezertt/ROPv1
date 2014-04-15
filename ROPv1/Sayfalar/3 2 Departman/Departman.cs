@@ -113,10 +113,8 @@ namespace ROPv1
         {
             DialogResult eminMisiniz;
 
-            using (KontrolFormu dialog = new KontrolFormu(treeDepartman.SelectedNode.Text + " adlı departmanı silmek istediğinize emin misiniz?", true))
-            {
-                eminMisiniz = dialog.ShowDialog();
-            }
+            KontrolFormu dialog = new KontrolFormu(treeDepartman.SelectedNode.Text + " adlı departmanı silmek istediğinize emin misiniz?", true);
+            eminMisiniz = dialog.ShowDialog();
 
             if (eminMisiniz == DialogResult.Yes)
             {
@@ -165,12 +163,11 @@ namespace ROPv1
         //Yeni Departmanı Kaydet
         private void buttonAddNewDep(object sender, EventArgs e)
         {
+            KontrolFormu dialog;
             if (comboNewDepName.Text == "Yeni Departman" || comboNewDepName.Text == "" || comboNewDepMenu.Text == "" || comboNewDepView.Text == "") // ilerde var olan depo,isim,menü veya masa planı var mı diye bak ona göre burayı göster 
             {
-                using (KontrolFormu dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false);
+                dialog.Show();
                 return;
             }
 
@@ -183,15 +180,13 @@ namespace ROPv1
                 {
                     if (string.Equals(restoranListesi[i].departmanAdi, comboNewDepName.Text, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        using (KontrolFormu dialog = new KontrolFormu("Aynı departman ismi sistemde kayıtlıdır. Lütfen başka bir isimle departman ekleyiniz", false))
-                        {
-                            dialog.ShowDialog();
-                        }
-                        comboNewDepName.Select(0, comboNewDepName.Text.Length);
+                        dialog = new KontrolFormu("Aynı departman ismi sistemde kayıtlıdır. Lütfen başka bir isimle departman ekleyiniz", false);
+
+                        dialog.Show();
                         return;
                     }
                 }
-                
+
                 treeDepartman.Nodes.Add(comboNewDepName.Text);
 
                 Restoran newDepartman = new Restoran();
@@ -216,24 +211,19 @@ namespace ROPv1
                 if (treeDepartman.Nodes.Count > 9)
                     buttonAddDepartment.Enabled = false;
 
-                using (KontrolFormu dialog = new KontrolFormu("Yeni Departman Bilgileri Kaydedilmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Yeni Departman Bilgileri Kaydedilmiştir", false);
+                dialog.Show();
             }
             else
             {
-                if(comboNewDepName.Text != restoranListesi[treeDepartman.SelectedNode.Index].departmanAdi)
+                if (comboNewDepName.Text != restoranListesi[treeDepartman.SelectedNode.Index].departmanAdi)
                 {
                     for (int i = 0; i < restoranListesi.Count; i++)
                     {
                         if (string.Equals(restoranListesi[i].departmanAdi, comboNewDepName.Text, StringComparison.CurrentCultureIgnoreCase))
                         {
-                            using (KontrolFormu dialog = new KontrolFormu("Aynı departman ismi sistemde kayıtlıdır. Lütfen başka bir isimle departman ekleyiniz", false))
-                            {
-                                dialog.ShowDialog();
-                            }
-                            comboNewDepName.Select(0, comboNewDepName.Text.Length);
+                            dialog = new KontrolFormu("Aynı departman ismi sistemde kayıtlıdır. Lütfen başka bir isimle departman ekleyiniz", false);
+                            dialog.Show();
                             return;
                         }
                     }
@@ -250,11 +240,11 @@ namespace ROPv1
                 treeDepartman.Nodes[treeDepartman.SelectedNode.Index].Text = comboNewDepName.Text;
                 newDepartmentForm.Text = comboNewDepName.Text;
 
-                using (KontrolFormu dialog = new KontrolFormu("Departman Bilgileri Güncellenmiştir", false))
-                {
-                    dialog.ShowDialog();
-                }
+                dialog = new KontrolFormu("Departman Bilgileri Güncellenmiştir", false);
+
+                dialog.Show();
             }
+
 
             //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
             foreach (TreeNode node in treeDepartman.Nodes)
