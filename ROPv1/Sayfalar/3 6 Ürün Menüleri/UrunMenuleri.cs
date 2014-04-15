@@ -262,81 +262,42 @@ namespace ROPv1
                 infoUrun[0].urunKDV.Add(8);
                 infoUrun[0].kategorininAdi = "Ürün Menüleri";
                 XmlSave.SaveRestoran(infoUrun, "urunler.xml");
-                //treeUrunler.Nodes.Insert(0, UrunMenuListesi[UrunMenuListesi.Count - 1].menuAdi);
             }
             else//menüde değişiklik yapıldıktan sonra basılan kaydet butonu.
             {
-                if (sender != null)
+                int indis = 0;
+                XmlLoad<KategorilerineGoreUrunler> loadInfo = new XmlLoad<KategorilerineGoreUrunler>();
+                KategorilerineGoreUrunler[] infoUrun = loadInfo.LoadRestoran("urunler.xml");
+                for (int i = 0; i < UrunMenuListesi.Count; i++)
                 {
-                    bool varmi = false, ayniMi = false;
-                    int bulunanindis = 0;
-                    for (int i = 0; i < UrunMenuListesi.Count; i++)
+                    if (string.Equals(infoUrun[0].urunAdi[i], UrunMenuListesi[treeMenuler.SelectedNode.Index].menuAdi, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        if (string.Equals(UrunMenuListesi[i].menuAdi, textboxMenuName.Text, StringComparison.CurrentCultureIgnoreCase) && UrunMenuListesi[i].menuFiyati != Convert.ToDouble(textboxFiyat.Text))
-                        {
-                            ayniMi = true;
-                            bulunanindis = i;
-                            break;
-                        }
-
-                        if (string.Equals(UrunMenuListesi[i].menuAdi, textboxMenuName.Text, StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            varmi = true;
-                            bulunanindis = i;
-                            break;
-                        }
-                    }
-                    if (ayniMi)
-                    {
-                        DialogResult eminMisiniz;
-
-                        using (dialog = new KontrolFormu("Eklemek istediğiniz menü listede bulunmaktadır. Ancak ürün fiyatı farklı girilmiş, ürün fiyatını değiştirmek ister misiniz?", true))
-                        {
-                            eminMisiniz = dialog.ShowDialog();
-                        }
-
-                        if (eminMisiniz == DialogResult.Yes)
-                        {
-
-                            UrunMenuListesi[bulunanindis].menuFiyati = Convert.ToDouble(textboxFiyat.Text);
-                            XmlSave.SaveRestoran(UrunMenuListesi, "UrunMenuleri.xml");
-                            XmlLoad<KategorilerineGoreUrunler> loadInfo = new XmlLoad<KategorilerineGoreUrunler>();
-                            KategorilerineGoreUrunler[] infoUrun = loadInfo.LoadRestoran("urunler.xml");
-                            infoUrun[0].porsiyonFiyati[bulunanindis] = UrunMenuListesi[bulunanindis].menuFiyati.ToString("0.00");
-                            XmlSave.SaveRestoran(infoUrun, "urunler.xml");
-                            dialog = new KontrolFormu(UrunMenuListesi[bulunanindis].menuAdi + " adlı menü güncellenmiştir", false);
-                            dialog.Show();
-                        }
-                        else
-                        {
-                            textboxMenuName.Focus();
-                        }
-                        return;
-                    }
-                    else if (varmi)
-                    {
-                        dialog = new KontrolFormu(UrunMenuListesi[bulunanindis].menuAdi + "Eklemek istediğiniz menü zaten aynı fiyatla listede bulunmaktadır.Lütfen menü ismini değiştiriniz", false);
-                        dialog.Show();
-                        return;
+                        indis = i;
+                        break;
                     }
                 }
 
-                dialog = new KontrolFormu("Menü Bilgileri Güncellenmiştir", false);
+                infoUrun[0].porsiyonFiyati[indis] = textboxFiyat.Text;
+                infoUrun[0].urunAdi[indis] = textboxMenuName.Text;
+                XmlSave.SaveRestoran(infoUrun, "urunler.xml");
+
+                UrunMenuListesi[treeMenuler.SelectedNode.Index].menuAdi = textboxMenuName.Text;
+                UrunMenuListesi[treeMenuler.SelectedNode.Index].menuFiyati = Convert.ToDouble(textboxFiyat.Text);
+                treeMenuler.SelectedNode.Text = textboxMenuName.Text;
+                dialog = new KontrolFormu("Departman Bilgileri Güncellenmiştir", false);
                 dialog.Show();
+                //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
+                foreach (TreeNode node in treeMenuler.Nodes)
+                {
+                    while (treeMenuler.Width - 12 < System.Windows.Forms.TextRenderer.MeasureText(node.Text, new Font(treeMenuler.Font.FontFamily, treeMenuler.Font.Size, treeMenuler.Font.Style)).Width)
+                    {
+                        treeMenuler.Font = new Font(treeMenuler.Font.FontFamily, treeMenuler.Font.Size - 0.5f, treeMenuler.Font.Style);
+                    }
+                }
             }
 
             XmlSave.SaveRestoran(UrunMenuListesi, "UrunMenuleri.xml");
             newUrunMenuForm.Text = textboxMenuName.Text;
-            //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
-            foreach (TreeNode node in treeMenuler.Nodes)
-            {
-                while (treeMenuler.Width - 12 < System.Windows.Forms.TextRenderer.MeasureText(node.Text, new Font(treeMenuler.Font.FontFamily, treeMenuler.Font.Size, treeMenuler.Font.Style)).Width)
-                {
-                    treeMenuler.Font = new Font(treeMenuler.Font.FontFamily, treeMenuler.Font.Size - 0.5f, treeMenuler.Font.Style);
-                }
-            }
-
-
         }
 
         //Menüye Sağdaki Ürün treesinde seçili olan ürünü ekler
