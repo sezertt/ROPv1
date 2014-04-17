@@ -48,7 +48,7 @@ namespace ROPv1
 
         int hangiDepartmanButonu = 0, hangiMasaDizayni = 200;
 
-        string hangiMasa;
+        string hangiMasa, ayarYapanKisi;
 
         List<Restoran> restoranListesi = new List<Restoran>();
 
@@ -276,18 +276,44 @@ namespace ROPv1
 
         public void gelenPinDogruMu(bool pinDogruMu, string ayarYapanKisi, string yapilacakIslemNe)
         {
+            this.ayarYapanKisi = ayarYapanKisi;
+
             if (pinDogruMu)
             {
                 if (yapilacakIslemNe == "Masa Görüntüleme")
                 {
-                    bool masaAcikMi = false;
+                    if (Properties.Settings.Default.Server == 2) // server
+                    {
+                        SqlCommand cmd = SQLBaglantisi.getCommand("SELECT OdemeYapiliyor FROM Adisyon WHERE Adisyon.AcikMi=1 AND Adisyon.MasaAdi='" + hangiMasa + "' AND Adisyon.DepartmanAdi='" + viewdakiDepartmaninAdi + "'");
 
-                    if (hangiMasaButonunaBasildi.ForeColor == Color.White)
-                        masaAcikMi = true;
+                        SqlDataReader dr = cmd.ExecuteReader();
 
-                    siparisMenuForm = new SiparisMenuFormu(this, hangiMasa, restoranListesi[hangiDepartmanButonu], ayarYapanKisi, masaAcikMi);
-                    siparisMenuForm.Show();
-                    acikMasaVarsaYapma = true;
+                        dr.Read();
+
+                        bool masaSerbestMi = false;
+
+                        try
+                        {
+                            masaSerbestMi = dr.GetBoolean(0);
+                        }
+                        catch
+                        {
+                            masaSerbestMi = false;
+                        }
+
+                        if (!masaSerbestMi)
+                        {
+                            komut_masaGirilebilirMi("True");
+                        }
+                        else
+                        {
+                            komut_masaGirilebilirMi("false");
+                        }
+                    }
+                    else
+                    {
+                        client.MesajYolla("komut=masaGirilebilirMi" + "&masa=" + hangiMasa + "&departmanAdi=" + viewdakiDepartmaninAdi);
+                    }
                 }
                 else if (yapilacakIslemNe == "Adisyon Görüntüleme")  // burada adisyon sayfası oluşturulacak ve ona geçilecek
                 {
@@ -385,15 +411,8 @@ namespace ROPv1
                 tablePanel.Tag = -1;
 
                 //Masa butonlarını eklemek için serversa direk ilk departman butonuna kod ile basıyoruz, clientsa servera sorarak açık masa bilgileriyle birlikte alıyoruz
-                if (Properties.Settings.Default.Server == 2)
-                {
-                    Button birinciDepartman = panel1.Controls["0"] as Button;
-                    birinciDepartman.PerformClick();
-                }
-                else
-                {
-                    client.MesajYolla("komut=departman&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
-                }
+                Button birinciDepartman = panel1.Controls["0"] as Button;
+                birinciDepartman.PerformClick();
             }
         }
 
@@ -524,6 +543,12 @@ namespace ROPv1
             tumKullanicilaraMesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departmanAdi + "&yeniMasa=" + yeniMasa + "&yeniDepartmanAdi=" + yeniDepartmanAdi);
         }
 
+        public void serverdanHesapOdeme(string masa, string departmanAdi, string komut)
+        {
+            // tüm kullanıcıları bilgilendir
+            tumKullanicilaraMesajYolla("komut=hesapOdeniyor&masa=" + masa + "&departmanAdi=" + departmanAdi);
+        }
+
         public void tumKullanicilaraMesajYolla(string mesaj)
         {
             ROPv1.GirisEkrani.BagliKullanicilar[] kullaniciDizisi = null;
@@ -569,7 +594,7 @@ namespace ROPv1
             if (Properties.Settings.Default.Server != 2)
             {
                 //Form kapatılırken sunucuya olan bağlantıyı keselim
-                if (client != null)
+                if (client != null && girisYapildi == true)
                 {
                     client.MesajYolla("komut=cikis");
                     client.BaglantiyiKes();
@@ -596,6 +621,12 @@ namespace ROPv1
                         break;
                     case "iptal": // serverdan iptal isteğinin sonucu geldiğinde
                         komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["ikramYeniMiEskiMi"]);
+                        break;
+                    case "hesapOdeniyor": // yeni masa açıldığı bilgisi geldiğinde
+                        komut_hesapOdeniyor(parametreler["masa"], parametreler["departmanAdi"]);
+                        break;
+                    case "masaGirilebilirMi": // yeni masa açıldığı bilgisi geldiğinde
+                        komut_masaGirilebilirMi(parametreler["cevap"]);
                         break;
                     case "masaDegistir": // masa değişikliği bilgisi geldiğinde eğer o masalar bizde açıksa kapatmalıyız
                     case "urunTasindi": // ürün aktarma bilgisi geldiğinde eğer o masalar bizde açıksa kapatmalıyız
@@ -641,7 +672,7 @@ namespace ROPv1
                         komut_masaKapandi(parametreler["masa"], parametreler["departmanAdi"]);
                         try
                         {
-                            //burada masa değiştir formdaki komut_masaKapandi yönlendirme yapılmalı
+                            //burada masa değiştir formdaki komut_masaKapandi yönlendirme yapılmalı (eğer siparismenuformun masa değiştir formu açıksa diye) 
                             siparisMenuForm.masaDegistirForm.komut_masaKapandi(parametreler["masa"], parametreler["departmanAdi"]);
                         }
                         catch { }
@@ -794,6 +825,38 @@ namespace ROPv1
         }
 
         #region Komutlar
+
+        private void komut_masaGirilebilirMi(string cevap)
+        {
+            if (cevap == "True")
+            {
+                bool masaAcikMi = false;
+
+                if (hangiMasaButonunaBasildi.ForeColor == Color.White)
+                    masaAcikMi = true;
+
+                siparisMenuForm = new SiparisMenuFormu(this, hangiMasa, restoranListesi[hangiDepartmanButonu], ayarYapanKisi, masaAcikMi);
+                siparisMenuForm.Show();
+                acikMasaVarsaYapma = true;
+            }
+            else
+            {
+                dialog2 = new KontrolFormu("Hesap ödeniyor lütfen daha sonra tekrar giriş yapmayı deneyin", false);
+                dialog2.Show();
+            }
+        }
+
+        private void komut_hesapOdeniyor(string masa, string departmanAdi)
+        {
+            //eğer hesabı ödenmeye başlanan masa serverda açıksa
+            if (siparisMenuForm != null)
+            {
+                if (siparisMenuForm.hesapForm != null && viewdakiDepartmaninAdi == departmanAdi && hangiMasaButonunaBasildi.Text == masa)
+                {
+                    menuFormunuKapatHesapOdeniyor(masa, departmanAdi);
+                }
+            }
+        }
 
         public void komut_masaDegisti(string masa, string departmanAdi, string yeniMasa, string yeniDepartmanAdi, string komut)
         {
@@ -965,11 +1028,9 @@ namespace ROPv1
                         client.BaglantiyiKes2();
                     }
                     girisYapildi = false;
-                    buttonConnection.Image = Properties.Resources.baglantiYOK;
-                    buttonConnection.Text = "Bağlan";
-                    KontrolFormu dialog = new KontrolFormu("Dikkat!\nSunucu bağlantısı koptu!", false);
-                    dialog.Show();
-
+                    KontrolFormu dialog = new KontrolFormu("Dikkat!\nSunucu bağlantısı koptu!\nLütfen yeniden giriş yapın", false);
+                    dialog.ShowDialog();
+                    Application.Exit();
                     break;
             }
         }
@@ -1102,6 +1163,14 @@ namespace ROPv1
             siparisMenuForm.Close();
 
             dialog2 = new KontrolFormu("Masada(" + masaAdi + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler" + yeniDepartmanAdi + " departmanındaki, " + yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false);
+            dialog2.Show();
+        }
+
+        public void menuFormunuKapatHesapOdeniyor(string masaAdi, string yeniDepartmanAdi)
+        {
+            siparisMenuForm.Close();
+
+            dialog2 = new KontrolFormu("Hesap ödeniyor lütfen daha sonra tekrar giriş yapmayı deneyin", false);
             dialog2.Show();
         }
     }

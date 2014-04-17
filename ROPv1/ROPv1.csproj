@@ -427,6 +427,11 @@
     <None Include="Resources\baglantiYOK.png" />
     <None Include="Resources\dataUpdate.png" />
     <None Include="Resources\kimlik.png" />
+    <None Include="Resources\ticket.png" />
+    <None Include="Resources\nakit.png" />
+    <None Include="Resources\kart.png" />
+    <None Include="Resources\hesap.png" />
+    <None Include="Resources\tl.png" />
     <Content Include="ROP.ico" />
   </ItemGroup>
   <ItemGroup>

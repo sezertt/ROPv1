@@ -18,6 +18,8 @@ namespace ROPv1
 
         public MasaDegistirFormu masaDegistirForm;
 
+        public HesapFormu hesapForm;
+
         Restoran hangiDepartman;
 
         int hangiMenuSecili = 555, menuSirasi = 0;
@@ -1926,8 +1928,6 @@ namespace ROPv1
                     masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
 
                     masaFormu.serverdanMasaDegisikligi(MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, "masaDegistir");
-
-                    //this.Close();
                 }
                 else // client
                 {
@@ -1935,7 +1935,6 @@ namespace ROPv1
 
                     yeniMasaninAdi = masaDegistirForm.yeniMasa;
                     masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
-                    //this.Close();
                 }
                 masaAktarmaIslemlerindenSonraCik(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman);
                 masaDegistirForm = null;
@@ -1951,9 +1950,37 @@ namespace ROPv1
         private void paymentButton_Click(object sender, EventArgs e)
         {
             //ödendiğinde sql de ödendi flagini 1 yap 
+
+            hesapForm = new HesapFormu(this, listUrunFiyat,MasaAdi,hangiDepartman.departmanAdi);
+
+            if (Properties.Settings.Default.Server == 2) // server
+            {
+                odemeyeGec();
+                //herkesi masadan çıkar 
+                masaFormu.serverdanHesapOdeme(MasaAdi, hangiDepartman.departmanAdi, "hesapOdeniyor");
+            }
+            else
+            {
+                //servera söyle herkesi masadan çıkarsın
+                masaFormu.menuFormundanServeraYolla(MasaAdi, hangiDepartman.departmanAdi, "hesapOdeniyor");
+            }
+            hesapForm.ShowDialog();
         } // şu an boş, yapılacak
 
         #region SQL İşlemleri
+
+        public void odemeyeGec()
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET OdemeYapiliyor=@odemeYapiliyor WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "')");
+
+            cmd.Parameters.AddWithValue("@odemeYapiliyor", 1);
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
         public int adisyonOlustur()
         {
             SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Adisyon(AcikMi,AdisyonNotu,AcilisZamani,DepartmanAdi,MasaAdi) VALUES(@_acikMi,@_AdisyonNotu,@_AcilisZamani,@_DepartmanAdi,@_MasaAdi) SELECT SCOPE_IDENTITY()");

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Data.SqlClient;
+using System.Globalization;
 
 namespace ROPv1
 {
@@ -16,15 +17,55 @@ namespace ROPv1
     {
         private SiparisMenuFormu menuFormu;
 
-        const int eskiIkramlar = 0, yeniIkramlar = 1, eskiSiparisler = 2, yeniSiparisler = 3;
-
         List<bool> listedeSeciliOlanItemlar = new List<bool>();
 
-        public HesapFormu(SiparisMenuFormu menuFormu, string masaninAdi, Restoran butonBilgileri, string siparisiGirenKisi, bool masaAcikmi)
+        string masaAdi, departmanAdi;
+
+        MyListView listHesaptakiler;
+
+        decimal toplamHesap = 0,odenmekIstenenHesap = 0;
+
+        public HesapFormu(SiparisMenuFormu menuFormu, MyListView siparisListView, string masaAdi, string departmanAdi)
         {
             InitializeComponent();
 
-            this.menuFormu = menuFormu;            
+            this.menuFormu = menuFormu;
+            this.masaAdi = masaAdi;
+            this.departmanAdi = departmanAdi;
+            this.listHesaptakiler = siparisListView;
+        }
+
+        decimal KesiriDecimalYap(string kesir) // verilen kesirli stringi decimale çevirerek return eder
+        {
+            decimal sonuc;
+
+            if (decimal.TryParse(kesir, out sonuc))
+            {
+                return sonuc;
+            }
+
+            string[] split = kesir.Split(new char[] { ' ', '/' });
+
+            if (split.Length == 2 || split.Length == 3)
+            {
+                int a, b;
+
+                if (int.TryParse(split[0], out a) && int.TryParse(split[1], out b))
+                {
+                    if (split.Length == 2)
+                    {
+                        return (decimal)a / b;
+                    }
+
+                    int c;
+
+                    if (int.TryParse(split[2], out c))
+                    {
+                        return a + (decimal)b / c;
+                    }
+                }
+            }
+            return 10;
         }
 
         //keypadin methodu
@@ -92,15 +133,15 @@ namespace ROPv1
 
             if (kacElemanSecili == 0) //list viewda seçili eleman yok 
             {
-                
+
             }
             else if (kacElemanSecili == 1) //list viewda 1 eleman seçili
             {
-                
+
             }
             else //list viewda 1 den fazla seçili eleman var
             {
-              
+
             }
         }
 
@@ -129,18 +170,82 @@ namespace ROPv1
         //form load
         private void HesapFormu_Load(object sender, EventArgs e)
         {
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+            timerSaat.Start();
+            labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));
+            labelTarih.Text = DateTime.Now.Date.ToString("d MMMM yyyy", new CultureInfo("tr-TR"));
 
+            labelMasa.Text = "Masa: " + masaAdi;
+            labelDepartman.Text = "Departman: " + departmanAdi;
+
+            for (int i = 0; i < listHesaptakiler.Groups[2].Items.Count; i++)
+            {
+                listUrunFiyat.Items.Add(listHesaptakiler.Groups[2].Items[i].Text);
+                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(listHesaptakiler.Groups[2].Items[i].SubItems[1].Text);
+                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(listHesaptakiler.Groups[2].Items[i].SubItems[2].Text);
+                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
+                toplamHesap += Convert.ToDecimal(listHesaptakiler.Groups[2].Items[i].SubItems[2].Text);
+            }
+
+            for (int i = 0; i < listHesaptakiler.Groups[3].Items.Count; i++)
+            {
+                listUrunFiyat.Items.Add(listHesaptakiler.Groups[3].Items[i].Text);
+                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(listHesaptakiler.Groups[3].Items[i].SubItems[1].Text);
+                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(listHesaptakiler.Groups[3].Items[i].SubItems[2].Text);
+                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
+                toplamHesap += Convert.ToDecimal(listHesaptakiler.Groups[3].Items[i].SubItems[2].Text);
+            }
+
+            textBoxSecilenlerinTutari.Text = toplamHesap.ToString("0.00");
+            odenmekIstenenHesap = toplamHesap;
         }
+
+        private void timerSaat_Tick(object sender, EventArgs e)
+        {
+            labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
+        }
+
+        private void hesaplaButonlarindanBirineBasildi(object sender, EventArgs e)
+        {
+            decimal carpan;
+            try
+            {
+                carpan = Convert.ToDecimal(((Button)sender).Text);
+
+                textNumberOfItem.Text = (Convert.ToDecimal(textNumberOfItem.Text) + carpan).ToString("0.00");
+                odenmekIstenenHesap = (Convert.ToDecimal(textNumberOfItem.Text) + carpan);
+            }
+            catch //tümü butonuna basılmış demektir
+            {        
+                carpan = KesiriDecimalYap(((Button)sender).Text);
+
+                if (((Button)sender).Name == "buttonbolun") //name = buttonbolun --> 1/n olan buton
+                {
+                    carpan = KesiriDecimalYap("1/"+textNumberOfItem.Text);
+                }
+                
+                if(carpan > 1)
+                {
+                    carpan = 1;
+                }
+                textNumberOfItem.Text = (toplamHesap * carpan).ToString("0.00");
+                odenmekIstenenHesap = toplamHesap * carpan;
+            }
+        }
+
+
 
         private void buttonTamam_Click(object sender, EventArgs e)
         {
-           
-        }
+            if (Properties.Settings.Default.Server == 2) //server - diğer tüm clientlara söylemeli yaptığı ikram vs. neyse
+            {
 
-        private void paymentButton_Click(object sender, EventArgs e)
-        {
-           
-        }    
+            }
+            else //client
+            {
+
+            }
+        }
 
         #region SQL İşlemleri
 

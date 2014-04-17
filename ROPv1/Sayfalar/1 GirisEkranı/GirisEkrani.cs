@@ -123,6 +123,12 @@ namespace ROPv1
                     case "iptal": // ürün iptal edildiği bilgisini dağıtmak için
                         komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"]);
                         break;
+                    case "hesapOdeniyor": // yeni masa açıldığı bilgisi geldiğinde
+                        komut_hesapOdeniyor(parametreler["masa"], parametreler["departmanAdi"]);
+                        break;
+                    case "masaGirilebilirMi": // yeni masa açıldığı bilgisi geldiğinde
+                        komut_masaGirilebilirMi(parametreler["masa"], parametreler["departmanAdi"], e.Client);
+                        break;
                     case "masaDegistir": // Masa değiştirmek ve bu bilgiyi diğer kullanıcılara bildirmek için
                         komut_masaDegistir(parametreler["yeniMasa"], parametreler["yeniDepartmanAdi"], parametreler["eskiMasa"], parametreler["eskiDepartmanAdi"], parametreler["yapilmasiGereken"]);
                         break;
@@ -184,6 +190,55 @@ namespace ROPv1
 
         #region Komutlar
 
+        private void komut_masaGirilebilirMi(string masa, string departmanAdi, ClientRef client)
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT OdemeYapiliyor FROM Adisyon WHERE Adisyon.AcikMi=1 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "'");
+
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            dr.Read();
+            bool masaSerbestMi = false;
+            try
+            {
+                masaSerbestMi = dr.GetBoolean(0);
+            }
+            catch
+            {
+                masaSerbestMi = false;
+            }
+
+
+            client.MesajYolla("komut=masaGirilebilirMi&cevap=" + !masaSerbestMi);    // masaSebestMi nin ! ini yollarız çünkü hesap alınıyorsa true gelicek alınmıyorsa yani masa serbestse false gelicek        
+        }
+
+        private void komut_hesapOdeniyor(string masa, string departmanAdi)
+        {
+            //masanın adisyonundaki odemeyapiliyor bilgisini güncelle
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET OdemeYapiliyor=@odemeYapiliyor WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
+
+            cmd.Parameters.AddWithValue("@odemeYapiliyor", 1);
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+
+            //eğer hesabı ödenmeye başlanan masa serverda açıksa
+            if (siparisForm != null)
+            {
+                if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == masa)
+                {
+                    //invoke thread ler arası haberleşme
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        siparisForm.menuFormunuKapatHesapOdeniyor(masa, departmanAdi);
+                    });
+                }
+            }
+
+            // tüm kullanıcıları bilgilendir
+            tumKullanicilaraMesajYolla("komut=hesapOdeniyor&masa=" + masa + "&departmanAdi=" + departmanAdi);
+        }
+
         private void komut_urunuTasi(string MasaAdi, string departmanAdi, string yeniMasa, string yeniDepartmanAdi, string siparisiGirenKisi, string aktarmaBilgileri, ClientRef client)
         {
             string[] aktarmalar;
@@ -204,7 +259,7 @@ namespace ROPv1
 
             string urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi = null;
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE Adisyon.AcikMi=1 AND Adisyon.MasaAdi='" + yeniMasa + "' AND Adisyon.DepartmanAdi='" + yeniDepartmanAdi + "' ");
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE Adisyon.AcikMi=1 AND Adisyon.MasaAdi='" + yeniMasa + "' AND Adisyon.DepartmanAdi='" + yeniDepartmanAdi + "'");
 
             SqlDataReader dr = cmd.ExecuteReader();
 
@@ -344,7 +399,7 @@ namespace ROPv1
 
             //clientları bilgilendir 
             //kapatma mesajını ve urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi bilgisini gönder
-            if (siparisForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi)
+            if (siparisForm != null && (siparisForm.viewdakiDepartmaninAdi == departmanAdi || siparisForm.viewdakiDepartmaninAdi == yeniDepartmanAdi))
             {
                 if (urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi != null)
                 {
@@ -353,12 +408,12 @@ namespace ROPv1
                     tablebutton.BackColor = Color.Firebrick;
                     tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi + "&departmanAdi=" + departmanAdi);
                 }
-                if (siparisForm.siparisMenuForm != null && siparisForm.hangiMasaButonunaBasildi.Text == MasaAdi)
+                if (siparisForm.siparisMenuForm != null && (siparisForm.hangiMasaButonunaBasildi.Text == yeniMasa || siparisForm.hangiMasaButonunaBasildi.Text == MasaAdi))
                 {
                     //invoke thread ler arası haberleşme
                     this.Invoke((MethodInvoker)delegate
                     {
-                        siparisForm.menuFormunuKapat(MasaAdi,yeniDepartmanAdi,yeniMasa);
+                        siparisForm.menuFormunuKapat(MasaAdi, yeniDepartmanAdi, yeniMasa);
                     });
                 }
             }
@@ -415,9 +470,13 @@ namespace ROPv1
                     break;
             }
 
-            if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == eskiDepartmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == eskiMasa)
+            if (siparisForm.siparisMenuForm != null)
             {
-                siparisForm.komut_masaDegisti(eskiMasa, eskiDepartmanAdi, yeniMasa, yeniDepartmanAdi, "masaDegistir");
+                //invoke thread ler arası haberleşme
+                this.Invoke((MethodInvoker)delegate
+                {
+                    siparisForm.komut_masaDegisti(eskiMasa, eskiDepartmanAdi, yeniMasa, yeniDepartmanAdi, "masaDegistir");
+                });
             }
 
             //Tüm kullanıcılara masa değiştir mesajı gönderelim
@@ -439,10 +498,18 @@ namespace ROPv1
 
         private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotuGelen)
         {
-            if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == masa)
+            if (siparisForm != null)
             {
-                siparisForm.siparisMenuForm.siparisOnayiGeldi(miktar, yemekAdi, dusulecekDegerGelen);
+                if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == masa)
+                {
+                    //invoke thread ler arası haberleşme
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        siparisForm.siparisMenuForm.siparisOnayiGeldi(miktar, yemekAdi, dusulecekDegerGelen);
+                    });
+                }
             }
+
 
             siparisiKimGirdi = siparisiGirenKisi;
 
@@ -514,9 +581,16 @@ namespace ROPv1
 
         private void komut_iptal(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu, string ikraminGrubu)
         {
-            if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == masa)
+            if (siparisForm != null)
             {
-                siparisForm.siparisMenuForm.iptalGeldi(miktar, yemekAdi, dusulecekDegerGelen, ikraminGrubu);
+                if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == masa)
+                {
+                    //invoke thread ler arası haberleşme
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        siparisForm.siparisMenuForm.iptalGeldi(miktar, yemekAdi, dusulecekDegerGelen, ikraminGrubu);
+                    });
+                }
             }
 
             siparisiKimGirdi = siparisiGirenKisi;
@@ -651,10 +725,18 @@ namespace ROPv1
 
         private void komut_ikram(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu)
         {
-            if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == masa)
+            if (siparisForm != null)
             {
-                siparisForm.siparisMenuForm.ikramGeldi(miktar, yemekAdi, dusulecekDegerGelen);
+                if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == masa)
+                {
+                    //invoke thread ler arası haberleşme
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        siparisForm.siparisMenuForm.ikramGeldi(miktar, yemekAdi, dusulecekDegerGelen);
+                    });
+                }
             }
+
             siparisiKimGirdi = siparisiGirenKisi;
 
             this.adisyonNotu = adisyonNotu;
@@ -779,9 +861,16 @@ namespace ROPv1
 
         private void komut_ikramIptal(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu, string ikramYeniMiEskiMi)
         {
-            if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == masa)
+            if (siparisForm != null)
             {
-                siparisForm.siparisMenuForm.ikramIptaliGeldi(miktar, yemekAdi, dusulecekDegerGelen, ikramYeniMiEskiMi);
+                if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == masa)
+                {
+                    //invoke thread ler arası haberleşme
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        siparisForm.siparisMenuForm.ikramIptaliGeldi(miktar, yemekAdi, dusulecekDegerGelen, ikramYeniMiEskiMi);
+                    });
+                }
             }
 
             siparisiKimGirdi = siparisiGirenKisi;
