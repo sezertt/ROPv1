@@ -86,14 +86,15 @@ namespace ROPv1
                         else
                         {
                             KontrolFormu dialog = new KontrolFormu("Adisyon görüntüleme yetkiniz bulunmamaktadır", false);
-                            dialog.Show();
+                            dialog.ShowDialog();
+                            dialog.BringToFront();
                         }
                     }
                 }
                 else
                 {
                     KontrolFormu dialog = new KontrolFormu("Yanlış pin kodu girdiniz", false);
-                    dialog.Show();
+                    dialog.ShowDialog();
                 }
                 textboxPin.Text = "";
             }

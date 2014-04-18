@@ -468,7 +468,7 @@ namespace ROPv1
                     }
                 }
             }
-        }
+        } 
 
         //çarpanın ayarları
         private void textNumberOfItem_TextChanged(object sender, EventArgs e)
