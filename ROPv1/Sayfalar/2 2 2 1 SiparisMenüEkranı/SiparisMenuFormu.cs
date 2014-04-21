@@ -14,7 +14,7 @@ namespace ROPv1
 {
     public partial class SiparisMenuFormu : Form
     {
-        private SiparisMasaFormu masaFormu;
+        public SiparisMasaFormu masaFormu;
 
         public MasaDegistirFormu masaDegistirForm;
 
@@ -468,7 +468,7 @@ namespace ROPv1
                     }
                 }
             }
-        } 
+        }
 
         //çarpanın ayarları
         private void textNumberOfItem_TextChanged(object sender, EventArgs e)
@@ -601,7 +601,7 @@ namespace ROPv1
                 {
                     buttonMasaDegistir.Enabled = true;
 
-                    SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Porsiyon, YemekAdi, IkramMi, Garsonu from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 ORDER BY Porsiyon DESC");
+                    SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Porsiyon, YemekAdi, IkramMi, Garsonu from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.AcikMi=1 ORDER BY Porsiyon DESC");
                     SqlDataReader dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
@@ -757,7 +757,6 @@ namespace ROPv1
 
             for (int i = 0; i < siparisler.Count(); i++)
             {
-
                 string[] detaylari = siparisler[i].Split('-');
                 yemeginFiyati = Convert.ToDecimal(detaylari[0]);
                 kacPorsiyon = Convert.ToDouble(detaylari[1]);
@@ -1757,7 +1756,6 @@ namespace ROPv1
             }
         }
 
-
         private void masaAktarmaIslemlerindenSonraCik(string yeniMasaAdi, string yeniDepartmanAdi)
         {
             if (Properties.Settings.Default.Server == 2) //server - diğer tüm clientlara söylemeli yaptığı ikram vs. neyse
@@ -1949,23 +1947,26 @@ namespace ROPv1
         //ödeme kısmına geçiş butonu
         private void paymentButton_Click(object sender, EventArgs e)
         {
-            //ödendiğinde sql de ödendi flagini 1 yap 
-
-            hesapForm = new HesapFormu(this, listUrunFiyat,MasaAdi,hangiDepartman.departmanAdi);
-
-            if (Properties.Settings.Default.Server == 2) // server
+            if (listUrunFiyat.Items.Count > 0)
             {
-                odemeyeGec();
-                //herkesi masadan çıkar 
-                masaFormu.serverdanHesapOdeme(MasaAdi, hangiDepartman.departmanAdi, "hesapOdeniyor");
+                //ödendiğinde sql de ödendi flagini 1 yap 
+
+                hesapForm = new HesapFormu(this, listUrunFiyat, MasaAdi, hangiDepartman.departmanAdi, siparisiKimGirdi);
+
+                if (Properties.Settings.Default.Server == 2) // server
+                {
+                    odemeyeGec();
+                    //herkesi masadan çıkar 
+                    masaFormu.serverdanHesapOdeme(MasaAdi, hangiDepartman.departmanAdi, "hesapOdeniyor");
+                }
+                else
+                {
+                    //servera söyle herkesi masadan çıkarsın
+                    masaFormu.menuFormundanServeraYolla(MasaAdi, hangiDepartman.departmanAdi, "hesapOdeniyor");
+                }
+                hesapForm.ShowDialog();
             }
-            else
-            {
-                //servera söyle herkesi masadan çıkarsın
-                masaFormu.menuFormundanServeraYolla(MasaAdi, hangiDepartman.departmanAdi, "hesapOdeniyor");
-            }
-            hesapForm.ShowDialog();
-        } // şu an boş, yapılacak
+        }
 
         #region SQL İşlemleri
 

@@ -826,6 +826,17 @@ namespace ROPv1
 
         #region Komutlar
 
+        private void komut_OdenenleriGonder(string siparisBilgileri)
+        {
+            try
+            {
+                //Mesajı yönlendirelim
+                siparisMenuForm.hesapForm.odenenlerGeldi(siparisBilgileri);
+            }
+            catch
+            { }
+        }
+
         private void komut_masaGirilebilirMi(string cevap)
         {
             if (cevap == "True")

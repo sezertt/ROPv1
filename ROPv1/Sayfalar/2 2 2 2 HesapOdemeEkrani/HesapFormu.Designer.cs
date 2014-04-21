@@ -60,12 +60,18 @@
             this.buttonHesapYazdir = new System.Windows.Forms.Button();
             this.buttonIndirimYuzdeli = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.listOdenenler = new System.Windows.Forms.ListView();
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.listUrunFiyat = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel2 = new System.Windows.Forms.Panel();
+            this.labelIndirimToplam = new System.Windows.Forms.Label();
             this.labelOdenenFis = new System.Windows.Forms.Label();
             this.labelOdenenKart = new System.Windows.Forms.Label();
             this.labelOdenenNakit = new System.Windows.Forms.Label();
@@ -85,7 +91,6 @@
             this.labelIndirimYuzde = new System.Windows.Forms.Label();
             this.buttonDeleteText = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.labelIndirimToplam = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -539,12 +544,60 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.listOdenenler);
             this.panel1.Controls.Add(this.listUrunFiyat);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Location = new System.Drawing.Point(9, 14);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(477, 742);
             this.panel1.TabIndex = 1;
+            // 
+            // listOdenenler
+            // 
+            this.listOdenenler.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listOdenenler.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.listOdenenler.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listOdenenler.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader5,
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8});
+            this.listOdenenler.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold);
+            this.listOdenenler.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.listOdenenler.FullRowSelect = true;
+            this.listOdenenler.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.listOdenenler.LabelWrap = false;
+            this.listOdenenler.Location = new System.Drawing.Point(0, 578);
+            this.listOdenenler.Margin = new System.Windows.Forms.Padding(0);
+            this.listOdenenler.MultiSelect = false;
+            this.listOdenenler.Name = "listOdenenler";
+            this.listOdenenler.Size = new System.Drawing.Size(477, 135);
+            this.listOdenenler.SmallImageList = this.ımageList1;
+            this.listOdenenler.TabIndex = 2;
+            this.listOdenenler.UseCompatibleStateImageBehavior = false;
+            this.listOdenenler.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Adet";
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "SeçilenAdet";
+            this.columnHeader6.Width = 63;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Siparişler";
+            this.columnHeader7.Width = 250;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "Fiyatları";
+            this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader8.Width = 100;
             // 
             // listUrunFiyat
             // 
@@ -567,7 +620,7 @@
             this.listUrunFiyat.Margin = new System.Windows.Forms.Padding(0);
             this.listUrunFiyat.MultiSelect = false;
             this.listUrunFiyat.Name = "listUrunFiyat";
-            this.listUrunFiyat.Size = new System.Drawing.Size(477, 621);
+            this.listUrunFiyat.Size = new System.Drawing.Size(477, 487);
             this.listUrunFiyat.SmallImageList = this.ımageList1;
             this.listUrunFiyat.TabIndex = 1;
             this.listUrunFiyat.UseCompatibleStateImageBehavior = false;
@@ -609,10 +662,25 @@
             this.panel2.Controls.Add(this.labelOdenenToplamText);
             this.panel2.Controls.Add(this.labelKalanHesap);
             this.panel2.Controls.Add(this.labelKalanText);
-            this.panel2.Location = new System.Drawing.Point(0, 620);
+            this.panel2.Location = new System.Drawing.Point(0, 486);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(477, 123);
+            this.panel2.Size = new System.Drawing.Size(477, 256);
             this.panel2.TabIndex = 1;
+            // 
+            // labelIndirimToplam
+            // 
+            this.labelIndirimToplam.AutoSize = true;
+            this.labelIndirimToplam.BackColor = System.Drawing.Color.Transparent;
+            this.labelIndirimToplam.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelIndirimToplam.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelIndirimToplam.Location = new System.Drawing.Point(110, -1);
+            this.labelIndirimToplam.Margin = new System.Windows.Forms.Padding(0);
+            this.labelIndirimToplam.Name = "labelIndirimToplam";
+            this.labelIndirimToplam.Size = new System.Drawing.Size(174, 33);
+            this.labelIndirimToplam.TabIndex = 110;
+            this.labelIndirimToplam.Text = "(indirim: 0,00)";
+            this.labelIndirimToplam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelIndirimToplam.Visible = false;
             // 
             // labelOdenenFis
             // 
@@ -620,7 +688,7 @@
             this.labelOdenenFis.BackColor = System.Drawing.Color.Transparent;
             this.labelOdenenFis.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.labelOdenenFis.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelOdenenFis.Location = new System.Drawing.Point(112, 72);
+            this.labelOdenenFis.Location = new System.Drawing.Point(112, 70);
             this.labelOdenenFis.Margin = new System.Windows.Forms.Padding(0);
             this.labelOdenenFis.Name = "labelOdenenFis";
             this.labelOdenenFis.Size = new System.Drawing.Size(353, 19);
@@ -634,7 +702,7 @@
             this.labelOdenenKart.BackColor = System.Drawing.Color.Transparent;
             this.labelOdenenKart.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.labelOdenenKart.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelOdenenKart.Location = new System.Drawing.Point(112, 53);
+            this.labelOdenenKart.Location = new System.Drawing.Point(112, 51);
             this.labelOdenenKart.Margin = new System.Windows.Forms.Padding(0);
             this.labelOdenenKart.Name = "labelOdenenKart";
             this.labelOdenenKart.Size = new System.Drawing.Size(353, 19);
@@ -648,7 +716,7 @@
             this.labelOdenenNakit.BackColor = System.Drawing.Color.Transparent;
             this.labelOdenenNakit.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.labelOdenenNakit.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelOdenenNakit.Location = new System.Drawing.Point(112, 34);
+            this.labelOdenenNakit.Location = new System.Drawing.Point(112, 32);
             this.labelOdenenNakit.Margin = new System.Windows.Forms.Padding(0);
             this.labelOdenenNakit.Name = "labelOdenenNakit";
             this.labelOdenenNakit.Size = new System.Drawing.Size(353, 19);
@@ -662,7 +730,7 @@
             this.labelOdenenToplam.BackColor = System.Drawing.Color.Transparent;
             this.labelOdenenToplam.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelOdenenToplam.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelOdenenToplam.Location = new System.Drawing.Point(261, 1);
+            this.labelOdenenToplam.Location = new System.Drawing.Point(261, -1);
             this.labelOdenenToplam.Margin = new System.Windows.Forms.Padding(0);
             this.labelOdenenToplam.Name = "labelOdenenToplam";
             this.labelOdenenToplam.Size = new System.Drawing.Size(208, 33);
@@ -676,7 +744,7 @@
             this.labelOdenenFisText.BackColor = System.Drawing.Color.Transparent;
             this.labelOdenenFisText.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelOdenenFisText.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelOdenenFisText.Location = new System.Drawing.Point(19, 72);
+            this.labelOdenenFisText.Location = new System.Drawing.Point(19, 70);
             this.labelOdenenFisText.Name = "labelOdenenFisText";
             this.labelOdenenFisText.Size = new System.Drawing.Size(82, 19);
             this.labelOdenenFisText.TabIndex = 105;
@@ -689,7 +757,7 @@
             this.labelOdenenKartText.BackColor = System.Drawing.Color.Transparent;
             this.labelOdenenKartText.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelOdenenKartText.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelOdenenKartText.Location = new System.Drawing.Point(19, 53);
+            this.labelOdenenKartText.Location = new System.Drawing.Point(19, 51);
             this.labelOdenenKartText.Name = "labelOdenenKartText";
             this.labelOdenenKartText.Size = new System.Drawing.Size(85, 19);
             this.labelOdenenKartText.TabIndex = 104;
@@ -702,7 +770,7 @@
             this.labelOdenenNakitText.BackColor = System.Drawing.Color.Transparent;
             this.labelOdenenNakitText.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelOdenenNakitText.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelOdenenNakitText.Location = new System.Drawing.Point(19, 34);
+            this.labelOdenenNakitText.Location = new System.Drawing.Point(19, 32);
             this.labelOdenenNakitText.Name = "labelOdenenNakitText";
             this.labelOdenenNakitText.Size = new System.Drawing.Size(50, 19);
             this.labelOdenenNakitText.TabIndex = 103;
@@ -715,7 +783,7 @@
             this.labelOdenenToplamText.BackColor = System.Drawing.Color.Transparent;
             this.labelOdenenToplamText.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelOdenenToplamText.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelOdenenToplamText.Location = new System.Drawing.Point(3, 1);
+            this.labelOdenenToplamText.Location = new System.Drawing.Point(3, -1);
             this.labelOdenenToplamText.Name = "labelOdenenToplamText";
             this.labelOdenenToplamText.Size = new System.Drawing.Size(110, 33);
             this.labelOdenenToplamText.TabIndex = 102;
@@ -728,13 +796,14 @@
             this.labelKalanHesap.BackColor = System.Drawing.Color.Transparent;
             this.labelKalanHesap.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelKalanHesap.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelKalanHesap.Location = new System.Drawing.Point(116, 88);
+            this.labelKalanHesap.Location = new System.Drawing.Point(175, 224);
             this.labelKalanHesap.Margin = new System.Windows.Forms.Padding(0);
             this.labelKalanHesap.Name = "labelKalanHesap";
-            this.labelKalanHesap.Size = new System.Drawing.Size(353, 33);
+            this.labelKalanHesap.Size = new System.Drawing.Size(294, 33);
             this.labelKalanHesap.TabIndex = 101;
             this.labelKalanHesap.Text = "0,00";
             this.labelKalanHesap.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.labelKalanHesap.TextChanged += new System.EventHandler(this.labelKalanHesap_TextChanged);
             // 
             // labelKalanText
             // 
@@ -742,7 +811,7 @@
             this.labelKalanText.BackColor = System.Drawing.Color.Transparent;
             this.labelKalanText.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelKalanText.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelKalanText.Location = new System.Drawing.Point(3, 88);
+            this.labelKalanText.Location = new System.Drawing.Point(3, 224);
             this.labelKalanText.Name = "labelKalanText";
             this.labelKalanText.Size = new System.Drawing.Size(84, 33);
             this.labelKalanText.TabIndex = 100;
@@ -756,6 +825,7 @@
             // 
             // labelIndirim
             // 
+            this.labelIndirim.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelIndirim.AutoSize = true;
             this.labelIndirim.BackColor = System.Drawing.Color.Transparent;
             this.labelIndirim.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -815,6 +885,7 @@
             // 
             // labelIndirimTL
             // 
+            this.labelIndirimTL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelIndirimTL.AutoSize = true;
             this.labelIndirimTL.BackColor = System.Drawing.Color.Transparent;
             this.labelIndirimTL.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -829,6 +900,7 @@
             // 
             // labelIndirimYuzde
             // 
+            this.labelIndirimYuzde.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelIndirimYuzde.AutoSize = true;
             this.labelIndirimYuzde.BackColor = System.Drawing.Color.Transparent;
             this.labelIndirimYuzde.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -871,22 +943,6 @@
             this.button1.TabIndex = 117;
             this.button1.Text = "Son Ödemeyi Geri Al";
             this.button1.UseVisualStyleBackColor = false;
-            // 
-            // labelIndirimToplam
-            // 
-            this.labelIndirimToplam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelIndirimToplam.AutoSize = true;
-            this.labelIndirimToplam.BackColor = System.Drawing.Color.Transparent;
-            this.labelIndirimToplam.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelIndirimToplam.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelIndirimToplam.Location = new System.Drawing.Point(110, 1);
-            this.labelIndirimToplam.Margin = new System.Windows.Forms.Padding(0);
-            this.labelIndirimToplam.Name = "labelIndirimToplam";
-            this.labelIndirimToplam.Size = new System.Drawing.Size(174, 33);
-            this.labelIndirimToplam.TabIndex = 110;
-            this.labelIndirimToplam.Text = "(indirim: 0,00)";
-            this.labelIndirimToplam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelIndirimToplam.Visible = false;
             // 
             // HesapFormu
             // 
@@ -1007,5 +1063,10 @@
         private System.Windows.Forms.Button buttonDeleteText;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label labelIndirimToplam;
+        private System.Windows.Forms.ListView listOdenenler;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
     }
 }

@@ -446,7 +446,6 @@
         private System.Windows.Forms.Button buttonHesapOde;
         private System.Windows.Forms.Button buttonTamam;
         private System.Windows.Forms.Button buttonNotEkle;
-        private System.Windows.Forms.Button buttonMasaDegistir;
         private System.Windows.Forms.TextBox textNumberOfItem;
         private System.Windows.Forms.Button buttonDeleteText;
         private PinboardClassLibrary.Pinboardcontrol2 pinboardcontrol21;
@@ -457,7 +456,6 @@
         private System.Windows.Forms.Button buttonUrunIptal;
         private System.Windows.Forms.Button buttonTasi;
         private System.Windows.Forms.ImageList ımageList1;
-        private MyListView listUrunFiyat;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
@@ -466,5 +464,7 @@
         private System.Windows.Forms.Label labelKalan;
         private System.Windows.Forms.Button buttonTemizle;
         private System.Windows.Forms.Timer timerDialogClose;
+        public System.Windows.Forms.Button buttonMasaDegistir;
+        public MyListView listUrunFiyat;
     }
 }

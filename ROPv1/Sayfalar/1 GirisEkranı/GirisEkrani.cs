@@ -147,6 +147,9 @@ namespace ROPv1
                     case "LoadSiparis": // bir kullanıcı menü ekranını açmak istediğinde masada verilen siparişleri aktarmak için
                         komut_loadSiparis(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
                         break;
+                    case "OdenenleriGonder": // bir kullanıcı menü ekranını açmak istediğinde masada verilen siparişleri aktarmak için
+                        komut_OdenenleriGonder(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
+                        break;
                     case "AdisyonNotu": // adisyon notu değiştirileceğinde eski adisyon notunu göstermek için
                         komut_adisyonNotu(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
                         break;
@@ -189,6 +192,35 @@ namespace ROPv1
         }
 
         #region Komutlar
+
+        //hesap ekranı load olurken ödenen siparişlere dair bilgileri gönderen method
+        private void komut_OdenenleriGonder(ClientRef client, string masa, string departmanAdi)
+        {
+            StringBuilder siparisBilgileri = new StringBuilder();
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Porsiyon, YemekAdi from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' and Adisyon.DepartmanAdi='" + departmanAdi + "' and Siparis.IptalMi=0 AND Siparis.OdendiMi=1 AND Adisyon.AcikMi=1 ORDER BY Porsiyon DESC");
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                try
+                {
+                    siparisBilgileri.Append("*" + dr.GetDecimal(0).ToString() + "-" + dr.GetDecimal(1).ToString() + "-" + dr.GetString(2));
+                }
+                catch
+                {
+                    //HATA MESAJI GÖNDER
+                    komut_IslemHatasi(client, "İşlem gerçekleştirilemedi, lütfen tekrar deneyiniz");
+                    siparisBilgileri.Clear();
+                    return;
+                }
+            }
+
+            if (siparisBilgileri.Length >= 1)
+            {
+                siparisBilgileri.Remove(0, 1);
+            }
+
+            client.MesajYolla("komut=OdenenleriGonder&siparisBilgileri=" + siparisBilgileri);
+        }
 
         private void komut_masaGirilebilirMi(string masa, string departmanAdi, ClientRef client)
         {
@@ -1025,7 +1057,7 @@ namespace ROPv1
         private void komut_loadSiparis(ClientRef client, string masa, string departmanAdi)
         {
             StringBuilder siparisBilgileri = new StringBuilder();
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Porsiyon, YemekAdi, IkramMi, Garsonu from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' and Adisyon.DepartmanAdi='" + departmanAdi + "' and Siparis.IptalMi=0 AND Siparis.OdendiMi=0 ORDER BY Porsiyon DESC");
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Porsiyon, YemekAdi, IkramMi, Garsonu from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' and Adisyon.DepartmanAdi='" + departmanAdi + "' and Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.AcikMi=1 ORDER BY Porsiyon DESC");
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
