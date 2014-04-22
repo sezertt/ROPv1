@@ -319,13 +319,13 @@ namespace ROPv1
                 }
                 if (textboxFiyat.Text == "")
                 {
-                    textboxFiyat.Text = UrunListesi[index].porsiyonFiyati[aradigim - 1];
+                    textboxFiyat.Text =UrunListesi[index].porsiyonFiyati[aradigim - 1];
                 }
                 else
                 {
                     double fiyat = Convert.ToDouble(textboxFiyat.Text);
                     fiyat += Convert.ToDouble(UrunListesi[index].porsiyonFiyati[aradigim - 1]);
-                    textboxFiyat.Text = fiyat.ToString();
+                    textboxFiyat.Text = fiyat.ToString("0.00");
                 }
                 MenuUrunuBilgisi yeniurun = new MenuUrunuBilgisi();
                 yeniurun.porsiyonFiyati = UrunListesi[index].porsiyonFiyati[aradigim - 1];
