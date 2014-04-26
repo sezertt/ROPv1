@@ -284,7 +284,7 @@ namespace ROPv1
                 {
                     if (Properties.Settings.Default.Server == 2) // server
                     {
-                        SqlCommand cmd = SQLBaglantisi.getCommand("SELECT OdemeYapiliyor FROM Adisyon WHERE Adisyon.AcikMi=1 AND Adisyon.MasaAdi='" + hangiMasa + "' AND Adisyon.DepartmanAdi='" + viewdakiDepartmaninAdi + "'");
+                        SqlCommand cmd = SQLBaglantisi.getCommand("SELECT OdemeYapiliyor FROM Adisyon WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Adisyon.MasaAdi='" + hangiMasa + "' AND Adisyon.DepartmanAdi='" + viewdakiDepartmaninAdi + "'");
 
                         SqlDataReader dr = cmd.ExecuteReader();
 
@@ -301,13 +301,16 @@ namespace ROPv1
                             masaSerbestMi = false;
                         }
 
-                        if (!masaSerbestMi)
+                        cmd.Connection.Close();
+                        cmd.Connection.Dispose();
+
+                        if (masaSerbestMi)
                         {
-                            komut_masaGirilebilirMi("True");
+                            komut_masaGirilebilirMi("false");
                         }
                         else
                         {
-                            komut_masaGirilebilirMi("false");
+                            komut_masaGirilebilirMi("True");
                         }
                     }
                     else
@@ -641,8 +644,14 @@ namespace ROPv1
                     case "giris": //Yolladığımız giris mesajına karşılık gelen mesaj
                         komut_giris(parametreler["sonuc"]);
                         break;
+                    case "OdemeOnay": //Yolladığımız giris mesajına karşılık gelen mesaj
+                        komut_OdemeOnay(parametreler["odemeTipi"], parametreler["odemeMiktari"], parametreler["secilipOdenenSiparisBilgileri"]);
+                        break;
                     case "LoadSiparis": // serverdan siparis bilgileri geldiğinde
                         komut_loadSiparis(parametreler["siparisBilgileri"]);
+                        break;
+                    case "OdenenleriGonder": // serverdan siparis bilgileri geldiğinde
+                        komut_OdenenleriGonder(parametreler["siparisBilgileri"], parametreler["odemeBilgileri"]);
                         break;
                     case "toplumesaj": //tüm gruba gelen mesaj - server kapandığında(şimdilik)
                         komut_topluMesaj(parametreler["mesaj"]);
@@ -697,6 +706,11 @@ namespace ROPv1
         public void menuFormundanServeraYolla(string masa, string departman, string komut)
         {
             client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman);
+        }
+
+        public void hesapFormundanOdeme(string masa, string departman, string komut, int odemeTipi, decimal odemeMiktari, StringBuilder secilipOdenenSiparisBilgileri)
+        {
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odemeTipi=" + odemeTipi.ToString() + "&odemeMiktari=" + odemeMiktari.ToString() + "&secilipOdenenSiparisBilgileri=" + secilipOdenenSiparisBilgileri);
         }
 
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
@@ -826,12 +840,23 @@ namespace ROPv1
 
         #region Komutlar
 
-        private void komut_OdenenleriGonder(string siparisBilgileri)
+        private void komut_OdemeOnay(string odemeTipi, string odemeMiktari, string secilipOdenenSiparisBilgileri)
         {
             try
             {
                 //Mesajı yönlendirelim
-                siparisMenuForm.hesapForm.odenenlerGeldi(siparisBilgileri);
+                siparisMenuForm.hesapForm.odemeOnaylandi(odemeTipi, odemeMiktari, secilipOdenenSiparisBilgileri);
+            }
+            catch
+            { }
+        }
+
+        private void komut_OdenenleriGonder(string siparisBilgileri, string odemeBilgileri)
+        {
+            try
+            {
+                //Mesajı yönlendirelim
+                siparisMenuForm.hesapForm.odenenlerGeldi(siparisBilgileri, odemeBilgileri);
             }
             catch
             { }
@@ -860,12 +885,10 @@ namespace ROPv1
         private void komut_hesapOdeniyor(string masa, string departmanAdi)
         {
             //eğer hesabı ödenmeye başlanan masa serverda açıksa
-            if (siparisMenuForm != null)
+            if (siparisMenuForm != null && (viewdakiDepartmaninAdi == departmanAdi && hangiMasaButonunaBasildi.Text == masa))
             {
-                if (siparisMenuForm.hesapForm != null && viewdakiDepartmaninAdi == departmanAdi && hangiMasaButonunaBasildi.Text == masa)
-                {
+                if(siparisMenuForm.hesapForm == null)
                     menuFormunuKapatHesapOdeniyor(masa, departmanAdi);
-                }
             }
         }
 

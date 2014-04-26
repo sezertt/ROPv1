@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b593b8a3-f3b2-4320-a7d9-c57a12a31f9e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:1118/Siparis.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Siparis.xsd" MetadataType="Schema" ID="0e435af2-fd50-4e73-b54e-d900c152be31" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?xsd=xsd2" />
+    <MetadataFile FileName="Siparis.wsdl" MetadataType="Wsdl" ID="21f764f4-e41b-45cd-872d-0be9f7452cc5" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?wsdl" />
+    <MetadataFile FileName="Siparis1.xsd" MetadataType="Schema" ID="47a26725-3daa-4626-a01b-8d44697e4767" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?xsd=xsd0" />
+    <MetadataFile FileName="Siparis.disco" MetadataType="Disco" ID="2f084fef-18ee-4052-95a6-fccc85f22128" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?disco" />
+    <MetadataFile FileName="Siparis2.xsd" MetadataType="Schema" ID="dcb63628-12ee-4b37-a4bb-ad03e3f4484c" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

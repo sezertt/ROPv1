@@ -233,6 +233,16 @@ namespace ROPv1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap invoice_icon {
+            get {
+                object obj = ResourceManager.GetObject("invoice-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap kart {
             get {
                 object obj = ResourceManager.GetObject("kart", resourceCulture);
