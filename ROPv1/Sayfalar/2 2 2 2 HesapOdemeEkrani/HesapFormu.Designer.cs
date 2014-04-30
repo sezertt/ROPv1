@@ -103,6 +103,7 @@
             this.textNumberOfItem.Size = new System.Drawing.Size(404, 67);
             this.textNumberOfItem.TabIndex = 68;
             this.textNumberOfItem.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textNumberOfItem.Click += new System.EventHandler(this.textNumberOfItem_Click);
             this.textNumberOfItem.TextChanged += new System.EventHandler(this.textNumberOfItem_TextChanged);
             this.textNumberOfItem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPressedOnPriceText);
             // 
@@ -270,6 +271,7 @@
             this.textBoxSecilenlerinTutari.Size = new System.Drawing.Size(404, 67);
             this.textBoxSecilenlerinTutari.TabIndex = 99;
             this.textBoxSecilenlerinTutari.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxSecilenlerinTutari.TextChanged += new System.EventHandler(this.textBoxSecilenlerinTutari_TextChanged);
             // 
             // button11
             // 

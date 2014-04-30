@@ -15,6 +15,8 @@ using System.Globalization;
 // 0 NAKİT
 // 1 KREDİ KARTI
 // 2 YEMEK FİŞİ
+// 3 İNDİRİM TL
+// 4 İNDİRİM %
 
 namespace ROPv1
 {
@@ -130,6 +132,25 @@ namespace ROPv1
             {
                 textNumberOfItem.Text = "0,";
                 textNumberOfItem.SelectionStart = textNumberOfItem.Text.Length;
+            }
+
+            bool odemedeSiparisSeciliMi = false;
+
+            for (int i = listUrunFiyat.Items.Count - 1; i > -1; i--)
+            {
+                if (listUrunFiyat.Items[i].SubItems[1].Text != "-")
+                {
+                    odemedeSiparisSeciliMi = true;
+                    break;
+                }
+            }
+
+            if(odemedeSiparisSeciliMi)
+            {
+                if (Convert.ToDecimal(textNumberOfItem.Text) < Convert.ToDecimal(textBoxSecilenlerinTutari.Text))
+                {
+                    textNumberOfItem.Text = Convert.ToDecimal(textBoxSecilenlerinTutari.Text).ToString("0.00");
+                }
             }
         }
 
@@ -577,11 +598,6 @@ namespace ROPv1
             if (indirim >= toplamHesap)
             {
                 indirim = toplamHesap;
-                textBoxSecilenlerinTutari.Text = "0,00";
-            }
-            else
-            {
-                textBoxSecilenlerinTutari.Text = (toplamHesap - indirim).ToString("0.00");
             }
 
             labelIndirimTLTutar.Text = indirim.ToString("0.00");
@@ -605,6 +621,15 @@ namespace ROPv1
                 toplamOdemeVeIndirim += indirim;
             }
 
+            if (indirim == toplamHesap)
+            {
+                textBoxSecilenlerinTutari.Text = "0,00";
+            }
+            else
+            {
+                textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+            }
+
             textNumberOfItem.Text = "0,00";
             labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
         }
@@ -626,12 +651,10 @@ namespace ROPv1
             if (indirimYuzde >= 100)
             {
                 indirimYuzde = toplamHesap;
-                textBoxSecilenlerinTutari.Text = "0,00";
             }
             else
             {
                 indirimYuzde = toplamHesap * indirimYuzde / 100;
-                textBoxSecilenlerinTutari.Text = (toplamHesap - indirimYuzde).ToString("0.00");
             }
 
             labelIndirimYuzdeTutar.Text = indirimYuzde.ToString("0.00");
@@ -652,6 +675,15 @@ namespace ROPv1
                 labelIndirimYuzde.Visible = true;
                 labelIndirimYuzdeTutar.Visible = true;
                 toplamOdemeVeIndirim += indirimYuzde;
+            }
+
+            if (indirimYuzde == 100)
+            {
+                textBoxSecilenlerinTutari.Text = "0,00";
+            }
+            else
+            {
+                textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             }
 
             textNumberOfItem.Text = "0,00";
@@ -737,6 +769,11 @@ namespace ROPv1
                 textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             if (Convert.ToDecimal(textNumberOfItem.Text) > (toplamHesap - toplamOdemeVeIndirim))
                 textNumberOfItem.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+
+            if (Convert.ToDecimal(textBoxSecilenlerinTutari.Text) < 0)
+                textBoxSecilenlerinTutari.Text = "0,00";
+            if (Convert.ToDecimal(textNumberOfItem.Text) < 0)
+                textNumberOfItem.Text = "0,00";
 
             listUrunFiyat.SelectedItems.Clear();
         }
@@ -1176,6 +1213,17 @@ namespace ROPv1
         private void buttonAdisyonYazdir_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBoxSecilenlerinTutari_TextChanged(object sender, EventArgs e)
+        {
+            if (Convert.ToDecimal(((TextBox)sender).Text) < 0)
+                ((TextBox)sender).Text = "0,00";          
+        }
+
+        private void textNumberOfItem_Click(object sender, EventArgs e)
+        {
+            ((TextBox)sender).SelectAll();
         }
     }
 }

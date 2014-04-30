@@ -30,6 +30,8 @@
         {
             this.labelAciklama = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonDevamEtme = new System.Windows.Forms.Button();
+            this.buttonDevamEt = new System.Windows.Forms.Button();
             this.buttonTamam = new System.Windows.Forms.Button();
             this.buttonNO = new System.Windows.Forms.Button();
             this.buttonYES = new System.Windows.Forms.Button();
@@ -56,6 +58,45 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(450, 110);
             this.panel1.TabIndex = 32;
+            // 
+            // buttonDevamEtme
+            // 
+            this.buttonDevamEtme.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonDevamEtme.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonDevamEtme.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonDevamEtme.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonDevamEtme.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonDevamEtme.Image = global::ROPv1.Properties.Resources.icon;
+            this.buttonDevamEtme.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonDevamEtme.Location = new System.Drawing.Point(312, 132);
+            this.buttonDevamEtme.Name = "buttonDevamEtme";
+            this.buttonDevamEtme.Size = new System.Drawing.Size(125, 50);
+            this.buttonDevamEtme.TabIndex = 35;
+            this.buttonDevamEtme.Text = "Tamam";
+            this.buttonDevamEtme.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonDevamEtme.UseVisualStyleBackColor = false;
+            this.buttonDevamEtme.Visible = false;
+            this.buttonDevamEtme.Click += new System.EventHandler(this.buttonTamam_Click);
+            // 
+            // buttonDevamEt
+            // 
+            this.buttonDevamEt.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonDevamEt.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonDevamEt.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonDevamEt.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonDevamEt.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonDevamEt.Image = global::ROPv1.Properties.Resources.dikkat;
+            this.buttonDevamEt.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonDevamEt.Location = new System.Drawing.Point(37, 132);
+            this.buttonDevamEt.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonDevamEt.Name = "buttonDevamEt";
+            this.buttonDevamEt.Size = new System.Drawing.Size(255, 50);
+            this.buttonDevamEt.TabIndex = 34;
+            this.buttonDevamEt.Text = "Biliyorum, Masayı Aç";
+            this.buttonDevamEt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonDevamEt.UseVisualStyleBackColor = false;
+            this.buttonDevamEt.Visible = false;
+            this.buttonDevamEt.Click += new System.EventHandler(this.buttonDevamEt_Click);
             // 
             // buttonTamam
             // 
@@ -120,6 +161,8 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(474, 189);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonDevamEtme);
+            this.Controls.Add(this.buttonDevamEt);
             this.Controls.Add(this.buttonTamam);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.buttonNO);
@@ -150,5 +193,7 @@
         private System.Windows.Forms.Label labelAciklama;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonTamam;
+        private System.Windows.Forms.Button buttonDevamEt;
+        private System.Windows.Forms.Button buttonDevamEtme;
     }
 }

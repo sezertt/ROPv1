@@ -460,6 +460,7 @@
     <None Include="Resources\hesap.png" />
     <None Include="Resources\tl.png" />
     <None Include="Resources\invoice-icon.png" />
+    <None Include="Resources\dikkat.png" />
     <Content Include="ROP.ico" />
   </ItemGroup>
   <ItemGroup>

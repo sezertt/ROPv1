@@ -173,6 +173,16 @@ namespace ROPv1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap dikkat {
+            get {
+                object obj = ResourceManager.GetObject("dikkat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap downBig {
             get {
                 object obj = ResourceManager.GetObject("downBig", resourceCulture);

@@ -872,7 +872,7 @@ namespace ROPv1
             { }
         }
 
-        private void komut_masaGirilebilirMi(string cevap)
+        public void komut_masaGirilebilirMi(string cevap)
         {
             if (cevap == "True")
             {
@@ -887,7 +887,7 @@ namespace ROPv1
             }
             else
             {
-                dialog2 = new KontrolFormu("Hesap ödeniyor lütfen daha sonra tekrar giriş yapmayı deneyin", false);
+                dialog2 = new KontrolFormu("Hesap ödeniyor lütfen daha sonra tekrar giriş yapmayı deneyin", false, this);
                 dialog2.Show();
             }
         }
