@@ -460,11 +460,11 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.Button buttonAdd;
-        private System.Windows.Forms.Label labelKalanHesap;
         private System.Windows.Forms.Label labelKalan;
         private System.Windows.Forms.Button buttonTemizle;
         private System.Windows.Forms.Timer timerDialogClose;
         public System.Windows.Forms.Button buttonMasaDegistir;
         public MyListView listUrunFiyat;
+        public System.Windows.Forms.Label labelKalanHesap;
     }
 }

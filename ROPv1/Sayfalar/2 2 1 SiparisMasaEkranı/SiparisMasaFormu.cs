@@ -713,6 +713,16 @@ namespace ROPv1
             client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odemeTipi=" + odemeTipi.ToString() + "&odemeMiktari=" + odemeMiktari.ToString() + "&secilipOdenenSiparisBilgileri=" + secilipOdenenSiparisBilgileri);
         }
 
+        public void hesapFormundanOdemeBitti(string masa, string departman, string komut, bool odenmeyenSiparisVarMiGelen)
+        {
+            int odenmeyenSiparisVarMi = 0; // ödenmeyen sipariş yok siparişleri ödendi ye çevir ve ödemeyapılıyoru 0 yap
+
+            if (odenmeyenSiparisVarMiGelen)
+                odenmeyenSiparisVarMi = 1; // ödenmeyen sipariş var sadece ödemeyapılıyoru 0 yap
+
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odenmeyenSiparisVarMi=" + odenmeyenSiparisVarMi);
+        }
+
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
         public void menuFormundanServeraSiparisYolla(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, string ikramYeniMiEskiMi)
         {

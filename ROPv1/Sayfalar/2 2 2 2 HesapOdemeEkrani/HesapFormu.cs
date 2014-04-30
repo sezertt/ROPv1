@@ -370,8 +370,6 @@ namespace ROPv1
                     }
 
                     labelOdenenToplam.Text = (Convert.ToDecimal(labelOdenenToplam.Text) + odenenMiktar).ToString("0.00");
-
-                    toplamHesap -= odenenMiktar;
                 }
                 cmd.Connection.Close();
                 cmd.Connection.Dispose();
@@ -531,8 +529,6 @@ namespace ROPv1
                     }
 
                     labelOdenenToplam.Text = (Convert.ToDecimal(labelOdenenToplam.Text) + odenenMiktar).ToString("0.00");
-
-                    toplamHesap -= odenenMiktar;
                 }
             }
 
@@ -801,6 +797,63 @@ namespace ROPv1
                 {
                     if (listUrunFiyat.Items[i].SubItems[1].Text != "-")
                     {
+                        //BURADA AKTARMALARDAKİ SİPARİŞLERİ UPDATE ET BOL VS. ikram iptaldeki gibi
+
+                        decimal kacPorsiyon = Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[1].Text.Substring(1, listUrunFiyat.Items[i].SubItems[1].Text.Length - 2));
+                        string yemeginAdi = listUrunFiyat.Items[i].SubItems[2].Text;
+                        decimal yemeginFiyati = Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[3].Text) / Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[0].Text);
+
+                        cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Porsiyon,Siparis.VerilisTarihi,Siparis.Garsonu FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masaAdi + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemeginAdi + "'ORDER BY Porsiyon DESC");
+
+                        dr = cmd.ExecuteReader();
+
+                        int siparisID;
+                        decimal porsiyon;
+                        DateTime verilisTarihi;
+                        while (dr.Read())
+                        {
+                            try
+                            {
+                                siparisID = dr.GetInt32(0);
+                                porsiyon = dr.GetDecimal(1);
+                                verilisTarihi = dr.GetDateTime(2);
+                                siparisiGirenKisi = dr.GetString(3);
+
+                                cmd.Connection.Close();
+                                cmd.Connection.Dispose();
+                            }
+                            catch
+                            {
+                                cmd.Connection.Close();
+                                cmd.Connection.Dispose();
+                                //HATA MESAJI GÖNDER
+                                KontrolFormu dialog = new KontrolFormu("Ödeme işlemi gerçekleşirken hata oluştu, lütfen tekrar deneyiniz", false);
+                                dialog.Show();
+                                return;
+                            }
+
+                            if (porsiyon < kacPorsiyon) // ödenmesi istenenlerin sayısı(kacPorsiyon) ödenebileceklerden(porsiyon) küçükse
+                            {
+                                odendiUpdateTam(siparisID);
+
+                                kacPorsiyon -= porsiyon;
+                            }
+                            else if (porsiyon > kacPorsiyon) // den büyükse
+                            {
+                                odendiUpdateInsert(siparisID, adisyonID, porsiyon, (double)yemeginFiyati, kacPorsiyon, yemeginAdi, verilisTarihi);
+
+                                kacPorsiyon = 0;
+                            }
+                            else // elimizde ikram edilmemişler ikramı istenene eşitse
+                            {
+                                odendiUpdateTam(siparisID);
+
+                                kacPorsiyon = 0;
+                            }
+                            if (kacPorsiyon == 0)
+                                break;
+                        }
+
                         int listedeYeniGelenSiparisVarmi = -1; //ürün cinsi alttaki ödenenlerde var mı bak 
 
                         for (int j = 0; j < listOdenenler.Items.Count; j++)
@@ -864,6 +917,7 @@ namespace ROPv1
 
                 toplamOdemeVeIndirim += odenenMiktar;
 
+                menuFormu.labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
                 textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
                 labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
                 textNumberOfItem.Text = "0,00";
@@ -987,6 +1041,7 @@ namespace ROPv1
 
             toplamOdemeVeIndirim += odenenMiktar;
 
+            menuFormu.labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             textNumberOfItem.Text = "0,00";
@@ -994,6 +1049,39 @@ namespace ROPv1
         }
 
         #region SQL İşlemleri
+
+        public void odendiUpdateTam(int siparisID)
+        {
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@id", siparisID);
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        public void odendiUpdateInsert(int siparisID, int adisyonID, decimal porsiyon, double fiyati, decimal odemeAdedi, string yemekAdi, DateTime verilisTarihi)
+        {
+            decimal yeniPorsiyonAdetiSiparis = porsiyon - odemeAdedi;
+
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu, OdendiMi=1 WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@Porsiyonu", odemeAdedi);
+            cmd.Parameters.AddWithValue("@id", siparisID);
+            cmd.ExecuteNonQuery();
+
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,VerilisTarihi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_VerilisTarihi)");
+            cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
+            cmd.Parameters.AddWithValue("@_Garsonu", siparisiGirenKisi);
+            cmd.Parameters.AddWithValue("@_Fiyatı", fiyati);
+            cmd.Parameters.AddWithValue("@_Porsiyon", yeniPorsiyonAdetiSiparis);
+            cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
+            cmd.Parameters.AddWithValue("@_VerilisTarihi", verilisTarihi);
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
 
         public void odemeyeGec()
         {
@@ -1054,13 +1142,28 @@ namespace ROPv1
                     menuFormu.listUrunFiyat.Items[i].Remove();
             }
 
-            if (Properties.Settings.Default.Server == 2) //server - diğer tüm
+            if (Properties.Settings.Default.Server == 2) //server 
             {
+                SqlCommand cmd;
+                if (buttonNakit.Enabled == false) // eğer herşey ödenmişse siparişlerin ödendimi değerini 1 yap
+                {
+                    cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "')");
+                    cmd.ExecuteNonQuery();
+                }
+                
+                // ödeme yapılıyor değerini 0 yap
+                cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET OdemeYapiliyor=@odemeYapiliyor WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "')");
 
+                cmd.Parameters.AddWithValue("@odemeYapiliyor", 0);
+
+                cmd.ExecuteNonQuery();
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
             }
             else //client
             {
-
+                menuFormu.masaFormu.hesapFormundanOdemeBitti(masaAdi, departmanAdi, "OdemeBitti", buttonNakit.Enabled); // herşey ödenmişse(buttonNakit.Enabled = false) servera masa daki siparişleri ödendi yapmasını ilet ve ödenmeyapiliyor değerini 0 yaptır
             }
             this.Close();
         }
@@ -1074,7 +1177,5 @@ namespace ROPv1
         {
 
         }
-
-
     }
 }

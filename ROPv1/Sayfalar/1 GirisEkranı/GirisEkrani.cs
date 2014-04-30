@@ -126,6 +126,9 @@ namespace ROPv1
                     case "hesapOdeniyor": // yeni masa açıldığı bilgisi geldiğinde
                         komut_hesapOdeniyor(parametreler["masa"], parametreler["departmanAdi"]);
                         break;
+                    case "OdemeBitti": // yeni masa açıldığı bilgisi geldiğinde
+                        komut_hesapOdemeBitti(parametreler["masa"], parametreler["departmanAdi"], parametreler["odenmeyenSiparisVarMi"]);
+                        break;
                     case "masaGirilebilirMi": // yeni masa açıldığı bilgisi geldiğinde
                         komut_masaGirilebilirMi(parametreler["masa"], parametreler["departmanAdi"], e.Client);
                         break;
@@ -393,6 +396,24 @@ namespace ROPv1
             cmd.Connection.Dispose();
 
             client.MesajYolla("komut=masaGirilebilirMi&cevap=" + !masaSerbestMi);    // masaSebestMi nin ! ini yollarız çünkü hesap alınıyorsa true gelicek alınmıyorsa yani masa serbestse false gelicek
+        }
+
+        private void komut_hesapOdemeBitti(string masa, string departmanAdi,string odenmeyenSiparisVarMi)
+        {
+            //masanın adisyonundaki odemeyapiliyor bilgisini güncelle
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET OdemeYapiliyor=@odemeYapiliyor WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
+
+            cmd.Parameters.AddWithValue("@odemeYapiliyor", 1);
+            cmd.ExecuteNonQuery();
+
+            if(odenmeyenSiparisVarMi == "0") // ödenmemiş sipariş yoksa siparişleri ödendi yap
+            {
+                cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
+                cmd.ExecuteNonQuery();
+            }
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
         }
 
         private void komut_hesapOdeniyor(string masa, string departmanAdi)
