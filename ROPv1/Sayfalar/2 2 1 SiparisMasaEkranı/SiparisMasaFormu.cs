@@ -73,20 +73,25 @@ namespace ROPv1
 
         private void myPannel_SizeChanged(object sender, EventArgs e)
         {
-            panel1.SuspendLayout();
-            foreach (Control ctrl in panel1.Controls)
+            if (panel1.Controls.Count > 0)
             {
-                if (ctrl is Button)
-                {
-                    ctrl.Width = panel1.ClientSize.Width / panel1.Controls.Count;
+                panel1.SuspendLayout();
 
-                    while (ctrl.Width < System.Windows.Forms.TextRenderer.MeasureText(ctrl.Text, new Font(ctrl.Font.FontFamily, ctrl.Font.Size, ctrl.Font.Style)).Width)
+                foreach (Control ctrl in panel1.Controls)
+                {
+                    if (ctrl is Button)
                     {
-                        ctrl.Font = new Font(ctrl.Font.FontFamily, ctrl.Font.Size - 0.5f, ctrl.Font.Style);
+                        ctrl.Width = panel1.ClientSize.Width / 6;
+
+                        while (ctrl.Width < System.Windows.Forms.TextRenderer.MeasureText(ctrl.Text, new Font(ctrl.Font.FontFamily, ctrl.Font.Size, ctrl.Font.Style)).Width)
+                        {
+                            ctrl.Font = new Font(ctrl.Font.FontFamily, ctrl.Font.Size - 0.5f, ctrl.Font.Style);
+                        }
                     }
                 }
+
+                panel1.ResumeLayout();
             }
-            panel1.ResumeLayout();
         }
 
         private void siparisButonuBasildi(object sender, EventArgs e)
@@ -406,12 +411,22 @@ namespace ROPv1
                     }
 
                     departmanButton.Height = panel1.Height;
-                    departmanButton.Width = panel1.Width / restoranListesi.Count;
-                    departmanButton.Dock = DockStyle.Right;
+                    departmanButton.Width = panel1.Width / 6;
+
                     departmanButton.Click += changeTableView;
+                    departmanButton.Anchor = AnchorStyles.Top;
+                    departmanButton.Margin = new Padding(0, 0, 0, 0);
                     panel1.Controls.Add(departmanButton);
+                    panel1.AutoScrollMinSize = new System.Drawing.Size(panel1.AutoScrollMinSize.Width + departmanButton.Width + 1, 30);
                 }
                 tablePanel.Tag = -1;
+
+                if(panel1.HorizontalScroll.Visible)
+                {
+                    panel1.Height += 17;
+                    tablePanel.Location = new Point(tablePanel.Location.X, tablePanel.Location.Y + 17);
+                    tablePanel.Height -= 17;
+                }
 
                 //Masa butonlarını eklemek için serversa direk ilk departman butonuna kod ile basıyoruz, clientsa servera sorarak açık masa bilgileriyle birlikte alıyoruz
                 Button birinciDepartman = panel1.Controls["0"] as Button;
@@ -644,6 +659,9 @@ namespace ROPv1
                     case "giris": //Yolladığımız giris mesajına karşılık gelen mesaj
                         komut_giris(parametreler["sonuc"]);
                         break;
+                    case "IndirimOnay": //Yolladığımız giris mesajına karşılık gelen mesaj
+                        komut_IndirimOnay(parametreler["odemeTipi"], parametreler["odemeMiktari"]);
+                        break;
                     case "OdemeOnay": //Yolladığımız giris mesajına karşılık gelen mesaj
                         komut_OdemeOnay(parametreler["odemeTipi"], parametreler["odemeMiktari"], parametreler["secilipOdenenSiparisBilgileri"]);
                         break;
@@ -721,6 +739,11 @@ namespace ROPv1
                 odenmeyenSiparisVarMi = 1; // ödenmeyen sipariş var sadece ödemeyapılıyoru 0 yap
 
             client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odenmeyenSiparisVarMi=" + odenmeyenSiparisVarMi);
+        }
+
+        public void hesapFormundanIndirim(string masa, string departman, string komut, int odemeTipi, decimal odemeMiktari)
+        {
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odemeTipi=" + odemeTipi + "&odemeMiktari=" + odemeMiktari);
         }
 
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
@@ -850,6 +873,17 @@ namespace ROPv1
 
         #region Komutlar
 
+        private void komut_IndirimOnay(string odemeTipi, string odemeMiktari)
+        {
+            try
+            {
+                //Mesajı yönlendirelim
+                siparisMenuForm.hesapForm.indirimOnaylandi(odemeTipi, odemeMiktari);
+            }
+            catch
+            { }
+        }
+
         private void komut_OdemeOnay(string odemeTipi, string odemeMiktari, string secilipOdenenSiparisBilgileri)
         {
             try
@@ -897,7 +931,7 @@ namespace ROPv1
             //eğer hesabı ödenmeye başlanan masa serverda açıksa
             if (siparisMenuForm != null && (viewdakiDepartmaninAdi == departmanAdi && hangiMasaButonunaBasildi.Text == masa))
             {
-                if(siparisMenuForm.hesapForm == null)
+                if (siparisMenuForm.hesapForm == null)
                     menuFormunuKapatHesapOdeniyor(masa, departmanAdi);
             }
         }

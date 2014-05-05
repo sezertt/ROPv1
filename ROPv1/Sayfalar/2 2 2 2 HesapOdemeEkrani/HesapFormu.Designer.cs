@@ -871,6 +871,7 @@
             this.buttonIndirim.Name = "buttonIndirim";
             this.buttonIndirim.Size = new System.Drawing.Size(205, 115);
             this.buttonIndirim.TabIndex = 90;
+            this.buttonIndirim.Tag = "3";
             this.buttonIndirim.Text = "İndirim";
             this.buttonIndirim.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.buttonIndirim.UseVisualStyleBackColor = false;
@@ -907,6 +908,7 @@
             this.buttonIndirimYuzdeli.Name = "buttonIndirimYuzdeli";
             this.buttonIndirimYuzdeli.Size = new System.Drawing.Size(205, 115);
             this.buttonIndirimYuzdeli.TabIndex = 60;
+            this.buttonIndirimYuzdeli.Tag = "4";
             this.buttonIndirimYuzdeli.Text = "İndirim";
             this.buttonIndirimYuzdeli.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.buttonIndirimYuzdeli.UseVisualStyleBackColor = false;

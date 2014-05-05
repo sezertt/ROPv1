@@ -163,10 +163,10 @@
             this.labelKalanHesap.BackColor = System.Drawing.Color.Transparent;
             this.labelKalanHesap.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelKalanHesap.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelKalanHesap.Location = new System.Drawing.Point(175, 670);
+            this.labelKalanHesap.Location = new System.Drawing.Point(271, 670);
             this.labelKalanHesap.Margin = new System.Windows.Forms.Padding(0);
             this.labelKalanHesap.Name = "labelKalanHesap";
-            this.labelKalanHesap.Size = new System.Drawing.Size(419, 33);
+            this.labelKalanHesap.Size = new System.Drawing.Size(323, 33);
             this.labelKalanHesap.TabIndex = 86;
             this.labelKalanHesap.Text = "0,00";
             this.labelKalanHesap.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -178,11 +178,11 @@
             this.labelKalan.BackColor = System.Drawing.Color.Transparent;
             this.labelKalan.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelKalan.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelKalan.Location = new System.Drawing.Point(13, 670);
+            this.labelKalan.Location = new System.Drawing.Point(12, 670);
             this.labelKalan.Name = "labelKalan";
-            this.labelKalan.Size = new System.Drawing.Size(91, 33);
+            this.labelKalan.Size = new System.Drawing.Size(268, 33);
             this.labelKalan.TabIndex = 85;
-            this.labelKalan.Text = "Hesap:";
+            this.labelKalan.Text = "Listenin Toplam Tutarı:";
             this.labelKalan.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // buttonAdd
@@ -406,9 +406,9 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 768);
             this.ControlBox = false;
+            this.Controls.Add(this.labelKalanHesap);
             this.Controls.Add(this.flowPanelUrunler);
             this.Controls.Add(this.buttonTemizle);
-            this.Controls.Add(this.labelKalanHesap);
             this.Controls.Add(this.labelKalan);
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.buttonUrunIptal);

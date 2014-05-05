@@ -70,5 +70,41 @@ namespace ROPv1.Properties {
                 this["BilgisayarAdi"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FirmaAdi {
+            get {
+                return ((string)(this["FirmaAdi"]));
+            }
+            set {
+                this["FirmaAdi"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FirmaAdresi {
+            get {
+                return ((string)(this["FirmaAdresi"]));
+            }
+            set {
+                this["FirmaAdresi"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FirmaTel {
+            get {
+                return ((string)(this["FirmaTel"]));
+            }
+            set {
+                this["FirmaTel"] = value;
+            }
+        }
     }
 }

@@ -96,13 +96,12 @@ namespace ROPv1
             }
             seciliItemSayisi = 0;
 
-            textNumberOfItem.Text = "0,00";
-
             decimal secilienTutar = toplamHesap - toplamOdemeVeIndirim;
 
             if (secilienTutar < 0)
                 secilienTutar = 0;
             textBoxSecilenlerinTutari.Text = (secilienTutar).ToString("0.00");
+            textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
         }
 
         //çarpan özellikleri
@@ -145,7 +144,7 @@ namespace ROPv1
                 }
             }
 
-            if(odemedeSiparisSeciliMi)
+            if (odemedeSiparisSeciliMi)
             {
                 if (Convert.ToDecimal(textNumberOfItem.Text) < Convert.ToDecimal(textBoxSecilenlerinTutari.Text))
                 {
@@ -354,6 +353,7 @@ namespace ROPv1
 
                         listOdenenler.Items[listedeYeniGelenSiparisVarmi].SubItems[2].Text = (Convert.ToDecimal(listOdenenler.Items[listedeYeniGelenSiparisVarmi].SubItems[2].Text) + (decimal)kacPorsiyon * yemeginFiyati).ToString("0.00");
                     }
+                    toplamHesap += Convert.ToDecimal((decimal)kacPorsiyon * yemeginFiyati);
                 }
 
                 // BURADA ODEME BILGILERINE SORGU AT  
@@ -365,6 +365,7 @@ namespace ROPv1
                 {
                     int odemeTipi;
                     decimal odenenMiktar;
+
                     try
                     {
                         odemeTipi = dr.GetInt32(0);
@@ -385,12 +386,61 @@ namespace ROPv1
                     {
                         labelOdenenKart.Text = (Convert.ToDecimal(labelOdenenKart.Text) + odenenMiktar).ToString("0.00");
                     }
-                    else // yemek fişi
+                    else if (odemeTipi == 2)// yemek fişi
                     {
                         labelOdenenFis.Text = (Convert.ToDecimal(labelOdenenFis.Text) + odenenMiktar).ToString("0.00");
                     }
+                    else if (odemeTipi == 3)// indirim TL
+                    {
+                        labelIndirimTLTutar.Text = odenenMiktar.ToString("0.00");
 
+                        labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11);
+                        labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + odenenMiktar).ToString("0.00") + ")";
+
+                        if (odenenMiktar == 0)
+                        {
+                            labelIndirimTL.Visible = false;
+                            labelIndirimTLTutar.Visible = false;
+                            if (!labelIndirimYuzde.Visible) // eğer yüzdeli indirim de yoksa labelları kaldır
+                            {
+                                labelIndirimToplam.Visible = false;
+                            }
+                        }
+                        else
+                        {
+                            labelIndirimToplam.Visible = true;
+                            labelIndirimTL.Visible = true;
+                            labelIndirimTLTutar.Visible = true;
+                        }
+                    }
+                    else // indirim Yüzde
+                    {
+
+                        odenenMiktar = toplamHesap * odenenMiktar / 100;
+
+                        labelIndirimYuzdeTutar.Text = odenenMiktar.ToString("0.00");
+
+                        labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11);
+                        labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + odenenMiktar).ToString("0.00") + ")";
+
+                        if (odenenMiktar == 0)
+                        {
+                            labelIndirimYuzde.Visible = false;
+                            labelIndirimYuzdeTutar.Visible = false;
+                            if (!labelIndirimTL.Visible) // eğer normal indirim de yoksa labelları kaldır
+                            {
+                                labelIndirimToplam.Visible = false;
+                            }
+                        }
+                        else
+                        {
+                            labelIndirimToplam.Visible = true;
+                            labelIndirimYuzde.Visible = true;
+                            labelIndirimYuzdeTutar.Visible = true;
+                        }
+                    }
                     labelOdenenToplam.Text = (Convert.ToDecimal(labelOdenenToplam.Text) + odenenMiktar).ToString("0.00");
+                    toplamOdemeVeIndirim += odenenMiktar;
                 }
                 cmd.Connection.Close();
                 cmd.Connection.Dispose();
@@ -544,12 +594,61 @@ namespace ROPv1
                     {
                         labelOdenenKart.Text = (Convert.ToDecimal(labelOdenenKart.Text) + odenenMiktar).ToString("0.00");
                     }
-                    else // yemek fişi
+                    else if (odemeTipi == 2) // yemek fişi
                     {
                         labelOdenenFis.Text = (Convert.ToDecimal(labelOdenenFis.Text) + odenenMiktar).ToString("0.00");
                     }
+                    else if (odemeTipi == 3) // indirim TL
+                    {
+                        labelIndirimTLTutar.Text = odenenMiktar.ToString("0.00");
 
+                        labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11);
+                        labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + odenenMiktar).ToString("0.00") + ")";
+
+                        if (odenenMiktar == 0)
+                        {
+                            labelIndirimTL.Visible = false;
+                            labelIndirimTLTutar.Visible = false;
+                            if (!labelIndirimYuzde.Visible) // eğer yüzdeli indirim de yoksa labelları kaldır
+                            {
+                                labelIndirimToplam.Visible = false;
+                            }
+                        }
+                        else
+                        {
+                            labelIndirimToplam.Visible = true;
+                            labelIndirimTL.Visible = true;
+                            labelIndirimTLTutar.Visible = true;
+                        }
+                    }
+                    else // indirim Yüzde
+                    {
+
+                        odenenMiktar = toplamHesap * odenenMiktar / 100;
+
+                        labelIndirimYuzdeTutar.Text = odenenMiktar.ToString("0.00");
+
+                        labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11);
+                        labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + odenenMiktar).ToString("0.00") + ")";
+
+                        if (odenenMiktar == 0)
+                        {
+                            labelIndirimYuzde.Visible = false;
+                            labelIndirimYuzdeTutar.Visible = false;
+                            if (!labelIndirimTL.Visible) // eğer normal indirim de yoksa labelları kaldır
+                            {
+                                labelIndirimToplam.Visible = false;
+                            }
+                        }
+                        else
+                        {
+                            labelIndirimToplam.Visible = true;
+                            labelIndirimYuzde.Visible = true;
+                            labelIndirimYuzdeTutar.Visible = true;
+                        }
+                    }
                     labelOdenenToplam.Text = (Convert.ToDecimal(labelOdenenToplam.Text) + odenenMiktar).ToString("0.00");
+                    toplamOdemeVeIndirim -= odenenMiktar;                    
                 }
             }
 
@@ -586,6 +685,7 @@ namespace ROPv1
             toplamOdemeVeIndirim -= indirim;
             labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11);
             labelIndirimToplam.Text = (Convert.ToDecimal(labelIndirimToplam.Text) - indirim).ToString("0.00");
+
             try
             {
                 indirim = Convert.ToDecimal(textNumberOfItem.Text);
@@ -595,50 +695,75 @@ namespace ROPv1
                 indirim = 0;
             }
 
-            if (indirim >= toplamHesap)
+            if (indirim > toplamHesap)
             {
                 indirim = toplamHesap;
             }
 
-            labelIndirimTLTutar.Text = indirim.ToString("0.00");
-            labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + indirim).ToString("0.00") + ")";
-
-
-            if (indirim == 0)
+            if (Properties.Settings.Default.Server == 2)
             {
-                labelIndirimTL.Visible = false;
-                labelIndirimTLTutar.Visible = false;
-                if (!labelIndirimYuzde.Visible) // eğer yüzdeli indirim de yoksa labelları kaldır
+                labelIndirimTLTutar.Text = indirim.ToString("0.00");
+                labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + indirim).ToString("0.00") + ")";
+
+                if (indirim == 0)
                 {
-                    labelIndirimToplam.Visible = false;
+                    labelIndirimTL.Visible = false;
+                    labelIndirimTLTutar.Visible = false;
+                    if (!labelIndirimYuzde.Visible) // eğer yüzdeli indirim de yoksa labelları kaldır
+                    {
+                        labelIndirimToplam.Visible = false;
+                    }
                 }
+                else
+                {
+                    labelIndirimToplam.Visible = true;
+                    labelIndirimTL.Visible = true;
+                    labelIndirimTLTutar.Visible = true;
+                    toplamOdemeVeIndirim += indirim;
+                }
+
+                if (indirim == toplamHesap)
+                {
+                    textBoxSecilenlerinTutari.Text = "0,00";
+                }
+                else
+                {
+                    textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+                }
+
+                textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
+
+                labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "'");
+                SqlDataReader dr = cmd.ExecuteReader();
+                dr.Read();
+                int adisyonID = dr.GetInt32(0);
+
+                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + Convert.ToInt32(((Button)sender).Tag) + "') UPDATE OdemeDetay SET OdenenMiktar='" + indirim + "' WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + Convert.ToInt32(((Button)sender).Tag) + "' ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
+
+                cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
+                cmd.Parameters.AddWithValue("@_OdemeTipi", Convert.ToInt32(Convert.ToInt32(((Button)sender).Tag)));
+                cmd.Parameters.AddWithValue("@_OdenenMiktar", Convert.ToDecimal(indirim));
+
+                cmd.ExecuteNonQuery();
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
             }
             else
             {
-                labelIndirimToplam.Visible = true;
-                labelIndirimTL.Visible = true;
-                labelIndirimTLTutar.Visible = true;
-                toplamOdemeVeIndirim += indirim;
+                //servera indirimi eklet
+                menuFormu.masaFormu.hesapFormundanIndirim(masaAdi, departmanAdi, "Indirim", Convert.ToInt32(((Button)sender).Tag), indirim);
             }
-
-            if (indirim == toplamHesap)
-            {
-                textBoxSecilenlerinTutari.Text = "0,00";
-            }
-            else
-            {
-                textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
-            }
-
-            textNumberOfItem.Text = "0,00";
-            labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
         }
 
         private void buttonIndirimYuzdeli_Click(object sender, EventArgs e)
         {
-            toplamOdemeVeIndirim -= indirimYuzde;
+            toplamOdemeVeIndirim -= indirimYuzde; // önceki indirimi çıkarıyoruz
             labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11);
             labelIndirimToplam.Text = (Convert.ToDecimal(labelIndirimToplam.Text) - indirimYuzde).ToString("0.00");
+
             try
             {
                 indirimYuzde = Convert.ToDecimal(textNumberOfItem.Text);
@@ -648,46 +773,168 @@ namespace ROPv1
                 indirimYuzde = 0;
             }
 
-            if (indirimYuzde >= 100)
+            if (Properties.Settings.Default.Server == 2)
             {
-                indirimYuzde = toplamHesap;
-            }
-            else
-            {
-                indirimYuzde = toplamHesap * indirimYuzde / 100;
-            }
-
-            labelIndirimYuzdeTutar.Text = indirimYuzde.ToString("0.00");
-            labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + indirimYuzde).ToString("0.00") + ")";
-
-            if (indirimYuzde == 0)
-            {
-                labelIndirimYuzde.Visible = false;
-                labelIndirimYuzdeTutar.Visible = false;
-                if (!labelIndirimTL.Visible) // eğer normal indirim de yoksa labelları kaldır
+                if (indirimYuzde > 100)
                 {
-                    labelIndirimToplam.Visible = false;
+                    indirimYuzde = toplamHesap;
                 }
+                else
+                {
+                    indirimYuzde = toplamHesap * indirimYuzde / 100;
+                }
+
+                labelIndirimYuzdeTutar.Text = indirimYuzde.ToString("0.00");
+                labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + indirimYuzde).ToString("0.00") + ")";
+
+                if (indirimYuzde == 0)
+                {
+                    labelIndirimYuzde.Visible = false;
+                    labelIndirimYuzdeTutar.Visible = false;
+                    if (!labelIndirimTL.Visible) // eğer normal indirim de yoksa labelları kaldır
+                    {
+                        labelIndirimToplam.Visible = false;
+                    }
+                }
+                else
+                {
+                    labelIndirimToplam.Visible = true;
+                    labelIndirimYuzde.Visible = true;
+                    labelIndirimYuzdeTutar.Visible = true;
+                    toplamOdemeVeIndirim += indirimYuzde;
+                }
+
+                if (indirimYuzde == toplamHesap)
+                {
+                    textBoxSecilenlerinTutari.Text = "0,00";
+                }
+                else
+                {
+                    textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+                }
+
+                textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
+
+                labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "'");
+                SqlDataReader dr = cmd.ExecuteReader();
+                dr.Read();
+                int adisyonID = dr.GetInt32(0);
+
+                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + Convert.ToInt32(((Button)sender).Tag) + "') UPDATE OdemeDetay SET OdenenMiktar='" + indirimYuzde + "' WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + Convert.ToInt32(((Button)sender).Tag) + "' ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
+
+                cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
+                cmd.Parameters.AddWithValue("@_OdemeTipi", Convert.ToInt32(Convert.ToInt32(((Button)sender).Tag)));
+                cmd.Parameters.AddWithValue("@_OdenenMiktar", Convert.ToDecimal(indirimYuzde));
+
+                cmd.ExecuteNonQuery();
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
             }
             else
             {
-                labelIndirimToplam.Visible = true;
-                labelIndirimYuzde.Visible = true;
-                labelIndirimYuzdeTutar.Visible = true;
-                toplamOdemeVeIndirim += indirimYuzde;
-            }
+                if (indirimYuzde > 100)
+                    indirimYuzde = 100;
 
-            if (indirimYuzde == 100)
-            {
-                textBoxSecilenlerinTutari.Text = "0,00";
+                //servera indirimi eklet
+                menuFormu.masaFormu.hesapFormundanIndirim(masaAdi, departmanAdi, "Indirim", Convert.ToInt32(((Button)sender).Tag), indirimYuzde);
             }
-            else
-            {
-                textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
-            }
+        }
 
-            textNumberOfItem.Text = "0,00";
-            labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+        public void indirimOnaylandi(string odemeTipiGelen, string odenenMiktarGelen)
+        {
+            decimal indirimGelen = Convert.ToDecimal(odenenMiktarGelen);
+
+            if (odemeTipiGelen == "3") // indirim TL
+            {
+                labelIndirimTLTutar.Text = indirimGelen.ToString("0.00");
+
+                try
+                {
+                    labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + indirimGelen).ToString("0.00") + ")";
+                }
+                catch
+                {
+                    labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11);
+                    labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + indirimGelen).ToString("0.00") + ")";
+                }
+
+                if (indirimGelen == 0)
+                {
+                    labelIndirimTL.Visible = false;
+                    labelIndirimTLTutar.Visible = false;
+                    if (!labelIndirimYuzde.Visible) // eğer yüzdeli indirim de yoksa labelları kaldır
+                    {
+                        labelIndirimToplam.Visible = false;
+                    }
+                }
+                else
+                {
+                    labelIndirimToplam.Visible = true;
+                    labelIndirimTL.Visible = true;
+                    labelIndirimTLTutar.Visible = true;
+                    toplamOdemeVeIndirim += indirimGelen;
+                }
+
+                if (indirimGelen == toplamHesap)
+                {
+                    textBoxSecilenlerinTutari.Text = "0,00";
+                }
+                else
+                {
+                    textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+                }
+
+                textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
+                labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+            }
+            else  // indirim yüzde
+            {
+                indirimGelen = toplamHesap * indirimGelen / 100;
+
+                labelIndirimYuzdeTutar.Text = indirimGelen.ToString("0.00");
+
+                try
+                {
+                    labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + indirimGelen).ToString("0.00") + ")";
+                }
+                catch
+                {
+                    labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11);
+                    labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + indirimGelen).ToString("0.00") + ")";
+                }
+
+                if (indirimGelen == 0)
+                {
+                    labelIndirimYuzde.Visible = false;
+                    labelIndirimYuzdeTutar.Visible = false;
+                    if (!labelIndirimTL.Visible) // eğer normal indirim de yoksa labelları kaldır
+                    {
+                        labelIndirimToplam.Visible = false;
+                    }
+                }
+                else
+                {
+                    labelIndirimToplam.Visible = true;
+                    labelIndirimYuzde.Visible = true;
+                    labelIndirimYuzdeTutar.Visible = true;
+                    toplamOdemeVeIndirim += indirimGelen;
+                }
+
+                if (indirimGelen == toplamHesap)
+                {
+                    textBoxSecilenlerinTutari.Text = "0,00";
+                }
+                else
+                {
+                    textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+                }
+
+                textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
+                labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+            }
         }
 
         private void buttonSecileniAzalt_Click(object sender, EventArgs e)
@@ -721,8 +968,8 @@ namespace ROPv1
             }
             else
             {
-                textNumberOfItem.Text = "0,00";
                 textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+                textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
             }
         }
 
@@ -855,9 +1102,6 @@ namespace ROPv1
                                 porsiyon = dr.GetDecimal(1);
                                 verilisTarihi = dr.GetDateTime(2);
                                 siparisiGirenKisi = dr.GetString(3);
-
-                                cmd.Connection.Close();
-                                cmd.Connection.Dispose();
                             }
                             catch
                             {
@@ -890,6 +1134,9 @@ namespace ROPv1
                             if (kacPorsiyon == 0)
                                 break;
                         }
+
+                        cmd.Connection.Close();
+                        cmd.Connection.Dispose();
 
                         int listedeYeniGelenSiparisVarmi = -1; //ürün cinsi alttaki ödenenlerde var mı bak 
 
@@ -957,7 +1204,7 @@ namespace ROPv1
                 menuFormu.labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
                 textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
                 labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
-                textNumberOfItem.Text = "0,00";
+                textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
                 buttonDeleteText_Click(null, null);
             }
             else //client
@@ -1081,7 +1328,7 @@ namespace ROPv1
             menuFormu.labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
-            textNumberOfItem.Text = "0,00";
+            textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
             buttonDeleteText_Click(null, null);
         }
 
@@ -1187,7 +1434,7 @@ namespace ROPv1
                     cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "')");
                     cmd.ExecuteNonQuery();
                 }
-                
+
                 // ödeme yapılıyor değerini 0 yap
                 cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET OdemeYapiliyor=@odemeYapiliyor WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "')");
 
@@ -1212,13 +1459,14 @@ namespace ROPv1
 
         private void buttonAdisyonYazdir_Click(object sender, EventArgs e)
         {
-
+            // masaya bakan ilk garsonun ismini döndüren sql sorgusu
+            //  SELECT TOP 1 Garsonu FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE MasaAdi='S2' AND DepartmanAdi='Departman' AND AcikMi=1 ORDER BY VerilisTarihi ASC
         }
 
         private void textBoxSecilenlerinTutari_TextChanged(object sender, EventArgs e)
         {
             if (Convert.ToDecimal(((TextBox)sender).Text) < 0)
-                ((TextBox)sender).Text = "0,00";          
+                ((TextBox)sender).Text = "0,00";
         }
 
         private void textNumberOfItem_Click(object sender, EventArgs e)

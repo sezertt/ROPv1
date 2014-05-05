@@ -129,6 +129,9 @@ namespace ROPv1
                     case "OdemeBitti": // yeni masa açıldığı bilgisi geldiğinde
                         komut_hesapOdemeBitti(parametreler["masa"], parametreler["departmanAdi"], parametreler["odenmeyenSiparisVarMi"]);
                         break;
+                    case "Indirim": // yeni masa açıldığı bilgisi geldiğinde
+                        komut_hesapIndirim(parametreler["masa"], parametreler["departmanAdi"], parametreler["odemeTipi"], parametreler["odemeMiktari"], e.Client);
+                        break;
                     case "masaGirilebilirMi": // yeni masa açıldığı bilgisi geldiğinde
                         komut_masaGirilebilirMi(parametreler["masa"], parametreler["departmanAdi"], e.Client);
                         break;
@@ -199,6 +202,27 @@ namespace ROPv1
 
         #region Komutlar
 
+        private void komut_hesapIndirim(string masa, string departmanAdi, string odemeTipi, string odemeMiktari, ClientRef client)
+        {                  
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "'");
+            SqlDataReader dr = cmd.ExecuteReader();
+            dr.Read();
+            int adisyonID = dr.GetInt32(0);
+
+            cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + odemeTipi + "') UPDATE OdemeDetay SET OdenenMiktar='" + odemeMiktari + "' WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + odemeTipi + "' ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
+
+            cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
+            cmd.Parameters.AddWithValue("@_OdemeTipi", Convert.ToInt32(odemeTipi));
+            cmd.Parameters.AddWithValue("@_OdenenMiktar", Convert.ToDecimal(odemeMiktari));
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+
+            client.MesajYolla("komut=IndirimOnay&odemeTipi=" + odemeTipi + "&odemeMiktari=" + odemeMiktari);
+        }
+
         private void komut_OdemeYapildi(string masa, string departmanAdi, string odemeTipi, string odemeMiktari, ClientRef client, string secilipOdenenSiparisBilgileri)
         {
             string[] siparisler;
@@ -216,7 +240,7 @@ namespace ROPv1
             SqlCommand cmd;
 
             //BURADA AKTARMALARDAKİ SİPARİŞLERİ UPDATE ET BOL VS. ikram iptaldeki gibi
-            
+
             int adisyonID = -1;
 
             if (siparisler.Count() > 0 && siparisler[0] != "")
@@ -398,7 +422,7 @@ namespace ROPv1
             client.MesajYolla("komut=masaGirilebilirMi&cevap=" + !masaSerbestMi);    // masaSebestMi nin ! ini yollarız çünkü hesap alınıyorsa true gelicek alınmıyorsa yani masa serbestse false gelicek
         }
 
-        private void komut_hesapOdemeBitti(string masa, string departmanAdi,string odenmeyenSiparisVarMi)
+        private void komut_hesapOdemeBitti(string masa, string departmanAdi, string odenmeyenSiparisVarMi)
         {
             //masanın adisyonundaki odemeyapiliyor bilgisini güncelle
             SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET OdemeYapiliyor=@odemeYapiliyor WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
@@ -406,7 +430,7 @@ namespace ROPv1
             cmd.Parameters.AddWithValue("@odemeYapiliyor", 1);
             cmd.ExecuteNonQuery();
 
-            if(odenmeyenSiparisVarMi == "0") // ödenmemiş sipariş yoksa siparişleri ödendi yap
+            if (odenmeyenSiparisVarMi == "0") // ödenmemiş sipariş yoksa siparişleri ödendi yap
             {
                 cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
                 cmd.ExecuteNonQuery();
