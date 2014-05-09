@@ -126,9 +126,6 @@ namespace ROPv1
 
                 if (treeDepartman.Nodes.Count < 2)
                     buttonDeleteDepartment.Enabled = false;
-
-                if (treeDepartman.Nodes.Count < 10)
-                    buttonAddDepartment.Enabled = true;
             }
         }
 
@@ -208,8 +205,6 @@ namespace ROPv1
 
                 if (treeDepartman.Nodes.Count > 1)
                     buttonDeleteDepartment.Enabled = true;
-                if (treeDepartman.Nodes.Count > 9)
-                    buttonAddDepartment.Enabled = false;
 
                 dialog = new KontrolFormu("Yeni Departman Bilgileri Kaydedilmiştir", false);
                 dialog.Show();
@@ -283,7 +278,7 @@ namespace ROPv1
         }
 
         //Departmanların Sıralamasını Değiştir - AŞAĞI
-        private void modeNodeDown(object sender, EventArgs e)
+        private void moveNodeDown(object sender, EventArgs e)
         {
             int index = treeDepartman.SelectedNode.Index;
 
@@ -414,9 +409,6 @@ namespace ROPv1
 
             if (treeDepartman.Nodes.Count < 2)
                 buttonDeleteDepartment.Enabled = false;
-
-            if (treeDepartman.Nodes.Count > 9)
-                buttonAddDepartment.Enabled = false;
         }
 
         private void comboNewDepName_KeyPress(object sender, KeyPressEventArgs e)

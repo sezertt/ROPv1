@@ -25,18 +25,6 @@ namespace ROPv1.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.0.0.0")]
-        public string IP {
-            get {
-                return ((string)(this["IP"]));
-            }
-            set {
-                this["IP"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("13759")]
         public int Port {
             get {
@@ -73,37 +61,23 @@ namespace ROPv1.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string FirmaAdi {
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        public string IP {
             get {
-                return ((string)(this["FirmaAdi"]));
+                return ((string)(this["IP"]));
             }
             set {
-                this["FirmaAdi"] = value;
+                this["IP"] = value;
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string FirmaAdresi {
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=LHCASPER;Initial Catalog=ropv1;Integrated Security=True")]
+        public string ropv1ConnectionString {
             get {
-                return ((string)(this["FirmaAdresi"]));
-            }
-            set {
-                this["FirmaAdresi"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string FirmaTel {
-            get {
-                return ((string)(this["FirmaTel"]));
-            }
-            set {
-                this["FirmaTel"] = value;
+                return ((string)(this["ropv1ConnectionString"]));
             }
         }
     }

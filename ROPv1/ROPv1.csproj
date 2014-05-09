@@ -56,6 +56,11 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -63,6 +68,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -91,6 +97,12 @@
     <Compile Include="Common\EncryptionUtility.cs" />
     <Compile Include="Common\QueryStringSecurityHelper.cs" />
     <Compile Include="Common\ValidationException.cs" />
+    <Compile Include="CrystalReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrystalReport1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DAL\dalGarson.cs" />
     <Compile Include="DBHelpers\ConnStringHelper.cs" />
     <Compile Include="DBHelpers\SqlDataReaderHelper.cs" />
@@ -205,6 +217,18 @@
     <Compile Include="Sayfalar\3 8 Reçeteler\Receteler.Designer.cs">
       <DependentUpon>Receteler.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sayfalar\3 9 1 İşletme Bilgileri\IsletmeBilgileri.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\3 9 1 İşletme Bilgileri\IsletmeBilgileri.Designer.cs">
+      <DependentUpon>IsletmeBilgileri.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sayfalar\3 9 2 Adisyon\Adisyon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\3 9 2 Adisyon\Adisyon.Designer.cs">
+      <DependentUpon>Adisyon.cs</DependentUpon>
+    </Compile>
     <Compile Include="Sayfalar\GenelKullanılanlar\AdisyonNotuFormu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -243,6 +267,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CrystalReport1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReport1.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\1 GirisEkranı\PortFormu.resx">
       <DependentUpon>PortFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -301,6 +329,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\3 8 Reçeteler\Receteler.resx">
       <DependentUpon>Receteler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\3 9 1 İşletme Bilgileri\IsletmeBilgileri.resx">
+      <DependentUpon>IsletmeBilgileri.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\3 9 2 Adisyon\Adisyon.resx">
+      <DependentUpon>Adisyon.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\GenelKullanılanlar\AdisyonNotuFormu.resx">
       <DependentUpon>AdisyonNotuFormu.cs</DependentUpon>
@@ -474,6 +509,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\sezerwcf\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

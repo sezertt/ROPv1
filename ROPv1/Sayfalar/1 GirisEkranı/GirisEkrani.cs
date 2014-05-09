@@ -1633,6 +1633,24 @@ namespace ROPv1
         //Form Load
         private void GirisEkrani_Load(object sender, EventArgs e)
         {
+
+            //SQL SERVER BAĞLANTI KONTROLÜ BURADA YAPILIYOR
+            SqlConnection cnn;
+            try
+            {
+                cnn = new SqlConnection("server=.;database=ropv1;integrated security=true");
+                cnn.Open();
+                cnn.Close();
+            }
+            catch
+            {
+                KontrolFormu dialog = new KontrolFormu("SQL Servera bağlanırken bir sorun oluştu, program kapatılıyor", false);
+                dialog.ShowDialog();
+                cnn = null;
+                Application.Exit();
+                return;
+            }
+
             buttonConnection_Click(null, null);
 
             labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));

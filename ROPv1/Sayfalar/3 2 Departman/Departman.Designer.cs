@@ -261,7 +261,7 @@
             this.button2.Text = "Aşağı Taşı";
             this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.modeNodeDown);
+            this.button2.Click += new System.EventHandler(this.moveNodeDown);
             // 
             // button1
             // 

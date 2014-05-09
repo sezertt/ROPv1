@@ -104,7 +104,7 @@ namespace ROPv1
                     break;
                 case 5:
                     ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingsback;
-                    buttonBilgiAktar.Visible = true;
+                    buttonBilgiAktar.Visible = false;
                     break;
                 default:
                     break;
@@ -185,6 +185,11 @@ namespace ROPv1
                     splitPanel.Panel2.Controls.Add(receteView);
                     receteView.Dock = DockStyle.Fill;
                     break;
+                case 8: //İşletme Bilgileri Seçildi
+                    IsletmeBilgileri isletmeBilgileriView = new IsletmeBilgileri();
+                    splitPanel.Panel2.Controls.Add(isletmeBilgileriView);
+                    isletmeBilgileriView.Dock = DockStyle.Fill;
+                    break;
                 default:
                     break;
                 #endregion
@@ -253,6 +258,8 @@ namespace ROPv1
             {
                 if (e.Control && e.Shift && e.KeyCode == Keys.D3 && leftPanelView.Nodes.Count < 1)
                 {
+                    buttonBilgiAktar.Visible = true;
+
                     leftPanelView.Nodes.Add("Kullanıcılar");
                     leftPanelView.Nodes.Add("Departmanlar");
                     leftPanelView.Nodes.Add("Masa Yerleşim Planı");
@@ -261,6 +268,7 @@ namespace ROPv1
                     leftPanelView.Nodes.Add("Ürün Menüleri");
                     leftPanelView.Nodes.Add("Stok Ayarları");
                     leftPanelView.Nodes.Add("Reçeteler");
+                    leftPanelView.Nodes.Add("İşletme Bilgileri");
 
                     leftPanelView.SelectedNode = leftPanelView.Nodes[0];
                 }

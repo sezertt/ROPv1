@@ -648,7 +648,7 @@ namespace ROPv1
                         }
                     }
                     labelOdenenToplam.Text = (Convert.ToDecimal(labelOdenenToplam.Text) + odenenMiktar).ToString("0.00");
-                    toplamOdemeVeIndirim -= odenenMiktar;                    
+                    toplamOdemeVeIndirim -= odenenMiktar;
                 }
             }
 
@@ -693,7 +693,7 @@ namespace ROPv1
             catch
             {
                 indirim = 0;
-            }
+            }            
 
             if (indirim > toplamHesap)
             {
@@ -739,14 +739,23 @@ namespace ROPv1
                 SqlDataReader dr = cmd.ExecuteReader();
                 dr.Read();
                 int adisyonID = dr.GetInt32(0);
+                int tip = Convert.ToInt32(((Button)sender).Tag);
+                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + tip + "') UPDATE OdemeDetay SET OdenenMiktar=@_OdenenMiktar2 WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + tip + "' ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
 
-                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + Convert.ToInt32(((Button)sender).Tag) + "') UPDATE OdemeDetay SET OdenenMiktar='" + indirim + "' WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + Convert.ToInt32(((Button)sender).Tag) + "' ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
+                cmd.Parameters.AddWithValue("@_OdenenMiktar2", indirim);
 
                 cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
-                cmd.Parameters.AddWithValue("@_OdemeTipi", Convert.ToInt32(Convert.ToInt32(((Button)sender).Tag)));
-                cmd.Parameters.AddWithValue("@_OdenenMiktar", Convert.ToDecimal(indirim));
-
-                cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@_OdemeTipi", tip);
+                cmd.Parameters.AddWithValue("@_OdenenMiktar", indirim);
+                
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
 
                 cmd.Connection.Close();
                 cmd.Connection.Dispose();
@@ -820,13 +829,18 @@ namespace ROPv1
                 SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "'");
                 SqlDataReader dr = cmd.ExecuteReader();
                 dr.Read();
-                int adisyonID = dr.GetInt32(0);
 
-                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + Convert.ToInt32(((Button)sender).Tag) + "') UPDATE OdemeDetay SET OdenenMiktar='" + indirimYuzde + "' WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + Convert.ToInt32(((Button)sender).Tag) + "' ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
+                int adisyonID = dr.GetInt32(0);
+                int tip = Convert.ToInt32(((Button)sender).Tag);
+
+                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + tip + "') UPDATE OdemeDetay SET OdenenMiktar=@_OdenenMiktar2 WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + tip + "' ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
+
+                cmd.Parameters.AddWithValue("@_OdenenMiktar2", indirimYuzde);
+
 
                 cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
-                cmd.Parameters.AddWithValue("@_OdemeTipi", Convert.ToInt32(Convert.ToInt32(((Button)sender).Tag)));
-                cmd.Parameters.AddWithValue("@_OdenenMiktar", Convert.ToDecimal(indirimYuzde));
+                cmd.Parameters.AddWithValue("@_OdemeTipi", tip);
+                cmd.Parameters.AddWithValue("@_OdenenMiktar", indirimYuzde);
 
                 cmd.ExecuteNonQuery();
 
@@ -1460,7 +1474,29 @@ namespace ROPv1
         private void buttonAdisyonYazdir_Click(object sender, EventArgs e)
         {
             // masaya bakan ilk garsonun ismini döndüren sql sorgusu
-            //  SELECT TOP 1 Garsonu FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE MasaAdi='S2' AND DepartmanAdi='Departman' AND AcikMi=1 ORDER BY VerilisTarihi ASC
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT TOP 1 Garsonu,AcilisZamani FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "' AND AcikMi=1 ORDER BY VerilisTarihi ASC");
+            SqlDataReader dr = cmd.ExecuteReader();
+            dr.Read();
+
+            string garson;
+            DateTime acilisZamani;
+
+            try // açık
+            {
+                garson = dr.GetString(0);
+                acilisZamani = dr.GetDateTime(1);
+            }
+            catch
+            {
+                KontrolFormu dialog = new KontrolFormu("Adisyon bilgileri alınırken hata oluştu, lütfen tekrar deneyiniz", false);
+                dialog.Show();
+                return;
+            }
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+
+            Adisyon adisyonFormu = new Adisyon(masaAdi, departmanAdi, garson, acilisZamani);
+            adisyonFormu.Show();
         }
 
         private void textBoxSecilenlerinTutari_TextChanged(object sender, EventArgs e)

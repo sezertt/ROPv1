@@ -772,7 +772,7 @@
             this.buttonAdisyonYazdir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.buttonAdisyonYazdir.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonAdisyonYazdir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonAdisyonYazdir.Image = global::ROPv1.Properties.Resources.invoice_icon;
+            this.buttonAdisyonYazdir.Image = global::ROPv1.Properties.Resources.adisyonIcon;
             this.buttonAdisyonYazdir.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.buttonAdisyonYazdir.Location = new System.Drawing.Point(1144, 397);
             this.buttonAdisyonYazdir.Name = "buttonAdisyonYazdir";
