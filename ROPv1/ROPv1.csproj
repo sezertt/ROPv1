@@ -154,6 +154,12 @@
     <Compile Include="Sayfalar\2 2 2 2 HesapOdemeEkrani\HesapFormu.Designer.cs">
       <DependentUpon>HesapFormu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sayfalar\2 2 2 2 HesapOdemeEkrani\YaziciFormu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\2 2 2 2 HesapOdemeEkrani\YaziciFormu.Designer.cs">
+      <DependentUpon>YaziciFormu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Sayfalar\3 1 Kullanıcılar\Kullanici.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -298,6 +304,9 @@
     <EmbeddedResource Include="Sayfalar\2 2 2 2 HesapOdemeEkrani\HesapFormu.resx">
       <DependentUpon>HesapFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\2 2 2 2 HesapOdemeEkrani\YaziciFormu.resx">
+      <DependentUpon>YaziciFormu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\3 1 Kullanıcılar\Kullanici.resx">
       <DependentUpon>Kullanici.cs</DependentUpon>

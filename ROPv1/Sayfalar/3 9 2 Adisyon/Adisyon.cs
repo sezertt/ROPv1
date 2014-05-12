@@ -16,13 +16,18 @@ namespace ROPv1
     {
         string masaAdi, departmanAdi, garson;
         DateTime acilisZamani;
-        public Adisyon(string masaAdi, string departmanAdi, string garson, DateTime acilisZamani)
+        decimal indirim;
+        string[] yaziciBilgileri;
+
+        public Adisyon(string masaAdi, string departmanAdi, string garson, DateTime acilisZamani, decimal indirim, string [] yaziciBilgileri)
         {
             InitializeComponent();
             this.masaAdi = masaAdi;
             this.departmanAdi = departmanAdi;
             this.garson = garson;
             this.acilisZamani = acilisZamani;
+            this.indirim = indirim;
+            this.yaziciBilgileri = yaziciBilgileri;
 
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
@@ -30,9 +35,14 @@ namespace ROPv1
 
         private void Adisyon_Load(object sender, EventArgs e)
         {
+            /*
+            yaziciBilgileri[0] // yazici adı    
+            yaziciBilgileri[3] // yazıcı windows adı
+            */
             CrystalReport1 rapor = new CrystalReport1();
-            rapor.SetParameterValue("FirmaAdi","Liva");
-            rapor.SetParameterValue("FirmaAdresTelefon","asdgadgdgsdg dsgfsdgsd sdgfsd");
+            rapor.SetParameterValue("Indirim", indirim);
+            rapor.SetParameterValue("FirmaAdi",yaziciBilgileri[1]); // firma adı
+            rapor.SetParameterValue("FirmaAdresTelefon",yaziciBilgileri[2] + " " + yaziciBilgileri[4]); // firma adres ve telefon
             rapor.SetParameterValue("Garson",garson);
             rapor.SetParameterValue("Masa",masaAdi);
             rapor.SetParameterValue("Departman",departmanAdi);

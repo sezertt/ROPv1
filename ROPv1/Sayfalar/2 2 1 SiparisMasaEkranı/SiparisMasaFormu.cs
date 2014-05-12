@@ -62,6 +62,8 @@ namespace ROPv1
 
         public string viewdakiDepartmaninAdi;
 
+        PinKoduFormu pinForm;
+
         public SiparisMasaFormu(List<ROPv1.GirisEkrani.BagliKullanicilar> AlinanKullanicilar)
         {
             kullanicilar = AlinanKullanicilar;
@@ -96,13 +98,31 @@ namespace ROPv1
 
         private void siparisButonuBasildi(object sender, EventArgs e)
         {
+            if (pinForm != null)
+            {
+                if (pinForm.Visible)
+                {
+                    pinForm.BringToFront();
+                    return;
+                }
+            }
+
+            if (dialog2 != null)
+            {
+                if (dialog2.Visible)
+                {
+                    dialog2.BringToFront();
+                    return;
+                }
+            }
+
             if (acikMasaVarsaYapma)
             {
                 acikMasaVarsaUyariVerFormuOneGetir();
                 return;
             }
 
-            PinKoduFormu pinForm = new PinKoduFormu("Masa Görüntüleme", this);
+            pinForm = new PinKoduFormu("Masa Görüntüleme", this);
             pinForm.Show();
 
             hangiMasaButonunaBasildi = sender as Button;
@@ -112,6 +132,24 @@ namespace ROPv1
         //departman değiştirme butonlarından birine basıldıysa
         private void changeTableView(object sender, EventArgs e)
         {
+            if (pinForm != null)
+            {
+                if (pinForm.Visible)
+                {
+                    pinForm.BringToFront();
+                    return;
+                }
+            }
+
+            if (dialog2 != null)
+            {
+                if (dialog2.Visible)
+                {
+                    dialog2.BringToFront();
+                    return;
+                }
+            }
+
             if (acikMasaVarsaYapma)
             {
                 acikMasaVarsaUyariVerFormuOneGetir();
@@ -250,6 +288,24 @@ namespace ROPv1
 
         private void exitPressed(object sender, EventArgs e)
         {
+            if (pinForm != null)
+            {
+                if (pinForm.Visible)
+                {
+                    pinForm.BringToFront();
+                    return;
+                }
+            }
+
+            if (dialog2 != null)
+            {
+                if (dialog2.Visible)
+                {
+                    dialog2.BringToFront();
+                    return;
+                }
+            }
+
             if (acikMasaVarsaYapma)
             {
                 acikMasaVarsaUyariVerFormuOneGetir();
@@ -269,13 +325,31 @@ namespace ROPv1
 
         private void buttonAdisyon_Click(object sender, EventArgs e)
         {
+            if (pinForm != null)
+            {
+                if (pinForm.Visible)
+                {
+                    pinForm.BringToFront();
+                    return;
+                }
+            }
+
+            if (dialog2 != null)
+            {
+                if (dialog2.Visible)
+                {
+                    dialog2.BringToFront();
+                    return;
+                }
+            }
+
             if (acikMasaVarsaYapma)
             {
                 acikMasaVarsaUyariVerFormuOneGetir();
                 return;
             }
 
-            PinKoduFormu pinForm = new PinKoduFormu("Adisyon Görüntüleme", this);
+            pinForm = new PinKoduFormu("Adisyon Görüntüleme", this);
             pinForm.Show();
         } // düzenlenecek
 
@@ -421,7 +495,7 @@ namespace ROPv1
                 }
                 tablePanel.Tag = -1;
 
-                if(panel1.HorizontalScroll.Visible)
+                if (panel1.HorizontalScroll.Visible)
                 {
                     panel1.Height += 17;
                     tablePanel.Location = new Point(tablePanel.Location.X, tablePanel.Location.Y + 17);

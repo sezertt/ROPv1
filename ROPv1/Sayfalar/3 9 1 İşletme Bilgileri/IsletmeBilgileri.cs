@@ -78,10 +78,10 @@ namespace ROPv1
 
                 if (treeYaziciAdi.Nodes.Count < 2)
                 {  
-                    textboxYaziciAdi.Text = yazici[0];
+                    comboYaziciAdi.Text = yazici[0];
                     comboBoxFirmaAdi.Text = yazici[1];
                     textBoxAdres.Text = yazici[2];                  
-                    comboYazicilar.Text = yazici[3];
+                    comboYukluYazicilar.Text = yazici[3];
                     textBoxTelefon.Text = yazici[4];
                 }
             }
@@ -95,7 +95,7 @@ namespace ROPv1
                 //varsa comboboxa yazdır
                 foreach (String printer in PrinterSettings.InstalledPrinters)
                 {
-                    comboYazicilar.Items.Add(printer.ToString());
+                    comboYukluYazicilar.Items.Add(printer.ToString());
                 }
             }
 
@@ -129,14 +129,14 @@ namespace ROPv1
 
         private void comboYazicilar_Click(object sender, EventArgs e)
         {
-            comboYazicilar.Items.Clear();
+            comboYukluYazicilar.Items.Clear();
             // Yüklü printer var mı bak
             if (PrinterSettings.InstalledPrinters.Count > 0)
             {
                 //varsa comboboxa yazdır
                 foreach (String printer in PrinterSettings.InstalledPrinters)
                 {
-                    comboYazicilar.Items.Add(printer.ToString());
+                    comboYukluYazicilar.Items.Add(printer.ToString());
                 }
             }
             ((ComboBox)sender).DroppedDown = true;
@@ -146,23 +146,26 @@ namespace ROPv1
         {
             if (buttonYaziciyiSil.Visible)
             {
-                textboxYaziciAdi.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][0];
+                comboYaziciAdi.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][0];
                 comboBoxFirmaAdi.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][1];
                 textBoxAdres.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][2];
-                comboYazicilar.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][3];
+                comboYukluYazicilar.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][3];
                 textBoxTelefon.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][4];
-                newYaziciForm.Text = textboxYaziciAdi.Text;
+                newYaziciForm.Text = comboYaziciAdi.Text;
             }
         }
 
         private void buttonYeniYaziciEkle_Click(object sender, EventArgs e)
         {
+            if (treeYaziciAdi.Nodes.Count > 11)
+                return;
+
             if (newYaziciForm.Text != "Yeni Yazıcı")
             {
                 newYaziciForm.Text = "Yeni Yazıcı";
                 textBoxAdres.Text = "";
-                textboxYaziciAdi.Text = "";
-                comboYazicilar.Text = "";
+                comboYaziciAdi.Text = "";
+                comboYukluYazicilar.Text = "";
                 textBoxTelefon.Text = "";
                 buttonYaziciyiSil.Visible = false;
                 buttonIptal.Visible = true;
@@ -172,12 +175,12 @@ namespace ROPv1
 
         private void buttonIptal_Click(object sender, EventArgs e)
         {
-            textboxYaziciAdi.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][0];
+            comboYaziciAdi.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][0];
             comboBoxFirmaAdi.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][1];
             textBoxAdres.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][2];
-            comboYazicilar.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][3];
+            comboYukluYazicilar.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][3];
             textBoxTelefon.Text = yazicilar[treeYaziciAdi.SelectedNode.Index][4];
-            newYaziciForm.Text = textboxYaziciAdi.Text;
+            newYaziciForm.Text = comboYaziciAdi.Text;
 
             buttonYaziciyiSil.Visible = true;
             buttonIptal.Visible = false;
@@ -213,7 +216,7 @@ namespace ROPv1
         private void buttonYaziciyiKaydet_Click(object sender, EventArgs e)
         {
             KontrolFormu dialog;
-            if (textboxYaziciAdi.Text == "Yeni Yazıcı" || comboBoxFirmaAdi.Text == "" || comboYazicilar.Text == "")
+            if (comboYaziciAdi.Text == "Yeni Yazıcı" || comboBoxFirmaAdi.Text == "" || comboYukluYazicilar.Text == "")
             {
                 dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false);
                 dialog.Show();
@@ -226,22 +229,22 @@ namespace ROPv1
             {
                 for (int i = 0; i < yazicilar.Count; i++)
                 {
-                    if (string.Equals(yazicilar[i][0], textboxYaziciAdi.Text, StringComparison.CurrentCultureIgnoreCase))
+                    if (string.Equals(yazicilar[i][0], comboYaziciAdi.Text, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        dialog = new KontrolFormu("Aynı yazıcı ismi sistemde kayıtlıdır. Lütfen başka bir isimle yazıcı ekleyiniz", false);
+                        dialog = new KontrolFormu("Aynı yazıcı ismi sistemde kayıtlıdır. Yeni yazıcınızı Adisyon5/Mutfak5 gibi kaydediniz.", false);
 
                         dialog.Show();
                         return;
                     }
                 }
 
-                treeYaziciAdi.Nodes.Add(textboxYaziciAdi.Text);
+                treeYaziciAdi.Nodes.Add(comboYaziciAdi.Text);
 
                 SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Yazici(YaziciAdi,FirmaAdi,FirmaAdres,Yazici,Telefon) VALUES(@_YaziciAdi,@_FirmaAdi,@_FirmaAdres,@_Yazici,@_Telefon)");
-                cmd.Parameters.AddWithValue("@_YaziciAdi", textboxYaziciAdi.Text);
+                cmd.Parameters.AddWithValue("@_YaziciAdi", comboYaziciAdi.Text);
                 cmd.Parameters.AddWithValue("@_FirmaAdi", comboBoxFirmaAdi.Text);
                 cmd.Parameters.AddWithValue("@_FirmaAdres", textBoxAdres.Text);
-                cmd.Parameters.AddWithValue("@_Yazici", comboYazicilar.Text);
+                cmd.Parameters.AddWithValue("@_Yazici", comboYukluYazicilar.Text);
                 cmd.Parameters.AddWithValue("@_Telefon", textBoxTelefon.Text);
 
                 cmd.ExecuteNonQuery();
@@ -250,14 +253,14 @@ namespace ROPv1
                 cmd.Connection.Dispose();
 
                 string[] yazici = new string[5];
-                yazici[0] = textboxYaziciAdi.Text; // yazici adi
+                yazici[0] = comboYaziciAdi.Text; // yazici adi
                 yazici[1] = comboBoxFirmaAdi.Text; // firma adi
                 yazici[2] = textBoxAdres.Text; // firma adres
-                yazici[3] = comboYazicilar.Text; // yazici
+                yazici[3] = comboYukluYazicilar.Text; // yazici
                 yazici[4] = textBoxTelefon.Text; // telefon
                 yazicilar.Add(yazici);
 
-                newYaziciForm.Text = textboxYaziciAdi.Text;
+                newYaziciForm.Text = comboYaziciAdi.Text;
 
                 treeYaziciAdi.SelectedNode = treeYaziciAdi.Nodes[treeYaziciAdi.Nodes.Count - 1];
                 treeYaziciAdi.Focus();
@@ -285,13 +288,13 @@ namespace ROPv1
             }
             else
             {
-                if (textboxYaziciAdi.Text != yazicilar[treeYaziciAdi.SelectedNode.Index][0])
+                if (comboYaziciAdi.Text != yazicilar[treeYaziciAdi.SelectedNode.Index][0])
                 {
                     for (int i = 0; i < yazicilar.Count; i++)
                     {
-                        if (string.Equals(yazicilar[i][0], textboxYaziciAdi.Text, StringComparison.CurrentCultureIgnoreCase))
+                        if (string.Equals(yazicilar[i][0], comboYaziciAdi.Text, StringComparison.CurrentCultureIgnoreCase))
                         {
-                            dialog = new KontrolFormu("Aynı departman ismi sistemde kayıtlıdır. Lütfen başka bir isimle departman ekleyiniz", false);
+                            dialog = new KontrolFormu("Aynı yazıcı ismi sistemde kayıtlıdır. Yeni yazıcınızı Adisyon5/Mutfak5 gibi kaydediniz.", false);
                             dialog.Show();
                             return;
                         }
@@ -300,10 +303,10 @@ namespace ROPv1
 
                 // Yazıcıda değişiklik yapıldıktan sonra basılan kaydet butonu.
                 SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Yazici SET YaziciAdi=@yaziciAdi,FirmaAdi=@firmaAdi,FirmaAdres=@firmaAdres,Yazici=@yazici,Telefon=@telefon WHERE YaziciAdi=@yaziciAdi2");
-                cmd.Parameters.AddWithValue("@yaziciAdi", textboxYaziciAdi.Text);
+                cmd.Parameters.AddWithValue("@yaziciAdi", comboYaziciAdi.Text);
                 cmd.Parameters.AddWithValue("@firmaAdi", comboBoxFirmaAdi.Text);
                 cmd.Parameters.AddWithValue("@firmaAdres", textBoxAdres.Text);
-                cmd.Parameters.AddWithValue("@yazici", comboYazicilar.Text);
+                cmd.Parameters.AddWithValue("@yazici", comboYukluYazicilar.Text);
                 cmd.Parameters.AddWithValue("@telefon",textBoxTelefon.Text);
                 cmd.Parameters.AddWithValue("@yaziciAdi2", yazicilar[treeYaziciAdi.SelectedNode.Index][0]);
                 cmd.ExecuteNonQuery();
@@ -312,8 +315,8 @@ namespace ROPv1
                 cmd.Connection.Dispose();
 
 
-                treeYaziciAdi.Nodes[treeYaziciAdi.SelectedNode.Index].Text = textboxYaziciAdi.Text;
-                newYaziciForm.Text = textboxYaziciAdi.Text;
+                treeYaziciAdi.Nodes[treeYaziciAdi.SelectedNode.Index].Text = comboYaziciAdi.Text;
+                newYaziciForm.Text = comboYaziciAdi.Text;
 
                 dialog = new KontrolFormu("Yazıcı Bilgileri Güncellenmiştir", false);
 
@@ -329,6 +332,11 @@ namespace ROPv1
                     treeYaziciAdi.Font = new Font(treeYaziciAdi.Font.FontFamily, treeYaziciAdi.Font.Size - 0.5f, treeYaziciAdi.Font.Style);
                 }
             }
+        }
+
+        private void comboYaziciAdi_Click(object sender, EventArgs e)
+        {
+            ((ComboBox)sender).DroppedDown = true;
         }
     }
 }

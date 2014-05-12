@@ -32,19 +32,19 @@
             this.buttonYeniYaziciEkle = new System.Windows.Forms.Button();
             this.treeYaziciAdi = new System.Windows.Forms.TreeView();
             this.newYaziciForm = new System.Windows.Forms.GroupBox();
+            this.comboYaziciAdi = new System.Windows.Forms.ComboBox();
+            this.textBoxTelefon = new System.Windows.Forms.MaskedTextBox();
             this.comboBoxFirmaAdi = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxAdres = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboYazicilar = new System.Windows.Forms.ComboBox();
-            this.textboxYaziciAdi = new System.Windows.Forms.TextBox();
+            this.comboYukluYazicilar = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.buttonYaziciyiKaydet = new System.Windows.Forms.Button();
             this.buttonYaziciyiSil = new System.Windows.Forms.Button();
             this.buttonIptal = new System.Windows.Forms.Button();
-            this.textBoxTelefon = new System.Windows.Forms.MaskedTextBox();
             this.newYaziciForm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,6 +101,7 @@
             // 
             this.newYaziciForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.newYaziciForm.BackColor = System.Drawing.Color.White;
+            this.newYaziciForm.Controls.Add(this.comboYaziciAdi);
             this.newYaziciForm.Controls.Add(this.textBoxTelefon);
             this.newYaziciForm.Controls.Add(this.comboBoxFirmaAdi);
             this.newYaziciForm.Controls.Add(this.label3);
@@ -108,8 +109,7 @@
             this.newYaziciForm.Controls.Add(this.label2);
             this.newYaziciForm.Controls.Add(this.buttonYeniYaziciEkle);
             this.newYaziciForm.Controls.Add(this.label1);
-            this.newYaziciForm.Controls.Add(this.comboYazicilar);
-            this.newYaziciForm.Controls.Add(this.textboxYaziciAdi);
+            this.newYaziciForm.Controls.Add(this.comboYukluYazicilar);
             this.newYaziciForm.Controls.Add(this.label7);
             this.newYaziciForm.Controls.Add(this.label5);
             this.newYaziciForm.Controls.Add(this.buttonYaziciyiKaydet);
@@ -123,6 +123,35 @@
             this.newYaziciForm.TabIndex = 43;
             this.newYaziciForm.TabStop = false;
             this.newYaziciForm.Text = "Yeni Yazıcı";
+            // 
+            // comboYaziciAdi
+            // 
+            this.comboYaziciAdi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboYaziciAdi.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.comboYaziciAdi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.comboYaziciAdi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.comboYaziciAdi.FormattingEnabled = true;
+            this.comboYaziciAdi.Items.AddRange(new object[] {
+            "Adisyon",
+            "Mutfak"});
+            this.comboYaziciAdi.Location = new System.Drawing.Point(13, 52);
+            this.comboYaziciAdi.MaxDropDownItems = 20;
+            this.comboYaziciAdi.MaxLength = 100;
+            this.comboYaziciAdi.Name = "comboYaziciAdi";
+            this.comboYaziciAdi.Size = new System.Drawing.Size(400, 32);
+            this.comboYaziciAdi.TabIndex = 51;
+            this.comboYaziciAdi.Click += new System.EventHandler(this.comboYaziciAdi_Click);
+            this.comboYaziciAdi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.combo_KeyPress);
+            // 
+            // textBoxTelefon
+            // 
+            this.textBoxTelefon.Font = new System.Drawing.Font("Arial", 15.75F);
+            this.textBoxTelefon.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.textBoxTelefon.Location = new System.Drawing.Point(196, 293);
+            this.textBoxTelefon.Mask = "(999) 000-0000";
+            this.textBoxTelefon.Name = "textBoxTelefon";
+            this.textBoxTelefon.Size = new System.Drawing.Size(399, 32);
+            this.textBoxTelefon.TabIndex = 50;
             // 
             // comboBoxFirmaAdi
             // 
@@ -189,33 +218,21 @@
             this.label1.TabIndex = 42;
             this.label1.Text = "İşletme Adresi:";
             // 
-            // comboYazicilar
+            // comboYukluYazicilar
             // 
-            this.comboYazicilar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboYazicilar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.comboYazicilar.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.comboYazicilar.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.comboYazicilar.FormattingEnabled = true;
-            this.comboYazicilar.Location = new System.Drawing.Point(433, 52);
-            this.comboYazicilar.MaxDropDownItems = 20;
-            this.comboYazicilar.MaxLength = 50;
-            this.comboYazicilar.Name = "comboYazicilar";
-            this.comboYazicilar.Size = new System.Drawing.Size(400, 32);
-            this.comboYazicilar.TabIndex = 4;
-            this.comboYazicilar.Click += new System.EventHandler(this.comboYazicilar_Click);
-            this.comboYazicilar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboYazicilar_KeyPress);
-            // 
-            // textboxYaziciAdi
-            // 
-            this.textboxYaziciAdi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textboxYaziciAdi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textboxYaziciAdi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textboxYaziciAdi.Location = new System.Drawing.Point(13, 52);
-            this.textboxYaziciAdi.MaxLength = 50;
-            this.textboxYaziciAdi.Name = "textboxYaziciAdi";
-            this.textboxYaziciAdi.Size = new System.Drawing.Size(400, 32);
-            this.textboxYaziciAdi.TabIndex = 2;
-            this.textboxYaziciAdi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.combo_KeyPress);
+            this.comboYukluYazicilar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboYukluYazicilar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.comboYukluYazicilar.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.comboYukluYazicilar.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.comboYukluYazicilar.FormattingEnabled = true;
+            this.comboYukluYazicilar.Location = new System.Drawing.Point(433, 52);
+            this.comboYukluYazicilar.MaxDropDownItems = 20;
+            this.comboYukluYazicilar.MaxLength = 50;
+            this.comboYukluYazicilar.Name = "comboYukluYazicilar";
+            this.comboYukluYazicilar.Size = new System.Drawing.Size(400, 32);
+            this.comboYukluYazicilar.TabIndex = 4;
+            this.comboYukluYazicilar.Click += new System.EventHandler(this.comboYazicilar_Click);
+            this.comboYukluYazicilar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboYazicilar_KeyPress);
             // 
             // label7
             // 
@@ -292,16 +309,6 @@
             this.buttonIptal.UseVisualStyleBackColor = false;
             this.buttonIptal.Click += new System.EventHandler(this.buttonIptal_Click);
             // 
-            // textBoxTelefon
-            // 
-            this.textBoxTelefon.Font = new System.Drawing.Font("Arial", 15.75F);
-            this.textBoxTelefon.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBoxTelefon.Location = new System.Drawing.Point(196, 293);
-            this.textBoxTelefon.Mask = "(999) 000-0000";
-            this.textBoxTelefon.Name = "textBoxTelefon";
-            this.textBoxTelefon.Size = new System.Drawing.Size(399, 32);
-            this.textBoxTelefon.TabIndex = 50;
-            // 
             // IsletmeBilgileri
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -327,8 +334,7 @@
         private System.Windows.Forms.GroupBox newYaziciForm;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboYazicilar;
-        private System.Windows.Forms.TextBox textboxYaziciAdi;
+        private System.Windows.Forms.ComboBox comboYukluYazicilar;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonYaziciyiKaydet;
@@ -338,5 +344,6 @@
         private System.Windows.Forms.TextBox textBoxAdres;
         private System.Windows.Forms.ComboBox comboBoxFirmaAdi;
         private System.Windows.Forms.MaskedTextBox textBoxTelefon;
+        private System.Windows.Forms.ComboBox comboYaziciAdi;
     }
 }

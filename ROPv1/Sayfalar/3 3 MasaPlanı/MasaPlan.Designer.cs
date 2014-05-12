@@ -34,13 +34,13 @@
             this.newTableForm = new System.Windows.Forms.GroupBox();
             this.numericTableCount = new System.Windows.Forms.NumericUpDown();
             this.textTableDesignName = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.buttonSaveNewTable = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.tablePanel = new System.Windows.Forms.TableLayoutPanel();
             this.textTableName = new System.Windows.Forms.TextBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.buttonEditDesign = new System.Windows.Forms.Button();
             this.buttonDeleteTable = new System.Windows.Forms.Button();
@@ -138,6 +138,11 @@
             this.textTableDesignName.Size = new System.Drawing.Size(244, 32);
             this.textTableDesignName.TabIndex = 2;
             this.textTableDesignName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textTableName_KeyPress);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // label7
             // 
@@ -257,11 +262,6 @@
             this.textTableName.TabIndex = 28;
             this.textTableName.TextChanged += new System.EventHandler(this.TableName_TextChanged);
             this.textTableName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textTableName_KeyPress);
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // label1
             // 

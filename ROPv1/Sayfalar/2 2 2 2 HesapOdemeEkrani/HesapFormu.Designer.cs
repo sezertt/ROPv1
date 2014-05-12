@@ -796,7 +796,7 @@
             this.buttonYemekFisi.Name = "buttonYemekFisi";
             this.buttonYemekFisi.Size = new System.Drawing.Size(205, 115);
             this.buttonYemekFisi.TabIndex = 94;
-            this.buttonYemekFisi.Tag = "2";
+            this.buttonYemekFisi.Tag = "103";
             this.buttonYemekFisi.Text = "Yemek Fişi";
             this.buttonYemekFisi.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.buttonYemekFisi.UseVisualStyleBackColor = false;
@@ -815,7 +815,7 @@
             this.buttonKart.Name = "buttonKart";
             this.buttonKart.Size = new System.Drawing.Size(205, 115);
             this.buttonKart.TabIndex = 93;
-            this.buttonKart.Tag = "1";
+            this.buttonKart.Tag = "102";
             this.buttonKart.Text = "Kredi Kartı";
             this.buttonKart.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.buttonKart.UseVisualStyleBackColor = false;
@@ -834,7 +834,7 @@
             this.buttonNakit.Name = "buttonNakit";
             this.buttonNakit.Size = new System.Drawing.Size(205, 115);
             this.buttonNakit.TabIndex = 92;
-            this.buttonNakit.Tag = "0";
+            this.buttonNakit.Tag = "101";
             this.buttonNakit.Text = "Nakit";
             this.buttonNakit.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.buttonNakit.UseVisualStyleBackColor = false;
@@ -871,7 +871,7 @@
             this.buttonIndirim.Name = "buttonIndirim";
             this.buttonIndirim.Size = new System.Drawing.Size(205, 115);
             this.buttonIndirim.TabIndex = 90;
-            this.buttonIndirim.Tag = "3";
+            this.buttonIndirim.Tag = "104";
             this.buttonIndirim.Text = "İndirim";
             this.buttonIndirim.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.buttonIndirim.UseVisualStyleBackColor = false;
@@ -908,7 +908,7 @@
             this.buttonIndirimYuzdeli.Name = "buttonIndirimYuzdeli";
             this.buttonIndirimYuzdeli.Size = new System.Drawing.Size(205, 115);
             this.buttonIndirimYuzdeli.TabIndex = 60;
-            this.buttonIndirimYuzdeli.Tag = "4";
+            this.buttonIndirimYuzdeli.Tag = "0";
             this.buttonIndirimYuzdeli.Text = "İndirim";
             this.buttonIndirimYuzdeli.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.buttonIndirimYuzdeli.UseVisualStyleBackColor = false;
