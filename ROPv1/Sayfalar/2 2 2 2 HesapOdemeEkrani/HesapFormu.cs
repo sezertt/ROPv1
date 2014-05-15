@@ -24,6 +24,8 @@ namespace ROPv1
     {
         private SiparisMenuFormu menuFormu;
 
+        CrystalReport1 rapor = new CrystalReport1();
+
         string masaAdi, departmanAdi, siparisiGirenKisi, garson, acilisZamaniString;
 
         ListViewItem sonSecilenItem;
@@ -304,7 +306,7 @@ namespace ROPv1
                     listUrunFiyat.Columns[2].Width = fiyatBoyu;
                 }
             }
-
+            
             if (Properties.Settings.Default.Server == 2)
             {
                 odemeyeGec();
@@ -317,7 +319,8 @@ namespace ROPv1
                 {
                     decimal yemeginFiyati;
                     double kacPorsiyon;
-                    string yemeginAdi;
+                    string yemeginAdi;                  
+
                     try
                     {
                         yemeginFiyati = dr.GetDecimal(0);
@@ -424,6 +427,24 @@ namespace ROPv1
                     {
                         indirimYuzde = odenenMiktar;
                         odenenMiktar = toplamHesap * odemeTipi / 100;
+
+                        if(indirimYuzde != odenenMiktar)// hesapta değişiklik yapılmış odenen miktarı güncelle
+                        {
+                            cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "'");
+                            dr = cmd.ExecuteReader();
+                            dr.Read();
+                            int adisyonID = dr.GetInt32(0);
+
+                            cmd = SQLBaglantisi.getCommand("UPDATE OdemeDetay SET OdenenMiktar=@_OdenenMiktar2, OdemeTipi=@_OdemeTipi2 WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi=(SELECT OdemeTipi FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi<101)");
+
+                            cmd.Parameters.AddWithValue("@_OdenenMiktar2", odenenMiktar);
+                            cmd.Parameters.AddWithValue("@_OdemeTipi2", odemeTipi);
+
+                            cmd.ExecuteNonQuery();
+
+                            cmd.Connection.Close();
+                            cmd.Connection.Dispose();
+                        }
 
                         labelIndirimYuzdeTutar.Text = odenenMiktar.ToString("0.00");
 
@@ -637,6 +658,11 @@ namespace ROPv1
                         indirimYuzde = odenenMiktar;
                         odenenMiktar = toplamHesap * odemeTipi / 100;
 
+                        if (indirimYuzde != odenenMiktar)// hesapta değişiklik yapılmış odenen miktarı güncelle
+                        {
+                            menuFormu.masaFormu.hesapFormundanIndirim(masaAdi, departmanAdi, "Indirim", odemeTipi, odenenMiktar);
+                        }
+
                         labelIndirimYuzdeTutar.Text = odenenMiktar.ToString("0.00");
 
                         labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 9);
@@ -755,7 +781,7 @@ namespace ROPv1
 
                 if (tip == 0) // indirim yüzde
                 {
-                    tip = Convert.ToInt32(textNumberOfItem.Text);
+                    tip = Convert.ToInt32(Math.Floor(Convert.ToDouble(textNumberOfItem.Text)));
                 }
 
                 cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + tip + "') UPDATE OdemeDetay SET OdenenMiktar=@_OdenenMiktar2 WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + tip + "' ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
@@ -787,7 +813,6 @@ namespace ROPv1
 
         private void buttonIndirimYuzdeli_Click(object sender, EventArgs e)
         {
-            int eskiTip = Convert.ToInt32(indirimYuzde / toplamHesap * 100);
             toplamOdemeVeIndirim -= indirimYuzde; // önceki indirimi çıkarıyoruz
             labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 9);
             labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(0, labelIndirimToplam.Text.Length - 1);
@@ -806,7 +831,7 @@ namespace ROPv1
 
             if (tip == 0) // indirim yüzde
             {
-                tip = Convert.ToInt32(textNumberOfItem.Text);
+                tip = Convert.ToInt32(Math.Floor(Convert.ToDouble(textNumberOfItem.Text)));
             }
 
             if (Properties.Settings.Default.Server == 2)
@@ -860,7 +885,7 @@ namespace ROPv1
 
                 int adisyonID = dr.GetInt32(0);
 
-                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + eskiTip + "') UPDATE OdemeDetay SET OdenenMiktar=@_OdenenMiktar2, OdemeTipi=@_OdemeTipi2 WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + eskiTip + "' ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
+                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi<101) UPDATE OdemeDetay SET OdenenMiktar=@_OdenenMiktar2, OdemeTipi=@_OdemeTipi2 WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi=(SELECT OdemeTipi FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi<101) ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
 
                 cmd.Parameters.AddWithValue("@_OdenenMiktar2", indirimYuzde);
                 cmd.Parameters.AddWithValue("@_OdemeTipi2", tip);
@@ -1512,6 +1537,9 @@ namespace ROPv1
                 return;
             }
 
+            rapor.SetParameterValue("Masa", masaAdi);
+            rapor.SetParameterValue("Departman", departmanAdi);
+
             if (Properties.Settings.Default.Server == 2) //server 
             {
                 // Burada yazıcıların içerisinde Adisyon isimli var mı diye bak varsa o yazıcıya gönder yoksa 
@@ -1605,8 +1633,18 @@ namespace ROPv1
                 acilisZamani = Convert.ToDateTime(acilisZamaniString);
             }
 
-            Adisyon adisyonFormu = new Adisyon(masaAdi, departmanAdi, garson, acilisZamani, Convert.ToDecimal(labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11)), yaziciBilgileri);
-            adisyonFormu.Show();
+            //Adisyon adisyonFormu = new Adisyon(masaAdi, departmanAdi, garson, acilisZamani, Convert.ToDecimal(labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11)), yaziciBilgileri);
+            //adisyonFormu.Show();
+
+            decimal yazdirilacakIndirim = Convert.ToDecimal(labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11));
+
+            rapor.SetParameterValue("Garson", garson);
+            rapor.SetParameterValue("Indirim", yazdirilacakIndirim);
+            rapor.SetParameterValue("AcilisZamani", acilisZamani);
+            rapor.SetParameterValue("FirmaAdi", yaziciBilgileri[1]); // firma adı
+            rapor.SetParameterValue("FirmaAdresTelefon", yaziciBilgileri[2] + " " + yaziciBilgileri[4]); // firma adres ve telefon
+            rapor.PrintOptions.PrinterName = yaziciBilgileri[3];
+            rapor.PrintToPrinter(1, false, 0, 0);
         }
 
         // serverdan yazıcılar geldi

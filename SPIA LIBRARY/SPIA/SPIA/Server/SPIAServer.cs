@@ -364,8 +364,8 @@ namespace SPIA.Server
                 try
                 {
                     agAkisi = new NetworkStream(soket);
-                    binaryOkuyucu = new BinaryReader(agAkisi, Encoding.UTF32);
-                    binaryYazici = new BinaryWriter(agAkisi, Encoding.UTF32);
+                    binaryOkuyucu = new BinaryReader(agAkisi, Encoding.UTF8);
+                    binaryYazici = new BinaryWriter(agAkisi, Encoding.UTF8);
                     thread = new Thread(new ThreadStart(tCalis));
                     calisiyor = true;
                     thread.Start();
@@ -406,7 +406,7 @@ namespace SPIA.Server
             {
                 try
                 {
-                    byte[] bMesaj = System.Text.Encoding.UTF32.GetBytes(mesaj);
+                    byte[] bMesaj = System.Text.Encoding.UTF8.GetBytes(mesaj);
                     byte[] b = new byte[bMesaj.Length + 2];
                     Array.Copy(bMesaj, 0, b, 1, bMesaj.Length);
                     b[0] = BASLANGIC_BYTE;
@@ -444,7 +444,7 @@ namespace SPIA.Server
                         {
                             bList.Add(b);
                         }
-                        string mesaj = System.Text.Encoding.UTF32.GetString(bList.ToArray());
+                        string mesaj = System.Text.Encoding.UTF8.GetString(bList.ToArray());
                         //Okunan paketi sunucuya ilet
                         sunucu.yeniClientMesajiAlindi(this, mesaj);
                         yeniMesajAlindiTetikle(mesaj);

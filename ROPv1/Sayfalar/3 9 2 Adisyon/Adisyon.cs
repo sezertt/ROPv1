@@ -49,6 +49,8 @@ namespace ROPv1
             rapor.SetParameterValue("Departman",departmanAdi);
             rapor.SetParameterValue("AcilisZamani",acilisZamani);
             ReportView.ReportSource = rapor;
+
+            rapor.PrintToPrinter(1, false, 0, 0);
         }
     }
 }

@@ -86,8 +86,8 @@ namespace SPIA.Client
                 IPEndPoint ipep = new IPEndPoint(IPAddress.Parse(serverIpAdresi), serverPort);
                 clientBaglantisi.Connect(ipep);
                 agAkisi = new NetworkStream(clientBaglantisi);
-                binaryOkuyucu = new BinaryReader(agAkisi, Encoding.UTF32);
-                binaryYazici = new BinaryWriter(agAkisi, Encoding.UTF32);
+                binaryOkuyucu = new BinaryReader(agAkisi, Encoding.UTF8);
+                binaryYazici = new BinaryWriter(agAkisi, Encoding.UTF8);
                 thread = new Thread(new ThreadStart(tCalis));
                 calisiyor = true;
                 thread.Start();
@@ -133,7 +133,7 @@ namespace SPIA.Client
             try
             {
                 //Mesajý byte dizisine çevirelim
-                byte[] bMesaj = System.Text.Encoding.UTF32.GetBytes(mesaj);
+                byte[] bMesaj = System.Text.Encoding.UTF8.GetBytes(mesaj);
                 //Karþý tarafa gönderilecek byte dizisini oluþturalým
                 byte[] b = new byte[bMesaj.Length + 2];
                 Array.Copy(bMesaj, 0, b, 1, bMesaj.Length);
@@ -173,7 +173,7 @@ namespace SPIA.Client
                     {
                         bList.Add(b);
                     }
-                    string mesaj = System.Text.Encoding.UTF32.GetString(bList.ToArray());
+                    string mesaj = System.Text.Encoding.UTF8.GetString(bList.ToArray());
                     //Yeni mesaj baþarýyla alýndý
                     yeniMesajAlindiTetikle(mesaj);
                 }

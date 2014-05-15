@@ -31,7 +31,7 @@ namespace ROPv1
             if (comboServer.Text == "Server")
             {
                 Properties.Settings.Default.Server = 2;
-                Properties.Settings.Default.IP = "127.0.0.1"; // localhost olmak zorunda server için
+                //Properties.Settings.Default.IP = "127.0.0.1"; // localhost olmak zorunda server için
             }
             else
                 Properties.Settings.Default.Server = 0;
