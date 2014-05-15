@@ -39,6 +39,7 @@ namespace ROPv1
             yaziciBilgileri[0] // yazici adı    
             yaziciBilgileri[3] // yazıcı windows adı
             */
+            //bura düzeltilecek direk yazdırma için ayarlanmalı
             CrystalReport1 rapor = new CrystalReport1();
             rapor.SetParameterValue("Indirim", indirim);
             rapor.SetParameterValue("FirmaAdi",yaziciBilgileri[1]); // firma adı

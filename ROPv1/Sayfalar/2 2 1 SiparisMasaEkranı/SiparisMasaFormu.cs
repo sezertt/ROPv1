@@ -449,6 +449,8 @@ namespace ROPv1
                 //kendi listemize atıyoruz
                 masaDizaynListesi.AddRange(infoMasa);
 
+                int departmanButtonWidth = 0;
+
                 //departman butonlarını ekrana ekliyoruz
                 for (int i = 0; i < restoranListesi.Count; i++)
                 {
@@ -484,15 +486,27 @@ namespace ROPv1
                         }
                     }
 
-                    departmanButton.Height = panel1.Height;
-                    departmanButton.Width = panel1.Width / 6;
+                    if (restoranListesi.Count < 6)
+                    {
+                        departmanButton.Height = panel1.Height;
+                        departmanButton.Width = panel1.Width / restoranListesi.Count;
+                    }
+                    else
+                    {
+                        departmanButton.Height = panel1.Height;
+                        departmanButton.Width = panel1.Width / 6;
+                    }
+
+                    departmanButtonWidth = departmanButton.Width;
 
                     departmanButton.Click += changeTableView;
                     departmanButton.Anchor = AnchorStyles.Top;
                     departmanButton.Margin = new Padding(0, 0, 0, 0);
                     panel1.Controls.Add(departmanButton);
-                    panel1.AutoScrollMinSize = new System.Drawing.Size(panel1.AutoScrollMinSize.Width + departmanButton.Width + 1, 30);
                 }
+
+                panel1.AutoScrollMinSize = new System.Drawing.Size(departmanButtonWidth * restoranListesi.Count, 30);
+
                 tablePanel.Tag = -1;
 
                 if (panel1.HorizontalScroll.Visible)
@@ -513,7 +527,7 @@ namespace ROPv1
             if (e.Control && e.Shift && e.KeyCode == Keys.D3) //Kısayol Tuşları ile ekranı açıyoruz ctrl+shift+3
             {
                 PortFormu portFormu = new PortFormu();
-                portFormu.Show();
+                portFormu.ShowDialog();
             }
         }
 
@@ -730,6 +744,9 @@ namespace ROPv1
                     case "ikramIptal": // serverdan ikram iptal isteğinin sonucu geldiğinde
                         komut_ikramIptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["ikramYeniMiEskiMi"]);
                         break;
+                    case "BulunanYazicilar": //Yolladığımız giris mesajına karşılık gelen mesaj
+                        komut_yazicilarGeldi(parametreler["adisyonYazicilari"], parametreler["digerYazicilar"], parametreler["garson"], parametreler["acilisZamani"]);
+                        break;
                     case "giris": //Yolladığımız giris mesajına karşılık gelen mesaj
                         komut_giris(parametreler["sonuc"]);
                         break;
@@ -815,6 +832,11 @@ namespace ROPv1
             client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odenmeyenSiparisVarMi=" + odenmeyenSiparisVarMi);
         }
 
+        public void hesapFormundanYazicilariIste(string komut, string masaAdi, string departmanAdi)
+        {
+            client.MesajYolla("komut=" + komut + "&masa=" + masaAdi + "&departmanAdi=" + departmanAdi);
+        }
+
         public void hesapFormundanIndirim(string masa, string departman, string komut, int odemeTipi, decimal odemeMiktari)
         {
             client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odemeTipi=" + odemeTipi + "&odemeMiktari=" + odemeMiktari);
@@ -895,8 +917,12 @@ namespace ROPv1
                     if (siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi != "")
                     {
                         Button tablebutton = tablePanel.Controls[siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi] as Button;
-                        tablebutton.ForeColor = Color.White;
-                        tablebutton.BackColor = Color.Firebrick;
+
+                        if(tablebutton != null)
+                        {
+                            tablebutton.ForeColor = Color.White;
+                            tablebutton.BackColor = Color.Firebrick;
+                        }
 
                         tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                     }
@@ -946,6 +972,12 @@ namespace ROPv1
         }
 
         #region Komutlar
+
+        //yazıcıları hesap formuna gönder
+        private void komut_yazicilarGeldi(string aYazicilari, string dYazicilari, string garson, string acilisZamani)
+        {
+            siparisMenuForm.hesapForm.yazicilarGeldi(aYazicilari, dYazicilari, garson, acilisZamani);
+        }
 
         private void komut_IndirimOnay(string odemeTipi, string odemeMiktari)
         {

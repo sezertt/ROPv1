@@ -12,7 +12,7 @@ namespace ConsoleDeneme
         static void Main(string[] args)
         {
             localhost.SiparisClient fr = new localhost.SiparisClient();
-            entSiparis ds = fr.GetSiparisBilgileri();
+            var ds = fr.GetSiparisBilgileri();
         }
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b593b8a3-f3b2-4320-a7d9-c57a12a31f9e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="df06a108-1dda-40b9-a79a-fbc2beb5b098" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,11 +22,11 @@
     <MetadataSource Address="http://localhost:1118/Siparis.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Siparis.xsd" MetadataType="Schema" ID="0e435af2-fd50-4e73-b54e-d900c152be31" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?xsd=xsd2" />
-    <MetadataFile FileName="Siparis.wsdl" MetadataType="Wsdl" ID="21f764f4-e41b-45cd-872d-0be9f7452cc5" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?wsdl" />
-    <MetadataFile FileName="Siparis1.xsd" MetadataType="Schema" ID="47a26725-3daa-4626-a01b-8d44697e4767" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?xsd=xsd0" />
-    <MetadataFile FileName="Siparis.disco" MetadataType="Disco" ID="2f084fef-18ee-4052-95a6-fccc85f22128" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?disco" />
-    <MetadataFile FileName="Siparis2.xsd" MetadataType="Schema" ID="dcb63628-12ee-4b37-a4bb-ad03e3f4484c" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?xsd=xsd1" />
+    <MetadataFile FileName="Siparis.xsd" MetadataType="Schema" ID="649794a0-8162-4d48-83e7-e88bc907339a" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?xsd=xsd2" />
+    <MetadataFile FileName="Siparis.wsdl" MetadataType="Wsdl" ID="70d98c31-c4a4-4b0b-baa3-ea133b696085" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?wsdl" />
+    <MetadataFile FileName="Siparis1.xsd" MetadataType="Schema" ID="829797d4-c00b-47f6-8daa-cf6d28fa579a" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?xsd=xsd0" />
+    <MetadataFile FileName="Siparis.disco" MetadataType="Disco" ID="1049d3a5-3df7-456e-835c-d49da806060b" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?disco" />
+    <MetadataFile FileName="Siparis2.xsd" MetadataType="Schema" ID="c7cc7fc2-90c5-49a2-945c-7d054fa2d5f1" SourceId="1" SourceUrl="http://localhost:1118/Siparis.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

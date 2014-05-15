@@ -14,9 +14,6 @@ using System.Collections.Specialized;
 using System.Data.SqlClient;
 using SPIA;
 using SPIA.Server;
-using ROPv1.BLL;
-using ROPv1.Entity;
-
 
 namespace ROPv1
 {
@@ -153,6 +150,9 @@ namespace ROPv1
                     case "giris": // bir kullanıcı servera bağlandığında
                         komut_giris(e.Client, parametreler["nick"]);
                         break;
+                    case "YaziciIstegi": // bir kullanıcı servera bağlandığında
+                        komut_yaziciGonder(e.Client,parametreler["masa"], parametreler["departmanAdi"]);
+                        break;
                     case "LoadSiparis": // bir kullanıcı menü ekranını açmak istediğinde masada verilen siparişleri aktarmak için
                         komut_loadSiparis(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
                         break;
@@ -202,8 +202,85 @@ namespace ROPv1
 
         #region Komutlar
 
+        private void komut_yaziciGonder(ClientRef client, string masaAdi, string departmanAdi)
+        {
+            List<string[]> adisyonYazicilari = new List<string[]>();
+            List<string[]> digerYazicilar = new List<string[]>();
+
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT YaziciAdi,FirmaAdi,FirmaAdres,Yazici,Telefon FROM Yazici");
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                string[] yazici = new string[5];
+
+                yazici[0] = dr.GetString(0); // yazici adı
+                yazici[1] = dr.GetString(1); // firma adı
+                yazici[2] = dr.GetString(2); // firma adres
+                yazici[3] = dr.GetString(3); // yazıcı windows adı
+                yazici[4] = dr.GetString(4); // telefon
+
+                if (yazici[0].Substring(0, 7) == "Adisyon")
+                {
+                    adisyonYazicilari.Add(yazici);
+                }
+                else
+                {
+                    digerYazicilar.Add(yazici);
+                }
+            }
+
+            // masaya bakan ilk garsonun ismini döndüren sql sorgusu
+            cmd = SQLBaglantisi.getCommand("SELECT TOP 1 Garsonu,AcilisZamani FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "' AND AcikMi=1 ORDER BY VerilisTarihi ASC");
+            dr = cmd.ExecuteReader();
+            dr.Read();
+
+            string garson;
+            DateTime acilisZamani;
+
+            try // açık
+            {
+                garson = dr.GetString(0);
+                acilisZamani = dr.GetDateTime(1);
+            }
+            catch
+            {
+                KontrolFormu dialog = new KontrolFormu("Adisyon bilgileri alınırken hata oluştu, lütfen tekrar deneyiniz", false);
+                dialog.Show();
+                return;
+            }
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+
+            StringBuilder aYazicilari = new StringBuilder(), dYazicilari = new StringBuilder();
+
+            for (int i = 0; i < adisyonYazicilari.Count; i++)
+            {
+                aYazicilari.Append("*" + adisyonYazicilari[i][0] + "-" + adisyonYazicilari[i][1] + "-" + adisyonYazicilari[i][2] + "-" + adisyonYazicilari[i][3] + "-" + adisyonYazicilari[i][4]);
+            }
+
+            for (int i = 0; i < digerYazicilar.Count; i++)
+            {
+                dYazicilari.Append("*" + digerYazicilar[i][0] + "-" + digerYazicilar[i][1] + "-" + digerYazicilar[i][2] + "-" + digerYazicilar[i][3] + "-" + digerYazicilar[i][4]);
+            }
+
+            //baştaki * ı sil
+            if (aYazicilari.Length >= 1)
+            {
+                aYazicilari.Remove(0, 1);
+            }
+
+            if (dYazicilari.Length >= 1)
+            {
+                aYazicilari.Remove(0, 1);
+            }
+
+            client.MesajYolla("komut=BulunanYazicilar&adisyonYazicilari=" + aYazicilari + "&digerYazicilar=" + dYazicilari + "&garson=" + garson + "&acilisZamani=" + acilisZamani.ToString());
+        }
+
         private void komut_hesapIndirim(string masa, string departmanAdi, string odemeTipi, string odemeMiktari, ClientRef client)
-        {                  
+        {
             SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "'");
             SqlDataReader dr = cmd.ExecuteReader();
             dr.Read();
@@ -1674,7 +1751,7 @@ namespace ROPv1
             if (e.Control && e.Shift && e.KeyCode == Keys.D3) //Kısayol Tuşları ile ekranı açıyoruz ctrl+shift+3
             {
                 PortFormu portFormu = new PortFormu();
-                portFormu.Show();
+                portFormu.ShowDialog();
             }
         }
 

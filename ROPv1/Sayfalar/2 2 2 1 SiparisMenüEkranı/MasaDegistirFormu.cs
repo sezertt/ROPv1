@@ -106,21 +106,27 @@ namespace ROPv1
                 //kendi listemize atıyoruz
                 masaDizaynListesi.AddRange(infoMasa);
 
+                bool departmanBulunduMu = false;
+
                 for (int i = 0; i < restoranListesi.Count; i++)
                 {
                     Button departmanButton = new Button();
                     departmanButton.Text = restoranListesi[i].departmanAdi;
 
-                    if (departmanButton.Text == eskiDepartman)
+                    departmanButton.BackColor = Color.White;
+                    departmanButton.ForeColor = SystemColors.ActiveCaption;
+
+                    if (!departmanBulunduMu)
                     {
-                        departmanButton.BackColor = SystemColors.ActiveCaption;
-                        departmanButton.ForeColor = Color.White;
-                    }
-                    else
-                    {
-                        departmanButton.BackColor = Color.White;
-                        departmanButton.ForeColor = SystemColors.ActiveCaption;
-                    }
+                        if (departmanButton.Text != eskiDepartman)
+                        {
+                            hangiDepartmanButonu++;
+                        }
+                        else
+                        {
+                            departmanBulunduMu = true;
+                        }
+                    } 
 
                     departmanButton.Font = new Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
                     departmanButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -165,10 +171,15 @@ namespace ROPv1
 
         private void changeTableView(object sender, EventArgs e)
         {
-            panel1.Controls[hangiDepartmanButonu].BackColor = Color.White;
-            panel1.Controls[hangiDepartmanButonu].ForeColor = SystemColors.ActiveCaption;
+            if (hangiDepartmanButonu != Convert.ToInt32(((Button)sender).Name))
+            {
+                panel1.Controls[hangiDepartmanButonu].BackColor = Color.White;
+                panel1.Controls[hangiDepartmanButonu].ForeColor = SystemColors.ActiveCaption;
+            }
+
             panel1.Controls[Convert.ToInt32(((Button)sender).Name)].BackColor = SystemColors.ActiveCaption;
             panel1.Controls[Convert.ToInt32(((Button)sender).Name)].ForeColor = Color.White;
+
             hangiDepartmanButonu = Convert.ToInt32(((Button)sender).Name);
             hangiMasaDizayni = Convert.ToInt32(((Button)sender).Tag);
 

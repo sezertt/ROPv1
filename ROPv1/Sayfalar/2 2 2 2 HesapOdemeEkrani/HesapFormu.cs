@@ -24,7 +24,7 @@ namespace ROPv1
     {
         private SiparisMenuFormu menuFormu;
 
-        string masaAdi, departmanAdi, siparisiGirenKisi;
+        string masaAdi, departmanAdi, siparisiGirenKisi, garson, acilisZamaniString;
 
         ListViewItem sonSecilenItem;
 
@@ -401,7 +401,7 @@ namespace ROPv1
                         indirim = odenenMiktar;
 
                         labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 9);
-                        labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(0, labelIndirimToplam.Text.Length - 1); 
+                        labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(0, labelIndirimToplam.Text.Length - 1);
                         labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + odenenMiktar).ToString("0.00") + ")";
 
                         if (odenenMiktar == 0)
@@ -790,7 +790,7 @@ namespace ROPv1
             int eskiTip = Convert.ToInt32(indirimYuzde / toplamHesap * 100);
             toplamOdemeVeIndirim -= indirimYuzde; // önceki indirimi çıkarıyoruz
             labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 9);
-            labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(0, labelIndirimToplam.Text.Length - 1); 
+            labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(0, labelIndirimToplam.Text.Length - 1);
             labelIndirimToplam.Text = (Convert.ToDecimal(labelIndirimToplam.Text) - indirimYuzde).ToString("0.00");
 
             try
@@ -902,7 +902,7 @@ namespace ROPv1
                 catch
                 {
                     labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 9);
-                    labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(0, labelIndirimToplam.Text.Length - 1); 
+                    labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(0, labelIndirimToplam.Text.Length - 1);
                     labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + indirimGelen).ToString("0.00") + ")";
                 }
 
@@ -948,7 +948,7 @@ namespace ROPv1
                 catch
                 {
                     labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 9);
-                    labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(0, labelIndirimToplam.Text.Length - 1); 
+                    labelIndirimToplam.Text = labelIndirimToplam.Text.Substring(0, labelIndirimToplam.Text.Length - 1);
                     labelIndirimToplam.Text = "(indirim:" + (Convert.ToDecimal(labelIndirimToplam.Text) + indirimGelen).ToString("0.00") + ")";
                 }
 
@@ -1296,6 +1296,7 @@ namespace ROPv1
             }
         }
 
+
         public void odemeOnaylandi(string odemeTipiGelen, string odenenMiktarGelen, string secilipOdenenSiparisBilgileri)
         {
             string[] siparisler;
@@ -1505,7 +1506,7 @@ namespace ROPv1
 
         private void buttonAdisyonYazdir_Click(object sender, EventArgs e)
         {
-            if(yaziciForm != null)
+            if (yaziciForm != null)
             {
                 yaziciForm.BringToFront();
                 return;
@@ -1515,7 +1516,7 @@ namespace ROPv1
             {
                 // Burada yazıcıların içerisinde Adisyon isimli var mı diye bak varsa o yazıcıya gönder yoksa 
                 // Show(); ile yazıcı seçim formu göster. seçildiğinde seçilen yazıcıya gönder
-                
+
                 List<string[]> adisyonYazicilari = new List<string[]>();
                 List<string[]> digerYazicilar = new List<string[]>();
 
@@ -1532,7 +1533,7 @@ namespace ROPv1
                     yazici[3] = dr.GetString(3); // yazıcı windows adı
                     yazici[4] = dr.GetString(4); // telefon
 
-                    if (yazici[0].Substring(0,7) == "Adisyon")
+                    if (yazici[0].Substring(0, 7) == "Adisyon")
                     {
                         adisyonYazicilari.Add(yazici);
                     }
@@ -1551,7 +1552,7 @@ namespace ROPv1
                 }
                 else if (adisyonYazicilari.Count > 1) // 1 den fazla adisyon yazıcısı var hangisinin istendiğini sor
                 {
-                    yaziciForm = new YaziciFormu(this,digerYazicilar,adisyonYazicilari);
+                    yaziciForm = new YaziciFormu(this, digerYazicilar, adisyonYazicilari);
                     yaziciForm.Show();
                 }
                 else if (digerYazicilar.Count > 0)// adisyon yazıcısı yok, olan yazıcıları göster
@@ -1568,37 +1569,100 @@ namespace ROPv1
             }
             else // client
             {
-                //servera adisyonu yaz mesajı yolla
-            }            
+                // yazıcılar serverdan istenir
+                menuFormu.masaFormu.hesapFormundanYazicilariIste("YaziciIstegi",masaAdi,departmanAdi);
+            }
         }
 
         // yazıcı formundan dönen cevap
-        public void yazdir(string [] yaziciBilgileri)
+        public void yazdir(string[] yaziciBilgileri)
         {
-            // masaya bakan ilk garsonun ismini döndüren sql sorgusu
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT TOP 1 Garsonu,AcilisZamani FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "' AND AcikMi=1 ORDER BY VerilisTarihi ASC");
-            SqlDataReader dr = cmd.ExecuteReader();
-            dr.Read();
-
-            string garson;
             DateTime acilisZamani;
 
-            try // açık
+            if (Properties.Settings.Default.Server == 2) //server 
             {
-                garson = dr.GetString(0);
-                acilisZamani = dr.GetDateTime(1);
+                // masaya bakan ilk garsonun ismini döndüren sql sorgusu
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT TOP 1 Garsonu,AcilisZamani FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "' AND AcikMi=1 ORDER BY VerilisTarihi ASC");
+                SqlDataReader dr = cmd.ExecuteReader();
+                dr.Read();
+
+                try // açık
+                {
+                    garson = dr.GetString(0);
+                    acilisZamani = dr.GetDateTime(1);
+                }
+                catch
+                {
+                    KontrolFormu dialog = new KontrolFormu("Adisyon bilgileri alınırken hata oluştu, lütfen tekrar deneyiniz", false);
+                    dialog.Show();
+                    return;
+                }
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
             }
-            catch
+            else
             {
-                KontrolFormu dialog = new KontrolFormu("Adisyon bilgileri alınırken hata oluştu, lütfen tekrar deneyiniz", false);
-                dialog.Show();
-                return;
+                acilisZamani = Convert.ToDateTime(acilisZamaniString);
             }
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
 
             Adisyon adisyonFormu = new Adisyon(masaAdi, departmanAdi, garson, acilisZamani, Convert.ToDecimal(labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11)), yaziciBilgileri);
             adisyonFormu.Show();
+        }
+
+        // serverdan yazıcılar geldi
+        public void yazicilarGeldi(string aYazicilari, string dYazicilari , string garson, string acilisZamani)
+        {
+            this.garson = garson;
+            this.acilisZamaniString = acilisZamani;
+
+            string[] adisyonYaziciDizisi, digerYaziciDizisi;
+
+            List<string[]> adisyonYazicilari = new List<string[]>();
+            List<string[]> digerYazicilar = new List<string[]>();
+            try
+            {
+                //Gelen mesajı * ile ayır
+                adisyonYaziciDizisi = aYazicilari.Split('*');
+                digerYaziciDizisi = aYazicilari.Split('*');
+            }
+            catch (Exception)
+            {
+                KontrolFormu dialog = new KontrolFormu("Yazıcıları alırken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                dialog.Show();
+                return;
+            }
+
+            for (int i = 0; i < adisyonYaziciDizisi.Count(); i++)
+            {
+                string[] detaylari = adisyonYaziciDizisi[i].Split('-');
+                adisyonYazicilari.Add(detaylari);
+            }
+            for (int i = 0; i < digerYaziciDizisi.Count(); i++)
+            {
+                string[] detaylari = digerYaziciDizisi[i].Split('-');
+                digerYazicilar.Add(detaylari);
+            }
+
+            if (adisyonYazicilari.Count == 1) // tek adisyon yazıcısı var direk gönder
+            {
+                yazdir(adisyonYazicilari[0]);
+            }
+            else if (adisyonYazicilari.Count > 1) // 1 den fazla adisyon yazıcısı var hangisinin istendiğini sor
+            {
+                yaziciForm = new YaziciFormu(this, digerYazicilar, adisyonYazicilari);
+                yaziciForm.Show();
+            }
+            else if (digerYazicilar.Count > 0)// adisyon yazıcısı yok, olan yazıcıları göster
+            {
+                yaziciForm = new YaziciFormu(this, digerYazicilar);
+                yaziciForm.Show();
+            }
+            else // hata mesajı, lütfen yazıcı yükleyiniz 
+            {
+                KontrolFormu dialog = new KontrolFormu("Yüklü yazıcı bulunamadı, lütfen yazıcı yükleyin", false);
+                dialog.Show();
+                return;
+            }
         }
 
         private void textBoxSecilenlerinTutari_TextChanged(object sender, EventArgs e)

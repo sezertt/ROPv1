@@ -2344,7 +2344,7 @@ namespace ROPv1
 
                         masaFormu.serverdanMasaDegisikligi(MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, "urunTasindi");
 
-                        masaAktarmaIslemlerindenSonraSiparisleriGir(MasaAdi, hangiDepartman.departmanAdi);
+                        masaAktarmaIslemlerindenSonraSiparisleriGir(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman);
 
                         dialog2 = new KontrolFormu("Masa(" + MasaAdi + ")'dan seçilen ürünler " + masaDegistirForm.yeniDepartman + "\ndepartmanındaki, " + masaDegistirForm.yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false, this);
                         timerDialogClose.Start();
@@ -2384,7 +2384,7 @@ namespace ROPv1
                             aktarmaBilgileri.Remove(0, 1);
                         }
 
-                        masaAktarmaIslemlerindenSonraSiparisleriGir(MasaAdi, hangiDepartman.departmanAdi);
+                        masaAktarmaIslemlerindenSonraSiparisleriGir(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman);
 
                         masaFormu.menuFormundanServeraUrunTasinacakBilgisiGonder(MasaAdi, hangiDepartman.departmanAdi, "urunuTasi", masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, siparisiKimGirdi, aktarmaBilgileri);
 

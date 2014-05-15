@@ -93,21 +93,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLL\bllGarson.cs" />
-    <Compile Include="Common\EncryptionUtility.cs" />
-    <Compile Include="Common\QueryStringSecurityHelper.cs" />
-    <Compile Include="Common\ValidationException.cs" />
     <Compile Include="CrystalReport1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CrystalReport1.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DAL\dalGarson.cs" />
-    <Compile Include="DBHelpers\ConnStringHelper.cs" />
-    <Compile Include="DBHelpers\SqlDataReaderHelper.cs" />
-    <Compile Include="DBHelpers\SqlHelper.cs" />
-    <Compile Include="Entity\entGarson.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Sayfalar\1 GirisEkranı\PortFormu.cs">
       <SubType>Form</SubType>
