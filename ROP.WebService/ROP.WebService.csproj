@@ -82,14 +82,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ROP.Business\ROP.Business.csproj">
-      <Project>{6bd4f944-467f-43e0-9bff-f46f47a4664a}</Project>
-      <Name>ROP.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ROP.Commons\ROP.Commons.csproj">
-      <Project>{70efa690-093f-4d22-84dd-ee9921fc5d05}</Project>
-      <Name>ROP.Commons</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SPIA LIBRARY\SPIA\SPIA.csproj">
       <Project>{9eedb602-6af6-4ab9-bbe4-38235501dd90}</Project>
       <Name>SPIA</Name>

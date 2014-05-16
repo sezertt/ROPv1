@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.Threading;
 
 // ÖDEME TİPLERİ 
 // 101 NAKİT
@@ -306,7 +307,7 @@ namespace ROPv1
                     listUrunFiyat.Columns[2].Width = fiyatBoyu;
                 }
             }
-            
+
             if (Properties.Settings.Default.Server == 2)
             {
                 odemeyeGec();
@@ -319,7 +320,7 @@ namespace ROPv1
                 {
                     decimal yemeginFiyati;
                     double kacPorsiyon;
-                    string yemeginAdi;                  
+                    string yemeginAdi;
 
                     try
                     {
@@ -428,7 +429,7 @@ namespace ROPv1
                         indirimYuzde = odenenMiktar;
                         odenenMiktar = toplamHesap * odemeTipi / 100;
 
-                        if(indirimYuzde != odenenMiktar)// hesapta değişiklik yapılmış odenen miktarı güncelle
+                        if (indirimYuzde != odenenMiktar)// hesapta değişiklik yapılmış odenen miktarı güncelle
                         {
                             cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "'");
                             dr = cmd.ExecuteReader();
@@ -1537,12 +1538,9 @@ namespace ROPv1
                 return;
             }
 
-            rapor.SetParameterValue("Masa", masaAdi);
-            rapor.SetParameterValue("Departman", departmanAdi);
-
             if (Properties.Settings.Default.Server == 2) //server 
             {
-                // Burada yazıcıların içerisinde Adisyon isimli var mı diye bak varsa o yazıcıya gönder yoksa 
+                // Burada yazıcıların içerisinde Adisyon ismi ile başlayan yazıcı var mı diye bak varsa o yazıcıya gönder yoksa 
                 // Show(); ile yazıcı seçim formu göster. seçildiğinde seçilen yazıcıya gönder
 
                 List<string[]> adisyonYazicilari = new List<string[]>();
@@ -1598,7 +1596,7 @@ namespace ROPv1
             else // client
             {
                 // yazıcılar serverdan istenir
-                menuFormu.masaFormu.hesapFormundanYazicilariIste("YaziciIstegi",masaAdi,departmanAdi);
+                menuFormu.masaFormu.hesapFormundanYazicilariIste("YaziciIstegi", masaAdi, departmanAdi);
             }
         }
 
@@ -1638,17 +1636,31 @@ namespace ROPv1
 
             decimal yazdirilacakIndirim = Convert.ToDecimal(labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11));
 
+            asyncYaziciyaGonder(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, yaziciBilgileri[1], yaziciBilgileri[2] + " " + yaziciBilgileri[4], yaziciBilgileri[3], rapor);
+        }
+
+        public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReport1 rapor)
+        {
+            var t = new Thread(() => Basla(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, firmaAdi, adresTelefon, printerAdi,rapor));
+            t.Start();
+            return t;
+        }
+
+        private static void Basla(string masaAdi, string departmanAdi, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReport1 rapor)
+        {
+            rapor.SetParameterValue("Masa", masaAdi);
+            rapor.SetParameterValue("Departman", departmanAdi);
             rapor.SetParameterValue("Garson", garson);
             rapor.SetParameterValue("Indirim", yazdirilacakIndirim);
             rapor.SetParameterValue("AcilisZamani", acilisZamani);
-            rapor.SetParameterValue("FirmaAdi", yaziciBilgileri[1]); // firma adı
-            rapor.SetParameterValue("FirmaAdresTelefon", yaziciBilgileri[2] + " " + yaziciBilgileri[4]); // firma adres ve telefon
-            rapor.PrintOptions.PrinterName = yaziciBilgileri[3];
+            rapor.SetParameterValue("FirmaAdi", firmaAdi); // firma adı
+            rapor.SetParameterValue("FirmaAdresTelefon", adresTelefon); // firma adres ve telefon        
+            rapor.PrintOptions.PrinterName = printerAdi;
             rapor.PrintToPrinter(1, false, 0, 0);
         }
 
         // serverdan yazıcılar geldi
-        public void yazicilarGeldi(string aYazicilari, string dYazicilari , string garson, string acilisZamani)
+        public void yazicilarGeldi(string aYazicilari, string dYazicilari, string garson, string acilisZamani)
         {
             this.garson = garson;
             this.acilisZamaniString = acilisZamani;

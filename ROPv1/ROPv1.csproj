@@ -66,9 +66,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -259,11 +256,6 @@
     <Compile Include="Sayfalar\2 2 1 SiparisMasaEkranı\SiparisMasaFormu.Designer.cs">
       <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Service References\sezerwcf\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="CrystalReport1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReport1.cs</LastGenOutput>
@@ -370,19 +362,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Service References\sezerwcf\ROPv1.sezerwcf.entSiparis.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\sezerwcf\Siparis.wsdl" />
-    <None Include="Service References\sezerwcf\Siparis.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\sezerwcf\Siparis1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\sezerwcf\Siparis2.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\username.png" />
@@ -465,13 +444,6 @@
     <None Include="Resources\righticon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\sezerwcf\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\sezerwcf\configuration.svcinfo" />
-    <None Include="Service References\sezerwcf\configuration91.svcinfo" />
-    <None Include="Service References\sezerwcf\Siparis.disco" />
     <None Include="Resources\swap.png" />
     <None Include="Resources\pay.png" />
     <None Include="Resources\checkmark.png" />
@@ -503,12 +475,6 @@
       <Project>{9eedb602-6af6-4ab9-bbe4-38235501dd90}</Project>
       <Name>SPIA</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\sezerwcf\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
