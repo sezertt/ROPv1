@@ -14,6 +14,7 @@ using System.Collections.Specialized;
 using System.Data.SqlClient;
 using SPIA;
 using SPIA.Server;
+using System.Threading;
 
 namespace ROPv1
 {
@@ -29,6 +30,8 @@ namespace ROPv1
 
         public WPF_UserControls.VerticalCenterTextBox userNameTextBox;
         public WPF_UserControls.VerticalCenterPasswordBox passwordTextBox;
+
+        CrystalReportMutfak raporMutfak = new CrystalReportMutfak();
 
         public SiparisMasaFormu siparisForm;
 
@@ -115,7 +118,7 @@ namespace ROPv1
                 switch (parametreler["komut"])
                 {
                     case "siparis":
-                        komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"]);
+                        komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["sonSiparisMi"]);
                         break;
                     case "iptal": // ürün iptal edildiği bilgisini dağıtmak için
                         komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"]);
@@ -797,7 +800,7 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotuGelen)
+        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotuGelen, string sonSiparisMi)
         {
             if (siparisForm != null)
             {
@@ -810,7 +813,6 @@ namespace ROPv1
                     });
                 }
             }
-
 
             siparisiKimGirdi = siparisiGirenKisi;
 
@@ -865,8 +867,48 @@ namespace ROPv1
             cmd.Connection.Close();
             cmd.Connection.Dispose();
 
+            if(sonSiparisMi == "0") // mutfağa adisyon gönder
+            {
+                cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
+                dr = cmd.ExecuteReader();
+
+                dr.Read();
+
+                string firmaAdi = dr.GetString(0), yaziciAdi = dr.GetString(1);
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
+
+                asyncYaziciyaGonder(masa, departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
+            }
+
             //Tüm kullanıcılara sipariş mesajı gönderelim
             tumKullanicilaraMesajYolla("komut=siparis&masa=" + masa + "&departmanAdi=" + departmanAdi + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDegerGelen);
+        }
+
+        public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string firmaAdi, string printerAdi, CrystalReportMutfak rapor)
+        {
+            var t = new Thread(() => Basla(masaAdi, departmanAdi, firmaAdi, printerAdi, rapor));
+            t.Start();
+            return t;
+        }
+
+        private static void Basla(string masaAdi, string departmanAdi, string firmaAdi, string printerAdi, CrystalReportMutfak rapor)
+        {
+            rapor.SetParameterValue("Masa", masaAdi);
+            rapor.SetParameterValue("Departman", departmanAdi);
+            rapor.SetParameterValue("FirmaAdi", firmaAdi); // firma adı
+            rapor.PrintOptions.PrinterName = printerAdi;
+            rapor.PrintToPrinter(1, false, 0, 0);
+
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET MutfakCiktisiAlindiMi=1 WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi=@masaninAdi AND DepartmanAdi=@departmanAdi)");
+            cmd.Parameters.AddWithValue("@masaninAdi", masaAdi);
+            cmd.Parameters.AddWithValue("@departmanAdi", departmanAdi);
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
         }
 
         private void komut_listeBos(string masa, string departmanAdi)

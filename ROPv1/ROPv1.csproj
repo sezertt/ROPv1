@@ -90,10 +90,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrystalReport1.cs">
+    <Compile Include="CrystalReportMutfak.cs">
+      <DependentUpon>CrystalReportMutfak.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CrystalReportAdisyon.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CrystalReport1.rpt</DependentUpon>
+      <DependentUpon>CrystalReportAdisyon.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
@@ -217,12 +223,6 @@
     <Compile Include="Sayfalar\3 9 1 İşletme Bilgileri\IsletmeBilgileri.Designer.cs">
       <DependentUpon>IsletmeBilgileri.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\3 9 2 Adisyon\Adisyon.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Sayfalar\3 9 2 Adisyon\Adisyon.Designer.cs">
-      <DependentUpon>Adisyon.cs</DependentUpon>
-    </Compile>
     <Compile Include="Sayfalar\GenelKullanılanlar\AdisyonNotuFormu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -256,9 +256,13 @@
     <Compile Include="Sayfalar\2 2 1 SiparisMasaEkranı\SiparisMasaFormu.Designer.cs">
       <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CrystalReport1.rpt">
+    <EmbeddedResource Include="CrystalReportMutfak.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>CrystalReport1.cs</LastGenOutput>
+      <LastGenOutput>CrystalReportMutfak.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReportAdisyon.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReportAdisyon.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\1 GirisEkranı\PortFormu.resx">
       <DependentUpon>PortFormu.cs</DependentUpon>
@@ -324,10 +328,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\3 9 1 İşletme Bilgileri\IsletmeBilgileri.resx">
       <DependentUpon>IsletmeBilgileri.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\3 9 2 Adisyon\Adisyon.resx">
-      <DependentUpon>Adisyon.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\GenelKullanılanlar\AdisyonNotuFormu.resx">
       <DependentUpon>AdisyonNotuFormu.cs</DependentUpon>

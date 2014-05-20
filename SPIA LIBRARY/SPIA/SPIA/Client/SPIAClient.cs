@@ -172,7 +172,7 @@ namespace SPIA.Client
                     while ((b = binaryOkuyucu.ReadByte()) != BITIS_BYTE)
                     {
                         bList.Add(b);
-                    }
+                    }                    
                     string mesaj = System.Text.Encoding.UTF8.GetString(bList.ToArray());
                     //Yeni mesaj baþarýyla alýndý
                     yeniMesajAlindiTetikle(mesaj);

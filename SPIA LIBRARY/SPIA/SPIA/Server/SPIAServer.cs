@@ -440,10 +440,12 @@ namespace SPIA.Server
                         }
                         //Mesajý oku
                         List<byte> bList = new List<byte>();
+
                         while ((b = binaryOkuyucu.ReadByte()) != BITIS_BYTE)
                         {
                             bList.Add(b);
                         }
+
                         string mesaj = System.Text.Encoding.UTF8.GetString(bList.ToArray());
                         //Okunan paketi sunucuya ilet
                         sunucu.yeniClientMesajiAlindi(this, mesaj);

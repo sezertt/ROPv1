@@ -284,7 +284,7 @@ namespace ROPv1
                 UrunMenuListesi[treeMenuler.SelectedNode.Index].menuAdi = textboxMenuName.Text;
                 UrunMenuListesi[treeMenuler.SelectedNode.Index].menuFiyati = Convert.ToDouble(textboxFiyat.Text);
                 treeMenuler.SelectedNode.Text = textboxMenuName.Text;
-                dialog = new KontrolFormu("Departman Bilgileri Güncellenmiştir", false);
+                dialog = new KontrolFormu("Ürün Menüsü Güncellenmiştir", false);
                 dialog.Show();
                 //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
                 foreach (TreeNode node in treeMenuler.Nodes)
@@ -319,7 +319,7 @@ namespace ROPv1
                 }
                 if (textboxFiyat.Text == "")
                 {
-                    textboxFiyat.Text =UrunListesi[index].porsiyonFiyati[aradigim - 1];
+                    textboxFiyat.Text = Convert.ToDouble(UrunListesi[index].porsiyonFiyati[aradigim - 1]).ToString("0.00");
                 }
                 else
                 {
@@ -354,9 +354,9 @@ namespace ROPv1
             }
             else
             {
-                KontrolFormu dialog = new KontrolFormu("Lütfen menüye eklemek istediğiniz ürünü seçiniz", false);                
-                    dialog.Show();
-                    return;             
+                KontrolFormu dialog = new KontrolFormu("Lütfen menüye eklemek istediğiniz ürünü seçiniz", false);
+                dialog.Show();
+                return;
             }
 
         }
@@ -378,7 +378,7 @@ namespace ROPv1
                 }
                 treeMenununUrunler.Nodes.Remove(treeMenununUrunler.SelectedNode);
 
-                textboxFiyat.Text = fiyat.ToString();
+                textboxFiyat.Text = fiyat.ToString("0.00");
             }
         }
 
