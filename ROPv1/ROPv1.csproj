@@ -169,7 +169,6 @@
     </Compile>
     <Compile Include="Sayfalar\3 4 Menüler\Menuler.cs" />
     <Compile Include="Sayfalar\3 4 Menüler\TumKategoriler.cs" />
-    <Compile Include="Sayfalar\3 6 Ürün Menüleri\MenuUrunuBilgisi.cs" />
     <Compile Include="Sayfalar\3 5 Ürünler\KategorilerineGoreUrunler.cs" />
     <Compile Include="Sayfalar\3 3 MasaPlanı\MasaDizayn.cs" />
     <Compile Include="Sayfalar\3 3 MasaPlanı\MasaPlan.cs">
@@ -196,32 +195,31 @@
     <Compile Include="Sayfalar\1 GirisEkranı\MyWaitForm.Designer.cs">
       <DependentUpon>MyWaitForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\3 6 Ürün Menüleri\MenuBilgileri.cs" />
-    <Compile Include="Sayfalar\3 6 Ürün Menüleri\UrunMenuleri.cs">
+    <Compile Include="Sayfalar\3 6 Stoklar\StokBilgileri.cs" />
+    <Compile Include="Sayfalar\3 6 Stoklar\Stoklar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\3 6 Ürün Menüleri\UrunMenuleri.Designer.cs">
-      <DependentUpon>UrunMenuleri.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Sayfalar\3 7 Stoklar\StokBilgileri.cs" />
-    <Compile Include="Sayfalar\3 7 Stoklar\Stoklar.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Sayfalar\3 7 Stoklar\Stoklar.Designer.cs">
+    <Compile Include="Sayfalar\3 6 Stoklar\Stoklar.Designer.cs">
       <DependentUpon>Stoklar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\3 8 Reçeteler\ReceteBilgileri.cs" />
-    <Compile Include="Sayfalar\3 8 Reçeteler\Receteler.cs">
+    <Compile Include="Sayfalar\3 7 Reçeteler\ReceteBilgileri.cs" />
+    <Compile Include="Sayfalar\3 7 Reçeteler\Receteler.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\3 8 Reçeteler\Receteler.Designer.cs">
+    <Compile Include="Sayfalar\3 7 Reçeteler\Receteler.Designer.cs">
       <DependentUpon>Receteler.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\3 9 1 İşletme Bilgileri\IsletmeBilgileri.cs">
+    <Compile Include="Sayfalar\3 8 İşletme Bilgileri\IsletmeBilgileri.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\3 9 1 İşletme Bilgileri\IsletmeBilgileri.Designer.cs">
+    <Compile Include="Sayfalar\3 8 İşletme Bilgileri\IsletmeBilgileri.Designer.cs">
       <DependentUpon>IsletmeBilgileri.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sayfalar\3 9 Adisyon Görüntüleme\AdisyonGoruntuleme.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\3 9 Adisyon Görüntüleme\AdisyonGoruntuleme.Designer.cs">
+      <DependentUpon>AdisyonGoruntuleme.cs</DependentUpon>
     </Compile>
     <Compile Include="Sayfalar\GenelKullanılanlar\AdisyonNotuFormu.cs">
       <SubType>Form</SubType>
@@ -317,17 +315,18 @@
     <EmbeddedResource Include="Sayfalar\3 5 Ürünler\Products.resx">
       <DependentUpon>Products.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\3 6 Ürün Menüleri\UrunMenuleri.resx">
-      <DependentUpon>UrunMenuleri.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\3 7 Stoklar\Stoklar.resx">
+    <EmbeddedResource Include="Sayfalar\3 6 Stoklar\Stoklar.resx">
       <DependentUpon>Stoklar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\3 8 Reçeteler\Receteler.resx">
+    <EmbeddedResource Include="Sayfalar\3 7 Reçeteler\Receteler.resx">
       <DependentUpon>Receteler.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\3 9 1 İşletme Bilgileri\IsletmeBilgileri.resx">
+    <EmbeddedResource Include="Sayfalar\3 8 İşletme Bilgileri\IsletmeBilgileri.resx">
       <DependentUpon>IsletmeBilgileri.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\3 9 Adisyon Görüntüleme\AdisyonGoruntuleme.resx">
+      <DependentUpon>AdisyonGoruntuleme.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\GenelKullanılanlar\AdisyonNotuFormu.resx">
       <DependentUpon>AdisyonNotuFormu.cs</DependentUpon>

@@ -165,27 +165,18 @@ namespace ROPv1
                     splitPanel.Panel2.Controls.Add(productView);
                     productView.Dock = DockStyle.Fill;
                     break;
-
-                case 5: //Ürün Menüleri Seçildi
-                    if (File.Exists("urunler.xml"))
-                    {
-                        UrunMenuleri urunMenuView = new UrunMenuleri();
-                        splitPanel.Panel2.Controls.Add(urunMenuView);
-                        urunMenuView.Dock = DockStyle.Fill;
-                    }
-                    break;
-                case 6: //Stok Ayarları Seçildi
+                case 5: //Stok Ayarları Seçildi
                     Stoklar stokView = new Stoklar();
                     splitPanel.Panel2.Controls.Add(stokView);
                     stokView.Dock = DockStyle.Fill;
 
                     break;
-                case 7: //Reçeteler Seçildi
+                case 6: //Reçeteler Seçildi
                     Receteler receteView = new Receteler();
                     splitPanel.Panel2.Controls.Add(receteView);
                     receteView.Dock = DockStyle.Fill;
                     break;
-                case 8: //İşletme Bilgileri Seçildi
+                case 7: //İşletme Bilgileri Seçildi
                     IsletmeBilgileri isletmeBilgileriView = new IsletmeBilgileri();
                     splitPanel.Panel2.Controls.Add(isletmeBilgileriView);
                     isletmeBilgileriView.Dock = DockStyle.Fill;
@@ -265,7 +256,6 @@ namespace ROPv1
                     leftPanelView.Nodes.Add("Masa Yerleşim Planı");
                     leftPanelView.Nodes.Add("Menüler");
                     leftPanelView.Nodes.Add("Ürünler");
-                    leftPanelView.Nodes.Add("Ürün Menüleri");
                     leftPanelView.Nodes.Add("Stok Ayarları");
                     leftPanelView.Nodes.Add("Reçeteler");
                     leftPanelView.Nodes.Add("İşletme Bilgileri");

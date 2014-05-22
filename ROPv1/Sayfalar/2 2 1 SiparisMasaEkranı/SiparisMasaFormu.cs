@@ -399,7 +399,8 @@ namespace ROPv1
                 }
                 else if (yapilacakIslemNe == "Adisyon Görüntüleme")  // burada adisyon sayfası oluşturulacak ve ona geçilecek
                 {
-
+                    AdisyonGoruntuleme adisyonGoruntulemeFormu = new AdisyonGoruntuleme();
+                    adisyonGoruntulemeFormu.Show();
                 }
             }
         }

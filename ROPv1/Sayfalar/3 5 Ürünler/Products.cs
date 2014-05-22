@@ -40,13 +40,6 @@ namespace ROPv1
             }
             if (treeUrunAdi.SelectedNode.Parent != null)
             {
-                if (urunListesi[treeUrunAdi.SelectedNode.Parent.Index].kategorininAdi == "Ürün Menüleri")
-                {
-                    newProductForm.Enabled = false;
-                }
-                else
-                    newProductForm.Enabled = true;
-
                 if (buttonDeleteProduct.Visible)
                 {
                     textboxUrunName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[treeUrunAdi.SelectedNode.Index];
@@ -554,8 +547,7 @@ namespace ROPv1
             for (int i = 0; i < kategoriListesi[0].kategoriler.Count; i++)
             {
                 treeUrunAdi.Nodes.Add(kategoriListesi[0].kategoriler[i]);
-                if (kategoriListesi[0].kategoriler[i] != "Ürün Menüleri")
-                    comboNewKategoriName.Items.Add(kategoriListesi[0].kategoriler[i]);
+                comboNewKategoriName.Items.Add(kategoriListesi[0].kategoriler[i]);
             }
 
             KategorilerineGoreUrunler[] infoUrun = new KategorilerineGoreUrunler[infoKategoriler[0].kategoriler.Count];
