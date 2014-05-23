@@ -66,6 +66,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -90,6 +91,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrystalReportGunSonuRaporu.cs">
+      <DependentUpon>CrystalReportGunSonuRaporu.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="CrystalReportMutfak.cs">
       <DependentUpon>CrystalReportMutfak.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -113,6 +120,12 @@
     </Compile>
     <Compile Include="Sayfalar\1 GirisEkranı\PortFormu.Designer.cs">
       <DependentUpon>PortFormu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sayfalar\2 1 1 Raporlar\Raporlar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\2 1 1 Raporlar\Raporlar.Designer.cs">
+      <DependentUpon>Raporlar.cs</DependentUpon>
     </Compile>
     <Compile Include="Sayfalar\2 1 AdminGirisi\AdminGirisFormu.cs">
       <SubType>Form</SubType>
@@ -237,10 +250,10 @@
     <Compile Include="Sayfalar\GenelKullanılanlar\XMLAktarClient.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\XMLAktarServer.cs" />
     <Compile Include="Gereksizler\Program.cs" />
-    <Compile Include="Sayfalar\3 6 Stoklar\Products.cs">
+    <Compile Include="Sayfalar\3 5 Ürünler\Products.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\3 6 Stoklar\Products.Designer.cs">
+    <Compile Include="Sayfalar\3 5 Ürünler\Products.Designer.cs">
       <DependentUpon>Products.cs</DependentUpon>
     </Compile>
     <Compile Include="Sayfalar\GenelKullanılanlar\KontrolFormu.cs">
@@ -259,6 +272,10 @@
     <Compile Include="Sayfalar\2 2 1 SiparisMasaEkranı\SiparisMasaFormu.Designer.cs">
       <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CrystalReportGunSonuRaporu.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReportGunSonuRaporu.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="CrystalReportMutfak.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReportMutfak.cs</LastGenOutput>
@@ -270,6 +287,9 @@
     <EmbeddedResource Include="Sayfalar\1 GirisEkranı\PortFormu.resx">
       <DependentUpon>PortFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\2 1 1 Raporlar\Raporlar.resx">
+      <DependentUpon>Raporlar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\2 1 AdminGirisi\AdminGirisFormu.resx">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
@@ -317,7 +337,7 @@
     <EmbeddedResource Include="Sayfalar\3 4 Menüler\MenuControl.resx">
       <DependentUpon>MenuControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\3 6 Stoklar\Products.resx">
+    <EmbeddedResource Include="Sayfalar\3 5 Ürünler\Products.resx">
       <DependentUpon>Products.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\3 6 Stoklar\Stoklar.resx">

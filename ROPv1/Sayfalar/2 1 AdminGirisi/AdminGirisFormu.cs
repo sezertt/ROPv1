@@ -72,13 +72,15 @@ namespace ROPv1
                     reportCheckBox.Image = global::ROPv1.Properties.Resources.reportsback;
                     buttonBilgiAktar.Visible = false;
                     //report işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok
+                    leftPanelView.Nodes.Add("Gün Sonu Raporu");
+                    leftPanelView.Nodes.Add("Ürün Satış Raporu");
 
+                    leftPanelView.SelectedNode = leftPanelView.Nodes[0];
                     break;
                 case 2:
                     stokCheckBox.Image = global::ROPv1.Properties.Resources.stockback;
                     buttonBilgiAktar.Visible = false;
                     //stok işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok
-
                     break;
                 case 3:
                     ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingsback;
@@ -110,59 +112,85 @@ namespace ROPv1
         private void changeSettingsScreen(object sender, TreeViewEventArgs e)
         {
             splitPanel.Panel2.Controls.Clear();
-            switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
+            if(leftPanelView.Nodes[0].Text == "Kullanıcılar")
             {
-                #region
-                case 0: //Kullanıcılar Seçildi
-                    leftPanelView.SelectedNode = leftPanelView.Nodes[0];
-                    Kullanici kullaniciView = new Kullanici();
-                    splitPanel.Panel2.Controls.Add(kullaniciView);
-                    kullaniciView.Dock = DockStyle.Fill;
-                    break;
+                switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
+                {
+                    #region
+                    case 0: //Kullanıcılar Seçildi
+                        Kullanici kullaniciView = new Kullanici();
+                        splitPanel.Panel2.Controls.Add(kullaniciView);
+                        kullaniciView.Dock = DockStyle.Fill;
+                        break;
 
-                case 1: //Departmanlar Seçildi
-                    Departman departmanView = new Departman();
-                    splitPanel.Panel2.Controls.Add(departmanView);
-                    departmanView.Dock = DockStyle.Fill;
-                    break;
+                    case 1: //Departmanlar Seçildi
+                        Departman departmanView = new Departman();
+                        splitPanel.Panel2.Controls.Add(departmanView);
+                        departmanView.Dock = DockStyle.Fill;
+                        break;
 
-                case 2: //Departman Yerleşim Planı Seçildi
-                    MasaPlan masaPlanView = new MasaPlan();
-                    splitPanel.Panel2.Controls.Add(masaPlanView);
-                    masaPlanView.Dock = DockStyle.Fill;
-                    break;
+                    case 2: //Departman Yerleşim Planı Seçildi
+                        MasaPlan masaPlanView = new MasaPlan();
+                        splitPanel.Panel2.Controls.Add(masaPlanView);
+                        masaPlanView.Dock = DockStyle.Fill;
+                        break;
 
-                case 3: //Menüler Seçildi
-                    MenuControl menuView = new MenuControl();
-                    splitPanel.Panel2.Controls.Add(menuView);
-                    menuView.Dock = DockStyle.Fill;
-                    break;
+                    case 3: //Menüler Seçildi
+                        MenuControl menuView = new MenuControl();
+                        splitPanel.Panel2.Controls.Add(menuView);
+                        menuView.Dock = DockStyle.Fill;
+                        break;
 
-                case 4: //Ürünler Seçildi
-                    Products productView = new Products();
-                    splitPanel.Panel2.Controls.Add(productView);
-                    productView.Dock = DockStyle.Fill;
-                    break;
-                case 5: //Stok Ayarları Seçildi
-                    Stoklar stokView = new Stoklar();
-                    splitPanel.Panel2.Controls.Add(stokView);
-                    stokView.Dock = DockStyle.Fill;
+                    case 4: //Ürünler Seçildi
+                        Products productView = new Products();
+                        splitPanel.Panel2.Controls.Add(productView);
+                        productView.Dock = DockStyle.Fill;
+                        break;
+                    case 5: //Stok Ayarları Seçildi
+                        Stoklar stokView = new Stoklar();
+                        splitPanel.Panel2.Controls.Add(stokView);
+                        stokView.Dock = DockStyle.Fill;
 
-                    break;
-                case 6: //Reçeteler Seçildi
-                    Receteler receteView = new Receteler();
-                    splitPanel.Panel2.Controls.Add(receteView);
-                    receteView.Dock = DockStyle.Fill;
-                    break;
-                case 7: //İşletme Bilgileri Seçildi
-                    IsletmeBilgileri isletmeBilgileriView = new IsletmeBilgileri();
-                    splitPanel.Panel2.Controls.Add(isletmeBilgileriView);
-                    isletmeBilgileriView.Dock = DockStyle.Fill;
-                    break;
-                default:
-                    break;
-                #endregion
+                        break;
+                    case 6: //Reçeteler Seçildi
+                        Receteler receteView = new Receteler();
+                        splitPanel.Panel2.Controls.Add(receteView);
+                        receteView.Dock = DockStyle.Fill;
+                        break;
+
+                    case 7: //İşletme Bilgileri Seçildi
+                        IsletmeBilgileri isletmeBilgileriView = new IsletmeBilgileri();
+                        splitPanel.Panel2.Controls.Add(isletmeBilgileriView);
+                        isletmeBilgileriView.Dock = DockStyle.Fill;
+                        break;
+
+                    default:
+                        break;
+                    #endregion
+                }
             }
+            else if (leftPanelView.Nodes[0].Text == "Gün Sonu Raporu")
+            {
+                Raporlar raporView = new Raporlar();
+                splitPanel.Panel2.Controls.Add(raporView);
+                raporView.Dock = DockStyle.Fill;
+
+                switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
+                {
+                    #region
+                    case 0: //Gün sonu raporu seçildi
+
+                        break;
+
+                    case 1: //Ürün satış raporu seçildi
+
+                        break;
+
+                    default:
+                        break;
+                    #endregion
+                }
+            }            
         }
 
         private void timerSaat_Tick(object sender, EventArgs e)

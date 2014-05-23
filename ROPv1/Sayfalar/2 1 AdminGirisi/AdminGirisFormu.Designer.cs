@@ -36,9 +36,9 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.reportCheckBox = new System.Windows.Forms.CheckBox();
             this.stokCheckBox = new System.Windows.Forms.CheckBox();
-            this.adisyonCheckBox = new System.Windows.Forms.CheckBox();
             this.ayarCheckBox = new System.Windows.Forms.CheckBox();
             this.exitButton = new System.Windows.Forms.Button();
+            this.adisyonCheckBox = new System.Windows.Forms.CheckBox();
             this.labelSaat = new System.Windows.Forms.Label();
             this.labelTarih = new System.Windows.Forms.Label();
             this.labelGun = new System.Windows.Forms.Label();
@@ -168,26 +168,6 @@
             this.stokCheckBox.UseVisualStyleBackColor = false;
             this.stokCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
             // 
-            // adisyonCheckBox
-            // 
-            this.adisyonCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.adisyonCheckBox.BackColor = System.Drawing.SystemColors.Window;
-            this.adisyonCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.adisyonCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.adisyonCheckBox.Image = global::ROPv1.Properties.Resources.adisyon;
-            this.adisyonCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.adisyonCheckBox.Location = new System.Drawing.Point(236, 10);
-            this.adisyonCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
-            this.adisyonCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
-            this.adisyonCheckBox.Name = "adisyonCheckBox";
-            this.adisyonCheckBox.Size = new System.Drawing.Size(180, 110);
-            this.adisyonCheckBox.TabIndex = 20;
-            this.adisyonCheckBox.Tag = "4";
-            this.adisyonCheckBox.Text = "Adisyonlar";
-            this.adisyonCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.adisyonCheckBox.UseVisualStyleBackColor = false;
-            this.adisyonCheckBox.Click += new System.EventHandler(this.adisyonCheckBox_Click);
-            // 
             // ayarCheckBox
             // 
             this.ayarCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -228,6 +208,26 @@
             this.exitButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.exitButton.UseVisualStyleBackColor = false;
             this.exitButton.Click += new System.EventHandler(this.exitPressed);
+            // 
+            // adisyonCheckBox
+            // 
+            this.adisyonCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.adisyonCheckBox.BackColor = System.Drawing.SystemColors.Window;
+            this.adisyonCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.adisyonCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.adisyonCheckBox.Image = global::ROPv1.Properties.Resources.adisyon;
+            this.adisyonCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.adisyonCheckBox.Location = new System.Drawing.Point(236, 10);
+            this.adisyonCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
+            this.adisyonCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
+            this.adisyonCheckBox.Name = "adisyonCheckBox";
+            this.adisyonCheckBox.Size = new System.Drawing.Size(180, 110);
+            this.adisyonCheckBox.TabIndex = 20;
+            this.adisyonCheckBox.Tag = "4";
+            this.adisyonCheckBox.Text = "Adisyonlar";
+            this.adisyonCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.adisyonCheckBox.UseVisualStyleBackColor = false;
+            this.adisyonCheckBox.Click += new System.EventHandler(this.adisyonCheckBox_Click);
             // 
             // labelSaat
             // 
