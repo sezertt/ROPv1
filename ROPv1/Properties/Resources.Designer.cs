@@ -93,16 +93,6 @@ namespace ROPv1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap adisyonback {
-            get {
-                object obj = ResourceManager.GetObject("adisyonback", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap adisyonIcon {
             get {
                 object obj = ResourceManager.GetObject("adisyonIcon", resourceCulture);
@@ -366,26 +356,6 @@ namespace ROPv1.Properties {
         internal static System.Drawing.Bitmap righticon {
             get {
                 object obj = ResourceManager.GetObject("righticon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap salesback {
-            get {
-                object obj = ResourceManager.GetObject("salesback", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap salescolor {
-            get {
-                object obj = ResourceManager.GetObject("salescolor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

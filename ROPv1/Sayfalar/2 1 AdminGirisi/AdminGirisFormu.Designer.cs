@@ -34,7 +34,6 @@
             this.buttonBilgiAktar = new System.Windows.Forms.Button();
             this.leftPanelView = new System.Windows.Forms.TreeView();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.saleCheckBox = new System.Windows.Forms.CheckBox();
             this.reportCheckBox = new System.Windows.Forms.CheckBox();
             this.stokCheckBox = new System.Windows.Forms.CheckBox();
             this.adisyonCheckBox = new System.Windows.Forms.CheckBox();
@@ -111,44 +110,21 @@
             this.leftPanelView.ShowLines = false;
             this.leftPanelView.ShowRootLines = false;
             this.leftPanelView.Size = new System.Drawing.Size(192, 640);
-            this.leftPanelView.TabIndex = 7;
+            this.leftPanelView.TabIndex = 1;
             this.leftPanelView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.changeSettingsScreen);
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoSize = true;
-            this.flowLayoutPanel1.Controls.Add(this.saleCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.reportCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.stokCheckBox);
-            this.flowLayoutPanel1.Controls.Add(this.adisyonCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.ayarCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.exitButton);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(250, 7);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(625, 7);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1116, 116);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(744, 116);
             this.flowLayoutPanel1.TabIndex = 0;
-            // 
-            // saleCheckBox
-            // 
-            this.saleCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.saleCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.saleCheckBox.BackColor = System.Drawing.SystemColors.Window;
-            this.saleCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.saleCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.saleCheckBox.Image = global::ROPv1.Properties.Resources.salescolor;
-            this.saleCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.saleCheckBox.Location = new System.Drawing.Point(3, 3);
-            this.saleCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
-            this.saleCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
-            this.saleCheckBox.Name = "saleCheckBox";
-            this.saleCheckBox.Size = new System.Drawing.Size(180, 110);
-            this.saleCheckBox.TabIndex = 0;
-            this.saleCheckBox.Tag = "1";
-            this.saleCheckBox.Text = "Satışlar";
-            this.saleCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.saleCheckBox.UseVisualStyleBackColor = false;
-            this.saleCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
             // 
             // reportCheckBox
             // 
@@ -159,13 +135,13 @@
             this.reportCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.reportCheckBox.Image = global::ROPv1.Properties.Resources.reportscolor;
             this.reportCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.reportCheckBox.Location = new System.Drawing.Point(189, 3);
+            this.reportCheckBox.Location = new System.Drawing.Point(3, 3);
             this.reportCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
             this.reportCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
             this.reportCheckBox.Name = "reportCheckBox";
             this.reportCheckBox.Size = new System.Drawing.Size(180, 110);
             this.reportCheckBox.TabIndex = 1;
-            this.reportCheckBox.Tag = "2";
+            this.reportCheckBox.Tag = "1";
             this.reportCheckBox.Text = "Raporlar";
             this.reportCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.reportCheckBox.UseVisualStyleBackColor = false;
@@ -180,13 +156,13 @@
             this.stokCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.stokCheckBox.Image = global::ROPv1.Properties.Resources.stockcolor;
             this.stokCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.stokCheckBox.Location = new System.Drawing.Point(375, 3);
+            this.stokCheckBox.Location = new System.Drawing.Point(189, 3);
             this.stokCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
             this.stokCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
             this.stokCheckBox.Name = "stokCheckBox";
             this.stokCheckBox.Size = new System.Drawing.Size(180, 110);
             this.stokCheckBox.TabIndex = 2;
-            this.stokCheckBox.Tag = "3";
+            this.stokCheckBox.Tag = "2";
             this.stokCheckBox.Text = "Stoklar";
             this.stokCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.stokCheckBox.UseVisualStyleBackColor = false;
@@ -194,24 +170,23 @@
             // 
             // adisyonCheckBox
             // 
-            this.adisyonCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.adisyonCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.adisyonCheckBox.BackColor = System.Drawing.SystemColors.Window;
             this.adisyonCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.adisyonCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.adisyonCheckBox.Image = global::ROPv1.Properties.Resources.adisyon;
             this.adisyonCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.adisyonCheckBox.Location = new System.Drawing.Point(561, 3);
+            this.adisyonCheckBox.Location = new System.Drawing.Point(236, 10);
             this.adisyonCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
             this.adisyonCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
             this.adisyonCheckBox.Name = "adisyonCheckBox";
             this.adisyonCheckBox.Size = new System.Drawing.Size(180, 110);
-            this.adisyonCheckBox.TabIndex = 4;
+            this.adisyonCheckBox.TabIndex = 20;
             this.adisyonCheckBox.Tag = "4";
             this.adisyonCheckBox.Text = "Adisyonlar";
             this.adisyonCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.adisyonCheckBox.UseVisualStyleBackColor = false;
-            this.adisyonCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
+            this.adisyonCheckBox.Click += new System.EventHandler(this.adisyonCheckBox_Click);
             // 
             // ayarCheckBox
             // 
@@ -222,13 +197,13 @@
             this.ayarCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingscolor;
             this.ayarCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ayarCheckBox.Location = new System.Drawing.Point(747, 3);
+            this.ayarCheckBox.Location = new System.Drawing.Point(375, 3);
             this.ayarCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
             this.ayarCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
             this.ayarCheckBox.Name = "ayarCheckBox";
             this.ayarCheckBox.Size = new System.Drawing.Size(180, 110);
             this.ayarCheckBox.TabIndex = 5;
-            this.ayarCheckBox.Tag = "5";
+            this.ayarCheckBox.Tag = "3";
             this.ayarCheckBox.Text = "Veri Aktar";
             this.ayarCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.ayarCheckBox.UseVisualStyleBackColor = false;
@@ -243,7 +218,7 @@
             this.exitButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.exitButton.Image = global::ROPv1.Properties.Resources.logOut;
             this.exitButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.exitButton.Location = new System.Drawing.Point(933, 3);
+            this.exitButton.Location = new System.Drawing.Point(561, 3);
             this.exitButton.MaximumSize = new System.Drawing.Size(300, 110);
             this.exitButton.MinimumSize = new System.Drawing.Size(180, 110);
             this.exitButton.Name = "exitButton";
@@ -305,6 +280,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1378, 788);
             this.ControlBox = false;
+            this.Controls.Add(this.adisyonCheckBox);
             this.Controls.Add(this.labelGun);
             this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.flowLayoutPanel1);
@@ -335,7 +311,6 @@
 
         private System.Windows.Forms.SplitContainer splitPanel;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.CheckBox saleCheckBox;
         private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.CheckBox reportCheckBox;
         private System.Windows.Forms.CheckBox stokCheckBox;

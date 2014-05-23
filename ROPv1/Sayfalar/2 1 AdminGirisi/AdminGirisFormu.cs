@@ -45,26 +45,16 @@ namespace ROPv1
             {
                 #region
                 case 1:
-                    saleCheckBox.Image = global::ROPv1.Properties.Resources.salescolor;
-                    saleCheckBox.ImageAlign = ContentAlignment.TopCenter;
-                    saleCheckBox.ForeColor = SystemColors.ActiveCaption;
-                    break;
-                case 2:
                     reportCheckBox.Image = global::ROPv1.Properties.Resources.reportscolor;
                     reportCheckBox.ImageAlign = ContentAlignment.TopCenter;
                     reportCheckBox.ForeColor = SystemColors.ActiveCaption;
                     break;
-                case 3:
+                case 2:
                     stokCheckBox.Image = global::ROPv1.Properties.Resources.stockcolor;
                     stokCheckBox.ImageAlign = ContentAlignment.TopCenter;
                     stokCheckBox.ForeColor = SystemColors.ActiveCaption;
                     break;
-                case 4:
-                    adisyonCheckBox.Image = global::ROPv1.Properties.Resources.adisyon;
-                    adisyonCheckBox.ImageAlign = ContentAlignment.TopCenter;
-                    adisyonCheckBox.ForeColor = SystemColors.ActiveCaption;
-                    break;
-                case 5:
+                case 3:
                     ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingscolor;
                     ayarCheckBox.ImageAlign = ContentAlignment.TopCenter;
                     ayarCheckBox.ForeColor = SystemColors.ActiveCaption;
@@ -79,30 +69,18 @@ namespace ROPv1
             {
                 #region
                 case 1:
-                    saleCheckBox.Image = global::ROPv1.Properties.Resources.salesback;
-                    buttonBilgiAktar.Visible = false;
-                    //sale işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok
-
-                    break;
-                case 2:
                     reportCheckBox.Image = global::ROPv1.Properties.Resources.reportsback;
                     buttonBilgiAktar.Visible = false;
                     //report işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok
 
                     break;
-                case 3:
+                case 2:
                     stokCheckBox.Image = global::ROPv1.Properties.Resources.stockback;
                     buttonBilgiAktar.Visible = false;
                     //stok işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok
 
                     break;
-                case 4:
-                    adisyonCheckBox.Image = global::ROPv1.Properties.Resources.adisyonback;
-                    buttonBilgiAktar.Visible = false;
-                    //adisyon işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok
-
-                    break;
-                case 5:
+                case 3:
                     ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingsback;
                     buttonBilgiAktar.Visible = false;
                     break;
@@ -230,15 +208,11 @@ namespace ROPv1
                     }
                 }
             }
-
-            if (saleCheckBox.Enabled == true)
-                changeButonChecked(saleCheckBox);
-            else if (reportCheckBox.Enabled == true)
+            
+            if (reportCheckBox.Enabled == true)
                 changeButonChecked(reportCheckBox);
             else if (stokCheckBox.Enabled == true)
                 changeButonChecked(stokCheckBox);
-            else if (adisyonCheckBox.Enabled == true)
-                changeButonChecked(adisyonCheckBox);
             else if (ayarCheckBox.Enabled == true)
                 changeButonChecked(ayarCheckBox);
         }
@@ -320,6 +294,12 @@ namespace ROPv1
         {
             Application.Idle -= OnLoaded;
             _waitForm.Close();
+        }
+
+        private void adisyonCheckBox_Click(object sender, EventArgs e)
+        {
+            AdisyonGoruntuleme adisyonForm = new AdisyonGoruntuleme();
+            adisyonForm.Show();
         }
     }
 }

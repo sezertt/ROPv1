@@ -42,6 +42,25 @@
             this.dateBaslangic = new System.Windows.Forms.DateTimePicker();
             this.dateBitis = new System.Windows.Forms.DateTimePicker();
             this.comboAdisyonAyar = new System.Windows.Forms.ComboBox();
+            this.listAdisyon = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listAdisyonDetay = new System.Windows.Forms.ListView();
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.buttonSayfaArttir = new System.Windows.Forms.Button();
+            this.buttonSayfaAzalt = new System.Windows.Forms.Button();
+            this.labelSayfaSayisi = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.labelSayfa = new System.Windows.Forms.Label();
+            this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // labelGun
@@ -125,7 +144,7 @@
             // buttonArttir
             // 
             this.buttonArttir.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.buttonArttir.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonArttir.BackColor = System.Drawing.Color.White;
             this.buttonArttir.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonArttir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonArttir.Image = global::ROPv1.Properties.Resources.upBig;
@@ -158,12 +177,14 @@
             // 
             this.textboxAdisyonID.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.textboxAdisyonID.Font = new System.Drawing.Font("Calibri", 16F);
-            this.textboxAdisyonID.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.textboxAdisyonID.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.textboxAdisyonID.Location = new System.Drawing.Point(495, 13);
             this.textboxAdisyonID.MaxLength = 10;
             this.textboxAdisyonID.Name = "textboxAdisyonID";
             this.textboxAdisyonID.Size = new System.Drawing.Size(154, 34);
             this.textboxAdisyonID.TabIndex = 40;
+            this.textboxAdisyonID.Enter += new System.EventHandler(this.textboxAdisyonID_Enter);
+            this.textboxAdisyonID.Leave += new System.EventHandler(this.textboxAdisyonID_Leave);
             // 
             // dateBaslangic
             // 
@@ -205,17 +226,219 @@
             this.comboAdisyonAyar.Items.AddRange(new object[] {
             "Açık Adisyonlar",
             "Tüm Adisyonlar",
-            "Adisyon Id",
+            "Adisyon ID",
             "Masa Adı",
-            "Departman Adı "});
+            "Departman Adı"});
             this.comboAdisyonAyar.Location = new System.Drawing.Point(247, 12);
             this.comboAdisyonAyar.Name = "comboAdisyonAyar";
             this.comboAdisyonAyar.Size = new System.Drawing.Size(242, 34);
             this.comboAdisyonAyar.TabIndex = 41;
-            this.comboAdisyonAyar.TextChanged += new System.EventHandler(this.comboAdisyonAyar_TextChanged);
             this.comboAdisyonAyar.Click += new System.EventHandler(this.comboAdisyonAyar_Click);
             this.comboAdisyonAyar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboAdisyonAyar_KeyPress);
             this.comboAdisyonAyar.Leave += new System.EventHandler(this.comboAdisyonAyar_Leave);
+            // 
+            // listAdisyon
+            // 
+            this.listAdisyon.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listAdisyon.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.listAdisyon.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listAdisyon.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader11});
+            this.listAdisyon.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
+            this.listAdisyon.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.listAdisyon.FullRowSelect = true;
+            this.listAdisyon.GridLines = true;
+            this.listAdisyon.HideSelection = false;
+            this.listAdisyon.LabelWrap = false;
+            this.listAdisyon.Location = new System.Drawing.Point(9, 127);
+            this.listAdisyon.Margin = new System.Windows.Forms.Padding(0);
+            this.listAdisyon.MultiSelect = false;
+            this.listAdisyon.Name = "listAdisyon";
+            this.listAdisyon.Scrollable = false;
+            this.listAdisyon.Size = new System.Drawing.Size(915, 607);
+            this.listAdisyon.TabIndex = 42;
+            this.listAdisyon.UseCompatibleStateImageBehavior = false;
+            this.listAdisyon.View = System.Windows.Forms.View.Details;
+            this.listAdisyon.SelectedIndexChanged += new System.EventHandler(this.listAdisyon_SelectedIndexChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Adisyon ID";
+            this.columnHeader1.Width = 85;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Departman Adı";
+            this.columnHeader2.Width = 116;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Masa Adı";
+            this.columnHeader3.Width = 75;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Tarih";
+            this.columnHeader4.Width = 85;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Açılış - Kapanış";
+            this.columnHeader9.Width = 113;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "Adisyon Notu";
+            this.columnHeader10.Width = 338;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "Toplam";
+            this.columnHeader11.Width = 100;
+            // 
+            // listAdisyonDetay
+            // 
+            this.listAdisyonDetay.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listAdisyonDetay.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.listAdisyonDetay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listAdisyonDetay.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader6,
+            this.columnHeader5,
+            this.columnHeader7,
+            this.columnHeader8});
+            this.listAdisyonDetay.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.listAdisyonDetay.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.listAdisyonDetay.FullRowSelect = true;
+            this.listAdisyonDetay.GridLines = true;
+            this.listAdisyonDetay.LabelWrap = false;
+            this.listAdisyonDetay.Location = new System.Drawing.Point(934, 127);
+            this.listAdisyonDetay.Margin = new System.Windows.Forms.Padding(0);
+            this.listAdisyonDetay.MultiSelect = false;
+            this.listAdisyonDetay.Name = "listAdisyonDetay";
+            this.listAdisyonDetay.Size = new System.Drawing.Size(420, 690);
+            this.listAdisyonDetay.TabIndex = 43;
+            this.listAdisyonDetay.UseCompatibleStateImageBehavior = false;
+            this.listAdisyonDetay.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Ürün";
+            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader5.Width = 163;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Adet";
+            this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader7.Width = 53;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "Fiyat";
+            this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader8.Width = 91;
+            // 
+            // buttonSayfaArttir
+            // 
+            this.buttonSayfaArttir.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonSayfaArttir.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonSayfaArttir.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonSayfaArttir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonSayfaArttir.Image = global::ROPv1.Properties.Resources.righticon;
+            this.buttonSayfaArttir.Location = new System.Drawing.Point(622, 746);
+            this.buttonSayfaArttir.Name = "buttonSayfaArttir";
+            this.buttonSayfaArttir.Size = new System.Drawing.Size(120, 61);
+            this.buttonSayfaArttir.TabIndex = 45;
+            this.buttonSayfaArttir.TabStop = false;
+            this.buttonSayfaArttir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSayfaArttir.UseVisualStyleBackColor = false;
+            this.buttonSayfaArttir.Click += new System.EventHandler(this.buttonSayfaArttirClick);
+            // 
+            // buttonSayfaAzalt
+            // 
+            this.buttonSayfaAzalt.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonSayfaAzalt.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonSayfaAzalt.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonSayfaAzalt.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonSayfaAzalt.Image = global::ROPv1.Properties.Resources.lefticon;
+            this.buttonSayfaAzalt.Location = new System.Drawing.Point(227, 746);
+            this.buttonSayfaAzalt.Name = "buttonSayfaAzalt";
+            this.buttonSayfaAzalt.Size = new System.Drawing.Size(120, 61);
+            this.buttonSayfaAzalt.TabIndex = 44;
+            this.buttonSayfaAzalt.TabStop = false;
+            this.buttonSayfaAzalt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSayfaAzalt.UseVisualStyleBackColor = false;
+            this.buttonSayfaAzalt.Click += new System.EventHandler(this.buttonSayfaAzalt_Click);
+            // 
+            // labelSayfaSayisi
+            // 
+            this.labelSayfaSayisi.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.labelSayfaSayisi.AutoSize = true;
+            this.labelSayfaSayisi.BackColor = System.Drawing.Color.Transparent;
+            this.labelSayfaSayisi.Font = new System.Drawing.Font("Calibri", 32F);
+            this.labelSayfaSayisi.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelSayfaSayisi.Location = new System.Drawing.Point(496, 748);
+            this.labelSayfaSayisi.Name = "labelSayfaSayisi";
+            this.labelSayfaSayisi.Size = new System.Drawing.Size(45, 53);
+            this.labelSayfaSayisi.TabIndex = 47;
+            this.labelSayfaSayisi.Text = "0";
+            this.labelSayfaSayisi.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Calibri", 32F, System.Drawing.FontStyle.Bold);
+            this.label2.ForeColor = System.Drawing.SystemColors.Window;
+            this.label2.Location = new System.Drawing.Point(464, 748);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 53);
+            this.label2.TabIndex = 48;
+            this.label2.Text = "/";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelSayfa
+            // 
+            this.labelSayfa.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.labelSayfa.BackColor = System.Drawing.Color.Transparent;
+            this.labelSayfa.Font = new System.Drawing.Font("Calibri", 32F);
+            this.labelSayfa.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelSayfa.Location = new System.Drawing.Point(338, 748);
+            this.labelSayfa.Name = "labelSayfa";
+            this.labelSayfa.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.labelSayfa.Size = new System.Drawing.Size(138, 53);
+            this.labelSayfa.TabIndex = 49;
+            this.labelSayfa.Text = "0";
+            this.labelSayfa.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.labelSayfa.TextChanged += new System.EventHandler(this.labelSayfa_TextChanged);
+            // 
+            // keyboardcontrol1
+            // 
+            this.keyboardcontrol1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.keyboardcontrol1.ForeColor = System.Drawing.SystemColors.Window;
+            this.keyboardcontrol1.KeyboardType = KeyboardClassLibrary.BoW.Standard;
+            this.keyboardcontrol1.Location = new System.Drawing.Point(4, 535);
+            this.keyboardcontrol1.Name = "keyboardcontrol1";
+            this.keyboardcontrol1.Size = new System.Drawing.Size(924, 282);
+            this.keyboardcontrol1.TabIndex = 50;
+            this.keyboardcontrol1.Visible = false;
+            this.keyboardcontrol1.UserKeyPressed += new KeyboardClassLibrary.KeyboardDelegate(this.keyboardcontrol1_UserKeyPressed);
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Garson";
+            this.columnHeader6.Width = 109;
             // 
             // AdisyonGoruntuleme
             // 
@@ -224,6 +447,14 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 819);
             this.ControlBox = false;
+            this.Controls.Add(this.keyboardcontrol1);
+            this.Controls.Add(this.buttonSayfaAzalt);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelSayfa);
+            this.Controls.Add(this.buttonSayfaArttir);
+            this.Controls.Add(this.labelSayfaSayisi);
+            this.Controls.Add(this.listAdisyonDetay);
+            this.Controls.Add(this.listAdisyon);
             this.Controls.Add(this.comboAdisyonAyar);
             this.Controls.Add(this.textboxAdisyonID);
             this.Controls.Add(this.buttonAzalt);
@@ -265,5 +496,24 @@
         private System.Windows.Forms.DateTimePicker dateBaslangic;
         private System.Windows.Forms.DateTimePicker dateBitis;
         private System.Windows.Forms.ComboBox comboAdisyonAyar;
+        private System.Windows.Forms.ListView listAdisyon;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.ListView listAdisyonDetay;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.Button buttonSayfaArttir;
+        private System.Windows.Forms.Button buttonSayfaAzalt;
+        private System.Windows.Forms.Label labelSayfaSayisi;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelSayfa;
+        private KeyboardClassLibrary.Keyboardcontrol keyboardcontrol1;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
     }
 }

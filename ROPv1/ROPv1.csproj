@@ -103,6 +103,11 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Sayfalar\1 GirisEkranı\PortFormu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -232,10 +237,10 @@
     <Compile Include="Sayfalar\GenelKullanılanlar\XMLAktarClient.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\XMLAktarServer.cs" />
     <Compile Include="Gereksizler\Program.cs" />
-    <Compile Include="Sayfalar\3 5 Ürünler\Products.cs">
+    <Compile Include="Sayfalar\3 6 Stoklar\Products.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\3 5 Ürünler\Products.Designer.cs">
+    <Compile Include="Sayfalar\3 6 Stoklar\Products.Designer.cs">
       <DependentUpon>Products.cs</DependentUpon>
     </Compile>
     <Compile Include="Sayfalar\GenelKullanılanlar\KontrolFormu.cs">
@@ -312,7 +317,7 @@
     <EmbeddedResource Include="Sayfalar\3 4 Menüler\MenuControl.resx">
       <DependentUpon>MenuControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\3 5 Ürünler\Products.resx">
+    <EmbeddedResource Include="Sayfalar\3 6 Stoklar\Products.resx">
       <DependentUpon>Products.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\3 6 Stoklar\Stoklar.resx">
@@ -351,11 +356,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -392,9 +392,6 @@
     <None Include="Resources\logOut.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\salescolor.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\reportscolor.png" />
   </ItemGroup>
   <ItemGroup>
@@ -407,9 +404,6 @@
     <None Include="Resources\settingscolor.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\adisyonback.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\reportsback.png" />
   </ItemGroup>
   <ItemGroup>
@@ -417,9 +411,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\stockback.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\salesback.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\delete.png" />
