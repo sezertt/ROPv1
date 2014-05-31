@@ -890,7 +890,7 @@
             this.buttonHesapYazdir.Name = "buttonHesapYazdir";
             this.buttonHesapYazdir.Size = new System.Drawing.Size(205, 115);
             this.buttonHesapYazdir.TabIndex = 89;
-            this.buttonHesapYazdir.Text = "Hesap Yazdır";
+            this.buttonHesapYazdir.Text = "Kasa Fişi Yazdır";
             this.buttonHesapYazdir.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.buttonHesapYazdir.UseVisualStyleBackColor = false;
             this.buttonHesapYazdir.Click += new System.EventHandler(this.buttonHesapYazdir_Click);
@@ -964,6 +964,7 @@
             this.ShowInTaskbar = false;
             this.Text = "SiparisMenuFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HesapFormu_FormClosing);
             this.Load += new System.EventHandler(this.HesapFormu_Load);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

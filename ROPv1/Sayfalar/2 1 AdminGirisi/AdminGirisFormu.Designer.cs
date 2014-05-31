@@ -295,6 +295,7 @@
             this.ShowInTaskbar = false;
             this.Text = "AdminGirisFormu";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AdminGirisFormu_FormClosing);
             this.Load += new System.EventHandler(this.AdminGirisFormu_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AdminGirisFormu_KeyDown);
             this.splitPanel.Panel1.ResumeLayout(false);

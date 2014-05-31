@@ -16,14 +16,14 @@ namespace ROPv1 {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class CrystalReportGunSonuRaporu : ReportClass {
+    public class CrystalReportIndirim : ReportClass {
         
-        public CrystalReportGunSonuRaporu() {
+        public CrystalReportIndirim() {
         }
         
         public override string ResourceName {
             get {
-                return "CrystalReportGunSonuRaporu.rpt";
+                return "CrystalReportIndirim.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace ROPv1 {
         
         public override string FullResourceName {
             get {
-                return "ROPv1.CrystalReportGunSonuRaporu.rpt";
+                return "ROPv1.CrystalReportIndirim.rpt";
             }
             set {
                 // Do nothing
@@ -82,17 +82,9 @@ namespace ROPv1 {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section ReportFooterSection2 {
-            get {
-                return this.ReportDefinition.Sections[4];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public CrystalDecisions.CrystalReports.Engine.Section Section5 {
             get {
-                return this.ReportDefinition.Sections[5];
+                return this.ReportDefinition.Sections[4];
             }
         }
         
@@ -106,33 +98,17 @@ namespace ROPv1 {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_BitisTarihi {
+        public CrystalDecisions.Shared.IParameterField Parameter_RaporSonuTarihi {
             get {
                 return this.DataDefinition.ParameterFields[1];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CrystalReportIndirimrpt_BaslangicTarihi {
-            get {
-                return this.DataDefinition.ParameterFields[2];
-            }
-        }
-        
-        [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_CrystalReportIndirimrpt_RaporSonuTarihi {
-            get {
-                return this.DataDefinition.ParameterFields[3];
             }
         }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedCrystalReportGunSonuRaporu : Component, ICachedReport {
+    public class CachedCrystalReportIndirim : Component, ICachedReport {
         
-        public CachedCrystalReportGunSonuRaporu() {
+        public CachedCrystalReportIndirim() {
         }
         
         [Browsable(false)]
@@ -169,7 +145,7 @@ namespace ROPv1 {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            CrystalReportGunSonuRaporu rpt = new CrystalReportGunSonuRaporu();
+            CrystalReportIndirim rpt = new CrystalReportIndirim();
             rpt.Site = this.Site;
             return rpt;
         }

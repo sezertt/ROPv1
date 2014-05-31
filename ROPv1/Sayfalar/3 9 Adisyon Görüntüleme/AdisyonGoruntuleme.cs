@@ -475,6 +475,8 @@ namespace ROPv1
 
         private void listAdisyon_SelectedIndexChanged(object sender, EventArgs e)
         {
+            buttonYazdir.Enabled = false;
+
             if (listAdisyon.SelectedItems.Count != 1)
                 return;
 
@@ -482,18 +484,21 @@ namespace ROPv1
 
             SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Garsonu,Fiyatı,Porsiyon,YemekAdi,IkramMi,IptalMi FROM Siparis WHERE AdisyonID='" + listAdisyon.SelectedItems[0].SubItems[0].Text + "'");
             SqlDataReader dr = cmd.ExecuteReader();
+
+            decimal adisyonHesabi = 0;
+
             while (dr.Read())
             {
                 string yemekAdi = dr.GetString(3);
                 bool ikramMi = dr.GetBoolean(4), iptalMi = dr.GetBoolean(5);
                 decimal adedi = dr.GetDecimal(2), fiyati = dr.GetDecimal(1);
-                
+
                 listAdisyonDetay.Items.Add(dr.GetString(0));
                 listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add(yemekAdi);
                 listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add(Convert.ToDouble(adedi).ToString());
                 if (ikramMi)
                 {
-                    listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add((adedi * fiyati).ToString("0.00") + "ikram");
+                    listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add("(ikram)");
                 }
                 else
                 {
@@ -501,13 +506,38 @@ namespace ROPv1
                 }
                 listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].Font = new Font("Calibri", 14F, FontStyle.Bold);
 
+
                 if (iptalMi)
                 {
                     listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].BackColor = Color.IndianRed;
                 }
+                else
+                {
+                    try
+                    {
+                        adisyonHesabi += Convert.ToDecimal(listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems[3].Text);
+                    }
+                    catch
+                    { }
+                }
+                buttonYazdir.Enabled = true;
             }
+            labelToplamHesap.Text = adisyonHesabi.ToString("0.00");
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
 
+        private void buttonYazdir_Click(object sender, EventArgs e)
+        {
+            listAdisyonDetay.Items.Add("");
+            listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add("Toplam");
+            listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add(":");
+            listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add(labelToplamHesap.Text);
 
+            listViewPrinter printer = new listViewPrinter(listAdisyonDetay, new Point(15, 15), false, false, listAdisyon.SelectedItems[0].SubItems[1].Text + " " + listAdisyon.SelectedItems[0].SubItems[2].Text + " Adisyon Dökümü");
+            printer.print();
+
+            listAdisyonDetay.Items.RemoveAt(listAdisyonDetay.Items.Count - 1);
         }
     }
 }

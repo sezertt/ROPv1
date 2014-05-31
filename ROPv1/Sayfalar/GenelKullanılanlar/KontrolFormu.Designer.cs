@@ -76,7 +76,7 @@
             this.buttonDevamEtme.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonDevamEtme.UseVisualStyleBackColor = false;
             this.buttonDevamEtme.Visible = false;
-            this.buttonDevamEtme.Click += new System.EventHandler(this.buttonTamam_Click);
+            this.buttonDevamEtme.Click += new System.EventHandler(this.buttonDevamEtme_Click);
             // 
             // buttonDevamEt
             // 
@@ -133,7 +133,7 @@
             this.buttonNO.Text = "Hayır   ";
             this.buttonNO.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonNO.UseVisualStyleBackColor = false;
-            this.buttonNO.Click += new System.EventHandler(this.buttonTamam_Click);
+            this.buttonNO.Click += new System.EventHandler(this.buttonNO_Click);
             // 
             // buttonYES
             // 
@@ -151,7 +151,7 @@
             this.buttonYES.Text = "Evet   ";
             this.buttonYES.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonYES.UseVisualStyleBackColor = false;
-            this.buttonYES.Click += new System.EventHandler(this.buttonTamam_Click);
+            this.buttonYES.Click += new System.EventHandler(this.buttonYES_Click);
             // 
             // KontrolFormu
             // 

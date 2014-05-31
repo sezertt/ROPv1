@@ -91,6 +91,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrystalReportIndirim.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrystalReportIndirim.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CrystalReportGunSonuRaporu.cs">
       <DependentUpon>CrystalReportGunSonuRaporu.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -239,6 +245,7 @@
     <Compile Include="Sayfalar\3 9 Adisyon Görüntüleme\AdisyonGoruntuleme.Designer.cs">
       <DependentUpon>AdisyonGoruntuleme.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sayfalar\3 9 Adisyon Görüntüleme\listViewPrinter.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\AdisyonNotuFormu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -272,6 +279,10 @@
     <Compile Include="Sayfalar\2 2 1 SiparisMasaEkranı\SiparisMasaFormu.Designer.cs">
       <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CrystalReportIndirim.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReportIndirim.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="CrystalReportGunSonuRaporu.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReportGunSonuRaporu.cs</LastGenOutput>

@@ -33,7 +33,11 @@ namespace ROPv1
 
         CrystalReportMutfak raporMutfak = new CrystalReportMutfak();
 
+        CrystalReportAdisyon raporAdisyon = new CrystalReportAdisyon();
+
         public SiparisMasaFormu siparisForm;
+
+        AdminGirisFormu adminForm;
 
         string siparisiKimGirdi, adisyonNotu;
 
@@ -129,6 +133,9 @@ namespace ROPv1
                     case "OdemeBitti": // yeni masa açıldığı bilgisi geldiğinde
                         komut_hesapOdemeBitti(parametreler["masa"], parametreler["departmanAdi"], parametreler["odenmeyenSiparisVarMi"]);
                         break;
+                    case "AdisyonYazdir": // ikramın iptal edildiği bilgisini dağıtmak için
+                        komut_adisyonYazdir(parametreler["masa"], parametreler["departmanAdi"], parametreler["garson"], parametreler["yazdirilacakIndirim"], parametreler["acilisZamani"], parametreler["firmaAdi"], parametreler["firmaAdresTelefon"], parametreler["yaziciWindowsAdi"]);
+                        break;
                     case "Indirim": // yeni masa açıldığı bilgisi geldiğinde
                         komut_hesapIndirim(parametreler["masa"], parametreler["departmanAdi"], parametreler["odemeTipi"], parametreler["odemeMiktari"], e.Client);
                         break;
@@ -154,7 +161,7 @@ namespace ROPv1
                         komut_giris(e.Client, parametreler["nick"]);
                         break;
                     case "YaziciIstegi": // bir kullanıcı servera bağlandığında
-                        komut_yaziciGonder(e.Client,parametreler["masa"], parametreler["departmanAdi"]);
+                        komut_yaziciGonder(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
                         break;
                     case "LoadSiparis": // bir kullanıcı menü ekranını açmak istediğinde masada verilen siparişleri aktarmak için
                         komut_loadSiparis(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
@@ -867,19 +874,24 @@ namespace ROPv1
             cmd.Connection.Close();
             cmd.Connection.Dispose();
 
-            if(sonSiparisMi == "0") // mutfağa adisyon gönder
+            if (sonSiparisMi == "0") // mutfağa adisyon gönder
             {
                 cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
                 dr = cmd.ExecuteReader();
 
-                dr.Read();
+                string firmaAdi = "", yaziciAdi = "";
 
-                string firmaAdi = dr.GetString(0), yaziciAdi = dr.GetString(1);
+                while (dr.Read())
+                {
+                    firmaAdi = dr.GetString(0);
+                    yaziciAdi = dr.GetString(1);
+                }
 
                 cmd.Connection.Close();
                 cmd.Connection.Dispose();
 
-                asyncYaziciyaGonder(masa, departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
+                if (yaziciAdi != "")
+                    asyncYaziciyaGonder(masa, departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
             }
 
             //Tüm kullanıcılara sipariş mesajı gönderelim
@@ -909,6 +921,31 @@ namespace ROPv1
 
             cmd.Connection.Close();
             cmd.Connection.Dispose();
+        }
+
+        private void komut_adisyonYazdir(string masa, string departmanAdi, string garson, string yazdirilacakIndirim, string acilisZamani, string firmaAdi, string firmaAdresTelefon, string yaziciWindowsAdi)
+        {
+            asyncYaziciyaGonder(masa, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, firmaAdi, firmaAdresTelefon, yaziciWindowsAdi, raporAdisyon);
+        }
+
+        public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string garson, string yazdirilacakIndirim, string acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor)
+        {
+            var t = new Thread(() => Basla(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, firmaAdi, adresTelefon, printerAdi, rapor));
+            t.Start();
+            return t;
+        }
+
+        private static void Basla(string masaAdi, string departmanAdi, string garson, string yazdirilacakIndirim, string acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor)
+        {
+            rapor.SetParameterValue("Masa", masaAdi);
+            rapor.SetParameterValue("Departman", departmanAdi);
+            rapor.SetParameterValue("Garson", garson);
+            rapor.SetParameterValue("Indirim", yazdirilacakIndirim);
+            rapor.SetParameterValue("AcilisZamani", acilisZamani);
+            rapor.SetParameterValue("FirmaAdi", firmaAdi); // firma adı
+            rapor.SetParameterValue("FirmaAdresTelefon", adresTelefon); // firma adres ve telefon        
+            rapor.PrintOptions.PrinterName = printerAdi;
+            rapor.PrintToPrinter(1, false, 0, 0);
         }
 
         private void komut_listeBos(string masa, string departmanAdi)
@@ -1687,7 +1724,7 @@ namespace ROPv1
             {
                 XmlSave.SaveRestoran(username, "sonKullanici.xml");
 
-                AdminGirisFormu adminForm = new AdminGirisFormu();
+                adminForm = new AdminGirisFormu();
                 Task.Factory.StartNew(() => adminForm.ShowDialog());
                 //adminForm.Show();
             }
@@ -1708,7 +1745,7 @@ namespace ROPv1
                     { //şifre doğru
                         XmlSave.SaveRestoran(username, "sonKullanici.xml");
 
-                        AdminGirisFormu adminForm = new AdminGirisFormu();
+                        adminForm = new AdminGirisFormu();
                         Task.Factory.StartNew(() => adminForm.ShowDialog());
                         //adminForm.Show();
                     }
@@ -1743,7 +1780,6 @@ namespace ROPv1
             siparisForm = new SiparisMasaFormu(kullanicilar);
 
             Task.Factory.StartNew(() => siparisForm.ShowDialog());
-            //siparisForm.Show();
         }
 
         private void exitButtonPressed(object sender, EventArgs e)

@@ -1736,15 +1736,19 @@ namespace ROPv1
                     {
                         cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
                         dr = cmd.ExecuteReader();
+                        string firmaAdi = "", yaziciAdi = "";
 
-                        dr.Read();
-
-                        string firmaAdi = dr.GetString(0), yaziciAdi = dr.GetString(1);
+                        while(dr.Read())
+                        {
+                            firmaAdi = dr.GetString(0);
+                            yaziciAdi = dr.GetString(1);
+                        }
 
                         cmd.Connection.Close();
                         cmd.Connection.Dispose();
 
-                        asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
+                        if (yaziciAdi != "")
+                            asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
                     }
 
                     if (adisyonNotuGuncellenmeliMi) // eğer sipariş notuna dokunulmuşsa not update edilsin
@@ -1781,9 +1785,10 @@ namespace ROPv1
                     masaAcikMi = true;
                     this.Close();
                 }
-            }
+            }     
         }
 
+        // mutfak adisyonu
         public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string firmaAdi, string printerAdi, CrystalReportMutfak rapor)
         {
             var t = new Thread(() => Basla(masaAdi, departmanAdi, firmaAdi, printerAdi, rapor));
@@ -1844,14 +1849,19 @@ namespace ROPv1
                     cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
                     dr = cmd.ExecuteReader();
 
-                    dr.Read();
+                    string firmaAdi = "", yaziciAdi = "";
 
-                    string firmaAdi = dr.GetString(0), yaziciAdi = dr.GetString(1);
+                    while (dr.Read())
+                    {
+                        firmaAdi = dr.GetString(0);
+                        yaziciAdi = dr.GetString(1);
+                    }
 
                     cmd.Connection.Close();
                     cmd.Connection.Dispose();
 
-                    asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
+                    if (yaziciAdi != "")
+                        asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
                 }
 
                 if (adisyonNotuGuncellenmeliMi) // eğer sipariş notuna dokunulmuşsa not update edilsin
@@ -2507,14 +2517,19 @@ namespace ROPv1
                     cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
                     dr = cmd.ExecuteReader();
 
-                    dr.Read();
+                    string firmaAdi = "", yaziciAdi = "";
 
-                    string firmaAdi = dr.GetString(0), yaziciAdi = dr.GetString(1);
+                    while (dr.Read())
+                    {
+                        firmaAdi = dr.GetString(0);
+                        yaziciAdi = dr.GetString(1);
+                    }
 
                     cmd.Connection.Close();
                     cmd.Connection.Dispose();
 
-                    asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
+                    if (yaziciAdi != "")
+                        asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
                 }
 
                 if (adisyonNotuGuncellenmeliMi) // eğer sipariş notuna dokunulmuşsa not update edilsin
@@ -2546,6 +2561,11 @@ namespace ROPv1
             dialog2.Close();
             timerDialogClose.Stop();
             this.Close();
+        }
+
+        public void menuFormunuKapat()
+        {
+            buttonTamam_Click(null, null);
         }
     }
 }

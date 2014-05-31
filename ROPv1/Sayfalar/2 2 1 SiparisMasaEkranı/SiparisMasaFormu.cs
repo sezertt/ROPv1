@@ -843,6 +843,11 @@ namespace ROPv1
             client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odemeTipi=" + odemeTipi + "&odemeMiktari=" + odemeMiktari);
         }
 
+        public void hesapFormundanAdisyonYazdir(string masa, string departman, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string firmaAdresTelefon, string yaziciWindowsAdi)
+        {
+            client.MesajYolla("komut=AdisyonYazdir&masa=" + masa + "&departmanAdi=" + departman + "&garson=" + garson + "&yazdirilacakIndirim=" + yazdirilacakIndirim.ToString("0.00") + "&acilisZamani=" + acilisZamani + "&firmaAdresTelefon=" + firmaAdresTelefon + "&yaziciWindowsAdi=" + yaziciWindowsAdi);
+        }
+
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
         public void menuFormundanServeraSiparisYolla(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, string ikramYeniMiEskiMi)
         {
@@ -919,7 +924,7 @@ namespace ROPv1
                     {
                         Button tablebutton = tablePanel.Controls[siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi] as Button;
 
-                        if(tablebutton != null)
+                        if (tablebutton != null)
                         {
                             tablebutton.ForeColor = Color.White;
                             tablebutton.BackColor = Color.Firebrick;
@@ -970,6 +975,7 @@ namespace ROPv1
 
             siparisMenuForm = null;
             acikMasaVarsaYapma = false;
+            this.Activate();
         }
 
         #region Komutlar

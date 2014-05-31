@@ -14,6 +14,7 @@ namespace ROPv1
     {
         SiparisMenuFormu menuFormu;
         SiparisMasaFormu masaFormu;
+        AdminGirisFormu adminGirisFormu;
 
         public KontrolFormu(string textboxText, bool BoxType, SiparisMenuFormu menuFormu)
         {
@@ -51,6 +52,26 @@ namespace ROPv1
             buttonNO.Visible = false;
             buttonYES.Visible = false;
             buttonTamam.Visible = false;
+        }
+
+        public KontrolFormu(string textboxText, bool BoxType, AdminGirisFormu adminGirisFormu)
+        {
+            InitializeComponent();
+
+            if (masaFormu != null)
+                this.adminGirisFormu = adminGirisFormu;
+
+            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+
+            labelAciklama.Text = textboxText;
+
+            if (!BoxType) //OK Box
+            {
+                buttonNO.Visible = false;
+                buttonYES.Visible = false;
+                buttonTamam.Visible = true;
+            }
         }
 
         public KontrolFormu(string textboxText, bool BoxType)
@@ -95,6 +116,23 @@ namespace ROPv1
         {
             if (masaFormu != null)
                 masaFormu.komut_masaGirilebilirMi("True");
+            this.Close();
+        }
+
+        private void buttonNO_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void buttonDevamEtme_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void buttonYES_Click(object sender, EventArgs e)
+        {
+            if (adminGirisFormu != null)
+                adminGirisFormu.raporla();
             this.Close();
         }
     }

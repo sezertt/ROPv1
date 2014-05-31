@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Globalization;
+using System.Data.SqlClient;
 
 namespace ROPv1
 {
@@ -25,6 +26,7 @@ namespace ROPv1
 
         private void exitPressed(object sender, EventArgs e)
         {
+            this.Dispose();
             this.Close();
         }
 
@@ -171,26 +173,40 @@ namespace ROPv1
             }
             else if (leftPanelView.Nodes[0].Text == "Gün Sonu Raporu")
             {
-                Raporlar raporView = new Raporlar();
-                splitPanel.Panel2.Controls.Add(raporView);
-                raporView.Dock = DockStyle.Fill;
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AcikMi FROM Adisyon WHERE AcikMi=1");
+                SqlDataReader dr = cmd.ExecuteReader();
 
-                switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
+                if(dr.Read())
                 {
-                    #region
-                    case 0: //Gün sonu raporu seçildi
-
-                        break;
-
-                    case 1: //Ürün satış raporu seçildi
-
-                        break;
-
-                    default:
-                        break;
-                    #endregion
+                    KontrolFormu dialog = new KontrolFormu("Sistemde açık masa bulunurken raporlama düzgün görüntülenemeyebilir, devam etmek istiyor musunuz?", true, this);
+                    dialog.Show();
                 }
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
             }            
+        }
+
+        public void raporla()
+        {
+            Raporlar raporView = new Raporlar();
+            splitPanel.Panel2.Controls.Add(raporView);
+            raporView.Dock = DockStyle.Fill;
+
+            switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
+            {
+                #region
+                case 0: //Gün sonu raporu seçildi
+
+                    break;
+
+                case 1: //Ürün satış raporu seçildi
+
+                    break;
+
+                default:
+                    break;
+                #endregion
+            }
         }
 
         private void timerSaat_Tick(object sender, EventArgs e)
@@ -328,6 +344,11 @@ namespace ROPv1
         {
             AdisyonGoruntuleme adisyonForm = new AdisyonGoruntuleme();
             adisyonForm.Show();
+        }
+
+        private void AdminGirisFormu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
         }
     }
 }

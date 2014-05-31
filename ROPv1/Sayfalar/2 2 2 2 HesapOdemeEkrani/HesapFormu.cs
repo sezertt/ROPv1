@@ -198,6 +198,7 @@ namespace ROPv1
             return t;
         }
 
+        // mutfak adisyonu
         private static void Basla(string masaAdi, string departmanAdi, string firmaAdi, string printerAdi, CrystalReportMutfak rapor)
         {
             rapor.SetParameterValue("Masa", masaAdi);
@@ -238,7 +239,7 @@ namespace ROPv1
                 labelMasa.Font = new Font(labelMasa.Font.FontFamily, labelMasa.Font.Size - 0.5f, labelMasa.Font.Style);
             }
 
-            // EĞER BURADA ÜRÜN VARSA ADİSYON VAR MI YOK MU BAK VARSA SİPARİŞLERİ EKLE YOKSA OLUŞTUR VE EKLE
+            // EĞER BURADA ÜRÜN VARSA ADİSYON VAR MI YOK MU BAK VARSA SİPARİŞLERİ EKLE, ÜRÜN YOKSA ÜRÜNÜ OLUŞTUR VE EKLE
             if (listHesaptakiler.Groups[3].Items.Count > 0)
             {
                 if (Properties.Settings.Default.Server == 2) //server - diğer tüm clientlara söylemeli yaptığı ikram vs. neyse
@@ -284,14 +285,19 @@ namespace ROPv1
                         cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
                         dr = cmd.ExecuteReader();
 
-                        dr.Read();
+                        string firmaAdi = "", yaziciAdi = "";
 
-                        string firmaAdi = dr.GetString(0), yaziciAdi = dr.GetString(1);
+                        while (dr.Read())
+                        {
+                            firmaAdi = dr.GetString(0);
+                            yaziciAdi = dr.GetString(1);
+                        }
 
                         cmd.Connection.Close();
                         cmd.Connection.Dispose();
 
-                        asyncYaziciyaGonder(masaAdi, departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
+                        if (yaziciAdi != "")
+                            asyncYaziciyaGonder(masaAdi, departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
                     }
 
                 }
@@ -528,11 +534,12 @@ namespace ROPv1
                 textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
                 textNumberOfItem.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
                 labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+
+                adisyonYazdirilabilirMi();
             }
             else
             {
                 //servera söyle herkesi masadan çıkarsın
-
                 menuFormu.masaFormu.menuFormundanServeraYolla(masaAdi, departmanAdi, "hesapOdeniyor");
 
                 menuFormu.masaFormu.menuFormundanServeraYolla(masaAdi, departmanAdi, "OdenenleriGonder");
@@ -744,6 +751,19 @@ namespace ROPv1
             textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             textNumberOfItem.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+
+            adisyonYazdirilabilirMi();
+        }
+
+        private void adisyonYazdirilabilirMi()
+        {
+            decimal Odenecek = 0;
+            for (int i = 0; i < listUrunFiyat.Items.Count; i++)
+            {
+                Odenecek += Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[0].Text) * Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[3].Text);
+            }
+            if (Odenecek != Convert.ToDecimal(labelKalanHesap.Text))
+                buttonAdisyonYazdir.Enabled = false;
         }
 
         //Kalan hesap 0 ın altına indiğinde çalışması gereken method
@@ -767,6 +787,8 @@ namespace ROPv1
                 buttonNakit.Enabled = true;
                 buttonYemekFisi.Enabled = true;
             }
+            adisyonYazdirilabilirMi();
+
         }
 
         private void buttonIndirim_Click(object sender, EventArgs e)
@@ -1676,18 +1698,19 @@ namespace ROPv1
                 }
                 cmd.Connection.Close();
                 cmd.Connection.Dispose();
+
+                decimal yazdirilacakIndirim = Convert.ToDecimal(labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11));
+
+                asyncYaziciyaGonder(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, yaziciBilgileri[1], yaziciBilgileri[2] + " " + yaziciBilgileri[4], yaziciBilgileri[3], raporAdisyon);
             }
             else
             {
+                decimal yazdirilacakIndirim = Convert.ToDecimal(labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11));
+
                 acilisZamani = Convert.ToDateTime(acilisZamaniString);
+
+                menuFormu.masaFormu.hesapFormundanAdisyonYazdir(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, yaziciBilgileri[1], yaziciBilgileri[2] + " " + yaziciBilgileri[4], yaziciBilgileri[3]);
             }
-
-            //Adisyon adisyonFormu = new Adisyon(masaAdi, departmanAdi, garson, acilisZamani, Convert.ToDecimal(labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11)), yaziciBilgileri);
-            //adisyonFormu.Show();
-
-            decimal yazdirilacakIndirim = Convert.ToDecimal(labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11));
-
-            asyncYaziciyaGonder(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, yaziciBilgileri[1], yaziciBilgileri[2] + " " + yaziciBilgileri[4], yaziciBilgileri[3], raporAdisyon);
         }
 
         public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor)
@@ -1775,6 +1798,14 @@ namespace ROPv1
         private void textNumberOfItem_Click(object sender, EventArgs e)
         {
             ((TextBox)sender).SelectAll();
+        }
+
+        private void HesapFormu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Convert.ToDecimal(labelKalanHesap.Text) == 0)
+            {
+                menuFormu.menuFormunuKapat();
+            }
         }
     }
 }

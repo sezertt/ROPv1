@@ -51,6 +51,7 @@
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.listAdisyonDetay = new System.Windows.Forms.ListView();
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -60,7 +61,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.labelSayfa = new System.Windows.Forms.Label();
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.labelToplamHesap = new System.Windows.Forms.Label();
+            this.labelKalanText = new System.Windows.Forms.Label();
+            this.buttonYazdir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelGun
@@ -324,10 +327,15 @@
             this.listAdisyonDetay.Margin = new System.Windows.Forms.Padding(0);
             this.listAdisyonDetay.MultiSelect = false;
             this.listAdisyonDetay.Name = "listAdisyonDetay";
-            this.listAdisyonDetay.Size = new System.Drawing.Size(420, 690);
+            this.listAdisyonDetay.Size = new System.Drawing.Size(420, 607);
             this.listAdisyonDetay.TabIndex = 43;
             this.listAdisyonDetay.UseCompatibleStateImageBehavior = false;
             this.listAdisyonDetay.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Garson";
+            this.columnHeader6.Width = 109;
             // 
             // columnHeader5
             // 
@@ -435,10 +443,49 @@
             this.keyboardcontrol1.Visible = false;
             this.keyboardcontrol1.UserKeyPressed += new KeyboardClassLibrary.KeyboardDelegate(this.keyboardcontrol1_UserKeyPressed);
             // 
-            // columnHeader6
+            // labelToplamHesap
             // 
-            this.columnHeader6.Text = "Garson";
-            this.columnHeader6.Width = 109;
+            this.labelToplamHesap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelToplamHesap.BackColor = System.Drawing.Color.Transparent;
+            this.labelToplamHesap.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelToplamHesap.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelToplamHesap.Location = new System.Drawing.Point(1202, 760);
+            this.labelToplamHesap.Margin = new System.Windows.Forms.Padding(0);
+            this.labelToplamHesap.Name = "labelToplamHesap";
+            this.labelToplamHesap.Size = new System.Drawing.Size(152, 33);
+            this.labelToplamHesap.TabIndex = 102;
+            this.labelToplamHesap.Text = "0,00";
+            this.labelToplamHesap.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelKalanText
+            // 
+            this.labelKalanText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelKalanText.AutoSize = true;
+            this.labelKalanText.BackColor = System.Drawing.Color.Transparent;
+            this.labelKalanText.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelKalanText.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelKalanText.Location = new System.Drawing.Point(1095, 760);
+            this.labelKalanText.Name = "labelKalanText";
+            this.labelKalanText.Size = new System.Drawing.Size(104, 33);
+            this.labelKalanText.TabIndex = 103;
+            this.labelKalanText.Text = "Toplam:";
+            this.labelKalanText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // buttonYazdir
+            // 
+            this.buttonYazdir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonYazdir.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonYazdir.Enabled = false;
+            this.buttonYazdir.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold);
+            this.buttonYazdir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonYazdir.Location = new System.Drawing.Point(934, 750);
+            this.buttonYazdir.Name = "buttonYazdir";
+            this.buttonYazdir.Size = new System.Drawing.Size(120, 55);
+            this.buttonYazdir.TabIndex = 104;
+            this.buttonYazdir.TabStop = false;
+            this.buttonYazdir.Text = "Yazdır";
+            this.buttonYazdir.UseVisualStyleBackColor = false;
+            this.buttonYazdir.Click += new System.EventHandler(this.buttonYazdir_Click);
             // 
             // AdisyonGoruntuleme
             // 
@@ -447,6 +494,9 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 819);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonYazdir);
+            this.Controls.Add(this.labelKalanText);
+            this.Controls.Add(this.labelToplamHesap);
             this.Controls.Add(this.keyboardcontrol1);
             this.Controls.Add(this.buttonSayfaAzalt);
             this.Controls.Add(this.label2);
@@ -515,5 +565,8 @@
         private System.Windows.Forms.Label labelSayfa;
         private KeyboardClassLibrary.Keyboardcontrol keyboardcontrol1;
         private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.Label labelToplamHesap;
+        private System.Windows.Forms.Label labelKalanText;
+        private System.Windows.Forms.Button buttonYazdir;
     }
 }
