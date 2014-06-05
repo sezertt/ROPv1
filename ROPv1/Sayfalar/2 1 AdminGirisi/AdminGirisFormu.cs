@@ -19,6 +19,8 @@ namespace ROPv1
         int kullaniciAdi = 0;
         UItemp[] infoKullanici;
 
+        Raporlar gunRaporView, urunRaporView;
+
         public AdminGirisFormu()
         {
             InitializeComponent();
@@ -61,6 +63,11 @@ namespace ROPv1
                     ayarCheckBox.ImageAlign = ContentAlignment.TopCenter;
                     ayarCheckBox.ForeColor = SystemColors.ActiveCaption;
                     break;
+                case 4:
+                    anketCheckBox.Image = global::ROPv1.Properties.Resources.anket;
+                    anketCheckBox.ImageAlign = ContentAlignment.TopCenter;
+                    anketCheckBox.ForeColor = SystemColors.ActiveCaption;
+                    break;
                 default:
                     break;
                 #endregion
@@ -86,6 +93,21 @@ namespace ROPv1
                     break;
                 case 3:
                     ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingsback;
+                    buttonBilgiAktar.Visible = true;
+
+                    leftPanelView.Nodes.Add("Kullanıcılar");
+                    leftPanelView.Nodes.Add("Departmanlar");
+                    leftPanelView.Nodes.Add("Masa Yerleşim Planı");
+                    leftPanelView.Nodes.Add("Menüler");
+                    leftPanelView.Nodes.Add("Ürünler");
+                    leftPanelView.Nodes.Add("Stok Ayarları");
+                    leftPanelView.Nodes.Add("Reçeteler");
+                    leftPanelView.Nodes.Add("İşletme Bilgileri");
+
+                    leftPanelView.SelectedNode = leftPanelView.Nodes[0];
+                    break;
+                case 4:
+                    anketCheckBox.Image = global::ROPv1.Properties.Resources.anketBack;
                     buttonBilgiAktar.Visible = false;
                     break;
                 default:
@@ -114,7 +136,7 @@ namespace ROPv1
         private void changeSettingsScreen(object sender, TreeViewEventArgs e)
         {
             splitPanel.Panel2.Controls.Clear();
-            if(leftPanelView.Nodes[0].Text == "Kullanıcılar")
+            if (leftPanelView.Nodes[0].Text == "Kullanıcılar")
             {
                 switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
                 {
@@ -173,34 +195,42 @@ namespace ROPv1
             }
             else if (leftPanelView.Nodes[0].Text == "Gün Sonu Raporu")
             {
-                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AcikMi FROM Adisyon WHERE AcikMi=1");
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AcikMi FROM Adisyon WHERE AcikMi=1 AND IptalMi=0");
                 SqlDataReader dr = cmd.ExecuteReader();
 
-                if(dr.Read())
+                if (dr.Read())
                 {
                     KontrolFormu dialog = new KontrolFormu("Sistemde açık masa bulunurken raporlama düzgün görüntülenemeyebilir, devam etmek istiyor musunuz?", true, this);
                     dialog.Show();
                 }
                 cmd.Connection.Close();
                 cmd.Connection.Dispose();
-            }            
+            }
         }
 
         public void raporla()
         {
-            Raporlar raporView = new Raporlar();
-            splitPanel.Panel2.Controls.Add(raporView);
-            raporView.Dock = DockStyle.Fill;
-
             switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
             {
                 #region
                 case 0: //Gün sonu raporu seçildi
-
+                    if(gunRaporView == null)
+                    {
+                        gunRaporView = new Raporlar(true);
+                        splitPanel.Panel2.Controls.Add(gunRaporView);
+                        gunRaporView.Dock = DockStyle.Fill;
+                    }
+                    gunRaporView.BringToFront();
                     break;
 
                 case 1: //Ürün satış raporu seçildi
-
+                    if (urunRaporView == null)
+                    {
+                        urunRaporView = new Raporlar(false);
+                        splitPanel.Panel2.Controls.Add(urunRaporView);
+                        urunRaporView.Dock = DockStyle.Fill;
+                    }
+                    urunRaporView.BringToFront();
                     break;
 
                 default:
@@ -252,33 +282,15 @@ namespace ROPv1
                     }
                 }
             }
-            
-            if (reportCheckBox.Enabled == true)
-                changeButonChecked(reportCheckBox);
-            else if (stokCheckBox.Enabled == true)
-                changeButonChecked(stokCheckBox);
-            else if (ayarCheckBox.Enabled == true)
-                changeButonChecked(ayarCheckBox);
         }
 
         private void AdminGirisFormu_KeyDown(object sender, KeyEventArgs e)
         {
-            if (ayarCheckBox.ForeColor == Color.White)
+            if (ayarCheckBox.Visible == false)
             {
-                if (e.Control && e.Shift && e.KeyCode == Keys.D3 && leftPanelView.Nodes.Count < 1)
+                if (e.Control && e.Shift && e.KeyCode == Keys.D3)
                 {
-                    buttonBilgiAktar.Visible = true;
-
-                    leftPanelView.Nodes.Add("Kullanıcılar");
-                    leftPanelView.Nodes.Add("Departmanlar");
-                    leftPanelView.Nodes.Add("Masa Yerleşim Planı");
-                    leftPanelView.Nodes.Add("Menüler");
-                    leftPanelView.Nodes.Add("Ürünler");
-                    leftPanelView.Nodes.Add("Stok Ayarları");
-                    leftPanelView.Nodes.Add("Reçeteler");
-                    leftPanelView.Nodes.Add("İşletme Bilgileri");
-
-                    leftPanelView.SelectedNode = leftPanelView.Nodes[0];
+                    ayarCheckBox.Visible = true;                    
                 }
             }
         }
@@ -344,11 +356,6 @@ namespace ROPv1
         {
             AdisyonGoruntuleme adisyonForm = new AdisyonGoruntuleme();
             adisyonForm.Show();
-        }
-
-        private void AdminGirisFormu_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            
         }
     }
 }

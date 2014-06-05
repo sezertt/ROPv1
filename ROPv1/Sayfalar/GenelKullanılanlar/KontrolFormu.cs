@@ -58,7 +58,7 @@ namespace ROPv1
         {
             InitializeComponent();
 
-            if (masaFormu != null)
+            if (adminGirisFormu != null)
                 this.adminGirisFormu = adminGirisFormu;
 
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;

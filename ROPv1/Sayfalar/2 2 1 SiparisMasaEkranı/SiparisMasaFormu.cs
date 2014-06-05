@@ -323,84 +323,46 @@ namespace ROPv1
             labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
         }
 
-        private void buttonAdisyon_Click(object sender, EventArgs e)
-        {
-            if (pinForm != null)
-            {
-                if (pinForm.Visible)
-                {
-                    pinForm.BringToFront();
-                    return;
-                }
-            }
-
-            if (dialog2 != null)
-            {
-                if (dialog2.Visible)
-                {
-                    dialog2.BringToFront();
-                    return;
-                }
-            }
-
-            if (acikMasaVarsaYapma)
-            {
-                acikMasaVarsaUyariVerFormuOneGetir();
-                return;
-            }
-
-            pinForm = new PinKoduFormu("Adisyon Görüntüleme", this);
-            pinForm.Show();
-        } // düzenlenecek
-
-        public void gelenPinDogruMu(bool pinDogruMu, string ayarYapanKisi, string yapilacakIslemNe)
+        public void gelenPinDogruMu(bool pinDogruMu, string ayarYapanKisi)
         {
             this.ayarYapanKisi = ayarYapanKisi;
 
             if (pinDogruMu)
             {
-                if (yapilacakIslemNe == "Masa Görüntüleme")
+                if (Properties.Settings.Default.Server == 2) // server
                 {
-                    if (Properties.Settings.Default.Server == 2) // server
+                    SqlCommand cmd = SQLBaglantisi.getCommand("SELECT OdemeYapiliyor FROM Adisyon WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Adisyon.MasaAdi='" + hangiMasa + "' AND Adisyon.DepartmanAdi='" + viewdakiDepartmaninAdi + "'");
+
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    dr.Read();
+
+                    bool masaSerbestMi = false;
+
+                    try
                     {
-                        SqlCommand cmd = SQLBaglantisi.getCommand("SELECT OdemeYapiliyor FROM Adisyon WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Adisyon.MasaAdi='" + hangiMasa + "' AND Adisyon.DepartmanAdi='" + viewdakiDepartmaninAdi + "'");
+                        masaSerbestMi = dr.GetBoolean(0);
+                    }
+                    catch
+                    {
+                        masaSerbestMi = false;
+                    }
 
-                        SqlDataReader dr = cmd.ExecuteReader();
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
 
-                        dr.Read();
-
-                        bool masaSerbestMi = false;
-
-                        try
-                        {
-                            masaSerbestMi = dr.GetBoolean(0);
-                        }
-                        catch
-                        {
-                            masaSerbestMi = false;
-                        }
-
-                        cmd.Connection.Close();
-                        cmd.Connection.Dispose();
-
-                        if (masaSerbestMi)
-                        {
-                            komut_masaGirilebilirMi("false");
-                        }
-                        else
-                        {
-                            komut_masaGirilebilirMi("True");
-                        }
+                    if (masaSerbestMi)
+                    {
+                        komut_masaGirilebilirMi("false");
                     }
                     else
                     {
-                        client.MesajYolla("komut=masaGirilebilirMi" + "&masa=" + hangiMasa + "&departmanAdi=" + viewdakiDepartmaninAdi);
+                        komut_masaGirilebilirMi("True");
                     }
                 }
-                else if (yapilacakIslemNe == "Adisyon Görüntüleme")  // burada adisyon sayfası oluşturulacak ve ona geçilecek
+                else
                 {
-                    AdisyonGoruntuleme adisyonGoruntulemeFormu = new AdisyonGoruntuleme();
-                    adisyonGoruntulemeFormu.Show();
+                    client.MesajYolla("komut=masaGirilebilirMi" + "&masa=" + hangiMasa + "&departmanAdi=" + viewdakiDepartmaninAdi);
                 }
             }
         }

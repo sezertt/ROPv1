@@ -91,11 +91,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrystalReportIndirim.cs">
+    <Compile Include="CrystalReportUrunSatisRaporu.cs">
+      <DependentUpon>CrystalReportUrunSatisRaporu.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CrystalReportIndirim.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="CrystalReportGunSonuRaporu.cs">
       <DependentUpon>CrystalReportGunSonuRaporu.rpt</DependentUpon>
@@ -279,9 +279,9 @@
     <Compile Include="Sayfalar\2 2 1 SiparisMasaEkranı\SiparisMasaFormu.Designer.cs">
       <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CrystalReportIndirim.rpt">
+    <EmbeddedResource Include="CrystalReportUrunSatisRaporu.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>CrystalReportIndirim.cs</LastGenOutput>
+      <LastGenOutput>CrystalReportUrunSatisRaporu.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="CrystalReportGunSonuRaporu.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -489,6 +489,8 @@
     <None Include="Resources\tl.png" />
     <None Include="Resources\invoice-icon.png" />
     <None Include="Resources\dikkat.png" />
+    <None Include="Resources\anket.png" />
+    <None Include="Resources\anketBack.png" />
     <Content Include="ROP.ico" />
   </ItemGroup>
   <ItemGroup>

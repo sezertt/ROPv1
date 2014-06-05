@@ -38,7 +38,6 @@
             this.buttonName = new System.Windows.Forms.Button();
             this.buttonUpdate = new System.Windows.Forms.Button();
             this.buttonConnection = new System.Windows.Forms.Button();
-            this.buttonAdisyon = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
@@ -182,23 +181,6 @@
             this.buttonConnection.UseVisualStyleBackColor = false;
             this.buttonConnection.Click += new System.EventHandler(this.buttonConnection_Click);
             // 
-            // buttonAdisyon
-            // 
-            this.buttonAdisyon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAdisyon.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonAdisyon.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonAdisyon.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonAdisyon.Image = global::ROPv1.Properties.Resources.adisyon;
-            this.buttonAdisyon.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonAdisyon.Location = new System.Drawing.Point(855, 12);
-            this.buttonAdisyon.Name = "buttonAdisyon";
-            this.buttonAdisyon.Size = new System.Drawing.Size(220, 110);
-            this.buttonAdisyon.TabIndex = 25;
-            this.buttonAdisyon.Text = "Adisyonlar";
-            this.buttonAdisyon.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.buttonAdisyon.UseVisualStyleBackColor = false;
-            this.buttonAdisyon.Click += new System.EventHandler(this.buttonAdisyon_Click);
-            // 
             // exitButton
             // 
             this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -239,7 +221,6 @@
             this.Controls.Add(this.buttonName);
             this.Controls.Add(this.buttonUpdate);
             this.Controls.Add(this.buttonConnection);
-            this.Controls.Add(this.buttonAdisyon);
             this.Controls.Add(this.tablePanel);
             this.Controls.Add(this.labelGun);
             this.Controls.Add(this.labelTarih);
@@ -270,7 +251,6 @@
         private System.Windows.Forms.Label labelTarih;
         private System.Windows.Forms.Label labelSaat;
         private System.Windows.Forms.Timer timerSaat;
-        private System.Windows.Forms.Button buttonAdisyon;
         private System.Windows.Forms.Button buttonConnection;
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Button buttonName;

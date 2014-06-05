@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.comboAdisyonAyar = new System.Windows.Forms.ComboBox();
             this.buttonAzalt = new System.Windows.Forms.Button();
@@ -43,19 +42,6 @@
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // keyboardcontrol1
-            // 
-            this.keyboardcontrol1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.keyboardcontrol1.ForeColor = System.Drawing.SystemColors.Window;
-            this.keyboardcontrol1.KeyboardType = KeyboardClassLibrary.BoW.Standard;
-            this.keyboardcontrol1.Location = new System.Drawing.Point(0, 344);
-            this.keyboardcontrol1.Name = "keyboardcontrol1";
-            this.keyboardcontrol1.Size = new System.Drawing.Size(993, 282);
-            this.keyboardcontrol1.TabIndex = 37;
-            this.keyboardcontrol1.Visible = false;
-            this.keyboardcontrol1.UserKeyPressed += new KeyboardClassLibrary.KeyboardDelegate(this.keyboardcontrol1_UserKeyPressed);
             // 
             // crystalReportViewer1
             // 
@@ -70,10 +56,12 @@
             this.crystalReportViewer1.Name = "crystalReportViewer1";
             this.crystalReportViewer1.ShowCloseButton = false;
             this.crystalReportViewer1.ShowCopyButton = false;
+            this.crystalReportViewer1.ShowExportButton = false;
             this.crystalReportViewer1.ShowGotoPageButton = false;
             this.crystalReportViewer1.ShowGroupTreeButton = false;
             this.crystalReportViewer1.ShowLogo = false;
             this.crystalReportViewer1.ShowParameterPanelButton = false;
+            this.crystalReportViewer1.ShowRefreshButton = false;
             this.crystalReportViewer1.ShowTextSearchButton = false;
             this.crystalReportViewer1.Size = new System.Drawing.Size(997, 578);
             this.crystalReportViewer1.TabIndex = 38;
@@ -86,15 +74,21 @@
             this.comboAdisyonAyar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.comboAdisyonAyar.FormattingEnabled = true;
             this.comboAdisyonAyar.Items.AddRange(new object[] {
-            "Açık Adisyonlar",
-            "Tüm Adisyonlar",
-            "Adisyon ID",
-            "Masa Adı",
-            "Departman Adı"});
+            "Bugün",
+            "Dün",
+            "Bu Hafta",
+            "Önceki Hafta",
+            "Bu Ay",
+            "Önceki Ay",
+            "Seçilen Tarih"});
             this.comboAdisyonAyar.Location = new System.Drawing.Point(8, 8);
             this.comboAdisyonAyar.Name = "comboAdisyonAyar";
             this.comboAdisyonAyar.Size = new System.Drawing.Size(242, 34);
             this.comboAdisyonAyar.TabIndex = 46;
+            this.comboAdisyonAyar.SelectedIndexChanged += new System.EventHandler(this.comboAdisyonAyar_SelectedIndexChanged);
+            this.comboAdisyonAyar.Click += new System.EventHandler(this.comboAdisyonAyar_Click);
+            this.comboAdisyonAyar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboAdisyonAyar_KeyPress);
+            this.comboAdisyonAyar.Leave += new System.EventHandler(this.comboAdisyonAyar_Leave);
             // 
             // buttonAzalt
             // 
@@ -110,6 +104,7 @@
             this.buttonAzalt.TabStop = false;
             this.buttonAzalt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonAzalt.UseVisualStyleBackColor = false;
+            this.buttonAzalt.Click += new System.EventHandler(this.buttonAzalt_Click);
             // 
             // buttonArttir
             // 
@@ -125,6 +120,7 @@
             this.buttonArttir.TabStop = false;
             this.buttonArttir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonArttir.UseVisualStyleBackColor = false;
+            this.buttonArttir.Click += new System.EventHandler(this.buttonArttir_Click);
             // 
             // dateBitis
             // 
@@ -139,6 +135,8 @@
             this.dateBitis.Name = "dateBitis";
             this.dateBitis.Size = new System.Drawing.Size(278, 33);
             this.dateBitis.TabIndex = 43;
+            this.dateBitis.ValueChanged += new System.EventHandler(this.dateBitis_ValueChanged);
+            this.dateBitis.Enter += new System.EventHandler(this.dateBitis_Enter);
             // 
             // dateBaslangic
             // 
@@ -153,6 +151,8 @@
             this.dateBaslangic.Name = "dateBaslangic";
             this.dateBaslangic.Size = new System.Drawing.Size(278, 33);
             this.dateBaslangic.TabIndex = 42;
+            this.dateBaslangic.ValueChanged += new System.EventHandler(this.dateBitis_ValueChanged);
+            this.dateBaslangic.Enter += new System.EventHandler(this.dateBaslangic_Enter);
             // 
             // Raporlar
             // 
@@ -163,7 +163,6 @@
             this.Controls.Add(this.buttonArttir);
             this.Controls.Add(this.dateBitis);
             this.Controls.Add(this.dateBaslangic);
-            this.Controls.Add(this.keyboardcontrol1);
             this.Controls.Add(this.crystalReportViewer1);
             this.Name = "Raporlar";
             this.Size = new System.Drawing.Size(993, 626);
@@ -174,7 +173,6 @@
 
         #endregion
 
-        private KeyboardClassLibrary.Keyboardcontrol keyboardcontrol1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
         private System.Windows.Forms.ComboBox comboAdisyonAyar;

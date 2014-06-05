@@ -16,12 +16,25 @@ namespace ROPv1
         string[] yaziciAdi;
         bool yazdir = true;
         List<string[]> digerYazicilar, adisyonYazicilari;
+        AdisyonGoruntuleme adisyonFormu;
 
         public YaziciFormu(HesapFormu hesapFormu, List<string[]> digerYazicilar, List<string[]> adisyonYazicilari = null)
         {
             InitializeComponent();
 
             this.hesapFormu = hesapFormu;
+            this.digerYazicilar = digerYazicilar;
+            this.adisyonYazicilari = adisyonYazicilari;
+
+            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+        }
+
+        public YaziciFormu(AdisyonGoruntuleme adisyonFormu, List<string[]> digerYazicilar, List<string[]> adisyonYazicilari = null)
+        {
+            InitializeComponent();
+
+            this.adisyonFormu = adisyonFormu;
             this.digerYazicilar = digerYazicilar;
             this.adisyonYazicilari = adisyonYazicilari;
 
@@ -77,13 +90,22 @@ namespace ROPv1
         private void YaziciFormu_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (yazdir)
-                hesapFormu.yazdir(yaziciAdi);
+            {
+                if (hesapFormu != null)
+                    hesapFormu.yazdir(yaziciAdi);
+                else if (adisyonFormu != null)
+                    adisyonFormu.yazdir(yaziciAdi);
+            }
         }
 
         private void buttonNO_Click(object sender, EventArgs e)
         {
             yazdir = false;
-            hesapFormu.yaziciForm = null;
+            if (hesapFormu != null)
+                hesapFormu.yaziciForm = null;
+            else if (adisyonFormu != null)
+                adisyonFormu.yazdir(yaziciAdi);
+            
             this.Close();
         }
 

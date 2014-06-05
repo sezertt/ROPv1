@@ -20,6 +20,7 @@ namespace ROPv1
 {
     public partial class AdisyonGoruntuleme : Form
     {
+        public YaziciFormu yaziciForm = null;
         bool hangiTakvimFocuslu = true, ilkAramaEventiReturnEt = true;
         int sonQuery = 0, toplamVeriSayisi = 0;
         string baslangic, bitis;
@@ -159,14 +160,13 @@ namespace ROPv1
 
             double adisyonID, adisyonSayisi = 0;
             string adisyonNotu, departmanAdi, masaAdi, tarih, acilisKapanisSaati;
-            DateTime acilisZamani, ased;
+            DateTime acilisZamani;
             DateTime? kapanisZamani = null;
             bool iptalMi;
             decimal adisyonFiyati = 0, toplamFiyat = 0;
 
             baslangic = dateBaslangic.Value.ToString("yyyy-MM-dd");
-            ased = dateBitis.Value.AddDays(1);
-            bitis = ased.ToString("yyyy-MM-dd");
+            bitis = dateBitis.Value.ToString("yyyy-MM-dd");
 
             switch (comboAdisyonAyar.Text)
             {
@@ -178,7 +178,7 @@ namespace ROPv1
                     adisyonSayisi = dr.GetInt32(0);
                     toplamVeriSayisi = Convert.ToInt32(adisyonSayisi);
 
-                    cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani BETWEEN '" + baslangic + "' AND '" + bitis + "' AND AcikMi=1 ORDER BY AdisyonID DESC");
+                    cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND AcikMi=1 ORDER BY AdisyonID DESC");
                     break;
 
                 case "Tüm Adisyonlar":
@@ -189,7 +189,7 @@ namespace ROPv1
                     adisyonSayisi = dr.GetInt32(0);
                     toplamVeriSayisi = Convert.ToInt32(adisyonSayisi);
 
-                    cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani BETWEEN '" + baslangic + "' AND '" + bitis + "' ORDER BY AdisyonID DESC");
+                    cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' ORDER BY AdisyonID DESC");
                     break;
                 case "Adisyon ID":
                     sonQuery = 3;
@@ -209,7 +209,7 @@ namespace ROPv1
                     adisyonSayisi = dr.GetInt32(0);
                     toplamVeriSayisi = Convert.ToInt32(adisyonSayisi);
 
-                    cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani BETWEEN '" + baslangic + "' AND '" + bitis + "' AND AdisyonID LIKE '%" + girilenAdisyonID + "%' ORDER BY AdisyonID DESC");
+                    cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND AdisyonID LIKE '%" + girilenAdisyonID + "%' ORDER BY AdisyonID DESC");
                     break;
                 case "Masa Adı":
                     sonQuery = 4;
@@ -219,7 +219,7 @@ namespace ROPv1
                     adisyonSayisi = dr.GetInt32(0);
                     toplamVeriSayisi = Convert.ToInt32(adisyonSayisi);
 
-                    cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani BETWEEN '" + baslangic + "' AND '" + bitis + "' AND MasaAdi LIKE '%" + textboxAdisyonID.Text + "%' ORDER BY AdisyonID DESC");
+                    cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND MasaAdi LIKE '%" + textboxAdisyonID.Text + "%' ORDER BY AdisyonID DESC");
                     break;
                 case "Departman Adı":
                     sonQuery = 5;
@@ -229,7 +229,7 @@ namespace ROPv1
                     adisyonSayisi = dr.GetInt32(0);
                     toplamVeriSayisi = Convert.ToInt32(adisyonSayisi);
 
-                    cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani BETWEEN '" + baslangic + "' AND '" + bitis + "' AND DepartmanAdi LIKE '%" + textboxAdisyonID.Text + "%' ORDER BY AdisyonID DESC");
+                    cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND DepartmanAdi LIKE '%" + textboxAdisyonID.Text + "%' ORDER BY AdisyonID DESC");
                     break;
                 default:
                     sonQuery = 0;
@@ -370,13 +370,13 @@ namespace ROPv1
                 case 1://açık adisyonlar
                     listAdisyon.Items.Clear();
 
-                    cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) * FROM (SELECT TOP (@_ilkAlinacakVeri) AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani BETWEEN '" + baslangic + "' AND '" + bitis + "' AND AcikMi=1 ORDER BY AdisyonID DESC) AS isim ORDER BY AdisyonID ASC");
+                    cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) * FROM (SELECT TOP (@_ilkAlinacakVeri) AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHEREAcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND AcikMi=1 ORDER BY AdisyonID DESC) AS isim ORDER BY AdisyonID ASC");
                     break;
 
                 case 2://tüm adisyonlar
                     listAdisyon.Items.Clear();
 
-                    cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) * FROM (SELECT TOP (@_ilkAlinacakVeri) AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani BETWEEN '" + baslangic + "' AND '" + bitis + "' ORDER BY AdisyonID DESC) AS isim ORDER BY AdisyonID ASC");
+                    cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) * FROM (SELECT TOP (@_ilkAlinacakVeri) AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' ORDER BY AdisyonID DESC) AS isim ORDER BY AdisyonID ASC");
                     break;
 
                 case 3://adisyonID
@@ -393,19 +393,19 @@ namespace ROPv1
                         dialog.Show();
                     }
 
-                    cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) * FROM (SELECT TOP (@_ilkAlinacakVeri) AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani BETWEEN '" + baslangic + "' AND '" + bitis + "' AND AdisyonID LIKE '%" + girilenAdisyonID + "%' ORDER BY AdisyonID DESC) AS isim ORDER BY AdisyonID ASC");
+                    cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) * FROM (SELECT TOP (@_ilkAlinacakVeri) AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND AdisyonID LIKE '%" + girilenAdisyonID + "%' ORDER BY AdisyonID DESC) AS isim ORDER BY AdisyonID ASC");
                     break;
 
                 case 4://masa adı
                     listAdisyon.Items.Clear();
 
-                    cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) * FROM (SELECT TOP (@_ilkAlinacakVeri) AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani BETWEEN '" + baslangic + "' AND '" + bitis + "' AND MasaAdi LIKE '%" + textboxAdisyonID.Text + "%' ORDER BY AdisyonID DESC) AS isim ORDER BY AdisyonID ASC");
+                    cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) * FROM (SELECT TOP (@_ilkAlinacakVeri) AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND MasaAdi LIKE '%" + textboxAdisyonID.Text + "%' ORDER BY AdisyonID DESC) AS isim ORDER BY AdisyonID ASC");
                     break;
 
                 case 5://departman adı
                     listAdisyon.Items.Clear();
 
-                    cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) * FROM (SELECT TOP (@_ilkAlinacakVeri) AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani BETWEEN '" + baslangic + "' AND '" + bitis + "' AND DepartmanAdi LIKE '%" + textboxAdisyonID.Text + "%' ORDER BY AdisyonID DESC) AS isim ORDER BY AdisyonID ASC");
+                    cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) * FROM (SELECT TOP (@_ilkAlinacakVeri) AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND DepartmanAdi LIKE '%" + textboxAdisyonID.Text + "%' ORDER BY AdisyonID DESC) AS isim ORDER BY AdisyonID ASC");
                     break;
 
                 default:
@@ -529,13 +529,101 @@ namespace ROPv1
 
         private void buttonYazdir_Click(object sender, EventArgs e)
         {
+            if (yaziciForm != null)
+            {
+                yaziciForm.BringToFront();
+                return;
+            }
+
+            // Burada yazıcıların içerisinde Adisyon ismi ile başlayan yazıcı var mı diye bak varsa o yazıcıya gönder yoksa 
+            // Show(); ile yazıcı seçim formu göster. seçildiğinde seçilen yazıcıya gönder
+
+            List<string[]> adisyonYazicilari = new List<string[]>();
+            List<string[]> digerYazicilar = new List<string[]>();
+
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT YaziciAdi,FirmaAdi,FirmaAdres,Yazici,Telefon FROM Yazici");
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                string[] yazici = new string[5];
+
+                yazici[0] = dr.GetString(0); // yazici adı
+                yazici[1] = dr.GetString(1); // firma adı
+                yazici[2] = dr.GetString(2); // firma adres
+                yazici[3] = dr.GetString(3); // yazıcı windows adı
+                yazici[4] = dr.GetString(4); // telefon
+
+                if (yazici[0].Substring(0, 7) == "Adisyon")
+                {
+                    adisyonYazicilari.Add(yazici);
+                }
+                else
+                {
+                    digerYazicilar.Add(yazici);
+                }
+            }
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+
+            if (adisyonYazicilari.Count == 1) // tek adisyon yazıcısı var direk gönder
+            {
+                yazdir(adisyonYazicilari[0]);
+            }
+            else if (adisyonYazicilari.Count > 1) // 1 den fazla adisyon yazıcısı var hangisinin istendiğini sor
+            {
+                yaziciForm = new YaziciFormu(this, digerYazicilar, adisyonYazicilari);
+                yaziciForm.Show();
+            }
+            else if (digerYazicilar.Count > 0)// adisyon yazıcısı yok, olan yazıcıları göster
+            {
+                yaziciForm = new YaziciFormu(this, digerYazicilar);
+                yaziciForm.Show();
+            }
+            else // hata mesajı, lütfen yazıcı yükleyiniz 
+            {
+                KontrolFormu dialog = new KontrolFormu("Yüklü yazıcı bulunamadı, lütfen yazıcı yükleyin", false);
+                dialog.Show();
+                return;
+            }
+        }
+
+        // yazıcı formundan dönen cevap
+        public void yazdir(string[] yaziciBilgileri)
+        {
+            //yazdırmadan önce sayfaya göre list viewı ayarlıyoruz
             listAdisyonDetay.Items.Add("");
             listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add("Toplam");
             listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add(":");
             listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add(labelToplamHesap.Text);
 
-            listViewPrinter printer = new listViewPrinter(listAdisyonDetay, new Point(15, 15), false, false, listAdisyon.SelectedItems[0].SubItems[1].Text + " " + listAdisyon.SelectedItems[0].SubItems[2].Text + " Adisyon Dökümü");
-            printer.print();
+            listAdisyonDetay.Font = new Font("Calibri", 10F, FontStyle.Bold);
+            for(int i=0; i< listAdisyonDetay.Items.Count;i++)
+            {
+                listAdisyonDetay.Items[i].Font = new Font("Calibri", 10F, FontStyle.Bold);
+            }
+            listAdisyonDetay.Columns[2].Text = "Ad.";
+            listAdisyonDetay.Columns[0].Width = 90;
+            listAdisyonDetay.Columns[1].Width = 110;
+            listAdisyonDetay.Columns[2].Width = 30;
+            listAdisyonDetay.Columns[3].Width = 55;
+
+            // yazdırıyoruz
+            listViewPrinter printer = new listViewPrinter(listAdisyonDetay, new Point(13, 10), false, false, listAdisyon.SelectedItems[0].SubItems[1].Text + " " + listAdisyon.SelectedItems[0].SubItems[2].Text + " Adisyon Dökümü(" + listAdisyon.SelectedItems[0].SubItems[0].Text + ")\n" + listAdisyon.SelectedItems[0].SubItems[3].Text + " / " + listAdisyon.SelectedItems[0].SubItems[4].Text);
+            printer.print(yaziciBilgileri[3]);
+
+            //listviewı eski haline getiriyoruz
+            listAdisyonDetay.Font = new Font("Calibri", 14F, FontStyle.Bold);
+            for (int i = 0; i < listAdisyonDetay.Items.Count; i++)
+            {
+                listAdisyonDetay.Items[i].Font = new Font("Calibri", 14F, FontStyle.Bold);
+            }
+            listAdisyonDetay.Columns[2].Text = "Adet";
+            listAdisyonDetay.Columns[0].Width = 109;
+            listAdisyonDetay.Columns[1].Width = 163;
+            listAdisyonDetay.Columns[2].Width = 53;
+            listAdisyonDetay.Columns[3].Width = 91;
 
             listAdisyonDetay.Items.RemoveAt(listAdisyonDetay.Items.Count - 1);
         }

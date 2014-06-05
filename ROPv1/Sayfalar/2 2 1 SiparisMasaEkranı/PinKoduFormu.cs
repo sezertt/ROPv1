@@ -116,7 +116,7 @@ namespace ROPv1
 
         private void PinKoduFormu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            gelenForm.gelenPinDogruMu(dogru, ayarYapanKisi, yapilacakIslem);
+            gelenForm.gelenPinDogruMu(dogru, ayarYapanKisi);
         }
     }
 }

@@ -33,16 +33,18 @@ namespace ROPv1
 	        this.border = border;
 	        this.hasGroups = hasGroups;
 	        this.title = title;
-	        titleHeight = !string.IsNullOrEmpty(title) ? lv.FindForm().CreateGraphics().MeasureString(title, new Font(lv.Font.Name, 14)).ToSize().Height : 0;
+	        titleHeight = !string.IsNullOrEmpty(title) ? lv.FindForm().CreateGraphics().MeasureString(title, new Font(lv.Font.Name, 12)).ToSize().Height : 0;
             pd.BeginPrint += pd_BeginPrint;
             pd.PrintPage += pd_PrintPage;
         }
 
-        public void print()
+        public void print(string printerName)
         {
+            
+            pd.PrinterSettings.PrinterName = printerName;
             pd.Print();
+             
             /*
-            //pd.Print()
             PrintPreviewDialog ppd = new PrintPreviewDialog();
             ppd.Document = pd;
             ppd.WindowState = FormWindowState.Maximized;
@@ -304,7 +306,7 @@ namespace ROPv1
 
             Rectangle r2 = new Rectangle(location, new Size(lv.Columns.Cast<ColumnHeader>().Skip(pages[0].startCol).Take(pages[0].columns).Sum((ColumnHeader ch) => ch.Width), titleHeight));
 
-            e.Graphics.DrawString(title, new Font(lv.Font.Name, 15), Brushes.Black, r2, sf);
+            e.Graphics.DrawString(title, new Font(lv.Font.Name, 12), Brushes.Black, r2, sf);
 
             sf.Alignment = StringAlignment.Near;
 
@@ -381,23 +383,6 @@ namespace ROPv1
             }
 
         }
-        //static bool InitStaticVariableHelper(Microsoft.VisualBasic.CompilerServices.StaticLocalInitFlag flag)
-        //{
-        //    if (flag.State == 0)
-        //    {
-        //        flag.State = 2;
-        //        return true;
-        //    }
-        //    else if (flag.State == 2)
-        //    {
-        //        throw new Microsoft.VisualBasic.CompilerServices.IncompleteInitialization();
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
-
     }
 
 }
