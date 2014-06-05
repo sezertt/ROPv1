@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ROPv1 {
+namespace ROPv1.CrystalReports {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -16,14 +16,14 @@ namespace ROPv1 {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class CrystalReportMutfak : ReportClass {
+    public class CrystalReportAdisyon : ReportClass {
         
-        public CrystalReportMutfak() {
+        public CrystalReportAdisyon() {
         }
         
         public override string ResourceName {
             get {
-                return "CrystalReportMutfak.rpt";
+                return "CrystalReportAdisyon.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace ROPv1 {
         
         public override string FullResourceName {
             get {
-                return "ROPv1.CrystalReportMutfak.rpt";
+                return "ROPv1.CrystalReports.CrystalReportAdisyon.rpt";
             }
             set {
                 // Do nothing
@@ -130,7 +130,7 @@ namespace ROPv1 {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Departman {
+        public CrystalDecisions.Shared.IParameterField Parameter_Garson {
             get {
                 return this.DataDefinition.ParameterFields[1];
             }
@@ -138,17 +138,49 @@ namespace ROPv1 {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_Masa {
+        public CrystalDecisions.Shared.IParameterField Parameter_Departman {
             get {
                 return this.DataDefinition.ParameterFields[2];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_Masa {
+            get {
+                return this.DataDefinition.ParameterFields[3];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_FirmaAdresTelefon {
+            get {
+                return this.DataDefinition.ParameterFields[4];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_AcilisZamani {
+            get {
+                return this.DataDefinition.ParameterFields[5];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_Indirim {
+            get {
+                return this.DataDefinition.ParameterFields[6];
             }
         }
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedCrystalReportMutfak : Component, ICachedReport {
+    public class CachedCrystalReportAdisyon : Component, ICachedReport {
         
-        public CachedCrystalReportMutfak() {
+        public CachedCrystalReportAdisyon() {
         }
         
         [Browsable(false)]
@@ -185,7 +217,7 @@ namespace ROPv1 {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            CrystalReportMutfak rpt = new CrystalReportMutfak();
+            CrystalReportAdisyon rpt = new CrystalReportAdisyon();
             rpt.Site = this.Site;
             return rpt;
         }

@@ -109,6 +109,12 @@ namespace ROPv1
                 case 4:
                     anketCheckBox.Image = global::ROPv1.Properties.Resources.anketBack;
                     buttonBilgiAktar.Visible = false;
+
+                    leftPanelView.Nodes.Add("Anket Sonuçları");
+                    leftPanelView.Nodes.Add("Kullanıcı Bilgileri");
+                    leftPanelView.Nodes.Add("Anket Ayarları");
+
+                    leftPanelView.SelectedNode = leftPanelView.Nodes[0];
                     break;
                 default:
                     break;
@@ -205,6 +211,30 @@ namespace ROPv1
                 }
                 cmd.Connection.Close();
                 cmd.Connection.Dispose();
+            }
+            else if (leftPanelView.Nodes[0].Text == "Anket Sonuçları")
+            {
+                switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
+                {
+                    #region
+                    case 0: //Anket Sonuçları Seçildi
+
+                        break;
+
+                    case 1: //Kullanıcı Bilgileri Seçildi
+
+                        break;
+
+                    case 2: //Anket Ayarları Seçildi
+                        AnketAyarlari anketAyarView = new AnketAyarlari();
+                        splitPanel.Panel2.Controls.Add(anketAyarView);
+                        anketAyarView.Dock = DockStyle.Fill;
+                        break;
+
+                    default:
+                        break;
+                    #endregion
+                }
             }
         }
 

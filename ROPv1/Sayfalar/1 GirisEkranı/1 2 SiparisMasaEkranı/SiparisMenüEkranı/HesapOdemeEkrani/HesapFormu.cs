@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Threading;
+using ROPv1.CrystalReports;
 
 // ÖDEME TİPLERİ 
 // 101 NAKİT
