@@ -128,6 +128,7 @@ namespace ROPv1
         {
             ((ComboBox)sender).SelectionLength = 0;
         }
+
         private void buttonSayfaArttirClick(object sender, EventArgs e)
         {
             if (Convert.ToInt32(labelSayfa.Text) == Convert.ToInt32(labelSayfaSayisi.Text))
@@ -175,8 +176,8 @@ namespace ROPv1
                     cmd = SQLBaglantisi.getCommand("SELECT COUNT(AdisyonID) FROM Adisyon WHERE AcikMi=1");
                     dr = cmd.ExecuteReader();
                     dr.Read();
-                    adisyonSayisi = dr.GetInt32(0);
-                    toplamVeriSayisi = Convert.ToInt32(adisyonSayisi);
+                    toplamVeriSayisi = dr.GetInt32(0);
+                    adisyonSayisi = Convert.ToDouble(toplamVeriSayisi);
 
                     cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND AcikMi=1 ORDER BY AdisyonID DESC");
                     break;
@@ -186,8 +187,8 @@ namespace ROPv1
                     cmd = SQLBaglantisi.getCommand("SELECT COUNT(AdisyonID) FROM Adisyon");
                     dr = cmd.ExecuteReader();
                     dr.Read();
-                    adisyonSayisi = dr.GetInt32(0);
-                    toplamVeriSayisi = Convert.ToInt32(adisyonSayisi);
+                    toplamVeriSayisi = dr.GetInt32(0);
+                    adisyonSayisi = Convert.ToDouble(toplamVeriSayisi);
 
                     cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' ORDER BY AdisyonID DESC");
                     break;
@@ -206,8 +207,8 @@ namespace ROPv1
                     cmd = SQLBaglantisi.getCommand("SELECT COUNT(AdisyonID) FROM Adisyon WHERE AdisyonID='" + girilenAdisyonID + "'");
                     dr = cmd.ExecuteReader();
                     dr.Read();
-                    adisyonSayisi = dr.GetInt32(0);
-                    toplamVeriSayisi = Convert.ToInt32(adisyonSayisi);
+                    toplamVeriSayisi = dr.GetInt32(0);
+                    adisyonSayisi = Convert.ToDouble(toplamVeriSayisi);
 
                     cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND AdisyonID LIKE '%" + girilenAdisyonID + "%' ORDER BY AdisyonID DESC");
                     break;
@@ -216,8 +217,8 @@ namespace ROPv1
                     cmd = SQLBaglantisi.getCommand("SELECT COUNT(AdisyonID) FROM Adisyon WHERE MasaAdi='" + textboxAdisyonID.Text + "'");
                     dr = cmd.ExecuteReader();
                     dr.Read();
-                    adisyonSayisi = dr.GetInt32(0);
-                    toplamVeriSayisi = Convert.ToInt32(adisyonSayisi);
+                    toplamVeriSayisi = dr.GetInt32(0);
+                    adisyonSayisi = Convert.ToDouble(toplamVeriSayisi);
 
                     cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND MasaAdi LIKE '%" + textboxAdisyonID.Text + "%' ORDER BY AdisyonID DESC");
                     break;
@@ -226,8 +227,8 @@ namespace ROPv1
                     cmd = SQLBaglantisi.getCommand("SELECT COUNT(AdisyonID) FROM Adisyon WHERE DepartmanAdi='" + textboxAdisyonID.Text + "'");
                     dr = cmd.ExecuteReader();
                     dr.Read();
-                    adisyonSayisi = dr.GetInt32(0);
-                    toplamVeriSayisi = Convert.ToInt32(adisyonSayisi);
+                    toplamVeriSayisi = dr.GetInt32(0);
+                    adisyonSayisi = Convert.ToDouble(toplamVeriSayisi);
 
                     cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND DepartmanAdi LIKE '%" + textboxAdisyonID.Text + "%' ORDER BY AdisyonID DESC");
                     break;
@@ -268,6 +269,7 @@ namespace ROPv1
 
                 SqlCommand cmd2 = SQLBaglantisi.getCommand("SELECT Fiyatı*Porsiyon FROM Siparis WHERE AdisyonID='" + adisyonID + "'");
                 SqlDataReader dr2 = cmd2.ExecuteReader();
+
                 while (dr2.Read())
                 {
                     adisyonFiyati += dr2.GetDecimal(0);
@@ -284,6 +286,7 @@ namespace ROPv1
                 listAdisyon.Items[listAdisyon.Items.Count - 1].SubItems.Add(acilisKapanisSaati);
                 listAdisyon.Items[listAdisyon.Items.Count - 1].SubItems.Add(adisyonNotu);
                 listAdisyon.Items[listAdisyon.Items.Count - 1].SubItems.Add(adisyonFiyati.ToString("0.00"));
+
                 if (iptalMi)
                 {
                     listAdisyon.Items[listAdisyon.Items.Count - 1].BackColor = Color.IndianRed;
@@ -370,7 +373,7 @@ namespace ROPv1
                 case 1://açık adisyonlar
                     listAdisyon.Items.Clear();
 
-                    cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) * FROM (SELECT TOP (@_ilkAlinacakVeri) AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHEREAcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND AcikMi=1 ORDER BY AdisyonID DESC) AS isim ORDER BY AdisyonID ASC");
+                    cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) * FROM (SELECT TOP (@_ilkAlinacakVeri) AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE AcilisZamani >='" + baslangic + "' AND AcilisZamani <= '" + bitis + "' AND AcikMi=1 ORDER BY AdisyonID DESC) AS isim ORDER BY AdisyonID ASC");
                     break;
 
                 case 2://tüm adisyonlar

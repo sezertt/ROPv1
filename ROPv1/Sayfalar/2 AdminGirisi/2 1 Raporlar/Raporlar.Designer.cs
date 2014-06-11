@@ -52,7 +52,7 @@
             this.crystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.crystalReportViewer1.CachedPageNumberPerDoc = 10;
             this.crystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.crystalReportViewer1.Location = new System.Drawing.Point(0, 48);
+            this.crystalReportViewer1.Location = new System.Drawing.Point(0, 0);
             this.crystalReportViewer1.Name = "crystalReportViewer1";
             this.crystalReportViewer1.ShowCloseButton = false;
             this.crystalReportViewer1.ShowCopyButton = false;
@@ -63,7 +63,7 @@
             this.crystalReportViewer1.ShowParameterPanelButton = false;
             this.crystalReportViewer1.ShowRefreshButton = false;
             this.crystalReportViewer1.ShowTextSearchButton = false;
-            this.crystalReportViewer1.Size = new System.Drawing.Size(997, 578);
+            this.crystalReportViewer1.Size = new System.Drawing.Size(1018, 626);
             this.crystalReportViewer1.TabIndex = 38;
             this.crystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None;
             // 
@@ -81,9 +81,9 @@
             "Bu Ay",
             "Önceki Ay",
             "Seçilen Tarih"});
-            this.comboAdisyonAyar.Location = new System.Drawing.Point(8, 8);
+            this.comboAdisyonAyar.Location = new System.Drawing.Point(200, 7);
             this.comboAdisyonAyar.Name = "comboAdisyonAyar";
-            this.comboAdisyonAyar.Size = new System.Drawing.Size(242, 34);
+            this.comboAdisyonAyar.Size = new System.Drawing.Size(131, 34);
             this.comboAdisyonAyar.TabIndex = 46;
             this.comboAdisyonAyar.SelectedIndexChanged += new System.EventHandler(this.comboAdisyonAyar_SelectedIndexChanged);
             this.comboAdisyonAyar.Click += new System.EventHandler(this.comboAdisyonAyar_Click);
@@ -97,7 +97,7 @@
             this.buttonAzalt.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonAzalt.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonAzalt.Image = global::ROPv1.Properties.Resources.downIcon;
-            this.buttonAzalt.Location = new System.Drawing.Point(915, 8);
+            this.buttonAzalt.Location = new System.Drawing.Point(940, 7);
             this.buttonAzalt.Name = "buttonAzalt";
             this.buttonAzalt.Size = new System.Drawing.Size(70, 34);
             this.buttonAzalt.TabIndex = 45;
@@ -113,7 +113,7 @@
             this.buttonArttir.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonArttir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonArttir.Image = global::ROPv1.Properties.Resources.upIcon;
-            this.buttonArttir.Location = new System.Drawing.Point(837, 8);
+            this.buttonArttir.Location = new System.Drawing.Point(866, 7);
             this.buttonArttir.Name = "buttonArttir";
             this.buttonArttir.Size = new System.Drawing.Size(70, 34);
             this.buttonArttir.TabIndex = 44;
@@ -131,10 +131,11 @@
             this.dateBitis.CalendarTitleForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.dateBitis.CalendarTrailingForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.dateBitis.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.dateBitis.Location = new System.Drawing.Point(548, 8);
+            this.dateBitis.Location = new System.Drawing.Point(602, 7);
             this.dateBitis.Name = "dateBitis";
-            this.dateBitis.Size = new System.Drawing.Size(278, 33);
+            this.dateBitis.Size = new System.Drawing.Size(259, 33);
             this.dateBitis.TabIndex = 43;
+            this.dateBitis.Value = new System.DateTime(2014, 6, 6, 10, 45, 0, 0);
             this.dateBitis.ValueChanged += new System.EventHandler(this.dateBitis_ValueChanged);
             this.dateBitis.Enter += new System.EventHandler(this.dateBitis_Enter);
             // 
@@ -147,9 +148,9 @@
             this.dateBaslangic.CalendarTitleForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.dateBaslangic.CalendarTrailingForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.dateBaslangic.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.dateBaslangic.Location = new System.Drawing.Point(260, 8);
+            this.dateBaslangic.Location = new System.Drawing.Point(337, 7);
             this.dateBaslangic.Name = "dateBaslangic";
-            this.dateBaslangic.Size = new System.Drawing.Size(278, 33);
+            this.dateBaslangic.Size = new System.Drawing.Size(259, 33);
             this.dateBaslangic.TabIndex = 42;
             this.dateBaslangic.ValueChanged += new System.EventHandler(this.dateBitis_ValueChanged);
             this.dateBaslangic.Enter += new System.EventHandler(this.dateBaslangic_Enter);
@@ -165,7 +166,7 @@
             this.Controls.Add(this.dateBaslangic);
             this.Controls.Add(this.crystalReportViewer1);
             this.Name = "Raporlar";
-            this.Size = new System.Drawing.Size(993, 626);
+            this.Size = new System.Drawing.Size(1015, 626);
             this.Load += new System.EventHandler(this.Raporlar_Load);
             this.ResumeLayout(false);
 

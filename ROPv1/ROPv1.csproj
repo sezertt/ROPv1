@@ -133,6 +133,12 @@
     <Compile Include="Sayfalar\2 AdminGirisi\2 1 Raporlar\Raporlar.Designer.cs">
       <DependentUpon>Raporlar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketKullanicilari.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketKullanicilari.Designer.cs">
+      <DependentUpon>AnketKullanicilari.cs</DependentUpon>
+    </Compile>
     <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketAyarlari.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -307,6 +313,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 1 Raporlar\Raporlar.resx">
       <DependentUpon>Raporlar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketKullanicilari.resx">
+      <DependentUpon>AnketKullanicilari.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketAyarlari.resx">
       <DependentUpon>AnketAyarlari.cs</DependentUpon>

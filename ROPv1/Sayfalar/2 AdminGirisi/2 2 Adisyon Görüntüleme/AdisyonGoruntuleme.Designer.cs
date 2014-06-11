@@ -60,10 +60,10 @@
             this.labelSayfaSayisi = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.labelSayfa = new System.Windows.Forms.Label();
-            this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.labelToplamHesap = new System.Windows.Forms.Label();
             this.labelKalanText = new System.Windows.Forms.Label();
             this.buttonYazdir = new System.Windows.Forms.Button();
+            this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.SuspendLayout();
             // 
             // labelGun
@@ -430,19 +430,6 @@
             this.labelSayfa.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.labelSayfa.TextChanged += new System.EventHandler(this.labelSayfa_TextChanged);
             // 
-            // keyboardcontrol1
-            // 
-            this.keyboardcontrol1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.keyboardcontrol1.ForeColor = System.Drawing.SystemColors.Window;
-            this.keyboardcontrol1.KeyboardType = KeyboardClassLibrary.BoW.Standard;
-            this.keyboardcontrol1.Location = new System.Drawing.Point(4, 535);
-            this.keyboardcontrol1.Name = "keyboardcontrol1";
-            this.keyboardcontrol1.Size = new System.Drawing.Size(924, 282);
-            this.keyboardcontrol1.TabIndex = 50;
-            this.keyboardcontrol1.Visible = false;
-            this.keyboardcontrol1.UserKeyPressed += new KeyboardClassLibrary.KeyboardDelegate(this.keyboardcontrol1_UserKeyPressed);
-            // 
             // labelToplamHesap
             // 
             this.labelToplamHesap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -486,6 +473,19 @@
             this.buttonYazdir.Text = "Yazdır";
             this.buttonYazdir.UseVisualStyleBackColor = false;
             this.buttonYazdir.Click += new System.EventHandler(this.buttonYazdir_Click);
+            // 
+            // keyboardcontrol1
+            // 
+            this.keyboardcontrol1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.keyboardcontrol1.ForeColor = System.Drawing.SystemColors.Window;
+            this.keyboardcontrol1.KeyboardType = KeyboardClassLibrary.BoW.Standard;
+            this.keyboardcontrol1.Location = new System.Drawing.Point(4, 535);
+            this.keyboardcontrol1.Name = "keyboardcontrol1";
+            this.keyboardcontrol1.Size = new System.Drawing.Size(924, 282);
+            this.keyboardcontrol1.TabIndex = 50;
+            this.keyboardcontrol1.Visible = false;
+            this.keyboardcontrol1.UserKeyPressed += new KeyboardClassLibrary.KeyboardDelegate(this.keyboardcontrol1_UserKeyPressed);
             // 
             // AdisyonGoruntuleme
             // 
@@ -563,10 +563,10 @@
         private System.Windows.Forms.Label labelSayfaSayisi;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelSayfa;
-        private KeyboardClassLibrary.Keyboardcontrol keyboardcontrol1;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.Label labelToplamHesap;
         private System.Windows.Forms.Label labelKalanText;
         private System.Windows.Forms.Button buttonYazdir;
+        private KeyboardClassLibrary.Keyboardcontrol keyboardcontrol1;
     }
 }

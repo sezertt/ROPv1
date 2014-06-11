@@ -76,10 +76,8 @@ namespace ROPv1
                     bitis = firstOfthisMonth.AddDays(-1).ToString("yyyy-MM-dd");
                     break;
                 case 6: // Seçilen Tarih
-                    DateTime ased;
                     baslangic = dateBaslangic.Value.ToString("yyyy-MM-dd");
-                    ased = dateBitis.Value.AddDays(1);
-                    bitis = ased.ToString("yyyy-MM-dd");
+                    bitis = dateBitis.Value.ToString("yyyy-MM-dd");
                     break;
             }
 

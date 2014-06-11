@@ -176,6 +176,12 @@ namespace ROPv1
                     case "departman"://departmanın masaları hakkında bilgi                 
                         komut_departman(e.Client, parametreler["departmanAdi"]);
                         break;
+                    case "anketIstegi":// anket isteği geldiğinde
+                        komut_anketIstegi(e.Client);
+                        break;
+                    case "anketCevaplari": // anket cevapları geldiğinde
+                        komut_anketCevaplari(parametreler["kullaniciBilgileri"], parametreler["cevapBilgileri"], parametreler["soruBilgileri"]); // anket cevapları ve kullanıcı bilgileri
+                        break;
                     case "cikis": // bir kullanıcı serverdan çıktığında
                         komut_cikis(e.Client);
                         break;
@@ -212,6 +218,102 @@ namespace ROPv1
         }
 
         #region Komutlar
+
+        // Anket doldurulduktan sonra cevapları gelince çalışacak fonksiyon
+        private void komut_anketCevaplari(string gelenKullaniciBilgileri, string gelenCevapBilgileri, string gelenSoruBilgileri) // anket cevapları ve kullanıcı bilgileri
+        {
+            string[] kullaniciBilgileri, cevapBilgileri, soruBilgileri;
+            try
+            {
+                kullaniciBilgileri = gelenKullaniciBilgileri.Split('*');
+                cevapBilgileri = gelenSoruBilgileri.Split('*');
+                soruBilgileri = gelenSoruBilgileri.Split('*');
+            }
+            catch
+            {
+                return;
+            }
+
+            // BURAYI KONTROL ET HATA VEREBİLİR --> insert update select scope identity???
+            SqlCommand cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM AnketKullanicilari WHERE Adi='" + kullaniciBilgileri[0] + "' AND SoyAdi='" + kullaniciBilgileri[1] + "' AND Eposta='" + kullaniciBilgileri[2] + "' SELECT SCOPE_IDENTITY()) UPDATE AnketKullanicilari SET Telefon='" + kullaniciBilgileri[3] + "' WHERE Adi='" + kullaniciBilgileri[0] + "' AND SoyAdi='" + kullaniciBilgileri[1] + "' AND Eposta='" + kullaniciBilgileri[2] + "' SELECT SCOPE_IDENTITY() ELSE INSERT INTO AnketKullanicilari(Adi,SoyAdi,Eposta,Telefon) VALUES(@_Adi,@_SoyAdi,@_Eposta,@_Telefon) SELECT SCOPE_IDENTITY()");     
+
+            int kullaniciID, anketID;
+
+            cmd.Parameters.AddWithValue("@_Adi", kullaniciBilgileri[0]);
+            cmd.Parameters.AddWithValue("@_SoyAdi", kullaniciBilgileri[1]);
+            cmd.Parameters.AddWithValue("@_Eposta", kullaniciBilgileri[2]);
+            cmd.Parameters.AddWithValue("@_Telefon", kullaniciBilgileri[3]);
+
+            try
+            {
+                kullaniciID = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch
+            {
+                return;
+            }
+
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Anket(KullaniciID) VALUES(@_KullaniciID) SELECT SCOPE_IDENTITY()");
+            cmd.Parameters.AddWithValue("@_KullaniciID", kullaniciID);
+
+            try
+            {
+                anketID = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch
+            {
+                return;
+            }
+
+            for (int i = 0; i < soruBilgileri.Count(); i++)
+            {
+                cmd = SQLBaglantisi.getCommand("SELECT SoruID,EtkiYuzdesi FROM AnketSorular WHERE Soru='" + soruBilgileri[i] + "'");
+                SqlDataReader dr = cmd.ExecuteReader();
+                dr.Read();
+
+                int soruID = dr.GetInt32(0);
+                decimal etkiYuzdesi = dr.GetDecimal(1);
+
+                cmd = SQLBaglantisi.getCommand("INSERT INTO AnketCevaplar(AnketID,Cevap,EtkiYuzdesi,SoruID) VALUES(@_AnketID,@_Cevap,@_EtkiYuzdesi,@_SoruID)");
+                cmd.Parameters.AddWithValue("@_AnketID", anketID);
+                cmd.Parameters.AddWithValue("@_Cevap", cevapBilgileri[i]);
+                cmd.Parameters.AddWithValue("@_EtkiYuzdesi", etkiYuzdesi);
+                cmd.Parameters.AddWithValue("@_SoruID", soruID);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        // Anket isteği geldiğinde anket sorularını clienta gönderen fonksiyon
+        private void komut_anketIstegi(ClientRef client)
+        {
+            StringBuilder anketSorulari = new StringBuilder();
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Soru,SorununSirasi FROM AnketSorular WHERE SoruAktifMi=1");
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                try
+                {
+                    anketSorulari.Append("*" + dr.GetString(0) + "-" + dr.GetInt32(1));
+                }
+                catch
+                {
+                    anketSorulari.Clear();
+                }
+            }
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+
+            //İlk sorunun başına konulan "*" metnini kaldır
+            if (anketSorulari.Length >= 1)
+            {
+                anketSorulari.Remove(0, 1);
+            }
+
+            //Kullanıcıya soruları gönderelim
+            client.MesajYolla("komut=anketIstegi&sorular=" + anketSorulari);
+        }
 
         private void komut_yaziciGonder(ClientRef client, string masaAdi, string departmanAdi)
         {

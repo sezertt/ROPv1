@@ -36,7 +36,7 @@ namespace ROPv1
 
         MyListView listHesaptakiler;
 
-        decimal toplamHesap = 0, indirim = 0, indirimYuzde = 0, toplamOdemeVeIndirim = 0;
+        decimal toplamHesap = 0, indirim = 0, indirimYuzde = 0, toplamOdemeVeIndirim = 0, paraUstu = 0;
 
         const int urunBoyu = 240, fiyatBoyu = 90;
 
@@ -310,7 +310,7 @@ namespace ROPv1
                     {
                         sonSiparisMi--;
 
-                        menuFormu.masaFormu.serveraSiparis(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, siparisiGirenKisi, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), "",sonSiparisMi);
+                        menuFormu.masaFormu.serveraSiparis(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, siparisiGirenKisi, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), "", sonSiparisMi);
                     }
                     menuFormu.masaAcikMi = true;
                 }
@@ -1173,10 +1173,20 @@ namespace ROPv1
 
         private void buttonOdeme_Click(object sender, EventArgs e)
         {
-            decimal odenenMiktar;
+            decimal odenenMiktar, paraUstu = 0;
+
             try
             {
-                odenenMiktar = Convert.ToDecimal(textNumberOfItem.Text);
+                if (Convert.ToDecimal(textNumberOfItem.Text) > Convert.ToDecimal(labelKalanHesap.Text))
+                {
+                    odenenMiktar = Convert.ToDecimal(labelKalanHesap.Text);
+                    paraUstu = Convert.ToDecimal(textNumberOfItem.Text) - Convert.ToDecimal(labelKalanHesap.Text);
+                }
+                else
+                {
+                    odenenMiktar = Convert.ToDecimal(textNumberOfItem.Text);
+                }
+
                 if (odenenMiktar <= 0)
                 {
                     textNumberOfItem.Text = "0,00";
@@ -1345,7 +1355,9 @@ namespace ROPv1
 
                 labelOdenenToplam.Text = (Convert.ToDecimal(labelOdenenToplam.Text) + odenenMiktar).ToString("0.00");
 
-                toplamOdemeVeIndirim += odenenMiktar;
+                toplamOdemeVeIndirim += paraUstu + odenenMiktar;
+
+                paraUstu = 0;
 
                 menuFormu.labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
                 textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
@@ -1392,7 +1404,7 @@ namespace ROPv1
                     secilipOdenenSiparisBilgileri = null;
                 }
                 //bilgileri servera gönder
-                menuFormu.masaFormu.hesapFormundanOdeme(masaAdi, departmanAdi, "OdemeYapildi", Convert.ToInt32(((Button)sender).Tag), Convert.ToDecimal(textNumberOfItem.Text), secilipOdenenSiparisBilgileri);
+                menuFormu.masaFormu.hesapFormundanOdeme(masaAdi, departmanAdi, "OdemeYapildi", Convert.ToInt32(((Button)sender).Tag), odenenMiktar, secilipOdenenSiparisBilgileri);
             }
         }
 
@@ -1470,7 +1482,9 @@ namespace ROPv1
 
             labelOdenenToplam.Text = (Convert.ToDecimal(labelOdenenToplam.Text) + odenenMiktar).ToString("0.00");
 
-            toplamOdemeVeIndirim += odenenMiktar;
+            toplamOdemeVeIndirim += paraUstu + odenenMiktar;
+
+            paraUstu = 0;
 
             menuFormu.labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
@@ -1716,7 +1730,7 @@ namespace ROPv1
 
         public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor)
         {
-            var t = new Thread(() => Basla(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, firmaAdi, adresTelefon, printerAdi,rapor));
+            var t = new Thread(() => Basla(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, firmaAdi, adresTelefon, printerAdi, rapor));
             t.Start();
             return t;
         }
@@ -1803,7 +1817,7 @@ namespace ROPv1
 
         private void HesapFormu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Convert.ToDecimal(labelKalanHesap.Text) == 0)
+            if (Convert.ToDecimal(labelKalanHesap.Text) <= 0)
             {
                 menuFormu.menuFormunuKapat();
             }

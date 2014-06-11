@@ -110,9 +110,10 @@ namespace ROPv1
                     anketCheckBox.Image = global::ROPv1.Properties.Resources.anketBack;
                     buttonBilgiAktar.Visible = false;
 
-                    leftPanelView.Nodes.Add("Anket Sonuçları");
-                    leftPanelView.Nodes.Add("Kullanıcı Bilgileri");
-                    leftPanelView.Nodes.Add("Anket Ayarları");
+                    leftPanelView.Nodes.Add("Anket Değerlendirme"); // ( Alınan oyların sayısı, alınan tam puanlar , genel puanlama vs. )
+                    leftPanelView.Nodes.Add("Anket Sonuçları"); // ( Yapılan anketleri görüntüleme )
+                    leftPanelView.Nodes.Add("Kullanıcı Bilgileri"); // ( Kullanıcı bilgileri )
+                    leftPanelView.Nodes.Add("Anket Ayarları"); // ( Anket ayarları )
 
                     leftPanelView.SelectedNode = leftPanelView.Nodes[0];
                     break;
@@ -142,6 +143,7 @@ namespace ROPv1
         private void changeSettingsScreen(object sender, TreeViewEventArgs e)
         {
             splitPanel.Panel2.Controls.Clear();
+
             if (leftPanelView.Nodes[0].Text == "Kullanıcılar")
             {
                 switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
@@ -203,29 +205,59 @@ namespace ROPv1
             {
                 SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AcikMi FROM Adisyon WHERE AcikMi=1 AND IptalMi=0");
                 SqlDataReader dr = cmd.ExecuteReader();
-
-                if (dr.Read())
+                dr.Read();
+                try
                 {
-                    KontrolFormu dialog = new KontrolFormu("Sistemde açık masa bulunurken raporlama düzgün görüntülenemeyebilir, devam etmek istiyor musunuz?", true, this);
+                    dr.GetBoolean(0);
+                    KontrolFormu dialog = new KontrolFormu("Sistemde açık masa bulunurken raporlama yapılamaz\n DİKKAT: Çalışma esnasında raporlama alınması sistemi yavaşlatacağından hatalara neden olabilir!", false);
                     dialog.Show();
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
                 }
-                cmd.Connection.Close();
-                cmd.Connection.Dispose();
+                catch
+                {
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+
+                    switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
+                    {
+                        #region
+                        case 0: //Gün sonu raporu seçildi
+                            gunRaporView.Dock = DockStyle.Fill;
+                            splitPanel.Panel2.Controls.Add(gunRaporView);
+                            break;
+
+                        case 1: //Ürün satış raporu seçildi
+                            urunRaporView.Dock = DockStyle.Fill;
+                            splitPanel.Panel2.Controls.Add(urunRaporView);
+                            break;
+
+                        default:
+                            break;
+                        #endregion
+                    }
+                }
             }
-            else if (leftPanelView.Nodes[0].Text == "Anket Sonuçları")
+            else if (leftPanelView.Nodes[0].Text == "Anket Değerlendirme")
             {
                 switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
                 {
                     #region
-                    case 0: //Anket Sonuçları Seçildi
+                    case 0: //Anket Değerlendirme Seçildi ( Alınan oyların sayısı, alınan tam puanlar , genel puanlama vs. )
 
                         break;
 
-                    case 1: //Kullanıcı Bilgileri Seçildi
+                    case 1: //Anket Sonuçları Seçildi ( Yapılan anketleri görüntüleme )
 
                         break;
 
-                    case 2: //Anket Ayarları Seçildi
+                    case 2: //Kullanicilar Seçildi  ( kullanıcı bilgileri )
+                        AnketKullanicilari anketKullaniciView = new AnketKullanicilari();
+                        splitPanel.Panel2.Controls.Add(anketKullaniciView);
+                        anketKullaniciView.Dock = DockStyle.Fill;
+                        break;
+
+                    case 3: //Anket Ayarları Seçildi 
                         AnketAyarlari anketAyarView = new AnketAyarlari();
                         splitPanel.Panel2.Controls.Add(anketAyarView);
                         anketAyarView.Dock = DockStyle.Fill;
@@ -235,37 +267,6 @@ namespace ROPv1
                         break;
                     #endregion
                 }
-            }
-        }
-
-        public void raporla()
-        {
-            switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
-            {
-                #region
-                case 0: //Gün sonu raporu seçildi
-                    if(gunRaporView == null)
-                    {
-                        gunRaporView = new Raporlar(true);
-                        splitPanel.Panel2.Controls.Add(gunRaporView);
-                        gunRaporView.Dock = DockStyle.Fill;
-                    }
-                    gunRaporView.BringToFront();
-                    break;
-
-                case 1: //Ürün satış raporu seçildi
-                    if (urunRaporView == null)
-                    {
-                        urunRaporView = new Raporlar(false);
-                        splitPanel.Panel2.Controls.Add(urunRaporView);
-                        urunRaporView.Dock = DockStyle.Fill;
-                    }
-                    urunRaporView.BringToFront();
-                    break;
-
-                default:
-                    break;
-                #endregion
             }
         }
 
@@ -312,6 +313,8 @@ namespace ROPv1
                     }
                 }
             }
+            gunRaporView = new Raporlar(true);
+            urunRaporView = new Raporlar(false);
         }
 
         private void AdminGirisFormu_KeyDown(object sender, KeyEventArgs e)
@@ -320,7 +323,7 @@ namespace ROPv1
             {
                 if (e.Control && e.Shift && e.KeyCode == Keys.D3)
                 {
-                    ayarCheckBox.Visible = true;                    
+                    ayarCheckBox.Visible = true;
                 }
             }
         }
