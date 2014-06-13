@@ -133,6 +133,24 @@
     <Compile Include="Sayfalar\2 AdminGirisi\2 1 Raporlar\Raporlar.Designer.cs">
       <DependentUpon>Raporlar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketDegerlendirmeYazili.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketDegerlendirmeYazili.Designer.cs">
+      <DependentUpon>AnketDegerlendirmeYazili.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketDegerlendirmeSecme.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketDegerlendirmeSecme.Designer.cs">
+      <DependentUpon>AnketDegerlendirmeSecme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketSonuclari.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketSonuclari.Designer.cs">
+      <DependentUpon>AnketSonuclari.cs</DependentUpon>
+    </Compile>
     <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketKullanicilari.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -313,6 +331,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 1 Raporlar\Raporlar.resx">
       <DependentUpon>Raporlar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketDegerlendirmeYazili.resx">
+      <DependentUpon>AnketDegerlendirmeYazili.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketDegerlendirmeSecme.resx">
+      <DependentUpon>AnketDegerlendirmeSecme.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketSonuclari.resx">
+      <DependentUpon>AnketSonuclari.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketKullanicilari.resx">
       <DependentUpon>AnketKullanicilari.cs</DependentUpon>

@@ -14,6 +14,7 @@ namespace ROPv1
     {
         SiparisMenuFormu menuFormu;
         SiparisMasaFormu masaFormu;
+        AnketKullanicilari anketKullaniciFormu;
 
         public KontrolFormu(string textboxText, bool BoxType, SiparisMenuFormu menuFormu)
         {
@@ -50,6 +51,24 @@ namespace ROPv1
             buttonDevamEtme.Visible = true;
             buttonNO.Visible = false;
             buttonYES.Visible = false;
+            buttonTamam.Visible = false;
+        }
+
+        public KontrolFormu(string textboxText, bool BoxType, AnketKullanicilari anketKullaniciFormu)
+        {
+            InitializeComponent();
+
+            if (anketKullaniciFormu != null)
+                this.anketKullaniciFormu = anketKullaniciFormu;
+
+            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+
+            labelAciklama.Text = textboxText;
+            buttonDevamEt.Visible = false;
+            buttonDevamEtme.Visible = false;
+            buttonNO.Visible = true;
+            buttonYES.Visible = true;
             buttonTamam.Visible = false;
         }
 
@@ -110,6 +129,8 @@ namespace ROPv1
 
         private void buttonYES_Click(object sender, EventArgs e)
         {
+            if (anketKullaniciFormu != null)
+                anketKullaniciFormu.kullaniciyiSilOnaylandi();
             this.Close();
         }
     }

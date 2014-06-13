@@ -62,8 +62,6 @@
             this.numericSoru14 = new System.Windows.Forms.NumericUpDown();
             this.textBoxYazi16 = new System.Windows.Forms.TextBox();
             this.textBoxYazi17 = new System.Windows.Forms.TextBox();
-            this.numericYazi16 = new System.Windows.Forms.NumericUpDown();
-            this.numericYazi17 = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -79,24 +77,19 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
             this.numericSecmeliSoruSayisi = new System.Windows.Forms.NumericUpDown();
             this.numericYaziliSoruSayisi = new System.Windows.Forms.NumericUpDown();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.textBox18 = new System.Windows.Forms.TextBox();
-            this.textBox19 = new System.Windows.Forms.TextBox();
-            this.textBox20 = new System.Windows.Forms.TextBox();
-            this.textBox21 = new System.Windows.Forms.TextBox();
-            this.textBox22 = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
             this.buttonSaveNewTable = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
+            this.buttonKlavyeAsagi = new System.Windows.Forms.Button();
+            this.buttonKlavye = new System.Windows.Forms.Button();
+            this.buttonKlavyeYukari = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericSoru4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSoru5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSoru6)).BeginInit();
@@ -112,8 +105,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericSoru1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSoru15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSoru14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericYazi16)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericYazi17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSecmeliSoruSayisi)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericYaziliSoruSayisi)).BeginInit();
             this.SuspendLayout();
@@ -474,7 +465,7 @@
             this.numericSoru3.TabIndex = 31;
             this.numericSoru3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericSoru3.Value = new decimal(new int[] {
-            5,
+            20,
             0,
             0,
             0});
@@ -490,7 +481,7 @@
             this.numericSoru2.TabIndex = 30;
             this.numericSoru2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericSoru2.Value = new decimal(new int[] {
-            5,
+            10,
             0,
             0,
             0});
@@ -506,7 +497,7 @@
             this.numericSoru1.TabIndex = 29;
             this.numericSoru1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericSoru1.Value = new decimal(new int[] {
-            5,
+            10,
             0,
             0,
             0});
@@ -549,11 +540,11 @@
             this.textBoxYazi16.ContextMenuStrip = this.contextMenuStrip1;
             this.textBoxYazi16.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxYazi16.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBoxYazi16.Location = new System.Drawing.Point(634, 328);
+            this.textBoxYazi16.Location = new System.Drawing.Point(680, 244);
             this.textBoxYazi16.MaxLength = 350;
             this.textBoxYazi16.Multiline = true;
             this.textBoxYazi16.Name = "textBoxYazi16";
-            this.textBoxYazi16.Size = new System.Drawing.Size(296, 108);
+            this.textBoxYazi16.Size = new System.Drawing.Size(328, 108);
             this.textBoxYazi16.TabIndex = 32;
             this.textBoxYazi16.Text = "Görüş ve Önerileriniz :";
             // 
@@ -564,42 +555,13 @@
             this.textBoxYazi17.Enabled = false;
             this.textBoxYazi17.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxYazi17.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBoxYazi17.Location = new System.Drawing.Point(634, 442);
+            this.textBoxYazi17.Location = new System.Drawing.Point(680, 378);
             this.textBoxYazi17.MaxLength = 350;
             this.textBoxYazi17.Multiline = true;
             this.textBoxYazi17.Name = "textBoxYazi17";
-            this.textBoxYazi17.Size = new System.Drawing.Size(296, 108);
+            this.textBoxYazi17.Size = new System.Drawing.Size(331, 108);
             this.textBoxYazi17.TabIndex = 33;
             this.textBoxYazi17.Text = "Uygulamamızı beğendiniz mi? Görüşlerinizi yazın, size göre geliştirelim";
-            // 
-            // numericYazi16
-            // 
-            this.numericYazi16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericYazi16.DecimalPlaces = 1;
-            this.numericYazi16.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.numericYazi16.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.numericYazi16.Location = new System.Drawing.Point(934, 366);
-            this.numericYazi16.Name = "numericYazi16";
-            this.numericYazi16.Size = new System.Drawing.Size(77, 32);
-            this.numericYazi16.TabIndex = 35;
-            this.numericYazi16.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericYazi16.Value = new decimal(new int[] {
-            25,
-            0,
-            0,
-            0});
-            // 
-            // numericYazi17
-            // 
-            this.numericYazi17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericYazi17.Enabled = false;
-            this.numericYazi17.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.numericYazi17.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.numericYazi17.Location = new System.Drawing.Point(934, 480);
-            this.numericYazi17.Name = "numericYazi17";
-            this.numericYazi17.Size = new System.Drawing.Size(77, 32);
-            this.numericYazi17.TabIndex = 36;
-            this.numericYazi17.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label5
             // 
@@ -781,32 +743,6 @@
             this.label15.Text = "11 -";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label16
-            // 
-            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label16.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label16.Location = new System.Drawing.Point(936, 328);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(35, 24);
-            this.label16.TabIndex = 53;
-            this.label16.Text = "- 1";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label17
-            // 
-            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label17.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label17.Location = new System.Drawing.Point(936, 442);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(35, 24);
-            this.label17.TabIndex = 54;
-            this.label17.Text = "- 2";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // label19
             // 
             this.label19.AutoSize = true;
@@ -824,37 +760,25 @@
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label20.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label20.Location = new System.Drawing.Point(634, 301);
+            this.label20.Location = new System.Drawing.Point(635, 210);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(208, 24);
             this.label20.TabIndex = 57;
             this.label20.Text = "Yazılı Anket Soruları";
-            // 
-            // label21
-            // 
-            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label21.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label21.Location = new System.Drawing.Point(634, 48);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(123, 24);
-            this.label21.TabIndex = 58;
-            this.label21.Text = "Soru Sayısı";
             // 
             // numericSecmeliSoruSayisi
             // 
             this.numericSecmeliSoruSayisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.numericSecmeliSoruSayisi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.numericSecmeliSoruSayisi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.numericSecmeliSoruSayisi.Location = new System.Drawing.Point(770, 44);
+            this.numericSecmeliSoruSayisi.Location = new System.Drawing.Point(638, 44);
             this.numericSecmeliSoruSayisi.Maximum = new decimal(new int[] {
             15,
             0,
             0,
             0});
             this.numericSecmeliSoruSayisi.Name = "numericSecmeliSoruSayisi";
-            this.numericSecmeliSoruSayisi.Size = new System.Drawing.Size(114, 32);
+            this.numericSecmeliSoruSayisi.Size = new System.Drawing.Size(373, 32);
             this.numericSecmeliSoruSayisi.TabIndex = 59;
             this.numericSecmeliSoruSayisi.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericSecmeliSoruSayisi.Value = new decimal(new int[] {
@@ -869,14 +793,14 @@
             this.numericYaziliSoruSayisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.numericYaziliSoruSayisi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.numericYaziliSoruSayisi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.numericYaziliSoruSayisi.Location = new System.Drawing.Point(890, 44);
+            this.numericYaziliSoruSayisi.Location = new System.Drawing.Point(638, 121);
             this.numericYaziliSoruSayisi.Maximum = new decimal(new int[] {
             2,
             0,
             0,
             0});
             this.numericYaziliSoruSayisi.Name = "numericYaziliSoruSayisi";
-            this.numericYaziliSoruSayisi.Size = new System.Drawing.Size(114, 32);
+            this.numericYaziliSoruSayisi.Size = new System.Drawing.Size(373, 32);
             this.numericYaziliSoruSayisi.TabIndex = 61;
             this.numericYaziliSoruSayisi.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericYaziliSoruSayisi.Value = new decimal(new int[] {
@@ -892,11 +816,11 @@
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label22.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label22.Location = new System.Drawing.Point(781, 14);
+            this.label22.Location = new System.Drawing.Point(719, 14);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(89, 24);
+            this.label22.Size = new System.Drawing.Size(208, 24);
             this.label22.TabIndex = 60;
-            this.label22.Text = "Seçmeli";
+            this.label22.Text = "Seçmeli Soru Sayısı";
             // 
             // label23
             // 
@@ -904,117 +828,11 @@
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label23.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label23.Location = new System.Drawing.Point(914, 14);
+            this.label23.Location = new System.Drawing.Point(730, 88);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(60, 24);
+            this.label23.Size = new System.Drawing.Size(179, 24);
             this.label23.TabIndex = 62;
-            this.label23.Text = "Yazılı";
-            // 
-            // textBox18
-            // 
-            this.textBox18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox18.ContextMenuStrip = this.contextMenuStrip1;
-            this.textBox18.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBox18.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBox18.Location = new System.Drawing.Point(770, 99);
-            this.textBox18.MaxLength = 25;
-            this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(234, 32);
-            this.textBox18.TabIndex = 63;
-            this.textBox18.Text = "Tamamen Katılıyorum";
-            this.textBox18.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox19
-            // 
-            this.textBox19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox19.ContextMenuStrip = this.contextMenuStrip1;
-            this.textBox19.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBox19.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBox19.Location = new System.Drawing.Point(770, 137);
-            this.textBox19.MaxLength = 25;
-            this.textBox19.Name = "textBox19";
-            this.textBox19.Size = new System.Drawing.Size(234, 32);
-            this.textBox19.TabIndex = 64;
-            this.textBox19.Text = "Katılıyorum";
-            this.textBox19.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox20
-            // 
-            this.textBox20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox20.ContextMenuStrip = this.contextMenuStrip1;
-            this.textBox20.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBox20.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBox20.Location = new System.Drawing.Point(770, 175);
-            this.textBox20.MaxLength = 25;
-            this.textBox20.Name = "textBox20";
-            this.textBox20.Size = new System.Drawing.Size(234, 32);
-            this.textBox20.TabIndex = 65;
-            this.textBox20.Text = "Kararsızım";
-            this.textBox20.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox21
-            // 
-            this.textBox21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox21.ContextMenuStrip = this.contextMenuStrip1;
-            this.textBox21.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBox21.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBox21.Location = new System.Drawing.Point(770, 213);
-            this.textBox21.MaxLength = 25;
-            this.textBox21.Name = "textBox21";
-            this.textBox21.Size = new System.Drawing.Size(234, 32);
-            this.textBox21.TabIndex = 66;
-            this.textBox21.Text = "Katılmıyorum";
-            this.textBox21.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox22
-            // 
-            this.textBox22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox22.ContextMenuStrip = this.contextMenuStrip1;
-            this.textBox22.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textBox22.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBox22.Location = new System.Drawing.Point(770, 250);
-            this.textBox22.MaxLength = 25;
-            this.textBox22.Name = "textBox22";
-            this.textBox22.Size = new System.Drawing.Size(234, 32);
-            this.textBox22.TabIndex = 67;
-            this.textBox22.Text = "Tamamen Katılmıyorum";
-            this.textBox22.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label24
-            // 
-            this.label24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label24.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label24.Location = new System.Drawing.Point(653, 154);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(89, 24);
-            this.label24.TabIndex = 68;
-            this.label24.Text = "Seçmeli";
-            // 
-            // label25
-            // 
-            this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label25.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label25.Location = new System.Drawing.Point(662, 178);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(69, 24);
-            this.label25.TabIndex = 69;
-            this.label25.Text = "Anket";
-            // 
-            // label26
-            // 
-            this.label26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label26.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label26.Location = new System.Drawing.Point(661, 202);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(71, 24);
-            this.label26.TabIndex = 70;
-            this.label26.Text = "Şıkları";
+            this.label23.Text = "Yazılı Soru Sayısı";
             // 
             // buttonSaveNewTable
             // 
@@ -1024,7 +842,7 @@
             this.buttonSaveNewTable.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSaveNewTable.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonSaveNewTable.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSaveNewTable.Location = new System.Drawing.Point(722, 564);
+            this.buttonSaveNewTable.Location = new System.Drawing.Point(719, 517);
             this.buttonSaveNewTable.Name = "buttonSaveNewTable";
             this.buttonSaveNewTable.Size = new System.Drawing.Size(208, 45);
             this.buttonSaveNewTable.TabIndex = 71;
@@ -1033,29 +851,109 @@
             this.buttonSaveNewTable.UseVisualStyleBackColor = false;
             this.buttonSaveNewTable.Click += new System.EventHandler(this.buttonKaydet_Click);
             // 
+            // label16
+            // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label16.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label16.Location = new System.Drawing.Point(639, 247);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(35, 24);
+            this.label16.TabIndex = 72;
+            this.label16.Text = "1 -";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label17.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label17.Location = new System.Drawing.Point(639, 381);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(35, 24);
+            this.label17.TabIndex = 73;
+            this.label17.Text = "2 -";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // keyboardcontrol1
+            // 
+            this.keyboardcontrol1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.keyboardcontrol1.ForeColor = System.Drawing.SystemColors.Window;
+            this.keyboardcontrol1.KeyboardType = KeyboardClassLibrary.BoW.Standard;
+            this.keyboardcontrol1.Location = new System.Drawing.Point(0, 344);
+            this.keyboardcontrol1.Name = "keyboardcontrol1";
+            this.keyboardcontrol1.Size = new System.Drawing.Size(1018, 282);
+            this.keyboardcontrol1.TabIndex = 74;
+            this.keyboardcontrol1.Visible = false;
+            this.keyboardcontrol1.UserKeyPressed += new KeyboardClassLibrary.KeyboardDelegate(this.keyboardcontrol1_UserKeyPressed);
+            // 
+            // buttonKlavyeAsagi
+            // 
+            this.buttonKlavyeAsagi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonKlavyeAsagi.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonKlavyeAsagi.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonKlavyeAsagi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonKlavyeAsagi.Image = global::ROPv1.Properties.Resources.downIcon;
+            this.buttonKlavyeAsagi.Location = new System.Drawing.Point(719, 573);
+            this.buttonKlavyeAsagi.Name = "buttonKlavyeAsagi";
+            this.buttonKlavyeAsagi.Size = new System.Drawing.Size(51, 45);
+            this.buttonKlavyeAsagi.TabIndex = 75;
+            this.buttonKlavyeAsagi.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonKlavyeAsagi.UseVisualStyleBackColor = false;
+            this.buttonKlavyeAsagi.Click += new System.EventHandler(this.buttonKlavyeAsagi_Click);
+            // 
+            // buttonKlavye
+            // 
+            this.buttonKlavye.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonKlavye.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonKlavye.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonKlavye.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonKlavye.Image = global::ROPv1.Properties.Resources.add;
+            this.buttonKlavye.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonKlavye.Location = new System.Drawing.Point(776, 573);
+            this.buttonKlavye.Name = "buttonKlavye";
+            this.buttonKlavye.Size = new System.Drawing.Size(93, 45);
+            this.buttonKlavye.TabIndex = 75;
+            this.buttonKlavye.Text = "Klavye";
+            this.buttonKlavye.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonKlavye.UseVisualStyleBackColor = false;
+            this.buttonKlavye.Click += new System.EventHandler(this.buttonKlavye_Click);
+            // 
+            // buttonKlavyeYukari
+            // 
+            this.buttonKlavyeYukari.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonKlavyeYukari.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonKlavyeYukari.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonKlavyeYukari.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonKlavyeYukari.Image = global::ROPv1.Properties.Resources.upIcon;
+            this.buttonKlavyeYukari.Location = new System.Drawing.Point(876, 573);
+            this.buttonKlavyeYukari.Name = "buttonKlavyeYukari";
+            this.buttonKlavyeYukari.Size = new System.Drawing.Size(51, 45);
+            this.buttonKlavyeYukari.TabIndex = 76;
+            this.buttonKlavyeYukari.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonKlavyeYukari.UseVisualStyleBackColor = false;
+            this.buttonKlavyeYukari.Click += new System.EventHandler(this.buttonKlavyeYukari_Click);
+            // 
             // AnketAyarlari
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.buttonKlavyeYukari);
+            this.Controls.Add(this.buttonKlavye);
+            this.Controls.Add(this.buttonKlavyeAsagi);
+            this.Controls.Add(this.keyboardcontrol1);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label16);
             this.Controls.Add(this.buttonSaveNewTable);
-            this.Controls.Add(this.label26);
-            this.Controls.Add(this.label25);
-            this.Controls.Add(this.label24);
-            this.Controls.Add(this.textBox22);
-            this.Controls.Add(this.textBox21);
-            this.Controls.Add(this.textBox20);
-            this.Controls.Add(this.textBox19);
-            this.Controls.Add(this.textBox18);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.numericYaziliSoruSayisi);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.numericSecmeliSoruSayisi);
-            this.Controls.Add(this.label21);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.label19);
-            this.Controls.Add(this.label17);
-            this.Controls.Add(this.label16);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label13);
@@ -1069,8 +967,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.numericYazi17);
-            this.Controls.Add(this.numericYazi16);
             this.Controls.Add(this.textBoxYazi17);
             this.Controls.Add(this.textBoxYazi16);
             this.Controls.Add(this.numericSoru3);
@@ -1123,8 +1019,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericSoru1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSoru15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSoru14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericYazi16)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericYazi17)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSecmeliSoruSayisi)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericYaziliSoruSayisi)).EndInit();
             this.ResumeLayout(false);
@@ -1167,8 +1061,6 @@
         private System.Windows.Forms.NumericUpDown numericSoru14;
         private System.Windows.Forms.TextBox textBoxYazi16;
         private System.Windows.Forms.TextBox textBoxYazi17;
-        private System.Windows.Forms.NumericUpDown numericYazi16;
-        private System.Windows.Forms.NumericUpDown numericYazi17;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -1184,24 +1076,19 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label21;
         private System.Windows.Forms.NumericUpDown numericSecmeliSoruSayisi;
         private System.Windows.Forms.NumericUpDown numericYaziliSoruSayisi;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.TextBox textBox19;
-        private System.Windows.Forms.TextBox textBox20;
-        private System.Windows.Forms.TextBox textBox21;
-        private System.Windows.Forms.TextBox textBox22;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Button buttonSaveNewTable;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private KeyboardClassLibrary.Keyboardcontrol keyboardcontrol1;
+        private System.Windows.Forms.Button buttonKlavyeAsagi;
+        private System.Windows.Forms.Button buttonKlavye;
+        private System.Windows.Forms.Button buttonKlavyeYukari;
 
     }
 }

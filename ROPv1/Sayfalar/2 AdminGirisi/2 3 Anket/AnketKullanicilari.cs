@@ -16,6 +16,7 @@ namespace ROPv1
     public partial class AnketKullanicilari : UserControl
     {
         int kullaniciSayisi = 0;
+
         public AnketKullanicilari()
         {
             InitializeComponent();
@@ -49,7 +50,7 @@ namespace ROPv1
                 IlkAlinacakVerininSirasi = kullaniciSayisi;
             }
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) Adi, Soyadi, Eposta, Telefon FROM (SELECT TOP (@_ilkAlinacakVeri) Adi, Soyadi, Eposta, Telefon FROM AnketKullanicilari ORDER BY Adi DESC) AS isim ORDER BY Adi ASC");
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT TOP (@_toplamVeri) Adi, Soyadi, Eposta, Telefon, KullaniciID FROM (SELECT TOP (@_ilkAlinacakVeri) Adi, Soyadi, Eposta, Telefon, KullaniciID FROM AnketKullanicilari ORDER BY KullaniciID DESC) AS isim ORDER BY KullaniciID ASC");
 
             cmd.Parameters.AddWithValue("@_toplamVeri", alinacakToplamVeriSayisi);
             cmd.Parameters.AddWithValue("@_ilkAlinacakVeri", IlkAlinacakVerininSirasi);
@@ -70,16 +71,25 @@ namespace ROPv1
                 if (!dr.IsDBNull(3))
                     telefon = dr.GetString(3);
 
-                listKullanici.Items.Add(adi);
-                listKullanici.Items[listKullanici.Items.Count - 1].SubItems.Add(soyadi);
-                listKullanici.Items[listKullanici.Items.Count - 1].SubItems.Add(eposta);
-                listKullanici.Items[listKullanici.Items.Count - 1].SubItems.Add(telefon);
+                listKullanici.Items.Insert(0,adi);
+                listKullanici.Items[0].SubItems.Add(soyadi);
+                listKullanici.Items[0].SubItems.Add(eposta);
+                listKullanici.Items[0].SubItems.Add(telefon);
             }
             cmd.Connection.Close();
             cmd.Connection.Dispose();
         }
 
         private void buttonKullaniciyiSil_Click(object sender, EventArgs e)
+        {
+            if(listKullanici.SelectedItems.Count > 0)
+            {
+                KontrolFormu dialog = new KontrolFormu(listKullanici.SelectedItems[0].SubItems[0].Text + listKullanici.SelectedItems[0].SubItems[1].Text + "adlı kullanıcıyı silmek istediğinize emin misiniz? Kullanıcını anketleri de silinecektir.", true, this);
+                dialog.Show();
+            }
+        }
+
+        public void kullaniciyiSilOnaylandi()
         {
             SqlCommand cmd = SQLBaglantisi.getCommand("DELETE FROM AnketCevaplar WHERE AnketID = (SELECT AnketID FROM Anket WHERE KullaniciID=(SELECT KullaniciID FROM AnketKullanicilari WHERE Adi='" + listKullanici.SelectedItems[0].SubItems[0].Text + "' AND SoyAdi='" + listKullanici.SelectedItems[0].SubItems[1].Text + "' AND Eposta='" + listKullanici.SelectedItems[0].SubItems[2].Text + "' AND Telefon='" + listKullanici.SelectedItems[0].SubItems[3].Text + "'))");
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Data.SqlClient;
 
 namespace ROPv1
 {
@@ -483,32 +484,53 @@ namespace ROPv1
 
         private void MasaPlan_Load(object sender, EventArgs e)
         {
-            //açılışta capslock açıksa kapatıyoruz.
-            ToggleCapsLock(false);
+            string masaAdi;
 
-            #region xml oku
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE AcikMi=1 AND IptalMi=0");
+            SqlDataReader dr = cmd.ExecuteReader();
+            dr.Read();
 
-            MasaDizayn[] info = new MasaDizayn[1];
-
-            //eğer masaDizayn listesi bulunmuyorsa default değerlerle ilk dizaynı oluşturuyoruz
-            if (!File.Exists("masaDizayn.xml"))
+            try
             {
-                if (!File.Exists("restoran.xml"))
+                masaAdi = dr.GetString(0);
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
+
+                KontrolFormu dialog = new KontrolFormu( masaAdi + " adlı masa açık. Açık masa bulunurken masa planlaması yapılamaz", false);
+                dialog.Show();
+            }
+            catch
+            {
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
+
+                //açılışta capslock açıksa kapatıyoruz.
+                ToggleCapsLock(false);
+
+                #region xml oku
+
+                MasaDizayn[] info = new MasaDizayn[1];
+
+                //eğer masaDizayn listesi bulunmuyorsa default değerlerle ilk dizaynı oluşturuyoruz
+                if (!File.Exists("masaDizayn.xml"))
                 {
-                    departmanVarmi[0] = new Restoran();
-                    departmanVarmi[0].departmanAdi = "Departman";
-                    departmanVarmi[0].departmanMenusu = "Menü";
-                    departmanVarmi[0].departmanEkrani = "Masa Ekranı";
-                    XmlSave.SaveRestoran(departmanVarmi, "restoran.xml");
-                }
+                    if (!File.Exists("restoran.xml"))
+                    {
+                        departmanVarmi[0] = new Restoran();
+                        departmanVarmi[0].departmanAdi = "Departman";
+                        departmanVarmi[0].departmanMenusu = "Menü";
+                        departmanVarmi[0].departmanEkrani = "Masa Ekranı";
+                        XmlSave.SaveRestoran(departmanVarmi, "restoran.xml");
+                    }
 
-                XmlLoad<Restoran> loadInfoFromDepartman = new XmlLoad<Restoran>();
-                departmanVarmi = loadInfoFromDepartman.LoadRestoran("restoran.xml");
+                    XmlLoad<Restoran> loadInfoFromDepartman = new XmlLoad<Restoran>();
+                    departmanVarmi = loadInfoFromDepartman.LoadRestoran("restoran.xml");
 
-                info[0] = new MasaDizayn();
-                info[0].masaPlanIsmi = departmanVarmi[0].departmanEkrani;
+                    info[0] = new MasaDizayn();
+                    info[0].masaPlanIsmi = departmanVarmi[0].departmanEkrani;
 
-                string[][] refresher = new string[][]
+                    string[][] refresher = new string[][]
                 {
                     new string[] {"RP1", "RP2", "RP3", "RP4", "RP5", null, null},
                     new string[] {"RP6", "RP7", "RP8", "RP9", "RP10", null, null},
@@ -518,87 +540,88 @@ namespace ROPv1
                     new string[] {null, null, null, null, null, null, null}
                 };
 
-                info[0].masaYerleri = refresher;
-                XmlSave.SaveRestoran(info, "masaDizayn.xml");
-            }
-            else
-            {
-                XmlLoad<Restoran> loadInfoFromDepartman2 = new XmlLoad<Restoran>();
-                departmanVarmi = loadInfoFromDepartman2.LoadRestoran("restoran.xml");
-            }
-
-            //liste varsa okuyoruz
-            XmlLoad<MasaDizayn> loadInfo = new XmlLoad<MasaDizayn>();
-            info = loadInfo.LoadRestoran("masaDizayn.xml");
-
-            //kendi listemize atıyoruz
-            masaDizaynListesi.AddRange(info);
-
-            //listenin ilk elemanının ismini ekranda gösteriyoruz
-            textTableDesignName.Text = masaDizaynListesi[0].masaPlanIsmi;
-
-            //Kaç masa eklendiğini tutması için oluşturulan değişken
-            int masaSayisi = 0;
-
-            //tüm masalar oluşturuluyor(42 adet) ve listenin ilk elemanının planına göre dolular belirleniyor
-            for (int i = 0; i < 6; i++)
-            {
-                for (int j = 0; j < 7; j++)
+                    info[0].masaYerleri = refresher;
+                    XmlSave.SaveRestoran(info, "masaDizayn.xml");
+                }
+                else
                 {
-                    Button buttonTable = new Button();
-                    buttonTable.UseVisualStyleBackColor = false;
-                    buttonTable.BackColor = Color.White;
-                    buttonTable.ForeColor = SystemColors.ActiveCaption;
-                    buttonTable.Font = new Font("Arial", 12, FontStyle.Bold);
-                    buttonTable.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                    tablePanel.Controls.Add(buttonTable, j, i);
-                    buttonTable.Click += buttonTablePressed;
-                    buttonTable.Name = "" + i + j;
+                    XmlLoad<Restoran> loadInfoFromDepartman2 = new XmlLoad<Restoran>();
+                    departmanVarmi = loadInfoFromDepartman2.LoadRestoran("restoran.xml");
+                }
 
-                    if (masaDizaynListesi[0].masaYerleri[i][j] != null)
+                //liste varsa okuyoruz
+                XmlLoad<MasaDizayn> loadInfo = new XmlLoad<MasaDizayn>();
+                info = loadInfo.LoadRestoran("masaDizayn.xml");
+
+                //kendi listemize atıyoruz
+                masaDizaynListesi.AddRange(info);
+
+                //listenin ilk elemanının ismini ekranda gösteriyoruz
+                textTableDesignName.Text = masaDizaynListesi[0].masaPlanIsmi;
+
+                //Kaç masa eklendiğini tutması için oluşturulan değişken
+                int masaSayisi = 0;
+
+                //tüm masalar oluşturuluyor(42 adet) ve listenin ilk elemanının planına göre dolular belirleniyor
+                for (int i = 0; i < 6; i++)
+                {
+                    for (int j = 0; j < 7; j++)
                     {
-                        buttonTable.Text = masaDizaynListesi[0].masaYerleri[i][j];
-                        buttonTable.Visible = true;
-                        masaSayisi++;
+                        Button buttonTable = new Button();
+                        buttonTable.UseVisualStyleBackColor = false;
+                        buttonTable.BackColor = Color.White;
+                        buttonTable.ForeColor = SystemColors.ActiveCaption;
+                        buttonTable.Font = new Font("Arial", 12, FontStyle.Bold);
+                        buttonTable.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                        tablePanel.Controls.Add(buttonTable, j, i);
+                        buttonTable.Click += buttonTablePressed;
+                        buttonTable.Name = "" + i + j;
+
+                        if (masaDizaynListesi[0].masaYerleri[i][j] != null)
+                        {
+                            buttonTable.Text = masaDizaynListesi[0].masaYerleri[i][j];
+                            buttonTable.Visible = true;
+                            masaSayisi++;
+                        }
+                        else
+                            buttonTable.Visible = false;
                     }
-                    else
-                        buttonTable.Visible = false;
                 }
-            }
 
-            numericTableCount.Value = masaSayisi;
+                numericTableCount.Value = masaSayisi;
 
-            newTableForm.Text = textTableDesignName.Text;
+                newTableForm.Text = textTableDesignName.Text;
 
-            treeMasaPlanName.Nodes.Add(masaDizaynListesi[0].masaPlanIsmi);
+                treeMasaPlanName.Nodes.Add(masaDizaynListesi[0].masaPlanIsmi);
 
-            //listede başka dizaynlar varsa onların da isimleri gösteriliyor
-            for (int i = 1; i < masaDizaynListesi.Count; i++)
-            {
-                treeMasaPlanName.Nodes.Add(masaDizaynListesi[i].masaPlanIsmi);
-            }
-
-            //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
-            foreach (TreeNode node in treeMasaPlanName.Nodes)
-            {
-                while (treeMasaPlanName.Width - 12 < System.Windows.Forms.TextRenderer.MeasureText(node.Text, new Font(treeMasaPlanName.Font.FontFamily, treeMasaPlanName.Font.Size, treeMasaPlanName.Font.Style)).Width)
+                //listede başka dizaynlar varsa onların da isimleri gösteriliyor
+                for (int i = 1; i < masaDizaynListesi.Count; i++)
                 {
-                    treeMasaPlanName.Font = new Font(treeMasaPlanName.Font.FontFamily, treeMasaPlanName.Font.Size - 0.5f, treeMasaPlanName.Font.Style);
+                    treeMasaPlanName.Nodes.Add(masaDizaynListesi[i].masaPlanIsmi);
                 }
-            }
 
-            #endregion
+                //Nodeların eklenmesinden sonra taşma varsa bile ekrana sığması için font boyutunu küçültüyoruz
+                foreach (TreeNode node in treeMasaPlanName.Nodes)
+                {
+                    while (treeMasaPlanName.Width - 12 < System.Windows.Forms.TextRenderer.MeasureText(node.Text, new Font(treeMasaPlanName.Font.FontFamily, treeMasaPlanName.Font.Size, treeMasaPlanName.Font.Style)).Width)
+                    {
+                        treeMasaPlanName.Font = new Font(treeMasaPlanName.Font.FontFamily, treeMasaPlanName.Font.Size - 0.5f, treeMasaPlanName.Font.Style);
+                    }
+                }
 
-            //ilk dizaynı seçili dizayn yapıyoruz
-            treeMasaPlanName.SelectedNode = treeMasaPlanName.Nodes[0];
+                #endregion
 
-            // 1 dizayn varsa silinemesin
-            if (treeMasaPlanName.Nodes.Count < 2)
-                buttonDeleteTable.Enabled = false;
+                //ilk dizaynı seçili dizayn yapıyoruz
+                treeMasaPlanName.SelectedNode = treeMasaPlanName.Nodes[0];
 
-            // 10 dan fazla dizayn eklenemesin
-            if (treeMasaPlanName.Nodes.Count > 9)
-                buttonAddTableDesign.Enabled = false;
+                // 1 dizayn varsa silinemesin
+                if (treeMasaPlanName.Nodes.Count < 2)
+                    buttonDeleteTable.Enabled = false;
+
+                // 10 dan fazla dizayn eklenemesin
+                if (treeMasaPlanName.Nodes.Count > 9)
+                    buttonAddTableDesign.Enabled = false;
+            }            
         }
 
         private void textTableName_KeyPress(object sender, KeyPressEventArgs e)

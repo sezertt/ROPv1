@@ -110,7 +110,8 @@ namespace ROPv1
                     anketCheckBox.Image = global::ROPv1.Properties.Resources.anketBack;
                     buttonBilgiAktar.Visible = false;
 
-                    leftPanelView.Nodes.Add("Anket Değerlendirme"); // ( Alınan oyların sayısı, alınan tam puanlar , genel puanlama vs. )
+                    leftPanelView.Nodes.Add("Anket Değerlendirme(Seçmeli Sorular)"); // ( Alınan oyların sayısı, alınan tam puanlar , genel puanlama vs. )
+                    leftPanelView.Nodes.Add("Anket Değerlendirme(Yazılı Sorular)"); 
                     leftPanelView.Nodes.Add("Anket Sonuçları"); // ( Yapılan anketleri görüntüleme )
                     leftPanelView.Nodes.Add("Kullanıcı Bilgileri"); // ( Kullanıcı bilgileri )
                     leftPanelView.Nodes.Add("Anket Ayarları"); // ( Anket ayarları )
@@ -238,26 +239,36 @@ namespace ROPv1
                     }
                 }
             }
-            else if (leftPanelView.Nodes[0].Text == "Anket Değerlendirme")
+            else if (leftPanelView.Nodes[0].Text == "Anket Değerlendirme(Seçmeli Sorular)")
             {
                 switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
                 {
                     #region
                     case 0: //Anket Değerlendirme Seçildi ( Alınan oyların sayısı, alınan tam puanlar , genel puanlama vs. )
-
+                        AnketDegerlendirmeSecme anketDegerlendirmeSecmeView = new AnketDegerlendirmeSecme();
+                        splitPanel.Panel2.Controls.Add(anketDegerlendirmeSecmeView);
+                        anketDegerlendirmeSecmeView.Dock = DockStyle.Fill;
                         break;
 
-                    case 1: //Anket Sonuçları Seçildi ( Yapılan anketleri görüntüleme )
+                    case 1: //Anket Değerlendirme Seçildi ( Alınan oyların sayısı, alınan tam puanlar , genel puanlama vs. )
+                        AnketDegerlendirmeYazili anketDegerlendirmeYaziliView = new AnketDegerlendirmeYazili();
+                        splitPanel.Panel2.Controls.Add(anketDegerlendirmeYaziliView);
+                        anketDegerlendirmeYaziliView.Dock = DockStyle.Fill;
 
                         break;
+                    case 2: //Anket Sonuçları Seçildi ( Yapılan anketleri görüntüleme )
+                        AnketSonuclari anketSonuclariView = new AnketSonuclari();
+                        splitPanel.Panel2.Controls.Add(anketSonuclariView);
+                        anketSonuclariView.Dock = DockStyle.Fill;
+                        break;
 
-                    case 2: //Kullanicilar Seçildi  ( kullanıcı bilgileri )
+                    case 3: //Kullanicilar Seçildi  ( kullanıcı bilgileri )
                         AnketKullanicilari anketKullaniciView = new AnketKullanicilari();
                         splitPanel.Panel2.Controls.Add(anketKullaniciView);
                         anketKullaniciView.Dock = DockStyle.Fill;
                         break;
 
-                    case 3: //Anket Ayarları Seçildi 
+                    case 4: //Anket Ayarları Seçildi 
                         AnketAyarlari anketAyarView = new AnketAyarlari();
                         splitPanel.Panel2.Controls.Add(anketAyarView);
                         anketAyarView.Dock = DockStyle.Fill;

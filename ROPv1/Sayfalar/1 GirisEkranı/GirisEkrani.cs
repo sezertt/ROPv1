@@ -226,7 +226,7 @@ namespace ROPv1
             try
             {
                 kullaniciBilgileri = gelenKullaniciBilgileri.Split('*');
-                cevapBilgileri = gelenSoruBilgileri.Split('*');
+                cevapBilgileri = gelenCevapBilgileri.Split('*');
                 soruBilgileri = gelenSoruBilgileri.Split('*');
             }
             catch
@@ -235,7 +235,7 @@ namespace ROPv1
             }
 
             // BURAYI KONTROL ET HATA VEREBİLİR --> insert update select scope identity???
-            SqlCommand cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM AnketKullanicilari WHERE Adi='" + kullaniciBilgileri[0] + "' AND SoyAdi='" + kullaniciBilgileri[1] + "' AND Eposta='" + kullaniciBilgileri[2] + "' SELECT SCOPE_IDENTITY()) UPDATE AnketKullanicilari SET Telefon='" + kullaniciBilgileri[3] + "' WHERE Adi='" + kullaniciBilgileri[0] + "' AND SoyAdi='" + kullaniciBilgileri[1] + "' AND Eposta='" + kullaniciBilgileri[2] + "' SELECT SCOPE_IDENTITY() ELSE INSERT INTO AnketKullanicilari(Adi,SoyAdi,Eposta,Telefon) VALUES(@_Adi,@_SoyAdi,@_Eposta,@_Telefon) SELECT SCOPE_IDENTITY()");     
+            SqlCommand cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM AnketKullanicilari WHERE Adi='" + kullaniciBilgileri[0] + "' AND SoyAdi='" + kullaniciBilgileri[1] + "' AND Eposta='" + kullaniciBilgileri[2] + "' SELECT SCOPE_IDENTITY()) UPDATE AnketKullanicilari SET Telefon='" + kullaniciBilgileri[3] + "' WHERE Adi='" + kullaniciBilgileri[0] + "' AND SoyAdi='" + kullaniciBilgileri[1] + "' AND Eposta='" + kullaniciBilgileri[2] + "' SELECT SCOPE_IDENTITY() ELSE INSERT INTO AnketKullanicilari(Adi,SoyAdi,Eposta,Telefon) VALUES(@_Adi,@_SoyAdi,@_Eposta,@_Telefon) SELECT SCOPE_IDENTITY()");
 
             int kullaniciID, anketID;
 
@@ -253,8 +253,45 @@ namespace ROPv1
                 return;
             }
 
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Anket(KullaniciID) VALUES(@_KullaniciID) SELECT SCOPE_IDENTITY()");
+            decimal genelPuan = 0;
+
+            for (int i = 0; i < soruBilgileri.Count(); i++)
+            {
+                cmd = SQLBaglantisi.getCommand("SELECT EtkiYuzdesi FROM AnketSorular WHERE Soru='" + soruBilgileri[i] + "' AND SorununSirasi<16");
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    decimal etki = dr.GetDecimal(0);
+
+                    int cevapDegeri = Convert.ToInt32(cevapBilgileri[i]);
+                    decimal carpan = 0;
+
+                    switch (cevapDegeri)
+                    {
+                        case 1:
+                            carpan = 0;
+                            break;
+                        case 2:
+                            carpan = 0.25M;
+                            break;
+                        case 3:
+                            carpan = 0.5M;
+                            break;
+                        case 4:
+                            carpan = 0.75M;
+                            break;
+                        case 5:
+                            carpan = 1;
+                            break;
+                    }
+                    genelPuan += carpan * etki;
+                }
+            }
+
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Anket(KullaniciID,AnketPuani) VALUES(@_KullaniciID,@_AnketPuani) SELECT SCOPE_IDENTITY()");
             cmd.Parameters.AddWithValue("@_KullaniciID", kullaniciID);
+            cmd.Parameters.AddWithValue("@_AnketPuani", genelPuan);
 
             try
             {
@@ -267,18 +304,19 @@ namespace ROPv1
 
             for (int i = 0; i < soruBilgileri.Count(); i++)
             {
-                cmd = SQLBaglantisi.getCommand("SELECT SoruID,EtkiYuzdesi FROM AnketSorular WHERE Soru='" + soruBilgileri[i] + "'");
+                cmd = SQLBaglantisi.getCommand("SELECT SoruID,EtkiYuzdesi,SorununSirasi FROM AnketSorular WHERE Soru='" + soruBilgileri[i] + "'");
                 SqlDataReader dr = cmd.ExecuteReader();
                 dr.Read();
 
-                int soruID = dr.GetInt32(0);
+                int soruID = dr.GetInt32(0), sorununSirasi = dr.GetInt32(2);
                 decimal etkiYuzdesi = dr.GetDecimal(1);
 
-                cmd = SQLBaglantisi.getCommand("INSERT INTO AnketCevaplar(AnketID,Cevap,EtkiYuzdesi,SoruID) VALUES(@_AnketID,@_Cevap,@_EtkiYuzdesi,@_SoruID)");
+                cmd = SQLBaglantisi.getCommand("INSERT INTO AnketCevaplar(AnketID,Cevap,EtkiYuzdesi,SoruID,SorununSirasi) VALUES(@_AnketID,@_Cevap,@_EtkiYuzdesi,@_SoruID,@SorununSirasi)");
                 cmd.Parameters.AddWithValue("@_AnketID", anketID);
                 cmd.Parameters.AddWithValue("@_Cevap", cevapBilgileri[i]);
                 cmd.Parameters.AddWithValue("@_EtkiYuzdesi", etkiYuzdesi);
                 cmd.Parameters.AddWithValue("@_SoruID", soruID);
+                cmd.Parameters.AddWithValue("@SorununSirasi", sorununSirasi);
 
                 cmd.ExecuteNonQuery();
             }
@@ -288,7 +326,7 @@ namespace ROPv1
         private void komut_anketIstegi(ClientRef client)
         {
             StringBuilder anketSorulari = new StringBuilder();
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Soru,SorununSirasi FROM AnketSorular WHERE SoruAktifMi=1");
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Soru,SorununSirasi FROM AnketSorular WHERE SoruAktifMi=1 ORDER BY SorununSirasi ASC");
             SqlDataReader dr = cmd.ExecuteReader();
 
             while (dr.Read())

@@ -20,12 +20,37 @@ namespace ROPv1
             InitializeComponent();
         }
 
+        internal static class NativeMethods
+        {
+            //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
+            [DllImport("user32.dll")]
+            internal static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        }
+        static void ToggleCapsLock(bool onOrOff)
+        {
+            if (IsKeyLocked(Keys.CapsLock) == onOrOff)
+                return;
+            NativeMethods.keybd_event(0x14, 0x45, 0x1, (UIntPtr)0);
+            NativeMethods.keybd_event(0x14, 0x45, 0x1 | 0x2, (UIntPtr)0);
+        }
+
+        //sanal klayvemize basıldığında touchscreenkeyboard dll mize basılan key i yolluyoruz
+        private void keyboardcontrol1_UserKeyPressed(object sender, KeyboardClassLibrary.KeyboardEventArgs e)
+        {
+            SendKeys.Send(e.KeyboardKeyPressed);
+        }
+
+
         private void Raporlar_Load(object sender, EventArgs e)
         {
+
+            //açılışta capslock açıksa kapatıyoruz.
+            ToggleCapsLock(false);
+
             SqlCommand cmd = SQLBaglantisi.getCommand("SELECT EtkiYuzdesi,Soru,SorununSirasi FROM AnketSorular WHERE SoruAktifMi=1");
             SqlDataReader dr = cmd.ExecuteReader();
 
-            int i = 18, j = 0, k = 0;
+            int j = 0, k = 0;
             while (dr.Read())
             {
                 decimal yuzde = dr.GetDecimal(0);
@@ -38,16 +63,10 @@ namespace ROPv1
                     (this.Controls.Find("numericSoru" + sorununSirasi, true).FirstOrDefault() as NumericUpDown).Value = yuzde;
                     j++;
                 }
-                else if (sorununSirasi < 18) // textboxyazi 
+                else // textboxyazi 
                 {
-                    (this.Controls.Find("textBoxYazi" + sorununSirasi, true).FirstOrDefault() as TextBox).Text = soru;
-                    (this.Controls.Find("numericYazi" + sorununSirasi, true).FirstOrDefault() as NumericUpDown).Value = yuzde;
+                    (this.Controls.Find("textBoxYazi" + sorununSirasi, true).FirstOrDefault() as TextBox).Text = soru;                    
                     k++;
-                }
-                else //textbox
-                {
-                    (this.Controls.Find("textBox" + i, true).FirstOrDefault() as TextBox).Text = soru;
-                    i++;
                 }
             }
 
@@ -113,30 +132,22 @@ namespace ROPv1
             {
                 textBoxYazi16.Enabled = true;
                 textBoxYazi17.Enabled = true;
-                numericYazi16.Enabled = true;
-                numericYazi17.Enabled = true;
             }
             else if (yaziliSoruAdedi == 1)
             {
                 textBoxYazi16.Enabled = true;
                 textBoxYazi17.Enabled = false;
-                numericYazi16.Enabled = true;
-                numericYazi17.Enabled = false;
             }
             else if (Convert.ToInt32(numericSecmeliSoruSayisi.Value) > 0)
             {
                 textBoxYazi16.Enabled = false;
                 textBoxYazi17.Enabled = false;
-                numericYazi16.Enabled = false;
-                numericYazi17.Enabled = false;
             }
             else
             {
                 numericYaziliSoruSayisi.Value = 1;
                 textBoxYazi16.Enabled = true;
                 textBoxYazi17.Enabled = false;
-                numericYazi16.Enabled = true;
-                numericYazi17.Enabled = false;
             }
 
         }
@@ -148,10 +159,9 @@ namespace ROPv1
             int secmeliSoruAdedi = Convert.ToInt32(numericSecmeliSoruSayisi.Value);
             int yaziliSoruAdedi = Convert.ToInt32(numericYaziliSoruSayisi.Value);
             int alinacakSecmeliSoruAdedi = secmeliSoruAdedi;
-            int alinacakYaziliSoruAdedi = yaziliSoruAdedi;
 
-            string[] sorular = new string[22];
-            decimal[] puanlandırma = new decimal[22];
+            string[] sorular = new string[17];
+            decimal[] puanlandırma = new decimal[17];
 
             foreach (NumericUpDown puan in this.Controls.OfType<NumericUpDown>())
             {
@@ -170,27 +180,8 @@ namespace ROPv1
                             }
                         }
                     }
-                    else // yazılı soru
-                    {
-                        if (alinacakYaziliSoruAdedi > 0)
-                        {
-                            if (yaziliSoruAdedi == 1)
-                            {
-                                if (kacinci == 16)
-                                {
-                                    toplam += puan.Value;
-                                    alinacakYaziliSoruAdedi--;
-                                }
-                            }
-                            else
-                            {
-                                toplam += puan.Value;
-                                alinacakYaziliSoruAdedi--;
-                            }
-                            puanlandırma[kacinci - 1] = puan.Value;
-                        }
-                    }
-                    if (alinacakYaziliSoruAdedi == 0 && alinacakSecmeliSoruAdedi == 0)
+                   
+                    if (alinacakSecmeliSoruAdedi == 0)
                         break;
                 }
             }
@@ -222,7 +213,7 @@ namespace ROPv1
                         sorular[kacinci - 1] = "";
                     }
                 }
-                else if (kacinci < 18) // yazili soru
+                else // yazili soru
                 {
                     if (yaziliSoruAdedi == 1)
                     {
@@ -242,22 +233,19 @@ namespace ROPv1
                         sorular[kacinci] = "";
                     }
                 }
-                else
-                {
-                    if (puan.Text == "")
-                    {
-                        KontrolFormu dialog = new KontrolFormu("Şıklar boş bırakılamaz", false);
-                        dialog.Show();
-                        return;
-                    }
-                    sorular[kacinci - 1] = puan.Text;
-                }
             }
 
             SqlCommand cmd;
 
-            for (int i = 0; i < 22; i++)
+            cmd = SQLBaglantisi.getCommand("UPDATE AnketSorular SET SoruAktifMi=0");
+            cmd.ExecuteNonQuery();
+
+
+            for (int i = 0; i < 17; i++)
             {
+                if (sorular[i] == "")
+                    break;
+
                 if (i < numericSecmeliSoruSayisi.Value)// seçmeli sorular
                 {
                     cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM AnketSorular WHERE Soru=@_Soru1 AND SorununSirasi<16) UPDATE AnketSorular SET EtkiYuzdesi=@_EtkiYuzdesi1, SoruAktifMi=1, SorununSirasi=@_sorununSirasi1 WHERE Soru=@_Soru2 AND SorununSirasi<16 ELSE INSERT INTO AnketSorular(EtkiYuzdesi,Soru,SoruAktifMi,SorununSirasi) VALUES(@_EtkiYuzdesi2,@_Soru3,1,@_SorununSirasi2)");
@@ -274,33 +262,21 @@ namespace ROPv1
                     cmd.ExecuteNonQuery();
 
                 }
-                else if (i < numericYaziliSoruSayisi.Value + 15 && i > 14) // yazılı sorular
+                else // yazılı sorular
                 {
                     cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM AnketSorular WHERE Soru=@_Soru1 AND SorununSirasi>15) UPDATE AnketSorular SET EtkiYuzdesi=@_EtkiYuzdesi1, SoruAktifMi=1, SorununSirasi=@_sorununSirasi1 WHERE Soru=@_Soru2 AND SorununSirasi>15 ELSE INSERT INTO AnketSorular(EtkiYuzdesi,Soru,SoruAktifMi,SorununSirasi) VALUES(@_EtkiYuzdesi2,@_Soru3,1,@_SorununSirasi2)");
 
                     cmd.Parameters.AddWithValue("@_Soru1", sorular[i]);
-                    cmd.Parameters.AddWithValue("@_EtkiYuzdesi1", puanlandırma[i]);
+                    cmd.Parameters.AddWithValue("@_EtkiYuzdesi1", 0);
                     cmd.Parameters.AddWithValue("@_sorununSirasi1", i + 1);
 
                     cmd.Parameters.AddWithValue("@_Soru2", sorular[i]);
 
-                    cmd.Parameters.AddWithValue("@_EtkiYuzdesi2", puanlandırma[i]);
+                    cmd.Parameters.AddWithValue("@_EtkiYuzdesi2", 0);
                     cmd.Parameters.AddWithValue("@_Soru3", sorular[i]);
                     cmd.Parameters.AddWithValue("@_sorununSirasi2", i + 1);
                     cmd.ExecuteNonQuery();
 
-                }
-                else if(i > 16)// şıklar
-                {
-                    cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM AnketSorular WHERE SorununSirasi=@_sorununSirasi1) UPDATE AnketSorular SET Soru=@_Soru WHERE SorununSirasi=@_sorununSirasi2 ELSE INSERT INTO AnketSorular(EtkiYuzdesi,Soru,SoruAktifMi,SorununSirasi) VALUES(0,@_Soru,1,@_SorununSirasi3)");
-
-                    cmd.Parameters.AddWithValue("@_sorununSirasi1", i + 1);
-                    cmd.Parameters.AddWithValue("@_sorununSirasi2", i + 1);
-
-                    cmd.Parameters.AddWithValue("@_Soru", sorular[i]);
-                    cmd.Parameters.AddWithValue("@_sorununSirasi3", i + 1);
-
-                    cmd.ExecuteNonQuery();
                 }
             }
 
@@ -316,6 +292,37 @@ namespace ROPv1
 
             KontrolFormu dialog2 = new KontrolFormu("Değişiklikler kaydedildi", false);
             dialog2.Show();
+        }
+
+        // Klavyeyi gizle/göster resmini değiştir + / -
+        private void buttonKlavye_Click(object sender, EventArgs e)
+        {
+            if(keyboardcontrol1.Visible)
+            {
+                buttonKlavye.Image = global::ROPv1.Properties.Resources.add;
+                keyboardcontrol1.Visible = false;
+                buttonKlavyeAsagi.Visible = false;
+                buttonKlavyeYukari.Visible = false;
+            }
+            else
+            {
+                buttonKlavye.Image = global::ROPv1.Properties.Resources.delete;
+                keyboardcontrol1.Visible = true;
+                buttonKlavyeAsagi.Visible = true;
+                buttonKlavyeYukari.Visible = true;
+            }
+        }
+
+        // Klavyeyi aşağıda göster
+        private void buttonKlavyeAsagi_Click(object sender, EventArgs e)
+        {
+            keyboardcontrol1.Dock = DockStyle.Bottom;
+        }
+
+        // Klavyeyi yukarda göster
+        private void buttonKlavyeYukari_Click(object sender, EventArgs e)
+        {
+            keyboardcontrol1.Dock = DockStyle.Top;
         }
     }
 }
