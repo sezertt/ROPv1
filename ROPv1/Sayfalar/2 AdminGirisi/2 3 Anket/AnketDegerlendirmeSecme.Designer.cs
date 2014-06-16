@@ -51,7 +51,7 @@
             // 
             // buttonSayfaAzalt
             // 
-            this.buttonSayfaAzalt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonSayfaAzalt.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonSayfaAzalt.BackColor = System.Drawing.SystemColors.Window;
             this.buttonSayfaAzalt.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonSayfaAzalt.ForeColor = System.Drawing.SystemColors.ActiveCaption;
@@ -67,7 +67,7 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Calibri", 24.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -81,7 +81,7 @@
             // 
             // labelSayfa
             // 
-            this.labelSayfa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelSayfa.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.labelSayfa.BackColor = System.Drawing.Color.Transparent;
             this.labelSayfa.Font = new System.Drawing.Font("Calibri", 24.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelSayfa.ForeColor = System.Drawing.SystemColors.Window;
@@ -96,7 +96,7 @@
             // 
             // buttonSayfaArttir
             // 
-            this.buttonSayfaArttir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonSayfaArttir.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonSayfaArttir.BackColor = System.Drawing.SystemColors.Window;
             this.buttonSayfaArttir.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonSayfaArttir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
@@ -112,7 +112,7 @@
             // 
             // labelSayfaSayisi
             // 
-            this.labelSayfaSayisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelSayfaSayisi.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.labelSayfaSayisi.AutoSize = true;
             this.labelSayfaSayisi.BackColor = System.Drawing.Color.Transparent;
             this.labelSayfaSayisi.Font = new System.Drawing.Font("Calibri", 24.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -128,8 +128,9 @@
             // 
             this.listSecmeliSoru.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.listSecmeliSoru.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-            this.listSecmeliSoru.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listSecmeliSoru.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listSecmeliSoru.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader6,
             this.columnHeader5,
@@ -280,7 +281,7 @@
             this.label1Yildiz.Text = "%15 - 1 Yıldız";
             this.label1Yildiz.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // AnketDegerlendirme
+            // AnketDegerlendirmeSecme
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -298,7 +299,7 @@
             this.Controls.Add(this.labelSayfa);
             this.Controls.Add(this.buttonSayfaArttir);
             this.Controls.Add(this.labelSayfaSayisi);
-            this.Name = "AnketDegerlendirme";
+            this.Name = "AnketDegerlendirmeSecme";
             this.Size = new System.Drawing.Size(1018, 626);
             this.Load += new System.EventHandler(this.AnketDegerlendirme_Load);
             this.ResumeLayout(false);
