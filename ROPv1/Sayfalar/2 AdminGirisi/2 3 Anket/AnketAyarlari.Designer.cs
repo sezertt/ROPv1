@@ -120,7 +120,7 @@
             this.textboxSoru4.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxSoru4.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textboxSoru4.Location = new System.Drawing.Point(57, 44);
-            this.textboxSoru4.MaxLength = 350;
+            this.textboxSoru4.MaxLength = 500;
             this.textboxSoru4.Name = "textboxSoru4";
             this.textboxSoru4.Size = new System.Drawing.Size(488, 32);
             this.textboxSoru4.TabIndex = 2;
@@ -132,7 +132,7 @@
             this.textBoxSoru5.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru5.Location = new System.Drawing.Point(57, 82);
-            this.textBoxSoru5.MaxLength = 350;
+            this.textBoxSoru5.MaxLength = 500;
             this.textBoxSoru5.Name = "textBoxSoru5";
             this.textBoxSoru5.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru5.TabIndex = 3;
@@ -144,7 +144,7 @@
             this.textBoxSoru6.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru6.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru6.Location = new System.Drawing.Point(57, 120);
-            this.textBoxSoru6.MaxLength = 350;
+            this.textBoxSoru6.MaxLength = 500;
             this.textBoxSoru6.Name = "textBoxSoru6";
             this.textBoxSoru6.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru6.TabIndex = 4;
@@ -156,7 +156,7 @@
             this.textBoxSoru7.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru7.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru7.Location = new System.Drawing.Point(57, 158);
-            this.textBoxSoru7.MaxLength = 350;
+            this.textBoxSoru7.MaxLength = 500;
             this.textBoxSoru7.Name = "textBoxSoru7";
             this.textBoxSoru7.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru7.TabIndex = 5;
@@ -168,7 +168,7 @@
             this.textBoxSoru8.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru8.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru8.Location = new System.Drawing.Point(57, 196);
-            this.textBoxSoru8.MaxLength = 350;
+            this.textBoxSoru8.MaxLength = 500;
             this.textBoxSoru8.Name = "textBoxSoru8";
             this.textBoxSoru8.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru8.TabIndex = 6;
@@ -180,7 +180,7 @@
             this.textBoxSoru13.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru13.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru13.Location = new System.Drawing.Point(57, 386);
-            this.textBoxSoru13.MaxLength = 350;
+            this.textBoxSoru13.MaxLength = 500;
             this.textBoxSoru13.Name = "textBoxSoru13";
             this.textBoxSoru13.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru13.TabIndex = 11;
@@ -192,7 +192,7 @@
             this.textBoxSoru12.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru12.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru12.Location = new System.Drawing.Point(57, 348);
-            this.textBoxSoru12.MaxLength = 350;
+            this.textBoxSoru12.MaxLength = 500;
             this.textBoxSoru12.Name = "textBoxSoru12";
             this.textBoxSoru12.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru12.TabIndex = 10;
@@ -204,7 +204,7 @@
             this.textBoxSoru11.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru11.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru11.Location = new System.Drawing.Point(57, 310);
-            this.textBoxSoru11.MaxLength = 350;
+            this.textBoxSoru11.MaxLength = 500;
             this.textBoxSoru11.Name = "textBoxSoru11";
             this.textBoxSoru11.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru11.TabIndex = 9;
@@ -216,7 +216,7 @@
             this.textBoxSoru10.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru10.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru10.Location = new System.Drawing.Point(57, 272);
-            this.textBoxSoru10.MaxLength = 350;
+            this.textBoxSoru10.MaxLength = 500;
             this.textBoxSoru10.Name = "textBoxSoru10";
             this.textBoxSoru10.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru10.TabIndex = 8;
@@ -228,7 +228,7 @@
             this.textBoxSoru9.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru9.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru9.Location = new System.Drawing.Point(57, 234);
-            this.textBoxSoru9.MaxLength = 350;
+            this.textBoxSoru9.MaxLength = 500;
             this.textBoxSoru9.Name = "textBoxSoru9";
             this.textBoxSoru9.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru9.TabIndex = 7;
@@ -240,7 +240,7 @@
             this.textBoxSoru3.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru3.Location = new System.Drawing.Point(57, 576);
-            this.textBoxSoru3.MaxLength = 350;
+            this.textBoxSoru3.MaxLength = 500;
             this.textBoxSoru3.Name = "textBoxSoru3";
             this.textBoxSoru3.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru3.TabIndex = 16;
@@ -252,7 +252,7 @@
             this.textBoxSoru2.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru2.Location = new System.Drawing.Point(57, 538);
-            this.textBoxSoru2.MaxLength = 350;
+            this.textBoxSoru2.MaxLength = 500;
             this.textBoxSoru2.Name = "textBoxSoru2";
             this.textBoxSoru2.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru2.TabIndex = 15;
@@ -264,7 +264,7 @@
             this.textBoxSoru1.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru1.Location = new System.Drawing.Point(57, 500);
-            this.textBoxSoru1.MaxLength = 350;
+            this.textBoxSoru1.MaxLength = 500;
             this.textBoxSoru1.Name = "textBoxSoru1";
             this.textBoxSoru1.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru1.TabIndex = 14;
@@ -276,7 +276,7 @@
             this.textBoxSoru15.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru15.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru15.Location = new System.Drawing.Point(57, 462);
-            this.textBoxSoru15.MaxLength = 350;
+            this.textBoxSoru15.MaxLength = 500;
             this.textBoxSoru15.Name = "textBoxSoru15";
             this.textBoxSoru15.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru15.TabIndex = 13;
@@ -288,7 +288,7 @@
             this.textBoxSoru14.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSoru14.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxSoru14.Location = new System.Drawing.Point(57, 424);
-            this.textBoxSoru14.MaxLength = 350;
+            this.textBoxSoru14.MaxLength = 500;
             this.textBoxSoru14.Name = "textBoxSoru14";
             this.textBoxSoru14.Size = new System.Drawing.Size(488, 32);
             this.textBoxSoru14.TabIndex = 12;
@@ -541,7 +541,7 @@
             this.textBoxYazi16.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxYazi16.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxYazi16.Location = new System.Drawing.Point(680, 244);
-            this.textBoxYazi16.MaxLength = 350;
+            this.textBoxYazi16.MaxLength = 500;
             this.textBoxYazi16.Multiline = true;
             this.textBoxYazi16.Name = "textBoxYazi16";
             this.textBoxYazi16.Size = new System.Drawing.Size(328, 108);
@@ -556,7 +556,7 @@
             this.textBoxYazi17.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxYazi17.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxYazi17.Location = new System.Drawing.Point(680, 378);
-            this.textBoxYazi17.MaxLength = 350;
+            this.textBoxYazi17.MaxLength = 500;
             this.textBoxYazi17.Multiline = true;
             this.textBoxYazi17.Name = "textBoxYazi17";
             this.textBoxYazi17.Size = new System.Drawing.Size(331, 108);
