@@ -59,7 +59,8 @@ namespace ROPv1
                 //kullanıcının yerini bul
                 for (int i = 0; i < infoKullanici.Count(); i++)
                 {
-                    if (Helper.VerifyHash(textboxPin.Text, "SHA512", infoKullanici[i].UIPN))
+                    //if (Helper.VerifyHash(textboxPin.Text, "SHA512", infoKullanici[i].UIPN))
+                    if (PasswordHash.ValidatePassword(textboxPin.Text, infoKullanici[i].UIPN))
                     {
                         kullaniciAdi = i;
                         break;
@@ -77,7 +78,8 @@ namespace ROPv1
                     }
                     else if (yapilacakIslem == "Adisyon Görüntüleme")
                     {
-                        if (Helper.VerifyHash("true", "SHA512", infoKullanici[kullaniciAdi].UIY[3]))
+                        //if (Helper.VerifyHash("true", "SHA512", infoKullanici[kullaniciAdi].UIY[3]))
+                        if (PasswordHash.ValidatePassword("true", infoKullanici[kullaniciAdi].UIY[3]))
                         {
                             dogru = true;
                             ayarYapanKisi = (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIS);

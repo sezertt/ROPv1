@@ -91,7 +91,7 @@ namespace ROPv1
 
         public void kullaniciyiSilOnaylandi()
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("DELETE FROM AnketCevaplar WHERE AnketID = (SELECT AnketID FROM Anket WHERE KullaniciID=(SELECT KullaniciID FROM AnketKullanicilari WHERE Adi='" + listKullanici.SelectedItems[0].SubItems[0].Text + "' AND SoyAdi='" + listKullanici.SelectedItems[0].SubItems[1].Text + "' AND Eposta='" + listKullanici.SelectedItems[0].SubItems[2].Text + "' AND Telefon='" + listKullanici.SelectedItems[0].SubItems[3].Text + "'))");
+            SqlCommand cmd = SQLBaglantisi.getCommand("DELETE FROM AnketCevaplar WHERE AnketID = (SELECT TOP 1 AnketID FROM Anket WHERE KullaniciID=(SELECT KullaniciID FROM AnketKullanicilari WHERE Adi='" + listKullanici.SelectedItems[0].SubItems[0].Text + "' AND SoyAdi='" + listKullanici.SelectedItems[0].SubItems[1].Text + "' AND Eposta='" + listKullanici.SelectedItems[0].SubItems[2].Text + "' AND Telefon='" + listKullanici.SelectedItems[0].SubItems[3].Text + "'))");
 
             cmd.ExecuteNonQuery();
 

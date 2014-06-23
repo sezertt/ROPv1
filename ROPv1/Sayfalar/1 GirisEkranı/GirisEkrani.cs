@@ -1854,14 +1854,28 @@ namespace ROPv1
                 infoKullanici[0].UIN = (new UnicodeEncoding()).GetBytes("Adınız");
                 infoKullanici[0].UIS = (new UnicodeEncoding()).GetBytes("Soy Adınız");
                 infoKullanici[0].UIUN = (new UnicodeEncoding()).GetBytes("admin");
+                infoKullanici[0].UIU = (new UnicodeEncoding()).GetBytes("Yönetici");
+
+                /*
                 infoKullanici[0].UIPN = Helper.ComputeHash("0000", "SHA512", null);
                 infoKullanici[0].UIPW = Helper.ComputeHash("00000", "SHA512", null);
-                infoKullanici[0].UIU = (new UnicodeEncoding()).GetBytes("Yönetici");
                 infoKullanici[0].UIY[0] = Helper.ComputeHash("true", "SHA512", null);
                 infoKullanici[0].UIY[1] = Helper.ComputeHash("true", "SHA512", null);
                 infoKullanici[0].UIY[2] = Helper.ComputeHash("true", "SHA512", null);
                 infoKullanici[0].UIY[3] = Helper.ComputeHash("true", "SHA512", null);
                 infoKullanici[0].UIY[4] = Helper.ComputeHash("true", "SHA512", null);
+                */
+
+                infoKullanici[0].UIPN = PasswordHash.CreateHash("0000");
+                infoKullanici[0].UIPW = PasswordHash.CreateHash("00000");
+                infoKullanici[0].UIY[0] = PasswordHash.CreateHash("true");
+                infoKullanici[0].UIY[1] = PasswordHash.CreateHash("true");
+                infoKullanici[0].UIY[2] = PasswordHash.CreateHash("true");
+                infoKullanici[0].UIY[3] = PasswordHash.CreateHash("true");
+                infoKullanici[0].UIY[4] = PasswordHash.CreateHash("true");
+
+
+
 
                 XmlSave.SaveRestoran(infoKullanici, "tempfiles.xml");
 
@@ -1897,7 +1911,10 @@ namespace ROPv1
                 }
                 if (kullaniciAdi != -5)
                 {
-                    bool flag = Helper.VerifyHash(password, "SHA512", infoKullanici[kullaniciAdi].UIPW);
+                    //bool flag = Helper.VerifyHash(password, "SHA512", infoKullanici[kullaniciAdi].UIPW);
+
+                    bool flag = PasswordHash.ValidatePassword(password, infoKullanici[kullaniciAdi].UIPW);
+
                     if (flag == true)
                     { //şifre doğru
                         XmlSave.SaveRestoran(username, "sonKullanici.xml");

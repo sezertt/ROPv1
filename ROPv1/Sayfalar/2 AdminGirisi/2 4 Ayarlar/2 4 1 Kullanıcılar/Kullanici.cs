@@ -38,7 +38,8 @@ namespace ROPv1
 
                 for (int j = 0; j < 5; j++)
                 {
-                    if (Helper.VerifyHash("true", "SHA512", kullaniciListesi[i].UIY[j]))
+                    //if (Helper.VerifyHash("true", "SHA512", kullaniciListesi[i].UIY[j]))
+                    if (PasswordHash.ValidatePassword("true", kullaniciListesi[i].UIY[j]))
                     {
                         treeYetkiler.Nodes[j].Checked = true;
                     }
@@ -126,7 +127,8 @@ namespace ROPv1
                         dialog.Show();
                         return;
                     }
-                    else if (Helper.VerifyHash(textboxPin.Text, "SHA512", kullaniciListesi[j].UIPN))
+                    //else if (Helper.VerifyHash(textboxPin.Text, "SHA512", kullaniciListesi[j].UIPN))
+                    else if (PasswordHash.ValidatePassword(textboxPin.Text, kullaniciListesi[j].UIPN))
                     {
                         dialog = new KontrolFormu("Kullanımda olan bir pin girdiniz, lütfen kontrol edin", false);
                         dialog.Show();
@@ -144,15 +146,30 @@ namespace ROPv1
                 temp.UIN = (new UnicodeEncoding()).GetBytes(textboxName.Text);
                 temp.UIS = (new UnicodeEncoding()).GetBytes(textboxSurname.Text);
                 temp.UIUN = (new UnicodeEncoding()).GetBytes(textboxUserName.Text);
+                temp.UIU = (new UnicodeEncoding()).GetBytes(comboNewTitle.Text);
+
+                /*
                 temp.UIPN = Helper.ComputeHash(textboxPin.Text, "SHA512", null);
                 temp.UIPW = Helper.ComputeHash(textBoxPassword.Text, "SHA512", null);
-                temp.UIU = (new UnicodeEncoding()).GetBytes(comboNewTitle.Text);
+                
                 for (int i = 0; i < 5; i++)
                 {
                     if (treeYetkiler.Nodes[i].Checked)
                         temp.UIY[i] = Helper.ComputeHash("true", "SHA512", null);
                     else
                         temp.UIY[i] = Helper.ComputeHash("false", "SHA512", null);
+                }
+                */
+
+                temp.UIPN = PasswordHash.CreateHash(textboxPin.Text);
+                temp.UIPW = PasswordHash.CreateHash(textBoxPassword.Text);
+
+                for (int i = 0; i < 5; i++)
+                {
+                    if (treeYetkiler.Nodes[i].Checked)
+                        temp.UIY[i] = PasswordHash.CreateHash("true");
+                    else
+                        temp.UIY[i] = PasswordHash.CreateHash("false");
                 }
 
                 kullaniciListesi.Add(temp);
@@ -214,7 +231,8 @@ namespace ROPv1
 
                 for (int j = 0; j < kullaniciListesi.Count(); j++)
                 {
-                    if (Helper.VerifyHash(textboxPin.Text, "SHA512", kullaniciListesi[j].UIPN))
+                    //if (Helper.VerifyHash(textboxPin.Text, "SHA512", kullaniciListesi[j].UIPN))
+                    if (PasswordHash.ValidatePassword(textboxPin.Text, kullaniciListesi[j].UIPN))
                     {
                         kacTane++;
                     }
@@ -236,13 +254,14 @@ namespace ROPv1
                 kullaniciListesi[i].UIS = (new UnicodeEncoding()).GetBytes(textboxSurname.Text);
                 kullaniciListesi[i].UIUN = (new UnicodeEncoding()).GetBytes(textboxUserName.Text);
 
+                kullaniciListesi[i].UIU = (new UnicodeEncoding()).GetBytes(comboNewTitle.Text);
+
+                /*
                 if (textboxPin.Text != "")
                     kullaniciListesi[i].UIPN = Helper.ComputeHash(textboxPin.Text, "SHA512", null);
 
                 if (textBoxPassword.Text != "")
                     kullaniciListesi[i].UIPW = Helper.ComputeHash(textBoxPassword.Text, "SHA512", null);
-
-                kullaniciListesi[i].UIU = (new UnicodeEncoding()).GetBytes(comboNewTitle.Text);
 
                 for (int x = 0; x < 5; x++)
                 {
@@ -250,6 +269,21 @@ namespace ROPv1
                         kullaniciListesi[i].UIY[x] = Helper.ComputeHash("true", "SHA512", null);
                     else
                         kullaniciListesi[i].UIY[x] = Helper.ComputeHash("false", "SHA512", null);
+                }
+                 */
+
+                if (textboxPin.Text != "")
+                    kullaniciListesi[i].UIPN = PasswordHash.CreateHash(textboxPin.Text);
+
+                if (textBoxPassword.Text != "")
+                    kullaniciListesi[i].UIPW = PasswordHash.CreateHash(textBoxPassword.Text);
+
+                for (int x = 0; x < 5; x++)
+                {
+                    if (treeYetkiler.Nodes[x].Checked)
+                        kullaniciListesi[i].UIY[x] = PasswordHash.CreateHash("true");
+                    else
+                        kullaniciListesi[i].UIY[x] = PasswordHash.CreateHash("false");
                 }
 
                 // dosya korumayı açıyoruz
@@ -274,9 +308,9 @@ namespace ROPv1
         {
             DialogResult eminMisiniz;
 
-            KontrolFormu dialog = new KontrolFormu(treeUserName.SelectedNode.Text + " adlı kullanıcıyı silmek istediğinize emin misiniz?", true);            
+            KontrolFormu dialog = new KontrolFormu(treeUserName.SelectedNode.Text + " adlı kullanıcıyı silmek istediğinize emin misiniz?", true);
             eminMisiniz = dialog.ShowDialog();
-            
+
 
             if (eminMisiniz == DialogResult.Yes)
             {
@@ -311,7 +345,8 @@ namespace ROPv1
 
             for (int j = 0; j < 5; j++)
             {
-                if (Helper.VerifyHash("true", "SHA512", kullaniciListesi[i].UIY[j]))
+                //if (Helper.VerifyHash("true", "SHA512", kullaniciListesi[i].UIY[j]))
+                if (PasswordHash.ValidatePassword("true", kullaniciListesi[i].UIY[j]))
                 {
                     treeYetkiler.Nodes[j].Checked = true;
                 }

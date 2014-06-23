@@ -282,7 +282,7 @@
     <Compile Include="Sayfalar\GenelKullanılanlar\AdisyonNotuFormu.Designer.cs">
       <DependentUpon>AdisyonNotuFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\GenelKullanılanlar\Helper.cs" />
+    <Compile Include="Sayfalar\GenelKullanılanlar\PasswordHash.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\SQLBaglantisi.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\XMLAktarClient.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\XMLAktarServer.cs" />
@@ -424,9 +424,7 @@
       <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Gereksizler\app.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="app.config" />
     <None Include="Gereksizler\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

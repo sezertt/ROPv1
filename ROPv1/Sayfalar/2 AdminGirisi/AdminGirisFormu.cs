@@ -318,7 +318,8 @@ namespace ROPv1
                 //yetkilerine göre işlemlere izin verme
                 for (int i = 0; i < 4; i++)
                 {
-                    if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[i]))
+                    //if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[i]))
+                    if (PasswordHash.ValidatePassword("false", infoKullanici[kullaniciAdi].UIY[i]))
                     {
                         flowLayoutPanel1.Controls[i].Enabled = false;
                     }

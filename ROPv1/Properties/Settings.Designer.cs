@@ -70,15 +70,5 @@ namespace ROPv1.Properties {
                 this["IP"] = value;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=LHCASPER;Initial Catalog=ropv1;Integrated Security=True")]
-        public string ropv1ConnectionString {
-            get {
-                return ((string)(this["ropv1ConnectionString"]));
-            }
-        }
     }
 }
