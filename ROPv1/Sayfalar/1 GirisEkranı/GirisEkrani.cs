@@ -16,11 +16,19 @@ using SPIA;
 using SPIA.Server;
 using System.Threading;
 using ROPv1.CrystalReports;
+using System.Net.Mail;
+using System.Net;
+using System.Security.Cryptography;
 
 namespace ROPv1
 {
+
     public partial class GirisEkrani : Form
     {
+        const int adet = 12;
+
+        double gecenSure = 0;
+
         // SPIA kütüphanesindeki sunucu nesnesi        
         private SPIAServer sunucu;
 
@@ -243,7 +251,7 @@ namespace ROPv1
             SqlDataReader dr = cmd.ExecuteReader();
             dr.Read();
 
-            int kullaniciID,anketID;
+            int kullaniciID, anketID;
 
             try
             {
@@ -275,7 +283,7 @@ namespace ROPv1
 
                 while (dr2.Read())
                 {
-                    decimal etki = dr2.GetDecimal(0);        
+                    decimal etki = dr2.GetDecimal(0);
 
                     int cevapDegeri = Convert.ToInt32(Convert.ToDouble(cevapBilgileri[i]));
                     decimal carpan = 0;
@@ -1856,16 +1864,6 @@ namespace ROPv1
                 infoKullanici[0].UIUN = (new UnicodeEncoding()).GetBytes("admin");
                 infoKullanici[0].UIU = (new UnicodeEncoding()).GetBytes("Yönetici");
 
-                /*
-                infoKullanici[0].UIPN = Helper.ComputeHash("0000", "SHA512", null);
-                infoKullanici[0].UIPW = Helper.ComputeHash("00000", "SHA512", null);
-                infoKullanici[0].UIY[0] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].UIY[1] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].UIY[2] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].UIY[3] = Helper.ComputeHash("true", "SHA512", null);
-                infoKullanici[0].UIY[4] = Helper.ComputeHash("true", "SHA512", null);
-                */
-
                 infoKullanici[0].UIPN = PasswordHash.CreateHash("0000");
                 infoKullanici[0].UIPW = PasswordHash.CreateHash("00000");
                 infoKullanici[0].UIY[0] = PasswordHash.CreateHash("true");
@@ -1966,9 +1964,134 @@ namespace ROPv1
             labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
         }
 
+        private static string GetUniqueKey(int maxSize)
+        {
+            char[] chars = new char[62];
+            chars =
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+            byte[] data = new byte[1];
+            RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
+            crypto.GetNonZeroBytes(data);
+            data = new byte[maxSize];
+            crypto.GetNonZeroBytes(data);
+            StringBuilder result = new StringBuilder(maxSize);
+            foreach (byte b in data)
+            {
+                result.Append(chars[b % (chars.Length)]);
+            }
+            return result.ToString();
+        }
+
+        private void yeniSifreYaratveGonder()
+        {
+            string[] keys = new string[adet];
+
+            for (int i = 0; i < adet; i++)
+            {
+                keys[i] = GetUniqueKey(10);
+            }
+
+            bool mailGonderildi = false;
+
+            while (!mailGonderildi)
+            {
+                try
+                {
+                    MailMessage message = new MailMessage();
+                    SmtpClient smtp = new SmtpClient();
+
+                    message.From = new MailAddress("restomasyon@gmail.com");
+                    message.To.Add(new MailAddress("restomasyon@gmail.com"));
+
+                    message.Subject = "" + Properties.Settings.Default.FirmaAdi;
+
+                    for (int i = 0; i < adet; i++)
+                    {
+                        message.Body += keys[i] + "\n";
+                    }
+
+                    smtp.Port = 587;
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.EnableSsl = true;
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Credentials = new NetworkCredential("restomasyon@gmail.com", "Otomasyon23");
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtp.Send(message);
+                    mailGonderildi = true;
+
+                    for (int i = 0; i < adet; i++)
+                    {
+                        keys[i] = PasswordHash.CreateHash(keys[i]);
+                        Properties.Settings.Default.IP2Check.Add(keys[i]);
+                    }
+                    Properties.Settings.Default.Save();
+                }
+                catch
+                {
+                    KontrolFormu dialog = new KontrolFormu("Devam edebilmek için internet bağlantısı sağlamanız gerekmektedir, bağlantınızı yaptıktan sonra Tamam tuşuna basınız", false);
+                    dialog.ShowDialog();
+                }
+            }
+        }
+
         //Form Load
         private void GirisEkrani_Load(object sender, EventArgs e)
         {
+            if (Properties.Settings.Default.FirmaAdi == "")
+            {
+                SifreVeFirmaAdiFormu firmaAdiFormu = new SifreVeFirmaAdiFormu(true);
+                firmaAdiFormu.ShowDialog();
+            }
+
+            try
+            {
+                gecenSure = Properties.Settings.Default.Port2;
+
+                if (DateTime.Now >= Properties.Settings.Default.IP2.AddDays(30) && DateTime.Now < Properties.Settings.Default.IP2 && gecenSure >= 43200)
+                {
+                    Properties.Settings.Default.IP2Check.RemoveAt(0);
+                    Properties.Settings.Default.Port2 = -1;
+                    Properties.Settings.Default.IP2 = default(DateTime);
+                    Properties.Settings.Default.Save();
+                }
+            }
+            catch
+            { }
+
+            string sifre = PasswordHash.CreateHash("*/*/*//*/*/*///*/");
+            bool sifreKaldi = false;
+
+            if (Properties.Settings.Default.IP2Check != null)
+            {
+                for (int i = 0; i < Properties.Settings.Default.IP2Check.Count; i++)
+                {
+                    if (Properties.Settings.Default.IP2Check[i] != null && Properties.Settings.Default.IP2Check[i] != "")
+                    {
+                        sifre = Properties.Settings.Default.IP2Check[i];
+                        sifreKaldi = true;
+                        break;
+                    }
+                    else
+                    {
+                        Properties.Settings.Default.IP2Check.RemoveAt(i);
+                        Properties.Settings.Default.Port2 = -1;
+                        Properties.Settings.Default.IP2 = default(DateTime);
+                        i--;
+                    }
+                }
+                Properties.Settings.Default.Save();
+            }
+
+            if (!sifreKaldi) // yeni şifre gönder
+            {
+                yeniSifreYaratveGonder();
+            }
+
+            if (Properties.Settings.Default.IP3 == "" && !PasswordHash.ValidatePassword(Properties.Settings.Default.IP3, sifre))
+            {
+                SifreVeFirmaAdiFormu firmaAdiFormu = new SifreVeFirmaAdiFormu(false);
+                firmaAdiFormu.ShowDialog();
+            }
 
             //SQL SERVER BAĞLANTI KONTROLÜ BURADA YAPILIYOR
             SqlConnection cnn;
@@ -2023,6 +2146,9 @@ namespace ROPv1
                 sunucu.Durdur();
                 sunucu = null;
             }
+            
+            Properties.Settings.Default.Port2 = gecenSure;
+            Properties.Settings.Default.Save();
         }
 
         private void buttonConnection_Click(object sender, EventArgs e)
@@ -2205,5 +2331,11 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
         #endregion
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.Port2 != -1)
+                gecenSure += 10;
+        }
     }
 }

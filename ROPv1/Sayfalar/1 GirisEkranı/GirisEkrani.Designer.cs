@@ -45,6 +45,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.textboxOnlineKullanicilar = new System.Windows.Forms.TextBox();
             this.buttonConnection = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -143,7 +144,7 @@
             this.labelGun.Size = new System.Drawing.Size(116, 33);
             this.labelGun.TabIndex = 15;
             this.labelGun.Text = "Pazartesi";
-            this.labelGun.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelGun.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelTarih
             // 
@@ -156,7 +157,7 @@
             this.labelTarih.Size = new System.Drawing.Size(180, 33);
             this.labelTarih.TabIndex = 14;
             this.labelTarih.Text = "10 Şubat 2014 ";
-            this.labelTarih.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelTarih.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelSaat
             // 
@@ -169,7 +170,7 @@
             this.labelSaat.Size = new System.Drawing.Size(246, 73);
             this.labelSaat.TabIndex = 13;
             this.labelSaat.Text = "22:55:30";
-            this.labelSaat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelSaat.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // timerSaat
             // 
@@ -243,6 +244,11 @@
             this.buttonConnection.UseVisualStyleBackColor = false;
             this.buttonConnection.Click += new System.EventHandler(this.buttonConnection_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 600000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // GirisEkrani
             // 
             this.AcceptButton = this.girisButton;
@@ -300,6 +306,7 @@
         private System.Windows.Forms.Timer timerSaat;
         private System.Windows.Forms.TextBox textboxOnlineKullanicilar;
         private System.Windows.Forms.Button buttonConnection;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

@@ -256,22 +256,6 @@ namespace ROPv1
 
                 kullaniciListesi[i].UIU = (new UnicodeEncoding()).GetBytes(comboNewTitle.Text);
 
-                /*
-                if (textboxPin.Text != "")
-                    kullaniciListesi[i].UIPN = Helper.ComputeHash(textboxPin.Text, "SHA512", null);
-
-                if (textBoxPassword.Text != "")
-                    kullaniciListesi[i].UIPW = Helper.ComputeHash(textBoxPassword.Text, "SHA512", null);
-
-                for (int x = 0; x < 5; x++)
-                {
-                    if (treeYetkiler.Nodes[x].Checked)
-                        kullaniciListesi[i].UIY[x] = Helper.ComputeHash("true", "SHA512", null);
-                    else
-                        kullaniciListesi[i].UIY[x] = Helper.ComputeHash("false", "SHA512", null);
-                }
-                 */
-
                 if (textboxPin.Text != "")
                     kullaniciListesi[i].UIPN = PasswordHash.CreateHash(textboxPin.Text);
 

@@ -121,6 +121,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Sayfalar\1 GirisEkranı\SifreVeFirmaAdiFormu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\1 GirisEkranı\SifreVeFirmaAdiFormu.Designer.cs">
+      <DependentUpon>SifreVeFirmaAdiFormu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Sayfalar\1 GirisEkranı\PortFormu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -324,6 +330,10 @@
     <EmbeddedResource Include="CrystalReports\CrystalReportAdisyon.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReportAdisyon.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\1 GirisEkranı\SifreVeFirmaAdiFormu.resx">
+      <DependentUpon>SifreVeFirmaAdiFormu.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\1 GirisEkranı\PortFormu.resx">
       <DependentUpon>PortFormu.cs</DependentUpon>

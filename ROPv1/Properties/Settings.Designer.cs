@@ -70,5 +70,65 @@ namespace ROPv1.Properties {
                 this["IP"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime IP2 {
+            get {
+                return ((global::System.DateTime)(this["IP2"]));
+            }
+            set {
+                this["IP2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public double Port2 {
+            get {
+                return ((double)(this["Port2"]));
+            }
+            set {
+                this["Port2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" />")]
+        public global::System.Collections.Specialized.StringCollection IP2Check {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["IP2Check"]));
+            }
+            set {
+                this["IP2Check"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FirmaAdi {
+            get {
+                return ((string)(this["FirmaAdi"]));
+            }
+            set {
+                this["FirmaAdi"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string IP3 {
+            get {
+                return ((string)(this["IP3"]));
+            }
+            set {
+                this["IP3"] = value;
+            }
+        }
     }
 }

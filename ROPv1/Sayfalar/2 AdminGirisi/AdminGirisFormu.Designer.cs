@@ -34,16 +34,16 @@
             this.buttonBilgiAktar = new System.Windows.Forms.Button();
             this.leftPanelView = new System.Windows.Forms.TreeView();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.exitButton = new System.Windows.Forms.Button();
+            this.anketCheckBox = new System.Windows.Forms.CheckBox();
+            this.reportCheckBox = new System.Windows.Forms.CheckBox();
+            this.stokCheckBox = new System.Windows.Forms.CheckBox();
+            this.ayarCheckBox = new System.Windows.Forms.CheckBox();
             this.labelSaat = new System.Windows.Forms.Label();
             this.labelTarih = new System.Windows.Forms.Label();
             this.labelGun = new System.Windows.Forms.Label();
             this.timerSaat = new System.Windows.Forms.Timer(this.components);
             this.adisyonCheckBox = new System.Windows.Forms.CheckBox();
-            this.ayarCheckBox = new System.Windows.Forms.CheckBox();
-            this.reportCheckBox = new System.Windows.Forms.CheckBox();
-            this.stokCheckBox = new System.Windows.Forms.CheckBox();
-            this.anketCheckBox = new System.Windows.Forms.CheckBox();
-            this.exitButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitPanel)).BeginInit();
             this.splitPanel.Panel1.SuspendLayout();
             this.splitPanel.SuspendLayout();
@@ -129,91 +129,46 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(930, 116);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // labelSaat
+            // exitButton
             // 
-            this.labelSaat.AutoSize = true;
-            this.labelSaat.BackColor = System.Drawing.Color.Transparent;
-            this.labelSaat.Font = new System.Drawing.Font("Calibri", 45F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelSaat.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelSaat.Location = new System.Drawing.Point(0, 0);
-            this.labelSaat.Name = "labelSaat";
-            this.labelSaat.Size = new System.Drawing.Size(246, 73);
-            this.labelSaat.TabIndex = 7;
-            this.labelSaat.Text = "22:55:30";
-            this.labelSaat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.exitButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.exitButton.AutoSize = true;
+            this.exitButton.BackColor = System.Drawing.SystemColors.Window;
+            this.exitButton.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.exitButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.exitButton.Image = global::ROPv1.Properties.Resources.logOut;
+            this.exitButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.exitButton.Location = new System.Drawing.Point(747, 3);
+            this.exitButton.MaximumSize = new System.Drawing.Size(300, 110);
+            this.exitButton.MinimumSize = new System.Drawing.Size(180, 110);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(180, 110);
+            this.exitButton.TabIndex = 5;
+            this.exitButton.Text = "Çıkış";
+            this.exitButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.exitButton.UseVisualStyleBackColor = false;
+            this.exitButton.Click += new System.EventHandler(this.exitPressed);
             // 
-            // labelTarih
+            // anketCheckBox
             // 
-            this.labelTarih.AutoSize = true;
-            this.labelTarih.BackColor = System.Drawing.Color.Transparent;
-            this.labelTarih.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelTarih.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelTarih.Location = new System.Drawing.Point(34, 61);
-            this.labelTarih.Name = "labelTarih";
-            this.labelTarih.Size = new System.Drawing.Size(180, 33);
-            this.labelTarih.TabIndex = 8;
-            this.labelTarih.Text = "10 Şubat 2014 ";
-            this.labelTarih.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelGun
-            // 
-            this.labelGun.AutoSize = true;
-            this.labelGun.BackColor = System.Drawing.Color.Transparent;
-            this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGun.Location = new System.Drawing.Point(64, 88);
-            this.labelGun.Name = "labelGun";
-            this.labelGun.Size = new System.Drawing.Size(116, 33);
-            this.labelGun.TabIndex = 9;
-            this.labelGun.Text = "Pazartesi";
-            this.labelGun.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // timerSaat
-            // 
-            this.timerSaat.Interval = 1000;
-            this.timerSaat.Tick += new System.EventHandler(this.timerSaat_Tick);
-            // 
-            // adisyonCheckBox
-            // 
-            this.adisyonCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.adisyonCheckBox.BackColor = System.Drawing.SystemColors.Window;
-            this.adisyonCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.adisyonCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.adisyonCheckBox.Image = global::ROPv1.Properties.Resources.adisyon;
-            this.adisyonCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.adisyonCheckBox.Location = new System.Drawing.Point(236, 10);
-            this.adisyonCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
-            this.adisyonCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
-            this.adisyonCheckBox.Name = "adisyonCheckBox";
-            this.adisyonCheckBox.Size = new System.Drawing.Size(180, 110);
-            this.adisyonCheckBox.TabIndex = 6;
-            this.adisyonCheckBox.Tag = "4";
-            this.adisyonCheckBox.Text = "Adisyonlar";
-            this.adisyonCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.adisyonCheckBox.UseVisualStyleBackColor = false;
-            this.adisyonCheckBox.Click += new System.EventHandler(this.adisyonCheckBox_Click);
-            // 
-            // ayarCheckBox
-            // 
-            this.ayarCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.ayarCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.ayarCheckBox.BackColor = System.Drawing.SystemColors.Window;
-            this.ayarCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.ayarCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingscolor;
-            this.ayarCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ayarCheckBox.Location = new System.Drawing.Point(3, 3);
-            this.ayarCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
-            this.ayarCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
-            this.ayarCheckBox.Name = "ayarCheckBox";
-            this.ayarCheckBox.Size = new System.Drawing.Size(180, 110);
-            this.ayarCheckBox.TabIndex = 4;
-            this.ayarCheckBox.Tag = "3";
-            this.ayarCheckBox.Text = "Veri Aktar";
-            this.ayarCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.ayarCheckBox.UseVisualStyleBackColor = false;
-            this.ayarCheckBox.Visible = false;
-            this.ayarCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
+            this.anketCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.anketCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.anketCheckBox.BackColor = System.Drawing.SystemColors.Window;
+            this.anketCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.anketCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.anketCheckBox.Image = global::ROPv1.Properties.Resources.anket;
+            this.anketCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.anketCheckBox.Location = new System.Drawing.Point(561, 3);
+            this.anketCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
+            this.anketCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
+            this.anketCheckBox.Name = "anketCheckBox";
+            this.anketCheckBox.Size = new System.Drawing.Size(180, 110);
+            this.anketCheckBox.TabIndex = 3;
+            this.anketCheckBox.Tag = "4";
+            this.anketCheckBox.Text = "Anket";
+            this.anketCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.anketCheckBox.UseVisualStyleBackColor = false;
+            this.anketCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
             // 
             // reportCheckBox
             // 
@@ -257,46 +212,91 @@
             this.stokCheckBox.UseVisualStyleBackColor = false;
             this.stokCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
             // 
-            // anketCheckBox
+            // ayarCheckBox
             // 
-            this.anketCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.anketCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.anketCheckBox.BackColor = System.Drawing.SystemColors.Window;
-            this.anketCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.anketCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.anketCheckBox.Image = global::ROPv1.Properties.Resources.anket;
-            this.anketCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.anketCheckBox.Location = new System.Drawing.Point(561, 3);
-            this.anketCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
-            this.anketCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
-            this.anketCheckBox.Name = "anketCheckBox";
-            this.anketCheckBox.Size = new System.Drawing.Size(180, 110);
-            this.anketCheckBox.TabIndex = 3;
-            this.anketCheckBox.Tag = "4";
-            this.anketCheckBox.Text = "Anket";
-            this.anketCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.anketCheckBox.UseVisualStyleBackColor = false;
-            this.anketCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
+            this.ayarCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.ayarCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ayarCheckBox.BackColor = System.Drawing.SystemColors.Window;
+            this.ayarCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.ayarCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingscolor;
+            this.ayarCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.ayarCheckBox.Location = new System.Drawing.Point(3, 3);
+            this.ayarCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
+            this.ayarCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
+            this.ayarCheckBox.Name = "ayarCheckBox";
+            this.ayarCheckBox.Size = new System.Drawing.Size(180, 110);
+            this.ayarCheckBox.TabIndex = 4;
+            this.ayarCheckBox.Tag = "3";
+            this.ayarCheckBox.Text = "Veri Aktar";
+            this.ayarCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.ayarCheckBox.UseVisualStyleBackColor = false;
+            this.ayarCheckBox.Visible = false;
+            this.ayarCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
             // 
-            // exitButton
+            // labelSaat
             // 
-            this.exitButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.exitButton.AutoSize = true;
-            this.exitButton.BackColor = System.Drawing.SystemColors.Window;
-            this.exitButton.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.exitButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.exitButton.Image = global::ROPv1.Properties.Resources.logOut;
-            this.exitButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.exitButton.Location = new System.Drawing.Point(747, 3);
-            this.exitButton.MaximumSize = new System.Drawing.Size(300, 110);
-            this.exitButton.MinimumSize = new System.Drawing.Size(180, 110);
-            this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(180, 110);
-            this.exitButton.TabIndex = 5;
-            this.exitButton.Text = "Çıkış";
-            this.exitButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.exitButton.UseVisualStyleBackColor = false;
-            this.exitButton.Click += new System.EventHandler(this.exitPressed);
+            this.labelSaat.AutoSize = true;
+            this.labelSaat.BackColor = System.Drawing.Color.Transparent;
+            this.labelSaat.Font = new System.Drawing.Font("Calibri", 45F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelSaat.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelSaat.Location = new System.Drawing.Point(0, 0);
+            this.labelSaat.Name = "labelSaat";
+            this.labelSaat.Size = new System.Drawing.Size(246, 73);
+            this.labelSaat.TabIndex = 7;
+            this.labelSaat.Text = "22:55:30";
+            this.labelSaat.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelTarih
+            // 
+            this.labelTarih.AutoSize = true;
+            this.labelTarih.BackColor = System.Drawing.Color.Transparent;
+            this.labelTarih.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelTarih.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelTarih.Location = new System.Drawing.Point(34, 61);
+            this.labelTarih.Name = "labelTarih";
+            this.labelTarih.Size = new System.Drawing.Size(180, 33);
+            this.labelTarih.TabIndex = 8;
+            this.labelTarih.Text = "10 Şubat 2014 ";
+            this.labelTarih.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelGun
+            // 
+            this.labelGun.AutoSize = true;
+            this.labelGun.BackColor = System.Drawing.Color.Transparent;
+            this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelGun.Location = new System.Drawing.Point(64, 88);
+            this.labelGun.Name = "labelGun";
+            this.labelGun.Size = new System.Drawing.Size(116, 33);
+            this.labelGun.TabIndex = 9;
+            this.labelGun.Text = "Pazartesi";
+            this.labelGun.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // timerSaat
+            // 
+            this.timerSaat.Interval = 1000;
+            this.timerSaat.Tick += new System.EventHandler(this.timerSaat_Tick);
+            // 
+            // adisyonCheckBox
+            // 
+            this.adisyonCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.adisyonCheckBox.BackColor = System.Drawing.SystemColors.Window;
+            this.adisyonCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.adisyonCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.adisyonCheckBox.Image = global::ROPv1.Properties.Resources.adisyon;
+            this.adisyonCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.adisyonCheckBox.Location = new System.Drawing.Point(236, 10);
+            this.adisyonCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
+            this.adisyonCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
+            this.adisyonCheckBox.Name = "adisyonCheckBox";
+            this.adisyonCheckBox.Size = new System.Drawing.Size(180, 110);
+            this.adisyonCheckBox.TabIndex = 6;
+            this.adisyonCheckBox.Tag = "4";
+            this.adisyonCheckBox.Text = "Adisyonlar";
+            this.adisyonCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.adisyonCheckBox.UseVisualStyleBackColor = false;
+            this.adisyonCheckBox.Click += new System.EventHandler(this.adisyonCheckBox_Click);
             // 
             // AdminGirisFormu
             // 

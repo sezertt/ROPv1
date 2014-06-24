@@ -53,7 +53,7 @@
             this.labelGun.Size = new System.Drawing.Size(116, 33);
             this.labelGun.TabIndex = 12;
             this.labelGun.Text = "Pazartesi";
-            this.labelGun.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelGun.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelTarih
             // 
@@ -66,7 +66,7 @@
             this.labelTarih.Size = new System.Drawing.Size(180, 33);
             this.labelTarih.TabIndex = 11;
             this.labelTarih.Text = "10 Şubat 2014 ";
-            this.labelTarih.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelTarih.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelSaat
             // 
@@ -79,7 +79,7 @@
             this.labelSaat.Size = new System.Drawing.Size(246, 73);
             this.labelSaat.TabIndex = 10;
             this.labelSaat.Text = "22:55:30";
-            this.labelSaat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelSaat.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // timerSaat
             // 
