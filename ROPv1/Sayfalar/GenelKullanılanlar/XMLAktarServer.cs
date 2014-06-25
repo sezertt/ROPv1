@@ -17,7 +17,6 @@ namespace ROPv1
             sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             sock.Bind(ipEnd);
             sock.Listen(100);
-            //clientSock is the socket object of client, so we can use it now to transfer data to client
         }
 
         public bool Server(string FileName)

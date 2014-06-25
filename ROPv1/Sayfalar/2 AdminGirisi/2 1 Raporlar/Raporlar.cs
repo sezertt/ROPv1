@@ -27,22 +27,12 @@ namespace ROPv1
             InitializeComponent();
 
             this.gunSonuRaporuMu = gunSonuRaporuMu;
-
-            if (gunSonuRaporuMu)
-            {
-                raporGunSonu = new CrystalReportGunSonuRaporu();
-            }
-            else
-            {
-                raporUrunSatis = new CrystalReportUrunSatisRaporu();
-            }
         }
 
         private void Raporlar_Load(object sender, EventArgs e)
         {
             dateBitis.MaxDate = DateTime.Today;
-            dateBaslangic.MaxDate = DateTime.Today;
-            comboAdisyonAyar.SelectedIndex = 0;
+            dateBaslangic.MaxDate = DateTime.Today;            
         }
 
         private void comboAdisyonAyar_SelectedIndexChanged(object sender, EventArgs e)
@@ -175,6 +165,50 @@ namespace ROPv1
             {
                 comboAdisyonAyar_SelectedIndexChanged(comboAdisyonAyar, null);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ShowWaitForm();
+            if (gunSonuRaporuMu)
+            {
+                raporGunSonu = new CrystalReportGunSonuRaporu();
+            }
+            else
+            {
+                raporUrunSatis = new CrystalReportUrunSatisRaporu();
+            }
+            buttonRaporla.Visible = false;
+            comboAdisyonAyar.SelectedIndex = 0;
+            comboAdisyonAyar.Enabled = true;
+        }
+
+        private MyWaitForm _waitForm;
+
+        //girişe basıldığında id kontrolü sırasında lütfen bekleyiniz yazan bir form göstermek için
+        protected void ShowWaitForm()
+        {
+            // don't display more than one wait form at a time
+            if (_waitForm != null && !_waitForm.IsDisposed)
+            {
+                return;
+            }
+
+            _waitForm = new MyWaitForm("Rapor Hazırlanıyor...\nLütfen Bekleyin");
+            _waitForm.TopMost = true;
+            _waitForm.StartPosition = FormStartPosition.CenterScreen;
+            _waitForm.Show();
+            _waitForm.Refresh();
+
+            // force the wait window to display for at least 700ms so it doesn't just flash on the screen
+            System.Threading.Thread.Sleep(750);
+            Application.Idle += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, EventArgs e)
+        {
+            Application.Idle -= OnLoaded;
+            _waitForm.Close();
         }
     }
 

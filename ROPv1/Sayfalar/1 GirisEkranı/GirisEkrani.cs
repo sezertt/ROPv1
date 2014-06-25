@@ -19,6 +19,7 @@ using ROPv1.CrystalReports;
 using System.Net.Mail;
 using System.Net;
 using System.Security.Cryptography;
+using System.Security;
 
 namespace ROPv1
 {
@@ -205,6 +206,9 @@ namespace ROPv1
                     case "adisyonNotunuGuncelle":
                         komut_adisyonNotunuGuncelle(parametreler["masa"], parametreler["departmanAdi"], parametreler["adisyonNotu"]);
                         break;
+                    case "veriGonder":
+                        komut_veriGonder(e.Client,parametreler["kacinci"]);
+                        break;
                 }
             }
             catch (Exception)
@@ -226,6 +230,17 @@ namespace ROPv1
         }
 
         #region Komutlar
+
+        private void komut_veriGonder(ClientRef client,string kacinci)
+        {
+            int kacinciDosya = Convert.ToInt32(kacinci);
+            
+            client.MesajYolla("komut=dosyalar&kacinci=" + kacinciDosya);
+            
+            string[] xmlDosyalari = { "kategoriler.xml", "masaDizayn.xml", "menu.xml", "restoran.xml", "stoklar.xml", "tempfiles.xml", "urunler.xml" };
+
+            client.gonder(xmlDosyalari[kacinciDosya - 1]);        
+        }
 
         // Anket doldurulduktan sonra cevapları gelince çalışacak fonksiyon
         private void komut_anketCevaplari(string gelenKullaniciBilgileri, string gelenCevapBilgileri, string gelenSoruBilgileri) // anket cevapları ve kullanıcı bilgileri
@@ -498,7 +513,6 @@ namespace ROPv1
 
             SqlCommand cmd;
 
-            //BURADA AKTARMALARDAKİ SİPARİŞLERİ UPDATE ET 
 
             int adisyonID = -1;
 
@@ -1084,6 +1098,13 @@ namespace ROPv1
 
             cmd.ExecuteNonQuery();
 
+            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AdisyonNotu=@_AdisyonNotu WHERE AcikMi=1 AND MasaAdi=@masaninAdi AND DepartmanAdi=@departmanAdi");
+            cmd.Parameters.AddWithValue("@_AdisyonNotu", "");
+            cmd.Parameters.AddWithValue("@masaninAdi", masaAdi);
+            cmd.Parameters.AddWithValue("@departmanAdi", departmanAdi);
+
+            cmd.ExecuteNonQuery();
+
             cmd.Connection.Close();
             cmd.Connection.Dispose();
         }
@@ -1536,7 +1557,7 @@ namespace ROPv1
         {
             string adisyonNotu = "";
 
-            //Burada adisyonNotu'nu sql den al
+            //adisyonNotu'nu sql den al
             SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonNotu FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "'");
             SqlDataReader dr = cmd.ExecuteReader();
             dr.Read();
@@ -1982,6 +2003,16 @@ namespace ROPv1
             return result.ToString();
         }
 
+        public SecureString convertToSecureString(string strPassword)
+        {
+            var secureStr = new SecureString();
+            if (strPassword.Length > 0)
+            {
+                foreach (var c in strPassword.ToCharArray()) secureStr.AppendChar(c);
+            }
+            return secureStr;
+        }
+
         private void yeniSifreYaratveGonder()
         {
             string[] keys = new string[adet];
@@ -2014,7 +2045,12 @@ namespace ROPv1
                     smtp.Host = "smtp.gmail.com";
                     smtp.EnableSsl = true;
                     smtp.UseDefaultCredentials = false;
-                    smtp.Credentials = new NetworkCredential("restomasyon@gmail.com", "Otomasyon23");
+                    SecureString sfr = new System.Security.SecureString();
+
+                    sfr = convertToSecureString("Otomasyon23");
+                    sfr.MakeReadOnly();
+
+                    smtp.Credentials = new NetworkCredential("restomasyon@gmail.com", sfr);
                     smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                     smtp.Send(message);
                     mailGonderildi = true;
@@ -2093,7 +2129,7 @@ namespace ROPv1
                 firmaAdiFormu.ShowDialog();
             }
 
-            //SQL SERVER BAĞLANTI KONTROLÜ BURADA YAPILIYOR
+            //SQL SERVER BAĞLANTI KONTROLÜ YAPILIYOR
             SqlConnection cnn;
             try
             {

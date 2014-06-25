@@ -155,6 +155,7 @@ namespace ROPv1
                 acikMasaVarsaUyariVerFormuOneGetir();
                 return;
             }
+
             panel1.Controls[hangiDepartmanButonu].BackColor = Color.White;
             panel1.Controls[hangiDepartmanButonu].ForeColor = SystemColors.ActiveCaption;
             panel1.Controls[Convert.ToInt32(((Button)sender).Name)].BackColor = SystemColors.ActiveCaption;
@@ -195,8 +196,6 @@ namespace ROPv1
 
                     for (int i = 0; i < 6; i++)
                     {
-                        if (masaDizaynListesi[hangiMasaDizayni].masaPlanIsmi == "")
-                            break;
                         for (int j = 0; j < 7; j++)
                         {
                             if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[i][j] != null)
@@ -558,7 +557,9 @@ namespace ROPv1
                 acikMasaVarsaUyariVerFormuOneGetir();
                 return;
             }
+            client.MesajYolla("komut=veriGonder&kacinci=1");
 
+            /*
             bool basarili = false;
 
             XMLAktarClient aktarimServeri = new XMLAktarClient();
@@ -586,8 +587,7 @@ namespace ROPv1
             {
                 KontrolFormu dialog4 = new KontrolFormu("Dosya alımı başarısız, server alıma ayarlanmamışsa ayarladıktan sonra lütfen tekrar deneyiniz", false);
                 dialog4.Show();
-
-            }
+            }*/
         }
 
         #endregion
@@ -671,7 +671,7 @@ namespace ROPv1
             }
         }
 
-        // Sunucudan bir mesaj alındığında buraya gelir        
+        // Sunucudan bir mesaj alındığında çalışır        
         private void mesajAlindi(MesajAlmaArgumanlari e)
         {
             NameValueCollection parametreler = mesajCoz(e.Mesaj);
@@ -731,7 +731,7 @@ namespace ROPv1
                     case "departman": //açık masa bilgilerini geldiğinde
                         try
                         {
-                            //burada masa değiştir formdaki komut_departmana yönlendirme yapılmalı
+                            //masa değiştir formdaki komut_departmana yönlendirme yapılmalı, masa değiştirme durumunda da departmandaki açık/kapalı masaların görünmesi için
                             siparisMenuForm.masaDegistirForm.komut_departman(parametreler["masa"]);
                             siparisMenuForm.masaDegistirForm.BringToFront();
                         }
@@ -744,7 +744,7 @@ namespace ROPv1
                         komut_masaAcildi(parametreler["masa"], parametreler["departmanAdi"]);
                         try
                         {
-                            //burada masa değiştir formdaki komut_masaAcildi yönlendirme yapılmalı
+                            //masa değiştir formdaki komut_masaAcildi yönlendirme yapılmalı, masa değiştirme durumunda da departmandaki açık/kapalı masaların görünmesi için
                             siparisMenuForm.masaDegistirForm.komut_masaAcildi(parametreler["masa"], parametreler["departmanAdi"]);
                         }
                         catch { }
@@ -753,7 +753,7 @@ namespace ROPv1
                         komut_masaKapandi(parametreler["masa"], parametreler["departmanAdi"]);
                         try
                         {
-                            //burada masa değiştir formdaki komut_masaKapandi yönlendirme yapılmalı (eğer siparismenuformun masa değiştir formu açıksa diye) 
+                            //masa değiştir formdaki komut_masaKapandi yönlendirme yapılmalı , masa değiştirme durumunda da departmandaki açık/kapalı masaların görünmesi için
                             siparisMenuForm.masaDegistirForm.komut_masaKapandi(parametreler["masa"], parametreler["departmanAdi"]);
                         }
                         catch { }
@@ -763,6 +763,9 @@ namespace ROPv1
                         break;
                     case "IslemHatasi": // bir hata oluştuğunda
                         komut_IslemHatasi(parametreler["hata"]);
+                        break;
+                    case "dosyalar":
+                        komut_dosyalar(parametreler["kacinci"]);
                         break;
                 }
             }
@@ -942,6 +945,22 @@ namespace ROPv1
 
         #region Komutlar
 
+        private void komut_dosyalar(string kacinci)
+        {
+            int kacinciDosya = Convert.ToInt32(kacinci);
+
+            if(client.dosyaAl()) // dosya gönderimi başarılı sıradakini gönder 
+            {
+                if (kacinciDosya == 7)
+                    return;
+                client.MesajYolla("komut=veriGonder&kacinci=" + (kacinciDosya + 1));
+            }
+            else // dosya gönderimi başarısız aynısını tekrar gönder 
+            {
+                client.MesajYolla("komut=veriGonder&kacinci=" + kacinciDosya);
+            }
+        }
+
         //yazıcıları hesap formuna gönder
         private void komut_yazicilarGeldi(string aYazicilari, string dYazicilari, string garson, string acilisZamani)
         {
@@ -1042,7 +1061,10 @@ namespace ROPv1
                 buttonConnection.Image = Properties.Resources.baglantiOK;
                 buttonConnection.Text = "Bağlı";
                 buttonName.Visible = true;
-                buttonName.Text = Properties.Settings.Default.BilgisayarAdi;
+
+                if (Properties.Settings.Default.BilgisayarAdi != "")
+                    buttonName.Text = Properties.Settings.Default.BilgisayarAdi;
+
                 if (!loadYapildiMi)
                     SiparisMasaFormu_Load(null, null);
             }
@@ -1088,6 +1110,7 @@ namespace ROPv1
             tablePanel.RowCount = 6;
             tablePanel.ColumnCount = 7;
             tablePanel.Controls.Clear();
+
             for (int i = 0; i < 6; i++)
             {
                 for (int j = 0; j < 7; j++)
@@ -1130,13 +1153,13 @@ namespace ROPv1
                 }
             }
 
-            for (int j = 6; j > 0; j--)
+            for (int j = 6; j >= 0; j--)
             {
                 if (masaDizaynListesi[hangiMasaDizayni].masaPlanIsmi == "")
                     break;
 
                 bool sutunBos = true;
-                for (int i = 5; i > 0; i--)
+                for (int i = 5; i >= 0; i--)
                 {
                     if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[i][j] != null)
                     {
@@ -1150,12 +1173,12 @@ namespace ROPv1
                     break;
             }
 
-            for (int j = 5; j > 0; j--)
+            for (int j = 5; j >= 0; j--)
             {
                 if (masaDizaynListesi[hangiMasaDizayni].masaPlanIsmi == "")
                     break;
                 bool sutunBos = true;
-                for (int i = 6; i > 0; i--)
+                for (int i = 6; i >= 0; i--)
                 {
                     if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[j][i] != null)
                     {

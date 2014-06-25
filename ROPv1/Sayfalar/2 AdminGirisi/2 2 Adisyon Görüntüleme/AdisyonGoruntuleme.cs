@@ -538,7 +538,7 @@ namespace ROPv1
                 return;
             }
 
-            // Burada yazıcıların içerisinde Adisyon ismi ile başlayan yazıcı var mı diye bak varsa o yazıcıya gönder yoksa 
+            // yazıcıların içerisinde Adisyon ismi ile başlayan yazıcı var mı diye bak varsa o yazıcıya gönder yoksa 
             // Show(); ile yazıcı seçim formu göster. seçildiğinde seçilen yazıcıya gönder
 
             List<string[]> adisyonYazicilari = new List<string[]>();

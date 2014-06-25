@@ -110,8 +110,8 @@ namespace ROPv1
                     anketCheckBox.Image = global::ROPv1.Properties.Resources.anketBack;
                     buttonBilgiAktar.Visible = false;
 
-                    leftPanelView.Nodes.Add("Anket Değerlendirme(Seçmeli Sorular)"); // ( Alınan oyların sayısı, alınan tam puanlar , genel puanlama vs. )
-                    leftPanelView.Nodes.Add("Anket Değerlendirme(Yazılı Sorular)"); 
+                    leftPanelView.Nodes.Add("Değerlendirme(SS)"); // ( Alınan oyların sayısı, alınan tam puanlar , genel puanlama vs. )
+                    leftPanelView.Nodes.Add("Değerlendirme(YS)"); 
                     leftPanelView.Nodes.Add("Anket Sonuçları"); // ( Yapılan anketleri görüntüleme )
                     leftPanelView.Nodes.Add("Kullanıcı Bilgileri"); // ( Kullanıcı bilgileri )
                     leftPanelView.Nodes.Add("Anket Ayarları"); // ( Anket ayarları )
@@ -318,7 +318,6 @@ namespace ROPv1
                 //yetkilerine göre işlemlere izin verme
                 for (int i = 0; i < 4; i++)
                 {
-                    //if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciAdi].UIY[i]))
                     if (PasswordHash.ValidatePassword("false", infoKullanici[kullaniciAdi].UIY[i]))
                     {
                         flowLayoutPanel1.Controls[i].Enabled = false;
@@ -341,7 +340,7 @@ namespace ROPv1
         }
 
         private void buttonBilgiAktar_Click(object sender, EventArgs e)
-        {
+        {/*
             ShowWaitForm();
             bool basarili = true;
             string[] xmlDosyalari = { "kategoriler.xml", "masaDizayn.xml", "menu.xml", "restoran.xml", "stoklar.xml", "tempfiles.xml", "urunler.xml" };
@@ -366,7 +365,7 @@ namespace ROPv1
             {
                 KontrolFormu dialog = new KontrolFormu("Dosya gönderimi başarısız", false);
                 dialog.Show();
-            }
+            }*/
         }
 
         private MyWaitForm _waitForm;
@@ -380,7 +379,7 @@ namespace ROPv1
                 return;
             }
 
-            _waitForm = new MyWaitForm();
+            _waitForm = new MyWaitForm("Dosyalar Aktarılıyor...\nLütfen Bekleyiniz");
             _waitForm.TopMost = true;
             _waitForm.StartPosition = FormStartPosition.CenterScreen;
             _waitForm.Show();

@@ -392,6 +392,30 @@ namespace SPIA.Server
 
                 }
             }
+
+            public void gonder(string FileName)
+            {
+                try
+                {
+                    string fileName = FileName;// "test.txt";// "Your File Name";
+                    string filePath = @"C:\Program Files\ROP\";//Your File Path;
+                    byte[] fileNameByte = Encoding.ASCII.GetBytes(fileName);
+
+                    byte[] fileData = File.ReadAllBytes(filePath + fileName);
+                    byte[] clientData = new byte[4 + fileNameByte.Length + fileData.Length];
+                    byte[] fileNameLen = BitConverter.GetBytes(fileNameByte.Length);
+
+                    fileNameLen.CopyTo(clientData, 0);
+                    fileNameByte.CopyTo(clientData, 4);
+                    fileData.CopyTo(clientData, 4 + fileNameByte.Length);
+
+                    soket.Send(clientData);
+                }
+                catch (Exception ex)
+                {
+                    string xczx = ex.ToString();
+                }
+            }
             
             /// Ýstemci ile olan baðlantýyý keser            
             public void BaglantiyiKapat()

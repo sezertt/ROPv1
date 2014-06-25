@@ -256,13 +256,13 @@ namespace ROPv1
                         }
                     }
 
-                    for (int j = 6; j > 0; j--)
+                    for (int j = 6; j >= 0; j--)
                     {
                         if (masaDizaynListesi[hangiMasaDizayni].masaPlanIsmi == "")
                             break;
 
                         bool sutunBos = true;
-                        for (int i = 5; i > 0; i--)
+                        for (int i = 5; i >= 0; i--)
                         {
                             if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[i][j] != null)
                             {
@@ -276,12 +276,12 @@ namespace ROPv1
                             break;
                     }
 
-                    for (int j = 5; j > 0; j--)
+                    for (int j = 5; j >= 0; j--)
                     {
                         if (masaDizaynListesi[hangiMasaDizayni].masaPlanIsmi == "")
                             break;
                         bool sutunBos = true;
-                        for (int i = 6; i > 0; i--)
+                        for (int i = 6; i >= 0; i--)
                         {
                             if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[j][i] != null)
                             {
@@ -374,13 +374,13 @@ namespace ROPv1
                 }
             }
 
-            for (int j = 6; j > 0; j--)
+            for (int j = 6; j >= 0; j--)
             {
                 if (masaDizaynListesi[hangiMasaDizayni].masaPlanIsmi == "")
                     break;
 
                 bool sutunBos = true;
-                for (int i = 5; i > 0; i--)
+                for (int i = 5; i >= 0; i--)
                 {
                     if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[i][j] != null)
                     {
@@ -394,12 +394,12 @@ namespace ROPv1
                     break;
             }
 
-            for (int j = 5; j > 0; j--)
+            for (int j = 5; j >= 0; j--)
             {
                 if (masaDizaynListesi[hangiMasaDizayni].masaPlanIsmi == "")
                     break;
                 bool sutunBos = true;
-                for (int i = 6; i > 0; i--)
+                for (int i = 6; i >= 0; i--)
                 {
                     if (masaDizaynListesi[hangiMasaDizayni].masaYerleri[j][i] != null)
                     {

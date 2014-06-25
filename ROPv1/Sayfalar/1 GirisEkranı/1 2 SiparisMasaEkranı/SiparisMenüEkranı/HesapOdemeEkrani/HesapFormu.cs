@@ -213,7 +213,14 @@ namespace ROPv1
             cmd.Parameters.AddWithValue("@departmanAdi", departmanAdi);
 
             cmd.ExecuteNonQuery();
+            
+            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AdisyonNotu=@_AdisyonNotu WHERE AcikMi=1 AND MasaAdi=@masaninAdi AND DepartmanAdi=@departmanAdi");
+            cmd.Parameters.AddWithValue("@_AdisyonNotu", "");
+            cmd.Parameters.AddWithValue("@masaninAdi", masaAdi);
+            cmd.Parameters.AddWithValue("@departmanAdi", departmanAdi);
 
+            cmd.ExecuteNonQuery();
+            
             cmd.Connection.Close();
             cmd.Connection.Dispose();
         }
@@ -240,7 +247,7 @@ namespace ROPv1
                 labelMasa.Font = new Font(labelMasa.Font.FontFamily, labelMasa.Font.Size - 0.5f, labelMasa.Font.Style);
             }
 
-            // EĞER BURADA ÜRÜN VARSA ADİSYON VAR MI YOK MU BAK VARSA SİPARİŞLERİ EKLE, ÜRÜN YOKSA ÜRÜNÜ OLUŞTUR VE EKLE
+            // EĞER ÜRÜN VARSA ADİSYON VAR MI YOK MU BAK VARSA SİPARİŞLERİ EKLE, ÜRÜN YOKSA ÜRÜNÜ OLUŞTUR VE EKLE
             if (listHesaptakiler.Groups[3].Items.Count > 0)
             {
                 if (Properties.Settings.Default.Server == 2) //server - diğer tüm clientlara söylemeli yaptığı ikram vs. neyse
@@ -279,7 +286,7 @@ namespace ROPv1
                         menuFormu.masaFormu.serverdanSiparisIkramVeyaIptal(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), null);
                     }
 
-                    //burada mutfak adisyonu iste 
+                    // mutfak adisyonu iste 
 
                     if (mutfakAdisyonuYazdir)
                     {
@@ -336,10 +343,9 @@ namespace ROPv1
                     {
                         menuFormu.listUrunFiyat.Groups[2].Items[listedeYeniGelenSiparisVarmi].SubItems[0].Text = (Convert.ToDouble(menuFormu.listUrunFiyat.Groups[2].Items[listedeYeniGelenSiparisVarmi].SubItems[0].Text) + Convert.ToDouble(menuFormu.listUrunFiyat.Groups[3].Items[i].SubItems[0].Text)).ToString();
                         menuFormu.listUrunFiyat.Groups[2].Items[listedeYeniGelenSiparisVarmi].SubItems[2].Text = (Convert.ToDecimal(menuFormu.listUrunFiyat.Groups[2].Items[listedeYeniGelenSiparisVarmi].SubItems[2].Text) + Convert.ToDecimal(menuFormu.listUrunFiyat.Groups[3].Items[i].SubItems[2].Text)).ToString("0.00");
-                    }
+                        menuFormu.listUrunFiyat.Groups[3].Items[i].Remove();
+                    }                  
                 }
-                //yeni siparişleri hazırladık eski sipariş haline çevirdik artık listeden kaldırabiliriz 
-                menuFormu.listUrunFiyat.Groups[3].Items.Clear();
             }
 
             //Urunleri listeye ekliyoruz , fiyatlarını alıyoruz
@@ -420,7 +426,7 @@ namespace ROPv1
                     toplamHesap += Convert.ToDecimal((decimal)kacPorsiyon * yemeginFiyati);
                 }
 
-                // BURADA ODEME BILGILERINE SORGU AT  
+                // ODEME BILGILERINE SORGU AT  
                 cmd = SQLBaglantisi.getCommand("SELECT OdemeTipi, OdenenMiktar from OdemeDetay JOIN Adisyon ON OdemeDetay.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masaAdi + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0");
 
                 dr = cmd.ExecuteReader();
@@ -761,8 +767,9 @@ namespace ROPv1
             decimal Odenecek = 0;
             for (int i = 0; i < listUrunFiyat.Items.Count; i++)
             {
-                Odenecek += Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[0].Text) * Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[3].Text);
+                Odenecek += Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[3].Text);
             }
+
             if (Odenecek != Convert.ToDecimal(labelKalanHesap.Text))
                 buttonAdisyonYazdir.Enabled = false;
         }
@@ -1237,7 +1244,7 @@ namespace ROPv1
                 {
                     if (listUrunFiyat.Items[i].SubItems[1].Text != "-")
                     {
-                        //BURADA AKTARMALARDAKİ SİPARİŞLERİ UPDATE ET BOL VS. ikram iptaldeki gibi
+                        //AKTARMALARDAKİ SİPARİŞLERİ UPDATE ET BOL VS. ikram iptaldeki gibi
 
                         decimal kacPorsiyon = Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[1].Text.Substring(1, listUrunFiyat.Items[i].SubItems[1].Text.Length - 2));
                         string yemeginAdi = listUrunFiyat.Items[i].SubItems[2].Text;
@@ -1628,7 +1635,7 @@ namespace ROPv1
 
             if (Properties.Settings.Default.Server == 2) //server 
             {
-                // Burada yazıcıların içerisinde Adisyon ismi ile başlayan yazıcı var mı diye bak varsa o yazıcıya gönder yoksa 
+                // yazıcıların içerisinde Adisyon ismi ile başlayan yazıcı var mı diye bak varsa o yazıcıya gönder yoksa 
                 // Show(); ile yazıcı seçim formu göster. seçildiğinde seçilen yazıcıya gönder
 
                 List<string[]> adisyonYazicilari = new List<string[]>();
@@ -1647,14 +1654,22 @@ namespace ROPv1
                     yazici[3] = dr.GetString(3); // yazıcı windows adı
                     yazici[4] = dr.GetString(4); // telefon
 
-                    if (yazici[0].Substring(0, 7) == "Adisyon")
+                    try
                     {
-                        adisyonYazicilari.Add(yazici);
+                        if (yazici[0].Substring(0, 7) == "Adisyon")
+                        {
+                            adisyonYazicilari.Add(yazici);
+                        }
+                        else
+                        {
+                            digerYazicilar.Add(yazici);
+                        }
                     }
-                    else
+                    catch
                     {
                         digerYazicilar.Add(yazici);
                     }
+
                 }
 
                 cmd.Connection.Close();

@@ -64,6 +64,31 @@ namespace SPIA.Client
         private volatile bool calisiyor = false;
 
         // PUBLIC FONKSYONLAR /////////////////////////////////////////////////
+
+        public bool dosyaAl()
+        {
+            try
+            {
+                byte[] clientData = new byte[1024 * 5000];
+                string receivedPath = @"C:\ROP\";
+
+                int receivedBytesLen = clientBaglantisi.Receive(clientData);
+
+                int fileNameLen = BitConverter.ToInt32(clientData, 0);
+                string fileName = Encoding.ASCII.GetString(clientData, 4, fileNameLen);
+
+                BinaryWriter bWrite = new BinaryWriter(File.Open(receivedPath + fileName, FileMode.Create));
+                bWrite.Write(clientData, 4 + fileNameLen, receivedBytesLen - 4 - fileNameLen);
+
+                bWrite.Close();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                string xczx = ex.ToString();
+                return false;
+            }
+        }
         
         /// Bir SPIA Ýstemcisi oluþturur.        
         /// <param name="serverIpAdresi">SPIA Sunucusunun IP adresi</param>

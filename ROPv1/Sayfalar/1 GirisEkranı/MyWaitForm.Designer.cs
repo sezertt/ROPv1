@@ -41,6 +41,7 @@
             this.label1.Size = new System.Drawing.Size(385, 55);
             this.label1.TabIndex = 0;
             this.label1.Text = "Lütfen Bekleyiniz";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MyWaitForm
             // 
@@ -61,6 +62,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.MyWaitForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

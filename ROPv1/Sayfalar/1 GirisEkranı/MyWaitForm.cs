@@ -12,9 +12,17 @@ namespace ROPv1
 {
     public partial class MyWaitForm : Form
     {
-        public MyWaitForm()
+        string labelText;
+
+        public MyWaitForm(string labelText)
         {
             InitializeComponent();
+            this.labelText = labelText;
+        }
+
+        private void MyWaitForm_Load(object sender, EventArgs e)
+        {
+            label1.Text = labelText;
         }
     }
 }

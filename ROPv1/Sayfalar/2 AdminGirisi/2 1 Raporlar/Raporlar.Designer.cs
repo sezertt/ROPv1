@@ -28,20 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.comboAdisyonAyar = new System.Windows.Forms.ComboBox();
             this.buttonAzalt = new System.Windows.Forms.Button();
             this.buttonArttir = new System.Windows.Forms.Button();
             this.dateBitis = new System.Windows.Forms.DateTimePicker();
             this.dateBaslangic = new System.Windows.Forms.DateTimePicker();
+            this.buttonRaporla = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // crystalReportViewer1
             // 
@@ -70,6 +64,7 @@
             // comboAdisyonAyar
             // 
             this.comboAdisyonAyar.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.comboAdisyonAyar.Enabled = false;
             this.comboAdisyonAyar.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboAdisyonAyar.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.comboAdisyonAyar.FormattingEnabled = true;
@@ -155,10 +150,28 @@
             this.dateBaslangic.ValueChanged += new System.EventHandler(this.dateBitis_ValueChanged);
             this.dateBaslangic.Enter += new System.EventHandler(this.dateBaslangic_Enter);
             // 
+            // buttonRaporla
+            // 
+            this.buttonRaporla.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonRaporla.BackColor = System.Drawing.Color.White;
+            this.buttonRaporla.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonRaporla.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonRaporla.Location = new System.Drawing.Point(0, 0);
+            this.buttonRaporla.Name = "buttonRaporla";
+            this.buttonRaporla.Size = new System.Drawing.Size(1015, 626);
+            this.buttonRaporla.TabIndex = 47;
+            this.buttonRaporla.TabStop = false;
+            this.buttonRaporla.Text = "Rapor Çıkar \r\n(Dikkat:Raporlama uzun sürebilir)";
+            this.buttonRaporla.UseVisualStyleBackColor = false;
+            this.buttonRaporla.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Raporlar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonRaporla);
             this.Controls.Add(this.comboAdisyonAyar);
             this.Controls.Add(this.buttonAzalt);
             this.Controls.Add(this.buttonArttir);
@@ -174,13 +187,13 @@
 
         #endregion
 
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
         private System.Windows.Forms.ComboBox comboAdisyonAyar;
         private System.Windows.Forms.Button buttonAzalt;
         private System.Windows.Forms.Button buttonArttir;
         private System.Windows.Forms.DateTimePicker dateBitis;
         private System.Windows.Forms.DateTimePicker dateBaslangic;
+        private System.Windows.Forms.Button buttonRaporla;
 
     }
 }

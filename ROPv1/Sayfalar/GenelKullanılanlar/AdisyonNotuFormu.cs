@@ -15,7 +15,7 @@ namespace ROPv1
     public partial class AdisyonNotuFormu : Form
     {
         public string AdisyonNotu;
-        bool alwaysFocus = false;
+        bool bilgisayarAdiGeldi = false;
 
         public AdisyonNotuFormu(string eskiNot)
         {
@@ -31,7 +31,7 @@ namespace ROPv1
 
             if (eskiNot == "Bilgisayar adını giriniz" || eskiNot == "Girilen bilgisayar adı kullanımda, lütfen başka bir bilgisayar adı giriniz")
             {
-                alwaysFocus = true;
+                bilgisayarAdiGeldi = true;
                 checkBoxSave.Visible = true;
             }
         }
@@ -60,7 +60,7 @@ namespace ROPv1
         private void buttonTamam_Click(object sender, EventArgs e)
         {
             AdisyonNotu = textboxNot.Text;
-            if (alwaysFocus)
+            if (bilgisayarAdiGeldi)
             {
                 if (string.IsNullOrWhiteSpace(textboxNot.Text))
                 {
@@ -86,7 +86,7 @@ namespace ROPv1
 
         private void textboxNot_Click(object sender, EventArgs e)
         {
-            if (alwaysFocus)
+            if (bilgisayarAdiGeldi)
                 textboxNot.Select(0, textboxNot.TextLength);
         }
 
@@ -100,8 +100,7 @@ namespace ROPv1
 
         private void AdisyonNotuFormu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Determine if text has changed in the textbox by comparing to original text.
-            if (string.IsNullOrWhiteSpace(textboxNot.Text) && alwaysFocus)
+            if (string.IsNullOrWhiteSpace(textboxNot.Text) && bilgisayarAdiGeldi)
             {
                 e.Cancel = true;
             }

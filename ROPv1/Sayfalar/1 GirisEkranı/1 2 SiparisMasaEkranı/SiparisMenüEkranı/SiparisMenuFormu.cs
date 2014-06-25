@@ -874,7 +874,7 @@ namespace ROPv1
             {
                 AdisyonNotuFormu notFormu;
 
-                //Burada adisyonNotu'nu sql den al
+                //adisyonNotu'nu sql den al
                 SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonNotu FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "'");
                 SqlDataReader dr = cmd.ExecuteReader();
                 dr.Read();
@@ -1732,8 +1732,7 @@ namespace ROPv1
                         masaFormu.serverdanSiparisIkramVeyaIptal(MasaAdi, hangiDepartman.departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), null);
                     }
 
-                    //burada mutfak adisyonu iste 
-
+                    // mutfak adisyonu iste 
                     if (mutfakAdisyonuYazdir)
                     {
                         cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
@@ -1812,6 +1811,13 @@ namespace ROPv1
 
             cmd.ExecuteNonQuery();
 
+            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AdisyonNotu=@_AdisyonNotu WHERE AcikMi=1 AND MasaAdi=@masaninAdi AND DepartmanAdi=@departmanAdi");
+            cmd.Parameters.AddWithValue("@_AdisyonNotu", "");
+            cmd.Parameters.AddWithValue("@masaninAdi", masaAdi);
+            cmd.Parameters.AddWithValue("@departmanAdi", departmanAdi);
+
+            cmd.ExecuteNonQuery();
+
             cmd.Connection.Close();
             cmd.Connection.Dispose();
         }
@@ -1844,7 +1850,7 @@ namespace ROPv1
                     masaFormu.serverdanSiparisIkramVeyaIptal(yeniMasaAdi, yeniDepartmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), null);
                 }
 
-                //burada mutfak adisyonu iste 
+                //mutfak adisyonu iste 
 
                 if (mutfakAdisyonuYazdir)
                 {
@@ -2512,7 +2518,7 @@ namespace ROPv1
                     masaFormu.serverdanSiparisIkramVeyaIptal(yeniMasaAdi, yeniDepartmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), null);
                 }
 
-                //burada mutfak adisyonu iste 
+                //mutfak adisyonu iste 
 
                 if (mutfakAdisyonuYazdir)
                 {
