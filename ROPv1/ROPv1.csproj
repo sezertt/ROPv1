@@ -121,167 +121,167 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\SifreVeFirmaAdiFormu.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SifreVeFirmaAdiFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\SifreVeFirmaAdiFormu.Designer.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SifreVeFirmaAdiFormu.Designer.cs">
       <DependentUpon>SifreVeFirmaAdiFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\PortFormu.cs">
+    <Compile Include="Sayfalar\GirisEkrani\PortFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\PortFormu.Designer.cs">
+    <Compile Include="Sayfalar\GirisEkrani\PortFormu.Designer.cs">
       <DependentUpon>PortFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 1 Raporlar\Raporlar.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Raporlar\Raporlar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 1 Raporlar\Raporlar.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Raporlar\Raporlar.Designer.cs">
       <DependentUpon>Raporlar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketDegerlendirmeYazili.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Anket\AnketDegerlendirmeYazili.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketDegerlendirmeYazili.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Anket\AnketDegerlendirmeYazili.Designer.cs">
       <DependentUpon>AnketDegerlendirmeYazili.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketDegerlendirmeSecme.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Anket\AnketDegerlendirmeSecme.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketDegerlendirmeSecme.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Anket\AnketDegerlendirmeSecme.Designer.cs">
       <DependentUpon>AnketDegerlendirmeSecme.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketSonuclari.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Anket\AnketSonuclari.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketSonuclari.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Anket\AnketSonuclari.Designer.cs">
       <DependentUpon>AnketSonuclari.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketKullanicilari.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Anket\AnketKullanicilari.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketKullanicilari.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Anket\AnketKullanicilari.Designer.cs">
       <DependentUpon>AnketKullanicilari.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketAyarlari.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Anket\AnketAyarlari.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketAyarlari.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Anket\AnketAyarlari.Designer.cs">
       <DependentUpon>AnketAyarlari.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\AdminGirisFormu.cs">
+    <Compile Include="Sayfalar\AdminGirisi\AdminGirisFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\AdminGirisFormu.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\AdminGirisFormu.Designer.cs">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\PinKoduFormu.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\PinKoduFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\PinKoduFormu.Designer.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\PinKoduFormu.Designer.cs">
       <DependentUpon>PinKoduFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\MyListView.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\MyListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\MasaDegistirFormu.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\MasaDegistirFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\MasaDegistirFormu.Designer.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\MasaDegistirFormu.Designer.cs">
       <DependentUpon>MasaDegistirFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\UrunDegistir.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\UrunDegistir.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\UrunDegistir.Designer.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\UrunDegistir.Designer.cs">
       <DependentUpon>UrunDegistir.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\SiparisMenuFormu.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\SiparisMenuFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\SiparisMenuFormu.Designer.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\SiparisMenuFormu.Designer.cs">
       <DependentUpon>SiparisMenuFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\HesapOdemeEkrani\HesapFormu.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\HesapOdemeEkrani\HesapFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\HesapOdemeEkrani\HesapFormu.Designer.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\HesapOdemeEkrani\HesapFormu.Designer.cs">
       <DependentUpon>HesapFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\HesapOdemeEkrani\YaziciFormu.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\HesapOdemeEkrani\YaziciFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\HesapOdemeEkrani\YaziciFormu.Designer.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\HesapOdemeEkrani\YaziciFormu.Designer.cs">
       <DependentUpon>YaziciFormu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 1 Kullanıcılar\Kullanici.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Kullanicilar\Kullanici.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 1 Kullanıcılar\Kullanici.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Kullanicilar\Kullanici.Designer.cs">
       <DependentUpon>Kullanici.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 1 Kullanıcılar\UItemp.cs" />
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 4 Menüler\MenuControl.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Kullanicilar\UItemp.cs" />
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Menuler\MenuControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 4 Menüler\MenuControl.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Menuler\MenuControl.Designer.cs">
       <DependentUpon>MenuControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 4 Menüler\Menuler.cs" />
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 4 Menüler\TumKategoriler.cs" />
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 5 Ürünler\KategorilerineGoreUrunler.cs" />
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 3 MasaPlanı\MasaDizayn.cs" />
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 3 MasaPlanı\MasaPlan.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Menuler\Menuler.cs" />
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Menuler\TumKategoriler.cs" />
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\KategorilerineGoreUrunler.cs" />
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\MasaPlani\MasaDizayn.cs" />
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\MasaPlani\MasaPlan.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 3 MasaPlanı\MasaPlan.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\MasaPlani\MasaPlan.Designer.cs">
       <DependentUpon>MasaPlan.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 2 Departman\Departman.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Departman\Departman.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 2 Departman\Departman.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Departman\Departman.Designer.cs">
       <DependentUpon>Departman.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\GirisEkrani.cs">
+    <Compile Include="Sayfalar\GirisEkrani\GirisEkrani.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\GirisEkrani.Designer.cs">
+    <Compile Include="Sayfalar\GirisEkrani\GirisEkrani.Designer.cs">
       <DependentUpon>GirisEkrani.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\MyWaitForm.cs">
+    <Compile Include="Sayfalar\GirisEkrani\MyWaitForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\MyWaitForm.Designer.cs">
+    <Compile Include="Sayfalar\GirisEkrani\MyWaitForm.Designer.cs">
       <DependentUpon>MyWaitForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 6 Stoklar\StokBilgileri.cs" />
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 6 Stoklar\Stoklar.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Stoklar\StokBilgileri.cs" />
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Stoklar\Stoklar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 6 Stoklar\Stoklar.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Stoklar\Stoklar.Designer.cs">
       <DependentUpon>Stoklar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 7 Reçeteler\ReceteBilgileri.cs" />
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 7 Reçeteler\Receteler.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Receteler\ReceteBilgileri.cs" />
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Receteler\Receteler.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 7 Reçeteler\Receteler.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Receteler\Receteler.Designer.cs">
       <DependentUpon>Receteler.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 8 İşletme Bilgileri\IsletmeBilgileri.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\YazıcıVeIsletmeBilgileri\IsletmeBilgileri.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 8 İşletme Bilgileri\IsletmeBilgileri.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\YazıcıVeIsletmeBilgileri\IsletmeBilgileri.Designer.cs">
       <DependentUpon>IsletmeBilgileri.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 2 Adisyon Görüntüleme\AdisyonGoruntuleme.cs">
+    <Compile Include="Sayfalar\AdminGirisi\AdisyonGoruntuleme\AdisyonGoruntuleme.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 2 Adisyon Görüntüleme\AdisyonGoruntuleme.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\AdisyonGoruntuleme\AdisyonGoruntuleme.Designer.cs">
       <DependentUpon>AdisyonGoruntuleme.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 2 Adisyon Görüntüleme\listViewPrinter.cs" />
+    <Compile Include="Sayfalar\AdminGirisi\AdisyonGoruntuleme\listViewPrinter.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\AdisyonNotuFormu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -291,10 +291,10 @@
     <Compile Include="Sayfalar\GenelKullanılanlar\PasswordHash.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\SQLBaglantisi.cs" />
     <Compile Include="Gereksizler\Program.cs" />
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 5 Ürünler\Products.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\Products.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 5 Ürünler\Products.Designer.cs">
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\Products.Designer.cs">
       <DependentUpon>Products.cs</DependentUpon>
     </Compile>
     <Compile Include="Sayfalar\GenelKullanılanlar\KontrolFormu.cs">
@@ -305,12 +305,12 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Gereksizler\Settings.cs" />
-    <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 2 Departman\Restoran.cs" />
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Departman\Restoran.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\SaveLoadXml.cs" />
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMasaFormu.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMasaFormu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMasaFormu.Designer.cs">
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMasaFormu.Designer.cs">
       <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="CrystalReports\CrystalReportUrunSatisRaporu.rpt">
@@ -329,91 +329,91 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReportAdisyon.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\1 GirisEkranı\SifreVeFirmaAdiFormu.resx">
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\SifreVeFirmaAdiFormu.resx">
       <DependentUpon>SifreVeFirmaAdiFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\1 GirisEkranı\PortFormu.resx">
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\PortFormu.resx">
       <DependentUpon>PortFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 1 Raporlar\Raporlar.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Raporlar\Raporlar.resx">
       <DependentUpon>Raporlar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketDegerlendirmeYazili.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Anket\AnketDegerlendirmeYazili.resx">
       <DependentUpon>AnketDegerlendirmeYazili.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketDegerlendirmeSecme.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Anket\AnketDegerlendirmeSecme.resx">
       <DependentUpon>AnketDegerlendirmeSecme.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketSonuclari.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Anket\AnketSonuclari.resx">
       <DependentUpon>AnketSonuclari.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketKullanicilari.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Anket\AnketKullanicilari.resx">
       <DependentUpon>AnketKullanicilari.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 3 Anket\AnketAyarlari.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Anket\AnketAyarlari.resx">
       <DependentUpon>AnketAyarlari.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\AdminGirisFormu.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\AdminGirisFormu.resx">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\PinKoduFormu.resx">
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\PinKoduFormu.resx">
       <DependentUpon>PinKoduFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\MasaDegistirFormu.resx">
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\MasaDegistirFormu.resx">
       <DependentUpon>MasaDegistirFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\UrunDegistir.resx">
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\UrunDegistir.resx">
       <DependentUpon>UrunDegistir.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\SiparisMenuFormu.resx">
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\SiparisMenuFormu.resx">
       <DependentUpon>SiparisMenuFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\HesapOdemeEkrani\HesapFormu.resx">
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\HesapOdemeEkrani\HesapFormu.resx">
       <DependentUpon>HesapFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMenüEkranı\HesapOdemeEkrani\YaziciFormu.resx">
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\HesapOdemeEkrani\YaziciFormu.resx">
       <DependentUpon>YaziciFormu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 1 Kullanıcılar\Kullanici.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Ayarlar\Kullanicilar\Kullanici.resx">
       <DependentUpon>Kullanici.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 3 MasaPlanı\MasaPlan.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Ayarlar\MasaPlani\MasaPlan.resx">
       <DependentUpon>MasaPlan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 2 Departman\Departman.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Ayarlar\Departman\Departman.resx">
       <DependentUpon>Departman.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\1 GirisEkranı\GirisEkrani.resx">
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\GirisEkrani.resx">
       <DependentUpon>GirisEkrani.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\1 GirisEkranı\MyWaitForm.resx">
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\MyWaitForm.resx">
       <DependentUpon>MyWaitForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 4 Menüler\MenuControl.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Ayarlar\Menuler\MenuControl.resx">
       <DependentUpon>MenuControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 5 Ürünler\Products.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\Products.resx">
       <DependentUpon>Products.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 6 Stoklar\Stoklar.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Ayarlar\Stoklar\Stoklar.resx">
       <DependentUpon>Stoklar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 7 Reçeteler\Receteler.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Ayarlar\Receteler\Receteler.resx">
       <DependentUpon>Receteler.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 8 İşletme Bilgileri\IsletmeBilgileri.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Ayarlar\YazıcıVeIsletmeBilgileri\IsletmeBilgileri.resx">
       <DependentUpon>IsletmeBilgileri.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\2 AdminGirisi\2 2 Adisyon Görüntüleme\AdisyonGoruntuleme.resx">
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\AdisyonGoruntuleme\AdisyonGoruntuleme.resx">
       <DependentUpon>AdisyonGoruntuleme.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -428,7 +428,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Sayfalar\1 GirisEkranı\1 2 SiparisMasaEkranı\SiparisMasaFormu.resx">
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMasaFormu.resx">
       <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
