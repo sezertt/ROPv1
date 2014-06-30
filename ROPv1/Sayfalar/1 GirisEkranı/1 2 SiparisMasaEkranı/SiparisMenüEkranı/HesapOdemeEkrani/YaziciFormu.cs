@@ -92,9 +92,15 @@ namespace ROPv1
             if (yazdir)
             {
                 if (hesapFormu != null)
+                {
                     hesapFormu.yazdir(yaziciAdi);
+                    hesapFormu.yaziciForm = null;
+                }
                 else if (adisyonFormu != null)
+                {
                     adisyonFormu.yazdir(yaziciAdi);
+                    adisyonFormu.yaziciForm = null;
+                }
             }
         }
 
