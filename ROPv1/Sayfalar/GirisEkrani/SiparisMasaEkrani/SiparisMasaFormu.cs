@@ -1074,8 +1074,7 @@ namespace ROPv1
                 buttonConnection.Text = "Bağlı";
                 buttonName.Visible = true;
 
-                if (Properties.Settings.Default.BilgisayarAdi != "")
-                    buttonName.Text = Properties.Settings.Default.BilgisayarAdi;
+                buttonName.Text = nick;
 
                 if (!loadYapildiMi)
                     SiparisMasaFormu_Load(null, null);
@@ -1220,7 +1219,6 @@ namespace ROPv1
                     dialog.ShowDialog();
 
                     System.Windows.Forms.Application.Exit();
-
                     break;
             }
         }

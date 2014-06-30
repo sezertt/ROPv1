@@ -156,7 +156,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRaporla.BackColor = System.Drawing.Color.White;
-            this.buttonRaporla.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonRaporla.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold);
             this.buttonRaporla.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonRaporla.Location = new System.Drawing.Point(0, 0);
             this.buttonRaporla.Name = "buttonRaporla";

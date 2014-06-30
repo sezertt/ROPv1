@@ -45,7 +45,9 @@ namespace ROPv1
 
         public YaziciFormu yaziciForm = null;
 
-        public HesapFormu(SiparisMenuFormu menuFormu, MyListView siparisListView, string masaAdi, string departmanAdi, string siparisiGirenKisi)
+        bool indirimYetkisi = true;
+
+        public HesapFormu(SiparisMenuFormu menuFormu, MyListView siparisListView, string masaAdi, string departmanAdi, string siparisiGirenKisi, bool indirimYetkisi)
         {
             InitializeComponent();
 
@@ -54,6 +56,7 @@ namespace ROPv1
             this.departmanAdi = departmanAdi;
             this.listHesaptakiler = siparisListView;
             this.siparisiGirenKisi = siparisiGirenKisi;
+            this.indirimYetkisi = indirimYetkisi;
         }
 
         decimal KesiriDecimalYap(string kesir) // verilen kesirli stringi decimale çevirerek return eder
@@ -232,6 +235,12 @@ namespace ROPv1
         //form load
         private void HesapFormu_Load(object sender, EventArgs e)
         {
+            if(!indirimYetkisi)
+            {
+                buttonIndirim.Enabled = false;
+                buttonIndirimYuzdeli.Enabled = false;
+            }
+
             labelSaat.Text = DateTime.Now.ToString("HH:mm:ss", new CultureInfo("tr-TR"));
             timerSaat.Start();
             labelGun.Text = DateTime.Now.ToString("dddd", new CultureInfo("tr-TR"));

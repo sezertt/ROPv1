@@ -2062,7 +2062,7 @@ namespace ROPv1
             {
                 //ödendiğinde sql de ödendi flagini 1 yap 
 
-                hesapForm = new HesapFormu(this, listUrunFiyat, MasaAdi, hangiDepartman.departmanAdi, siparisiKimGirdi);
+                hesapForm = new HesapFormu(this, listUrunFiyat, MasaAdi, hangiDepartman.departmanAdi, siparisiKimGirdi, iptalIkram);
                 hesapForm.ShowDialog();
             }
         }
