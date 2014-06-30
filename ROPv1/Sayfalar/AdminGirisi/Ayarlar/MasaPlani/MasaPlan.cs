@@ -482,6 +482,7 @@ namespace ROPv1
             }
         }
 
+        // form load
         private void MasaPlan_Load(object sender, EventArgs e)
         {
             string masaAdi;
@@ -499,6 +500,10 @@ namespace ROPv1
 
                 KontrolFormu dialog = new KontrolFormu( masaAdi + " adlı masa açık. Açık masa bulunurken masa planlaması yapılamaz", false);
                 dialog.Show();
+                buttonSaveNewTable.Enabled = false;
+                buttonCancel.Enabled = false;
+                buttonDeleteTable.Enabled = false;
+                buttonEditDesign.Enabled = false;
             }
             catch
             {

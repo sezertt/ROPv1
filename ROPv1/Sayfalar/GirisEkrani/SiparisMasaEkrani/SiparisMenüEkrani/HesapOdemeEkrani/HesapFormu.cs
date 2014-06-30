@@ -1166,7 +1166,9 @@ namespace ROPv1
 
         private void buttonOdeme_Click(object sender, EventArgs e)
         {
-            decimal odenenMiktar, paraUstu = 0;
+            decimal odenenMiktar;
+
+            paraUstu = 0;
 
             try
             {
@@ -1194,7 +1196,6 @@ namespace ROPv1
 
             if (Properties.Settings.Default.Server == 2) //server - diğer tüm clientlara söylemeli yaptığı ikram vs. neyse
             {
-
                 // adisyon id al 
                 int adisyonID;
                 SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "' AND AcikMi=1");
