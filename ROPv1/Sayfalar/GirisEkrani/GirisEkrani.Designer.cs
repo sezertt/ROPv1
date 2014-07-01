@@ -135,26 +135,24 @@
             // 
             // labelGun
             // 
-            this.labelGun.AutoSize = true;
             this.labelGun.BackColor = System.Drawing.Color.Transparent;
             this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGun.Location = new System.Drawing.Point(64, 88);
+            this.labelGun.Location = new System.Drawing.Point(13, 88);
             this.labelGun.Name = "labelGun";
-            this.labelGun.Size = new System.Drawing.Size(116, 33);
+            this.labelGun.Size = new System.Drawing.Size(214, 33);
             this.labelGun.TabIndex = 15;
             this.labelGun.Text = "Pazartesi";
             this.labelGun.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelTarih
             // 
-            this.labelTarih.AutoSize = true;
             this.labelTarih.BackColor = System.Drawing.Color.Transparent;
             this.labelTarih.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelTarih.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelTarih.Location = new System.Drawing.Point(34, 61);
+            this.labelTarih.Location = new System.Drawing.Point(13, 61);
             this.labelTarih.Name = "labelTarih";
-            this.labelTarih.Size = new System.Drawing.Size(180, 33);
+            this.labelTarih.Size = new System.Drawing.Size(214, 33);
             this.labelTarih.TabIndex = 14;
             this.labelTarih.Text = "10 Şubat 2014 ";
             this.labelTarih.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -246,7 +244,7 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 600000;
+            this.timer1.Interval = 60000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // GirisEkrani

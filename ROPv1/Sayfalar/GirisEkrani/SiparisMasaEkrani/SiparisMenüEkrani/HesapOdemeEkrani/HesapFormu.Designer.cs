@@ -340,13 +340,12 @@
             // labelGun
             // 
             this.labelGun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelGun.AutoSize = true;
             this.labelGun.BackColor = System.Drawing.Color.Transparent;
             this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGun.Location = new System.Drawing.Point(1189, 85);
+            this.labelGun.Location = new System.Drawing.Point(1138, 85);
             this.labelGun.Name = "labelGun";
-            this.labelGun.Size = new System.Drawing.Size(116, 33);
+            this.labelGun.Size = new System.Drawing.Size(216, 33);
             this.labelGun.TabIndex = 107;
             this.labelGun.Text = "Pazartesi";
             this.labelGun.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -354,13 +353,12 @@
             // labelTarih
             // 
             this.labelTarih.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelTarih.AutoSize = true;
             this.labelTarih.BackColor = System.Drawing.Color.Transparent;
             this.labelTarih.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelTarih.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelTarih.Location = new System.Drawing.Point(1159, 58);
+            this.labelTarih.Location = new System.Drawing.Point(1138, 58);
             this.labelTarih.Name = "labelTarih";
-            this.labelTarih.Size = new System.Drawing.Size(180, 33);
+            this.labelTarih.Size = new System.Drawing.Size(216, 33);
             this.labelTarih.TabIndex = 106;
             this.labelTarih.Text = "10 Şubat 2014 ";
             this.labelTarih.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -921,6 +919,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 768);
             this.ControlBox = false;
+            this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.buttonAdisyonYazdir);
             this.Controls.Add(this.buttonDeleteText);
             this.Controls.Add(this.button15);
@@ -929,7 +928,6 @@
             this.Controls.Add(this.labelIndirimYuzdeTutar);
             this.Controls.Add(this.labelGun);
             this.Controls.Add(this.labelIndirimTL);
-            this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.labelIndirimYuzde);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button12);

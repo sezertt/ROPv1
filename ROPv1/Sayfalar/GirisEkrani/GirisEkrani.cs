@@ -2118,6 +2118,8 @@ namespace ROPv1
         //Form Load
         private void GirisEkrani_Load(object sender, EventArgs e)
         {
+            //Properties.Settings.Default.Reset();
+
             if (Properties.Settings.Default.FirmaAdi == "")
             {
                 SifreVeFirmaAdiFormu firmaAdiFormu = new SifreVeFirmaAdiFormu(true);
@@ -2186,6 +2188,9 @@ namespace ROPv1
                         System.Windows.Forms.Application.Exit();
                         return;
                     }
+
+                    Properties.Settings.Default.Port2 = 0;
+                    Properties.Settings.Default.Save();
                 }
             }
 
@@ -2222,6 +2227,8 @@ namespace ROPv1
             usernameBoxHost.Child = userNameTextBox;
             passwordTextBox = new WPF_UserControls.VerticalCenterPasswordBox();
             passwordBoxHost.Child = passwordTextBox;
+
+            timer1.Start();
         }
 
         // IP - Port - Server Seçimi Ekranı 
@@ -2432,7 +2439,7 @@ namespace ROPv1
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (Properties.Settings.Default.Port2 != -1)
-                gecenSure += 10;
+                gecenSure += 1;
         }
     }
 }
