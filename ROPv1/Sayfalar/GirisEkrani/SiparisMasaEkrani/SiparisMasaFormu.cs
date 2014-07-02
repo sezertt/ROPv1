@@ -921,9 +921,12 @@ namespace ROPv1
                                 tumKullanicilaraMesajYolla("komut=masaKapandi&masa=" + hangiMasaButonunaBasildi.Text + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                                 break;
                             default:
-                                hangiMasaButonunaBasildi.ForeColor = Color.White;
-                                hangiMasaButonunaBasildi.BackColor = Color.Firebrick;
-                                tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + hangiMasaButonunaBasildi.Text + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
+                                if (hangiMasaButonunaBasildi.BackColor != Color.Firebrick)
+                                {
+                                    hangiMasaButonunaBasildi.ForeColor = Color.White;
+                                    hangiMasaButonunaBasildi.BackColor = Color.Firebrick;
+                                    tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + hangiMasaButonunaBasildi.Text + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
+                                }
                                 break;
                         }
                     }
