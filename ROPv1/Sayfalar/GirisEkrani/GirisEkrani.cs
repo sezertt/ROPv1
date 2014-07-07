@@ -2136,7 +2136,7 @@ namespace ROPv1
             {
                 gecenSure = Properties.Settings.Default.Port2;
 
-                if (DateTime.Now >= Properties.Settings.Default.IP2.AddDays(30) || DateTime.Now < Properties.Settings.Default.IP2 || gecenSure >= 43200)
+                if (DateTime.Now >= Properties.Settings.Default.IP2.AddDays(30) || DateTime.Now < Properties.Settings.Default.IP2 || gecenSure >= 43200 || gecenSure != -1)
                 {
                     Properties.Settings.Default.IP2Check.RemoveAt(0);
                     Properties.Settings.Default.Port2 = -1;
