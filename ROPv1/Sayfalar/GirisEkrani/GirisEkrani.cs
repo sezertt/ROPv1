@@ -237,6 +237,15 @@ namespace ROPv1
         {
             int kacinciDosya = Convert.ToInt32(kacinci);
 
+            string image_outputDir = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
+            DirectoryInfo df = new DirectoryInfo(Application.StartupPath + @"\resimler\");
+
+            if (!df.Exists) // klasör yoksa oluştur
+            {
+                // create new directory
+                DirectoryInfo di = Directory.CreateDirectory(image_outputDir + @"\resimler\");
+            }           
+
             string path1 = Application.StartupPath + @"\resimler";
 
             string path2 = Application.StartupPath;
@@ -248,7 +257,7 @@ namespace ROPv1
 
             client.MesajYolla("komut=dosyalar&kacinci=" + kacinciDosya + "&kacDosya=" + (imageFiles.Count() + xmlDosyalari.Count()));
 
-            client.gonder(xmlDosyalari[kacinciDosya - 1], Application.StartupPath);
+            client.gonder(Path.GetFileName(xmlDosyalari[kacinciDosya - 1]), Application.StartupPath);
         }
 
         // Anket doldurulduktan sonra cevapları gelince çalışacak fonksiyon

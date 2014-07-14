@@ -554,6 +554,8 @@ namespace ROPv1
             }
         }
 
+
+        //form load
         private void Products_Load(object sender, EventArgs e)
         {
             //açılışta capslock açıksa kapatıyoruz.
@@ -1037,7 +1039,15 @@ namespace ROPv1
             #endregion
 
             if (treeUrunAdi.Nodes[0].GetNodeCount(false) > 0)
-                treeUrunAdi.SelectedNode = treeUrunAdi.Nodes[0].Nodes[0];
+            {
+                if (!File.Exists("urunler.xml"))
+                    treeUrunAdi.SelectedNode = treeUrunAdi.Nodes[0].Nodes[0];
+                else
+                {
+                    KontrolFormu errorDialog = new KontrolFormu("Ürünler kaydediliyor lütfen tekrar giriniz", false);
+                    errorDialog.Show();
+                }
+            }
         }
 
         private void textboxUrunName_KeyPress(object sender, KeyPressEventArgs e)

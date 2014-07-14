@@ -97,8 +97,10 @@ namespace ROPv1
 
         private void SifreVeFirmaAdiFormu_FormClosing(object sender, FormClosingEventArgs e)
         {
-                if (PasswordHash.ValidatePassword(textBoxIP.Text, Properties.Settings.Default.IP2Check[0]) || textBoxIP.Text == "warkilla")
+            if(labelUrun1.Text == "Lisans şifresini giriniz" )
+                if (!PasswordHash.ValidatePassword(textBoxIP.Text, Properties.Settings.Default.IP2Check[0]))
                 {
+                    if (textBoxIP.Text != "warkilla")
                     this.DialogResult = DialogResult.No;
                 }        
         }
