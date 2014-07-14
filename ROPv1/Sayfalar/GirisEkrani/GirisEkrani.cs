@@ -237,15 +237,18 @@ namespace ROPv1
         {
             int kacinciDosya = Convert.ToInt32(kacinci);
 
-            client.MesajYolla("komut=dosyalar&kacinci=" + kacinciDosya);
+            string path1 = Application.StartupPath + @"\resimler";
 
-            string[] xmlDosyalari = { "kategoriler.xml", "masaDizayn.xml", "menu.xml", "restoran.xml", "stoklar.xml", "tempfiles.xml", "urunler.xml" };
+            string path2 = Application.StartupPath;
 
-            string path = Application.StartupPath + @"\resimler";
 
-            string[] imageFiles = Directory.GetFiles(path, "*.png", SearchOption.TopDirectoryOnly);
+            string[] imageFiles = Directory.GetFiles(path1, "*.png", SearchOption.TopDirectoryOnly);
 
-            client.gonder(xmlDosyalari[kacinciDosya - 1],Application.StartupPath);
+            string[] xmlDosyalari = Directory.GetFiles(path2, "*.xml", SearchOption.TopDirectoryOnly);
+
+            client.MesajYolla("komut=dosyalar&kacinci=" + kacinciDosya + "&kacDosya=" + (imageFiles.Count() + xmlDosyalari.Count()));
+
+            client.gonder(xmlDosyalari[kacinciDosya - 1], Application.StartupPath);
         }
 
         // Anket doldurulduktan sonra cevapları gelince çalışacak fonksiyon
@@ -1995,10 +1998,10 @@ namespace ROPv1
                 return;
             }
 
-            if(siparisForm == null)
+            if (siparisForm == null)
             {
                 //sipariş ekranına geçilecek
-                siparisForm = new SiparisMasaFormu(kullanicilar,this);
+                siparisForm = new SiparisMasaFormu(kullanicilar, this);
 
                 Task.Factory.StartNew(() => siparisForm.ShowDialog());
             }
@@ -2018,7 +2021,7 @@ namespace ROPv1
         {
             char[] chars = new char[62];
             chars =
-            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
             byte[] data = new byte[1];
             RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
             crypto.GetNonZeroBytes(data);

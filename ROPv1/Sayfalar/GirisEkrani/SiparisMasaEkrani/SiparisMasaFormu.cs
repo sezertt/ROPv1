@@ -773,7 +773,7 @@ namespace ROPv1
                         komut_IslemHatasi(parametreler["hata"]);
                         break;
                     case "dosyalar":
-                        komut_dosyalar(parametreler["kacinci"]);
+                        komut_dosyalar(parametreler["kacinci"],parametreler["kacDosya"]);
                         break;
                 }
             }
@@ -956,13 +956,13 @@ namespace ROPv1
 
         #region Komutlar
 
-        private void komut_dosyalar(string kacinci)
+        private void komut_dosyalar(string kacinci, string kacDosya)
         {
             int kacinciDosya = Convert.ToInt32(kacinci);
 
             if (client.dosyaAl(Application.StartupPath)) // dosya gönderimi başarılı sıradakini gönder 
             {
-                if (kacinciDosya == 7)
+                if (kacinciDosya == Convert.ToInt32(kacDosya))
                 {
                     if (panel1.Controls.Count == 0)
                     {
