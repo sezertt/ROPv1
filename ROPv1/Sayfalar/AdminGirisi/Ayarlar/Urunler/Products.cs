@@ -1040,7 +1040,7 @@ namespace ROPv1
 
             if (treeUrunAdi.Nodes[0].GetNodeCount(false) > 0)
             {
-                if (!File.Exists("urunler.xml"))
+                if (File.Exists("urunler.xml"))
                     treeUrunAdi.SelectedNode = treeUrunAdi.Nodes[0].Nodes[0];
                 else
                 {

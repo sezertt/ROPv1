@@ -257,7 +257,7 @@ namespace ROPv1
 
             client.MesajYolla("komut=dosyalar&kacinci=" + kacinciDosya + "&kacDosya=" + (imageFiles.Count() + xmlDosyalari.Count()));
 
-            client.gonder(Path.GetFileName(xmlDosyalari[kacinciDosya - 1]), Application.StartupPath);
+            client.gonder(Path.GetFileName(xmlDosyalari[kacinciDosya - 1]), Application.StartupPath + "\\");
         }
 
         // Anket doldurulduktan sonra cevapları gelince çalışacak fonksiyon
@@ -2155,7 +2155,9 @@ namespace ROPv1
             {
                 gecenSure = Properties.Settings.Default.Port2;
 
-                if (DateTime.Now >= Properties.Settings.Default.IP2.AddDays(30) || DateTime.Now < Properties.Settings.Default.IP2 || gecenSure >= 43200 || gecenSure != -1)
+                DateTime x = new DateTime();
+
+                if ((DateTime.Now >= Properties.Settings.Default.IP2.AddDays(30) && Properties.Settings.Default.IP2 > x.AddDays(1)) || DateTime.Now < Properties.Settings.Default.IP2 || gecenSure >= 43200 || gecenSure != -1)
                 {
                     Properties.Settings.Default.IP2Check.RemoveAt(0);
                     Properties.Settings.Default.Port2 = -1;
@@ -2269,9 +2271,11 @@ namespace ROPv1
                 sunucu.Durdur();
                 sunucu = null;
             }
-
-            Properties.Settings.Default.Port2 = gecenSure;
-            Properties.Settings.Default.Save();
+            if(Properties.Settings.Default.Port2 != 0)
+            {
+                Properties.Settings.Default.Port2 = gecenSure;
+                Properties.Settings.Default.Save();
+            }
         }
 
         private void buttonConnection_Click(object sender, EventArgs e)
