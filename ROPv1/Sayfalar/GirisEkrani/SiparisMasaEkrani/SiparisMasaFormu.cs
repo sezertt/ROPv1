@@ -26,6 +26,8 @@ namespace ROPv1
         }
         private bool girisYapildi = false;
 
+        GirisEkrani girisEkrani;
+
         // SPIA kütüphanesini kullanarak SPIA sunucusuna bağlı olan istemci nesnesi        
         private SPIAClient client;
 
@@ -64,10 +66,11 @@ namespace ROPv1
 
         PinKoduFormu pinForm;
 
-        public SiparisMasaFormu(List<ROPv1.GirisEkrani.BagliKullanicilar> AlinanKullanicilar)
+        public SiparisMasaFormu(List<ROPv1.GirisEkrani.BagliKullanicilar> AlinanKullanicilar, GirisEkrani girisEkrani)
         {
             kullanicilar = AlinanKullanicilar;
             masalar = new List<string>();
+            this.girisEkrani = girisEkrani;
             InitializeComponent();
         }
 
@@ -165,7 +168,7 @@ namespace ROPv1
 
             viewdakiDepartmaninAdi = restoranListesi[hangiDepartmanButonu].departmanAdi;
 
-            if (Properties.Settings.Default.Server == 2)
+            if (Properties.Settings.Default.Server == 2) // departman gösterimi serverda gerçekleşiyorsa
             {
                 if (hangiMasaDizayni > masaDizaynListesi.Count - 1)
                 {
@@ -275,7 +278,7 @@ namespace ROPv1
                             break;
                     }
                 }
-            } // departman gösterimi serverda gerçekleşiyorsa
+            } 
             else// departman gösterimi clientlarda gerçekleşiyorsa
             {
                 if ((int)tablePanel.Tag != hangiMasaDizayni) //eğer seçili masa planı zaten ekrandaysa yenisi koyulmasın, ekranda değilse eskiler silinip yenisi eklensin
@@ -287,6 +290,9 @@ namespace ROPv1
 
         private void exitPressed(object sender, EventArgs e)
         {
+            if(girisEkrani != null)
+                girisEkrani.siparisForm = null;
+
             if (pinForm != null)
             {
                 if (pinForm.Visible)
@@ -954,7 +960,7 @@ namespace ROPv1
         {
             int kacinciDosya = Convert.ToInt32(kacinci);
 
-            if (client.dosyaAl()) // dosya gönderimi başarılı sıradakini gönder 
+            if (client.dosyaAl(Application.StartupPath)) // dosya gönderimi başarılı sıradakini gönder 
             {
                 if (kacinciDosya == 7)
                 {

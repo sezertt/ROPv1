@@ -47,7 +47,21 @@ namespace ROPv1
                     textboxUrunFiyat.Text = fiyat.ToString("C", turkish);
                     comboNewKategoriName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[treeUrunAdi.SelectedNode.Index];
                     comboKDV.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKDV[treeUrunAdi.SelectedNode.Index].ToString();
+                    textBoxUrunAciklamasi.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAciklamasi[treeUrunAdi.SelectedNode.Index];
                     newProductForm.Text = textboxUrunName.Text;
+                    textBoxUrunAciklamasi.Enabled = true;
+                    newProductForm.Enabled = true;
+
+                    string path = Application.StartupPath + @"\resimler\" + textboxUrunName.Text + ".png";
+
+                    if (System.IO.File.Exists(path))
+                    {
+                        buttonResim.Text = textboxUrunName.Text;
+                    }
+                    else
+                    {
+                        buttonResim.Text = "Ürün Fotoğrafı";
+                    }
                 }
 
             }
@@ -56,6 +70,7 @@ namespace ROPv1
                 if (buttonDeleteProduct.Visible)
                 {
                     newProductForm.Enabled = false;
+                    textBoxUrunAciklamasi.Enabled = false;
                 }
             }
         }
@@ -97,7 +112,10 @@ namespace ROPv1
                 if (info.Node.Parent == null)
                 {
                     if (buttonDeleteProduct.Visible)
+                    {
                         newProductForm.Enabled = false;
+                        textBoxUrunAciklamasi.Enabled = false;
+                    }
 
                     int index = info.Node.Index;
                     if (treeUrunAdi.Nodes[index].IsExpanded)
@@ -164,7 +182,7 @@ namespace ROPv1
                 urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi.RemoveAt(treeUrunAdi.SelectedNode.Index);
                 urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi.RemoveAt(treeUrunAdi.SelectedNode.Index);
                 urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKDV.RemoveAt(treeUrunAdi.SelectedNode.Index);
-
+                urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAciklamasi.RemoveAt(treeUrunAdi.SelectedNode.Index);
                 //kaydediyoruz
                 XmlSave.SaveRestoran(urunListesi, "urunler.xml");
 
@@ -182,6 +200,7 @@ namespace ROPv1
             if (treeUrunAdi.SelectedNode.Parent == null)
             {
                 newProductForm.Enabled = false;
+                textBoxUrunAciklamasi.Enabled = false;
             }
             else
             {
@@ -189,6 +208,7 @@ namespace ROPv1
                 textboxUrunFiyat.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[treeUrunAdi.SelectedNode.Index];
                 comboNewKategoriName.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[treeUrunAdi.SelectedNode.Index];
                 comboKDV.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKDV[treeUrunAdi.SelectedNode.Index].ToString();
+                textBoxUrunAciklamasi.Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAciklamasi[treeUrunAdi.SelectedNode.Index];
                 newProductForm.Text = textboxUrunName.Text;
             }
 
@@ -220,6 +240,7 @@ namespace ROPv1
                 buttonCancel.Visible = true;
                 buttonAddNewProduct.Enabled = false;
                 newProductForm.Enabled = true;
+                textBoxUrunAciklamasi.Enabled = true;
             }
             textboxUrunName.Focus();
         }
@@ -241,6 +262,8 @@ namespace ROPv1
 
             string urunAdi = textboxUrunName.Text, urunKategorisi = comboNewKategoriName.Text, urunFiyati = textboxUrunFiyat.Text.Substring(0, textboxUrunFiyat.Text.Length - 3);
             int urunKDV = Convert.ToInt32(comboKDV.Text);
+
+            string urunAciklamasi = textBoxUrunAciklamasi.Text;
 
             int kategoriYeri = 0;
             for (int i = 0; i < treeUrunAdi.Nodes.Count; i++) // kategori varsa yerini al
@@ -284,6 +307,7 @@ namespace ROPv1
                 urunListesi[kategoriYeri].urunKategorisi.Add(urunKategorisi);
                 urunListesi[kategoriYeri].porsiyonFiyati.Add(urunFiyati);
                 urunListesi[kategoriYeri].urunKDV.Add(urunKDV);
+                urunListesi[kategoriYeri].urunAciklamasi.Add(urunAciklamasi);
                 XmlSave.SaveRestoran(urunListesi, "urunler.xml");
 
                 newProductForm.Text = urunAdi;
@@ -326,6 +350,7 @@ namespace ROPv1
                     urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[treeUrunAdi.SelectedNode.Index] = urunFiyati;
                     urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[treeUrunAdi.SelectedNode.Index] = urunKategorisi;
                     urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKDV[treeUrunAdi.SelectedNode.Index] = urunKDV;
+                    urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAciklamasi[treeUrunAdi.SelectedNode.Index] = urunAciklamasi;
 
                     //eski ürünün görünümdeki ismi güncellenir
                     treeUrunAdi.SelectedNode.Text = urunAdi;
@@ -345,12 +370,14 @@ namespace ROPv1
                     urunListesi[kategoriYeri].urunKategorisi.Add(urunKategorisi);
                     urunListesi[kategoriYeri].porsiyonFiyati.Add(urunFiyati);
                     urunListesi[kategoriYeri].urunKDV.Add(urunKDV);
+                    urunListesi[kategoriYeri].urunAciklamasi.Add(urunAciklamasi);
 
                     //eski ürünü listeden çıkarırız
                     urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi.RemoveAt(treeUrunAdi.SelectedNode.Index);
                     urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi.RemoveAt(treeUrunAdi.SelectedNode.Index);
                     urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati.RemoveAt(treeUrunAdi.SelectedNode.Index);
                     urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKDV.RemoveAt(treeUrunAdi.SelectedNode.Index);
+                    urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAciklamasi.RemoveAt(treeUrunAdi.SelectedNode.Index);
 
                     //eski ürünü ağaçtan çıkarırız
                     treeUrunAdi.Nodes[treeUrunAdi.SelectedNode.Parent.Index].Nodes.RemoveAt(treeUrunAdi.SelectedNode.Index);
@@ -424,17 +451,20 @@ namespace ROPv1
                 //xmldeki görünümü güncelliyoruz
                 string geciciPorsiyonFiyati = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[index - 1],
                 geciciUrunAdi = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[index - 1],
+                geciciUrunAciklamasi = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAciklamasi[index - 1],
                 geciciUrunKategorisi = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[index - 1];
                 int geciciUrunKDV = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKDV[index - 1];
 
                 urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[index - 1] = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[index];
                 urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[index - 1] = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[index];
+                urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAciklamasi[index - 1] = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAciklamasi[index];
                 urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[index - 1] = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[index];
                 urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKDV[index - 1] = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKDV[index];
 
                 urunListesi[treeUrunAdi.SelectedNode.Parent.Index].porsiyonFiyati[index] = geciciPorsiyonFiyati;
                 urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[index] = geciciUrunAdi;
                 urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKategorisi[index] = geciciUrunKategorisi;
+                urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAciklamasi[index] = geciciUrunAciklamasi;
                 urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunKDV[index] = geciciUrunKDV;
 
                 XmlSave.SaveRestoran(urunListesi, "urunler.xml");
@@ -509,6 +539,21 @@ namespace ROPv1
             }
         }
 
+
+        public string ImageToBase64(Image image, System.Drawing.Imaging.ImageFormat format)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                // Convert Image to byte[]
+                image.Save(ms, format);
+                byte[] imageBytes = ms.ToArray();
+
+                // Convert byte[] to Base64 String
+                string base64String = Convert.ToBase64String(imageBytes);
+                return base64String;
+            }
+        }
+
         private void Products_Load(object sender, EventArgs e)
         {
             //açılışta capslock açıksa kapatıyoruz.
@@ -561,242 +606,290 @@ namespace ROPv1
                     infoUrun[i].urunAdi = new List<string>();
                     infoUrun[i].porsiyonFiyati = new List<string>();
                     infoUrun[i].urunKategorisi = new List<string>();
+                    infoUrun[i].urunAciklamasi = new List<string>();
                     infoUrun[i].urunKDV = new List<int>();
                 }
 
                 infoUrun[0].urunAdi.Add("Şırdan Tuzlama");
                 infoUrun[0].porsiyonFiyati.Add("7,00");
                 infoUrun[0].urunKategorisi.Add("Çorbalar");
+                infoUrun[0].urunAciklamasi.Add("Güzel çorba");                
                 infoUrun[0].urunKDV.Add(8);
 
                 infoUrun[0].urunAdi.Add("İşkembe");
                 infoUrun[0].porsiyonFiyati.Add("6,50");
                 infoUrun[0].urunKategorisi.Add("Çorbalar");
+                infoUrun[0].urunAciklamasi.Add("Güzel çorba");
                 infoUrun[0].urunKDV.Add(8);
 
                 infoUrun[0].urunAdi.Add("İşkembe Tuzlama");
                 infoUrun[0].porsiyonFiyati.Add("8,00");
                 infoUrun[0].urunKategorisi.Add("Çorbalar");
+                infoUrun[0].urunAciklamasi.Add("Güzel çorba");
                 infoUrun[0].urunKDV.Add(8);
 
                 infoUrun[0].urunAdi.Add("Ayak Paça");
                 infoUrun[0].porsiyonFiyati.Add("8,00");
                 infoUrun[0].urunKategorisi.Add("Çorbalar");
+                infoUrun[0].urunAciklamasi.Add("Güzel çorba");
                 infoUrun[0].urunKDV.Add(8);
 
                 infoUrun[0].urunAdi.Add("Kelle Paça");
                 infoUrun[0].porsiyonFiyati.Add("9,00");
                 infoUrun[0].urunKategorisi.Add("Çorbalar");
+                infoUrun[0].urunAciklamasi.Add("Güzel çorba");
                 infoUrun[0].urunKDV.Add(8);
 
                 infoUrun[1].urunAdi.Add("Mumbar Dolma");
                 infoUrun[1].porsiyonFiyati.Add("9,00");
                 infoUrun[1].urunKategorisi.Add("Spesyaller");
+                infoUrun[1].urunAciklamasi.Add("Güzel");
                 infoUrun[1].urunKDV.Add(8);
 
                 infoUrun[1].urunAdi.Add("İşkembe Güveç");
                 infoUrun[1].porsiyonFiyati.Add("9,00");
                 infoUrun[1].urunKategorisi.Add("Spesyaller");
+                infoUrun[1].urunAciklamasi.Add("Güzel");
                 infoUrun[1].urunKDV.Add(8);
 
                 infoUrun[1].urunAdi.Add("Tereyağında Tuzlama");
                 infoUrun[1].porsiyonFiyati.Add("7,00");
                 infoUrun[1].urunKategorisi.Add("Spesyaller");
+                infoUrun[1].urunAciklamasi.Add("Güzel");
                 infoUrun[1].urunKDV.Add(8);
 
                 infoUrun[1].urunAdi.Add("Kuzu Kelle");
                 infoUrun[1].porsiyonFiyati.Add("8,00");
                 infoUrun[1].urunKategorisi.Add("Spesyaller");
+                infoUrun[1].urunAciklamasi.Add("Güzel");
                 infoUrun[1].urunKDV.Add(8);
 
                 infoUrun[1].urunAdi.Add("Beyin Tava");
                 infoUrun[1].porsiyonFiyati.Add("8,00");
                 infoUrun[1].urunKategorisi.Add("Spesyaller");
+                infoUrun[1].urunAciklamasi.Add("Güzel");
                 infoUrun[1].urunKDV.Add(8);
 
                 infoUrun[2].urunAdi.Add("Ankara Döneri");
                 infoUrun[2].porsiyonFiyati.Add("8,00");
                 infoUrun[2].urunKategorisi.Add("Döner");
+                infoUrun[2].urunAciklamasi.Add("Güzel Döner");
                 infoUrun[2].urunKDV.Add(8);
 
                 infoUrun[2].urunAdi.Add("Dürüm Döner");
                 infoUrun[2].porsiyonFiyati.Add("8,00");
                 infoUrun[2].urunKategorisi.Add("Döner");
+                infoUrun[2].urunAciklamasi.Add("Güzel Döner");
                 infoUrun[2].urunKDV.Add(8);
 
                 infoUrun[2].urunAdi.Add("İskender");
                 infoUrun[2].porsiyonFiyati.Add("9,00");
                 infoUrun[2].urunKategorisi.Add("Döner");
+                infoUrun[2].urunAciklamasi.Add("Güzel Döner");
                 infoUrun[2].urunKDV.Add(8);
 
                 infoUrun[2].urunAdi.Add("Kapalı Döner");
                 infoUrun[2].porsiyonFiyati.Add("9,00");
                 infoUrun[2].urunKategorisi.Add("Döner");
+                infoUrun[2].urunAciklamasi.Add("Güzel Döner");
                 infoUrun[2].urunKDV.Add(8);
 
                 infoUrun[3].urunAdi.Add("Kıymalı Pide");
                 infoUrun[3].porsiyonFiyati.Add("6,00");
                 infoUrun[3].urunKategorisi.Add("Pideler");
+                infoUrun[3].urunAciklamasi.Add("Güzel Pide");
                 infoUrun[3].urunKDV.Add(8);
 
                 infoUrun[3].urunAdi.Add("Kuşbaşılı Pide");
                 infoUrun[3].porsiyonFiyati.Add("7,00");
                 infoUrun[3].urunKategorisi.Add("Pideler");
+                infoUrun[3].urunAciklamasi.Add("Güzel Pide");
                 infoUrun[3].urunKDV.Add(8);
 
                 infoUrun[3].urunAdi.Add("Kaşarlı Pide");
                 infoUrun[3].porsiyonFiyati.Add("7,00");
                 infoUrun[3].urunKategorisi.Add("Pideler");
+                infoUrun[3].urunAciklamasi.Add("Güzel Pide");
                 infoUrun[3].urunKDV.Add(8);
 
                 infoUrun[3].urunAdi.Add("Karışık Pide");
                 infoUrun[3].porsiyonFiyati.Add("8,00");
                 infoUrun[3].urunKategorisi.Add("Pideler");
+                infoUrun[3].urunAciklamasi.Add("Güzel Pide");
                 infoUrun[3].urunKDV.Add(8);
 
                 infoUrun[3].urunAdi.Add("Sucuklu Pide");
                 infoUrun[3].porsiyonFiyati.Add("8,00");
                 infoUrun[3].urunKategorisi.Add("Pideler");
+                infoUrun[3].urunAciklamasi.Add("Güzel Pide");
                 infoUrun[3].urunKDV.Add(8);
 
                 infoUrun[3].urunAdi.Add("Lahmacun");
                 infoUrun[3].porsiyonFiyati.Add("3,00");
                 infoUrun[3].urunKategorisi.Add("Pideler");
+                infoUrun[3].urunAciklamasi.Add("Güzel Pide");
                 infoUrun[3].urunKDV.Add(8);
 
                 infoUrun[4].urunAdi.Add("Tas Kebabı");
                 infoUrun[4].porsiyonFiyati.Add("10,00");
                 infoUrun[4].urunKategorisi.Add("Et Yemekleri");
+                infoUrun[4].urunAciklamasi.Add("Güzel Yemek");
                 infoUrun[4].urunKDV.Add(8);
 
                 infoUrun[4].urunAdi.Add("Püreli Kebap");
                 infoUrun[4].porsiyonFiyati.Add("10,00");
                 infoUrun[4].urunKategorisi.Add("Et Yemekleri");
+                infoUrun[4].urunAciklamasi.Add("Güzel Yemek");
                 infoUrun[4].urunKDV.Add(8);
 
                 infoUrun[4].urunAdi.Add("Beğendili Kebap");
                 infoUrun[4].porsiyonFiyati.Add("10,00");
                 infoUrun[4].urunKategorisi.Add("Et Yemekleri");
+                infoUrun[4].urunAciklamasi.Add("Güzel Yemek");
                 infoUrun[4].urunKDV.Add(8);
 
                 infoUrun[4].urunAdi.Add("Dana Rosto");
                 infoUrun[4].porsiyonFiyati.Add("10,00");
                 infoUrun[4].urunKategorisi.Add("Et Yemekleri");
+                infoUrun[4].urunAciklamasi.Add("Güzel Yemek");
                 infoUrun[4].urunKDV.Add(8);
 
                 infoUrun[4].urunAdi.Add("Orman Kebabı");
                 infoUrun[4].porsiyonFiyati.Add("10,00");
                 infoUrun[4].urunKategorisi.Add("Et Yemekleri");
+                infoUrun[4].urunAciklamasi.Add("Güzel Yemek");
                 infoUrun[4].urunKDV.Add(8);
 
                 infoUrun[4].urunAdi.Add("Çiftlik Kebabı");
                 infoUrun[4].porsiyonFiyati.Add("10,00");
                 infoUrun[4].urunKategorisi.Add("Et Yemekleri");
+                infoUrun[4].urunAciklamasi.Add("Güzel Yemek");
                 infoUrun[4].urunKDV.Add(8);
 
                 infoUrun[5].urunAdi.Add("İnegöl Köfte");
                 infoUrun[5].porsiyonFiyati.Add("7,00");
                 infoUrun[5].urunKategorisi.Add("Kebaplar");
+                infoUrun[5].urunAciklamasi.Add("Güzel Kebap");
                 infoUrun[5].urunKDV.Add(8);
 
                 infoUrun[5].urunAdi.Add("Kaşarlı Köfte");
                 infoUrun[5].porsiyonFiyati.Add("8,00");
                 infoUrun[5].urunKategorisi.Add("Kebaplar");
+                infoUrun[5].urunAciklamasi.Add("Güzel Kebap");
                 infoUrun[5].urunKDV.Add(8);
 
                 infoUrun[5].urunAdi.Add("Adana Kebap");
                 infoUrun[5].porsiyonFiyati.Add("7,50");
                 infoUrun[5].urunKategorisi.Add("Kebaplar");
+                infoUrun[5].urunAciklamasi.Add("Güzel Kebap");
                 infoUrun[5].urunKDV.Add(8);
 
                 infoUrun[5].urunAdi.Add("Beyti Kebap");
                 infoUrun[5].porsiyonFiyati.Add("9,00");
                 infoUrun[5].urunKategorisi.Add("Kebaplar");
+                infoUrun[5].urunAciklamasi.Add("Güzel Kebap");
                 infoUrun[5].urunKDV.Add(8);
 
                 infoUrun[5].urunAdi.Add("Patlıcan Kebap");
                 infoUrun[5].porsiyonFiyati.Add("10,00");
                 infoUrun[5].urunKategorisi.Add("Kebaplar");
+                infoUrun[5].urunAciklamasi.Add("Güzel Kebap");
                 infoUrun[5].urunKDV.Add(8);
 
                 infoUrun[5].urunAdi.Add("Domatesli Kebap");
                 infoUrun[5].porsiyonFiyati.Add("8,00");
                 infoUrun[5].urunKategorisi.Add("Kebaplar");
+                infoUrun[5].urunAciklamasi.Add("Güzel Kebap");
                 infoUrun[5].urunKDV.Add(8);
 
                 infoUrun[6].urunAdi.Add("Mevsim Salata");
                 infoUrun[6].porsiyonFiyati.Add("4,00");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
+                infoUrun[6].urunAciklamasi.Add("Güzel Salata");
                 infoUrun[6].urunKDV.Add(8);
 
                 infoUrun[6].urunAdi.Add("Çoban Salata");
                 infoUrun[6].porsiyonFiyati.Add("4,00");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
+                infoUrun[6].urunAciklamasi.Add("Güzel Salata");
                 infoUrun[6].urunKDV.Add(8);
 
                 infoUrun[6].urunAdi.Add("Beyin Salata");
                 infoUrun[6].porsiyonFiyati.Add("7,00");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
+                infoUrun[6].urunAciklamasi.Add("Güzel Salata");
                 infoUrun[6].urunKDV.Add(8);
 
                 infoUrun[6].urunAdi.Add("Cacık");
                 infoUrun[6].porsiyonFiyati.Add("4,00");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
+                infoUrun[6].urunAciklamasi.Add("Güzel Salata");
                 infoUrun[6].urunKDV.Add(8);
 
                 infoUrun[7].urunAdi.Add("Kaymaklı Ekmek Kadayıfı");
                 infoUrun[7].porsiyonFiyati.Add("5,00");
                 infoUrun[7].urunKategorisi.Add("Tatlılar");
+                infoUrun[7].urunAciklamasi.Add("Güzel Tatlı");
                 infoUrun[7].urunKDV.Add(8);
 
                 infoUrun[7].urunAdi.Add("Sütlü Kadayıf");
                 infoUrun[7].porsiyonFiyati.Add("4,00");
                 infoUrun[7].urunKategorisi.Add("Tatlılar");
+                infoUrun[7].urunAciklamasi.Add("Güzel Tatlı");
                 infoUrun[7].urunKDV.Add(8);
 
                 infoUrun[7].urunAdi.Add("Şekerpare");
                 infoUrun[7].porsiyonFiyati.Add("4,00");
                 infoUrun[7].urunKategorisi.Add("Tatlılar");
+                infoUrun[7].urunAciklamasi.Add("Güzel Tatlı");
                 infoUrun[7].urunKDV.Add(8);
 
                 infoUrun[7].urunAdi.Add("Fırın Sütlaç");
                 infoUrun[7].porsiyonFiyati.Add("4,00");
                 infoUrun[7].urunKategorisi.Add("Tatlılar");
+                infoUrun[7].urunAciklamasi.Add("Güzel Tatlı");
                 infoUrun[7].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Kola");
                 infoUrun[8].porsiyonFiyati.Add("2,00");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunAciklamasi.Add("Güzel İçecek");
                 infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Fanta");
                 infoUrun[8].porsiyonFiyati.Add("2,00");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunAciklamasi.Add("Güzel İçecek");
                 infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Meyve Suyu");
                 infoUrun[8].porsiyonFiyati.Add("2,00");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunAciklamasi.Add("Güzel İçecek");
                 infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Ayran");
                 infoUrun[8].porsiyonFiyati.Add("1,50");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunAciklamasi.Add("Güzel İçecek");
                 infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Soda");
                 infoUrun[8].porsiyonFiyati.Add("1,00");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunAciklamasi.Add("Güzel İçecek");
                 infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Su");
                 infoUrun[8].porsiyonFiyati.Add("1,00");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunAciklamasi.Add("Güzel İçecek");
                 infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[8].urunAdi.Add("Çay");
                 infoUrun[8].porsiyonFiyati.Add("0,50");
                 infoUrun[8].urunKategorisi.Add("İçecekler");
+                infoUrun[8].urunAciklamasi.Add("Güzel İçecek");
                 infoUrun[8].urunKDV.Add(8);
 
                 infoUrun[0].kategorininAdi = "Çorbalar";
@@ -838,8 +931,8 @@ namespace ROPv1
                 infoUrun2[i].urunAdi = new List<string>();
                 infoUrun2[i].porsiyonFiyati = new List<string>();
                 infoUrun2[i].urunKategorisi = new List<string>();
+                infoUrun2[i].urunAciklamasi = new List<string>();
                 infoUrun2[i].urunKDV = new List<int>();
-
             }
 
             for (int i = 0; i < kategoriListesi[0].kategoriler.Count; i++)
@@ -874,6 +967,7 @@ namespace ROPv1
                     {
                         urunListesiGecici[urunListesiGecici.Count - 1].urunKategorisi.Add("Kategorisiz Ürünler");
                         urunListesiGecici[urunListesiGecici.Count - 1].urunAdi.Add(urunListesiGecici[i].urunAdi[x]);
+                        urunListesiGecici[urunListesiGecici.Count - 1].urunAciklamasi.Add(urunListesiGecici[i].urunAciklamasi[x]);
                         urunListesiGecici[urunListesiGecici.Count - 1].porsiyonFiyati.Add(urunListesiGecici[i].porsiyonFiyati[x]);
                         urunListesiGecici[urunListesiGecici.Count - 1].urunKDV.Add(urunListesiGecici[i].urunKDV[x]);
 
@@ -883,6 +977,7 @@ namespace ROPv1
                             urunListesiGecici[i].urunAdi.RemoveAt(x);
                             urunListesiGecici[i].urunKategorisi.RemoveAt(x);
                             urunListesiGecici[i].porsiyonFiyati.RemoveAt(x);
+                            urunListesiGecici[i].urunAciklamasi.RemoveAt(x);
                             urunListesiGecici[i].urunKDV.RemoveAt(x);
                             x--;
                         }
@@ -897,11 +992,13 @@ namespace ROPv1
                             urunListesiGecici[kategoriYeri].urunKategorisi.Add(urunListesiGecici[i].urunKategorisi[x]);
                             urunListesiGecici[kategoriYeri].urunAdi.Add(urunListesiGecici[i].urunAdi[x]);
                             urunListesiGecici[kategoriYeri].porsiyonFiyati.Add(urunListesiGecici[i].porsiyonFiyati[x]);
+                            urunListesiGecici[kategoriYeri].urunAciklamasi.Add(urunListesiGecici[i].urunKategorisi[x]);
                             urunListesiGecici[kategoriYeri].urunKDV.Add(urunListesiGecici[i].urunKDV[x]);
 
                             urunListesiGecici[i].urunAdi.RemoveAt(x);
                             urunListesiGecici[i].urunKategorisi.RemoveAt(x);
                             urunListesiGecici[i].porsiyonFiyati.RemoveAt(x);
+                            urunListesiGecici[i].urunAciklamasi.RemoveAt(x);
                             urunListesiGecici[i].urunKDV.RemoveAt(x);
                             x--;
                         }
@@ -949,6 +1046,28 @@ namespace ROPv1
             {
                 e.Handled = true;
             }
+        }
+
+        // ürün fotoğraf butonu
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Invoker dialog = new Invoker();
+
+            if (dialog.Invoke() == DialogResult.OK)
+            {
+                ((Button)sender).Text = "Fotoğraf: " + urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[treeUrunAdi.SelectedNode.Index];
+
+                string newPath = Application.StartupPath + @"\resimler\" + urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[treeUrunAdi.SelectedNode.Index] + ".png";
+                try
+                {
+                    System.IO.File.Copy(dialog.InvokeDialog.FileName, newPath, true);
+                }
+                catch 
+                {
+                    KontrolFormu errorDialog = new KontrolFormu("Dosya kaydedilirken bir hata oluştu lütfen tekrar deneyiniz", false);
+                    errorDialog.Show();
+                }
+            }                
         }
     }
 }

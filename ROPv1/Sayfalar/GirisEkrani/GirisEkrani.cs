@@ -241,7 +241,11 @@ namespace ROPv1
 
             string[] xmlDosyalari = { "kategoriler.xml", "masaDizayn.xml", "menu.xml", "restoran.xml", "stoklar.xml", "tempfiles.xml", "urunler.xml" };
 
-            client.gonder(xmlDosyalari[kacinciDosya - 1]);
+            string path = Application.StartupPath + @"\resimler";
+
+            string[] imageFiles = Directory.GetFiles(path, "*.png", SearchOption.TopDirectoryOnly);
+
+            client.gonder(xmlDosyalari[kacinciDosya - 1],Application.StartupPath);
         }
 
         // Anket doldurulduktan sonra cevapları gelince çalışacak fonksiyon
@@ -1991,10 +1995,13 @@ namespace ROPv1
                 return;
             }
 
-            //sipariş ekranına geçilecek
-            siparisForm = new SiparisMasaFormu(kullanicilar);
+            if(siparisForm == null)
+            {
+                //sipariş ekranına geçilecek
+                siparisForm = new SiparisMasaFormu(kullanicilar,this);
 
-            Task.Factory.StartNew(() => siparisForm.ShowDialog());
+                Task.Factory.StartNew(() => siparisForm.ShowDialog());
+            }
         }
 
         private void exitButtonPressed(object sender, EventArgs e)

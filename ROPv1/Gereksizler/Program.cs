@@ -57,7 +57,7 @@ namespace ROPv1
             }
             else //client
             {
-                Application.Run(new SiparisMasaFormu(null));
+                Application.Run(new SiparisMasaFormu(null,null));
             }
         }
 

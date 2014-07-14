@@ -393,12 +393,12 @@ namespace SPIA.Server
                 }
             }
 
-            public void gonder(string FileName)
+            public void gonder(string FileName, string path)
             {
                 try
                 {
                     string fileName = FileName;// "test.txt";// "Your File Name";
-                    string filePath = @"C:\Program Files\ROP\";//Your File Path;
+                    string filePath = path;//Your File Path;
                     byte[] fileNameByte = Encoding.ASCII.GetBytes(fileName);
 
                     byte[] fileData = File.ReadAllBytes(filePath + fileName);

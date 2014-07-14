@@ -121,6 +121,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Sayfalar\GenelKullanılanlar\Invoker.cs" />
     <Compile Include="Sayfalar\GirisEkrani\SifreVeFirmaAdiFormu.cs">
       <SubType>Form</SubType>
     </Compile>

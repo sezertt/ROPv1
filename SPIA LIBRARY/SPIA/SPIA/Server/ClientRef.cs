@@ -21,6 +21,6 @@ namespace SPIA.Server
         /// Ýstemci ile olan baðlantýyý kapatýr        
         void BaglantiyiKapat();
 
-        void gonder(string Filename);
+        void gonder(string Filename, string path);
     }
 }

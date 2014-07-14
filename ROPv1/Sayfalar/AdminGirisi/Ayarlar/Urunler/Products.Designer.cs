@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.newProductForm = new System.Windows.Forms.GroupBox();
+            this.buttonResim = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.comboKDV = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,6 +50,7 @@
             this.treeUrunAdi = new System.Windows.Forms.TreeView();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.textBoxUrunAciklamasi = new System.Windows.Forms.TextBox();
             this.newProductForm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +58,7 @@
             // 
             this.newProductForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.newProductForm.BackColor = System.Drawing.Color.White;
+            this.newProductForm.Controls.Add(this.buttonResim);
             this.newProductForm.Controls.Add(this.label2);
             this.newProductForm.Controls.Add(this.comboKDV);
             this.newProductForm.Controls.Add(this.label1);
@@ -76,11 +79,26 @@
             this.newProductForm.TabStop = false;
             this.newProductForm.Text = "Yeni Ürün";
             // 
+            // buttonResim
+            // 
+            this.buttonResim.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonResim.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonResim.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonResim.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonResim.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonResim.Location = new System.Drawing.Point(8, 238);
+            this.buttonResim.Name = "buttonResim";
+            this.buttonResim.Size = new System.Drawing.Size(305, 38);
+            this.buttonResim.TabIndex = 45;
+            this.buttonResim.Text = "Ürün Fotoğrafı";
+            this.buttonResim.UseVisualStyleBackColor = false;
+            this.buttonResim.Click += new System.EventHandler(this.button3_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(4, 244);
+            this.label2.Location = new System.Drawing.Point(4, 202);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(90, 24);
             this.label2.TabIndex = 44;
@@ -96,7 +114,7 @@
             "1",
             "8",
             "18"});
-            this.comboKDV.Location = new System.Drawing.Point(100, 242);
+            this.comboKDV.Location = new System.Drawing.Point(100, 200);
             this.comboKDV.Name = "comboKDV";
             this.comboKDV.Size = new System.Drawing.Size(213, 32);
             this.comboKDV.TabIndex = 43;
@@ -109,7 +127,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Location = new System.Drawing.Point(4, 168);
+            this.label1.Location = new System.Drawing.Point(4, 135);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(112, 24);
             this.label1.TabIndex = 42;
@@ -123,7 +141,7 @@
             this.comboNewKategoriName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.comboNewKategoriName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.comboNewKategoriName.FormattingEnabled = true;
-            this.comboNewKategoriName.Location = new System.Drawing.Point(8, 195);
+            this.comboNewKategoriName.Location = new System.Drawing.Point(8, 162);
             this.comboNewKategoriName.MaxDropDownItems = 20;
             this.comboNewKategoriName.Name = "comboNewKategoriName";
             this.comboNewKategoriName.Size = new System.Drawing.Size(305, 32);
@@ -142,9 +160,9 @@
             this.textboxUrunFiyat.ContextMenuStrip = this.contextMenuStrip1;
             this.textboxUrunFiyat.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxUrunFiyat.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textboxUrunFiyat.Location = new System.Drawing.Point(8, 126);
+            this.textboxUrunFiyat.Location = new System.Drawing.Point(187, 95);
             this.textboxUrunFiyat.Name = "textboxUrunFiyat";
-            this.textboxUrunFiyat.Size = new System.Drawing.Size(305, 32);
+            this.textboxUrunFiyat.Size = new System.Drawing.Size(126, 32);
             this.textboxUrunFiyat.TabIndex = 3;
             this.textboxUrunFiyat.Enter += new System.EventHandler(this.fiyatGirilcek);
             this.textboxUrunFiyat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPressedOnPriceText);
@@ -169,7 +187,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label7.Location = new System.Drawing.Point(4, 99);
+            this.label7.Location = new System.Drawing.Point(4, 98);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(183, 24);
             this.label7.TabIndex = 25;
@@ -183,7 +201,7 @@
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label5.Location = new System.Drawing.Point(4, 30);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(104, 24);
+            this.label5.Size = new System.Drawing.Size(103, 24);
             this.label5.TabIndex = 19;
             this.label5.Text = "Ürün Adı:";
             // 
@@ -256,7 +274,7 @@
             this.labelUrunSayisiYazisi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelUrunSayisiYazisi.Location = new System.Drawing.Point(218, 305);
             this.labelUrunSayisiYazisi.Name = "labelUrunSayisiYazisi";
-            this.labelUrunSayisiYazisi.Size = new System.Drawing.Size(142, 24);
+            this.labelUrunSayisiYazisi.Size = new System.Drawing.Size(141, 24);
             this.labelUrunSayisiYazisi.TabIndex = 43;
             this.labelUrunSayisiYazisi.Text = "Ürün Sayısı =";
             // 
@@ -282,9 +300,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.keyboardcontrol1.ForeColor = System.Drawing.SystemColors.Window;
             this.keyboardcontrol1.KeyboardType = KeyboardClassLibrary.BoW.Standard;
-            this.keyboardcontrol1.Location = new System.Drawing.Point(0, 344);
+            this.keyboardcontrol1.Location = new System.Drawing.Point(0, 382);
             this.keyboardcontrol1.Name = "keyboardcontrol1";
-            this.keyboardcontrol1.Size = new System.Drawing.Size(993, 282);
+            this.keyboardcontrol1.Size = new System.Drawing.Size(993, 244);
             this.keyboardcontrol1.TabIndex = 32;
             this.keyboardcontrol1.UserKeyPressed += new KeyboardClassLibrary.KeyboardDelegate(this.keyboardcontrol1_UserKeyPressed);
             // 
@@ -345,10 +363,26 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.moveNodeUp);
             // 
+            // textBoxUrunAciklamasi
+            // 
+            this.textBoxUrunAciklamasi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxUrunAciklamasi.ContextMenuStrip = this.contextMenuStrip1;
+            this.textBoxUrunAciklamasi.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.textBoxUrunAciklamasi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.textBoxUrunAciklamasi.Location = new System.Drawing.Point(5, 344);
+            this.textBoxUrunAciklamasi.MaxLength = 80;
+            this.textBoxUrunAciklamasi.Name = "textBoxUrunAciklamasi";
+            this.textBoxUrunAciklamasi.Size = new System.Drawing.Size(974, 32);
+            this.textBoxUrunAciklamasi.TabIndex = 45;
+            this.textBoxUrunAciklamasi.Text = "Ürün Açıklaması";
+            this.textBoxUrunAciklamasi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxUrunName_KeyPress);
+            // 
             // Products
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.textBoxUrunAciklamasi);
             this.Controls.Add(this.labelUrunSayisi);
             this.Controls.Add(this.labelUrunSayisiYazisi);
             this.Controls.Add(this.button2);
@@ -390,6 +424,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboKDV;
+        private System.Windows.Forms.TextBox textBoxUrunAciklamasi;
+        private System.Windows.Forms.Button buttonResim;
 
     }
 }

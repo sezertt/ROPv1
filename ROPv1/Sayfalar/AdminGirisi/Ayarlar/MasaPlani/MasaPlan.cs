@@ -46,7 +46,7 @@ namespace ROPv1
             {
                 //seçilen masa dizaynı ismini görünüme ekle 
                 textTableDesignName.Text = masaDizaynListesi[treeMasaPlanName.SelectedNode.Index].masaPlanIsmi;
-
+                int masaSayisi = 0;
                 //seçilen masa dizaynının masalarına göre ekranı yerleştir
                 for (int i = 0; i < 6; i++)
                 {
@@ -58,6 +58,7 @@ namespace ROPv1
                             tablebutton.Text = masaDizaynListesi[treeMasaPlanName.SelectedNode.Index].masaYerleri[i][j];
                             tablebutton.Visible = true;
                             tablebutton.ForeColor = SystemColors.ActiveCaption;
+                            masaSayisi++;
                         }
                         else
                         {
@@ -68,7 +69,7 @@ namespace ROPv1
                         tablebutton.BackColor = Color.White;
                     }
                 }
-
+                numericTableCount.Value = masaSayisi;
                 newTableForm.Text = textTableDesignName.Text;
             }
         }

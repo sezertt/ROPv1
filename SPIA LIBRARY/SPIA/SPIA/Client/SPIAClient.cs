@@ -65,12 +65,12 @@ namespace SPIA.Client
 
         // PUBLIC FONKSYONLAR /////////////////////////////////////////////////
 
-        public bool dosyaAl()
+        public bool dosyaAl(string path)
         {
             try
             {
                 byte[] clientData = new byte[1024 * 5000];
-                string receivedPath = @"C:\ROP\";
+                string receivedPath = path;
 
                 int receivedBytesLen = clientBaglantisi.Receive(clientData);
 

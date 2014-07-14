@@ -1696,7 +1696,9 @@ namespace ROPv1
                         this.Close();
                         return;
                     }
-                    masaAcikMi = false;
+
+                    if(masaDegisti != 2)
+                        masaAcikMi = false;
 
                     this.Close();
                 }
@@ -1880,7 +1882,6 @@ namespace ROPv1
                 {
                     adisyonNotuUpdate(adisyonID);
                 }
-                this.Close();
             }
             else //client
             {
@@ -1901,7 +1902,6 @@ namespace ROPv1
                 {
                     masaFormu.serveraNotuYolla(yeniMasaAdi, yeniDepartmanAdi, "adisyonNotunuGuncelle", adisyonNotu);
                 }
-                this.Close();
             }
         }
 
@@ -2022,7 +2022,6 @@ namespace ROPv1
                             cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET MasaAdi=@masaninAdi, DepartmanAdi=@departmanAdi  WHERE MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND AcikMi=1");
                             cmd.Parameters.AddWithValue("@masaninAdi", masaDegistirForm.yeniMasa);
                             cmd.Parameters.AddWithValue("@departmanAdi", masaDegistirForm.yeniDepartman);
-
                             break;
                         default:
                             cmd = null;
@@ -2036,7 +2035,7 @@ namespace ROPv1
                     yeniMasaninAdi = masaDegistirForm.yeniMasa;
                     masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
 
-                    masaFormu.serverdanMasaDegisikligi(MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, "masaDegistir");
+                    masaFormu.serverdanMasaDegisikligi(MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, "masaDegistir");                    
                 }
                 else // client
                 {
@@ -2046,7 +2045,12 @@ namespace ROPv1
                     masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
                 }
                 masaAktarmaIslemlerindenSonraCik(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman);
+
+                if (masaDegisti == 2 || masaDegisti == 3)
+                    listUrunFiyat.Items.Clear();
+
                 masaDegistirForm = null;
+                buttonTamam_Click(null, null);
             }
         }
 
