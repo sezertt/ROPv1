@@ -1065,7 +1065,7 @@ namespace ROPv1
 
             if (dialog.Invoke() == DialogResult.OK)
             {
-                ((Button)sender).Text = "Fotoğraf: " + urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[treeUrunAdi.SelectedNode.Index];
+                ((Button)sender).Text = urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[treeUrunAdi.SelectedNode.Index];
 
                 string newPath = Application.StartupPath + @"\resimler\" + urunListesi[treeUrunAdi.SelectedNode.Parent.Index].urunAdi[treeUrunAdi.SelectedNode.Index] + ".png";
                 try

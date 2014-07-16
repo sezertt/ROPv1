@@ -399,7 +399,7 @@ namespace SPIA.Server
                 {
                     string fileName = FileName;// "test.txt";// "Your File Name";
                     string filePath = path;//Your File Path;
-                    byte[] fileNameByte = Encoding.ASCII.GetBytes(fileName);
+                    byte[] fileNameByte = Encoding.UTF8.GetBytes(fileName);
 
                     byte[] fileData = File.ReadAllBytes(filePath + fileName);
                     byte[] clientData = new byte[4 + fileNameByte.Length + fileData.Length];

@@ -246,7 +246,7 @@ namespace ROPv1
                 DirectoryInfo di = Directory.CreateDirectory(image_outputDir + @"\resimler\");
             }           
 
-            string path1 = Application.StartupPath + @"\resimler";
+            string path1 = Application.StartupPath + @"\\resimler";
 
             string path2 = Application.StartupPath;
 
@@ -257,7 +257,14 @@ namespace ROPv1
 
             client.MesajYolla("komut=dosyalar&kacinci=" + kacinciDosya + "&kacDosya=" + (imageFiles.Count() + xmlDosyalari.Count()));
 
-            client.gonder(Path.GetFileName(xmlDosyalari[kacinciDosya - 1]), Application.StartupPath + "\\");
+            if (kacinciDosya <= xmlDosyalari.Count())
+            {
+                client.gonder(Path.GetFileName(xmlDosyalari[kacinciDosya - 1]), path2 + "\\");
+            }
+            else
+            {
+                client.gonder(Path.GetFileName(imageFiles[kacinciDosya - 1 - xmlDosyalari.Count()]), path1 + "\\");
+            }
         }
 
         // Anket doldurulduktan sonra cevapları gelince çalışacak fonksiyon
@@ -1915,70 +1922,78 @@ namespace ROPv1
 
         private void girisButtonPressed(object sender, EventArgs e)
         {
-            if (!File.Exists("tempfiles.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default kategorilerimizi giriyoruz.
-            {
-                infoKullanici = new UItemp[1];
-
-                infoKullanici[0] = new UItemp();
-                infoKullanici[0].UIN = (new UnicodeEncoding()).GetBytes("Adınız");
-                infoKullanici[0].UIS = (new UnicodeEncoding()).GetBytes("Soy Adınız");
-                infoKullanici[0].UIUN = (new UnicodeEncoding()).GetBytes("admin");
-                infoKullanici[0].UIU = (new UnicodeEncoding()).GetBytes("Yönetici");
-
-                infoKullanici[0].UIPN = PasswordHash.CreateHash("0000");
-                infoKullanici[0].UIPW = PasswordHash.CreateHash("00000");
-                infoKullanici[0].UIY[0] = PasswordHash.CreateHash("true");
-                infoKullanici[0].UIY[1] = PasswordHash.CreateHash("true");
-                infoKullanici[0].UIY[2] = PasswordHash.CreateHash("true");
-                infoKullanici[0].UIY[3] = PasswordHash.CreateHash("true");
-                infoKullanici[0].UIY[4] = PasswordHash.CreateHash("true");
-
-
-                XmlSave.SaveRestoran(infoKullanici, "tempfiles.xml");
-
-                File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
-            }
-            XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
-            infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
-
-
-            string[] username = new string[1];
-            username[0] = userNameTextBox.getNameText(); //name lazım olduğunda al
-            string password = passwordTextBox.getPasswordText(); //password lazım olduğunda al 
-
-            int kullaniciAdi = -5;
-
-            if (username[0] == "ropisimiz" && password == "roproprop")
-            {
-                XmlSave.SaveRestoran(username, "sonKullanici.xml");
-
-                adminForm = new AdminGirisFormu();
-                Task.Factory.StartNew(() => adminForm.ShowDialog());
-                //adminForm.Show();
-            }
-            else
-            {
-                for (int i = 0; i < infoKullanici.Count(); i++)
+            if (adminForm == null)
+            {            
+                if (!File.Exists("tempfiles.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default kategorilerimizi giriyoruz.
                 {
-                    if (username[0] == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
-                    {
-                        kullaniciAdi = i;
-                        break;
-                    }
+                    infoKullanici = new UItemp[1];
+
+                    infoKullanici[0] = new UItemp();
+                    infoKullanici[0].UIN = (new UnicodeEncoding()).GetBytes("Adınız");
+                    infoKullanici[0].UIS = (new UnicodeEncoding()).GetBytes("Soy Adınız");
+                    infoKullanici[0].UIUN = (new UnicodeEncoding()).GetBytes("admin");
+                    infoKullanici[0].UIU = (new UnicodeEncoding()).GetBytes("Yönetici");
+
+                    infoKullanici[0].UIPN = PasswordHash.CreateHash("0000");
+                    infoKullanici[0].UIPW = PasswordHash.CreateHash("00000");
+                    infoKullanici[0].UIY[0] = PasswordHash.CreateHash("true");
+                    infoKullanici[0].UIY[1] = PasswordHash.CreateHash("true");
+                    infoKullanici[0].UIY[2] = PasswordHash.CreateHash("true");
+                    infoKullanici[0].UIY[3] = PasswordHash.CreateHash("true");
+                    infoKullanici[0].UIY[4] = PasswordHash.CreateHash("true");
+
+
+                    XmlSave.SaveRestoran(infoKullanici, "tempfiles.xml");
+
+                    File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
                 }
-                if (kullaniciAdi != -5)
+                XmlLoad<UItemp> loadInfoKullanicilar = new XmlLoad<UItemp>();
+                infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
+
+
+                string[] username = new string[1];
+                username[0] = userNameTextBox.getNameText(); //name lazım olduğunda al
+                string password = passwordTextBox.getPasswordText(); //password lazım olduğunda al 
+
+                int kullaniciAdi = -5;
+
+                if (username[0] == "ropisimiz" && password == "roproprop")
                 {
-                    //bool flag = Helper.VerifyHash(password, "SHA512", infoKullanici[kullaniciAdi].UIPW);
+                    XmlSave.SaveRestoran(username, "sonKullanici.xml");
 
-                    bool flag = PasswordHash.ValidatePassword(password, infoKullanici[kullaniciAdi].UIPW);
+                    adminForm = new AdminGirisFormu(this);
+                    Task.Factory.StartNew(() => adminForm.ShowDialog());
+                    //adminForm.Show();
+                }
+                else
+                {
+                    for (int i = 0; i < infoKullanici.Count(); i++)
+                    {
+                        if (username[0] == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
+                        {
+                            kullaniciAdi = i;
+                            break;
+                        }
+                    }
+                    if (kullaniciAdi != -5)
+                    {
+                        //bool flag = Helper.VerifyHash(password, "SHA512", infoKullanici[kullaniciAdi].UIPW);
 
-                    if (flag == true)
-                    { //şifre doğru
-                        XmlSave.SaveRestoran(username, "sonKullanici.xml");
+                        bool flag = PasswordHash.ValidatePassword(password, infoKullanici[kullaniciAdi].UIPW);
 
-                        adminForm = new AdminGirisFormu();
-                        Task.Factory.StartNew(() => adminForm.ShowDialog());
-                        //adminForm.Show();
+                        if (flag == true)
+                        { //şifre doğru
+                            XmlSave.SaveRestoran(username, "sonKullanici.xml");
+
+                            adminForm = new AdminGirisFormu(this);
+                            Task.Factory.StartNew(() => adminForm.ShowDialog());
+                            //adminForm.Show();
+                        }
+                        else
+                        {
+                            KontrolFormu dialog2 = new KontrolFormu("Yanlış kullanıcı adı/şifre girdiniz", false);
+                            dialog2.Show();
+                        }
                     }
                     else
                     {
@@ -1986,16 +2001,16 @@ namespace ROPv1
                         dialog2.Show();
                     }
                 }
-                else
-                {
-                    KontrolFormu dialog2 = new KontrolFormu("Yanlış kullanıcı adı/şifre girdiniz", false);
-                    dialog2.Show();
-                }
+
+                userNameTextBox = new WPF_UserControls.VerticalCenterTextBox();
+                usernameBoxHost.Child = userNameTextBox;
+                passwordTextBox = new WPF_UserControls.VerticalCenterPasswordBox();
+                passwordBoxHost.Child = passwordTextBox;
             }
-            userNameTextBox = new WPF_UserControls.VerticalCenterTextBox();
-            usernameBoxHost.Child = userNameTextBox;
-            passwordTextBox = new WPF_UserControls.VerticalCenterPasswordBox();
-            passwordBoxHost.Child = passwordTextBox;
+            else
+            {
+                adminForm.BringToFront();
+            }
         }
 
         private void siparisButtonPressed(object sender, EventArgs e)
@@ -2013,6 +2028,10 @@ namespace ROPv1
                 siparisForm = new SiparisMasaFormu(kullanicilar, this);
 
                 Task.Factory.StartNew(() => siparisForm.ShowDialog());
+            }
+            else
+            {
+                siparisForm.BringToFront();
             }
         }
 
@@ -2156,13 +2175,15 @@ namespace ROPv1
                 gecenSure = Properties.Settings.Default.Port2;
 
                 DateTime x = new DateTime();
-
-                if ((DateTime.Now >= Properties.Settings.Default.IP2.AddDays(30) && Properties.Settings.Default.IP2 > x.AddDays(1)) || DateTime.Now < Properties.Settings.Default.IP2 || gecenSure >= 43200 || gecenSure != -1)
+                if(gecenSure != -1)
                 {
-                    Properties.Settings.Default.IP2Check.RemoveAt(0);
-                    Properties.Settings.Default.Port2 = -1;
-                    Properties.Settings.Default.IP2 = default(DateTime);
-                    Properties.Settings.Default.Save();
+                    if ((DateTime.Now >= Properties.Settings.Default.IP2.AddDays(30) && Properties.Settings.Default.IP2 > x.AddDays(1)) || DateTime.Now < Properties.Settings.Default.IP2 || gecenSure >= 43200)
+                    {
+                        Properties.Settings.Default.IP2Check.RemoveAt(0);
+                        Properties.Settings.Default.Port2 = -1;
+                        Properties.Settings.Default.IP2 = default(DateTime);
+                        Properties.Settings.Default.Save();
+                    }
                 }
             }
             catch

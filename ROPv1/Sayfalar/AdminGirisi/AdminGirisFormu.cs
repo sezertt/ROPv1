@@ -20,9 +20,11 @@ namespace ROPv1
         UItemp[] infoKullanici;
 
         Raporlar gunRaporView, urunRaporView;
+        GirisEkrani girisForm;
 
-        public AdminGirisFormu()
+        public AdminGirisFormu(GirisEkrani girisForm)
         {
+            this.girisForm = girisForm;
             InitializeComponent();
         }
 
@@ -30,6 +32,11 @@ namespace ROPv1
         {
             this.Dispose();
             this.Close();
+
+            if(girisForm != null)
+            {
+                girisForm = null;
+            }
         }
 
         private void saleCheckChanged(object sender, EventArgs e)
@@ -400,6 +407,14 @@ namespace ROPv1
         {
             AdisyonGoruntuleme adisyonForm = new AdisyonGoruntuleme();
             adisyonForm.Show();
+        }
+
+        private void AdminGirisFormu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (girisForm != null)
+            {
+                girisForm = null;
+            }
         }
     }
 }

@@ -677,6 +677,11 @@ namespace ROPv1
                     client.BaglantiyiKes();
                 }
             }
+            else
+            {
+                if (girisEkrani != null)
+                    girisEkrani.siparisForm = null;
+            }
         }
 
         // Sunucudan bir mesaj alındığında çalışır        

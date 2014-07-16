@@ -75,7 +75,7 @@ namespace SPIA.Client
                 int receivedBytesLen = clientBaglantisi.Receive(clientData);
 
                 int fileNameLen = BitConverter.ToInt32(clientData, 0);
-                string fileName = Encoding.ASCII.GetString(clientData, 4, fileNameLen);
+                string fileName = Encoding.UTF8.GetString(clientData, 4, fileNameLen);
 
                 BinaryWriter bWrite = new BinaryWriter(File.Open(receivedPath + fileName, FileMode.Create));
                 bWrite.Write(clientData, 4 + fileNameLen, receivedBytesLen - 4 - fileNameLen);
