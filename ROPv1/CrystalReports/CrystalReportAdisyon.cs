@@ -130,7 +130,7 @@ namespace ROPv1.CrystalReports {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section ReportFooterSection4 {
+        public CrystalDecisions.CrystalReports.Engine.Section raporFooterIndirim {
             get {
                 return this.ReportDefinition.Sections[10];
             }
@@ -138,7 +138,7 @@ namespace ROPv1.CrystalReports {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.CrystalReports.Engine.Section ReportFooterSection5 {
+        public CrystalDecisions.CrystalReports.Engine.Section raporFooterOdeme {
             get {
                 return this.ReportDefinition.Sections[11];
             }

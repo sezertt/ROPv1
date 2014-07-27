@@ -1746,10 +1746,11 @@ namespace ROPv1
 
         private static void Basla(string masaAdi, string departmanAdi, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor, decimal odenenMiktar)
         {
+            odenenMiktar -= yazdirilacakIndirim;
             if(odenenMiktar <= 0 && yazdirilacakIndirim <= 0)
             {
                 ReportObjects ro = rapor.ReportDefinition.ReportObjects;
-                ((LineObject)ro[name: "line4"]).ObjectFormat.EnableSuppress = true; 
+                ((LineObject)ro[name: "line4"]).ObjectFormat.EnableSuppress = true;                 
             }
 
             rapor.SetParameterValue("Masa", masaAdi);

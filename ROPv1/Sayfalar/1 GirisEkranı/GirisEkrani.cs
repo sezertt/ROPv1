@@ -1133,6 +1133,9 @@ namespace ROPv1
         private static void Basla(string masaAdi, string departmanAdi, string garson, string yazdirilacakIndirim, string acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor, string odenenMiktar)
         {
             decimal odemesiYapilanMiktar = Convert.ToDecimal(odenenMiktar), indirim = Convert.ToDecimal(yazdirilacakIndirim);
+
+            odemesiYapilanMiktar -= indirim;
+
             if (odemesiYapilanMiktar <= 0 && indirim <= 0)
             {
                 ReportObjects ro = rapor.ReportDefinition.ReportObjects;
