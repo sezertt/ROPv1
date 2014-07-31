@@ -290,8 +290,6 @@
     </Compile>
     <Compile Include="Sayfalar\GenelKullanılanlar\PasswordHash.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\SQLBaglantisi.cs" />
-    <Compile Include="Sayfalar\GenelKullanılanlar\XMLAktarClient.cs" />
-    <Compile Include="Sayfalar\GenelKullanılanlar\XMLAktarServer.cs" />
     <Compile Include="Gereksizler\Program.cs" />
     <Compile Include="Sayfalar\2 AdminGirisi\2 4 Ayarlar\2 4 5 Ürünler\Products.cs">
       <SubType>UserControl</SubType>

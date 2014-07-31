@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Threading;
 using ROPv1.CrystalReports;
+using CrystalDecisions.CrystalReports.Engine;
 
 // ÖDEME TİPLERİ 
 // 101 NAKİT
@@ -168,6 +169,9 @@ namespace ROPv1
 
         private void hesaplaButonlarindanBirineBasildi(object sender, EventArgs e)
         {
+            if (Convert.ToDecimal(labelKalanHesap.Text) == 0)
+                return;
+
             decimal carpan;
             try
             {
@@ -213,14 +217,14 @@ namespace ROPv1
             cmd.Parameters.AddWithValue("@departmanAdi", departmanAdi);
 
             cmd.ExecuteNonQuery();
-            
+
             cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AdisyonNotu=@_AdisyonNotu WHERE AcikMi=1 AND MasaAdi=@masaninAdi AND DepartmanAdi=@departmanAdi");
             cmd.Parameters.AddWithValue("@_AdisyonNotu", "");
             cmd.Parameters.AddWithValue("@masaninAdi", masaAdi);
             cmd.Parameters.AddWithValue("@departmanAdi", departmanAdi);
 
             cmd.ExecuteNonQuery();
-            
+
             cmd.Connection.Close();
             cmd.Connection.Dispose();
         }
@@ -311,13 +315,13 @@ namespace ROPv1
                 }
                 else // client
                 {
-                    int sonSiparisMi = listUrunFiyat.Groups[3].Items.Count;
+                    int sonSiparisMi = listHesaptakiler.Groups[3].Items.Count;
 
                     foreach (ListViewItem siparis in listHesaptakiler.Groups[3].Items)
                     {
                         sonSiparisMi--;
 
-                        menuFormu.masaFormu.serveraSiparis(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, siparisiGirenKisi, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), "", sonSiparisMi);
+                        menuFormu.masaFormu.serveraSiparis(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, siparisiGirenKisi, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), "", sonSiparisMi,"ilkSiparis");
                     }
                     menuFormu.masaAcikMi = true;
                 }
@@ -344,7 +348,7 @@ namespace ROPv1
                         menuFormu.listUrunFiyat.Groups[2].Items[listedeYeniGelenSiparisVarmi].SubItems[0].Text = (Convert.ToDouble(menuFormu.listUrunFiyat.Groups[2].Items[listedeYeniGelenSiparisVarmi].SubItems[0].Text) + Convert.ToDouble(menuFormu.listUrunFiyat.Groups[3].Items[i].SubItems[0].Text)).ToString();
                         menuFormu.listUrunFiyat.Groups[2].Items[listedeYeniGelenSiparisVarmi].SubItems[2].Text = (Convert.ToDecimal(menuFormu.listUrunFiyat.Groups[2].Items[listedeYeniGelenSiparisVarmi].SubItems[2].Text) + Convert.ToDecimal(menuFormu.listUrunFiyat.Groups[3].Items[i].SubItems[2].Text)).ToString("0.00");
                         menuFormu.listUrunFiyat.Groups[3].Items[i].Remove();
-                    }                  
+                    }
                 }
             }
 
@@ -541,8 +545,6 @@ namespace ROPv1
                 textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
                 textNumberOfItem.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
                 labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
-
-                adisyonYazdirilabilirMi();
             }
             else
             {
@@ -758,20 +760,6 @@ namespace ROPv1
             textBoxSecilenlerinTutari.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             textNumberOfItem.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
-
-            adisyonYazdirilabilirMi();
-        }
-
-        private void adisyonYazdirilabilirMi()
-        {
-            decimal Odenecek = 0;
-            for (int i = 0; i < listUrunFiyat.Items.Count; i++)
-            {
-                Odenecek += Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[3].Text);
-            }
-
-            if (Odenecek != Convert.ToDecimal(labelKalanHesap.Text))
-                buttonAdisyonYazdir.Enabled = false;
         }
 
         //Kalan hesap 0 ın altına indiğinde çalışması gereken method
@@ -795,8 +783,6 @@ namespace ROPv1
                 buttonNakit.Enabled = true;
                 buttonYemekFisi.Enabled = true;
             }
-            adisyonYazdirilabilirMi();
-
         }
 
         private void buttonIndirim_Click(object sender, EventArgs e)
@@ -1708,6 +1694,14 @@ namespace ROPv1
         {
             DateTime acilisZamani;
 
+            decimal Odenecek = 0, odenenMiktar = 0;
+            for (int i = 0; i < listUrunFiyat.Items.Count; i++)
+            {
+                Odenecek += Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[3].Text);
+            }
+
+            odenenMiktar = Odenecek - Convert.ToDecimal(labelKalanHesap.Text);
+
             if (Properties.Settings.Default.Server == 2) //server 
             {
                 // masaya bakan ilk garsonun ismini döndüren sql sorgusu
@@ -1731,7 +1725,7 @@ namespace ROPv1
 
                 decimal yazdirilacakIndirim = Convert.ToDecimal(labelIndirimToplam.Text.Substring(9, labelIndirimToplam.Text.Length - 11));
 
-                asyncYaziciyaGonder(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, yaziciBilgileri[1], yaziciBilgileri[2] + " " + yaziciBilgileri[4], yaziciBilgileri[3], raporAdisyon);
+                asyncYaziciyaGonder(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, yaziciBilgileri[1], yaziciBilgileri[2] + " " + yaziciBilgileri[4], yaziciBilgileri[3], raporAdisyon, odenenMiktar);
             }
             else
             {
@@ -1739,23 +1733,32 @@ namespace ROPv1
 
                 acilisZamani = Convert.ToDateTime(acilisZamaniString);
 
-                menuFormu.masaFormu.hesapFormundanAdisyonYazdir(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, yaziciBilgileri[1], yaziciBilgileri[2] + " " + yaziciBilgileri[4], yaziciBilgileri[3]);
+                menuFormu.masaFormu.hesapFormundanAdisyonYazdir(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, yaziciBilgileri[1], yaziciBilgileri[2] + " " + yaziciBilgileri[4], yaziciBilgileri[3], odenenMiktar);
             }
         }
 
-        public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor)
+        public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor, decimal odenenMiktar)
         {
-            var t = new Thread(() => Basla(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, firmaAdi, adresTelefon, printerAdi, rapor));
+            var t = new Thread(() => Basla(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, firmaAdi, adresTelefon, printerAdi, rapor, odenenMiktar));
             t.Start();
             return t;
         }
 
-        private static void Basla(string masaAdi, string departmanAdi, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor)
+        private static void Basla(string masaAdi, string departmanAdi, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor, decimal odenenMiktar)
         {
+            if(odenenMiktar <= 0 && yazdirilacakIndirim <= 0)
+            {
+                ReportObjects ro = rapor.ReportDefinition.ReportObjects;
+                ((LineObject)ro[name: "line4"]).ObjectFormat.EnableSuppress = true; 
+            }
+
             rapor.SetParameterValue("Masa", masaAdi);
             rapor.SetParameterValue("Departman", departmanAdi);
             rapor.SetParameterValue("Garson", garson);
             rapor.SetParameterValue("Indirim", yazdirilacakIndirim);
+
+            rapor.SetParameterValue("OdenenMiktar", odenenMiktar);
+
             rapor.SetParameterValue("AcilisZamani", acilisZamani);
             rapor.SetParameterValue("FirmaAdi", firmaAdi); // firma adı
             rapor.SetParameterValue("FirmaAdresTelefon", adresTelefon); // firma adres ve telefon        
@@ -1777,7 +1780,7 @@ namespace ROPv1
             {
                 //Gelen mesajı * ile ayır
                 adisyonYaziciDizisi = aYazicilari.Split('*');
-                digerYaziciDizisi = aYazicilari.Split('*');
+                digerYaziciDizisi = dYazicilari.Split('*');
             }
             catch (Exception)
             {

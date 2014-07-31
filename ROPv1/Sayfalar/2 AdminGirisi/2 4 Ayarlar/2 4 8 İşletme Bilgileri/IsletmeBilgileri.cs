@@ -216,6 +216,14 @@ namespace ROPv1
         private void buttonYaziciyiKaydet_Click(object sender, EventArgs e)
         {
             KontrolFormu dialog;
+
+            if(comboYukluYazicilar.Text.Contains("-") || comboYukluYazicilar.Text.Contains("<") || comboYukluYazicilar.Text.Contains(">") || comboYukluYazicilar.Text.Contains("&") || comboYukluYazicilar.Text.Contains("=") || comboYukluYazicilar.Text.Contains("*"))
+            {
+                dialog = new KontrolFormu("Yazıcı adında -, &, <, >, * karakterleri bulunamaz, lütfen yazıcınızı tekrar başka bir isimle yükleyin veya başka bir yazıcı seçin ", false);
+                dialog.Show();
+                return;
+            }
+
             if (comboYaziciAdi.Text == "Yeni Yazıcı" || comboBoxFirmaAdi.Text == "" || comboYukluYazicilar.Text == "")
             {
                 dialog = new KontrolFormu("Eksik veya hatalı bilgi girdiniz, lütfen kontrol ediniz", false);

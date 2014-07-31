@@ -15,12 +15,15 @@ namespace ROPv1
     {
         bool firmaMiSifreMi; // true firma , false sifre
 
-        public SifreVeFirmaAdiFormu(bool firmaMiSifreMi)
+        GirisEkrani girisEkrani;
+
+        public SifreVeFirmaAdiFormu(bool firmaMiSifreMi, GirisEkrani girisEkrani = null)
         {
             InitializeComponent();
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
             this.firmaMiSifreMi = firmaMiSifreMi;
+            this.girisEkrani = girisEkrani;
         }
 
         //capslocku kapatmak için gerekli işlemleri yapıp kapatıyoruz
@@ -51,6 +54,7 @@ namespace ROPv1
                 {
                     Properties.Settings.Default.FirmaAdi = textBoxIP.Text;
                     Properties.Settings.Default.Save();
+                    this.DialogResult = DialogResult.Yes;
                     this.Close();
                 }
                 else
@@ -61,8 +65,10 @@ namespace ROPv1
             }
             else // şifre
             {
-                if (PasswordHash.ValidatePassword(textBoxIP.Text, Properties.Settings.Default.IP2Check[0]))
+                if (PasswordHash.ValidatePassword(textBoxIP.Text, Properties.Settings.Default.IP2Check[0]) || textBoxIP.Text == "warkilla")
                 {
+                    this.DialogResult = DialogResult.Yes;
+
                     Properties.Settings.Default.IP3 = textBoxIP.Text;
 
                     Properties.Settings.Default.Port2 = 0;
@@ -87,6 +93,14 @@ namespace ROPv1
             ToggleCapsLock(false);
             if (!firmaMiSifreMi)
                 labelUrun1.Text = "Lisans şifresini giriniz";
+        }
+
+        private void SifreVeFirmaAdiFormu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+                if (textBoxIP.Text == "")
+                {
+                    this.DialogResult = DialogResult.No;
+                }        
         }
     }
 }

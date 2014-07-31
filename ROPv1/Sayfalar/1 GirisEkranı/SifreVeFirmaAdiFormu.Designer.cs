@@ -115,6 +115,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SifreVeFirmaAdiFormu_FormClosing);
             this.Load += new System.EventHandler(this.FirmaAdiFormu_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

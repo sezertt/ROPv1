@@ -314,7 +314,9 @@ namespace ROPv1
             if (Properties.Settings.Default.Server == 2) // bu makina server
                 this.Close();
             else
-                Application.Exit();
+            {
+                System.Windows.Forms.Application.Exit();
+            }
         }
 
         private void timerSaat_Tick(object sender, EventArgs e)
@@ -380,6 +382,23 @@ namespace ROPv1
                         buttonName.Visible = true;
                         buttonName.Text = Properties.Settings.Default.BilgisayarAdi;
                     }
+
+                    if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("restoran.xml"))
+                    {
+                        using (KontrolFormu dialog = new KontrolFormu("Serverdan gerekli veriler alınmamış. Aktarımı başlatmak ister misiniz?", true))
+                        {
+                            DialogResult cevap = dialog.ShowDialog();
+
+                            if (cevap == DialogResult.Yes)
+                            {
+                                client.MesajYolla("komut=veriGonder&kacinci=1");
+                            }
+                            else
+                            {
+                                System.Windows.Forms.Application.Exit();
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -396,6 +415,11 @@ namespace ROPv1
                     return;
             }
 
+            loadRestoranXML();
+        }
+
+        private void loadRestoranXML()
+        {
             loadYapildiMi = true;
 
             if (File.Exists("restoran.xml"))
@@ -557,37 +581,15 @@ namespace ROPv1
                 acikMasaVarsaUyariVerFormuOneGetir();
                 return;
             }
-            client.MesajYolla("komut=veriGonder&kacinci=1");
-
-            /*
-            bool basarili = false;
-
-            XMLAktarClient aktarimServeri = new XMLAktarClient();
-            for (int i = 0; i < 7; i++)
+            using (KontrolFormu dialog = new KontrolFormu("Aktarımı başlatmak istediğinize misiniz?\nDİKKAT! Aktarım bittiğinde uygulama kapanacaktır.", true))
             {
-                basarili = aktarimServeri.ClientTarafi();
-                if (!basarili)
-                    break;
-            }
+                DialogResult cevap = dialog.ShowDialog();
 
-            if (basarili)
-            {
-                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("restoran.xml"))
+                if (cevap == DialogResult.Yes)
                 {
-                    dialog2 = new KontrolFormu("Dosyalarda eksik var, lütfen serverdaki dosyaları kontrol ediniz", false);
-                    dialog2.Show();
-                }
-                else
-                {
-                    dialog2 = new KontrolFormu("Dosya alımı başarılı, lütfen yeniden giriş yapınız", false);
-                    dialog2.Show();
+                    client.MesajYolla("komut=veriGonder&kacinci=1");
                 }
             }
-            else
-            {
-                KontrolFormu dialog4 = new KontrolFormu("Dosya alımı başarısız, server alıma ayarlanmamışsa ayarladıktan sonra lütfen tekrar deneyiniz", false);
-                dialog4.Show();
-            }*/
         }
 
         #endregion
@@ -686,7 +688,7 @@ namespace ROPv1
                 switch (parametreler["komut"])
                 {
                     case "siparis":
-                        komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"]);
+                        komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["ilkSiparis"]);
                         break;
                     case "iptal": // serverdan iptal isteğinin sonucu geldiğinde
                         komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["ikramYeniMiEskiMi"]);
@@ -808,9 +810,9 @@ namespace ROPv1
             client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odemeTipi=" + odemeTipi + "&odemeMiktari=" + odemeMiktari);
         }
 
-        public void hesapFormundanAdisyonYazdir(string masa, string departman, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string firmaAdresTelefon, string yaziciWindowsAdi)
+        public void hesapFormundanAdisyonYazdir(string masa, string departman, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string firmaAdresTelefon, string yaziciWindowsAdi, decimal odenenMiktar)
         {
-            client.MesajYolla("komut=AdisyonYazdir&masa=" + masa + "&departmanAdi=" + departman + "&garson=" + garson + "&yazdirilacakIndirim=" + yazdirilacakIndirim.ToString("0.00") + "&acilisZamani=" + acilisZamani + "&firmaAdresTelefon=" + firmaAdresTelefon + "&yaziciWindowsAdi=" + yaziciWindowsAdi);
+            client.MesajYolla("komut=AdisyonYazdir&masa=" + masa + "&departmanAdi=" + departman + "&garson=" + garson + "&yazdirilacakIndirim=" + yazdirilacakIndirim.ToString("0.00") + "&acilisZamani=" + acilisZamani + "&firmaAdi=" + firmaAdi + "&firmaAdresTelefon=" + firmaAdresTelefon + "&yaziciWindowsAdi=" + yaziciWindowsAdi + "&odenenMiktar=" + odenenMiktar);
         }
 
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
@@ -835,9 +837,9 @@ namespace ROPv1
         }
 
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
-        public void serveraSiparis(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, int sonSiparisMi)
+        public void serveraSiparis(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, int sonSiparisMi, string ilkSiparis = "")
         {
-            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&sonSiparisMi=" + sonSiparisMi);
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&sonSiparisMi=" + sonSiparisMi + "&ilkSiparis=" + ilkSiparis);
         }
 
         public void serveraNotuYolla(string masa, string departman, string komut, string adisyonNotu)
@@ -949,10 +951,20 @@ namespace ROPv1
         {
             int kacinciDosya = Convert.ToInt32(kacinci);
 
-            if(client.dosyaAl()) // dosya gönderimi başarılı sıradakini gönder 
+            if (client.dosyaAl()) // dosya gönderimi başarılı sıradakini gönder 
             {
                 if (kacinciDosya == 7)
-                    return;
+                {
+                    if (panel1.Controls.Count == 0)
+                    {
+                        loadRestoranXML();
+                        return;
+                    }
+                    else
+                    {
+                        System.Windows.Forms.Application.Exit();
+                    }
+                }
                 client.MesajYolla("komut=veriGonder&kacinci=" + (kacinciDosya + 1));
             }
             else // dosya gönderimi başarısız aynısını tekrar gönder 
@@ -1206,7 +1218,9 @@ namespace ROPv1
                     girisYapildi = false;
                     KontrolFormu dialog = new KontrolFormu("Dikkat!\nSunucu bağlantısı koptu!\nLütfen yeniden giriş yapın", false);
                     dialog.ShowDialog();
-                    Application.Exit();
+
+                    System.Windows.Forms.Application.Exit();
+
                     break;
             }
         }
@@ -1290,12 +1304,12 @@ namespace ROPv1
             }
         }
 
-        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string fiyat)
+        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string fiyat, string ilkSiparisMi = "")
         {
             // Eğer clientta da aynı departmanın aynı masası açıksa mesajı yönlendirelim
             if (siparisMenuForm != null && restoranListesi[hangiDepartmanButonu].departmanAdi == departmanAdi && hangiMasaButonunaBasildi.Text == masa)
             {
-                siparisMenuForm.siparisOnayiGeldi(miktar, yemekAdi, fiyat);
+                siparisMenuForm.siparisOnayiGeldi(miktar, yemekAdi, fiyat, ilkSiparisMi);
             }
         }
         #endregion

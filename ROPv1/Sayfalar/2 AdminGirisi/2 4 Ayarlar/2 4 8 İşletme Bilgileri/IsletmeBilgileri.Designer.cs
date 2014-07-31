@@ -148,7 +148,7 @@
             this.textBoxTelefon.Font = new System.Drawing.Font("Arial", 15.75F);
             this.textBoxTelefon.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxTelefon.Location = new System.Drawing.Point(196, 293);
-            this.textBoxTelefon.Mask = "(999) 000-0000";
+            this.textBoxTelefon.Mask = "(999) 000 00 00";
             this.textBoxTelefon.Name = "textBoxTelefon";
             this.textBoxTelefon.Size = new System.Drawing.Size(399, 32);
             this.textBoxTelefon.TabIndex = 50;

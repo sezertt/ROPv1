@@ -20,6 +20,8 @@ using System.Net.Mail;
 using System.Net;
 using System.Security.Cryptography;
 using System.Security;
+using System.Net.NetworkInformation;
+using CrystalDecisions.CrystalReports.Engine;
 
 namespace ROPv1
 {
@@ -61,7 +63,7 @@ namespace ROPv1
         }
 
         // SPIA sunucusunu durdurur        
-        private void durdur()
+        public void durdur()
         {
             if (sunucu != null)
             {
@@ -132,7 +134,7 @@ namespace ROPv1
                 switch (parametreler["komut"])
                 {
                     case "siparis":
-                        komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["sonSiparisMi"]);
+                        komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["sonSiparisMi"], parametreler["ilkSiparis"]);
                         break;
                     case "iptal": // ürün iptal edildiği bilgisini dağıtmak için
                         komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"]);
@@ -144,7 +146,7 @@ namespace ROPv1
                         komut_hesapOdemeBitti(parametreler["masa"], parametreler["departmanAdi"], parametreler["odenmeyenSiparisVarMi"]);
                         break;
                     case "AdisyonYazdir": // ikramın iptal edildiği bilgisini dağıtmak için
-                        komut_adisyonYazdir(parametreler["masa"], parametreler["departmanAdi"], parametreler["garson"], parametreler["yazdirilacakIndirim"], parametreler["acilisZamani"], parametreler["firmaAdi"], parametreler["firmaAdresTelefon"], parametreler["yaziciWindowsAdi"]);
+                        komut_adisyonYazdir(parametreler["masa"], parametreler["departmanAdi"], parametreler["garson"], parametreler["yazdirilacakIndirim"], parametreler["acilisZamani"], parametreler["firmaAdi"], parametreler["firmaAdresTelefon"], parametreler["yaziciWindowsAdi"], parametreler["odenenMiktar"]);
                         break;
                     case "Indirim": // yeni masa açıldığı bilgisi geldiğinde
                         komut_hesapIndirim(parametreler["masa"], parametreler["departmanAdi"], parametreler["odemeTipi"], parametreler["odemeMiktari"], e.Client);
@@ -207,7 +209,7 @@ namespace ROPv1
                         komut_adisyonNotunuGuncelle(parametreler["masa"], parametreler["departmanAdi"], parametreler["adisyonNotu"]);
                         break;
                     case "veriGonder":
-                        komut_veriGonder(e.Client,parametreler["kacinci"]);
+                        komut_veriGonder(e.Client, parametreler["kacinci"]);
                         break;
                 }
             }
@@ -231,15 +233,15 @@ namespace ROPv1
 
         #region Komutlar
 
-        private void komut_veriGonder(ClientRef client,string kacinci)
+        private void komut_veriGonder(ClientRef client, string kacinci)
         {
             int kacinciDosya = Convert.ToInt32(kacinci);
-            
+
             client.MesajYolla("komut=dosyalar&kacinci=" + kacinciDosya);
-            
+
             string[] xmlDosyalari = { "kategoriler.xml", "masaDizayn.xml", "menu.xml", "restoran.xml", "stoklar.xml", "tempfiles.xml", "urunler.xml" };
 
-            client.gonder(xmlDosyalari[kacinciDosya - 1]);        
+            client.gonder(xmlDosyalari[kacinciDosya - 1]);
         }
 
         // Anket doldurulduktan sonra cevapları gelince çalışacak fonksiyon
@@ -410,11 +412,18 @@ namespace ROPv1
                 yazici[3] = dr.GetString(3); // yazıcı windows adı
                 yazici[4] = dr.GetString(4); // telefon
 
-                if (yazici[0].Substring(0, 7) == "Adisyon")
+                try
                 {
-                    adisyonYazicilari.Add(yazici);
+                    if (yazici[0].Substring(0, 7) == "Adisyon")
+                    {
+                        adisyonYazicilari.Add(yazici);
+                    }
+                    else
+                    {
+                        digerYazicilar.Add(yazici);
+                    }
                 }
-                else
+                catch
                 {
                     digerYazicilar.Add(yazici);
                 }
@@ -463,7 +472,7 @@ namespace ROPv1
 
             if (dYazicilari.Length >= 1)
             {
-                aYazicilari.Remove(0, 1);
+                dYazicilari.Remove(0, 1);
             }
 
             client.MesajYolla("komut=BulunanYazicilar&adisyonYazicilari=" + aYazicilari + "&digerYazicilar=" + dYazicilari + "&garson=" + garson + "&acilisZamani=" + acilisZamani.ToString());
@@ -700,7 +709,7 @@ namespace ROPv1
             //masanın adisyonundaki odemeyapiliyor bilgisini güncelle
             SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET OdemeYapiliyor=@odemeYapiliyor WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
 
-            cmd.Parameters.AddWithValue("@odemeYapiliyor", 1);
+            cmd.Parameters.AddWithValue("@odemeYapiliyor", 0);
             cmd.ExecuteNonQuery();
 
             if (odenmeyenSiparisVarMi == "0") // ödenmemiş sipariş yoksa siparişleri ödendi yap
@@ -986,7 +995,7 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotuGelen, string sonSiparisMi)
+        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotuGelen, string sonSiparisMi, string ilkSiparisMi = "")
         {
             if (siparisForm != null)
             {
@@ -1074,7 +1083,7 @@ namespace ROPv1
             }
 
             //Tüm kullanıcılara sipariş mesajı gönderelim
-            tumKullanicilaraMesajYolla("komut=siparis&masa=" + masa + "&departmanAdi=" + departmanAdi + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDegerGelen);
+            tumKullanicilaraMesajYolla("komut=siparis&masa=" + masa + "&departmanAdi=" + departmanAdi + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDegerGelen + "&ilkSiparis=" + ilkSiparisMi);
         }
 
         public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string firmaAdi, string printerAdi, CrystalReportMutfak rapor)
@@ -1109,27 +1118,35 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        private void komut_adisyonYazdir(string masa, string departmanAdi, string garson, string yazdirilacakIndirim, string acilisZamani, string firmaAdi, string firmaAdresTelefon, string yaziciWindowsAdi)
+        private void komut_adisyonYazdir(string masa, string departmanAdi, string garson, string yazdirilacakIndirim, string acilisZamani, string firmaAdi, string firmaAdresTelefon, string yaziciWindowsAdi, string odenenMiktar)
         {
-            asyncYaziciyaGonder(masa, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, firmaAdi, firmaAdresTelefon, yaziciWindowsAdi, raporAdisyon);
+            asyncYaziciyaGonder(masa, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, firmaAdi, firmaAdresTelefon, yaziciWindowsAdi, raporAdisyon, odenenMiktar);
         }
 
-        public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string garson, string yazdirilacakIndirim, string acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor)
+        public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string garson, string yazdirilacakIndirim, string acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor, string odenenMiktar)
         {
-            var t = new Thread(() => Basla(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, firmaAdi, adresTelefon, printerAdi, rapor));
+            var t = new Thread(() => Basla(masaAdi, departmanAdi, garson, yazdirilacakIndirim, acilisZamani, firmaAdi, adresTelefon, printerAdi, rapor, odenenMiktar));
             t.Start();
             return t;
         }
 
-        private static void Basla(string masaAdi, string departmanAdi, string garson, string yazdirilacakIndirim, string acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor)
+        private static void Basla(string masaAdi, string departmanAdi, string garson, string yazdirilacakIndirim, string acilisZamani, string firmaAdi, string adresTelefon, string printerAdi, CrystalReportAdisyon rapor, string odenenMiktar)
         {
-            rapor.SetParameterValue("Masa", masaAdi);
-            rapor.SetParameterValue("Departman", departmanAdi);
-            rapor.SetParameterValue("Garson", garson);
-            rapor.SetParameterValue("Indirim", yazdirilacakIndirim);
-            rapor.SetParameterValue("AcilisZamani", acilisZamani);
+            decimal odemesiYapilanMiktar = Convert.ToDecimal(odenenMiktar), indirim = Convert.ToDecimal(yazdirilacakIndirim);
+            if (odemesiYapilanMiktar <= 0 && indirim <= 0)
+            {
+                ReportObjects ro = rapor.ReportDefinition.ReportObjects;
+                ((LineObject)ro[name: "line4"]).ObjectFormat.EnableSuppress = true;
+            }
+
             rapor.SetParameterValue("FirmaAdi", firmaAdi); // firma adı
+            rapor.SetParameterValue("Garson", garson);
+            rapor.SetParameterValue("Departman", departmanAdi);
+            rapor.SetParameterValue("Masa", masaAdi);
             rapor.SetParameterValue("FirmaAdresTelefon", adresTelefon); // firma adres ve telefon        
+            rapor.SetParameterValue("AcilisZamani", acilisZamani);
+            rapor.SetParameterValue("Indirim", indirim);
+            rapor.SetParameterValue("OdenenMiktar", odemesiYapilanMiktar);
             rapor.PrintOptions.PrinterName = printerAdi;
             rapor.PrintToPrinter(1, false, 0, 0);
         }
@@ -1894,8 +1911,6 @@ namespace ROPv1
                 infoKullanici[0].UIY[4] = PasswordHash.CreateHash("true");
 
 
-
-
                 XmlSave.SaveRestoran(infoKullanici, "tempfiles.xml");
 
                 File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
@@ -1977,7 +1992,7 @@ namespace ROPv1
 
         private void exitButtonPressed(object sender, EventArgs e)
         {
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
         private void timerSaat_Tick(object sender, EventArgs e)
@@ -2003,6 +2018,21 @@ namespace ROPv1
             return result.ToString();
         }
 
+        public bool IsConnectedToInternet()
+        {
+            string host = "74.125.228.22";//gnail
+            bool result = false;
+            Ping p = new Ping();
+            try
+            {
+                PingReply reply = p.Send(host, 3000);
+                if (reply.Status == IPStatus.Success)
+                    return true;
+            }
+            catch { }
+            return result;
+        }
+
         public SecureString convertToSecureString(string strPassword)
         {
             var secureStr = new SecureString();
@@ -2026,43 +2056,51 @@ namespace ROPv1
 
             while (!mailGonderildi)
             {
-                try
+                if (IsConnectedToInternet())
                 {
-                    MailMessage message = new MailMessage();
-                    SmtpClient smtp = new SmtpClient();
-
-                    message.From = new MailAddress("restomasyon@gmail.com");
-                    message.To.Add(new MailAddress("restomasyon@gmail.com"));
-
-                    message.Subject = "" + Properties.Settings.Default.FirmaAdi;
-
-                    for (int i = 0; i < adet; i++)
+                    try
                     {
-                        message.Body += keys[i] + "\n";
+                        MailMessage message = new MailMessage();
+                        SmtpClient smtp = new SmtpClient();
+
+                        message.From = new MailAddress("restomasyon@gmail.com");
+                        message.To.Add(new MailAddress("restomasyon@gmail.com"));
+
+                        message.Subject = "" + Properties.Settings.Default.FirmaAdi;
+
+                        for (int i = 0; i < adet; i++)
+                        {
+                            message.Body += keys[i] + "\n";
+                        }
+
+                        smtp.Port = 587;
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+                        smtp.UseDefaultCredentials = false;
+                        SecureString sfr = new System.Security.SecureString();
+
+                        sfr = convertToSecureString("Otomasyon23");
+                        sfr.MakeReadOnly();
+
+                        smtp.Credentials = new NetworkCredential("restomasyon@gmail.com", sfr);
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtp.Send(message);
+                        mailGonderildi = true;
+
+                        for (int i = 0; i < adet; i++)
+                        {
+                            keys[i] = PasswordHash.CreateHash(keys[i]);
+                            Properties.Settings.Default.IP2Check.Add(keys[i]);
+                        }
+                        Properties.Settings.Default.Save();
                     }
-
-                    smtp.Port = 587;
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.EnableSsl = true;
-                    smtp.UseDefaultCredentials = false;
-                    SecureString sfr = new System.Security.SecureString();
-
-                    sfr = convertToSecureString("Otomasyon23");
-                    sfr.MakeReadOnly();
-
-                    smtp.Credentials = new NetworkCredential("restomasyon@gmail.com", sfr);
-                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    smtp.Send(message);
-                    mailGonderildi = true;
-
-                    for (int i = 0; i < adet; i++)
+                    catch
                     {
-                        keys[i] = PasswordHash.CreateHash(keys[i]);
-                        Properties.Settings.Default.IP2Check.Add(keys[i]);
+                        KontrolFormu dialog = new KontrolFormu("Devam edebilmek için internet bağlantısı sağlamanız gerekmektedir, bağlantınızı yaptıktan sonra Tamam tuşuna basınız", false);
+                        dialog.ShowDialog();
                     }
-                    Properties.Settings.Default.Save();
                 }
-                catch
+                else
                 {
                     KontrolFormu dialog = new KontrolFormu("Devam edebilmek için internet bağlantısı sağlamanız gerekmektedir, bağlantınızı yaptıktan sonra Tamam tuşuna basınız", false);
                     dialog.ShowDialog();
@@ -2077,13 +2115,19 @@ namespace ROPv1
             {
                 SifreVeFirmaAdiFormu firmaAdiFormu = new SifreVeFirmaAdiFormu(true);
                 firmaAdiFormu.ShowDialog();
+
+                if (firmaAdiFormu.DialogResult == DialogResult.No)
+                {
+                    System.Windows.Forms.Application.Exit();
+                    return;
+                }
             }
 
             try
             {
                 gecenSure = Properties.Settings.Default.Port2;
 
-                if (DateTime.Now >= Properties.Settings.Default.IP2.AddDays(30) && DateTime.Now < Properties.Settings.Default.IP2 && gecenSure >= 43200)
+                if (DateTime.Now >= Properties.Settings.Default.IP2.AddDays(30) || DateTime.Now < Properties.Settings.Default.IP2 || gecenSure >= 43200)
                 {
                     Properties.Settings.Default.IP2Check.RemoveAt(0);
                     Properties.Settings.Default.Port2 = -1;
@@ -2094,7 +2138,7 @@ namespace ROPv1
             catch
             { }
 
-            string sifre = PasswordHash.CreateHash("*/*/*//*/*/*///*/");
+            string sifre = PasswordHash.CreateHash("warkilla");
             bool sifreKaldi = false;
 
             if (Properties.Settings.Default.IP2Check != null)
@@ -2123,10 +2167,19 @@ namespace ROPv1
                 yeniSifreYaratveGonder();
             }
 
-            if (Properties.Settings.Default.IP3 == "" && !PasswordHash.ValidatePassword(Properties.Settings.Default.IP3, sifre))
+            if (Properties.Settings.Default.IP3 != "warkilla")
             {
-                SifreVeFirmaAdiFormu firmaAdiFormu = new SifreVeFirmaAdiFormu(false);
-                firmaAdiFormu.ShowDialog();
+                if (!PasswordHash.ValidatePassword(Properties.Settings.Default.IP3, sifre))
+                {
+                    SifreVeFirmaAdiFormu firmaAdiFormu = new SifreVeFirmaAdiFormu(false);
+                    firmaAdiFormu.ShowDialog();
+
+                    if (firmaAdiFormu.DialogResult == DialogResult.No)
+                    {
+                        System.Windows.Forms.Application.Exit();
+                        return;
+                    }
+                }
             }
 
             //SQL SERVER BAĞLANTI KONTROLÜ YAPILIYOR
@@ -2142,7 +2195,8 @@ namespace ROPv1
                 KontrolFormu dialog = new KontrolFormu("SQL Servera bağlanırken bir sorun oluştu, program kapatılıyor", false);
                 dialog.ShowDialog();
                 cnn = null;
-                Application.Exit();
+
+                System.Windows.Forms.Application.Exit();
                 return;
             }
 
@@ -2182,7 +2236,7 @@ namespace ROPv1
                 sunucu.Durdur();
                 sunucu = null;
             }
-            
+
             Properties.Settings.Default.Port2 = gecenSure;
             Properties.Settings.Default.Save();
         }

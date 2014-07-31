@@ -38,7 +38,17 @@ namespace ROPv1
                     // Do nothing and return directly ...
                     return;
                 }
-                Environment.Exit(7);
+
+                if (System.Windows.Forms.Application.MessageLoop)
+                {
+                    // Use this since we are a WinForms app
+                    System.Windows.Forms.Application.Exit();
+                }
+                else
+                {
+                    // Use this since we are a console app
+                    System.Environment.Exit(1);
+                }
             }
 
             if (Properties.Settings.Default.Server == 2) // bu makina server
@@ -47,61 +57,7 @@ namespace ROPv1
             }
             else //client
             {
-                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("restoran.xml"))
-                {
-                    using (KontrolFormu dialog = new KontrolFormu("Bilgiler girilmemiş veri aktarımını başlatmak ister misiniz?", true))
-                    {
-                        DialogResult cevap = dialog.ShowDialog();
-                        bool basarili = false;
-
-                        if (cevap == DialogResult.Yes)
-                        {
-                            XMLAktarClient aktarimServeri = new XMLAktarClient();
-                            for (int i = 0; i < 7; i++)
-                            {
-                                basarili = aktarimServeri.ClientTarafi();
-                                if (!basarili)
-                                    break;
-                            }
-
-                            if (basarili)
-                            {
-                                if (!File.Exists("tempfiles.xml") || !File.Exists("kategoriler.xml") || !File.Exists("masaDizayn.xml") || !File.Exists("menu.xml") || !File.Exists("urunler.xml") || !File.Exists("restoran.xml"))
-                                {
-                                    using (KontrolFormu dialog2 = new KontrolFormu("Dosyalarda eksik var, lütfen serverdaki dosyaları kontrol ediniz", false))
-                                    {
-                                        dialog2.ShowDialog();
-                                        Environment.Exit(7);
-                                    }
-                                }
-                                else
-                                {
-                                    using (KontrolFormu dialog3 = new KontrolFormu("Dosya alımı başarılı, lütfen yeniden giriş yapınız", false))
-                                    {
-                                        dialog3.ShowDialog();
-                                        Environment.Exit(7);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                using (KontrolFormu dialog4 = new KontrolFormu("Dosya alımı başarısız, lütfen tekrar deneyiniz", false))
-                                {
-                                    dialog4.ShowDialog();
-                                    Environment.Exit(7);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Environment.Exit(7);
-                        }
-                    }
-                }
-                else // client
-                {
-                    Application.Run(new SiparisMasaFormu(null));
-                }
+                Application.Run(new SiparisMasaFormu(null));
             }
         }
 

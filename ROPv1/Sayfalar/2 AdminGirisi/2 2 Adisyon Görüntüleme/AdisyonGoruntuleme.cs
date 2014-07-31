@@ -557,11 +557,18 @@ namespace ROPv1
                 yazici[3] = dr.GetString(3); // yazıcı windows adı
                 yazici[4] = dr.GetString(4); // telefon
 
-                if (yazici[0].Substring(0, 7) == "Adisyon")
+                try
                 {
-                    adisyonYazicilari.Add(yazici);
+                    if (yazici[0].Substring(0, 7) == "Adisyon")
+                    {
+                        adisyonYazicilari.Add(yazici);
+                    }
+                    else
+                    {
+                        digerYazicilar.Add(yazici);
+                    }
                 }
-                else
+                catch
                 {
                     digerYazicilar.Add(yazici);
                 }

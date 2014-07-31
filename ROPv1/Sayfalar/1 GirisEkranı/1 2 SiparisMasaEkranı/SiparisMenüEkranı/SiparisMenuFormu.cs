@@ -1739,7 +1739,7 @@ namespace ROPv1
                         dr = cmd.ExecuteReader();
                         string firmaAdi = "", yaziciAdi = "";
 
-                        while(dr.Read())
+                        while (dr.Read())
                         {
                             firmaAdi = dr.GetString(0);
                             yaziciAdi = dr.GetString(1);
@@ -1770,12 +1770,13 @@ namespace ROPv1
                 }
                 else
                 {
+                    // eğer son siparişse mutfak adisyonu yazdırılmalı
                     int sonSiparisMi = listUrunFiyat.Groups[yeniSiparisler].Items.Count;
 
                     foreach (ListViewItem siparis in listUrunFiyat.Groups[yeniSiparisler].Items)
                     {
                         sonSiparisMi--;
-                        masaFormu.serveraSiparis(MasaAdi, hangiDepartman.departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, siparisiKimGirdi, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), adisyonNotu,sonSiparisMi);
+                        masaFormu.serveraSiparis(MasaAdi, hangiDepartman.departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, siparisiKimGirdi, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), adisyonNotu, sonSiparisMi);
                         adisyonNotuGuncellenmeliMi = false;
                     }
 
@@ -1786,7 +1787,7 @@ namespace ROPv1
                     masaAcikMi = true;
                     this.Close();
                 }
-            }     
+            }
         }
 
         // mutfak adisyonu
@@ -1824,6 +1825,9 @@ namespace ROPv1
 
         private void masaAktarmaIslemlerindenSonraCik(string yeniMasaAdi, string yeniDepartmanAdi)
         {
+            if (!adisyonNotuGuncellenmeliMi && listUrunFiyat.Groups[3].Items.Count == 0)
+                return;
+
             if (Properties.Settings.Default.Server == 2) //server - diğer tüm clientlara söylemeli yaptığı ikram vs. neyse
             {
                 SqlCommand cmd;
@@ -1880,14 +1884,17 @@ namespace ROPv1
             }
             else //client
             {
-                int sonSiparisMi = listUrunFiyat.Groups[3].Items.Count;
-
-                foreach (ListViewItem siparis in listUrunFiyat.Groups[yeniSiparisler].Items)
+                if (listUrunFiyat.Groups[3].Items.Count > 0)
                 {
-                    sonSiparisMi--;
+                    int sonSiparisMi = listUrunFiyat.Groups[3].Items.Count;
 
-                    masaFormu.serveraSiparis(yeniMasaAdi, yeniDepartmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, siparisiKimGirdi, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), adisyonNotu, sonSiparisMi);
-                    adisyonNotuGuncellenmeliMi = false;
+                    foreach (ListViewItem siparis in listUrunFiyat.Groups[yeniSiparisler].Items)
+                    {
+                        sonSiparisMi--;
+
+                        masaFormu.serveraSiparis(yeniMasaAdi, yeniDepartmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, siparisiKimGirdi, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), adisyonNotu, sonSiparisMi);
+                        adisyonNotuGuncellenmeliMi = false;
+                    }
                 }
 
                 if (adisyonNotuGuncellenmeliMi)
@@ -1899,8 +1906,13 @@ namespace ROPv1
         }
 
         //her yeni gelen sipariş için çalışan kısım
-        public void siparisOnayiGeldi(string miktar, string yemekAdi, string fiyatGelen)
+        public void siparisOnayiGeldi(string miktar, string yemekAdi, string fiyatGelen, string ilkSiparisMi="")
         {
+            if(ilkSiparisMi != "") // eğer hesap ödeme formuna geçerken gelen siparişler ise listeye ekleme çünkü onları zaten açılışta ekliyoruz
+            {
+                return;
+            }
+
             int gruptaYeniGelenSiparisVarmi = -1; //ürün cinsi hesapta var mı bak 
             for (int i = 0; i < listUrunFiyat.Groups[eskiSiparisler].Items.Count; i++)
             {
@@ -2438,7 +2450,7 @@ namespace ROPv1
 
                         masaFormu.serverdanMasaDegisikligi(MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, "urunTasindi");
 
-                        masaAktarmaIslemlerindenSonraSiparisleriGir(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman);
+                        urunAktarmaIslemlerindenSonraSiparisleriGir(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman);
 
                         dialog2 = new KontrolFormu("Masa(" + MasaAdi + ")'dan seçilen ürünler " + masaDegistirForm.yeniDepartman + "\ndepartmanındaki, " + masaDegistirForm.yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false, this);
                         timerDialogClose.Start();
@@ -2478,7 +2490,7 @@ namespace ROPv1
                             aktarmaBilgileri.Remove(0, 1);
                         }
 
-                        masaAktarmaIslemlerindenSonraSiparisleriGir(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman);
+                        urunAktarmaIslemlerindenSonraSiparisleriGir(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman);
 
                         masaFormu.menuFormundanServeraUrunTasinacakBilgisiGonder(MasaAdi, hangiDepartman.departmanAdi, "urunuTasi", masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, siparisiKimGirdi, aktarmaBilgileri);
 
@@ -2491,8 +2503,11 @@ namespace ROPv1
             }
         }
 
-        private void masaAktarmaIslemlerindenSonraSiparisleriGir(string yeniMasaAdi, string yeniDepartmanAdi)
+        private void urunAktarmaIslemlerindenSonraSiparisleriGir(string yeniMasaAdi, string yeniDepartmanAdi)
         {
+            if (!adisyonNotuGuncellenmeliMi && listUrunFiyat.Groups[3].Items.Count == 0)
+                return;
+
             if (Properties.Settings.Default.Server == 2) //server - diğer tüm clientlara söylemeli yaptığı ikram vs. neyse
             {
                 SqlCommand cmd;
@@ -2547,14 +2562,17 @@ namespace ROPv1
             }
             else //client
             {
-                int sonSiparisMi = listUrunFiyat.Groups[3].Items.Count;
-
-                foreach (ListViewItem siparis in listUrunFiyat.Groups[yeniSiparisler].Items)
+                if (listUrunFiyat.Groups[3].Items.Count > 0)
                 {
-                    sonSiparisMi--;
+                    int sonSiparisMi = listUrunFiyat.Groups[3].Items.Count;
 
-                    masaFormu.serveraSiparis(yeniMasaAdi, yeniDepartmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, siparisiKimGirdi, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), adisyonNotu,sonSiparisMi);
-                    adisyonNotuGuncellenmeliMi = false;
+                    foreach (ListViewItem siparis in listUrunFiyat.Groups[yeniSiparisler].Items)
+                    {
+                        sonSiparisMi--;
+
+                        masaFormu.serveraSiparis(yeniMasaAdi, yeniDepartmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[1].Text, siparisiKimGirdi, (Convert.ToDecimal(siparis.SubItems[2].Text) / Convert.ToDecimal(siparis.SubItems[0].Text)).ToString(), adisyonNotu, sonSiparisMi);
+                        adisyonNotuGuncellenmeliMi = false;
+                    }
                 }
 
                 if (adisyonNotuGuncellenmeliMi)
