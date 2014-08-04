@@ -166,8 +166,8 @@ namespace ROPv1
             bool iptalMi;
             decimal adisyonFiyati = 0, toplamFiyat = 0;
 
-            baslangic = dateBaslangic.Value.ToString("yyyy-MM-dd");
-            bitis = dateBitis.Value.ToString("yyyy-MM-dd");
+            baslangic = dateBaslangic.Value.ToString("yyyy-MM-dd") + " 00:00:00";
+            bitis = dateBitis.Value.ToString("yyyy-MM-dd") + " 23:59:59";
 
             switch (comboAdisyonAyar.Text)
             {

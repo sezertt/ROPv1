@@ -322,6 +322,11 @@ namespace ROPv1
                 cmd.Connection.Close();
                 cmd.Connection.Dispose();
 
+                yazicilar[treeYaziciAdi.SelectedNode.Index][0] = comboYaziciAdi.Text;
+                yazicilar[treeYaziciAdi.SelectedNode.Index][1] = comboBoxFirmaAdi.Text;
+                yazicilar[treeYaziciAdi.SelectedNode.Index][2] = textBoxAdres.Text;
+                yazicilar[treeYaziciAdi.SelectedNode.Index][3] = comboYukluYazicilar.Text;
+                yazicilar[treeYaziciAdi.SelectedNode.Index][4] = textBoxTelefon.Text;
 
                 treeYaziciAdi.Nodes[treeYaziciAdi.SelectedNode.Index].Text = comboYaziciAdi.Text;
                 newYaziciForm.Text = comboYaziciAdi.Text;

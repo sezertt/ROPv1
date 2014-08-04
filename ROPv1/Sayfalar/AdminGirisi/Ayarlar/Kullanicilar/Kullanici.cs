@@ -181,7 +181,7 @@ namespace ROPv1
                 XmlSave.SaveRestoran(kullaniciListesi, "tempfiles.xml");
 
                 //yeniden korumaları ekliyoruz
-                File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
+                File.SetAttributes("tempfiles.xml", FileAttributes.Archive);
 
                 treeUserName.SelectedNode = treeUserName.Nodes[treeUserName.Nodes.Count - 1];
                 treeUserName.Focus();
@@ -277,7 +277,7 @@ namespace ROPv1
                 XmlSave.SaveRestoran(kullaniciListesi, "tempfiles.xml");
 
                 //yeniden korumaları ekliyoruz
-                File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
+                File.SetAttributes("tempfiles.xml", FileAttributes.Archive);
 
                 //görünümdeki isimleri güncelliyoruz
                 treeUserName.SelectedNode.Text = textboxName.Text + " " + textboxSurname.Text;
@@ -308,7 +308,7 @@ namespace ROPv1
                 XmlSave.SaveRestoran(kullaniciListesi, "tempfiles.xml");
 
                 //yeniden korumaları ekliyoruz
-                File.SetAttributes("tempfiles.xml", FileAttributes.Archive | FileAttributes.Hidden | FileAttributes.ReadOnly);
+                File.SetAttributes("tempfiles.xml", FileAttributes.Archive);
 
                 // ağaçtan ürünü siliyoruz
                 treeUserName.SelectedNode.Remove();

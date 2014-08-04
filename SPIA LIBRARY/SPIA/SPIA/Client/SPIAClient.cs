@@ -77,15 +77,28 @@ namespace SPIA.Client
                 int fileNameLen = BitConverter.ToInt32(clientData, 0);
                 string fileName = Encoding.UTF8.GetString(clientData, 4, fileNameLen);
 
-                BinaryWriter bWrite = new BinaryWriter(File.Open(receivedPath + fileName, FileMode.Create));
+                string truePath = "\\";
+
+                if (fileName.Substring(fileName.Length - 3, 3) == "png")
+                {
+                    DirectoryInfo df = new DirectoryInfo(receivedPath + @"\resimler\");
+
+                    if (!df.Exists) // klasör yoksa oluþtur
+                    {
+                        // create new directory
+                        DirectoryInfo di = Directory.CreateDirectory(receivedPath + @"\resimler\");
+                    }
+                    truePath = "\\Resimler\\";
+                }
+
+                BinaryWriter bWrite = new BinaryWriter(File.Open(receivedPath + truePath + fileName, FileMode.Create));
                 bWrite.Write(clientData, 4 + fileNameLen, receivedBytesLen - 4 - fileNameLen);
 
                 bWrite.Close();
                 return true;
             }
-            catch(Exception ex)
+            catch
             {
-                string xczx = ex.ToString();
                 return false;
             }
         }

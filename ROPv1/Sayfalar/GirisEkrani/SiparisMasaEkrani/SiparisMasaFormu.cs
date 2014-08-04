@@ -674,7 +674,7 @@ namespace ROPv1
                 if (client != null && girisYapildi == true)
                 {
                     client.MesajYolla("komut=cikis");
-                    client.BaglantiyiKes();
+                    Environment.Exit(7);
                 }
             }
             else
@@ -779,6 +779,9 @@ namespace ROPv1
                         break;
                     case "dosyalar":
                         komut_dosyalar(parametreler["kacinci"],parametreler["kacDosya"]);
+                        break;
+                    case "guncellemeBaslat":
+                        komut_guncellemeBaslat();
                         break;
                 }
             }
@@ -961,6 +964,11 @@ namespace ROPv1
 
         #region Komutlar
 
+        private void komut_guncellemeBaslat()
+        {
+            client.MesajYolla("komut=veriGonder&kacinci=1");
+        }
+
         private void komut_dosyalar(string kacinci, string kacDosya)
         {
             int kacinciDosya = Convert.ToInt32(kacinci);
@@ -969,15 +977,7 @@ namespace ROPv1
             {
                 if (kacinciDosya == Convert.ToInt32(kacDosya))
                 {
-                    if (panel1.Controls.Count == 0)
-                    {
-                        loadRestoranXML();
-                        return;
-                    }
-                    else
-                    {
-                        System.Windows.Forms.Application.Exit();
-                    }
+                    Environment.Exit(7);
                 }
                 client.MesajYolla("komut=veriGonder&kacinci=" + (kacinciDosya + 1));
             }
@@ -1226,13 +1226,13 @@ namespace ROPv1
                 case "ServerKapandi":
                     if (client != null)
                     {
-                        client.BaglantiyiKes2();
+                        Environment.Exit(7);
                     }
                     girisYapildi = false;
                     KontrolFormu dialog = new KontrolFormu("Dikkat!\nSunucu bağlantısı koptu!\nLütfen yeniden giriş yapın", false);
                     dialog.ShowDialog();
 
-                    System.Windows.Forms.Application.Exit();
+                    Environment.Exit(7);
                     break;
             }
         }

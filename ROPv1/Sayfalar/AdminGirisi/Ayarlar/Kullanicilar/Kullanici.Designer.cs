@@ -277,7 +277,7 @@
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.label3.Location = new System.Drawing.Point(10, 86);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 24);
+            this.label3.Size = new System.Drawing.Size(87, 24);
             this.label3.TabIndex = 45;
             this.label3.Text = "Ünvanı:";
             // 
@@ -343,7 +343,7 @@
             this.buttonSaveNewUser.Name = "buttonSaveNewUser";
             this.buttonSaveNewUser.Size = new System.Drawing.Size(110, 45);
             this.buttonSaveNewUser.TabIndex = 8;
-            this.buttonSaveNewUser.Text = "Kaydet";
+            this.buttonSaveNewUser.Text = "Kaydet ";
             this.buttonSaveNewUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonSaveNewUser.UseVisualStyleBackColor = false;
             this.buttonSaveNewUser.Click += new System.EventHandler(this.buttonSaveNewUserPressed);

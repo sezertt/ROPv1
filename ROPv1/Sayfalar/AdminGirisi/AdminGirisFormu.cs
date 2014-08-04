@@ -35,7 +35,7 @@ namespace ROPv1
 
             if(girisForm != null)
             {
-                girisForm = null;
+                girisForm.adminForm = null;
             }
         }
 
@@ -347,61 +347,17 @@ namespace ROPv1
         }
 
         private void buttonBilgiAktar_Click(object sender, EventArgs e)
-        {/*
-            ShowWaitForm();
-            bool basarili = true;
-            string[] xmlDosyalari = { "kategoriler.xml", "masaDizayn.xml", "menu.xml", "restoran.xml", "stoklar.xml", "tempfiles.xml", "urunler.xml" };
-
-            XMLAktarServer aktarimServeri = new XMLAktarServer();
-
-            for (int i = 0; i < 7; i++)
-            {
-                basarili = aktarimServeri.Server(xmlDosyalari[i]);
-                if (!basarili)
-                {
-                    break;
-                }
-            }
-            OnLoaded(null, null);
-            if (basarili)
-            {
-                KontrolFormu dialog = new KontrolFormu("Dosya gönderimi başarılı", false);
-                dialog.Show();
-            }
-            else
-            {
-                KontrolFormu dialog = new KontrolFormu("Dosya gönderimi başarısız", false);
-                dialog.Show();
-            }*/
-        }
-
-        private MyWaitForm _waitForm;
-
-        //girişe basıldığında id kontrolü sırasında lütfen bekleyiniz yazan bir form göstermek için
-        protected void ShowWaitForm()
         {
-            // don't display more than one wait form at a time
-            if (_waitForm != null && !_waitForm.IsDisposed)
+            var di = new DirectoryInfo(Application.StartupPath);
+
+            foreach (var file in di.GetFiles("*", SearchOption.AllDirectories))
             {
-                return;
+                file.Attributes &= ~FileAttributes.ReadOnly;
+                file.Attributes &= ~FileAttributes.Hidden;
             }
 
-            _waitForm = new MyWaitForm("Dosyalar Aktarılıyor...\nLütfen Bekleyiniz");
-            _waitForm.TopMost = true;
-            _waitForm.StartPosition = FormStartPosition.CenterScreen;
-            _waitForm.Show();
-            _waitForm.Refresh();
-
-            // force the wait window to display for at least 700ms so it doesn't just flash on the screen
-            System.Threading.Thread.Sleep(500);
-            Application.Idle += OnLoaded;
-        }
-
-        private void OnLoaded(object sender, EventArgs e)
-        {
-            Application.Idle -= OnLoaded;
-            _waitForm.Close();
-        }
+            girisForm.tumKullanicilaraMesajYolla("komut=guncellemeyiBaslat");
+        }    
 
         private void adisyonCheckBox_Click(object sender, EventArgs e)
         {
@@ -413,7 +369,53 @@ namespace ROPv1
         {
             if (girisForm != null)
             {
-                girisForm = null;
+                girisForm.adminForm = null;
+            }
+        }
+
+        private void buttonUrunOzellikleri_Click(object sender, EventArgs e)
+        {
+            leftPanelView.Nodes.Clear();
+            splitPanel.Panel2.Controls.Clear();
+
+            switch (whichCheckBoxShouldUncheck) // önceden seçili olan checkboxı kaldır
+            {
+                #region
+                case 1:
+                    reportCheckBox.Image = global::ROPv1.Properties.Resources.reportscolor;
+                    reportCheckBox.ImageAlign = ContentAlignment.TopCenter;
+                    reportCheckBox.ForeColor = SystemColors.ActiveCaption;
+                    break;
+                case 2:
+                    stokCheckBox.Image = global::ROPv1.Properties.Resources.stockcolor;
+                    stokCheckBox.ImageAlign = ContentAlignment.TopCenter;
+                    stokCheckBox.ForeColor = SystemColors.ActiveCaption;
+                    break;
+                case 3:
+                    ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingscolor;
+                    ayarCheckBox.ImageAlign = ContentAlignment.TopCenter;
+                    ayarCheckBox.ForeColor = SystemColors.ActiveCaption;
+                    break;
+                case 4:
+                    anketCheckBox.Image = global::ROPv1.Properties.Resources.anket;
+                    anketCheckBox.ImageAlign = ContentAlignment.TopCenter;
+                    anketCheckBox.ForeColor = SystemColors.ActiveCaption;
+                    break;
+                default:
+                    break;
+                #endregion
+            }
+
+            if (File.Exists("urunler.xml"))
+            {
+                UrunlerTusu urunlerTusuView = new UrunlerTusu();
+                splitPanel.Panel2.Controls.Add(urunlerTusuView);
+                urunlerTusuView.Dock = DockStyle.Fill;
+            }
+            else
+            {
+                KontrolFormu dialog = new KontrolFormu("Lütfen önce ürünleri tanımlayınız", false);
+                dialog.Show();
             }
         }
     }

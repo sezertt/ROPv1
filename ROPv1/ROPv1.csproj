@@ -61,6 +61,9 @@
     <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="GlacialList">
+      <HintPath>dll dosyası\GlacialList.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -120,6 +123,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\UrunlerTusu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\UrunlerTusu.Designer.cs">
+      <DependentUpon>UrunlerTusu.cs</DependentUpon>
     </Compile>
     <Compile Include="Sayfalar\GenelKullanılanlar\Invoker.cs" />
     <Compile Include="Sayfalar\GirisEkrani\SifreVeFirmaAdiFormu.cs">
@@ -329,6 +338,9 @@
     <EmbeddedResource Include="CrystalReports\CrystalReportAdisyon.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReportAdisyon.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\UrunlerTusu.resx">
+      <DependentUpon>UrunlerTusu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\GirisEkrani\SifreVeFirmaAdiFormu.resx">
       <DependentUpon>SifreVeFirmaAdiFormu.cs</DependentUpon>

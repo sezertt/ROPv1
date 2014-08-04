@@ -264,6 +264,7 @@
             this.listAdisyon.MultiSelect = false;
             this.listAdisyon.Name = "listAdisyon";
             this.listAdisyon.Scrollable = false;
+            this.listAdisyon.ShowItemToolTips = true;
             this.listAdisyon.Size = new System.Drawing.Size(915, 607);
             this.listAdisyon.TabIndex = 42;
             this.listAdisyon.UseCompatibleStateImageBehavior = false;
@@ -316,7 +317,7 @@
             this.columnHeader5,
             this.columnHeader7,
             this.columnHeader8});
-            this.listAdisyonDetay.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.listAdisyonDetay.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.listAdisyonDetay.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.listAdisyonDetay.FullRowSelect = true;
             this.listAdisyonDetay.GridLines = true;
@@ -325,7 +326,8 @@
             this.listAdisyonDetay.Margin = new System.Windows.Forms.Padding(0);
             this.listAdisyonDetay.MultiSelect = false;
             this.listAdisyonDetay.Name = "listAdisyonDetay";
-            this.listAdisyonDetay.Size = new System.Drawing.Size(420, 607);
+            this.listAdisyonDetay.ShowItemToolTips = true;
+            this.listAdisyonDetay.Size = new System.Drawing.Size(420, 602);
             this.listAdisyonDetay.TabIndex = 43;
             this.listAdisyonDetay.UseCompatibleStateImageBehavior = false;
             this.listAdisyonDetay.View = System.Windows.Forms.View.Details;

@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminGirisFormu));
             this.splitPanel = new System.Windows.Forms.SplitContainer();
+            this.buttonUrunOzellikleri = new System.Windows.Forms.Button();
             this.buttonBilgiAktar = new System.Windows.Forms.Button();
             this.leftPanelView = new System.Windows.Forms.TreeView();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -64,6 +65,7 @@
             // splitPanel.Panel1
             // 
             this.splitPanel.Panel1.BackColor = System.Drawing.SystemColors.Window;
+            this.splitPanel.Panel1.Controls.Add(this.buttonUrunOzellikleri);
             this.splitPanel.Panel1.Controls.Add(this.buttonBilgiAktar);
             this.splitPanel.Panel1.Controls.Add(this.leftPanelView);
             // 
@@ -75,6 +77,22 @@
             this.splitPanel.SplitterWidth = 6;
             this.splitPanel.TabIndex = 6;
             // 
+            // buttonUrunOzellikleri
+            // 
+            this.buttonUrunOzellikleri.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonUrunOzellikleri.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonUrunOzellikleri.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonUrunOzellikleri.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonUrunOzellikleri.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonUrunOzellikleri.Location = new System.Drawing.Point(3, 584);
+            this.buttonUrunOzellikleri.Name = "buttonUrunOzellikleri";
+            this.buttonUrunOzellikleri.Size = new System.Drawing.Size(192, 60);
+            this.buttonUrunOzellikleri.TabIndex = 8;
+            this.buttonUrunOzellikleri.Text = "Ürün Özellikleri";
+            this.buttonUrunOzellikleri.UseVisualStyleBackColor = false;
+            this.buttonUrunOzellikleri.Click += new System.EventHandler(this.buttonUrunOzellikleri_Click);
+            // 
             // buttonBilgiAktar
             // 
             this.buttonBilgiAktar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -83,11 +101,11 @@
             this.buttonBilgiAktar.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonBilgiAktar.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonBilgiAktar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonBilgiAktar.Location = new System.Drawing.Point(3, 584);
+            this.buttonBilgiAktar.Location = new System.Drawing.Point(3, 518);
             this.buttonBilgiAktar.Name = "buttonBilgiAktar";
             this.buttonBilgiAktar.Size = new System.Drawing.Size(192, 60);
             this.buttonBilgiAktar.TabIndex = 7;
-            this.buttonBilgiAktar.Text = "Bilgi Aktarımını Başlat";
+            this.buttonBilgiAktar.Text = "Verileri Güncelle";
             this.buttonBilgiAktar.UseVisualStyleBackColor = false;
             this.buttonBilgiAktar.Visible = false;
             this.buttonBilgiAktar.Click += new System.EventHandler(this.buttonBilgiAktar_Click);
@@ -347,6 +365,7 @@
         private System.Windows.Forms.Timer timerSaat;
         private System.Windows.Forms.Button buttonBilgiAktar;
         private System.Windows.Forms.CheckBox ayarCheckBox;
+        private System.Windows.Forms.Button buttonUrunOzellikleri;
 
     }
 }
