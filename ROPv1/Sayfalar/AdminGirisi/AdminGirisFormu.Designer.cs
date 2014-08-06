@@ -282,7 +282,7 @@
             this.labelGun.BackColor = System.Drawing.Color.Transparent;
             this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGun.Location = new System.Drawing.Point(12, 88);
+            this.labelGun.Location = new System.Drawing.Point(12, 91);
             this.labelGun.Name = "labelGun";
             this.labelGun.Size = new System.Drawing.Size(218, 33);
             this.labelGun.TabIndex = 9;
@@ -321,9 +321,9 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1378, 788);
             this.ControlBox = false;
+            this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.adisyonCheckBox);
             this.Controls.Add(this.labelGun);
-            this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.splitPanel);
             this.Controls.Add(this.labelSaat);

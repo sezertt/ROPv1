@@ -76,7 +76,7 @@
             this.textNumberOfItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textNumberOfItem.Font = new System.Drawing.Font("Arial", 39F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textNumberOfItem.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textNumberOfItem.Location = new System.Drawing.Point(865, 617);
+            this.textNumberOfItem.Location = new System.Drawing.Point(876, 617);
             this.textNumberOfItem.MaxLength = 3;
             this.textNumberOfItem.Name = "textNumberOfItem";
             this.textNumberOfItem.Size = new System.Drawing.Size(126, 67);
@@ -92,7 +92,7 @@
             this.buttonDeleteText.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonDeleteText.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteText.Location = new System.Drawing.Point(863, 689);
+            this.buttonDeleteText.Location = new System.Drawing.Point(874, 689);
             this.buttonDeleteText.Name = "buttonDeleteText";
             this.buttonDeleteText.Size = new System.Drawing.Size(130, 68);
             this.buttonDeleteText.TabIndex = 69;
@@ -406,6 +406,8 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 768);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonDeleteText);
+            this.Controls.Add(this.textNumberOfItem);
             this.Controls.Add(this.labelKalanHesap);
             this.Controls.Add(this.flowPanelUrunler);
             this.Controls.Add(this.buttonTemizle);
@@ -418,8 +420,6 @@
             this.Controls.Add(this.labelDepartman);
             this.Controls.Add(this.labelMasa);
             this.Controls.Add(this.pinboardcontrol21);
-            this.Controls.Add(this.buttonDeleteText);
-            this.Controls.Add(this.textNumberOfItem);
             this.Controls.Add(this.buttonMasaDegistir);
             this.Controls.Add(this.buttonNotEkle);
             this.Controls.Add(this.flowPanelMenuBasliklari);

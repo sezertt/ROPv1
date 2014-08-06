@@ -47,7 +47,7 @@
             this.labelGun.BackColor = System.Drawing.Color.Transparent;
             this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGun.Location = new System.Drawing.Point(13, 88);
+            this.labelGun.Location = new System.Drawing.Point(13, 91);
             this.labelGun.Name = "labelGun";
             this.labelGun.Size = new System.Drawing.Size(217, 33);
             this.labelGun.TabIndex = 12;
@@ -215,13 +215,13 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1313, 819);
             this.ControlBox = false;
+            this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.buttonName);
             this.Controls.Add(this.buttonUpdate);
             this.Controls.Add(this.buttonConnection);
             this.Controls.Add(this.tablePanel);
             this.Controls.Add(this.labelGun);
-            this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.labelSaat);
             this.Controls.Add(this.exitButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

@@ -32,7 +32,9 @@ namespace ROPv1
         private void Raporlar_Load(object sender, EventArgs e)
         {
             dateBitis.MaxDate = DateTime.Today;
-            dateBaslangic.MaxDate = DateTime.Today;            
+            dateBaslangic.MaxDate = DateTime.Today;
+            dateBitis.Value = DateTime.Today;
+            dateBaslangic.Value = DateTime.Today;
         }
 
         private void comboAdisyonAyar_SelectedIndexChanged(object sender, EventArgs e)

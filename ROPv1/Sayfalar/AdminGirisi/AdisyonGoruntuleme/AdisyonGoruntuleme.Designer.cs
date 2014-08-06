@@ -71,7 +71,7 @@
             this.labelGun.BackColor = System.Drawing.Color.Transparent;
             this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGun.Location = new System.Drawing.Point(13, 88);
+            this.labelGun.Location = new System.Drawing.Point(13, 91);
             this.labelGun.Name = "labelGun";
             this.labelGun.Size = new System.Drawing.Size(212, 33);
             this.labelGun.TabIndex = 12;
@@ -512,10 +512,10 @@
             this.Controls.Add(this.dateBitis);
             this.Controls.Add(this.buttonAdisyonlariGetir);
             this.Controls.Add(this.dateBaslangic);
-            this.Controls.Add(this.labelGun);
             this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.labelSaat);
             this.Controls.Add(this.exitButton);
+            this.Controls.Add(this.labelGun);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;

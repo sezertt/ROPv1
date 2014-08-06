@@ -343,7 +343,7 @@
             this.labelGun.BackColor = System.Drawing.Color.Transparent;
             this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGun.Location = new System.Drawing.Point(1138, 85);
+            this.labelGun.Location = new System.Drawing.Point(1138, 86);
             this.labelGun.Name = "labelGun";
             this.labelGun.Size = new System.Drawing.Size(216, 33);
             this.labelGun.TabIndex = 107;
