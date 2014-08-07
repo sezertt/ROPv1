@@ -1884,8 +1884,6 @@ namespace ROPv1
                     return;
                 }
             }
-            //Tüm kullanıcılara bu kullanıcının çıkış yaptığı bilgisini gönder
-            tumKullanicilaraMesajYolla("komut=kullanicicikis&nick=" + kullanici.Nick);
             //Kullanıcı listesini ekranda gösterelim
             kullaniciListesiniYenile();
         }
