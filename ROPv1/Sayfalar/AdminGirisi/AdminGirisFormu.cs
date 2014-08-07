@@ -41,11 +41,6 @@ namespace ROPv1
 
         private void saleCheckChanged(object sender, EventArgs e)
         {
-            changeButonChecked(sender); // seçilen checkboxa gönder
-        }
-
-        private void changeButonChecked(object sender)
-        {
             if (Convert.ToInt32(((CheckBox)sender).Tag) == whichCheckBoxShouldUncheck) // eğer checkbox zaten seçiliyse birşey yapmadan dön
                 return;
 
@@ -118,7 +113,7 @@ namespace ROPv1
                     buttonBilgiAktar.Visible = false;
 
                     leftPanelView.Nodes.Add("Değerlendirme(SS)"); // ( Alınan oyların sayısı, alınan tam puanlar , genel puanlama vs. )
-                    leftPanelView.Nodes.Add("Değerlendirme(YS)"); 
+                    leftPanelView.Nodes.Add("Değerlendirme(YS)");
                     leftPanelView.Nodes.Add("Anket Sonuçları"); // ( Yapılan anketleri görüntüleme )
                     leftPanelView.Nodes.Add("Kullanıcı Bilgileri"); // ( Kullanıcı bilgileri )
                     leftPanelView.Nodes.Add("Anket Ayarları"); // ( Anket ayarları )
@@ -405,6 +400,8 @@ namespace ROPv1
                     break;
                 #endregion
             }
+
+            whichCheckBoxShouldUncheck = 0;
 
             if (File.Exists("urunler.xml"))
             {
