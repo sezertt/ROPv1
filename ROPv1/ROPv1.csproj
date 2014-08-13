@@ -185,6 +185,12 @@
     <Compile Include="Sayfalar\AdminGirisi\AdminGirisFormu.Designer.cs">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sayfalar\GirisEkrani\ModemFormu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\GirisEkrani\ModemFormu.Designer.cs">
+      <DependentUpon>ModemFormu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\PinKoduFormu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -371,6 +377,9 @@
     <EmbeddedResource Include="Sayfalar\AdminGirisi\AdminGirisFormu.resx">
       <DependentUpon>AdminGirisFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\ModemFormu.resx">
+      <DependentUpon>ModemFormu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\PinKoduFormu.resx">
       <DependentUpon>PinKoduFormu.cs</DependentUpon>

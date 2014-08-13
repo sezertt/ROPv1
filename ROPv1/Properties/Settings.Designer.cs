@@ -130,5 +130,29 @@ namespace ROPv1.Properties {
                 this["IP3"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SSID {
+            get {
+                return ((string)(this["SSID"]));
+            }
+            set {
+                this["SSID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SSIDPass {
+            get {
+                return ((string)(this["SSIDPass"]));
+            }
+            set {
+                this["SSIDPass"] = value;
+            }
+        }
     }
 }

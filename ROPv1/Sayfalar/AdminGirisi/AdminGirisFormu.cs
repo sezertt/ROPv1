@@ -15,6 +15,7 @@ namespace ROPv1
 {
     public partial class AdminGirisFormu : Form
     {
+        public string SSID, sifre;
         int whichCheckBoxShouldUncheck = 0;
         int kullaniciAdi = 0;
         UItemp[] infoKullanici;
@@ -343,15 +344,21 @@ namespace ROPv1
 
         private void buttonBilgiAktar_Click(object sender, EventArgs e)
         {
-            var di = new DirectoryInfo(Application.StartupPath);
+            KontrolFormu dialog = new KontrolFormu("Veri aktarımının doğru gerçekleştirilebilmesi için tabletlerin ayarlar ekranında olması gerekmektedir. Devam etmek istiyor musunuz ?", true);
+            DialogResult result = dialog.ShowDialog();
 
-            foreach (var file in di.GetFiles("*", SearchOption.AllDirectories))
+            if(result == DialogResult.Yes)
             {
-                file.Attributes &= ~FileAttributes.ReadOnly;
-                file.Attributes &= ~FileAttributes.Hidden;
-            }
+                var di = new DirectoryInfo(Application.StartupPath);
 
-            girisForm.tumKullanicilaraMesajYolla("komut=guncellemeyiBaslat");
+                foreach (var file in di.GetFiles("*", SearchOption.AllDirectories))
+                {
+                    file.Attributes &= ~FileAttributes.ReadOnly;
+                    file.Attributes &= ~FileAttributes.Hidden;
+                }
+
+                girisForm.tumKullanicilaraMesajYolla("komut=guncellemeyiBaslat");
+            }            
         }    
 
         private void adisyonCheckBox_Click(object sender, EventArgs e)
@@ -414,6 +421,14 @@ namespace ROPv1
                 KontrolFormu dialog = new KontrolFormu("Lütfen önce ürünleri tanımlayınız", false);
                 dialog.Show();
             }
+        }
+
+        private void buttonModem_Click(object sender, EventArgs e)
+        {
+            ModemFormu modemFormu = new ModemFormu(this);
+            DialogResult result = modemFormu.ShowDialog();
+            if (result == DialogResult.OK)
+                girisForm.tumKullanicilaraMesajYolla("komut=modemBilgileri&SSID="+SSID+"&Sifre="+sifre);
         }
     }
 }
