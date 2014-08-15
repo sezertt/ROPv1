@@ -65,7 +65,7 @@
             this.flowPanelUrunler.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowPanelUrunler.AutoScroll = true;
-            this.flowPanelUrunler.Location = new System.Drawing.Point(865, 12);
+            this.flowPanelUrunler.Location = new System.Drawing.Point(602, 12);
             this.flowPanelUrunler.Name = "flowPanelUrunler";
             this.flowPanelUrunler.Size = new System.Drawing.Size(504, 454);
             this.flowPanelUrunler.TabIndex = 0;
@@ -76,7 +76,7 @@
             this.textNumberOfItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.textNumberOfItem.Font = new System.Drawing.Font("Arial", 39F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textNumberOfItem.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textNumberOfItem.Location = new System.Drawing.Point(876, 617);
+            this.textNumberOfItem.Location = new System.Drawing.Point(613, 617);
             this.textNumberOfItem.MaxLength = 3;
             this.textNumberOfItem.Name = "textNumberOfItem";
             this.textNumberOfItem.Size = new System.Drawing.Size(126, 67);
@@ -92,7 +92,7 @@
             this.buttonDeleteText.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonDeleteText.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteText.Location = new System.Drawing.Point(874, 689);
+            this.buttonDeleteText.Location = new System.Drawing.Point(611, 689);
             this.buttonDeleteText.Name = "buttonDeleteText";
             this.buttonDeleteText.Size = new System.Drawing.Size(130, 68);
             this.buttonDeleteText.TabIndex = 69;
@@ -105,7 +105,7 @@
             // 
             this.pinboardcontrol21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pinboardcontrol21.KeyboardType = PinboardClassLibrary.BoW.Standard;
-            this.pinboardcontrol21.Location = new System.Drawing.Point(999, 467);
+            this.pinboardcontrol21.Location = new System.Drawing.Point(736, 467);
             this.pinboardcontrol21.Name = "pinboardcontrol21";
             this.pinboardcontrol21.Size = new System.Drawing.Size(362, 297);
             this.pinboardcontrol21.TabIndex = 74;
@@ -118,7 +118,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowPanelMenuBasliklari.AutoScroll = true;
             this.flowPanelMenuBasliklari.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowPanelMenuBasliklari.Location = new System.Drawing.Point(615, 12);
+            this.flowPanelMenuBasliklari.Location = new System.Drawing.Point(1115, 12);
             this.flowPanelMenuBasliklari.Name = "flowPanelMenuBasliklari";
             this.flowPanelMenuBasliklari.Size = new System.Drawing.Size(250, 744);
             this.flowPanelMenuBasliklari.TabIndex = 63;

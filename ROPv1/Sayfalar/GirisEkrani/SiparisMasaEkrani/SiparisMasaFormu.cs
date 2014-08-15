@@ -704,10 +704,10 @@ namespace ROPv1
                     case "iptal": // serverdan iptal isteğinin sonucu geldiğinde
                         komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["ikramYeniMiEskiMi"]);
                         break;
-                    case "hesapOdeniyor": // yeni masa açıldığı bilgisi geldiğinde
+                    case "hesapOdeniyor":
                         komut_hesapOdeniyor(parametreler["masa"], parametreler["departmanAdi"]);
                         break;
-                    case "masaGirilebilirMi": // yeni masa açıldığı bilgisi geldiğinde
+                    case "masaGirilebilirMi": 
                         komut_masaGirilebilirMi(parametreler["cevap"]);
                         break;
                     case "masaDegistir": // masa değişikliği bilgisi geldiğinde eğer o masalar bizde açıksa kapatmalıyız

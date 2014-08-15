@@ -393,28 +393,27 @@ namespace SPIA.Server
                 }
             }
 
-            public void gonder(string FileName, string path)
-            {
-                try
-                {
-                    string fileName = FileName;// "test.txt";// "Your File Name";
-                    string filePath = path;//Your File Path;
-                    byte[] fileNameByte = Encoding.UTF8.GetBytes(fileName);
+            public void gonder(string komut, string FileName, string path)
+            {        
+                string fileName = FileName;// "test.txt";// "Your File Name";
+                string filePath = path;//Your File Path;
+                byte[] fileNameByte = Encoding.UTF8.GetBytes(fileName);
 
-                    byte[] fileData = File.ReadAllBytes(filePath + fileName);
-                    byte[] clientData = new byte[4 + fileNameByte.Length + fileData.Length];
-                    byte[] fileNameLen = BitConverter.GetBytes(fileNameByte.Length);
+                byte[] fileData = File.ReadAllBytes(filePath + fileName);
+                byte[] clientData = new byte[komut.Length + 8 + fileNameByte.Length + fileData.Length];
+                byte[] fileNameLen = BitConverter.GetBytes(fileNameByte.Length);
+                
+                byte[] fileDataLen = BitConverter.GetBytes(fileData.Length);
 
-                    fileNameLen.CopyTo(clientData, 0);
-                    fileNameByte.CopyTo(clientData, 4);
-                    fileData.CopyTo(clientData, 4 + fileNameByte.Length);
+                byte[] komutByte = Encoding.UTF8.GetBytes(komut);
 
-                    soket.Send(clientData);
-                }
-                catch (Exception ex)
-                {
-                    string xczx = ex.ToString();
-                }
+                komutByte.CopyTo(clientData, 0);
+                fileDataLen.CopyTo(clientData, komutByte.Length);
+                fileNameLen.CopyTo(clientData, komutByte.Length + 4);
+                fileNameByte.CopyTo(clientData, komutByte.Length + 8);
+                fileData.CopyTo(clientData, 8 + fileNameByte.Length + komutByte.Length);
+
+                soket.Send(clientData);
             }
             
             /// Ýstemci ile olan baðlantýyý keser            

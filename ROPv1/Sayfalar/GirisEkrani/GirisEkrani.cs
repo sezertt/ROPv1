@@ -246,7 +246,7 @@ namespace ROPv1
             {
                 // create new directory
                 DirectoryInfo di = Directory.CreateDirectory(image_outputDir + @"\resimler\");
-            }           
+            }
 
             string path1 = Application.StartupPath + @"\resimler";
 
@@ -263,17 +263,14 @@ namespace ROPv1
                 return;
             }
 
-            client.MesajYolla("komut=dosyalar&kacinci=" + kacinciDosya + "&kacDosya=" + (imageFiles.Count() + xmlDosyalari.Count()));
-
             if (kacinciDosya <= xmlDosyalari.Count())
             {
-                client.gonder(Path.GetFileName(xmlDosyalari[kacinciDosya - 1]), path2 + "\\");
+                client.gonder("<komut=dosyalar&kacinci=" + kacinciDosya + "&kacDosya=" + (imageFiles.Count() + xmlDosyalari.Count()) + ">", Path.GetFileName(xmlDosyalari[kacinciDosya - 1]), path2 + "\\");
             }
-            else 
+            else
             {
-                client.gonder(Path.GetFileName(imageFiles[kacinciDosya - 1 - xmlDosyalari.Count()]), path1 + "\\");
+                client.gonder("<komut=dosyalar&kacinci=" + kacinciDosya + "&kacDosya=" + (imageFiles.Count() + xmlDosyalari.Count()) + ">", Path.GetFileName(imageFiles[kacinciDosya - 1 - xmlDosyalari.Count()]), path1 + "\\");
             }
-
         }
 
         // Anket doldurulduktan sonra cevapları gelince çalışacak fonksiyon
@@ -1964,7 +1961,7 @@ namespace ROPv1
         private void girisButtonPressed(object sender, EventArgs e)
         {
             if (adminForm == null)
-            {            
+            {
                 if (!File.Exists("tempfiles.xml")) // ilk açılışta veya bir sıkıntı sonucu kategoriler dosyası silinirse kendi default kategorilerimizi giriyoruz.
                 {
                     infoKullanici = new UItemp[1];
@@ -2215,7 +2212,7 @@ namespace ROPv1
                 gecenSure = Properties.Settings.Default.Port2;
 
                 DateTime x = new DateTime();
-                if(gecenSure != -1)
+                if (gecenSure != -1)
                 {
                     if ((DateTime.Now >= Properties.Settings.Default.IP2.AddDays(30) && Properties.Settings.Default.IP2 > x.AddDays(1)) || DateTime.Now < Properties.Settings.Default.IP2 || gecenSure >= 43200)
                     {
@@ -2338,7 +2335,7 @@ namespace ROPv1
                 sunucu.Durdur();
                 sunucu = null;
             }
-            if(Properties.Settings.Default.Port2 != 0)
+            if (Properties.Settings.Default.Port2 != 0)
             {
                 Properties.Settings.Default.Port2 = gecenSure;
                 Properties.Settings.Default.Save();
