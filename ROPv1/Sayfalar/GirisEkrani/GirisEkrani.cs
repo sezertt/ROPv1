@@ -259,6 +259,7 @@ namespace ROPv1
 
             if (kacinciDosya > imageFiles.Count() + xmlDosyalari.Count())
             {
+                adminForm.veriAktarimiTamamlandi();
                 client.MesajYolla("komut=aktarimTamamlandi");
                 return;
             }

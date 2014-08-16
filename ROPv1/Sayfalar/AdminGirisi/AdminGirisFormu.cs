@@ -358,8 +358,16 @@ namespace ROPv1
                 }
 
                 girisForm.tumKullanicilaraMesajYolla("komut=guncellemeyiBaslat");
+                buttonBilgiAktar.Enabled = false;
             }            
         }    
+
+        public void veriAktarimiTamamlandi()
+        {
+            buttonBilgiAktar.Enabled = true;
+            KontrolFormu dialog = new KontrolFormu("Dosya Aktarımı Tamamlandı", false);
+            dialog.Show();
+        }
 
         private void adisyonCheckBox_Click(object sender, EventArgs e)
         {

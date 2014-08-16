@@ -62,18 +62,19 @@
             // 
             // flowPanelUrunler
             // 
-            this.flowPanelUrunler.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.flowPanelUrunler.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowPanelUrunler.AutoScroll = true;
-            this.flowPanelUrunler.Location = new System.Drawing.Point(602, 12);
+            this.flowPanelUrunler.Location = new System.Drawing.Point(602, 10);
             this.flowPanelUrunler.Name = "flowPanelUrunler";
-            this.flowPanelUrunler.Size = new System.Drawing.Size(504, 454);
+            this.flowPanelUrunler.Size = new System.Drawing.Size(504, 456);
             this.flowPanelUrunler.TabIndex = 0;
             this.flowPanelUrunler.SizeChanged += new System.EventHandler(this.urunPanelSizeChanged);
             // 
             // textNumberOfItem
             // 
-            this.textNumberOfItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.textNumberOfItem.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.textNumberOfItem.Font = new System.Drawing.Font("Arial", 39F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textNumberOfItem.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textNumberOfItem.Location = new System.Drawing.Point(613, 617);
@@ -87,7 +88,7 @@
             // 
             // buttonDeleteText
             // 
-            this.buttonDeleteText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonDeleteText.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonDeleteText.BackColor = System.Drawing.SystemColors.Window;
             this.buttonDeleteText.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonDeleteText.ForeColor = System.Drawing.SystemColors.ActiveCaption;
@@ -103,7 +104,7 @@
             // 
             // pinboardcontrol21
             // 
-            this.pinboardcontrol21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pinboardcontrol21.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.pinboardcontrol21.KeyboardType = PinboardClassLibrary.BoW.Standard;
             this.pinboardcontrol21.Location = new System.Drawing.Point(736, 467);
             this.pinboardcontrol21.Name = "pinboardcontrol21";
@@ -113,14 +114,13 @@
             // 
             // flowPanelMenuBasliklari
             // 
-            this.flowPanelMenuBasliklari.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.flowPanelMenuBasliklari.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowPanelMenuBasliklari.AutoScroll = true;
             this.flowPanelMenuBasliklari.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowPanelMenuBasliklari.Location = new System.Drawing.Point(1115, 12);
+            this.flowPanelMenuBasliklari.Location = new System.Drawing.Point(1115, 10);
             this.flowPanelMenuBasliklari.Name = "flowPanelMenuBasliklari";
-            this.flowPanelMenuBasliklari.Size = new System.Drawing.Size(250, 744);
+            this.flowPanelMenuBasliklari.Size = new System.Drawing.Size(250, 746);
             this.flowPanelMenuBasliklari.TabIndex = 63;
             this.flowPanelMenuBasliklari.WrapContents = false;
             this.flowPanelMenuBasliklari.SizeChanged += new System.EventHandler(this.myPannel_SizeChanged);
