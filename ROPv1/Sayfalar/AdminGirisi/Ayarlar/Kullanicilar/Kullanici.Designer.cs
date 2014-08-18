@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Satışlar");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Raporlar");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Stoklar");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Ayarlar");
             System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Adisyonlar");
             System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Hesap İzinleri");
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
@@ -311,7 +311,7 @@
             treeNode2.Name = "Rapor";
             treeNode2.Text = "Raporlar";
             treeNode3.Name = "Stok";
-            treeNode3.Text = "Stoklar";
+            treeNode3.Text = "Ayarlar";
             treeNode4.Name = "Adisyon";
             treeNode4.Text = "Adisyonlar";
             treeNode5.Name = "ikramIptal";

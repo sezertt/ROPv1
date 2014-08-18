@@ -17,6 +17,7 @@ namespace SPIA.Client
 
         private const byte BASLANGIC_BYTE = (byte)60; // <
         private const byte BITIS_BYTE = (byte)62; // >
+        public string path = "";
 
         // PUBLIC ÖZELLÝKLER //////////////////////////////////////////////////
 
@@ -65,42 +66,44 @@ namespace SPIA.Client
 
         // PUBLIC FONKSYONLAR /////////////////////////////////////////////////
 
-        public bool dosyaAl(string path)
+        public void dosyaAl()
         {
-            try
-            {
-                byte[] clientData = new byte[1024 * 5000];
-                string receivedPath = path;
+            string receivedPath = this.path;
 
-                int receivedBytesLen = clientBaglantisi.Receive(clientData);
+            byte[] length = new byte[4];
 
-                int fileNameLen = BitConverter.ToInt32(clientData, 0);
-                string fileName = Encoding.UTF8.GetString(clientData, 4, fileNameLen);
+            binaryOkuyucu.Read(length, 0, 4);
 
-                string truePath = "\\";
+            int fileDataLen = BitConverter.ToInt32(length, 0);
 
-                if (fileName.Substring(fileName.Length - 3, 3) == "png")
-                {
-                    DirectoryInfo df = new DirectoryInfo(receivedPath + @"\resimler\");
+            binaryOkuyucu.Read(length, 0, 4);
 
-                    if (!df.Exists) // klasör yoksa oluþtur
-                    {
-                        // create new directory
-                        DirectoryInfo di = Directory.CreateDirectory(receivedPath + @"\resimler\");
-                    }
-                    truePath = "\\Resimler\\";
-                }
+            int fileNameLen = BitConverter.ToInt32(length, 0);
 
-                BinaryWriter bWrite = new BinaryWriter(File.Open(receivedPath + truePath + fileName, FileMode.Create));
-                bWrite.Write(clientData, 4 + fileNameLen, receivedBytesLen - 4 - fileNameLen);
+            byte[] fileNameBuffer = new byte[fileNameLen];
+            binaryOkuyucu.Read(fileNameBuffer, 0, fileNameLen);
 
-                bWrite.Close();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            string fileName = Encoding.UTF8.GetString(fileNameBuffer, 0, fileNameLen);
+
+            byte[] buffer = new byte[fileDataLen];
+
+             try {
+                int bytesReceived = 0;
+                do {
+                    //read byte from client
+                    int bytesRead = binaryOkuyucu.Read(buffer, bytesReceived, fileDataLen - bytesReceived);
+                    bytesReceived += bytesRead;
+                } while (bytesReceived < fileDataLen);   
+             }
+             catch
+             {
+                 return;
+             }
+
+            BinaryWriter bWrite = new BinaryWriter(File.Open(receivedPath + "\\" + fileName, FileMode.Create));
+            bWrite.Write(buffer, 0, fileDataLen);
+
+            bWrite.Close();
         }
         
         /// Bir SPIA Ýstemcisi oluþturur.        
@@ -212,6 +215,13 @@ namespace SPIA.Client
                         bList.Add(b);
                     }                    
                     string mesaj = System.Text.Encoding.UTF8.GetString(bList.ToArray());
+
+                    if (mesaj.Length > 13)
+                        if (mesaj.Substring(0, 14).Equals("komut=dosyalar"))
+                        {
+                            dosyaAl();
+                        }
+
                     //Yeni mesaj baþarýyla alýndý
                     yeniMesajAlindiTetikle(mesaj);
                 }

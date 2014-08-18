@@ -22,6 +22,8 @@ namespace ROPv1
 
         Raporlar gunRaporView, urunRaporView;
         GirisEkrani girisForm;
+        PinKoduFormu pinForm;
+        string ayarlaraGirenKisi;
 
         public AdminGirisFormu(GirisEkrani girisForm)
         {
@@ -39,6 +41,27 @@ namespace ROPv1
                 girisForm.adminForm = null;
             }
         }
+
+        public void gelenPinDogruMu(bool pinDogruMu, string ayarYapanKisi)
+        {
+            ayarlaraGirenKisi = ayarYapanKisi;
+
+            if (pinDogruMu)
+            {                    
+                buttonBilgiAktar.Visible = true;
+
+                leftPanelView.Nodes.Add("Kullanıcılar");
+                leftPanelView.Nodes.Add("Departmanlar");
+                leftPanelView.Nodes.Add("Masa Yerleşim Planı");
+                leftPanelView.Nodes.Add("Menüler");
+                leftPanelView.Nodes.Add("Ürünler");
+                leftPanelView.Nodes.Add("Stok Ayarları");
+                leftPanelView.Nodes.Add("Reçeteler");
+                leftPanelView.Nodes.Add("İşletme Bilgileri");
+                leftPanelView.SelectedNode = leftPanelView.Nodes[0];                    
+            }
+        }
+
 
         private void saleCheckChanged(object sender, EventArgs e)
         {
@@ -96,18 +119,19 @@ namespace ROPv1
                     break;
                 case 3:
                     ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingsback;
-                    buttonBilgiAktar.Visible = true;
+                            
 
-                    leftPanelView.Nodes.Add("Kullanıcılar");
-                    leftPanelView.Nodes.Add("Departmanlar");
-                    leftPanelView.Nodes.Add("Masa Yerleşim Planı");
-                    leftPanelView.Nodes.Add("Menüler");
-                    leftPanelView.Nodes.Add("Ürünler");
-                    leftPanelView.Nodes.Add("Stok Ayarları");
-                    leftPanelView.Nodes.Add("Reçeteler");
-                    leftPanelView.Nodes.Add("İşletme Bilgileri");
+                    if (pinForm != null)
+                    {
+                        if (pinForm.Visible)
+                        {
+                            pinForm.BringToFront();
+                            return;
+                        }
+                    }
 
-                    leftPanelView.SelectedNode = leftPanelView.Nodes[0];
+                    pinForm = new PinKoduFormu("Ayar Görüntüleme", this);
+                    pinForm.Show();                  
                     break;
                 case 4:
                     anketCheckBox.Image = global::ROPv1.Properties.Resources.anketBack;
@@ -331,17 +355,6 @@ namespace ROPv1
             urunRaporView = new Raporlar(false);
         }
 
-        private void AdminGirisFormu_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (ayarCheckBox.Visible == false)
-            {
-                if (e.Control && e.Shift && e.KeyCode == Keys.D3)
-                {
-                    ayarCheckBox.Visible = true;
-                }
-            }
-        }
-
         private void buttonBilgiAktar_Click(object sender, EventArgs e)
         {
             KontrolFormu dialog = new KontrolFormu("Veri aktarımının doğru gerçekleştirilebilmesi için tabletlerin ayarlar ekranında olması gerekmektedir. Devam etmek istiyor musunuz ?", true);
@@ -361,13 +374,6 @@ namespace ROPv1
                 buttonBilgiAktar.Enabled = false;
             }            
         }    
-
-        public void veriAktarimiTamamlandi()
-        {
-            buttonBilgiAktar.Enabled = true;
-            KontrolFormu dialog = new KontrolFormu("Dosya Aktarımı Tamamlandı", false);
-            dialog.Show();
-        }
 
         private void adisyonCheckBox_Click(object sender, EventArgs e)
         {
@@ -437,6 +443,22 @@ namespace ROPv1
             DialogResult result = modemFormu.ShowDialog();
             if (result == DialogResult.OK)
                 girisForm.tumKullanicilaraMesajYolla("komut=modemBilgileri&SSID="+SSID+"&Sifre="+sifre);
+        }
+
+        delegate void setButtonValueCallBack(Button veriButton);
+        public void veriAktarimiTamamlandi(Button veriBtn)
+        {
+            if(veriBtn.InvokeRequired)
+            {
+                setButtonValueCallBack btndelegate = new setButtonValueCallBack(veriAktarimiTamamlandi);
+                this.buttonBilgiAktar.Invoke(btndelegate,new object [] { buttonBilgiAktar });
+            }
+            else
+            {
+                veriBtn.Enabled = true;
+                KontrolFormu dialog = new KontrolFormu("Dosya Aktarımı Tamamlandı", false);
+                dialog.Show();
+            }
         }
     }
 }

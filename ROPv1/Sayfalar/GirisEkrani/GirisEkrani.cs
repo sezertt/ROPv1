@@ -211,7 +211,7 @@ namespace ROPv1
                         komut_adisyonNotunuGuncelle(parametreler["masa"], parametreler["departmanAdi"], parametreler["adisyonNotu"]);
                         break;
                     case "veriGonder":
-                        komut_veriGonder(e.Client, parametreler["kacinci"]);
+                        komut_veriGonder(e.Client, parametreler["kacinci"], parametreler["sadeceXML"]);
                         break;
                 }
             }
@@ -235,42 +235,57 @@ namespace ROPv1
 
         #region Komutlar
 
-        private void komut_veriGonder(ClientRef client, string kacinci)
+        private void komut_veriGonder(ClientRef client, string kacinci, string sadeceXML)
         {
             int kacinciDosya = Convert.ToInt32(kacinci);
-
-            string image_outputDir = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
-            DirectoryInfo df = new DirectoryInfo(Application.StartupPath + @"\resimler\");
-
-            if (!df.Exists) // klasör yoksa oluştur
-            {
-                // create new directory
-                DirectoryInfo di = Directory.CreateDirectory(image_outputDir + @"\resimler\");
-            }
-
-            string path1 = Application.StartupPath + @"\resimler";
+            int sadeceXMLMi = Convert.ToInt32(sadeceXML);
 
             string path2 = Application.StartupPath;
 
-
-            string[] imageFiles = Directory.GetFiles(path1, "*.png", SearchOption.TopDirectoryOnly);
-
             string[] xmlDosyalari = Directory.GetFiles(path2, "*.xml", SearchOption.TopDirectoryOnly);
 
-            if (kacinciDosya > imageFiles.Count() + xmlDosyalari.Count())
+            if (sadeceXMLMi == 1)
             {
-                adminForm.veriAktarimiTamamlandi();
-                client.MesajYolla("komut=aktarimTamamlandi");
-                return;
-            }
+                if (kacinciDosya > xmlDosyalari.Count())
+                {
+                    if(adminForm != null)
+                        adminForm.veriAktarimiTamamlandi(adminForm.buttonBilgiAktar);
 
-            if (kacinciDosya <= xmlDosyalari.Count())
-            {
-                client.gonder("<komut=dosyalar&kacinci=" + kacinciDosya + "&kacDosya=" + (imageFiles.Count() + xmlDosyalari.Count()) + ">", Path.GetFileName(xmlDosyalari[kacinciDosya - 1]), path2 + "\\");
+                    client.MesajYolla("komut=aktarimTamamlandi");
+                    return;
+                }
+                client.gonder("<komut=dosyalar&kacinci=" + kacinciDosya + ">", Path.GetFileName(xmlDosyalari[kacinciDosya - 1]), path2 + "\\");
             }
             else
             {
-                client.gonder("<komut=dosyalar&kacinci=" + kacinciDosya + "&kacDosya=" + (imageFiles.Count() + xmlDosyalari.Count()) + ">", Path.GetFileName(imageFiles[kacinciDosya - 1 - xmlDosyalari.Count()]), path1 + "\\");
+                string image_outputDir = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
+                DirectoryInfo df = new DirectoryInfo(Application.StartupPath + @"\resimler\");
+
+                if (!df.Exists) // klasör yoksa oluştur
+                {
+                    // create new directory
+                    DirectoryInfo di = Directory.CreateDirectory(image_outputDir + @"\resimler\");
+                }
+
+                string path1 = Application.StartupPath + @"\resimler";
+
+                string[] imageFiles = Directory.GetFiles(path1, "*.png", SearchOption.TopDirectoryOnly);
+
+                if (kacinciDosya > imageFiles.Count() + xmlDosyalari.Count())
+                {
+                    adminForm.veriAktarimiTamamlandi(adminForm.buttonBilgiAktar);
+                    client.MesajYolla("komut=aktarimTamamlandi");
+                    return;
+                }
+
+                if (kacinciDosya <= xmlDosyalari.Count())
+                {
+                    client.gonder("<komut=dosyalar&kacinci=" + kacinciDosya + ">", Path.GetFileName(xmlDosyalari[kacinciDosya - 1]), path2 + "\\");
+                }
+                else
+                {
+                    client.gonder("<komut=dosyalar&kacinci=" + kacinciDosya + ">", Path.GetFileName(imageFiles[kacinciDosya - 1 - xmlDosyalari.Count()]), path1 + "\\");
+                }
             }
         }
 

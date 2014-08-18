@@ -31,21 +31,21 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminGirisFormu));
             this.splitPanel = new System.Windows.Forms.SplitContainer();
+            this.buttonModem = new System.Windows.Forms.Button();
             this.buttonUrunOzellikleri = new System.Windows.Forms.Button();
             this.buttonBilgiAktar = new System.Windows.Forms.Button();
             this.leftPanelView = new System.Windows.Forms.TreeView();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.labelSaat = new System.Windows.Forms.Label();
-            this.labelTarih = new System.Windows.Forms.Label();
-            this.labelGun = new System.Windows.Forms.Label();
-            this.timerSaat = new System.Windows.Forms.Timer(this.components);
-            this.buttonModem = new System.Windows.Forms.Button();
-            this.adisyonCheckBox = new System.Windows.Forms.CheckBox();
             this.exitButton = new System.Windows.Forms.Button();
             this.anketCheckBox = new System.Windows.Forms.CheckBox();
             this.reportCheckBox = new System.Windows.Forms.CheckBox();
             this.stokCheckBox = new System.Windows.Forms.CheckBox();
             this.ayarCheckBox = new System.Windows.Forms.CheckBox();
+            this.labelSaat = new System.Windows.Forms.Label();
+            this.labelTarih = new System.Windows.Forms.Label();
+            this.labelGun = new System.Windows.Forms.Label();
+            this.timerSaat = new System.Windows.Forms.Timer(this.components);
+            this.adisyonCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitPanel)).BeginInit();
             this.splitPanel.Panel1.SuspendLayout();
             this.splitPanel.SuspendLayout();
@@ -78,6 +78,22 @@
             this.splitPanel.SplitterDistance = 200;
             this.splitPanel.SplitterWidth = 6;
             this.splitPanel.TabIndex = 6;
+            // 
+            // buttonModem
+            // 
+            this.buttonModem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonModem.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonModem.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonModem.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonModem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonModem.Location = new System.Drawing.Point(3, 518);
+            this.buttonModem.Name = "buttonModem";
+            this.buttonModem.Size = new System.Drawing.Size(192, 60);
+            this.buttonModem.TabIndex = 9;
+            this.buttonModem.Text = "Modem Bilgileri";
+            this.buttonModem.UseVisualStyleBackColor = false;
+            this.buttonModem.Click += new System.EventHandler(this.buttonModem_Click);
             // 
             // buttonUrunOzellikleri
             // 
@@ -148,84 +164,6 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(930, 116);
             this.flowLayoutPanel1.TabIndex = 0;
-            // 
-            // labelSaat
-            // 
-            this.labelSaat.AutoSize = true;
-            this.labelSaat.BackColor = System.Drawing.Color.Transparent;
-            this.labelSaat.Font = new System.Drawing.Font("Calibri", 45F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelSaat.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelSaat.Location = new System.Drawing.Point(0, 0);
-            this.labelSaat.Name = "labelSaat";
-            this.labelSaat.Size = new System.Drawing.Size(246, 73);
-            this.labelSaat.TabIndex = 7;
-            this.labelSaat.Text = "22:55:30";
-            this.labelSaat.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // labelTarih
-            // 
-            this.labelTarih.BackColor = System.Drawing.Color.Transparent;
-            this.labelTarih.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelTarih.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelTarih.Location = new System.Drawing.Point(12, 61);
-            this.labelTarih.Name = "labelTarih";
-            this.labelTarih.Size = new System.Drawing.Size(218, 33);
-            this.labelTarih.TabIndex = 8;
-            this.labelTarih.Text = "10 Şubat 2014 ";
-            this.labelTarih.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // labelGun
-            // 
-            this.labelGun.BackColor = System.Drawing.Color.Transparent;
-            this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGun.Location = new System.Drawing.Point(12, 91);
-            this.labelGun.Name = "labelGun";
-            this.labelGun.Size = new System.Drawing.Size(218, 33);
-            this.labelGun.TabIndex = 9;
-            this.labelGun.Text = "Pazartesi";
-            this.labelGun.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // timerSaat
-            // 
-            this.timerSaat.Interval = 1000;
-            this.timerSaat.Tick += new System.EventHandler(this.timerSaat_Tick);
-            // 
-            // buttonModem
-            // 
-            this.buttonModem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonModem.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonModem.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonModem.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonModem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonModem.Location = new System.Drawing.Point(3, 518);
-            this.buttonModem.Name = "buttonModem";
-            this.buttonModem.Size = new System.Drawing.Size(192, 60);
-            this.buttonModem.TabIndex = 9;
-            this.buttonModem.Text = "Modem Bilgileri";
-            this.buttonModem.UseVisualStyleBackColor = false;
-            this.buttonModem.Click += new System.EventHandler(this.buttonModem_Click);
-            // 
-            // adisyonCheckBox
-            // 
-            this.adisyonCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.adisyonCheckBox.BackColor = System.Drawing.SystemColors.Window;
-            this.adisyonCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.adisyonCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.adisyonCheckBox.Image = global::ROPv1.Properties.Resources.adisyon;
-            this.adisyonCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.adisyonCheckBox.Location = new System.Drawing.Point(236, 10);
-            this.adisyonCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
-            this.adisyonCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
-            this.adisyonCheckBox.Name = "adisyonCheckBox";
-            this.adisyonCheckBox.Size = new System.Drawing.Size(180, 110);
-            this.adisyonCheckBox.TabIndex = 6;
-            this.adisyonCheckBox.Tag = "4";
-            this.adisyonCheckBox.Text = "Adisyonlar";
-            this.adisyonCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.adisyonCheckBox.UseVisualStyleBackColor = false;
-            this.adisyonCheckBox.Click += new System.EventHandler(this.adisyonCheckBox_Click);
             // 
             // exitButton
             // 
@@ -326,11 +264,72 @@
             this.ayarCheckBox.Size = new System.Drawing.Size(180, 110);
             this.ayarCheckBox.TabIndex = 4;
             this.ayarCheckBox.Tag = "3";
-            this.ayarCheckBox.Text = "Veri Aktar";
+            this.ayarCheckBox.Text = "Ayarlar";
             this.ayarCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.ayarCheckBox.UseVisualStyleBackColor = false;
-            this.ayarCheckBox.Visible = false;
             this.ayarCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
+            // 
+            // labelSaat
+            // 
+            this.labelSaat.AutoSize = true;
+            this.labelSaat.BackColor = System.Drawing.Color.Transparent;
+            this.labelSaat.Font = new System.Drawing.Font("Calibri", 45F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelSaat.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelSaat.Location = new System.Drawing.Point(0, 0);
+            this.labelSaat.Name = "labelSaat";
+            this.labelSaat.Size = new System.Drawing.Size(246, 73);
+            this.labelSaat.TabIndex = 7;
+            this.labelSaat.Text = "22:55:30";
+            this.labelSaat.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelTarih
+            // 
+            this.labelTarih.BackColor = System.Drawing.Color.Transparent;
+            this.labelTarih.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelTarih.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelTarih.Location = new System.Drawing.Point(12, 61);
+            this.labelTarih.Name = "labelTarih";
+            this.labelTarih.Size = new System.Drawing.Size(218, 33);
+            this.labelTarih.TabIndex = 8;
+            this.labelTarih.Text = "10 Şubat 2014 ";
+            this.labelTarih.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelGun
+            // 
+            this.labelGun.BackColor = System.Drawing.Color.Transparent;
+            this.labelGun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelGun.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelGun.Location = new System.Drawing.Point(12, 91);
+            this.labelGun.Name = "labelGun";
+            this.labelGun.Size = new System.Drawing.Size(218, 33);
+            this.labelGun.TabIndex = 9;
+            this.labelGun.Text = "Pazartesi";
+            this.labelGun.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // timerSaat
+            // 
+            this.timerSaat.Interval = 1000;
+            this.timerSaat.Tick += new System.EventHandler(this.timerSaat_Tick);
+            // 
+            // adisyonCheckBox
+            // 
+            this.adisyonCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.adisyonCheckBox.BackColor = System.Drawing.SystemColors.Window;
+            this.adisyonCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.adisyonCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.adisyonCheckBox.Image = global::ROPv1.Properties.Resources.adisyon;
+            this.adisyonCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.adisyonCheckBox.Location = new System.Drawing.Point(236, 10);
+            this.adisyonCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
+            this.adisyonCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
+            this.adisyonCheckBox.Name = "adisyonCheckBox";
+            this.adisyonCheckBox.Size = new System.Drawing.Size(180, 110);
+            this.adisyonCheckBox.TabIndex = 6;
+            this.adisyonCheckBox.Tag = "4";
+            this.adisyonCheckBox.Text = "Adisyonlar";
+            this.adisyonCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.adisyonCheckBox.UseVisualStyleBackColor = false;
+            this.adisyonCheckBox.Click += new System.EventHandler(this.adisyonCheckBox_Click);
             // 
             // AdminGirisFormu
             // 
@@ -356,7 +355,6 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AdminGirisFormu_FormClosing);
             this.Load += new System.EventHandler(this.AdminGirisFormu_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AdminGirisFormu_KeyDown);
             this.splitPanel.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitPanel)).EndInit();
             this.splitPanel.ResumeLayout(false);
@@ -381,10 +379,10 @@
         private System.Windows.Forms.Label labelTarih;
         private System.Windows.Forms.Label labelGun;
         private System.Windows.Forms.Timer timerSaat;
-        private System.Windows.Forms.Button buttonBilgiAktar;
         private System.Windows.Forms.CheckBox ayarCheckBox;
         private System.Windows.Forms.Button buttonUrunOzellikleri;
         private System.Windows.Forms.Button buttonModem;
+        public System.Windows.Forms.Button buttonBilgiAktar;
 
     }
 }

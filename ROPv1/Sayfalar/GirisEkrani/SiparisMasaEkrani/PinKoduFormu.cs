@@ -16,13 +16,26 @@ namespace ROPv1
         string ayarYapanKisi;
         string yapilacakIslem;
 
-        SiparisMasaFormu gelenForm;
+        SiparisMasaFormu siparisMasaFormu;
+        AdminGirisFormu adminFormu;
 
-        public PinKoduFormu(string yapilacakIslemNe, SiparisMasaFormu gelenForm)
+        public PinKoduFormu(string yapilacakIslemNe, SiparisMasaFormu siparisMasaFormu)
         {
             InitializeComponent();
 
-            this.gelenForm = gelenForm;
+            this.siparisMasaFormu = siparisMasaFormu;
+
+            yapilacakIslem = yapilacakIslemNe;
+
+            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+        }
+
+        public PinKoduFormu(string yapilacakIslemNe, AdminGirisFormu adminFormu)
+        {
+            InitializeComponent();
+
+            this.adminFormu = adminFormu;
 
             yapilacakIslem = yapilacakIslemNe;
 
@@ -59,7 +72,6 @@ namespace ROPv1
                 //kullanıcının yerini bul
                 for (int i = 0; i < infoKullanici.Count(); i++)
                 {
-                    //if (Helper.VerifyHash(textboxPin.Text, "SHA512", infoKullanici[i].UIPN))
                     if (PasswordHash.ValidatePassword(textboxPin.Text, infoKullanici[i].UIPN))
                     {
                         kullaniciAdi = i;
@@ -78,7 +90,6 @@ namespace ROPv1
                     }
                     else if (yapilacakIslem == "Adisyon Görüntüleme")
                     {
-                        //if (Helper.VerifyHash("true", "SHA512", infoKullanici[kullaniciAdi].UIY[3]))
                         if (PasswordHash.ValidatePassword("true", infoKullanici[kullaniciAdi].UIY[3]))
                         {
                             dogru = true;
@@ -88,6 +99,21 @@ namespace ROPv1
                         else
                         {
                             KontrolFormu dialog = new KontrolFormu("Adisyon görüntüleme yetkiniz bulunmamaktadır", false);
+                            dialog.ShowDialog();
+                            dialog.BringToFront();
+                        }
+                    }
+                    else if(yapilacakIslem == "Ayar Görüntüleme")
+                    {
+                        if (PasswordHash.ValidatePassword("true", infoKullanici[kullaniciAdi].UIY[2]))
+                        {
+                            dogru = true;
+                            ayarYapanKisi = (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[kullaniciAdi].UIS);
+                            this.Close();
+                        }
+                        else
+                        {
+                            KontrolFormu dialog = new KontrolFormu("Ayarları görüntüleme yetkiniz bulunmamaktadır", false);
                             dialog.ShowDialog();
                             dialog.BringToFront();
                         }
@@ -118,7 +144,10 @@ namespace ROPv1
 
         private void PinKoduFormu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            gelenForm.gelenPinDogruMu(dogru, ayarYapanKisi);
+            if(siparisMasaFormu != null)
+                siparisMasaFormu.gelenPinDogruMu(dogru, ayarYapanKisi);
+            if (adminFormu != null)
+                adminFormu.gelenPinDogruMu(dogru, ayarYapanKisi);
         }
     }
 }

@@ -397,7 +397,7 @@ namespace ROPv1
 
                             if (cevap == DialogResult.Yes)
                             {
-                                client.MesajYolla("komut=veriGonder&kacinci=1");
+                                komut_guncellemeBaslat();
                             }
                             else
                             {
@@ -593,7 +593,7 @@ namespace ROPv1
 
                 if (cevap == DialogResult.Yes)
                 {
-                    client.MesajYolla("komut=veriGonder&kacinci=1");
+                    komut_guncellemeBaslat();
                 }
             }
         }
@@ -778,10 +778,15 @@ namespace ROPv1
                         komut_IslemHatasi(parametreler["hata"]);
                         break;
                     case "dosyalar":
-                        komut_dosyalar(parametreler["kacinci"],parametreler["kacDosya"]);
+                        komut_dosyalar(parametreler["kacinci"]);
                         break;
                     case "guncellemeBaslat":
                         komut_guncellemeBaslat();
+                        break;
+                    case "aktarimTamamlandi":
+                        dialog2 = new KontrolFormu("Veri aktarımı tamamlandı", false);
+                        dialog2.ShowDialog();
+                        Environment.Exit(7);
                         break;
                 }
             }
@@ -966,25 +971,17 @@ namespace ROPv1
 
         private void komut_guncellemeBaslat()
         {
-            client.MesajYolla("komut=veriGonder&kacinci=1");
+            client.path = Application.StartupPath;
+            client.MesajYolla("komut=veriGonder&kacinci=1&sadeceXML=1");
         }
 
-        private void komut_dosyalar(string kacinci, string kacDosya)
+        private void komut_dosyalar(string kacinci)
         {
             int kacinciDosya = Convert.ToInt32(kacinci);
 
-            if (client.dosyaAl(Application.StartupPath)) // dosya gönderimi başarılı sıradakini gönder 
-            {
-                if (kacinciDosya == Convert.ToInt32(kacDosya))
-                {
-                    Environment.Exit(7);
-                }
-                client.MesajYolla("komut=veriGonder&kacinci=" + (kacinciDosya + 1));
-            }
-            else // dosya gönderimi başarısız aynısını tekrar gönder 
-            {
-                client.MesajYolla("komut=veriGonder&kacinci=" + kacinciDosya);
-            }
+            client.path = Application.StartupPath; 
+            
+            client.MesajYolla("komut=veriGonder&kacinci=" + (kacinciDosya + 1) + "&sadeceXML=1");    
         }
 
         //yazıcıları hesap formuna gönder
