@@ -136,10 +136,10 @@ namespace ROPv1
                 switch (parametreler["komut"])
                 {
                     case "siparis":
-                        komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["sonSiparisMi"], parametreler["ilkSiparis"]);
+                        komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["sonSiparisMi"], parametreler["porsiyon"], parametreler["ilkSiparis"]);
                         break;
                     case "iptal": // ürün iptal edildiği bilgisini dağıtmak için
-                        komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"]);
+                        komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"], parametreler["porsiyon"]);
                         break;
                     case "hesapOdeniyor": // yeni masa açıldığı bilgisi geldiğinde
                         komut_hesapOdeniyor(parametreler["masa"], parametreler["departmanAdi"]);
@@ -160,10 +160,10 @@ namespace ROPv1
                         komut_masaDegistir(parametreler["yeniMasa"], parametreler["yeniDepartmanAdi"], parametreler["eskiMasa"], parametreler["eskiDepartmanAdi"], parametreler["yapilmasiGereken"]);
                         break;
                     case "ikram": // ürün ikram edildiği bilgisini dağıtmak için
-                        komut_ikram(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"]);
+                        komut_ikram(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["porsiyon"]);
                         break;
                     case "ikramIptal": // ikramın iptal edildiği bilgisini dağıtmak için
-                        komut_ikramIptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"]);
+                        komut_ikramIptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"], parametreler["porsiyon"]);
                         break;
                     case "urunuTasi": // ikramın iptal edildiği bilgisini dağıtmak için
                         komut_urunuTasi(parametreler["masa"], parametreler["departmanAdi"], parametreler["yeniMasa"], parametreler["yeniDepartmanAdi"], parametreler["siparisiGirenKisi"], parametreler["aktarmaBilgileri"], e.Client);
@@ -248,7 +248,7 @@ namespace ROPv1
             {
                 if (kacinciDosya > xmlDosyalari.Count())
                 {
-                    if(adminForm != null)
+                    if (adminForm != null)
                         adminForm.veriAktarimiTamamlandi(adminForm.buttonBilgiAktar);
 
                     client.MesajYolla("komut=aktarimTamamlandi");
@@ -576,30 +576,31 @@ namespace ROPv1
 
             if (siparisler.Count() > 0 && siparisler[0] != "")
             {
-                decimal kacPorsiyon;
+                int gelenAdet;
                 string yemeginAdi;
-                decimal yemeginFiyati;
+                decimal yemeginFiyati, porsiyon;
 
                 for (int i = 0; i < siparisler.Count(); i++)
                 {
                     string[] detaylari = siparisler[i].Split('-');
                     try
                     {
-                        kacPorsiyon = Convert.ToDecimal(detaylari[0]);
+                        gelenAdet = Convert.ToInt32(detaylari[0]);
                         yemeginAdi = detaylari[1];
                         yemeginFiyati = Convert.ToDecimal(detaylari[2]);
+                        porsiyon = Convert.ToDecimal(detaylari[3]);
                     }
                     catch
                     {
                         break;
                     }
 
-                    cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon,Siparis.VerilisTarihi,Siparis.Garsonu FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemeginAdi + "'ORDER BY Porsiyon DESC");
+                    cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Adet,Siparis.VerilisTarihi,Siparis.Garsonu FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemeginAdi + "' AND Siparis.Porsiyon=CONVERT(DECIMAL(5,2),@_Porsiyon) ORDER BY Adet DESC");
+                    cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
 
                     SqlDataReader dr = cmd.ExecuteReader();
 
-                    int siparisID;
-                    decimal porsiyon;
+                    int siparisID, adet;
                     DateTime verilisTarihi;
 
                     while (dr.Read())
@@ -608,7 +609,7 @@ namespace ROPv1
                         {
                             siparisID = dr.GetInt32(0);
                             adisyonID = dr.GetInt32(1);
-                            porsiyon = dr.GetDecimal(2);
+                            adet = dr.GetInt32(2);
                             verilisTarihi = dr.GetDateTime(3);
                             siparisiKimGirdi = dr.GetString(4);
 
@@ -624,25 +625,25 @@ namespace ROPv1
                             return;
                         }
 
-                        if (porsiyon < kacPorsiyon) // ödenmesi istenenlerin sayısı(kacPorsiyon) ödenebileceklerden(porsiyon) küçükse
+                        if (adet < gelenAdet) // ödenmesi istenenlerin sayısı(kacPorsiyon) ödenebileceklerden(porsiyon) küçükse
                         {
                             odendiUpdateTam(siparisID);
 
-                            kacPorsiyon -= porsiyon;
+                            gelenAdet -= adet;
                         }
-                        else if (porsiyon > kacPorsiyon) // den büyükse
+                        else if (adet > gelenAdet) // den büyükse
                         {
-                            odendiUpdateInsert(siparisID, adisyonID, porsiyon, (double)yemeginFiyati, kacPorsiyon, yemeginAdi, verilisTarihi);
+                            odendiUpdateInsert(siparisID, adisyonID, adet, (double)yemeginFiyati, gelenAdet, yemeginAdi, verilisTarihi, porsiyon);
 
-                            kacPorsiyon = 0;
+                            gelenAdet = 0;
                         }
                         else // elimizde ikram edilmemişler ikramı istenene eşitse
                         {
                             odendiUpdateTam(siparisID);
 
-                            kacPorsiyon = 0;
+                            gelenAdet = 0;
                         }
-                        if (kacPorsiyon == 0)
+                        if (gelenAdet == 0)
                             break;
                     }
                 }
@@ -675,13 +676,13 @@ namespace ROPv1
         private void komut_OdenenleriGonder(ClientRef client, string masa, string departmanAdi)
         {
             StringBuilder siparisBilgileri = new StringBuilder();
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Porsiyon, YemekAdi from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' and Adisyon.DepartmanAdi='" + departmanAdi + "' and Siparis.IptalMi=0 AND Siparis.OdendiMi=1 AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 ORDER BY Porsiyon DESC");
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Adet, YemekAdi, Porsiyon from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' and Adisyon.DepartmanAdi='" + departmanAdi + "' and Siparis.IptalMi=0 AND Siparis.OdendiMi=1 AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 ORDER BY Adet DESC");
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
                 try
                 {
-                    siparisBilgileri.Append("*" + dr.GetDecimal(0).ToString() + "-" + dr.GetDecimal(1).ToString() + "-" + dr.GetString(2));
+                    siparisBilgileri.Append("*" + dr.GetInt32(0).ToString() + "-" + dr.GetDecimal(1).ToString() + "-" + dr.GetString(2) + "-" + dr.GetDecimal(3));
                 }
                 catch
                 {
@@ -840,22 +841,23 @@ namespace ROPv1
             {
                 string yemekAdi;
                 double dusulecekDeger;
-                decimal istenilenTasimaMiktari;
-                int tasinacakUrunIkramMi;
+                int istenilenTasimaMiktari, tasinacakUrunIkramMi;
+                decimal porsiyon;
 
                 string[] detaylari = aktarmalar[i].Split('-');
                 yemekAdi = detaylari[0];
                 dusulecekDeger = Convert.ToDouble(detaylari[1]);
-                istenilenTasimaMiktari = Convert.ToDecimal(detaylari[2]);
+                istenilenTasimaMiktari = Convert.ToInt32(detaylari[2]);
                 tasinacakUrunIkramMi = Convert.ToInt32(detaylari[3]);
+                porsiyon = Convert.ToDecimal(detaylari[4]);
 
+                cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adet,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi='" + tasinacakUrunIkramMi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu='" + siparisiKimGirdi + "' AND Siparis.Porsiyon=CONVERT(DECIMAL(5,2),@_Porsiyon) ORDER BY Adet DESC");
 
-                cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Porsiyon,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi='" + tasinacakUrunIkramMi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
+                cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
 
                 dr = cmd.ExecuteReader();
 
-                int siparisID;
-                decimal porsiyon;
+                int siparisID, adet;
                 DateTime verilisTarihi;
 
                 while (dr.Read())
@@ -863,7 +865,7 @@ namespace ROPv1
                     try
                     {
                         siparisID = dr.GetInt32(0);
-                        porsiyon = dr.GetDecimal(1);
+                        adet = dr.GetInt32(1);
                         verilisTarihi = dr.GetDateTime(2);
                     }
                     catch
@@ -873,15 +875,15 @@ namespace ROPv1
                         return;
                     }
 
-                    if (porsiyon < istenilenTasimaMiktari) // elimizde ikram edilmemişler ikramı istenenden küçükse
+                    if (adet < istenilenTasimaMiktari) // elimizde ikram edilmemişler ikramı istenenden küçükse
                     {
                         urunTasimaUpdateTam(siparisID, aktarilacakMasaninAdisyonID);
 
-                        istenilenTasimaMiktari -= porsiyon;
+                        istenilenTasimaMiktari -= adet;
                     }
-                    else if (porsiyon > istenilenTasimaMiktari) // den büyükse
+                    else if (adet > istenilenTasimaMiktari) // den büyükse
                     {
-                        urunTasimaUpdateInsert(siparisID, aktarilacakMasaninAdisyonID, porsiyon, dusulecekDeger, istenilenTasimaMiktari, yemekAdi, tasinacakUrunIkramMi, verilisTarihi);
+                        urunTasimaUpdateInsert(siparisID, aktarilacakMasaninAdisyonID, adet, dusulecekDeger, istenilenTasimaMiktari, yemekAdi, tasinacakUrunIkramMi, verilisTarihi, porsiyon);
 
                         istenilenTasimaMiktari = 0;
                     }
@@ -898,7 +900,9 @@ namespace ROPv1
 
                 if (istenilenTasimaMiktari != 0)// aktarılacaklar daha bitmedi başka garsonların siparişlerinden aktarıma devam et
                 {
-                    cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Porsiyon,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi='" + tasinacakUrunIkramMi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu!='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
+                    cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adet,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi='" + tasinacakUrunIkramMi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu!='" + siparisiKimGirdi + "' AND Siparis.Porsiyon=CONVERT(DECIMAL(5,2),@_Porsiyon) ORDER BY Adet DESC");
+
+                    cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
 
                     dr = cmd.ExecuteReader();
 
@@ -907,7 +911,7 @@ namespace ROPv1
                         try
                         {
                             siparisID = dr.GetInt32(0);
-                            porsiyon = dr.GetDecimal(1);
+                            adet = dr.GetInt32(1);
                             verilisTarihi = dr.GetDateTime(2);
                         }
                         catch
@@ -917,15 +921,15 @@ namespace ROPv1
                             return;
                         }
 
-                        if (porsiyon < istenilenTasimaMiktari) // elimizde ikram edilmemişler ikramı istenenden küçükse
+                        if (adet < istenilenTasimaMiktari) // elimizde ikram edilmemişler ikramı istenenden küçükse
                         {
                             urunTasimaUpdateTam(siparisID, aktarilacakMasaninAdisyonID);
 
-                            istenilenTasimaMiktari -= porsiyon;
+                            istenilenTasimaMiktari -= adet;
                         }
-                        else if (porsiyon > istenilenTasimaMiktari) // den büyükse
+                        else if (adet > istenilenTasimaMiktari) // den büyükse
                         {
-                            urunTasimaUpdateInsert(siparisID, aktarilacakMasaninAdisyonID, porsiyon, dusulecekDeger, istenilenTasimaMiktari, yemekAdi, tasinacakUrunIkramMi, verilisTarihi);
+                            urunTasimaUpdateInsert(siparisID, aktarilacakMasaninAdisyonID, adet, dusulecekDeger, istenilenTasimaMiktari, yemekAdi, tasinacakUrunIkramMi, verilisTarihi, porsiyon);
 
                             istenilenTasimaMiktari = 0;
                         }
@@ -1044,7 +1048,7 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotuGelen, string sonSiparisMi, string ilkSiparisMi = "")
+        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotuGelen, string sonSiparisMi, string porsiyon, string ilkSiparisMi = "")
         {
             /*
                if(ilkSiparisMi != "") // eğer hesap ödeme formuna geçerken gelen siparişler ise listeye ekleme çünkü onları zaten açılışta ekliyoruz
@@ -1059,7 +1063,7 @@ namespace ROPv1
                     //invoke thread ler arası haberleşme
                     this.Invoke((MethodInvoker)delegate
                     {
-                        siparisForm.siparisMenuForm.siparisOnayiGeldi(miktar, yemekAdi, dusulecekDegerGelen);
+                        siparisForm.siparisMenuForm.siparisOnayiGeldi(miktar, yemekAdi, dusulecekDegerGelen, porsiyon);
                     });
                 }
             }
@@ -1096,13 +1100,14 @@ namespace ROPv1
                 }
             }
 
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,VerilisTarihi) VALUES(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_VerilisTarihi)");
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,VerilisTarihi,Porsiyon) VALUES(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_VerilisTarihi,@_Porsiyon)");
             cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
             cmd.Parameters.AddWithValue("@_Fiyatı", Convert.ToDecimal(dusulecekDegerGelen));
-            cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(miktar));
+            cmd.Parameters.AddWithValue("@_Adet", Convert.ToInt32(miktar));
             cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
             cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
+            cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(porsiyon));
 
             cmd.ExecuteNonQuery();
 
@@ -1143,7 +1148,7 @@ namespace ROPv1
             }
 
             //Tüm kullanıcılara sipariş mesajı gönderelim
-            tumKullanicilaraMesajYolla("komut=siparis&masa=" + masa + "&departmanAdi=" + departmanAdi + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDegerGelen + "&ilkSiparis=" + ilkSiparisMi);
+            tumKullanicilaraMesajYolla("komut=siparis&masa=" + masa + "&departmanAdi=" + departmanAdi + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDegerGelen + "&porsiyon=" + porsiyon + "&ilkSiparis=" + ilkSiparisMi);
         }
 
         public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string firmaAdi, string printerAdi, CrystalReportMutfak rapor)
@@ -1242,7 +1247,7 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        private void komut_iptal(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu, string ikraminGrubu)
+        private void komut_iptal(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu, string ikraminGrubu, string porsiyon)
         {
             if (siparisForm != null)
             {
@@ -1251,14 +1256,14 @@ namespace ROPv1
                     //invoke thread ler arası haberleşme
                     this.Invoke((MethodInvoker)delegate
                     {
-                        siparisForm.siparisMenuForm.iptalGeldi(miktar, yemekAdi, dusulecekDegerGelen, ikraminGrubu);
+                        siparisForm.siparisMenuForm.iptalGeldi(miktar, yemekAdi, dusulecekDegerGelen, ikraminGrubu, porsiyon);
                     });
                 }
             }
 
             siparisiKimGirdi = siparisiGirenKisi;
 
-            decimal istenilenSiparisiptalSayisi = Convert.ToDecimal(miktar);
+            int istenilenSiparisiptalSayisi = Convert.ToInt32(miktar);
 
             this.adisyonNotu = adisyonNotu;
 
@@ -1273,12 +1278,14 @@ namespace ROPv1
             else // değilse siparişlerden ikram edilecek
                 ikramSQLGirdisi = "0";
 
-            cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi='" + ikramSQLGirdisi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu='" + siparisiGirenKisi + "' ORDER BY Porsiyon DESC");
+            cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Adet,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi='" + ikramSQLGirdisi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu='" + siparisiGirenKisi + "' AND Siparis.Porsiyon=CONVERT(DECIMAL(5,2),@_Porsiyon) ORDER BY Adet DESC");
+
+            cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(porsiyon));
 
             SqlDataReader dr = cmd.ExecuteReader();
 
             int siparisID, adisyonID = 0;
-            decimal porsiyon;
+            int adet;
             DateTime verilisTarihi;
 
             while (dr.Read())
@@ -1287,7 +1294,7 @@ namespace ROPv1
                 {
                     siparisID = dr.GetInt32(0);
                     adisyonID = dr.GetInt32(1);
-                    porsiyon = dr.GetDecimal(2);
+                    adet = dr.GetInt32(2);
                     verilisTarihi = dr.GetDateTime(3);
                 }
                 catch
@@ -1297,15 +1304,15 @@ namespace ROPv1
                     return;
                 }
 
-                if (porsiyon < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
+                if (adet < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
                 {
                     iptalUpdateTam(siparisID);
 
-                    istenilenSiparisiptalSayisi -= porsiyon;
+                    istenilenSiparisiptalSayisi -= adet;
                 }
-                else if (porsiyon > istenilenSiparisiptalSayisi) // den büyükse
+                else if (adet > istenilenSiparisiptalSayisi) // den büyükse
                 {
-                    iptalUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenSiparisiptalSayisi, yemekAdi, verilisTarihi);
+                    iptalUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenSiparisiptalSayisi, yemekAdi, verilisTarihi, Convert.ToDecimal(porsiyon));
 
                     istenilenSiparisiptalSayisi = 0;
                 }
@@ -1321,7 +1328,9 @@ namespace ROPv1
 
             if (istenilenSiparisiptalSayisi != 0)// iptal edilecekler daha bitmedi başka garsonların siparişlerinden iptale devam et
             {
-                cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi='" + ikramSQLGirdisi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu!='" + siparisiGirenKisi + "' ORDER BY Porsiyon DESC");
+                cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Adet,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi='" + ikramSQLGirdisi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu!='" + siparisiGirenKisi + "' AND Siparis.Porsiyon=CONVERT(DECIMAL(5,2),@_Porsiyon) ORDER BY Adet DESC");
+
+                cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(porsiyon));
 
                 dr = cmd.ExecuteReader();
 
@@ -1331,7 +1340,7 @@ namespace ROPv1
                     {
                         siparisID = dr.GetInt32(0);
                         adisyonID = dr.GetInt32(1);
-                        porsiyon = dr.GetDecimal(2);
+                        adet = dr.GetInt32(2);
                         verilisTarihi = dr.GetDateTime(3);
                     }
                     catch
@@ -1341,15 +1350,15 @@ namespace ROPv1
                         return;
                     }
 
-                    if (porsiyon < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
+                    if (adet < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
                     {
                         iptalUpdateTam(siparisID);
 
-                        istenilenSiparisiptalSayisi -= porsiyon;
+                        istenilenSiparisiptalSayisi -= adet;
                     }
-                    else if (porsiyon > istenilenSiparisiptalSayisi) // den büyükse
+                    else if (adet > istenilenSiparisiptalSayisi) // den büyükse
                     {
-                        iptalUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenSiparisiptalSayisi, yemekAdi, verilisTarihi);
+                        iptalUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenSiparisiptalSayisi, yemekAdi, verilisTarihi, Convert.ToDecimal(porsiyon));
 
                         istenilenSiparisiptalSayisi = 0;
                     }
@@ -1378,10 +1387,10 @@ namespace ROPv1
             cmd.Connection.Dispose();
 
             //Tüm kullanıcılara iptal mesajı gönderelim
-            tumKullanicilaraMesajYolla("komut=iptal&masa=" + masa + "&departmanAdi=" + departmanAdi + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDeger + "&ikramYeniMiEskiMi=" + ikraminGrubu);
+            tumKullanicilaraMesajYolla("komut=iptal&masa=" + masa + "&departmanAdi=" + departmanAdi + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDeger + "&ikramYeniMiEskiMi=" + ikraminGrubu + "&porsiyon=" + porsiyon);
         }
 
-        private void komut_ikram(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu)
+        private void komut_ikram(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu, string porsiyon)
         {
             if (siparisForm != null)
             {
@@ -1390,7 +1399,7 @@ namespace ROPv1
                     //invoke thread ler arası haberleşme
                     this.Invoke((MethodInvoker)delegate
                     {
-                        siparisForm.siparisMenuForm.ikramGeldi(miktar, yemekAdi, dusulecekDegerGelen);
+                        siparisForm.siparisMenuForm.ikramGeldi(miktar, yemekAdi, dusulecekDegerGelen, porsiyon);
                     });
                 }
             }
@@ -1399,17 +1408,19 @@ namespace ROPv1
 
             this.adisyonNotu = adisyonNotu;
 
-            decimal istenilenikramSayisi = Convert.ToDecimal(miktar);
+            int istenilenikramSayisi = Convert.ToInt32(miktar);
 
             // ürünün değerini istenilen kadar azalt, kalan hesaptan düş
             double dusulecekDeger = Convert.ToDouble(dusulecekDegerGelen);
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu='" + siparisiGirenKisi + "' ORDER BY Porsiyon DESC");
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Adet,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu='" + siparisiGirenKisi + "' AND Siparis.Porsiyon=CONVERT(DECIMAL(5,2),@_Porsiyon) ORDER BY Adet DESC");
+
+            cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(porsiyon));
 
             SqlDataReader dr = cmd.ExecuteReader();
 
             int siparisID, adisyonID = 0;
-            decimal porsiyon;
+            int adet;
             DateTime verilisTarihi;
 
             while (dr.Read())
@@ -1418,7 +1429,7 @@ namespace ROPv1
                 {
                     siparisID = dr.GetInt32(0);
                     adisyonID = dr.GetInt32(1);
-                    porsiyon = dr.GetDecimal(2);
+                    adet = dr.GetInt32(2);
                     verilisTarihi = dr.GetDateTime(3);
                 }
                 catch
@@ -1428,15 +1439,15 @@ namespace ROPv1
                     return;
                 }
 
-                if (porsiyon < istenilenikramSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
+                if (adet < istenilenikramSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
                 {
                     ikramUpdateTam(siparisID, 1);
 
-                    istenilenikramSayisi -= porsiyon;
+                    istenilenikramSayisi -= adet;
                 }
-                else if (porsiyon > istenilenikramSayisi) // den büyükse
+                else if (adet > istenilenikramSayisi) // den büyükse
                 {
-                    ikramUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenikramSayisi, yemekAdi, 1, verilisTarihi);
+                    ikramUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenikramSayisi, yemekAdi, 1, verilisTarihi, Convert.ToDecimal(porsiyon));
 
                     istenilenikramSayisi = 0;
                 }
@@ -1453,7 +1464,9 @@ namespace ROPv1
 
             if (istenilenikramSayisi != 0)// ikram edilecekler daha bitmedi başka garsonların siparişlerinden ikram iptaline devam et
             {
-                cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu!='" + siparisiGirenKisi + "' ORDER BY Porsiyon DESC");
+                cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Adet,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu!='" + siparisiGirenKisi + "' AND Siparis.Porsiyon=CONVERT(DECIMAL(5,2),@_Porsiyon) ORDER BY Adet DESC");
+
+                cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(porsiyon));
 
                 dr = cmd.ExecuteReader();
 
@@ -1463,7 +1476,7 @@ namespace ROPv1
                     {
                         siparisID = dr.GetInt32(0);
                         adisyonID = dr.GetInt32(1);
-                        porsiyon = dr.GetDecimal(2);
+                        adet = dr.GetInt32(2);
                         verilisTarihi = dr.GetDateTime(3);
                     }
                     catch
@@ -1473,15 +1486,15 @@ namespace ROPv1
                         return;
                     }
 
-                    if (porsiyon < istenilenikramSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
+                    if (adet < istenilenikramSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
                     {
                         ikramUpdateTam(siparisID, 1);
 
-                        istenilenikramSayisi -= porsiyon;
+                        istenilenikramSayisi -= adet;
                     }
-                    else if (porsiyon > istenilenikramSayisi) // den büyükse
+                    else if (adet > istenilenikramSayisi) // den büyükse
                     {
-                        ikramUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenikramSayisi, yemekAdi, 1, verilisTarihi);
+                        ikramUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenikramSayisi, yemekAdi, 1, verilisTarihi, Convert.ToDecimal(porsiyon));
 
                         istenilenikramSayisi = 0;
                     }
@@ -1510,10 +1523,10 @@ namespace ROPv1
             cmd.Connection.Dispose();
 
             //Tüm kullanıcılara ikram mesajı gönderelim
-            tumKullanicilaraMesajYolla("komut=ikram&masa=" + masa + "&departmanAdi=" + departmanAdi + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDeger);
+            tumKullanicilaraMesajYolla("komut=ikram&masa=" + masa + "&departmanAdi=" + departmanAdi + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDeger + "&porsiyon=" + porsiyon);
         }
 
-        private void komut_ikramIptal(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu, string ikramYeniMiEskiMi)
+        private void komut_ikramIptal(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu, string ikramYeniMiEskiMi, string porsiyon)
         {
             if (siparisForm != null)
             {
@@ -1522,7 +1535,7 @@ namespace ROPv1
                     //invoke thread ler arası haberleşme
                     this.Invoke((MethodInvoker)delegate
                     {
-                        siparisForm.siparisMenuForm.ikramIptaliGeldi(miktar, yemekAdi, dusulecekDegerGelen, ikramYeniMiEskiMi);
+                        siparisForm.siparisMenuForm.ikramIptaliGeldi(miktar, yemekAdi, dusulecekDegerGelen, ikramYeniMiEskiMi, porsiyon);
                     });
                 }
             }
@@ -1531,16 +1544,17 @@ namespace ROPv1
 
             this.adisyonNotu = adisyonNotu;
 
-            decimal istenilenIkramiptalSayisi = Convert.ToDecimal(miktar);
+            int istenilenIkramiptalSayisi = Convert.ToInt32(miktar);
             // ürünün değerini bul ve hesaba ekle
             double dusulecekDeger = Convert.ToDouble(dusulecekDegerGelen);
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=1 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu='" + siparisiGirenKisi + "' ORDER BY Porsiyon DESC");
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Adet,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=1 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu='" + siparisiGirenKisi + "' AND Siparis.Porsiyon=CONVERT(DECIMAL(5,2),@_Porsiyon) ORDER BY Adet DESC");
+
+            cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(porsiyon));
 
             SqlDataReader dr = cmd.ExecuteReader();
 
-            int siparisID, adisyonID = 0;
-            decimal porsiyon;
+            int siparisID, adisyonID = 0, adet;
             DateTime verilisTarihi;
 
             while (dr.Read())
@@ -1549,7 +1563,7 @@ namespace ROPv1
                 {
                     siparisID = dr.GetInt32(0);
                     adisyonID = dr.GetInt32(1);
-                    porsiyon = dr.GetDecimal(2);
+                    adet = dr.GetInt32(2);
                     verilisTarihi = dr.GetDateTime(3);
                 }
                 catch
@@ -1559,15 +1573,15 @@ namespace ROPv1
                     return;
                 }
 
-                if (porsiyon < istenilenIkramiptalSayisi) // elimizdeki ikramlar iptali istenenden küçükse
+                if (adet < istenilenIkramiptalSayisi) // elimizdeki ikramlar iptali istenenden küçükse
                 {
                     ikramUpdateTam(siparisID, 0);
 
-                    istenilenIkramiptalSayisi -= porsiyon;
+                    istenilenIkramiptalSayisi -= adet;
                 }
-                else if (porsiyon > istenilenIkramiptalSayisi) // den büyükse
+                else if (adet > istenilenIkramiptalSayisi) // den büyükse
                 {
-                    ikramUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenIkramiptalSayisi, yemekAdi, 0, verilisTarihi);
+                    ikramUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenIkramiptalSayisi, yemekAdi, 0, verilisTarihi, Convert.ToDecimal(porsiyon));
 
                     istenilenIkramiptalSayisi = 0;
                 }
@@ -1584,7 +1598,9 @@ namespace ROPv1
 
             if (istenilenIkramiptalSayisi != 0)// ikram edilecekler daha bitmedi başka garsonların siparişlerinden ikram iptaline devam et
             {
-                cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Porsiyon,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu!='" + siparisiKimGirdi + "' ORDER BY Porsiyon DESC");
+                cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adisyon.AdisyonID,Adet,Siparis.VerilisTarihi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemekAdi + "' AND Siparis.Garsonu!='" + siparisiKimGirdi + "' AND Siparis.Porsiyon=CONVERT(DECIMAL(5,2),@_Porsiyon) ORDER BY Adet DESC");
+
+                cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(porsiyon));
 
                 dr = cmd.ExecuteReader();
 
@@ -1594,7 +1610,7 @@ namespace ROPv1
                     {
                         siparisID = dr.GetInt32(0);
                         adisyonID = dr.GetInt32(1);
-                        porsiyon = dr.GetDecimal(2);
+                        adet = dr.GetInt32(2);
                         verilisTarihi = dr.GetDateTime(3);
                     }
                     catch
@@ -1604,15 +1620,15 @@ namespace ROPv1
                         return;
                     }
 
-                    if (porsiyon < istenilenIkramiptalSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
+                    if (adet < istenilenIkramiptalSayisi) // elimizde ikram edilmemişler ikramı istenenden küçükse
                     {
                         ikramUpdateTam(siparisID, 0);
 
-                        istenilenIkramiptalSayisi -= porsiyon;
+                        istenilenIkramiptalSayisi -= adet;
                     }
-                    else if (porsiyon > istenilenIkramiptalSayisi) // den büyükse
+                    else if (adet > istenilenIkramiptalSayisi) // den büyükse
                     {
-                        ikramUpdateInsert(siparisID, adisyonID, porsiyon, dusulecekDeger, istenilenIkramiptalSayisi, yemekAdi, 0, verilisTarihi);
+                        ikramUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenIkramiptalSayisi, yemekAdi, 0, verilisTarihi, Convert.ToDecimal(porsiyon));
 
                         istenilenIkramiptalSayisi = 0;
                     }
@@ -1640,7 +1656,7 @@ namespace ROPv1
             cmd.Connection.Dispose();
 
             //Tüm kullanıcılara ikram iptal mesajı gönderelim
-            tumKullanicilaraMesajYolla("komut=ikramIptal&masa=" + masa + "&departmanAdi=" + departmanAdi + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDeger + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi);
+            tumKullanicilaraMesajYolla("komut=ikramIptal&masa=" + masa + "&departmanAdi=" + departmanAdi + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDeger + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi + "&porsiyon=" + porsiyon);
         }
 
         //parametre hatalı istenilen işlem yapılamadı hatası ver
@@ -1679,13 +1695,13 @@ namespace ROPv1
         {
 
             StringBuilder siparisBilgileri = new StringBuilder();
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Porsiyon, YemekAdi, IkramMi, Garsonu from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' and Adisyon.DepartmanAdi='" + departmanAdi + "' and Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 ORDER BY Porsiyon DESC");
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Adet, YemekAdi, IkramMi, Garsonu, Porsiyon from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' and Adisyon.DepartmanAdi='" + departmanAdi + "' and Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 ORDER BY Adet DESC");
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
                 try
                 {
-                    siparisBilgileri.Append("*" + dr.GetDecimal(0).ToString() + "-" + dr.GetDecimal(1).ToString() + "-" + dr.GetString(2) + "-" + dr.GetBoolean(3) + "-" + dr.GetString(4));
+                    siparisBilgileri.Append("*" + dr.GetDecimal(0).ToString() + "-" + dr.GetInt32(1).ToString() + "-" + dr.GetString(2) + "-" + dr.GetBoolean(3) + "-" + dr.GetString(4) + "-" + dr.GetDecimal(5));
                 }
                 catch
                 {
@@ -2388,25 +2404,27 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        public void odendiUpdateInsert(int siparisID, int adisyonID, decimal porsiyon, double fiyati, decimal odemeAdedi, string yemekAdi, DateTime verilisTarihi)
+        public void odendiUpdateInsert(int siparisID, int adisyonID, decimal adet, double fiyati, decimal odemeAdedi, string yemekAdi, DateTime verilisTarihi, decimal porsiyon)
         {
-            decimal yeniPorsiyonAdetiSiparis = porsiyon - odemeAdedi;
+            decimal yeniPorsiyonAdetiSiparis = adet - odemeAdedi;
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu, OdendiMi=1 WHERE SiparisID=@id");
-            cmd.Parameters.AddWithValue("@Porsiyonu", odemeAdedi);
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet, OdendiMi=1 WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@_Adet", odemeAdedi);
             cmd.Parameters.AddWithValue("@id", siparisID);
             cmd.ExecuteNonQuery();
 
             bool urunMutfagaBildirilmeliMi = mutfakBilgilendirilmeliMi(yemekAdi);
 
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,VerilisTarihi,MutfakCiktisiAlinmaliMi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi)");
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon)");
             cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
             cmd.Parameters.AddWithValue("@_Fiyatı", fiyati);
-            cmd.Parameters.AddWithValue("@_Porsiyon", yeniPorsiyonAdetiSiparis);
+            cmd.Parameters.AddWithValue("@_Adet", yeniPorsiyonAdetiSiparis);
             cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
             cmd.Parameters.AddWithValue("@_VerilisTarihi", verilisTarihi);
             cmd.Parameters.AddWithValue("@_MutfakCiktisiAlinmaliMi", urunMutfagaBildirilmeliMi);
+            cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
+
             cmd.ExecuteNonQuery();
 
             cmd.Connection.Close();
@@ -2428,27 +2446,28 @@ namespace ROPv1
             return true;
         }
 
-        public void ikramUpdateInsert(int siparisID, int adisyonID, decimal porsiyon, double dusulecekDeger, decimal ikramAdedi, string yemekAdi, int ikramMi, DateTime verilisTarihi)
+        public void ikramUpdateInsert(int siparisID, int adisyonID, decimal adet, double dusulecekDeger, decimal ikramAdedi, string yemekAdi, int ikramMi, DateTime verilisTarihi, decimal porsiyon)
         {
-            decimal yeniPorsiyonAdetiSiparis = porsiyon - ikramAdedi;
+            decimal yeniPorsiyonAdetiSiparis = adet - ikramAdedi;
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu WHERE SiparisID=@id");
-            cmd.Parameters.AddWithValue("@Porsiyonu", yeniPorsiyonAdetiSiparis);
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@_Adet", yeniPorsiyonAdetiSiparis);
             cmd.Parameters.AddWithValue("@id", siparisID);
             cmd.ExecuteNonQuery();
 
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,IkramMi,VerilisTarihi,MutfakCiktisiAlinmaliMi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IkramMi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi)");
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,IkramMi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_IkramMi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon)");
 
             bool urunMutfagaBildirilmeliMi = mutfakBilgilendirilmeliMi(yemekAdi);
 
             cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
             cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
-            cmd.Parameters.AddWithValue("@_Porsiyon", ikramAdedi);
+            cmd.Parameters.AddWithValue("@_Adet", ikramAdedi);
             cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
             cmd.Parameters.AddWithValue("@_IkramMi", ikramMi);
             cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
             cmd.Parameters.AddWithValue("@_MutfakCiktisiAlinmaliMi", urunMutfagaBildirilmeliMi);
+            cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
 
             cmd.ExecuteNonQuery();
 
@@ -2468,27 +2487,27 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        public void iptalUpdateInsert(int siparisID, int adisyonID, decimal porsiyon, double dusulecekDeger, decimal iptalAdedi, string yemekAdi, DateTime verilisTarihi)
+        public void iptalUpdateInsert(int siparisID, int adisyonID, decimal adet, double dusulecekDeger, decimal iptalAdedi, string yemekAdi, DateTime verilisTarihi, decimal porsiyon)
         {
-            decimal yeniPorsiyonAdetiSiparis = porsiyon - iptalAdedi;
+            decimal yeniPorsiyonAdetiSiparis = adet - iptalAdedi;
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu WHERE SiparisID=@id");
-            cmd.Parameters.AddWithValue("@Porsiyonu", yeniPorsiyonAdetiSiparis);
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@_Adet", yeniPorsiyonAdetiSiparis);
             cmd.Parameters.AddWithValue("@id", siparisID);
             cmd.ExecuteNonQuery();
 
             bool urunMutfagaBildirilmeliMi = mutfakBilgilendirilmeliMi(yemekAdi);
 
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,IptalMi,VerilisTarihi,MutfakCiktisiAlinmaliMi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IptalMi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi)");
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,IptalMi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_IptalMi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon)");
             cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
             cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
-            cmd.Parameters.AddWithValue("@_Porsiyon", iptalAdedi);
+            cmd.Parameters.AddWithValue("@_Adet", iptalAdedi);
             cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
             cmd.Parameters.AddWithValue("@_IptalMi", 1);
             cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
             cmd.Parameters.AddWithValue("@_MutfakCiktisiAlinmaliMi", urunMutfagaBildirilmeliMi);
-
+            cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
             cmd.ExecuteNonQuery();
 
             cmd.Connection.Close();
@@ -2537,26 +2556,27 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        public void urunTasimaUpdateInsert(int siparisID, int aktarimYapilacakMasaninAdisyonID, decimal porsiyon, double dusulecekDeger, decimal tasinacakMiktar, string yemekAdi, int ikramMi, DateTime verilisTarihi)
+        public void urunTasimaUpdateInsert(int siparisID, int aktarimYapilacakMasaninAdisyonID, decimal adet, double dusulecekDeger, decimal tasinacakMiktar, string yemekAdi, int ikramMi, DateTime verilisTarihi, decimal porsiyon)
         {
-            decimal yeniPorsiyonAdetiSiparis = porsiyon - tasinacakMiktar;
+            decimal yeniPorsiyonAdetiSiparis = adet - tasinacakMiktar;
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Porsiyon = @Porsiyonu WHERE SiparisID=@id");
-            cmd.Parameters.AddWithValue("@Porsiyonu", yeniPorsiyonAdetiSiparis);
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet WHERE SiparisID=@id");
+            cmd.Parameters.AddWithValue("@_Adet", yeniPorsiyonAdetiSiparis);
             cmd.Parameters.AddWithValue("@id", siparisID);
             cmd.ExecuteNonQuery();
 
             bool urunMutfagaBildirilmeliMi = mutfakBilgilendirilmeliMi(yemekAdi);
 
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Porsiyon,YemekAdi,IkramMi,VerilisTarihi,MutfakCiktisiAlinmaliMi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Porsiyon,@_YemekAdi,@_IkramMi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi)");
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,IkramMi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_IkramMi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon)");
             cmd.Parameters.AddWithValue("@_AdisyonID", aktarimYapilacakMasaninAdisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
             cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
-            cmd.Parameters.AddWithValue("@_Porsiyon", tasinacakMiktar);
+            cmd.Parameters.AddWithValue("@_Adet", tasinacakMiktar);
             cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
             cmd.Parameters.AddWithValue("@_IkramMi", ikramMi);
             cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
             cmd.Parameters.AddWithValue("@_MutfakCiktisiAlinmaliMi", urunMutfagaBildirilmeliMi);
+            cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
 
             cmd.ExecuteNonQuery();
 

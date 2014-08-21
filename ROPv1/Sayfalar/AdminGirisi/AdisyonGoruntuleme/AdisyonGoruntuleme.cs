@@ -267,7 +267,7 @@ namespace ROPv1
 
                 tarih = acilisZamani.ToShortDateString();
 
-                SqlCommand cmd2 = SQLBaglantisi.getCommand("SELECT Fiyatı*Porsiyon FROM Siparis WHERE AdisyonID='" + adisyonID + "'");
+                SqlCommand cmd2 = SQLBaglantisi.getCommand("SELECT Fiyatı*Adet FROM Siparis WHERE AdisyonID='" + adisyonID + "'");
                 SqlDataReader dr2 = cmd2.ExecuteReader();
 
                 while (dr2.Read())
@@ -449,7 +449,7 @@ namespace ROPv1
 
                 tarih = acilisZamani.ToShortDateString();
 
-                SqlCommand cmd2 = SQLBaglantisi.getCommand("SELECT Fiyatı*Porsiyon FROM Siparis WHERE AdisyonID='" + adisyonID + "'");
+                SqlCommand cmd2 = SQLBaglantisi.getCommand("SELECT Fiyatı*Adet FROM Siparis WHERE AdisyonID='" + adisyonID + "'");
                 SqlDataReader dr2 = cmd2.ExecuteReader();
                 while (dr2.Read())
                 {
@@ -485,7 +485,7 @@ namespace ROPv1
 
             listAdisyonDetay.Items.Clear();
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Garsonu,Fiyatı,Porsiyon,YemekAdi,IkramMi,IptalMi FROM Siparis WHERE AdisyonID='" + listAdisyon.SelectedItems[0].SubItems[0].Text + "'");
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Garsonu,Fiyatı,Adet,YemekAdi,IkramMi,IptalMi FROM Siparis WHERE AdisyonID='" + listAdisyon.SelectedItems[0].SubItems[0].Text + "'");
             SqlDataReader dr = cmd.ExecuteReader();
 
             decimal adisyonHesabi = 0;

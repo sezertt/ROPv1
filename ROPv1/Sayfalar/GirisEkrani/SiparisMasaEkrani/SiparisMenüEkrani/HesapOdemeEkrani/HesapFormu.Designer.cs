@@ -54,14 +54,16 @@
             this.buttonbolun = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.listOdenenler = new System.Windows.Forms.ListView();
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Adedi = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Porsiyonu = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.yemekAdi = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Fiyati = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.listUrunFiyat = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Adet = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Secilen = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Porsiyon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Adi = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Fiyat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel2 = new System.Windows.Forms.Panel();
             this.labelIndirimToplam = new System.Windows.Forms.Label();
             this.labelOdenenFis = new System.Windows.Forms.Label();
@@ -97,10 +99,10 @@
             this.textNumberOfItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textNumberOfItem.Font = new System.Drawing.Font("Arial", 39F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textNumberOfItem.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textNumberOfItem.Location = new System.Drawing.Point(721, 254);
+            this.textNumberOfItem.Location = new System.Drawing.Point(785, 254);
             this.textNumberOfItem.MaxLength = 500;
             this.textNumberOfItem.Name = "textNumberOfItem";
-            this.textNumberOfItem.Size = new System.Drawing.Size(404, 67);
+            this.textNumberOfItem.Size = new System.Drawing.Size(340, 67);
             this.textNumberOfItem.TabIndex = 68;
             this.textNumberOfItem.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textNumberOfItem.Click += new System.EventHandler(this.textNumberOfItem_Click);
@@ -114,9 +116,9 @@
             this.buttonSecileniAzalt.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonSecileniAzalt.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSecileniAzalt.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSecileniAzalt.Location = new System.Drawing.Point(501, 672);
+            this.buttonSecileniAzalt.Location = new System.Drawing.Point(565, 672);
             this.buttonSecileniAzalt.Name = "buttonSecileniAzalt";
-            this.buttonSecileniAzalt.Size = new System.Drawing.Size(188, 83);
+            this.buttonSecileniAzalt.Size = new System.Drawing.Size(169, 83);
             this.buttonSecileniAzalt.TabIndex = 69;
             this.buttonSecileniAzalt.TabStop = false;
             this.buttonSecileniAzalt.Text = "Seçileni Azalt";
@@ -127,9 +129,9 @@
             // 
             this.pinboardcontrol21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pinboardcontrol21.KeyboardType = PinboardClassLibrary.BoW.Standard;
-            this.pinboardcontrol21.Location = new System.Drawing.Point(495, 326);
+            this.pinboardcontrol21.Location = new System.Drawing.Point(559, 325);
             this.pinboardcontrol21.Name = "pinboardcontrol21";
-            this.pinboardcontrol21.Size = new System.Drawing.Size(392, 352);
+            this.pinboardcontrol21.Size = new System.Drawing.Size(350, 352);
             this.pinboardcontrol21.TabIndex = 74;
             this.pinboardcontrol21.UserKeyPressed += new PinboardClassLibrary.PinboardDelegate(this.pinboardcontrol21_UserKeyPressed);
             // 
@@ -139,9 +141,9 @@
             this.labelMasa.BackColor = System.Drawing.Color.Transparent;
             this.labelMasa.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelMasa.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelMasa.Location = new System.Drawing.Point(689, 18);
+            this.labelMasa.Location = new System.Drawing.Point(874, 18);
             this.labelMasa.Name = "labelMasa";
-            this.labelMasa.Size = new System.Drawing.Size(436, 33);
+            this.labelMasa.Size = new System.Drawing.Size(251, 33);
             this.labelMasa.TabIndex = 76;
             this.labelMasa.Text = "Masa:";
             this.labelMasa.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -153,7 +155,7 @@
             this.labelDepartman.BackColor = System.Drawing.Color.Transparent;
             this.labelDepartman.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelDepartman.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelDepartman.Location = new System.Drawing.Point(495, 18);
+            this.labelDepartman.Location = new System.Drawing.Point(561, 18);
             this.labelDepartman.Margin = new System.Windows.Forms.Padding(0);
             this.labelDepartman.Name = "labelDepartman";
             this.labelDepartman.Size = new System.Drawing.Size(148, 33);
@@ -174,7 +176,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.ForeColor = System.Drawing.SystemColors.Window;
-            this.label1.Location = new System.Drawing.Point(495, 272);
+            this.label1.Location = new System.Drawing.Point(563, 272);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(195, 33);
             this.label1.TabIndex = 88;
@@ -188,9 +190,9 @@
             this.button7.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button7.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button7.Location = new System.Drawing.Point(882, 332);
+            this.button7.Location = new System.Drawing.Point(905, 332);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(120, 84);
+            this.button7.Size = new System.Drawing.Size(110, 84);
             this.button7.TabIndex = 95;
             this.button7.TabStop = false;
             this.button7.Text = "Tümü";
@@ -204,9 +206,9 @@
             this.button8.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button8.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button8.Location = new System.Drawing.Point(1005, 332);
+            this.button8.Location = new System.Drawing.Point(1016, 332);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(120, 84);
+            this.button8.Size = new System.Drawing.Size(110, 84);
             this.button8.TabIndex = 96;
             this.button8.TabStop = false;
             this.button8.Text = "1";
@@ -220,9 +222,9 @@
             this.button9.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button9.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.button9.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button9.Location = new System.Drawing.Point(1005, 417);
+            this.button9.Location = new System.Drawing.Point(1016, 417);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(120, 84);
+            this.button9.Size = new System.Drawing.Size(110, 84);
             this.button9.TabIndex = 98;
             this.button9.TabStop = false;
             this.button9.Text = "5";
@@ -236,9 +238,9 @@
             this.button10.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button10.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.button10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button10.Location = new System.Drawing.Point(882, 417);
+            this.button10.Location = new System.Drawing.Point(905, 417);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(120, 84);
+            this.button10.Size = new System.Drawing.Size(110, 84);
             this.button10.TabIndex = 97;
             this.button10.TabStop = false;
             this.button10.Text = "1/2";
@@ -252,7 +254,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label2.ForeColor = System.Drawing.SystemColors.Window;
-            this.label2.Location = new System.Drawing.Point(495, 199);
+            this.label2.Location = new System.Drawing.Point(563, 199);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(222, 33);
             this.label2.TabIndex = 100;
@@ -265,10 +267,10 @@
             this.textBoxSecilenlerinTutari.Enabled = false;
             this.textBoxSecilenlerinTutari.Font = new System.Drawing.Font("Arial", 39F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textBoxSecilenlerinTutari.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textBoxSecilenlerinTutari.Location = new System.Drawing.Point(721, 181);
+            this.textBoxSecilenlerinTutari.Location = new System.Drawing.Point(785, 181);
             this.textBoxSecilenlerinTutari.MaxLength = 500;
             this.textBoxSecilenlerinTutari.Name = "textBoxSecilenlerinTutari";
-            this.textBoxSecilenlerinTutari.Size = new System.Drawing.Size(404, 67);
+            this.textBoxSecilenlerinTutari.Size = new System.Drawing.Size(340, 67);
             this.textBoxSecilenlerinTutari.TabIndex = 99;
             this.textBoxSecilenlerinTutari.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxSecilenlerinTutari.TextChanged += new System.EventHandler(this.textBoxSecilenlerinTutari_TextChanged);
@@ -280,9 +282,9 @@
             this.button11.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button11.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.button11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button11.Location = new System.Drawing.Point(1005, 587);
+            this.button11.Location = new System.Drawing.Point(1016, 587);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(120, 83);
+            this.button11.Size = new System.Drawing.Size(110, 84);
             this.button11.TabIndex = 104;
             this.button11.TabStop = false;
             this.button11.Text = "20";
@@ -296,9 +298,9 @@
             this.button12.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button12.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.button12.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button12.Location = new System.Drawing.Point(882, 587);
+            this.button12.Location = new System.Drawing.Point(905, 587);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(120, 83);
+            this.button12.Size = new System.Drawing.Size(110, 84);
             this.button12.TabIndex = 103;
             this.button12.TabStop = false;
             this.button12.Text = "1/4";
@@ -312,9 +314,9 @@
             this.button13.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button13.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.button13.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button13.Location = new System.Drawing.Point(1005, 502);
+            this.button13.Location = new System.Drawing.Point(1016, 502);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(120, 84);
+            this.button13.Size = new System.Drawing.Size(110, 84);
             this.button13.TabIndex = 102;
             this.button13.TabStop = false;
             this.button13.Text = "10";
@@ -328,9 +330,9 @@
             this.button14.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button14.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.button14.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button14.Location = new System.Drawing.Point(882, 502);
+            this.button14.Location = new System.Drawing.Point(905, 502);
             this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(120, 84);
+            this.button14.Size = new System.Drawing.Size(110, 84);
             this.button14.TabIndex = 101;
             this.button14.TabStop = false;
             this.button14.Text = "1/3";
@@ -384,9 +386,9 @@
             this.button15.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button15.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.button15.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button15.Location = new System.Drawing.Point(1005, 672);
+            this.button15.Location = new System.Drawing.Point(1016, 672);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(120, 83);
+            this.button15.Size = new System.Drawing.Size(110, 84);
             this.button15.TabIndex = 109;
             this.button15.TabStop = false;
             this.button15.Text = "50";
@@ -400,9 +402,9 @@
             this.buttonbolun.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonbolun.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonbolun.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonbolun.Location = new System.Drawing.Point(882, 672);
+            this.buttonbolun.Location = new System.Drawing.Point(905, 672);
             this.buttonbolun.Name = "buttonbolun";
-            this.buttonbolun.Size = new System.Drawing.Size(120, 83);
+            this.buttonbolun.Size = new System.Drawing.Size(110, 84);
             this.buttonbolun.TabIndex = 108;
             this.buttonbolun.TabStop = false;
             this.buttonbolun.Tag = "";
@@ -420,7 +422,7 @@
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Location = new System.Drawing.Point(9, 14);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(477, 742);
+            this.panel1.Size = new System.Drawing.Size(547, 742);
             this.panel1.TabIndex = 1;
             // 
             // listOdenenler
@@ -430,9 +432,10 @@
             this.listOdenenler.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listOdenenler.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader5,
-            this.columnHeader7,
-            this.columnHeader8});
+            this.Adedi,
+            this.Porsiyonu,
+            this.yemekAdi,
+            this.Fiyati});
             this.listOdenenler.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold);
             this.listOdenenler.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.listOdenenler.FullRowSelect = true;
@@ -442,26 +445,31 @@
             this.listOdenenler.Margin = new System.Windows.Forms.Padding(0);
             this.listOdenenler.MultiSelect = false;
             this.listOdenenler.Name = "listOdenenler";
-            this.listOdenenler.Size = new System.Drawing.Size(477, 135);
+            this.listOdenenler.ShowItemToolTips = true;
+            this.listOdenenler.Size = new System.Drawing.Size(547, 135);
             this.listOdenenler.SmallImageList = this.ımageList1;
             this.listOdenenler.TabIndex = 2;
             this.listOdenenler.UseCompatibleStateImageBehavior = false;
             this.listOdenenler.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeader5
+            // Adedi
             // 
-            this.columnHeader5.Text = "Adet";
+            this.Adedi.Text = "Adet";
             // 
-            // columnHeader7
+            // Porsiyonu
             // 
-            this.columnHeader7.Text = "Siparişler";
-            this.columnHeader7.Width = 250;
+            this.Porsiyonu.Width = 70;
             // 
-            // columnHeader8
+            // yemekAdi
             // 
-            this.columnHeader8.Text = "Fiyatları";
-            this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader8.Width = 100;
+            this.yemekAdi.Text = "Siparişler";
+            this.yemekAdi.Width = 250;
+            // 
+            // Fiyati
+            // 
+            this.Fiyati.Text = "Fiyatları";
+            this.Fiyati.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Fiyati.Width = 100;
             // 
             // listUrunFiyat
             // 
@@ -471,10 +479,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listUrunFiyat.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4});
+            this.Adet,
+            this.Secilen,
+            this.Porsiyon,
+            this.Adi,
+            this.Fiyat});
             this.listUrunFiyat.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold);
             this.listUrunFiyat.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.listUrunFiyat.FullRowSelect = true;
@@ -484,32 +493,37 @@
             this.listUrunFiyat.Margin = new System.Windows.Forms.Padding(0);
             this.listUrunFiyat.MultiSelect = false;
             this.listUrunFiyat.Name = "listUrunFiyat";
-            this.listUrunFiyat.Size = new System.Drawing.Size(477, 487);
+            this.listUrunFiyat.ShowItemToolTips = true;
+            this.listUrunFiyat.Size = new System.Drawing.Size(547, 487);
             this.listUrunFiyat.SmallImageList = this.ımageList1;
             this.listUrunFiyat.TabIndex = 1;
             this.listUrunFiyat.UseCompatibleStateImageBehavior = false;
             this.listUrunFiyat.View = System.Windows.Forms.View.Details;
             this.listUrunFiyat.Click += new System.EventHandler(this.listHesap_Click);
             // 
-            // columnHeader1
+            // Adet
             // 
-            this.columnHeader1.Text = "Adet";
+            this.Adet.Text = "Adet";
             // 
-            // columnHeader2
+            // Secilen
             // 
-            this.columnHeader2.Text = "SeçilenAdet";
-            this.columnHeader2.Width = 63;
+            this.Secilen.Text = "SeçilenAdet";
+            this.Secilen.Width = 63;
             // 
-            // columnHeader3
+            // Porsiyon
             // 
-            this.columnHeader3.Text = "Siparişler";
-            this.columnHeader3.Width = 250;
+            this.Porsiyon.Width = 70;
             // 
-            // columnHeader4
+            // Adi
             // 
-            this.columnHeader4.Text = "Fiyatları";
-            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader4.Width = 100;
+            this.Adi.Text = "Siparişler";
+            this.Adi.Width = 250;
+            // 
+            // Fiyat
+            // 
+            this.Fiyat.Text = "Fiyatları";
+            this.Fiyat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Fiyat.Width = 100;
             // 
             // panel2
             // 
@@ -528,7 +542,7 @@
             this.panel2.Controls.Add(this.labelKalanText);
             this.panel2.Location = new System.Drawing.Point(0, 485);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(477, 254);
+            this.panel2.Size = new System.Drawing.Size(547, 254);
             this.panel2.TabIndex = 1;
             // 
             // labelIndirimToplam
@@ -552,7 +566,7 @@
             this.labelOdenenFis.BackColor = System.Drawing.Color.Transparent;
             this.labelOdenenFis.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.labelOdenenFis.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelOdenenFis.Location = new System.Drawing.Point(112, 70);
+            this.labelOdenenFis.Location = new System.Drawing.Point(182, 70);
             this.labelOdenenFis.Margin = new System.Windows.Forms.Padding(0);
             this.labelOdenenFis.Name = "labelOdenenFis";
             this.labelOdenenFis.Size = new System.Drawing.Size(353, 19);
@@ -566,7 +580,7 @@
             this.labelOdenenKart.BackColor = System.Drawing.Color.Transparent;
             this.labelOdenenKart.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.labelOdenenKart.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelOdenenKart.Location = new System.Drawing.Point(112, 51);
+            this.labelOdenenKart.Location = new System.Drawing.Point(182, 51);
             this.labelOdenenKart.Margin = new System.Windows.Forms.Padding(0);
             this.labelOdenenKart.Name = "labelOdenenKart";
             this.labelOdenenKart.Size = new System.Drawing.Size(353, 19);
@@ -580,7 +594,7 @@
             this.labelOdenenNakit.BackColor = System.Drawing.Color.Transparent;
             this.labelOdenenNakit.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.labelOdenenNakit.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelOdenenNakit.Location = new System.Drawing.Point(112, 32);
+            this.labelOdenenNakit.Location = new System.Drawing.Point(182, 32);
             this.labelOdenenNakit.Margin = new System.Windows.Forms.Padding(0);
             this.labelOdenenNakit.Name = "labelOdenenNakit";
             this.labelOdenenNakit.Size = new System.Drawing.Size(353, 19);
@@ -594,7 +608,7 @@
             this.labelOdenenToplam.BackColor = System.Drawing.Color.Transparent;
             this.labelOdenenToplam.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelOdenenToplam.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelOdenenToplam.Location = new System.Drawing.Point(261, -1);
+            this.labelOdenenToplam.Location = new System.Drawing.Point(331, -1);
             this.labelOdenenToplam.Margin = new System.Windows.Forms.Padding(0);
             this.labelOdenenToplam.Name = "labelOdenenToplam";
             this.labelOdenenToplam.Size = new System.Drawing.Size(208, 33);
@@ -660,7 +674,7 @@
             this.labelKalanHesap.BackColor = System.Drawing.Color.Transparent;
             this.labelKalanHesap.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelKalanHesap.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelKalanHesap.Location = new System.Drawing.Point(175, 224);
+            this.labelKalanHesap.Location = new System.Drawing.Point(245, 224);
             this.labelKalanHesap.Margin = new System.Windows.Forms.Padding(0);
             this.labelKalanHesap.Name = "labelKalanHesap";
             this.labelKalanHesap.Size = new System.Drawing.Size(294, 33);
@@ -754,9 +768,9 @@
             this.buttonDeleteText.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonDeleteText.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteText.Location = new System.Drawing.Point(691, 672);
+            this.buttonDeleteText.Location = new System.Drawing.Point(737, 672);
             this.buttonDeleteText.Name = "buttonDeleteText";
-            this.buttonDeleteText.Size = new System.Drawing.Size(189, 83);
+            this.buttonDeleteText.Size = new System.Drawing.Size(165, 83);
             this.buttonDeleteText.TabIndex = 116;
             this.buttonDeleteText.TabStop = false;
             this.buttonDeleteText.Text = "Sıfırla";
@@ -790,9 +804,9 @@
             this.buttonYemekFisi.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonYemekFisi.Image = global::ROPv1.Properties.Resources.ticket;
             this.buttonYemekFisi.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonYemekFisi.Location = new System.Drawing.Point(922, 57);
+            this.buttonYemekFisi.Location = new System.Drawing.Point(941, 57);
             this.buttonYemekFisi.Name = "buttonYemekFisi";
-            this.buttonYemekFisi.Size = new System.Drawing.Size(205, 115);
+            this.buttonYemekFisi.Size = new System.Drawing.Size(185, 115);
             this.buttonYemekFisi.TabIndex = 94;
             this.buttonYemekFisi.Tag = "103";
             this.buttonYemekFisi.Text = "Yemek Fişi";
@@ -809,9 +823,9 @@
             this.buttonKart.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonKart.Image = global::ROPv1.Properties.Resources.kart;
             this.buttonKart.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonKart.Location = new System.Drawing.Point(710, 57);
+            this.buttonKart.Location = new System.Drawing.Point(753, 57);
             this.buttonKart.Name = "buttonKart";
-            this.buttonKart.Size = new System.Drawing.Size(205, 115);
+            this.buttonKart.Size = new System.Drawing.Size(185, 115);
             this.buttonKart.TabIndex = 93;
             this.buttonKart.Tag = "102";
             this.buttonKart.Text = "Kredi Kartı";
@@ -828,9 +842,9 @@
             this.buttonNakit.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonNakit.Image = global::ROPv1.Properties.Resources.nakit;
             this.buttonNakit.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonNakit.Location = new System.Drawing.Point(498, 57);
+            this.buttonNakit.Location = new System.Drawing.Point(565, 57);
             this.buttonNakit.Name = "buttonNakit";
-            this.buttonNakit.Size = new System.Drawing.Size(205, 115);
+            this.buttonNakit.Size = new System.Drawing.Size(185, 115);
             this.buttonNakit.TabIndex = 92;
             this.buttonNakit.Tag = "101";
             this.buttonNakit.Text = "Nakit";
@@ -902,7 +916,7 @@
             this.buttonIndirimYuzdeli.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonIndirimYuzdeli.Image = ((System.Drawing.Image)(resources.GetObject("buttonIndirimYuzdeli.Image")));
             this.buttonIndirimYuzdeli.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonIndirimYuzdeli.Location = new System.Drawing.Point(1143, 117);
+            this.buttonIndirimYuzdeli.Location = new System.Drawing.Point(1143, 119);
             this.buttonIndirimYuzdeli.Name = "buttonIndirimYuzdeli";
             this.buttonIndirimYuzdeli.Size = new System.Drawing.Size(205, 115);
             this.buttonIndirimYuzdeli.TabIndex = 60;
@@ -1017,10 +1031,10 @@
         private System.Windows.Forms.Label labelKalanText;
         private System.Windows.Forms.Timer timerSaat;
         private System.Windows.Forms.ListView listUrunFiyat;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader Adet;
+        private System.Windows.Forms.ColumnHeader Adi;
+        private System.Windows.Forms.ColumnHeader Fiyat;
+        private System.Windows.Forms.ColumnHeader Secilen;
         private System.Windows.Forms.Label labelIndirimTLTutar;
         private System.Windows.Forms.Label labelIndirimYuzdeTutar;
         private System.Windows.Forms.Label labelIndirimTL;
@@ -1028,9 +1042,11 @@
         private System.Windows.Forms.Button buttonDeleteText;
         private System.Windows.Forms.Label labelIndirimToplam;
         private System.Windows.Forms.ListView listOdenenler;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader7;
-        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader Adedi;
+        private System.Windows.Forms.ColumnHeader yemekAdi;
+        private System.Windows.Forms.ColumnHeader Fiyati;
         private System.Windows.Forms.Button buttonAdisyonYazdir;
+        private System.Windows.Forms.ColumnHeader Porsiyon;
+        private System.Windows.Forms.ColumnHeader Porsiyonu;
     }
 }

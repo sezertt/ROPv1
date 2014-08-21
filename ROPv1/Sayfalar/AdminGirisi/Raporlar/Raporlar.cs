@@ -76,7 +76,7 @@ namespace ROPv1
             decimal toplamSiparisTutari = 0;
             if (!gunSonuRaporuMu)
             {
-                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SUM(Fiyatı*Porsiyon) FROM Siparis WHERE VerilisTarihi >='" + baslangic + "' AND VerilisTarihi <= '" + bitis + "' ");
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SUM(Fiyatı*Adet) FROM Siparis WHERE VerilisTarihi >='" + baslangic + "' AND VerilisTarihi <= '" + bitis + "' ");
                 SqlDataReader dr = cmd.ExecuteReader();
 
                 dr.Read();

@@ -13,7 +13,7 @@ namespace ROPv1
     public partial class UrunDegistir : Form
     {
         ListView.SelectedListViewItemCollection urunler;
-        public List<decimal> miktarlar = new List<decimal>();
+        public List<int> miktarlar = new List<int>();
 
         public UrunDegistir(ListView.SelectedListViewItemCollection selectedListViewItems)
         {
@@ -32,27 +32,110 @@ namespace ROPv1
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            miktarlar.Add(Convert.ToDecimal(textBoxUrun1.Text));
-
+            if (textBoxUrun1.Text != "")
+                miktarlar.Add(Convert.ToInt32(textBoxUrun1.Text));
+            else
+            {
+                miktarlar.Add(Convert.ToInt32(0));
+                return;
+            }
             switch (urunler.Count)
             {
                 case 2:
-                    miktarlar.Add(Convert.ToDecimal(textBoxUrun2.Text));
+                    if (textBoxUrun2.Text != "")
+                        miktarlar.Add(Convert.ToInt32(textBoxUrun2.Text));
+                    else
+                    {
+                        miktarlar.Add(Convert.ToInt32(0));
+                        return;
+                    }
                     break;
                 case 3:
-                    miktarlar.Add(Convert.ToDecimal(textBoxUrun2.Text));
-                    miktarlar.Add(Convert.ToDecimal(textBoxUrun3.Text));
+                    if (textBoxUrun2.Text != "")
+                    {
+                        miktarlar.Add(Convert.ToInt32(textBoxUrun2.Text));
+                    }
+                    else
+                    {
+                        miktarlar.Add(Convert.ToInt32(0));
+                        return;
+                    }
+                    if (textBoxUrun3.Text != "")
+                    {
+                        miktarlar.Add(Convert.ToInt32(textBoxUrun3.Text));
+                    }
+                    else
+                    {
+                        miktarlar.Add(Convert.ToInt32(0));
+                        return;
+                    }
                     break;
                 case 4:
-                    miktarlar.Add(Convert.ToDecimal(textBoxUrun2.Text));
-                    miktarlar.Add(Convert.ToDecimal(textBoxUrun3.Text));
-                    miktarlar.Add(Convert.ToDecimal(textBoxUrun4.Text));
+                    if (textBoxUrun2.Text != "")
+                    {
+                        miktarlar.Add(Convert.ToInt32(textBoxUrun2.Text));
+                    }
+                    else
+                    {
+                        miktarlar.Add(Convert.ToInt32(0));
+                        return;
+                    }
+                    if (textBoxUrun3.Text != "")
+                    {
+                        miktarlar.Add(Convert.ToInt32(textBoxUrun3.Text));
+                    }
+                    else
+                    {
+                        miktarlar.Add(Convert.ToInt32(0));
+                        return;
+                    }
+                    if (textBoxUrun4.Text != "")
+                    {
+                        miktarlar.Add(Convert.ToInt32(textBoxUrun4.Text));
+                    }
+                    else
+                    {
+                        miktarlar.Add(Convert.ToInt32(0));
+                        return;
+                    }
                     break;
                 case 5:
-                    miktarlar.Add(Convert.ToDecimal(textBoxUrun2.Text));
-                    miktarlar.Add(Convert.ToDecimal(textBoxUrun3.Text));
-                    miktarlar.Add(Convert.ToDecimal(textBoxUrun4.Text));
-                    miktarlar.Add(Convert.ToDecimal(textBoxUrun5.Text));
+                    if (textBoxUrun2.Text != "")
+                    {
+                        miktarlar.Add(Convert.ToInt32(textBoxUrun2.Text));
+                    }
+                    else
+                    {
+                        miktarlar.Add(Convert.ToInt32(0));
+                        return;
+                    }
+                    if (textBoxUrun3.Text != "")
+                    {
+                        miktarlar.Add(Convert.ToInt32(textBoxUrun3.Text));
+                    }
+                    else
+                    {
+                        miktarlar.Add(Convert.ToInt32(0));
+                        return;
+                    }
+                    if (textBoxUrun4.Text != "")
+                    {
+                        miktarlar.Add(Convert.ToInt32(textBoxUrun4.Text));
+                    }
+                    else
+                    {
+                        miktarlar.Add(Convert.ToInt32(0));
+                        return;
+                    }
+                    if (textBoxUrun5.Text != "")
+                    {
+                        miktarlar.Add(Convert.ToInt32(textBoxUrun5.Text));
+                    }
+                    else
+                    {
+                        miktarlar.Add(Convert.ToInt32(0));
+                        return;
+                    }
                     break;
                 default:
                     break;
@@ -74,7 +157,7 @@ namespace ROPv1
                     switch (Convert.ToInt32(urun.Tag))
                     {
                         case 1:
-                            urun.Text = urunler[0].SubItems[1].Text;
+                            urun.Text = urunler[0].SubItems[2].Text;
                             textBoxUrun1.Text = urunler[0].SubItems[0].Text;
                             textBoxUrun1.Tag = Convert.ToDecimal(textBoxUrun1.Text);
                             if (urunler[0].Group.Tag.ToString() != "2")
@@ -83,7 +166,7 @@ namespace ROPv1
                         case 2:
                             if (urunler.Count > 1)
                             {
-                                urun.Text = urunler[1].SubItems[1].Text;
+                                urun.Text = urunler[1].SubItems[2].Text;
                                 textBoxUrun2.Text = urunler[1].SubItems[0].Text;
                                 textBoxUrun2.Tag = Convert.ToDecimal(textBoxUrun2.Text);
                                 if (urunler[1].Group.Tag.ToString() != "2")
@@ -98,7 +181,7 @@ namespace ROPv1
                         case 3:
                             if (urunler.Count > 2)
                             {
-                                urun.Text = urunler[2].SubItems[1].Text;
+                                urun.Text = urunler[2].SubItems[2].Text;
                                 textBoxUrun3.Text = urunler[2].SubItems[0].Text;
                                 textBoxUrun3.Tag = Convert.ToDecimal(textBoxUrun3.Text);
                                 if (urunler[2].Group.Tag.ToString() != "2")
@@ -113,7 +196,7 @@ namespace ROPv1
                         case 4:
                             if (urunler.Count > 3)
                             {
-                                urun.Text = urunler[3].SubItems[1].Text;
+                                urun.Text = urunler[3].SubItems[2].Text;
                                 textBoxUrun4.Text = urunler[3].SubItems[0].Text;
                                 textBoxUrun4.Tag = Convert.ToDecimal(textBoxUrun4.Text);
                                 if (urunler[3].Group.Tag.ToString() != "2")
@@ -128,7 +211,7 @@ namespace ROPv1
                         case 5:
                             if (urunler.Count > 4)
                             {
-                                urun.Text = urunler[4].SubItems[1].Text;
+                                urun.Text = urunler[4].SubItems[2].Text;
                                 textBoxUrun5.Text = urunler[4].SubItems[0].Text;
                                 textBoxUrun5.Tag = Convert.ToDecimal(textBoxUrun5.Text);
                                 if (urunler[4].Group.Tag.ToString() != "2")
@@ -155,13 +238,8 @@ namespace ROPv1
                     e.Handled = true;
             }
 
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
-                e.Handled = true;
-            }
-            else if (e.KeyChar == ',' && (sender as TextBox).Text.IndexOf(',') > -1 && (sender as TextBox).Text.Length < 4)
-            { // 1 kere , kullanmasına izin ver
-
                 e.Handled = true;
             }
         }
@@ -171,12 +249,7 @@ namespace ROPv1
             if ((sender as TextBox).Text == "")
                 return;
 
-            if ((sender as TextBox).Text == ",")
-            {
-                (sender as TextBox).Text = "0,";
-                (sender as TextBox).SelectionStart = (sender as TextBox).Text.Length;
-            }
-            else if (Convert.ToDouble((sender as TextBox).Text) > Convert.ToDouble((sender as TextBox).Tag) && (sender as TextBox).Tag != null)
+            if (Convert.ToDouble((sender as TextBox).Text) > Convert.ToDouble((sender as TextBox).Tag) && (sender as TextBox).Tag != null)
             {
                 (sender as TextBox).Text = (sender as TextBox).Tag.ToString();
             }
