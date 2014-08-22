@@ -44,6 +44,11 @@
             this.textBoxUrun3 = new System.Windows.Forms.TextBox();
             this.textBoxUrun2 = new System.Windows.Forms.TextBox();
             this.textBoxUrun1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -98,7 +103,7 @@
             this.labelUrun3.AutoSize = true;
             this.labelUrun3.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelUrun3.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelUrun3.Location = new System.Drawing.Point(9, 93);
+            this.labelUrun3.Location = new System.Drawing.Point(70, 93);
             this.labelUrun3.Name = "labelUrun3";
             this.labelUrun3.Size = new System.Drawing.Size(234, 24);
             this.labelUrun3.TabIndex = 17;
@@ -111,7 +116,7 @@
             this.labelUrun4.AutoSize = true;
             this.labelUrun4.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelUrun4.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelUrun4.Location = new System.Drawing.Point(9, 131);
+            this.labelUrun4.Location = new System.Drawing.Point(70, 131);
             this.labelUrun4.Name = "labelUrun4";
             this.labelUrun4.Size = new System.Drawing.Size(234, 24);
             this.labelUrun4.TabIndex = 18;
@@ -124,7 +129,7 @@
             this.labelUrun5.AutoSize = true;
             this.labelUrun5.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelUrun5.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelUrun5.Location = new System.Drawing.Point(9, 169);
+            this.labelUrun5.Location = new System.Drawing.Point(70, 169);
             this.labelUrun5.Name = "labelUrun5";
             this.labelUrun5.Size = new System.Drawing.Size(234, 24);
             this.labelUrun5.TabIndex = 19;
@@ -142,7 +147,7 @@
             this.labelUrun2.AutoSize = true;
             this.labelUrun2.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelUrun2.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelUrun2.Location = new System.Drawing.Point(9, 55);
+            this.labelUrun2.Location = new System.Drawing.Point(70, 55);
             this.labelUrun2.Name = "labelUrun2";
             this.labelUrun2.Size = new System.Drawing.Size(234, 24);
             this.labelUrun2.TabIndex = 16;
@@ -155,7 +160,8 @@
             this.labelUrun1.AutoSize = true;
             this.labelUrun1.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelUrun1.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelUrun1.Location = new System.Drawing.Point(9, 17);
+            this.labelUrun1.Location = new System.Drawing.Point(70, 17);
+            this.labelUrun1.Margin = new System.Windows.Forms.Padding(0);
             this.labelUrun1.Name = "labelUrun1";
             this.labelUrun1.Size = new System.Drawing.Size(234, 24);
             this.labelUrun1.TabIndex = 15;
@@ -237,6 +243,76 @@
             this.textBoxUrun1.TextChanged += new System.EventHandler(this.textNumberOfItem_TextChanged);
             this.textBoxUrun1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUrun5_KeyPress);
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Window;
+            this.label1.Location = new System.Drawing.Point(8, 17);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 24);
+            this.label1.TabIndex = 84;
+            this.label1.Tag = "6";
+            this.label1.Text = "------";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label2.ForeColor = System.Drawing.SystemColors.Window;
+            this.label2.Location = new System.Drawing.Point(8, 55);
+            this.label2.Margin = new System.Windows.Forms.Padding(0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(52, 24);
+            this.label2.TabIndex = 85;
+            this.label2.Tag = "6";
+            this.label2.Text = "------";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label3.ForeColor = System.Drawing.SystemColors.Window;
+            this.label3.Location = new System.Drawing.Point(8, 93);
+            this.label3.Margin = new System.Windows.Forms.Padding(0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(52, 24);
+            this.label3.TabIndex = 86;
+            this.label3.Tag = "6";
+            this.label3.Text = "------";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label4.ForeColor = System.Drawing.SystemColors.Window;
+            this.label4.Location = new System.Drawing.Point(8, 130);
+            this.label4.Margin = new System.Windows.Forms.Padding(0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 24);
+            this.label4.TabIndex = 87;
+            this.label4.Tag = "6";
+            this.label4.Text = "------";
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label5.ForeColor = System.Drawing.SystemColors.Window;
+            this.label5.Location = new System.Drawing.Point(8, 169);
+            this.label5.Margin = new System.Windows.Forms.Padding(0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(52, 24);
+            this.label5.TabIndex = 88;
+            this.label5.Tag = "6";
+            this.label5.Text = "------";
+            // 
             // UrunDegistir
             // 
             this.AcceptButton = this.buttonOK;
@@ -246,13 +322,18 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(496, 496);
             this.ControlBox = false;
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelUrun1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxUrun1);
             this.Controls.Add(this.textBoxUrun2);
             this.Controls.Add(this.textBoxUrun3);
             this.Controls.Add(this.textBoxUrun4);
             this.Controls.Add(this.textBoxUrun5);
             this.Controls.Add(this.labelUrun2);
-            this.Controls.Add(this.labelUrun1);
             this.Controls.Add(this.labelUrun5);
             this.Controls.Add(this.labelUrun4);
             this.Controls.Add(this.labelUrun3);
@@ -293,5 +374,10 @@
         private System.Windows.Forms.TextBox textBoxUrun3;
         private System.Windows.Forms.TextBox textBoxUrun2;
         private System.Windows.Forms.TextBox textBoxUrun1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }

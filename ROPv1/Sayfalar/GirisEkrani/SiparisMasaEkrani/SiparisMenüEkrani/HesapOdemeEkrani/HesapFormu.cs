@@ -1039,7 +1039,7 @@ namespace ROPv1
 
                         if (indirimYuzde != odenenMiktar)// hesapta değişiklik yapılmış odenen miktarı güncelle
                         {
-                            menuFormu.masaFormu.hesapFormundanIndirim(masaAdi, departmanAdi, "Indirim", odemeTipi, odenenMiktar);
+                            menuFormu.masaFormu.hesapFormundanIndirim(masaAdi, departmanAdi, "Indirim", odemeTipi, odenenMiktar, "");
                         }
 
                         labelIndirimYuzdeTutar.Text = odenenMiktar.ToString("0.00");
@@ -1177,10 +1177,11 @@ namespace ROPv1
                 }
 
                 // odeme miktarını ve türünü gir
-                cmd = SQLBaglantisi.getCommand("INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
+                cmd = SQLBaglantisi.getCommand("INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar,IndirimiKimGirdi) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar,@_IndirimiKimGirdi)");
                 cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
                 cmd.Parameters.AddWithValue("@_OdemeTipi", Convert.ToInt32(((Button)sender).Tag));
                 cmd.Parameters.AddWithValue("@_OdenenMiktar", odenenMiktar);
+                cmd.Parameters.AddWithValue("@_IndirimiKimGirdi", siparisiGirenKisi);
 
                 cmd.ExecuteNonQuery();
 
@@ -1358,7 +1359,7 @@ namespace ROPv1
                     secilipOdenenSiparisBilgileri = null;
                 }
                 //bilgileri servera gönder
-                menuFormu.masaFormu.hesapFormundanOdeme(masaAdi, departmanAdi, "OdemeYapildi", Convert.ToInt32(((Button)sender).Tag), odenenMiktar, secilipOdenenSiparisBilgileri);
+                menuFormu.masaFormu.hesapFormundanOdeme(masaAdi, departmanAdi, "OdemeYapildi", Convert.ToInt32(((Button)sender).Tag), odenenMiktar, secilipOdenenSiparisBilgileri, siparisiGirenKisi);
             }
         }
 
@@ -1648,13 +1649,15 @@ namespace ROPv1
                     tip = Convert.ToInt32(Math.Floor(Convert.ToDouble(textNumberOfItem.Text)));
                 }
 
-                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + tip + "') UPDATE OdemeDetay SET OdenenMiktar=@_OdenenMiktar2 WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + tip + "' ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
+                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + tip + "') UPDATE OdemeDetay SET OdenenMiktar=@_OdenenMiktar2, IndirimiKimGirdi=@_IndirimiKimGirdi WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi='" + tip + "' ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar,IndirimiKimGirdi) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar,@_IndirimiKimGirdi2)");
 
                 cmd.Parameters.AddWithValue("@_OdenenMiktar2", indirim);
+                cmd.Parameters.AddWithValue("@_IndirimiKimGirdi", siparisiGirenKisi);
 
                 cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
                 cmd.Parameters.AddWithValue("@_OdemeTipi", tip);
                 cmd.Parameters.AddWithValue("@_OdenenMiktar", indirim);
+                cmd.Parameters.AddWithValue("@_IndirimiKimGirdi2", siparisiGirenKisi);
 
                 try
                 {
@@ -1671,7 +1674,7 @@ namespace ROPv1
             else
             {
                 //servera indirimi eklet
-                menuFormu.masaFormu.hesapFormundanIndirim(masaAdi, departmanAdi, "Indirim", Convert.ToInt32(((Button)sender).Tag), indirim);
+                menuFormu.masaFormu.hesapFormundanIndirim(masaAdi, departmanAdi, "Indirim", Convert.ToInt32(((Button)sender).Tag), indirim, siparisiGirenKisi);
             }
         }
         // yüzdeli indirim butonu
@@ -1749,14 +1752,16 @@ namespace ROPv1
 
                 int adisyonID = dr.GetInt32(0);
 
-                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi<101) UPDATE OdemeDetay SET OdenenMiktar=@_OdenenMiktar2, OdemeTipi=@_OdemeTipi2 WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi=(SELECT OdemeTipi FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi<101) ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar)");
+                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi<101) UPDATE OdemeDetay SET OdenenMiktar=@_OdenenMiktar2, OdemeTipi=@_OdemeTipi2, IndirimiKimGirdi=@_IndirimiKimGirdi WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi=(SELECT OdemeTipi FROM OdemeDetay WHERE AdisyonID='" + adisyonID + "' AND OdemeTipi<101) ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar,IndirimiKimGirdi) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar,@_IndirimiKimGirdi2)");
 
                 cmd.Parameters.AddWithValue("@_OdenenMiktar2", indirimYuzde);
                 cmd.Parameters.AddWithValue("@_OdemeTipi2", tip);
+                cmd.Parameters.AddWithValue("@_IndirimiKimGirdi", siparisiGirenKisi);
 
                 cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
                 cmd.Parameters.AddWithValue("@_OdemeTipi", tip);
                 cmd.Parameters.AddWithValue("@_OdenenMiktar", indirimYuzde);
+                cmd.Parameters.AddWithValue("@_IndirimiKimGirdi2", siparisiGirenKisi);
 
                 cmd.ExecuteNonQuery();
 
@@ -1772,7 +1777,7 @@ namespace ROPv1
                 }
 
                 //servera indirimi eklet
-                menuFormu.masaFormu.hesapFormundanIndirim(masaAdi, departmanAdi, "Indirim", tip, indirimYuzde);
+                menuFormu.masaFormu.hesapFormundanIndirim(masaAdi, departmanAdi, "Indirim", tip, indirimYuzde,siparisiGirenKisi);
             }
         }
 

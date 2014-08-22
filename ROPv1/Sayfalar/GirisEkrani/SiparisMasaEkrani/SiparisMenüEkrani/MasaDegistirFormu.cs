@@ -294,7 +294,6 @@ namespace ROPv1
                         else
                             break;
                     }
-                    yeniDepartman = restoranListesi[hangiDepartmanButonu].departmanAdi;
                 }
             }
             else
@@ -304,6 +303,7 @@ namespace ROPv1
                     gelenSiparisFormu.masaDegisikligiFormundanAcikMasaBilgisiIstegiGeldiMasaFormunaIlet("komut=departman&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                 }
             }
+            yeniDepartman = restoranListesi[hangiDepartmanButonu].departmanAdi;
         }
 
         private void exitButton_Click(object sender, EventArgs e)

@@ -56,7 +56,7 @@ namespace ROPv1
 
         public int masaDegisti = -1;
 
-        public string yeniMasaninAdi = "", urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi = "";
+        public string yeniDepartmaninAdi = "", yeniMasaninAdi = "", urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi = "", urunTasinirkenYeniMasaOlusturulduysaOlusanDepartmaninAdi;
 
         public SiparisMenuFormu(SiparisMasaFormu masaFormu, string masaninAdi, Restoran butonBilgileri, string siparisiGirenKisi, bool masaAcikmi)
         {
@@ -524,7 +524,6 @@ namespace ROPv1
 
                         int gruptaYeniGelenSiparisVarmi = siparisGruptaVarMi(hangiGrup, yemeginAdi, (porsiyonu + "P").ToString()); //ürün cinsi hesapta var mı bak 
 
-                        decimal eklenecekDeger = yemeginFiyati * Convert.ToDecimal(porsiyonu);
 
                         if (gruptaYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
                         {
@@ -534,12 +533,12 @@ namespace ROPv1
                             listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems[1].Tag = porsiyonSinifiBul(yemeginAdi);
 
                             listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(yemeginAdi);
-                            listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(eklenecekDeger.ToString("0.00"));
+                            listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(yemeginFiyati.ToString("0.00"));
                             listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].Group = listUrunFiyat.Groups[hangiGrup];
                             listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
                             listedeSeciliOlanItemlar.Add(false);
 
-                            gorunumuDuzenle(yemeginAdi, eklenecekDeger.ToString("0.00"), kacAdet.ToString(), porsiyonu.ToString());
+                            gorunumuDuzenle(yemeginAdi, yemeginFiyati.ToString("0.00"), kacAdet.ToString(), porsiyonu.ToString());
                         }
                         else // varsa ürünün hesaptaki değerlerini istenilene göre arttır
                         {
@@ -547,7 +546,7 @@ namespace ROPv1
                         }
 
                         if (!ikramMi) // ikram değilse kalan hesaba gir
-                            labelKalanHesap.Text = (Convert.ToDecimal(labelKalanHesap.Text) + kacAdet * eklenecekDeger).ToString("0.00");
+                            labelKalanHesap.Text = (Convert.ToDecimal(labelKalanHesap.Text) + kacAdet * yemeginFiyati).ToString("0.00");
                     }
 
                     cmd.Connection.Close();
@@ -585,7 +584,7 @@ namespace ROPv1
         {
             buttonMasaDegistir.Enabled = true;
 
-            string[] siparisler;
+            string[] siparisler = null;
             try
             {
                 siparisler = siparisBilgileri.Split('*');
@@ -594,7 +593,7 @@ namespace ROPv1
             {
                 KontrolFormu dialog = new KontrolFormu("Masa bilgileri alınırken hata oluştu, lütfen tekrar deneyiniz", false);
                 dialog.Show();
-                return;
+                return;                
             }
 
             decimal yemeginFiyati, porsiyonu;
@@ -630,7 +629,7 @@ namespace ROPv1
                 if (gruptaYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
                 {
                     listUrunFiyat.Items.Add(adet.ToString());
-                    listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(porsiyonu + "P");
+                    listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add((Double)porsiyonu + "P");
 
                     listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems[1].Tag = porsiyonSinifiBul(yemeginAdi);
 
@@ -1802,6 +1801,7 @@ namespace ROPv1
                     cmd.Connection.Dispose();
 
                     yeniMasaninAdi = masaDegistirForm.yeniMasa;
+                    yeniDepartmaninAdi = masaDegistirForm.yeniDepartman;
                     masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
 
                     masaFormu.serverdanMasaDegisikligi(MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, "masaDegistir");
@@ -1811,6 +1811,7 @@ namespace ROPv1
                     masaFormu.menuFormundanServeraMasaDegisikligi(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman, MasaAdi, hangiDepartman.departmanAdi, masaDegistirForm.yapilmasiGerekenIslem, "masaDegistir");
 
                     yeniMasaninAdi = masaDegistirForm.yeniMasa;
+                    yeniDepartmaninAdi = masaDegistirForm.yeniDepartman;
                     masaDegisti = masaDegistirForm.yapilmasiGerekenIslem;
                 }
                 masaAktarmaIslemlerindenSonraCik(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman);
@@ -2107,6 +2108,7 @@ namespace ROPv1
                             aktarilacakMasaninAdisyonID = bosAdisyonOlustur(masaDegistirForm.yeniMasa, masaDegistirForm.yeniDepartman);
 
                             urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi = masaDegistirForm.yeniMasa;
+                            urunTasinirkenYeniMasaOlusturulduysaOlusanDepartmaninAdi = masaDegistirForm.yeniDepartman;
                         }
 
                         if (listUrunFiyat.Items.Count == urunDegistirForm.miktarlar.Count)
@@ -2271,6 +2273,9 @@ namespace ROPv1
                             masaAcikMi = false;
                         }
 
+                        urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi = masaDegistirForm.yeniMasa;
+                        urunTasinirkenYeniMasaOlusturulduysaOlusanDepartmaninAdi = masaDegistirForm.yeniDepartman;
+
                         for (int i = 0; i < urunDegistirForm.miktarlar.Count; i++)
                         {
                             istenilenTasimaMiktari = urunDegistirForm.miktarlar[i];
@@ -2286,7 +2291,7 @@ namespace ROPv1
 
                             double dusulecekDeger = Convert.ToDouble(listUrunFiyat.SelectedItems[i].SubItems[3].Text);
 
-                            aktarmaBilgileri.Append("*" + listUrunFiyat.SelectedItems[i].SubItems[2].Text + "-" + dusulecekDeger.ToString() + "-" + istenilenTasimaMiktari.ToString() + "-" + tasinacakUrunIkramMi.ToString() + listUrunFiyat.SelectedItems[i].SubItems[1].Text.Substring(0, listUrunFiyat.SelectedItems[i].SubItems[1].Text.Length - 1));
+                            aktarmaBilgileri.Append("*" + listUrunFiyat.SelectedItems[i].SubItems[2].Text + "-" + dusulecekDeger.ToString() + "-" + istenilenTasimaMiktari.ToString() + "-" + tasinacakUrunIkramMi.ToString() + "-" + listUrunFiyat.SelectedItems[i].SubItems[1].Text.Substring(0, listUrunFiyat.SelectedItems[i].SubItems[1].Text.Length - 1));
 
                             if (Convert.ToDouble(listUrunFiyat.SelectedItems[i].SubItems[0].Text) > Convert.ToDouble(istenilenTasimaMiktari))
                                 masaAcikMi = true;

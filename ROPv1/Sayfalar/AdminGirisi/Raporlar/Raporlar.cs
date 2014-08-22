@@ -42,29 +42,29 @@ namespace ROPv1
             switch (((ComboBox)sender).SelectedIndex)
             {
                 case 0: // Bugün
-                    baslangic = DateTime.Today.ToString("yyy-MM-dd") + " 00:00:00";
-                    bitis = DateTime.Today.ToString("yyy-MM-dd") + " 23:59:59";
+                    baslangic = DateTime.Today.ToString("yyyy-MM-dd") + " 00:00:00";
+                    bitis = DateTime.Today.ToString("yyyy-MM-dd") + " 23:59:59";
                     break;
                 case 1: // Dün
-                    baslangic = DateTime.Today.AddDays(-1).ToString("yyy-MM-dd") + " 00:00:00";
-                    bitis = DateTime.Today.AddDays(-1).ToString("yyy-MM-dd") + " 23:59:59";
+                    baslangic = DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd") + " 00:00:00";
+                    bitis = DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd") + " 23:59:59";
                     break;
                 case 2: // Bu Hafta
-                    baslangic = DateTime.Today.GetFirstDayOfWeek().ToString("yyy-MM-dd") + " 00:00:00";
-                    bitis = DateTime.Today.GetLastDayOfWeek().ToString("yyy-MM-dd") + " 23:59:59";
+                    baslangic = DateTime.Today.GetFirstDayOfWeek().ToString("yyyy-MM-dd") + " 00:00:00";
+                    bitis = DateTime.Today.GetLastDayOfWeek().ToString("yyyy-MM-dd") + " 23:59:59";
                     break;
                 case 3: // Önceki Hafta
-                    baslangic = DateTime.Today.GetFirstDayOfWeek().AddDays(-7).ToString("yyy-MM-dd") + " 00:00:00";
-                    bitis = DateTime.Today.GetLastDayOfWeek().AddDays(-7).ToString("yyy-MM-dd") + " 23:59:59";
+                    baslangic = DateTime.Today.GetFirstDayOfWeek().AddDays(-7).ToString("yyyy-MM-dd") + " 00:00:00";
+                    bitis = DateTime.Today.GetLastDayOfWeek().AddDays(-7).ToString("yyyy-MM-dd") + " 23:59:59";
                     break;
                 case 4: // Bu Ay
                     DateTime firstOfNextMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(1);
-                    baslangic = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).ToString("yyy-MM-dd") + " 00:00:00";
+                    baslangic = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).ToString("yyyy-MM-dd") + " 00:00:00";
                     bitis = firstOfNextMonth.AddDays(-1).ToString("yyyy-MM-dd") + " 23:59:59";
                     break;
                 case 5: // Önceki Ay
                     DateTime firstOfthisMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
-                    baslangic = new DateTime(DateTime.Today.Year, DateTime.Today.AddMonths(-1).Month, 1).ToString("yyy-MM-dd") + " 00:00:00";
+                    baslangic = new DateTime(DateTime.Today.Year, DateTime.Today.AddMonths(-1).Month, 1).ToString("yyyy-MM-dd") + " 00:00:00";
                     bitis = firstOfthisMonth.AddDays(-1).ToString("yyyy-MM-dd") + " 23:59:59";
                     break;
                 case 6: // Seçilen Tarih

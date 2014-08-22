@@ -804,9 +804,9 @@ namespace ROPv1
             client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman);
         }
 
-        public void hesapFormundanOdeme(string masa, string departman, string komut, int odemeTipi, decimal odemeMiktari, StringBuilder secilipOdenenSiparisBilgileri)
+        public void hesapFormundanOdeme(string masa, string departman, string komut, int odemeTipi, decimal odemeMiktari, StringBuilder secilipOdenenSiparisBilgileri, string odemeyiAlanKisi)
         {
-            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odemeTipi=" + odemeTipi.ToString() + "&odemeMiktari=" + odemeMiktari.ToString() + "&secilipOdenenSiparisBilgileri=" + secilipOdenenSiparisBilgileri);
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odemeTipi=" + odemeTipi.ToString() + "&odemeMiktari=" + odemeMiktari.ToString() + "&secilipOdenenSiparisBilgileri=" + secilipOdenenSiparisBilgileri + "&odemeyiAlanKisi=" + odemeyiAlanKisi);
         }
 
         public void hesapFormundanOdemeBitti(string masa, string departman, string komut, bool odenmeyenSiparisVarMiGelen)
@@ -824,9 +824,9 @@ namespace ROPv1
             client.MesajYolla("komut=" + komut + "&masa=" + masaAdi + "&departmanAdi=" + departmanAdi);
         }
 
-        public void hesapFormundanIndirim(string masa, string departman, string komut, int odemeTipi, decimal odemeMiktari)
+        public void hesapFormundanIndirim(string masa, string departman, string komut, int odemeTipi, decimal odemeMiktari, string indirimYapanKisi)
         {
-            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odemeTipi=" + odemeTipi + "&odemeMiktari=" + odemeMiktari);
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odemeTipi=" + odemeTipi + "&odemeMiktari=" + odemeMiktari + "&indirimYapanKisi=" + indirimYapanKisi);
         }
 
         public void hesapFormundanAdisyonYazdir(string masa, string departman, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string firmaAdresTelefon, string yaziciWindowsAdi, decimal odenenMiktar)
@@ -880,6 +880,19 @@ namespace ROPv1
             {
                 if (Properties.Settings.Default.Server != 2) // client
                 {
+                    if (siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi != "")
+                    {
+                        Button tablebutton = tablePanel.Controls[siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi] as Button;
+
+                        if (tablebutton != null)
+                        {
+                            tablebutton.ForeColor = Color.White;
+                            tablebutton.BackColor = Color.Firebrick;
+                        }
+
+                        client.MesajYolla("komut=masaAcildi&masa=" + siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi + "&departmanAdi=" + siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanDepartmaninAdi);
+                    }
+
                     if (siparisMenuForm.masaAcikMi)
                     {
                         switch (siparisMenuForm.masaDegisti)
@@ -891,6 +904,8 @@ namespace ROPv1
                                 break;
                             case 3: // 1 masa açık departmanda değişti
                                 client.MesajYolla("komut=masaKapandi&masa=" + hangiMasa + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
+
+                                client.MesajYolla("komut=masaAcildi&masa=" + siparisMenuForm.yeniMasaninAdi + "&departmanAdi=" + siparisMenuForm.yeniDepartmaninAdi);
                                 break;
                             default:
                                 Button tablebutton = tablePanel.Controls[hangiMasa] as Button;
@@ -916,7 +931,7 @@ namespace ROPv1
                             tablebutton.BackColor = Color.Firebrick;
                         }
 
-                        tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
+                        tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi + "&departmanAdi=" + siparisMenuForm.urunTasinirkenYeniMasaOlusturulduysaOlusanDepartmaninAdi);
                     }
 
                     if (siparisMenuForm.masaAcikMi)
@@ -935,9 +950,15 @@ namespace ROPv1
                                 tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + siparisMenuForm.yeniMasaninAdi + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                                 break;
                             case 3: // 1 masa açık departmanda değişti
-                                hangiMasaButonunaBasildi.ForeColor = SystemColors.ActiveCaption;
-                                hangiMasaButonunaBasildi.BackColor = Color.White;
+
+                                if(hangiMasaButonunaBasildi != null)
+                                {
+                                    hangiMasaButonunaBasildi.ForeColor = SystemColors.ActiveCaption;
+                                    hangiMasaButonunaBasildi.BackColor = Color.White;
+                                }
+                                
                                 tumKullanicilaraMesajYolla("komut=masaKapandi&masa=" + hangiMasaButonunaBasildi.Text + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
+                                tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + siparisMenuForm.yeniMasaninAdi + "&departmanAdi=" + siparisMenuForm.yeniDepartmaninAdi);
                                 break;
                             default:
                                 if (hangiMasaButonunaBasildi.BackColor != Color.Firebrick)
@@ -1069,7 +1090,7 @@ namespace ROPv1
                     masayiIslemYapmadanKapat = false;
                     siparisMenuForm.Close();
 
-                    dialog2 = new KontrolFormu("Masada(" + masa + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler" + yeniDepartmanAdi + " departmanındaki, " + yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false);
+                    dialog2 = new KontrolFormu("Masada(" + masa + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler " + yeniDepartmanAdi + " departmanındaki, " + yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false);
                     dialog2.Show();
                 }
             }
@@ -1361,7 +1382,7 @@ namespace ROPv1
         {
             siparisMenuForm.Close();
 
-            dialog2 = new KontrolFormu("Masada(" + masaAdi + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler" + yeniDepartmanAdi + " departmanındaki, " + yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false);
+            dialog2 = new KontrolFormu("Masada(" + masaAdi + ") ürün aktarımı gerçekleştirildi\nSeçilen ürünler " + yeniDepartmanAdi + " departmanındaki, " + yeniMasa + " masasına aktarıldı\nLütfen masaya yeniden giriş yapınız", false);
             dialog2.Show();
         }
 

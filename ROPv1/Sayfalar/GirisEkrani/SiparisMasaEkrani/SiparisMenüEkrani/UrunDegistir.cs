@@ -158,6 +158,7 @@ namespace ROPv1
                     {
                         case 1:
                             urun.Text = urunler[0].SubItems[2].Text;
+                            label1.Text = urunler[0].SubItems[1].Text;
                             textBoxUrun1.Text = urunler[0].SubItems[0].Text;
                             textBoxUrun1.Tag = Convert.ToDecimal(textBoxUrun1.Text);
                             if (urunler[0].Group.Tag.ToString() != "2")
@@ -167,6 +168,7 @@ namespace ROPv1
                             if (urunler.Count > 1)
                             {
                                 urun.Text = urunler[1].SubItems[2].Text;
+                                label2.Text = urunler[1].SubItems[1].Text;
                                 textBoxUrun2.Text = urunler[1].SubItems[0].Text;
                                 textBoxUrun2.Tag = Convert.ToDecimal(textBoxUrun2.Text);
                                 if (urunler[1].Group.Tag.ToString() != "2")
@@ -176,12 +178,14 @@ namespace ROPv1
                             {
                                 urun.Enabled = false;
                                 textBoxUrun2.Enabled = false;
+                                label2.Enabled = false;
                             }
                             break;
                         case 3:
                             if (urunler.Count > 2)
                             {
                                 urun.Text = urunler[2].SubItems[2].Text;
+                                label3.Text = urunler[2].SubItems[1].Text;
                                 textBoxUrun3.Text = urunler[2].SubItems[0].Text;
                                 textBoxUrun3.Tag = Convert.ToDecimal(textBoxUrun3.Text);
                                 if (urunler[2].Group.Tag.ToString() != "2")
@@ -191,12 +195,14 @@ namespace ROPv1
                             {
                                 urun.Enabled = false;
                                 textBoxUrun3.Enabled = false;
+                                label3.Enabled = false;
                             }
                             break;
                         case 4:
                             if (urunler.Count > 3)
                             {
                                 urun.Text = urunler[3].SubItems[2].Text;
+                                label4.Text = urunler[3].SubItems[1].Text;
                                 textBoxUrun4.Text = urunler[3].SubItems[0].Text;
                                 textBoxUrun4.Tag = Convert.ToDecimal(textBoxUrun4.Text);
                                 if (urunler[3].Group.Tag.ToString() != "2")
@@ -206,12 +212,14 @@ namespace ROPv1
                             {
                                 urun.Enabled = false;
                                 textBoxUrun4.Enabled = false;
+                                label4.Enabled = false;
                             }
                             break;
                         case 5:
                             if (urunler.Count > 4)
                             {
                                 urun.Text = urunler[4].SubItems[2].Text;
+                                label5.Text = urunler[4].SubItems[1].Text;
                                 textBoxUrun5.Text = urunler[4].SubItems[0].Text;
                                 textBoxUrun5.Tag = Convert.ToDecimal(textBoxUrun5.Text);
                                 if (urunler[4].Group.Tag.ToString() != "2")
@@ -221,6 +229,7 @@ namespace ROPv1
                             {
                                 urun.Enabled = false;
                                 textBoxUrun5.Enabled = false;
+                                label5.Enabled = false;
                             }
                             break;
                         default:

@@ -231,46 +231,26 @@ namespace ROPv1
             }
             else if (leftPanelView.Nodes[0].Text == "Gün Sonu Raporu")
             {
-                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AcikMi FROM Adisyon WHERE AcikMi=1 AND IptalMi=0");
-                SqlDataReader dr = cmd.ExecuteReader();
-                dr.Read();
-                try
+                switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
                 {
-                    dr.GetBoolean(0);
-                    KontrolFormu dialog = new KontrolFormu("Sistemde açık masa bulunurken raporlama yapılamaz\n DİKKAT: Çalışma esnasında raporlama alınması sistemi yavaşlatacağından hatalara neden olabilir!", false);
-                    dialog.Show();
-                    cmd.Connection.Close();
-                    cmd.Connection.Dispose();
-                }
-                catch
-                {
-                    cmd.Connection.Close();
-                    cmd.Connection.Dispose();
+                    case 0: //Gün sonu raporu seçildi
+                        gunRaporView.Dock = DockStyle.Fill;
+                        splitPanel.Panel2.Controls.Add(gunRaporView);
+                        break;
 
-                    switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
-                    {
-                        #region
-                        case 0: //Gün sonu raporu seçildi
-                            gunRaporView.Dock = DockStyle.Fill;
-                            splitPanel.Panel2.Controls.Add(gunRaporView);
-                            break;
+                    case 1: //Ürün satış raporu seçildi
+                        urunRaporView.Dock = DockStyle.Fill;
+                        splitPanel.Panel2.Controls.Add(urunRaporView);
+                        break;
 
-                        case 1: //Ürün satış raporu seçildi
-                            urunRaporView.Dock = DockStyle.Fill;
-                            splitPanel.Panel2.Controls.Add(urunRaporView);
-                            break;
-
-                        default:
-                            break;
-                        #endregion
-                    }
-                }
+                    default:
+                        break;
+                }                
             }
             else if (leftPanelView.Nodes[0].Text == "Anket Değerlendirme(Seçmeli Sorular)")
             {
                 switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
                 {
-                    #region
                     case 0: //Anket Değerlendirme Seçildi ( Alınan oyların sayısı, alınan tam puanlar , genel puanlama vs. )
                         AnketDegerlendirmeSecme anketDegerlendirmeSecmeView = new AnketDegerlendirmeSecme();
                         splitPanel.Panel2.Controls.Add(anketDegerlendirmeSecmeView);
@@ -303,7 +283,6 @@ namespace ROPv1
 
                     default:
                         break;
-                    #endregion
                 }
             }
         }
