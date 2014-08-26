@@ -139,7 +139,7 @@ namespace ROPv1
                         komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["sonSiparisMi"], parametreler["porsiyon"], parametreler["ilkSiparis"]);
                         break;
                     case "iptal": // ürün iptal edildiği bilgisini dağıtmak için
-                        komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"], parametreler["porsiyon"]);
+                        komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"], parametreler["porsiyon"], parametreler["iptalNedeni"]);
                         break;
                     case "hesapOdeniyor": // yeni masa açıldığı bilgisi geldiğinde
                         komut_hesapOdeniyor(parametreler["masa"], parametreler["departmanAdi"]);
@@ -786,7 +786,7 @@ namespace ROPv1
 
             if (odenmeyenSiparisVarMi == "0") // ödenmemiş sipariş yoksa siparişleri ödendi yap
             {
-                cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
+                cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE Siparis.IptalMi=0 AND AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
                 cmd.ExecuteNonQuery();
             }
 
@@ -1264,16 +1264,54 @@ namespace ROPv1
 
         private void komut_listeBos(string masa, string departmanAdi)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0, IptalMi=1, KapanisZamani=@date WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
-            cmd.Parameters.AddWithValue("@date", DateTime.Now);
+            SqlCommand cmd;
 
-            cmd.ExecuteNonQuery();
+            cmd = SQLBaglantisi.getCommand("SELECT OdenenMiktar from OdemeDetay JOIN Adisyon ON OdemeDetay.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0");
+            SqlDataReader dr = cmd.ExecuteReader();
 
-            cmd.Connection.Close();
-            cmd.Connection.Dispose();
+            try // eğer masanın ödenmiş siparişi varsa hesabı kapat 
+            {
+                decimal odenenmiktar = 0;
+
+                while (dr.Read()) // ödenen miktarları topluyoruz
+                {
+                    odenenmiktar += dr.GetDecimal(0);
+                }
+
+                if (odenenmiktar != 0) // eğer sıfırdan farklı ise adisyonu kapatıyoruz
+                {
+
+                    cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE Siparis.IptalMi=0 AND AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
+                    cmd.ExecuteNonQuery();
+                    cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0,KapanisZamani=@date WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
+                    cmd.Parameters.AddWithValue("@date", DateTime.Now);
+                }
+                else // değilse adisyonu iptal ediyoruz
+                {
+                    cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0, IptalMi=1, KapanisZamani=@date WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
+                    cmd.Parameters.AddWithValue("@date", DateTime.Now);
+                }
+            }
+            catch // eğer masanın ödenmiş siparişi yoksa iptal 
+            {
+                cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0, IptalMi=1, KapanisZamani=@date WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
+                cmd.Parameters.AddWithValue("@date", DateTime.Now);
+            }
+
+            try //adisyonID alınabilirse adisyon var demektir, ancak sipariş yok - o zaman adisyon kapatılır
+            {
+                cmd.ExecuteNonQuery();
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
+            }
+            catch (Exception) // masaya ait adisyon yok, çık
+            {
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
+            }
         }
 
-        private void komut_iptal(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu, string ikraminGrubu, string porsiyon)
+        private void komut_iptal(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu, string ikraminGrubu, string porsiyon, string iptalNedeni)
         {
             if (siparisForm != null)
             {
@@ -1332,19 +1370,19 @@ namespace ROPv1
 
                 if (adet < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
                 {
-                    iptalUpdateTam(siparisID);
+                    iptalUpdateTam(siparisID, iptalNedeni);
 
                     istenilenSiparisiptalSayisi -= adet;
                 }
                 else if (adet > istenilenSiparisiptalSayisi) // den büyükse
                 {
-                    iptalUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenSiparisiptalSayisi, yemekAdi, verilisTarihi, Convert.ToDecimal(porsiyon));
+                    iptalUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenSiparisiptalSayisi, yemekAdi, verilisTarihi, Convert.ToDecimal(porsiyon), iptalNedeni);
 
                     istenilenSiparisiptalSayisi = 0;
                 }
                 else // elimizdeki siparişler iptali istenene eşitse
                 {
-                    iptalUpdateTam(siparisID);
+                    iptalUpdateTam(siparisID, iptalNedeni);
 
                     istenilenSiparisiptalSayisi = 0;
                 }
@@ -1378,19 +1416,19 @@ namespace ROPv1
 
                     if (adet < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
                     {
-                        iptalUpdateTam(siparisID);
+                        iptalUpdateTam(siparisID, iptalNedeni);
 
                         istenilenSiparisiptalSayisi -= adet;
                     }
                     else if (adet > istenilenSiparisiptalSayisi) // den büyükse
                     {
-                        iptalUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenSiparisiptalSayisi, yemekAdi, verilisTarihi, Convert.ToDecimal(porsiyon));
+                        iptalUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenSiparisiptalSayisi, yemekAdi, verilisTarihi, Convert.ToDecimal(porsiyon), iptalNedeni);
 
                         istenilenSiparisiptalSayisi = 0;
                     }
                     else // elimizdeki siparişler iptali istenene eşitse
                     {
-                        iptalUpdateTam(siparisID);
+                        iptalUpdateTam(siparisID, iptalNedeni);
 
                         istenilenSiparisiptalSayisi = 0;
                     }
@@ -2513,7 +2551,7 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        public void iptalUpdateInsert(int siparisID, int adisyonID, decimal adet, double dusulecekDeger, decimal iptalAdedi, string yemekAdi, DateTime verilisTarihi, decimal porsiyon)
+        public void iptalUpdateInsert(int siparisID, int adisyonID, decimal adet, double dusulecekDeger, decimal iptalAdedi, string yemekAdi, DateTime verilisTarihi, decimal porsiyon, string iptalNedeni)
         {
             decimal yeniPorsiyonAdetiSiparis = adet - iptalAdedi;
 
@@ -2524,28 +2562,31 @@ namespace ROPv1
 
             bool urunMutfagaBildirilmeliMi = mutfakBilgilendirilmeliMi(yemekAdi);
 
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,IptalMi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_IptalMi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon)");
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,IptalMi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon,IptalNedeni) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_IptalMi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon,@_IptalNedeni)");
             cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
             cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
             cmd.Parameters.AddWithValue("@_Adet", iptalAdedi);
             cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
             cmd.Parameters.AddWithValue("@_IptalMi", 1);
-            cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
+            cmd.Parameters.AddWithValue("@_VerilisTarihi", verilisTarihi);
             cmd.Parameters.AddWithValue("@_MutfakCiktisiAlinmaliMi", urunMutfagaBildirilmeliMi);
             cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
+            cmd.Parameters.AddWithValue("@_IptalNedeni", iptalNedeni);
+
             cmd.ExecuteNonQuery();
 
             cmd.Connection.Close();
             cmd.Connection.Dispose();
         }
 
-        public void iptalUpdateTam(int siparisID)
+        public void iptalUpdateTam(int siparisID, string iptalNedeni)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET IptalMi=@iptal, Garsonu=@Garson WHERE SiparisID=@id");
-            cmd.Parameters.AddWithValue("@iptal", 1);
-            cmd.Parameters.AddWithValue("@Garson", siparisiKimGirdi);
-            cmd.Parameters.AddWithValue("@id", siparisID);
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET IptalMi=@_Iptal, Garsonu=@_Garson, IptalNedeni=@_IptalNedeni WHERE SiparisID=@_id");
+            cmd.Parameters.AddWithValue("@_Iptal", 1);
+            cmd.Parameters.AddWithValue("@_Garson", siparisiKimGirdi);
+            cmd.Parameters.AddWithValue("@_IptalNedeni", iptalNedeni);
+            cmd.Parameters.AddWithValue("@_id", siparisID);
             cmd.ExecuteNonQuery();
 
             cmd.Connection.Close();

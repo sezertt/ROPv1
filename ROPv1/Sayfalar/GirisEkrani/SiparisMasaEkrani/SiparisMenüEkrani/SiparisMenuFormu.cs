@@ -348,6 +348,11 @@ namespace ROPv1
                 else
                     buttonTasi.Enabled = true;
 
+                if (Convert.ToDecimal(listUrunFiyat.SelectedItems[0].SubItems[3].Text) > Convert.ToDecimal(labelKalanHesap.Text))
+                {
+                    buttonUrunIkram.Enabled = false;
+                    buttonUrunIptal.Enabled = false;
+                }
             }
             else
             {
@@ -433,7 +438,7 @@ namespace ROPv1
             }
             else // varsa ürünün hesaptaki değerlerini istenilene göre arttır
             {
-                listUrunFiyat.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text = (Convert.ToDouble(listUrunFiyat.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text) + kacAdet).ToString();                
+                listUrunFiyat.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text = (Convert.ToDouble(listUrunFiyat.Groups[yeniSiparisler].Items[gruptaYeniGelenSiparisVarmi].SubItems[0].Text) + kacAdet).ToString();
             }
 
             labelKalanHesap.Text = (Convert.ToDecimal(labelKalanHesap.Text) + kacAdet * eklenecekDeger).ToString("0.00");
@@ -547,7 +552,19 @@ namespace ROPv1
 
                         if (!ikramMi) // ikram değilse kalan hesaba gir
                             labelKalanHesap.Text = (Convert.ToDecimal(labelKalanHesap.Text) + kacAdet * yemeginFiyati).ToString("0.00");
+
                     }
+
+                    cmd = SQLBaglantisi.getCommand("SELECT OdenenMiktar from OdemeDetay JOIN Adisyon ON OdemeDetay.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0");
+                    dr = cmd.ExecuteReader();
+
+                    decimal odenenMiktar = 0;
+                    while (dr.Read())
+                    {
+                        odenenMiktar += dr.GetDecimal(0);
+                    }
+
+                    labelKalanHesap.Text = (Convert.ToDecimal(labelKalanHesap.Text) - odenenMiktar).ToString("0.00");
 
                     cmd.Connection.Close();
                     cmd.Connection.Dispose();
@@ -593,7 +610,7 @@ namespace ROPv1
             {
                 KontrolFormu dialog = new KontrolFormu("Masa bilgileri alınırken hata oluştu, lütfen tekrar deneyiniz", false);
                 dialog.Show();
-                return;                
+                return;
             }
 
             decimal yemeginFiyati, porsiyonu;
@@ -1238,24 +1255,23 @@ namespace ROPv1
         // ürün iptal etme butonu
         private void buttonUrunIptal_Click(object sender, EventArgs e)
         {
-            double porsiyonu = Convert.ToDouble(listUrunFiyat.SelectedItems[0].SubItems[1].Text.Substring(0,listUrunFiyat.SelectedItems[0].SubItems[1].Text.Length-1));
+            double porsiyonu = Convert.ToDouble(listUrunFiyat.SelectedItems[0].SubItems[1].Text.Substring(0, listUrunFiyat.SelectedItems[0].SubItems[1].Text.Length - 1));
 
             int kacAdet = Convert.ToInt32(labelCokluAdet.Text);
 
             if (kacAdet > Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[0].Text))
                 kacAdet = Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[0].Text);
 
-            DialogResult eminMisiniz;
+            UrunIptalNedeniFormu urunIptalFormu = new UrunIptalNedeniFormu(kacAdet + " adet " + listUrunFiyat.SelectedItems[0].SubItems[2].Text + " iptal edilecek. Kısaca nedenini yazınız");
 
-            using (KontrolFormu dialog = new KontrolFormu(kacAdet + " adet " + listUrunFiyat.SelectedItems[0].SubItems[2].Text + " iptal edilecek. Emin misiniz?", true))
-            {
-                eminMisiniz = dialog.ShowDialog();
-            }
+            DialogResult eminMisiniz = urunIptalFormu.ShowDialog();
 
             if (eminMisiniz == DialogResult.No)
             {
                 return;
             }
+
+            string iptalNedeni = urunIptalFormu.iptalNedeni;
 
             double dusulecekDeger = Convert.ToDouble(listUrunFiyat.SelectedItems[0].SubItems[3].Text);
 
@@ -1312,19 +1328,19 @@ namespace ROPv1
 
                         if (adet < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
                         {
-                            iptalUpdateTam(siparisID);
+                            iptalUpdateTam(siparisID, iptalNedeni);
 
                             istenilenSiparisiptalSayisi -= adet;
                         }
                         else if (adet > istenilenSiparisiptalSayisi) // den büyükse
                         {
-                            iptalUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenSiparisiptalSayisi, listUrunFiyat.SelectedItems[0].SubItems[2].Text, verilisTarihi, porsiyonu);
+                            iptalUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenSiparisiptalSayisi, listUrunFiyat.SelectedItems[0].SubItems[2].Text, verilisTarihi, porsiyonu, iptalNedeni);
 
                             istenilenSiparisiptalSayisi = 0;
                         }
                         else // elimizdeki siparişler iptali istenene eşitse
                         {
-                            iptalUpdateTam(siparisID);
+                            iptalUpdateTam(siparisID, iptalNedeni);
 
                             istenilenSiparisiptalSayisi = 0;
                         }
@@ -1356,19 +1372,19 @@ namespace ROPv1
 
                             if (adet < istenilenSiparisiptalSayisi) // elimizdeki siparişler iptali istenenden küçükse
                             {
-                                iptalUpdateTam(siparisID);
+                                iptalUpdateTam(siparisID, iptalNedeni);
 
                                 istenilenSiparisiptalSayisi -= adet;
                             }
                             else if (adet > istenilenSiparisiptalSayisi) // den büyükse
                             {
-                                iptalUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenSiparisiptalSayisi, listUrunFiyat.SelectedItems[0].SubItems[2].Text, verilisTarihi, porsiyonu);
+                                iptalUpdateInsert(siparisID, adisyonID, adet, dusulecekDeger, istenilenSiparisiptalSayisi, listUrunFiyat.SelectedItems[0].SubItems[2].Text, verilisTarihi, porsiyonu, iptalNedeni);
 
                                 istenilenSiparisiptalSayisi = 0;
                             }
                             else // elimizdeki siparişler iptali istenene eşitse
                             {
-                                iptalUpdateTam(siparisID);
+                                iptalUpdateTam(siparisID, iptalNedeni);
 
                                 istenilenSiparisiptalSayisi = 0;
                             }
@@ -1438,7 +1454,7 @@ namespace ROPv1
                 {
                     string ikramMi = listUrunFiyat.SelectedItems[0].Group.Tag.ToString();
 
-                    masaFormu.menuFormundanServeraSiparisYolla(MasaAdi, hangiDepartman.departmanAdi, "iptal", kacAdet.ToString(), listUrunFiyat.SelectedItems[0].SubItems[2].Text, siparisiKimGirdi, dusulecekDeger.ToString(), adisyonNotu, ikramMi, porsiyonu.ToString());
+                    masaFormu.menuFormundanServeraSiparisYolla(MasaAdi, hangiDepartman.departmanAdi, "iptal", kacAdet.ToString(), listUrunFiyat.SelectedItems[0].SubItems[2].Text, siparisiKimGirdi, dusulecekDeger.ToString(), adisyonNotu, ikramMi, porsiyonu.ToString(), iptalNedeni);
                     this.Enabled = false;
                 }
             }
@@ -1455,16 +1471,42 @@ namespace ROPv1
                 {
                     cmd = SQLBaglantisi.getCommand("SELECT OdenenMiktar from OdemeDetay JOIN Adisyon ON OdemeDetay.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0");
                     SqlDataReader dr = cmd.ExecuteReader();
-                    dr.Read();
 
                     try // eğer masanın ödenmiş siparişi varsa hesabı kapat 
                     {
-                        dr.GetDecimal(0);
+                        decimal odenenmiktar = 0;
 
-                        cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "')");
-                        cmd.ExecuteNonQuery();
-                        cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0,KapanisZamani=@date WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "')");
-                        cmd.Parameters.AddWithValue("@date", DateTime.Now);
+                        while (dr.Read()) // ödenen miktarları topluyoruz
+                        {
+                            odenenmiktar += dr.GetDecimal(0);
+                        }
+
+                        cmd = SQLBaglantisi.getCommand("SELECT COUNT(Adet) from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IptalMi=0 AND Siparis.IkramMi=1");
+                        dr = cmd.ExecuteReader();
+
+                        dr.Read();
+
+                        int ikramSayisi = 0;
+
+                        try
+                        {
+                            ikramSayisi = dr.GetInt32(0);
+                        }
+                        catch
+                        { }
+
+                        if (odenenmiktar != 0 || ikramSayisi > 0) // eğer sıfırdan farklı ise adisyonu kapatıyoruz
+                        {
+                            cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE Siparis.IptalMi=0 AND AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "')");
+                            cmd.ExecuteNonQuery();
+                            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0,KapanisZamani=@date WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "')");
+                            cmd.Parameters.AddWithValue("@date", DateTime.Now);
+                        }
+                        else // değilse adisyonu iptal ediyoruz
+                        {
+                            cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0, IptalMi=1, KapanisZamani=@date WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "')");
+                            cmd.Parameters.AddWithValue("@date", DateTime.Now);
+                        }
                     }
                     catch // eğer masanın ödenmiş siparişi yoksa iptal 
                     {
@@ -1956,7 +1998,7 @@ namespace ROPv1
             }
         }
 
-        public void iptalUpdateInsert(int siparisID, int adisyonID, decimal adet, double dusulecekDeger, decimal iptalAdedi, string yemekAdi, DateTime verilisTarihi, double porsiyon)
+        public void iptalUpdateInsert(int siparisID, int adisyonID, decimal adet, double dusulecekDeger, decimal iptalAdedi, string yemekAdi, DateTime verilisTarihi, double porsiyon, string iptalNedeni)
         {
             decimal yeniSiparisAdeti = adet - iptalAdedi;
 
@@ -1967,7 +2009,7 @@ namespace ROPv1
 
             bool urunMutfagaBildirilmeliMi = mutfakBilgilendirilmeliMi(yemekAdi);
 
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,IptalMi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_IptalMi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon)");
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,IptalMi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon,IptalNedeni) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_IptalMi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon,@_IptalNedeni)");
             cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
             cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
@@ -1977,6 +2019,7 @@ namespace ROPv1
             cmd.Parameters.AddWithValue("@_VerilisTarihi", verilisTarihi);
             cmd.Parameters.AddWithValue("@_MutfakCiktisiAlinmaliMi", urunMutfagaBildirilmeliMi);
             cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
+            cmd.Parameters.AddWithValue("@_IptalNedeni", iptalNedeni);
 
             cmd.ExecuteNonQuery();
 
@@ -1984,12 +2027,13 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        public void iptalUpdateTam(int siparisID)
+        public void iptalUpdateTam(int siparisID, string iptalNedeni)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET IptalMi=@iptal, Garsonu=@Garson WHERE SiparisID=@id");
-            cmd.Parameters.AddWithValue("@iptal", 1);
-            cmd.Parameters.AddWithValue("@Garson", siparisiKimGirdi);
-            cmd.Parameters.AddWithValue("@id", siparisID);
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET IptalMi=@_Iptal, Garsonu=@_Garson, IptalNedeni=@_IptalNedeni WHERE SiparisID=@_id");
+            cmd.Parameters.AddWithValue("@_Iptal", 1);
+            cmd.Parameters.AddWithValue("@_Garson", siparisiKimGirdi);
+            cmd.Parameters.AddWithValue("@_IptalNedeni", iptalNedeni);
+            cmd.Parameters.AddWithValue("@_id", siparisID);
             cmd.ExecuteNonQuery();
 
             cmd.Connection.Close();
@@ -2062,6 +2106,37 @@ namespace ROPv1
 
             if (urunDegissinMi == DialogResult.OK)
             {
+                Decimal toplam = 0;
+
+                //Eğer taşınmak istenen ürünlerin  miktarı 0 yapılmışsa, 0 yapılanları taşımaya çalışma
+                //Eğer taşınmak istenen ürünlerin fiyatları hesabı aşıyorsa ürünleri taşıma
+                for (int i = 0; i < urunDegistirForm.miktarlar.Count; i++)
+                {
+                    if (urunDegistirForm.miktarlar[i] == 0)
+                    {
+                        urunDegistirForm.miktarlar.RemoveAt(i);
+                        listUrunFiyat.Items[listUrunFiyat.SelectedItems[i].Index].Selected = false;
+                        i--;
+                    }
+                    else
+                    {
+                        toplam += Convert.ToDecimal(listUrunFiyat.Items[listUrunFiyat.SelectedItems[i].Index].SubItems[3].Text);
+                    }
+                }
+
+                //Eğer taşınması gereken ürün sayılarında 0 yapılanlar varsa ve onların dışında taşınacak ürün yoksa, ürün taşıma
+                if (urunDegistirForm.miktarlar.Count < 1)
+                {
+                    return;
+                }
+
+                if (toplam > Convert.ToDecimal(labelKalanHesap.Text))
+                {
+                    KontrolFormu dialog = new KontrolFormu("Ürün taşıma gerçekleştirilemedi\nTaşınmak istenen ürünlerin toplam tutarı,\n kalan hesabı geçemez", false);
+                    dialog.Show();
+                    return;
+                }
+
                 masaDegistirForm = new MasaDegistirFormu(MasaAdi, hangiDepartman.departmanAdi, this);
                 masaDegistirForm.ShowDialog();
 
@@ -2069,20 +2144,6 @@ namespace ROPv1
                     return;
                 else
                 {
-                    //Eğer taşınmak istenen ürünlerin  miktarı 0 yapılmışsa, 0 yapılanları taşımaya çalışma
-                    for (int i = 0; i < urunDegistirForm.miktarlar.Count; i++)
-                    {
-                        if (urunDegistirForm.miktarlar[i] == 0)
-                        {
-                            urunDegistirForm.miktarlar.RemoveAt(i);
-                            listUrunFiyat.Items[listUrunFiyat.SelectedItems[i].Index].Selected = false;
-                        }
-                    }
-
-                    //Eğer taşınması gereken ürün sayılarında 0 yapılanlar varsa ve onların dışında taşınacak ürün yoksa, ürün taşıma
-                    if (urunDegistirForm.miktarlar.Count < 1)
-                        return;
-
                     int istenilenTasimaMiktari;
 
                     int tasinacakUrunIkramMi;

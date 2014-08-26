@@ -87,5 +87,10 @@ namespace ROPv1
 
             listYaziliSoru.Columns[0].Width = listYaziliSoru.Width;
         }
+
+        private void listYaziliSoru_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

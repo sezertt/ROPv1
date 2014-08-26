@@ -17,7 +17,6 @@ namespace ROPv1
     public partial class Raporlar : UserControl
     {
         CrystalReportGunSonuRaporu raporGunSonu;
-        CrystalReportUrunSatisRaporu raporUrunSatis;
 
         string baslangic, bitis;
         bool hangiTakvimFocuslu = true, gunSonuRaporuMu = true;
@@ -74,35 +73,26 @@ namespace ROPv1
             }
 
             decimal toplamSiparisTutari = 0;
-            if (!gunSonuRaporuMu)
+
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SUM(s.Fiyatı*s.Adet) FROM Siparis s JOIN Adisyon a ON s.AdisyonID=a.AdisyonID WHERE a.KapanisZamani >='" + baslangic + "' AND a.KapanisZamani <= '" + bitis + "' ");
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            dr.Read();
+            try
             {
-                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT SUM(Fiyatı*Adet) FROM Siparis WHERE VerilisTarihi >='" + baslangic + "' AND VerilisTarihi <= '" + bitis + "' ");
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                dr.Read();
-                try
-                {
-                    toplamSiparisTutari = dr.GetDecimal(0);
-                }
-                catch
-                { }
-
-                cmd.Connection.Close();
-                cmd.Connection.Dispose();
-
-                raporUrunSatis.SetParameterValue("BaslangicTarihi", baslangic);
-                raporUrunSatis.SetParameterValue("BitisTarihi", bitis);
-                raporUrunSatis.SetParameterValue("toplamFiyat", toplamSiparisTutari);
-
-                crystalReportViewer1.ReportSource = raporUrunSatis;
+                toplamSiparisTutari = dr.GetDecimal(0);
             }
-            else
-            {
-                raporGunSonu.SetParameterValue("BaslangicTarihi", baslangic);
-                raporGunSonu.SetParameterValue("BitisTarihi", bitis);
+            catch
+            { }
 
-                crystalReportViewer1.ReportSource = raporGunSonu;
-            }           
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+
+            raporGunSonu.SetParameterValue("BaslangicTarihi", baslangic);
+            raporGunSonu.SetParameterValue("BitisTarihi", bitis);
+            raporGunSonu.SetParameterValue("toplamFiyat", toplamSiparisTutari);
+
+            crystalReportViewer1.ReportSource = raporGunSonu;
         }
 
         private void comboAdisyonAyar_Click(object sender, EventArgs e)
@@ -163,7 +153,7 @@ namespace ROPv1
                 dateBaslangic.Value = dateBitis.Value;
             dateBaslangic.MaxDate = dateBitis.Value;
 
-            if(comboAdisyonAyar.SelectedIndex == 6)
+            if (comboAdisyonAyar.SelectedIndex == 6)
             {
                 comboAdisyonAyar_SelectedIndexChanged(comboAdisyonAyar, null);
             }
@@ -172,14 +162,9 @@ namespace ROPv1
         private void button1_Click(object sender, EventArgs e)
         {
             ShowWaitForm();
-            if (gunSonuRaporuMu)
-            {
-                raporGunSonu = new CrystalReportGunSonuRaporu();
-            }
-            else
-            {
-                raporUrunSatis = new CrystalReportUrunSatisRaporu();
-            }
+
+            raporGunSonu = new CrystalReportGunSonuRaporu();
+
             buttonRaporla.Visible = false;
             comboAdisyonAyar.SelectedIndex = 0;
             comboAdisyonAyar.Enabled = true;

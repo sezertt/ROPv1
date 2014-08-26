@@ -34,8 +34,15 @@ namespace ROPv1
             cmd = SQLBaglantisi.getCommand("SELECT AVG(AnketPuani) FROM Anket");
             dr = cmd.ExecuteReader();
             dr.Read();
-            
-            decimal ortPuan = dr.GetDecimal(0);
+
+            decimal ortPuan = 0;
+
+            try
+            {
+                ortPuan = dr.GetDecimal(0);
+            }
+            catch
+            { }
 
             int yildiz = 0;
 
@@ -81,7 +88,7 @@ namespace ROPv1
             cmd.Connection.Close();
             cmd.Connection.Dispose();
 
-            if(toplamCevapSayisi > 0)
+            if (toplamCevapSayisi > 0)
             {
                 label1Yildiz.Text = "%" + (cevapSayilari[0] / toplamCevapSayisi * 100).ToString("0.0") + " - 1 Yıldız";
                 label2Yildiz.Text = "%" + (cevapSayilari[1] / toplamCevapSayisi * 100).ToString("0.0") + " - 2 Yıldız";

@@ -1553,7 +1553,7 @@ namespace ROPv1
                 SqlCommand cmd;
                 if (buttonNakit.Enabled == false) // eğer herşey ödenmişse siparişlerin ödendimi değerini 1 yap
                 {
-                    cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "')");
+                    cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE Siparis.IptalMi=0 AND AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "')");
                     cmd.ExecuteNonQuery();
                 }
 
@@ -1573,13 +1573,6 @@ namespace ROPv1
             }
             this.Close();
         }
-
-
-
-        
-
-
-        // indirimi kimin girdiği bilgisi eklenecek
 
         // tl indirim butonu
         private void buttonIndirim_Click(object sender, EventArgs e)

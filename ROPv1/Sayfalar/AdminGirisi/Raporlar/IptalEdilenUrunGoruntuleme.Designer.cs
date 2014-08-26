@@ -1,6 +1,6 @@
 ﻿namespace ROPv1
 {
-    partial class AnketDegerlendirmeYazili
+    partial class IptalEdilenUrunGoruntuleme
     {
         /// <summary> 
         /// Required designer variable.
@@ -33,8 +33,7 @@
             this.labelSayfa = new System.Windows.Forms.Label();
             this.labelSayfaSayisi = new System.Windows.Forms.Label();
             this.buttonSayfaArttir = new System.Windows.Forms.Button();
-            this.listYaziliSoru = new System.Windows.Forms.ListView();
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listIptalEdilenSorular = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // buttonSayfaAzalt
@@ -112,50 +111,42 @@
             this.buttonSayfaArttir.UseVisualStyleBackColor = false;
             this.buttonSayfaArttir.Click += new System.EventHandler(this.buttonSayfaArttir_Click);
             // 
-            // listYaziliSoru
+            // listIptalEdilenSorular
             // 
-            this.listYaziliSoru.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.listYaziliSoru.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-            this.listYaziliSoru.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listIptalEdilenSorular.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listIptalEdilenSorular.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.listIptalEdilenSorular.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listYaziliSoru.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader6});
-            this.listYaziliSoru.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
-            this.listYaziliSoru.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.listYaziliSoru.FullRowSelect = true;
-            this.listYaziliSoru.GridLines = true;
-            this.listYaziliSoru.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.listYaziliSoru.LabelWrap = false;
-            this.listYaziliSoru.Location = new System.Drawing.Point(6, 12);
-            this.listYaziliSoru.Margin = new System.Windows.Forms.Padding(0);
-            this.listYaziliSoru.MultiSelect = false;
-            this.listYaziliSoru.Name = "listYaziliSoru";
-            this.listYaziliSoru.Scrollable = false;
-            this.listYaziliSoru.ShowItemToolTips = true;
-            this.listYaziliSoru.Size = new System.Drawing.Size(1006, 544);
-            this.listYaziliSoru.TabIndex = 89;
-            this.listYaziliSoru.UseCompatibleStateImageBehavior = false;
-            this.listYaziliSoru.View = System.Windows.Forms.View.Details;
-            this.listYaziliSoru.SelectedIndexChanged += new System.EventHandler(this.listYaziliSoru_SelectedIndexChanged);
+            this.listIptalEdilenSorular.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Bold);
+            this.listIptalEdilenSorular.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.listIptalEdilenSorular.FullRowSelect = true;
+            this.listIptalEdilenSorular.GridLines = true;
+            this.listIptalEdilenSorular.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.listIptalEdilenSorular.LabelWrap = false;
+            this.listIptalEdilenSorular.Location = new System.Drawing.Point(6, 12);
+            this.listIptalEdilenSorular.Margin = new System.Windows.Forms.Padding(0);
+            this.listIptalEdilenSorular.MultiSelect = false;
+            this.listIptalEdilenSorular.Name = "listIptalEdilenSorular";
+            this.listIptalEdilenSorular.Scrollable = false;
+            this.listIptalEdilenSorular.ShowItemToolTips = true;
+            this.listIptalEdilenSorular.Size = new System.Drawing.Size(1006, 544);
+            this.listIptalEdilenSorular.TabIndex = 89;
+            this.listIptalEdilenSorular.UseCompatibleStateImageBehavior = false;
+            this.listIptalEdilenSorular.View = System.Windows.Forms.View.SmallIcon;
             // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "Seçmeli Soru";
-            this.columnHeader6.Width = 1006;
-            // 
-            // AnketDegerlendirmeYazili
+            // IptalEdilenUrunGoruntuleme
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.Controls.Add(this.listYaziliSoru);
+            this.Controls.Add(this.listIptalEdilenSorular);
             this.Controls.Add(this.buttonSayfaAzalt);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.labelSayfa);
             this.Controls.Add(this.buttonSayfaArttir);
             this.Controls.Add(this.labelSayfaSayisi);
-            this.Name = "AnketDegerlendirmeYazili";
+            this.Name = "IptalEdilenUrunGoruntuleme";
             this.Size = new System.Drawing.Size(1018, 626);
             this.Load += new System.EventHandler(this.AnketDegerlendirme_Load);
             this.ResumeLayout(false);
@@ -170,8 +161,7 @@
         private System.Windows.Forms.Label labelSayfa;
         private System.Windows.Forms.Label labelSayfaSayisi;
         private System.Windows.Forms.Button buttonSayfaArttir;
-        private System.Windows.Forms.ListView listYaziliSoru;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ListView listIptalEdilenSorular;
 
 
     }

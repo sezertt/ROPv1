@@ -835,12 +835,22 @@ namespace ROPv1
         }
 
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
-        public void menuFormundanServeraSiparisYolla(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, string ikramYeniMiEskiMi, string porsiyon)
+        public void menuFormundanServeraSiparisYolla(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, string ikramYeniMiEskiMi, string porsiyon, string iptalNedeni = null)
         {
-            if (ikramYeniMiEskiMi == null)
-                client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&porsiyon=" + porsiyon);
+            if(iptalNedeni == null)
+            {
+                if (ikramYeniMiEskiMi == null)
+                    client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&porsiyon=" + porsiyon);
+                else
+                    client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi + "&porsiyon=" + porsiyon);
+            }
             else
-                client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi + "&porsiyon=" + porsiyon);
+            {
+                if (ikramYeniMiEskiMi == null)
+                    client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&porsiyon=" + porsiyon + "&iptalNedeni=" + iptalNedeni);
+                else
+                    client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi + "&porsiyon=" + porsiyon + "&iptalNedeni=" + iptalNedeni);
+            }
         }
 
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
@@ -985,7 +995,14 @@ namespace ROPv1
 
             siparisMenuForm = null;
             acikMasaVarsaYapma = false;
-            this.Activate();
+            try
+            {
+                this.Activate();
+            }
+            catch
+            {
+
+            }
         }
 
         #region Komutlar

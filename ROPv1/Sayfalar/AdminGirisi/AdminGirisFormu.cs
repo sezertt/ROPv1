@@ -20,7 +20,7 @@ namespace ROPv1
         int kullaniciAdi = 0;
         UItemp[] infoKullanici;
 
-        Raporlar gunRaporView, urunRaporView;
+        Raporlar gunRaporView;
         GirisEkrani girisForm;
         PinKoduFormu pinForm;
         string ayarlaraGirenKisi;
@@ -33,10 +33,18 @@ namespace ROPv1
 
         private void exitPressed(object sender, EventArgs e)
         {
+            if (pinForm != null)
+            {
+                if (pinForm.Visible)
+                {
+                    pinForm.Close();
+                    pinForm = null;
+                }
+            }
             this.Dispose();
             this.Close();
 
-            if(girisForm != null)
+            if (girisForm != null)
             {
                 girisForm.adminForm = null;
             }
@@ -47,7 +55,7 @@ namespace ROPv1
             ayarlaraGirenKisi = ayarYapanKisi;
 
             if (pinDogruMu)
-            {                    
+            {
                 buttonBilgiAktar.Visible = true;
 
                 leftPanelView.Nodes.Add("Kullanıcılar");
@@ -58,7 +66,7 @@ namespace ROPv1
                 leftPanelView.Nodes.Add("Stok Ayarları");
                 leftPanelView.Nodes.Add("Reçeteler");
                 leftPanelView.Nodes.Add("İşletme Bilgileri");
-                leftPanelView.SelectedNode = leftPanelView.Nodes[0];                    
+                leftPanelView.SelectedNode = leftPanelView.Nodes[0];
             }
         }
 
@@ -104,22 +112,37 @@ namespace ROPv1
             {
                 #region
                 case 1:
+                    if (pinForm != null)
+                    {
+                        if (pinForm.Visible)
+                        {
+                            pinForm.Close();
+                            pinForm = null;
+                        }
+                    }
                     reportCheckBox.Image = global::ROPv1.Properties.Resources.reportsback;
                     buttonBilgiAktar.Visible = false;
                     //report işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok
                     leftPanelView.Nodes.Add("Gün Sonu Raporu");
-                    leftPanelView.Nodes.Add("Ürün Satış Raporu");
-
+                    leftPanelView.Nodes.Add("İptal Edilen Ürünler");
                     leftPanelView.SelectedNode = leftPanelView.Nodes[0];
                     break;
                 case 2:
+                    if (pinForm != null)
+                    {
+                        if (pinForm.Visible)
+                        {
+                            pinForm.Close();
+                            pinForm = null;
+                        }
+                    }
                     stokCheckBox.Image = global::ROPv1.Properties.Resources.stockback;
                     buttonBilgiAktar.Visible = false;
                     //stok işlemlerini split panelin 1. kısmına koy, seçili işlemi 2. kısma yok
                     break;
                 case 3:
                     ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingsback;
-                            
+
 
                     if (pinForm != null)
                     {
@@ -131,9 +154,17 @@ namespace ROPv1
                     }
 
                     pinForm = new PinKoduFormu("Ayar Görüntüleme", this);
-                    pinForm.Show();                  
+                    pinForm.Show();
                     break;
                 case 4:
+                    if (pinForm != null)
+                    {
+                        if (pinForm.Visible)
+                        {
+                            pinForm.Close();
+                            pinForm = null;
+                        }
+                    }
                     anketCheckBox.Image = global::ROPv1.Properties.Resources.anketBack;
                     buttonBilgiAktar.Visible = false;
 
@@ -146,6 +177,14 @@ namespace ROPv1
                     leftPanelView.SelectedNode = leftPanelView.Nodes[0];
                     break;
                 default:
+                    if (pinForm != null)
+                    {
+                        if (pinForm.Visible)
+                        {
+                            pinForm.Close();
+                            pinForm = null;
+                        }
+                    }
                     break;
                 #endregion
             }
@@ -166,6 +205,10 @@ namespace ROPv1
             whichCheckBoxShouldUncheck = Convert.ToInt32(((CheckBox)sender).Tag);
 
             leftPanelView.Focus();
+
+            if(pinForm != null && pinForm.Visible)
+                pinForm.Focus();
+
         }
 
         private void changeSettingsScreen(object sender, TreeViewEventArgs e)
@@ -237,17 +280,16 @@ namespace ROPv1
                         gunRaporView.Dock = DockStyle.Fill;
                         splitPanel.Panel2.Controls.Add(gunRaporView);
                         break;
-
-                    case 1: //Ürün satış raporu seçildi
-                        urunRaporView.Dock = DockStyle.Fill;
-                        splitPanel.Panel2.Controls.Add(urunRaporView);
+                    case 1: //Gün sonu raporu seçildi
+                        IptalEdilenUrunGoruntuleme iptalEdilenUrunGoruntulemeForm = new IptalEdilenUrunGoruntuleme();
+                        iptalEdilenUrunGoruntulemeForm.Dock = DockStyle.Fill;
+                        splitPanel.Panel2.Controls.Add(iptalEdilenUrunGoruntulemeForm);
                         break;
-
                     default:
                         break;
-                }                
+                }
             }
-            else if (leftPanelView.Nodes[0].Text == "Anket Değerlendirme(Seçmeli Sorular)")
+            else if (leftPanelView.Nodes[0].Text == "Değerlendirme(SS)")
             {
                 switch (leftPanelView.SelectedNode.Index) // settingsin içeriğindeki seçim değiştiğinde panel2 nin içeriğini değiştiriyoruz
                 {
@@ -331,15 +373,22 @@ namespace ROPv1
                 }
             }
             gunRaporView = new Raporlar(true);
-            urunRaporView = new Raporlar(false);
         }
 
         private void buttonBilgiAktar_Click(object sender, EventArgs e)
         {
+            if (pinForm != null)
+            {
+                if (pinForm.Visible)
+                {
+                    pinForm.Close();
+                    pinForm = null;
+                }
+            }
             KontrolFormu dialog = new KontrolFormu("Veri aktarımının doğru gerçekleştirilebilmesi için tabletlerin ayarlar ekranında olması gerekmektedir. Devam etmek istiyor musunuz ?", true);
             DialogResult result = dialog.ShowDialog();
 
-            if(result == DialogResult.Yes)
+            if (result == DialogResult.Yes)
             {
                 var di = new DirectoryInfo(Application.StartupPath);
 
@@ -351,11 +400,19 @@ namespace ROPv1
 
                 girisForm.tumKullanicilaraMesajYolla("komut=guncellemeyiBaslat");
                 buttonBilgiAktar.Enabled = false;
-            }            
-        }    
+            }
+        }
 
         private void adisyonCheckBox_Click(object sender, EventArgs e)
         {
+            if (pinForm != null)
+            {
+                if (pinForm.Visible)
+                {
+                    pinForm.Close();
+                    pinForm = null;
+                }
+            }
             AdisyonGoruntuleme adisyonForm = new AdisyonGoruntuleme();
             adisyonForm.Show();
         }
@@ -370,6 +427,14 @@ namespace ROPv1
 
         private void buttonUrunOzellikleri_Click(object sender, EventArgs e)
         {
+            if (pinForm != null)
+            {
+                if (pinForm.Visible)
+                {
+                    pinForm.Close();
+                    pinForm = null;
+                }
+            }
             leftPanelView.Nodes.Clear();
             splitPanel.Panel2.Controls.Clear();
 
@@ -418,19 +483,27 @@ namespace ROPv1
 
         private void buttonModem_Click(object sender, EventArgs e)
         {
+            if (pinForm != null)
+            {
+                if (pinForm.Visible)
+                {
+                    pinForm.Close();
+                    pinForm = null;
+                }
+            }
             ModemFormu modemFormu = new ModemFormu(this);
             DialogResult result = modemFormu.ShowDialog();
             if (result == DialogResult.OK)
-                girisForm.tumKullanicilaraMesajYolla("komut=modemBilgileri&SSID="+SSID+"&Sifre="+sifre);
+                girisForm.tumKullanicilaraMesajYolla("komut=modemBilgileri&SSID=" + SSID + "&Sifre=" + sifre);
         }
 
         delegate void setButtonValueCallBack(Button veriButton);
         public void veriAktarimiTamamlandi(Button veriBtn)
         {
-            if(veriBtn.InvokeRequired)
+            if (veriBtn.InvokeRequired)
             {
                 setButtonValueCallBack btndelegate = new setButtonValueCallBack(veriAktarimiTamamlandi);
-                this.buttonBilgiAktar.Invoke(btndelegate,new object [] { buttonBilgiAktar });
+                this.buttonBilgiAktar.Invoke(btndelegate, new object[] { buttonBilgiAktar });
             }
             else
             {

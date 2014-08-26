@@ -94,12 +94,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrystalReports\CrystalReportUrunSatisRaporu.cs">
-      <DependentUpon>CrystalReportUrunSatisRaporu.rpt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="CrystalReports\CrystalReportGunSonuRaporu.cs">
       <DependentUpon>CrystalReportGunSonuRaporu.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -129,6 +123,12 @@
     </Compile>
     <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\UrunlerTusu.Designer.cs">
       <DependentUpon>UrunlerTusu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sayfalar\AdminGirisi\Raporlar\IptalEdilenUrunGoruntuleme.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\AdminGirisi\Raporlar\IptalEdilenUrunGoruntuleme.Designer.cs">
+      <DependentUpon>IptalEdilenUrunGoruntuleme.cs</DependentUpon>
     </Compile>
     <Compile Include="Sayfalar\GenelKullanılanlar\Invoker.cs" />
     <Compile Include="Sayfalar\GirisEkrani\SifreVeFirmaAdiFormu.cs">
@@ -196,6 +196,12 @@
     </Compile>
     <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\PinKoduFormu.Designer.cs">
       <DependentUpon>PinKoduFormu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\UrunIptalNedeniFormu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\UrunIptalNedeniFormu.Designer.cs">
+      <DependentUpon>UrunIptalNedeniFormu.cs</DependentUpon>
     </Compile>
     <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\PorsiyonFormu.cs">
       <SubType>Form</SubType>
@@ -335,10 +341,6 @@
     <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMasaFormu.Designer.cs">
       <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CrystalReports\CrystalReportUrunSatisRaporu.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>CrystalReportUrunSatisRaporu.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="CrystalReports\CrystalReportGunSonuRaporu.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReportGunSonuRaporu.cs</LastGenOutput>
@@ -353,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\UrunlerTusu.resx">
       <DependentUpon>UrunlerTusu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Raporlar\IptalEdilenUrunGoruntuleme.resx">
+      <DependentUpon>IptalEdilenUrunGoruntuleme.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\GirisEkrani\SifreVeFirmaAdiFormu.resx">
       <DependentUpon>SifreVeFirmaAdiFormu.cs</DependentUpon>
@@ -390,6 +395,9 @@
     <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\PinKoduFormu.resx">
       <DependentUpon>PinKoduFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\UrunIptalNedeniFormu.resx">
+      <DependentUpon>UrunIptalNedeniFormu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\PorsiyonFormu.resx">
       <DependentUpon>PorsiyonFormu.cs</DependentUpon>
