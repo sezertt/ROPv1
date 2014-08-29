@@ -16,6 +16,8 @@ namespace ROPv1
     {
         public string iptalNedeni;
 
+        bool iptalBasildi = false;
+
         public UrunIptalNedeniFormu(string urunBilgileri)
         {
             InitializeComponent();
@@ -35,6 +37,7 @@ namespace ROPv1
             [DllImport("user32.dll")]
             internal static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
         }
+
         static void ToggleCapsLock(bool onOrOff)
         {
             if (IsKeyLocked(Keys.CapsLock) == onOrOff)
@@ -75,12 +78,17 @@ namespace ROPv1
 
         private void AdisyonNotuFormu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textboxNot.Text))
+            if (string.IsNullOrWhiteSpace(textboxNot.Text) && !iptalBasildi)
             {
                 e.Cancel = true;
             }
             else
                 iptalNedeni = textboxNot.Text;
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            iptalBasildi = true;
         }
     }
 }

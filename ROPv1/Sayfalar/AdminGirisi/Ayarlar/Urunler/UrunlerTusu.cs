@@ -41,9 +41,9 @@ namespace ROPv1
 
                     comboBoxPorsiyon.Tag = urunListesi[i].urunAdi[j] + "p";
 
-                    if (urunListesi[i].urunPorsiyonu[j] == 0) // 1 porsiyon
+                    if (urunListesi[i].urunPorsiyonSinifi[j] == 0) // 1 porsiyon
                         comboBoxPorsiyon.Text = "Bir Porsiyon";
-                    else if (urunListesi[i].urunPorsiyonu[j] == 1) // Yarım porsiyon
+                    else if (urunListesi[i].urunPorsiyonSinifi[j] == 1) // Yarım porsiyon
                         comboBoxPorsiyon.Text = "Yarım Porsiyon";
                     else // Çeyrek porsiyon
                         comboBoxPorsiyon.Text = "Çeyrek Porsiyon";
@@ -140,7 +140,7 @@ namespace ROPv1
                         urunPorsiyonu = 2;
                     }
 
-                    urunListesi[i].urunPorsiyonu[j] = urunPorsiyonu;
+                    urunListesi[i].urunPorsiyonSinifi[j] = urunPorsiyonu;
 
                     string urunMutfagaBildirilmeliMiString = ((ComboBox)glacialListUrunler.Items[glacialUrunListesiSirasi].SubItems[2].Control).Text;
 

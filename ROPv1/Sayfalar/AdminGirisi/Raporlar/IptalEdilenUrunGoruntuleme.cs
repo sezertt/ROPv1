@@ -15,6 +15,8 @@ namespace ROPv1
 {
     public partial class IptalEdilenUrunGoruntuleme : UserControl
     {
+        const int goruntulenecekAdet = 9;
+
         int iptalEdilenUrunSayisi = 0;
 
         public IptalEdilenUrunGoruntuleme()
@@ -31,10 +33,10 @@ namespace ROPv1
 
             iptalEdilenUrunSayisi = dr.GetInt32(0);
 
-            if (iptalEdilenUrunSayisi % 10 == 0)
-                labelSayfaSayisi.Text = (iptalEdilenUrunSayisi / 10).ToString();
+            if (iptalEdilenUrunSayisi % goruntulenecekAdet == 0)
+                labelSayfaSayisi.Text = (iptalEdilenUrunSayisi / goruntulenecekAdet).ToString();
             else
-                labelSayfaSayisi.Text = ((iptalEdilenUrunSayisi / 10) + 1).ToString();
+                labelSayfaSayisi.Text = ((iptalEdilenUrunSayisi / goruntulenecekAdet) + 1).ToString();
 
             labelSayfa.Text = "1";
         }
@@ -57,13 +59,13 @@ namespace ROPv1
         {
             listIptalEdilenSorular.Items.Clear();
 
-            int IlkAlinacakVerininSirasi, alinacakToplamVeriSayisi = 10;
+            int IlkAlinacakVerininSirasi, alinacakToplamVeriSayisi = goruntulenecekAdet;
 
-            IlkAlinacakVerininSirasi = Convert.ToInt32(labelSayfa.Text) * 10;
+            IlkAlinacakVerininSirasi = Convert.ToInt32(labelSayfa.Text) * goruntulenecekAdet;
 
             if (IlkAlinacakVerininSirasi > iptalEdilenUrunSayisi)
             {
-                alinacakToplamVeriSayisi = iptalEdilenUrunSayisi % 10;
+                alinacakToplamVeriSayisi = iptalEdilenUrunSayisi % goruntulenecekAdet;
                 IlkAlinacakVerininSirasi = iptalEdilenUrunSayisi;
             }
 
@@ -90,12 +92,24 @@ namespace ROPv1
                 else
                     ikramBilgisi = "Hayır";
 
-                listIptalEdilenSorular.Items.Insert(0, " - İPTAL NEDENİ - " + iptalNedeni);
+                GlacialComponents.Controls.GLItem glitem = new GlacialComponents.Controls.GLItem();
 
-                listIptalEdilenSorular.Items.Insert(0, " + ÜRÜN - " + yemekAdi + " + ADET - " + adedi + " + PORSİYON - " + porsiyonu + " + FİYAT - " + fiyati + " + İKRAM MI ? - " + ikramBilgisi + " + TOPLAM FİYAT - " + fiyati * adedi + " + GARSON - " + garsonu);                
+                glitem.Text = yemekAdi;
+
+                glitem.SubItems[1].Text = adedi.ToString();
+                glitem.SubItems[2].Text = porsiyonu.ToString();
+                glitem.SubItems[3].Text = fiyati.ToString();
+                glitem.SubItems[4].Text = ikramBilgisi;
+                glitem.SubItems[5].Text = (fiyati * adedi).ToString();
+                glitem.SubItems[6].Text = garsonu;
+                glitem.SubItems[7].Text = iptalNedeni;
+
+                listIptalEdilenSorular.Items.Insert(0, glitem);
+
             }
             cmd.Connection.Close();
             cmd.Connection.Dispose();
+            listIptalEdilenSorular.Items[0].Selected = true;
         }
     }
 }

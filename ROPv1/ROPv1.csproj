@@ -100,6 +100,12 @@
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="CrystalReports\CrystalReportMutfakUrunIptal.cs">
+      <DependentUpon>CrystalReportMutfakUrunIptal.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="CrystalReports\CrystalReportMutfak.cs">
       <DependentUpon>CrystalReportMutfak.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -344,6 +350,10 @@
     <EmbeddedResource Include="CrystalReports\CrystalReportGunSonuRaporu.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReportGunSonuRaporu.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReports\CrystalReportMutfakUrunIptal.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReportMutfakUrunIptal.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="CrystalReports\CrystalReportMutfak.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

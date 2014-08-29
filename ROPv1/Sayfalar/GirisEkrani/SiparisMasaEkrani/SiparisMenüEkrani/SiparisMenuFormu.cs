@@ -20,7 +20,9 @@ namespace ROPv1
 
         public MasaDegistirFormu masaDegistirForm;
 
-        CrystalReportMutfak raporMutfak = new CrystalReportMutfak();
+        CrystalReportMutfak raporMutfakNormal = new CrystalReportMutfak();
+
+        CrystalReportMutfakUrunIptal raporMutfakIptal = new CrystalReportMutfakUrunIptal();
 
         public HesapFormu hesapForm;
 
@@ -287,8 +289,8 @@ namespace ROPv1
             buttonTemizle_Click(null, null);
 
             secilenUrun.urunAdi.Add(((Button)sender).Text);
-            secilenUrun.urunPorsiyonu.Add(urunListesi[hangiKategoriSecili].urunPorsiyonu[Convert.ToInt32(((Button)sender).Tag)]);
-            secilenUrun.porsiyonFiyati.Add(urunListesi[hangiKategoriSecili].porsiyonFiyati[Convert.ToInt32(((Button)sender).Tag)]);
+            secilenUrun.urunPorsiyonSinifi.Add(urunListesi[hangiKategoriSecili].urunPorsiyonSinifi[Convert.ToInt32(((Button)sender).Tag)]);
+            secilenUrun.urunFiyati.Add(urunListesi[hangiKategoriSecili].urunFiyati[Convert.ToInt32(((Button)sender).Tag)]);
             labelEklenecekUrun.Text = ((Button)sender).Text;
         }
 
@@ -375,12 +377,12 @@ namespace ROPv1
             if (listUrunFiyat.SelectedItems.Count > 0)
             {
                 secilenUrun.urunAdi.Clear();
-                secilenUrun.urunPorsiyonu.Clear();
-                secilenUrun.porsiyonFiyati.Clear();
+                secilenUrun.urunPorsiyonSinifi.Clear();
+                secilenUrun.urunFiyati.Clear();
 
                 secilenUrun.urunAdi.Add(listUrunFiyat.SelectedItems[0].SubItems[2].Text);
-                secilenUrun.urunPorsiyonu.Add(Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[1].Tag));
-                secilenUrun.porsiyonFiyati.Add(listUrunFiyat.SelectedItems[0].SubItems[3].Text);
+                secilenUrun.urunPorsiyonSinifi.Add(Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[1].Tag));
+                secilenUrun.urunFiyati.Add(listUrunFiyat.SelectedItems[0].SubItems[3].Text);
 
                 labelEklenecekUrun.Text = listUrunFiyat.SelectedItems[0].SubItems[2].Text;
             }
@@ -404,8 +406,8 @@ namespace ROPv1
             buttonUrunIptal.Enabled = false;
 
             secilenUrun.urunAdi.Clear();
-            secilenUrun.urunPorsiyonu.Clear();
-            secilenUrun.porsiyonFiyati.Clear();
+            secilenUrun.urunPorsiyonSinifi.Clear();
+            secilenUrun.urunFiyati.Clear();
         }
 
         //listede seçili üründen çarpan kadar(çarpan yoksa 1 tane) ekleme butonu(ekle)
@@ -417,7 +419,7 @@ namespace ROPv1
 
             int gruptaYeniGelenSiparisVarmi = siparisGruptaVarMi(yeniSiparisler, secilenUrun.urunAdi[0], (porsiyon + "P").ToString()); //ürün cinsi hesapta var mı bak 
 
-            decimal eklenecekDeger = Convert.ToDecimal(secilenUrun.porsiyonFiyati[0]) * Convert.ToDecimal(porsiyon);
+            decimal eklenecekDeger = Convert.ToDecimal(secilenUrun.urunFiyati[0]) * Convert.ToDecimal(porsiyon);
 
             if (gruptaYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
             {
@@ -425,7 +427,7 @@ namespace ROPv1
 
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(porsiyon.ToString() + "P"); //porsiyon
 
-                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems[1].Tag = secilenUrun.urunPorsiyonu[0];
+                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems[1].Tag = secilenUrun.urunPorsiyonSinifi[0];
 
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(secilenUrun.urunAdi[0]); // ad
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(eklenecekDeger.ToString("0.00")); // fiyat
@@ -468,7 +470,7 @@ namespace ROPv1
                 for (int j = 0; j < urunListesi[i].urunAdi.Count; j++)
                 {
                     if (urunListesi[i].urunAdi[j] == urunAdi)
-                        return urunListesi[i].urunPorsiyonu[j];
+                        return urunListesi[i].urunPorsiyonSinifi[j];
                 }
             }
             return 0;
@@ -1417,7 +1419,6 @@ namespace ROPv1
                         listUrunFiyat.Columns[3].Width = fiyatBoyu + 10;
                     }
                 }
-
             }
             else //client 
             {
@@ -1522,7 +1523,6 @@ namespace ROPv1
                     }
                     catch (Exception) // masaya ait adisyon yok, çık
                     {
-                        cmd.Connection.Close();
                         cmd.Connection.Dispose();
                         this.Close();
                         return;
@@ -1562,14 +1562,21 @@ namespace ROPv1
                         masaFormu.serverdanSiparisIkramVeyaIptal(MasaAdi, hangiDepartman.departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[2].Text, Convert.ToDecimal(siparis.SubItems[3].Text).ToString(), null, siparis.SubItems[1].Text.Substring(0, siparis.SubItems[1].Text.Length - 1));
                     }
 
-                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0");
+                    //yeni ürünler için mutfak bildirimi
+                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=0");
                     dr = cmd.ExecuteReader();
+
+                    KontrolFormu dialog2 = null;
 
                     try
                     {
+                        dr.Read();
+
                         dr.GetBoolean(0);
-                        // mutfak adisyonu iste 
-                        cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
+
+                        // mutfak adisyonu iste
+                        cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi, Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
+
                         dr = cmd.ExecuteReader();
 
                         string firmaAdi = "", yaziciAdi = "";
@@ -1584,15 +1591,60 @@ namespace ROPv1
                         cmd.Connection.Dispose();
 
                         if (yaziciAdi != "")
-                            asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
+                            asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfakNormal);
                         else
                         {
-                            KontrolFormu dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
+                            dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
                             dialog2.Show();
                         }
                     }
                     catch
-                    { }
+                    {
+                        cmd.Connection.Close();
+                        cmd.Connection.Dispose();
+                    }
+
+                    // iptal edilen ürünler için mutfağa adisyon
+                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=1");
+                    dr = cmd.ExecuteReader();
+
+                    try
+                    {
+                        dr.Read();
+
+                        dr.GetBoolean(0);
+
+                        // mutfak adisyonu iste 
+                        cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
+                        dr = cmd.ExecuteReader();
+
+                        string firmaAdi = "", yaziciAdi = "";
+
+                        while (dr.Read())
+                        {
+                            firmaAdi = dr.GetString(0);
+                            yaziciAdi = dr.GetString(1);
+                        }
+
+                        cmd.Connection.Close();
+                        cmd.Connection.Dispose();
+                        
+                        if (yaziciAdi != "")
+                            asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfakIptal);
+                        else
+                        {
+                            if(dialog2 == null)
+                            {
+                                dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
+                                dialog2.Show();
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        cmd.Connection.Close();
+                        cmd.Connection.Dispose();
+                    }
 
                     if (adisyonNotuGuncellenmeliMi) // eğer sipariş notuna dokunulmuşsa not update edilsin
                     {
@@ -1641,6 +1693,8 @@ namespace ROPv1
 
         private static void Basla(string masaAdi, string departmanAdi, string firmaAdi, string printerAdi, CrystalReportMutfak rapor)
         {
+            rapor.Refresh();            
+
             rapor.SetParameterValue("Masa", masaAdi);
             rapor.SetParameterValue("Departman", departmanAdi);
             rapor.SetParameterValue("FirmaAdi", firmaAdi); // firma adı
@@ -1656,7 +1710,7 @@ namespace ROPv1
                 return;
             }
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET MutfakCiktisiAlindiMi=1 WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi=@masaninAdi AND DepartmanAdi=@departmanAdi)");
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET MutfakCiktisiAlindiMi=1 WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE IptalMi=0 AND AcikMi=1 AND MasaAdi=@masaninAdi AND DepartmanAdi=@departmanAdi)");
             cmd.Parameters.AddWithValue("@masaninAdi", masaAdi);
             cmd.Parameters.AddWithValue("@departmanAdi", departmanAdi);
 
@@ -1664,6 +1718,43 @@ namespace ROPv1
 
             cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AdisyonNotu=@_AdisyonNotu WHERE AcikMi=1 AND MasaAdi=@masaninAdi AND DepartmanAdi=@departmanAdi");
             cmd.Parameters.AddWithValue("@_AdisyonNotu", "");
+            cmd.Parameters.AddWithValue("@masaninAdi", masaAdi);
+            cmd.Parameters.AddWithValue("@departmanAdi", departmanAdi);
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
+
+        // mutfak ürün iptal adisyonu
+        public Thread asyncYaziciyaGonder(string masaAdi, string departmanAdi, string firmaAdi, string printerAdi, CrystalReportMutfakUrunIptal rapor)
+        {
+            var t = new Thread(() => Basla(masaAdi, departmanAdi, firmaAdi, printerAdi, rapor));
+            t.Start();
+            return t;
+        }
+
+        private static void Basla(string masaAdi, string departmanAdi, string firmaAdi, string printerAdi, CrystalReportMutfakUrunIptal rapor)
+        {
+            rapor.Refresh();
+
+            rapor.SetParameterValue("Masa", masaAdi);
+            rapor.SetParameterValue("Departman", departmanAdi);
+            rapor.SetParameterValue("FirmaAdi", firmaAdi); // firma adı
+            try
+            {
+                rapor.PrintOptions.PrinterName = printerAdi;
+                rapor.PrintToPrinter(1, false, 0, 0);
+            }
+            catch
+            {
+                KontrolFormu dialog = new KontrolFormu("Yazıcı bulunamadı\nLütfen ayarlarınızı kontrol edin", false);
+                dialog.Show();
+                return;
+            }
+
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET MutfakCiktisiAlindiMi=1 WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE IptalMi=1 AND AcikMi=1 AND MasaAdi=@masaninAdi AND DepartmanAdi=@departmanAdi)");
             cmd.Parameters.AddWithValue("@masaninAdi", masaAdi);
             cmd.Parameters.AddWithValue("@departmanAdi", departmanAdi);
 
@@ -1701,12 +1792,58 @@ namespace ROPv1
                 }
 
 
-                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0");
+                //yeni ürünler için mutfak bildirimi
+                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=0");
+                dr = cmd.ExecuteReader();
+
+                KontrolFormu dialog2 = null;
+
+                try
+                {
+                    dr.Read();
+
+                    dr.GetBoolean(0);
+
+                    // mutfak adisyonu iste
+                    cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi, Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
+
+                    dr = cmd.ExecuteReader();
+
+                    string firmaAdi = "", yaziciAdi = "";
+
+                    while (dr.Read())
+                    {
+                        firmaAdi = dr.GetString(0);
+                        yaziciAdi = dr.GetString(1);
+                    }
+
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+
+                    if (yaziciAdi != "")
+                        asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfakNormal);
+                    else
+                    {
+                        dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
+                        dialog2.Show();
+                    }
+                }
+                catch
+                {
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                }
+
+                // iptal edilen ürünler için mutfağa adisyon
+                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=1");
                 dr = cmd.ExecuteReader();
 
                 try
                 {
+                    dr.Read();
+
                     dr.GetBoolean(0);
+
                     // mutfak adisyonu iste 
                     cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
                     dr = cmd.ExecuteReader();
@@ -1723,15 +1860,21 @@ namespace ROPv1
                     cmd.Connection.Dispose();
 
                     if (yaziciAdi != "")
-                        asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
+                        asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfakIptal);
                     else
                     {
-                        KontrolFormu dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
-                        dialog2.Show();
+                        if (dialog2 == null)
+                        {
+                            dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
+                            dialog2.Show();
+                        }
                     }
                 }
                 catch
-                { }
+                {
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                }
 
                 if (adisyonNotuGuncellenmeliMi) // eğer sipariş notuna dokunulmuşsa not update edilsin
                 {
@@ -1769,7 +1912,6 @@ namespace ROPv1
             }
 
             int gruptaYeniGelenSiparisVarmi = siparisGruptaVarMi(eskiSiparisler, yemekAdi, porsiyonu + "P"); //ürün cinsi hesapta var mı bak           
-
             int kacAdet = Convert.ToInt32(miktar);
 
             if (gruptaYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
@@ -2002,14 +2144,14 @@ namespace ROPv1
         {
             decimal yeniSiparisAdeti = adet - iptalAdedi;
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet WHERE SiparisID=@id");
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet WHERE SiparisID=@_id");
             cmd.Parameters.AddWithValue("@_Adet", yeniSiparisAdeti);
-            cmd.Parameters.AddWithValue("@id", siparisID);
+            cmd.Parameters.AddWithValue("@_id", siparisID);
             cmd.ExecuteNonQuery();
 
             bool urunMutfagaBildirilmeliMi = mutfakBilgilendirilmeliMi(yemekAdi);
 
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,IptalMi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon,IptalNedeni) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_IptalMi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon,@_IptalNedeni)");
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,IptalMi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon,IptalNedeni,MutfakCiktisiAlindiMi) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_IptalMi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon,@_IptalNedeni,@_MutfakCiktisiAlindiMi)");
             cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
             cmd.Parameters.AddWithValue("@_Fiyatı", dusulecekDeger);
@@ -2020,6 +2162,7 @@ namespace ROPv1
             cmd.Parameters.AddWithValue("@_MutfakCiktisiAlinmaliMi", urunMutfagaBildirilmeliMi);
             cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
             cmd.Parameters.AddWithValue("@_IptalNedeni", iptalNedeni);
+            cmd.Parameters.AddWithValue("@_MutfakCiktisiAlindiMi", 0);
 
             cmd.ExecuteNonQuery();
 
@@ -2029,11 +2172,13 @@ namespace ROPv1
 
         public void iptalUpdateTam(int siparisID, string iptalNedeni)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET IptalMi=@_Iptal, Garsonu=@_Garson, IptalNedeni=@_IptalNedeni WHERE SiparisID=@_id");
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET IptalMi=@_Iptal, Garsonu=@_Garson, IptalNedeni=@_IptalNedeni, MutfakCiktisiAlindiMi=@_MutfakCiktisiAlindiMi WHERE SiparisID=@_id");
             cmd.Parameters.AddWithValue("@_Iptal", 1);
             cmd.Parameters.AddWithValue("@_Garson", siparisiKimGirdi);
             cmd.Parameters.AddWithValue("@_IptalNedeni", iptalNedeni);
             cmd.Parameters.AddWithValue("@_id", siparisID);
+            cmd.Parameters.AddWithValue("@_MutfakCiktisiAlindiMi", 0);
+
             cmd.ExecuteNonQuery();
 
             cmd.Connection.Close();
@@ -2403,12 +2548,58 @@ namespace ROPv1
                     masaFormu.serverdanSiparisIkramVeyaIptal(yeniMasaAdi, yeniDepartmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[2].Text, Convert.ToDecimal(siparis.SubItems[3].Text).ToString(), null, siparis.SubItems[1].Text.Substring(0, siparis.SubItems[1].Text.Length - 1));
                 }
 
-                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0");
+                //yeni ürünler için mutfak bildirimi
+                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=0");
+                dr = cmd.ExecuteReader();
+
+                KontrolFormu dialog2 = null;
+
+                try
+                {
+                    dr.Read();
+
+                    dr.GetBoolean(0);
+
+                    // mutfak adisyonu iste
+                    cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi, Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
+
+                    dr = cmd.ExecuteReader();
+
+                    string firmaAdi = "", yaziciAdi = "";
+
+                    while (dr.Read())
+                    {
+                        firmaAdi = dr.GetString(0);
+                        yaziciAdi = dr.GetString(1);
+                    }
+
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+
+                    if (yaziciAdi != "")
+                        asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfakNormal);
+                    else
+                    {
+                        dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
+                        dialog2.Show();
+                    }
+                }
+                catch
+                {
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                }
+
+                // iptal edilen ürünler için mutfağa adisyon
+                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=1");
                 dr = cmd.ExecuteReader();
 
                 try
                 {
+                    dr.Read();
+
                     dr.GetBoolean(0);
+
                     // mutfak adisyonu iste 
                     cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
                     dr = cmd.ExecuteReader();
@@ -2425,15 +2616,21 @@ namespace ROPv1
                     cmd.Connection.Dispose();
 
                     if (yaziciAdi != "")
-                        asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfak);
+                        asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfakIptal);
                     else
                     {
-                        KontrolFormu dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
-                        dialog2.Show();
+                        if (dialog2 == null)
+                        {
+                            dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
+                            dialog2.Show();
+                        }
                     }
                 }
                 catch
-                { }
+                {
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                }
 
                 if (adisyonNotuGuncellenmeliMi) // eğer sipariş notuna dokunulmuşsa not update edilsin
                 {
@@ -2516,9 +2713,9 @@ namespace ROPv1
         {
             if (!porsiyonFormVisible)
             {
-                if (secilenUrun.urunPorsiyonu.Count > 0)
+                if (secilenUrun.urunPorsiyonSinifi.Count > 0)
                 {
-                    porsiyonForm = new PorsiyonFormu(secilenUrun.urunPorsiyonu[0], this);
+                    porsiyonForm = new PorsiyonFormu(secilenUrun.urunPorsiyonSinifi[0], this);
                     porsiyonForm.Show();
                     porsiyonFormVisible = true;
                 }

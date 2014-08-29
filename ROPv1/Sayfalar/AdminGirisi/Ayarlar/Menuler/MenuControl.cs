@@ -618,1175 +618,1175 @@ namespace ROPv1
                 {
                     infoUrun[i] = new KategorilerineGoreUrunler();
                     infoUrun[i].urunAdi = new List<string>();
-                    infoUrun[i].porsiyonFiyati = new List<string>();
+                    infoUrun[i].urunFiyati = new List<string>();
                     infoUrun[i].urunKategorisi = new List<string>();
                     infoUrun[i].urunAciklamasi = new List<string>();
                     infoUrun[i].urunKDV = new List<int>();
-                    infoUrun[i].urunPorsiyonu = new List<int>();
+                    infoUrun[i].urunPorsiyonSinifi = new List<int>();
                     infoUrun[i].urunMutfagaBildirilmeliMi = new List<bool>();
                 }
 
                 infoUrun[0].urunAdi.Add("Osmanlı Kahvaltı");
-                infoUrun[0].porsiyonFiyati.Add("23,00");
+                infoUrun[0].urunFiyati.Add("23,00");
                 infoUrun[0].urunKategorisi.Add("Kahvaltı");
                 infoUrun[0].urunAciklamasi.Add("Keçi peyniri, tulum peyniri, tereyağ, siyah-yeşil zeytin, domates, salatalık, kızılcık murabbası,katmerli gözleme, pastırmalı yumurta, süt");
                 infoUrun[0].urunKDV.Add(8);
-                infoUrun[0].urunPorsiyonu.Add(0);
+                infoUrun[0].urunPorsiyonSinifi.Add(0);
                 infoUrun[0].urunMutfagaBildirilmeliMi.Add(true);
 
 
                 infoUrun[0].urunAdi.Add("Liva Özel Kahvaltı");
-                infoUrun[0].porsiyonFiyati.Add("21,75");
+                infoUrun[0].urunFiyati.Add("21,75");
                 infoUrun[0].urunKategorisi.Add("Kahvaltı");
                 infoUrun[0].urunAciklamasi.Add("Beyaz peynir, taze kaşar, sepet peyniri, siyah-yeşil zeytin, tavuk jambon, dana jambon, macar salam, 2 çeşit reçel, süzme bal, köy tereyağı, kaymak, livatella, domates, salatalık, biber, ceviz, sigara böreği, yumurta");
                 infoUrun[0].urunKDV.Add(8);
-                infoUrun[0].urunPorsiyonu.Add(0);
+                infoUrun[0].urunPorsiyonSinifi.Add(0);
                 infoUrun[0].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[0].urunAdi.Add("Sıcak Kahvaltı");
-                infoUrun[0].porsiyonFiyati.Add("21,75");
+                infoUrun[0].urunFiyati.Add("21,75");
                 infoUrun[0].urunKategorisi.Add("Kahvaltı");
                 infoUrun[0].urunAciklamasi.Add("Sote patates, ızgara sucuk, sosis ,ızgara hellim peyniri, sigara böreği, kaşar pane, domates, biber, bazlama ekmeği üstüne tek göz yumurta");
                 infoUrun[0].urunKDV.Add(8);
-                infoUrun[0].urunPorsiyonu.Add(0);
+                infoUrun[0].urunPorsiyonSinifi.Add(0);
                 infoUrun[0].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[0].urunAdi.Add("Form Kahvaltı");
-                infoUrun[0].porsiyonFiyati.Add("21,00");
+                infoUrun[0].urunFiyati.Add("21,00");
                 infoUrun[0].urunKategorisi.Add("Kahvaltı");
                 infoUrun[0].urunAciklamasi.Add("Form kahvaltıyla formunuzu koruyun sağlıklı yaşayın");
                 infoUrun[0].urunKDV.Add(8);
-                infoUrun[0].urunPorsiyonu.Add(0);
+                infoUrun[0].urunPorsiyonSinifi.Add(0);
                 infoUrun[0].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[0].urunAdi.Add("Ekonomik Kahvaltı");
-                infoUrun[0].porsiyonFiyati.Add("19,50");
+                infoUrun[0].urunFiyati.Add("19,50");
                 infoUrun[0].urunKategorisi.Add("Kahvaltı");
                 infoUrun[0].urunAciklamasi.Add("Hem miğdenize hem de cebinize göre kahvaltı");
                 infoUrun[0].urunKDV.Add(8);
-                infoUrun[0].urunPorsiyonu.Add(0);
+                infoUrun[0].urunPorsiyonSinifi.Add(0);
                 infoUrun[0].urunMutfagaBildirilmeliMi.Add(true);
 
 
                 infoUrun[0].urunAdi.Add("Annemin Kahvaltı");
-                infoUrun[0].porsiyonFiyati.Add("21,00");
+                infoUrun[0].urunFiyati.Add("21,00");
                 infoUrun[0].urunKategorisi.Add("Kahvaltı");
                 infoUrun[0].urunAciklamasi.Add("Anne eli değmiş gibi");
                 infoUrun[0].urunKDV.Add(8);
-                infoUrun[0].urunPorsiyonu.Add(0);
+                infoUrun[0].urunPorsiyonSinifi.Add(0);
                 infoUrun[0].urunMutfagaBildirilmeliMi.Add(true);
 
 
                 infoUrun[0].urunAdi.Add("Anadolu Kahvaltı");
-                infoUrun[0].porsiyonFiyati.Add("21,00");
+                infoUrun[0].urunFiyati.Add("21,00");
                 infoUrun[0].urunKategorisi.Add("Kahvaltı");
                 infoUrun[0].urunAciklamasi.Add("Anadolu lezzetleri bu kahvaltıda buluşuyor");
                 infoUrun[0].urunKDV.Add(8);
-                infoUrun[0].urunPorsiyonu.Add(0);
+                infoUrun[0].urunPorsiyonSinifi.Add(0);
                 infoUrun[0].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[1].urunAdi.Add("Sahanda Yumurta");
-                infoUrun[1].porsiyonFiyati.Add("10,00");
+                infoUrun[1].urunFiyati.Add("10,00");
                 infoUrun[1].urunKategorisi.Add("Sahanda Servisler");
                 infoUrun[1].urunAciklamasi.Add("");
                 infoUrun[1].urunKDV.Add(8);
-                infoUrun[1].urunPorsiyonu.Add(0);
+                infoUrun[1].urunPorsiyonSinifi.Add(0);
                 infoUrun[1].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[1].urunAdi.Add("Sahanda Sucuklu Yumurta");
-                infoUrun[1].porsiyonFiyati.Add("11,75");
+                infoUrun[1].urunFiyati.Add("11,75");
                 infoUrun[1].urunKategorisi.Add("Sahanda Servisler");
                 infoUrun[1].urunAciklamasi.Add("");
                 infoUrun[1].urunKDV.Add(8);
-                infoUrun[1].urunPorsiyonu.Add(0);
+                infoUrun[1].urunPorsiyonSinifi.Add(0);
                 infoUrun[1].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[1].urunAdi.Add("Sahanda Pastırmalı Yumurta");
-                infoUrun[1].porsiyonFiyati.Add("13,50");
+                infoUrun[1].urunFiyati.Add("13,50");
                 infoUrun[1].urunKategorisi.Add("Sahanda Servisler");
                 infoUrun[1].urunAciklamasi.Add("");
                 infoUrun[1].urunKDV.Add(8);
-                infoUrun[1].urunPorsiyonu.Add(0);
+                infoUrun[1].urunPorsiyonSinifi.Add(0);
                 infoUrun[1].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[1].urunAdi.Add("Sahanda Menemen");
-                infoUrun[1].porsiyonFiyati.Add("11,50");
+                infoUrun[1].urunFiyati.Add("11,50");
                 infoUrun[1].urunKategorisi.Add("Sahanda Servisler");
                 infoUrun[1].urunAciklamasi.Add("");
                 infoUrun[1].urunKDV.Add(8);
-                infoUrun[1].urunPorsiyonu.Add(0);
+                infoUrun[1].urunPorsiyonSinifi.Add(0);
                 infoUrun[1].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[1].urunAdi.Add("Sahanda Kavurmalı Yumurta");
-                infoUrun[1].porsiyonFiyati.Add("13,50");
+                infoUrun[1].urunFiyati.Add("13,50");
                 infoUrun[1].urunKategorisi.Add("Sahanda Servisler");
                 infoUrun[1].urunAciklamasi.Add("");
                 infoUrun[1].urunKDV.Add(8);
-                infoUrun[1].urunPorsiyonu.Add(0);
+                infoUrun[1].urunPorsiyonSinifi.Add(0);
                 infoUrun[1].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[1].urunAdi.Add("Karadeniz Usulü Mıhlama");
-                infoUrun[1].porsiyonFiyati.Add("11,50");
+                infoUrun[1].urunFiyati.Add("11,50");
                 infoUrun[1].urunKategorisi.Add("Sahanda Servisler");
                 infoUrun[1].urunAciklamasi.Add("");
                 infoUrun[1].urunKDV.Add(8);
-                infoUrun[1].urunPorsiyonu.Add(0);
+                infoUrun[1].urunPorsiyonSinifi.Add(0);
                 infoUrun[1].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[1].urunAdi.Add("Sahanda Kavurmalı Menemen");
-                infoUrun[1].porsiyonFiyati.Add("13,50");
+                infoUrun[1].urunFiyati.Add("13,50");
                 infoUrun[1].urunKategorisi.Add("Sahanda Servisler");
                 infoUrun[1].urunAciklamasi.Add("");
                 infoUrun[1].urunKDV.Add(8);
-                infoUrun[1].urunPorsiyonu.Add(0);
+                infoUrun[1].urunPorsiyonSinifi.Add(0);
                 infoUrun[1].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[2].urunAdi.Add("Sebzeli Omlet");
-                infoUrun[2].porsiyonFiyati.Add("13,50");
+                infoUrun[2].urunFiyati.Add("13,50");
                 infoUrun[2].urunKategorisi.Add("Omletler");
                 infoUrun[2].urunAciklamasi.Add("");
                 infoUrun[2].urunKDV.Add(8);
-                infoUrun[2].urunPorsiyonu.Add(0);
+                infoUrun[2].urunPorsiyonSinifi.Add(0);
                 infoUrun[2].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[2].urunAdi.Add("Karışık Omlet");
-                infoUrun[2].porsiyonFiyati.Add("15,00");
+                infoUrun[2].urunFiyati.Add("15,00");
                 infoUrun[2].urunKategorisi.Add("Omletler");
                 infoUrun[2].urunAciklamasi.Add("");
                 infoUrun[2].urunKDV.Add(8);
-                infoUrun[2].urunPorsiyonu.Add(0);
+                infoUrun[2].urunPorsiyonSinifi.Add(0);
                 infoUrun[2].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[2].urunAdi.Add("Kaşarlı Omlet");
-                infoUrun[2].porsiyonFiyati.Add("13,50");
+                infoUrun[2].urunFiyati.Add("13,50");
                 infoUrun[2].urunKategorisi.Add("Omletler");
                 infoUrun[2].urunAciklamasi.Add("");
                 infoUrun[2].urunKDV.Add(8);
-                infoUrun[2].urunPorsiyonu.Add(0);
+                infoUrun[2].urunPorsiyonSinifi.Add(0);
                 infoUrun[2].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[2].urunAdi.Add("Mantarlı Omlet");
-                infoUrun[2].porsiyonFiyati.Add("13,75");
+                infoUrun[2].urunFiyati.Add("13,75");
                 infoUrun[2].urunKategorisi.Add("Omletler");
                 infoUrun[2].urunAciklamasi.Add("");
                 infoUrun[2].urunKDV.Add(8);
-                infoUrun[2].urunPorsiyonu.Add(0);
+                infoUrun[2].urunPorsiyonSinifi.Add(0);
                 infoUrun[2].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[2].urunAdi.Add("Sade Omlet");
-                infoUrun[2].porsiyonFiyati.Add("12,50");
+                infoUrun[2].urunFiyati.Add("12,50");
                 infoUrun[2].urunKategorisi.Add("Omletler");
                 infoUrun[2].urunAciklamasi.Add("");
                 infoUrun[2].urunKDV.Add(8);
-                infoUrun[2].urunPorsiyonu.Add(0);
+                infoUrun[2].urunPorsiyonSinifi.Add(0);
                 infoUrun[2].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[2].urunAdi.Add("İspanyol Rulo Omlet");
-                infoUrun[2].porsiyonFiyati.Add("13,50");
+                infoUrun[2].urunFiyati.Add("13,50");
                 infoUrun[2].urunKategorisi.Add("Omletler");
                 infoUrun[2].urunAciklamasi.Add("");
                 infoUrun[2].urunKDV.Add(8);
-                infoUrun[2].urunPorsiyonu.Add(0);
+                infoUrun[2].urunPorsiyonSinifi.Add(0);
                 infoUrun[2].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[2].urunAdi.Add("Beyaz Peynirli Domatesli Omlet");
-                infoUrun[2].porsiyonFiyati.Add("13,50");
+                infoUrun[2].urunFiyati.Add("13,50");
                 infoUrun[2].urunKategorisi.Add("Omletler");
                 infoUrun[2].urunAciklamasi.Add("");
                 infoUrun[2].urunKDV.Add(8);
-                infoUrun[2].urunPorsiyonu.Add(0);
+                infoUrun[2].urunPorsiyonSinifi.Add(0);
                 infoUrun[2].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[3].urunAdi.Add("Bazlama Ekmeğine Kavurmalı Tost");
-                infoUrun[3].porsiyonFiyati.Add("15,75");
+                infoUrun[3].urunFiyati.Add("15,75");
                 infoUrun[3].urunKategorisi.Add("Tostlar");
                 infoUrun[3].urunAciklamasi.Add("");
                 infoUrun[3].urunKDV.Add(8);
-                infoUrun[3].urunPorsiyonu.Add(0);
+                infoUrun[3].urunPorsiyonSinifi.Add(0);
                 infoUrun[3].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[3].urunAdi.Add("Bazlama Ekmeğine Kocaman Tost");
-                infoUrun[3].porsiyonFiyati.Add("15,00");
+                infoUrun[3].urunFiyati.Add("15,00");
                 infoUrun[3].urunKategorisi.Add("Tostlar");
                 infoUrun[3].urunAciklamasi.Add("");
                 infoUrun[3].urunKDV.Add(8);
-                infoUrun[3].urunPorsiyonu.Add(0);
+                infoUrun[3].urunPorsiyonSinifi.Add(0);
                 infoUrun[3].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[3].urunAdi.Add("Karışık French Tost");
-                infoUrun[3].porsiyonFiyati.Add("15,00");
+                infoUrun[3].urunFiyati.Add("15,00");
                 infoUrun[3].urunKategorisi.Add("Tostlar");
                 infoUrun[3].urunAciklamasi.Add("");
                 infoUrun[3].urunKDV.Add(8);
-                infoUrun[3].urunPorsiyonu.Add(0);
+                infoUrun[3].urunPorsiyonSinifi.Add(0);
                 infoUrun[3].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[3].urunAdi.Add("Mantarlı French Tost");
-                infoUrun[3].porsiyonFiyati.Add("14,75");
+                infoUrun[3].urunFiyati.Add("14,75");
                 infoUrun[3].urunKategorisi.Add("Tostlar");
                 infoUrun[3].urunAciklamasi.Add("");
                 infoUrun[3].urunKDV.Add(8);
-                infoUrun[3].urunPorsiyonu.Add(0);
+                infoUrun[3].urunPorsiyonSinifi.Add(0);
                 infoUrun[3].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[3].urunAdi.Add("Tavuklu French Tost");
-                infoUrun[3].porsiyonFiyati.Add("15,00");
+                infoUrun[3].urunFiyati.Add("15,00");
                 infoUrun[3].urunKategorisi.Add("Tostlar");
                 infoUrun[3].urunAciklamasi.Add("");
                 infoUrun[3].urunKDV.Add(8);
-                infoUrun[3].urunPorsiyonu.Add(0);
+                infoUrun[3].urunPorsiyonSinifi.Add(0);
                 infoUrun[3].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[3].urunAdi.Add("Şefin Tostu");
-                infoUrun[3].porsiyonFiyati.Add("13,50");
+                infoUrun[3].urunFiyati.Add("13,50");
                 infoUrun[3].urunKategorisi.Add("Tostlar");
                 infoUrun[3].urunAciklamasi.Add("");
                 infoUrun[3].urunKDV.Add(8);
-                infoUrun[3].urunPorsiyonu.Add(0);
+                infoUrun[3].urunPorsiyonSinifi.Add(0);
                 infoUrun[3].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[3].urunAdi.Add("Karışık Tost");
-                infoUrun[3].porsiyonFiyati.Add("13,75");
+                infoUrun[3].urunFiyati.Add("13,75");
                 infoUrun[3].urunKategorisi.Add("Tostlar");
                 infoUrun[3].urunAciklamasi.Add("");
                 infoUrun[3].urunKDV.Add(8);
-                infoUrun[3].urunPorsiyonu.Add(0);
+                infoUrun[3].urunPorsiyonSinifi.Add(0);
                 infoUrun[3].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[3].urunAdi.Add("Sucuklu Kaşarlı Tost");
-                infoUrun[3].porsiyonFiyati.Add("13,00");
+                infoUrun[3].urunFiyati.Add("13,00");
                 infoUrun[3].urunKategorisi.Add("Tostlar");
                 infoUrun[3].urunAciklamasi.Add("");
                 infoUrun[3].urunKDV.Add(8);
-                infoUrun[3].urunPorsiyonu.Add(0);
+                infoUrun[3].urunPorsiyonSinifi.Add(0);
                 infoUrun[3].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[3].urunAdi.Add("Kaşarlı Tost");
-                infoUrun[3].porsiyonFiyati.Add("11,75");
+                infoUrun[3].urunFiyati.Add("11,75");
                 infoUrun[3].urunKategorisi.Add("Tostlar");
                 infoUrun[3].urunAciklamasi.Add("");
                 infoUrun[3].urunKDV.Add(8);
-                infoUrun[3].urunPorsiyonu.Add(0);
+                infoUrun[3].urunPorsiyonSinifi.Add(0);
                 infoUrun[3].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[3].urunAdi.Add("Beyaz Peynirli Tost");
-                infoUrun[3].porsiyonFiyati.Add("11,50");
+                infoUrun[3].urunFiyati.Add("11,50");
                 infoUrun[3].urunKategorisi.Add("Tostlar");
                 infoUrun[3].urunAciklamasi.Add("");
                 infoUrun[3].urunKDV.Add(8);
-                infoUrun[3].urunPorsiyonu.Add(0);
+                infoUrun[3].urunPorsiyonSinifi.Add(0);
                 infoUrun[3].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[4].urunAdi.Add("Teksas Usulü Tavuklu Quesedilla");
-                infoUrun[4].porsiyonFiyati.Add("17,50");
+                infoUrun[4].urunFiyati.Add("17,50");
                 infoUrun[4].urunKategorisi.Add("Gözlemeler");
                 infoUrun[4].urunAciklamasi.Add("Tortilla ekmeğinde mevsim sebzeleri, tavuk, kaşar, kızartılmış cips, avokado püresi, jalapeno biberi, salsa ve roka dip sos");
                 infoUrun[4].urunKDV.Add(8);
-                infoUrun[4].urunPorsiyonu.Add(0);
+                infoUrun[4].urunPorsiyonSinifi.Add(0);
                 infoUrun[4].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[4].urunAdi.Add("Macar Gözleme");
-                infoUrun[4].porsiyonFiyati.Add("15,25");
+                infoUrun[4].urunFiyati.Add("15,25");
                 infoUrun[4].urunKategorisi.Add("Gözlemeler");
                 infoUrun[4].urunAciklamasi.Add("Sac yufkasında sotelenmiş dana jambon, tavuk jambon, sosis, biber mix, kaşar peyniri, yanında patates ve livaya özel salata");
                 infoUrun[4].urunKDV.Add(8);
-                infoUrun[4].urunPorsiyonu.Add(0);
+                infoUrun[4].urunPorsiyonSinifi.Add(0);
                 infoUrun[4].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[4].urunAdi.Add("Köylüm Gözleme");
-                infoUrun[4].porsiyonFiyati.Add("13,25");
+                infoUrun[4].urunFiyati.Add("13,25");
                 infoUrun[4].urunKategorisi.Add("Gözlemeler");
                 infoUrun[4].urunAciklamasi.Add("Sac yufkasında kavrulmuş kıyma, patates püresi ve rende kaşar peyniri, yanında patates ve livaya özel salata");
                 infoUrun[4].urunKDV.Add(8);
-                infoUrun[4].urunPorsiyonu.Add(0);
+                infoUrun[4].urunPorsiyonSinifi.Add(0);
                 infoUrun[4].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[4].urunAdi.Add("Özel Liva Gözleme");
-                infoUrun[4].porsiyonFiyati.Add("15,50");
+                infoUrun[4].urunFiyati.Add("15,50");
                 infoUrun[4].urunKategorisi.Add("Gözlemeler");
                 infoUrun[4].urunAciklamasi.Add("Sac yufkasında kavrulmuş kıyma, patates püresi ve rende kaşar, yanında patates ve livaya özel salata");
                 infoUrun[4].urunKDV.Add(8);
-                infoUrun[4].urunPorsiyonu.Add(0);
+                infoUrun[4].urunPorsiyonSinifi.Add(0);
                 infoUrun[4].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[4].urunAdi.Add("Kaşar Peynirli Gözleme");
-                infoUrun[4].porsiyonFiyati.Add("14,75");
+                infoUrun[4].urunFiyati.Add("14,75");
                 infoUrun[4].urunKategorisi.Add("Gözlemeler");
                 infoUrun[4].urunAciklamasi.Add("");
                 infoUrun[4].urunKDV.Add(8);
-                infoUrun[4].urunPorsiyonu.Add(0);
+                infoUrun[4].urunPorsiyonSinifi.Add(0);
                 infoUrun[4].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[4].urunAdi.Add("Patatesli Gözleme");
-                infoUrun[4].porsiyonFiyati.Add("14,00");
+                infoUrun[4].urunFiyati.Add("14,00");
                 infoUrun[4].urunKategorisi.Add("Gözlemeler");
                 infoUrun[4].urunAciklamasi.Add("");
                 infoUrun[4].urunKDV.Add(8);
-                infoUrun[4].urunPorsiyonu.Add(0);
+                infoUrun[4].urunPorsiyonSinifi.Add(0);
                 infoUrun[4].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[4].urunAdi.Add("Beyaz Peynirli Gözleme");
-                infoUrun[4].porsiyonFiyati.Add("14,50");
+                infoUrun[4].urunFiyati.Add("14,50");
                 infoUrun[4].urunKategorisi.Add("Gözlemeler");
                 infoUrun[4].urunAciklamasi.Add("Sac yufkasında beyaz peynir ve maydanoz, yanında patates ve livaya özel salata");
                 infoUrun[4].urunKDV.Add(8);
-                infoUrun[4].urunPorsiyonu.Add(0);
+                infoUrun[4].urunPorsiyonSinifi.Add(0);
                 infoUrun[4].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[4].urunAdi.Add("Ispanaklı Mozarella Gözleme");
-                infoUrun[4].porsiyonFiyati.Add("15,25");
+                infoUrun[4].urunFiyati.Add("15,25");
                 infoUrun[4].urunKategorisi.Add("Gözlemeler");
                 infoUrun[4].urunAciklamasi.Add("");
                 infoUrun[4].urunKDV.Add(8);
-                infoUrun[4].urunPorsiyonu.Add(0);
+                infoUrun[4].urunPorsiyonSinifi.Add(0);
                 infoUrun[4].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Paçanga Böreği");
-                infoUrun[5].porsiyonFiyati.Add("15,99");
+                infoUrun[5].urunFiyati.Add("15,99");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("Sac yufkasında sotelenmiş julyen pastırma, biber mix, rende kaşar, yanında patates salsa ve roka dip sos");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Sigara Böreği");
-                infoUrun[5].porsiyonFiyati.Add("15,00");
+                infoUrun[5].urunFiyati.Add("15,00");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Çin Böreği");
-                infoUrun[5].porsiyonFiyati.Add("17,00");
+                infoUrun[5].urunFiyati.Add("17,00");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("Sote julyen mevsim sebzeleri, tavuk parçaları, soya sos ile tatlandırılıp özel teriyaki sos ve livaya özel salata");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Mantar Dolması");
-                infoUrun[5].porsiyonFiyati.Add("15,00");
+                infoUrun[5].urunFiyati.Add("15,00");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("Fırınlanmış mantar üzerine pastırma, salam, sucuk, dana jambon, tavuk jambon ve kaşar");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Sarımsaklı Ekmek");
-                infoUrun[5].porsiyonFiyati.Add("6,00");
+                infoUrun[5].urunFiyati.Add("6,00");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Karışık Sıcak Sepeti");
-                infoUrun[5].porsiyonFiyati.Add("19,50");
+                infoUrun[5].urunFiyati.Add("19,50");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("Kaşar pane, yıldız sosis, paçanga böreği, cornflakes paneli tavuk ve patates");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Piliç Fingers");
-                infoUrun[5].porsiyonFiyati.Add("19,00");
+                infoUrun[5].urunFiyati.Add("19,00");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("Çeşnilerle tatlandırılmış julten tavuk parçaları, patates, roka dip sos ve barbekü sos");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Kıtır Mozarella Çubukları");
-                infoUrun[5].porsiyonFiyati.Add("15,99");
+                infoUrun[5].urunFiyati.Add("15,99");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("Patates, livaya özel salata, roka dip sos ve salsa sos");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Kaşar Pane");
-                infoUrun[5].porsiyonFiyati.Add("12,50");
+                infoUrun[5].urunFiyati.Add("12,50");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("Patates, dip sos ve barbekü sos");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Patates Kroket");
-                infoUrun[5].porsiyonFiyati.Add("12,50");
+                infoUrun[5].urunFiyati.Add("12,50");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Soğan Halkaları");
-                infoUrun[5].porsiyonFiyati.Add("12,50");
+                infoUrun[5].urunFiyati.Add("12,50");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("Roka dip sos ve salsa sos");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Sosis Tava");
-                infoUrun[5].porsiyonFiyati.Add("12,75");
+                infoUrun[5].urunFiyati.Add("12,75");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("Patates ve barbekü sos");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Bonfrit Patates");
-                infoUrun[5].porsiyonFiyati.Add("13,00");
+                infoUrun[5].urunFiyati.Add("13,00");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("Barbekü sos");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Güveçte Kaşarlı Mantar");
-                infoUrun[5].porsiyonFiyati.Add("12,75");
+                infoUrun[5].urunFiyati.Add("12,75");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[5].urunAdi.Add("Elma Dilim Patates");
-                infoUrun[5].porsiyonFiyati.Add("13,25");
+                infoUrun[5].urunFiyati.Add("13,25");
                 infoUrun[5].urunKategorisi.Add("Aperatifler");
                 infoUrun[5].urunAciklamasi.Add("");
                 infoUrun[5].urunKDV.Add(8);
-                infoUrun[5].urunPorsiyonu.Add(0);
+                infoUrun[5].urunPorsiyonSinifi.Add(0);
                 infoUrun[5].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Taco Home Salata");
-                infoUrun[6].porsiyonFiyati.Add("21,00");
+                infoUrun[6].urunFiyati.Add("21,00");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("Taco içerisinde mevsim yeşillikleri, meksika fasülyesi, siyah zeytin, domates, salatalık, soya filizi, baby mısır, mantar, bonfile, kaşar, tobasco sos");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Mevsim Salata");
-                infoUrun[6].porsiyonFiyati.Add("16,75");
+                infoUrun[6].urunFiyati.Add("16,75");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("Mevsim yeşillikleri, havuç, kırmızı lahana, domates, salatalık, soya filizi, baby mısır, zeytin, beyaz peynir, zeytinyağı ve limon");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Ton Balıklı Salata");
-                infoUrun[6].porsiyonFiyati.Add("19,25");
+                infoUrun[6].urunFiyati.Add("19,25");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("Mevsim yeşillikleri üzerine ton balığı, haşlanmış yumurta, közlenmiş biber, soğan, domates, salatalık, kapari çiçeği, siyah zeytin");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Çok Peynirli Salata");
-                infoUrun[6].porsiyonFiyati.Add("19,25");
+                infoUrun[6].urunFiyati.Add("19,25");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("Karışık yeşillik, domates, salatalık, köz biber, siyah zeytin, ceviz, ezme peyniri, kaşar, dil peyniri, taze nane, feşleğen, pesto sos");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Sezar Salata");
-                infoUrun[6].porsiyonFiyati.Add("19,25");
+                infoUrun[6].urunFiyati.Add("19,25");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("Iceberg, ızgara tavuk parçaları, sarımsaklı graten ekmek, tane mısır, sezar sos ve parmesan peyniri");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Hellim Peynirli Salata");
-                infoUrun[6].porsiyonFiyati.Add("19,25");
+                infoUrun[6].urunFiyati.Add("19,25");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("Iceberg, akdeniz yeşillikleri, kornişon turşu, cherry domates, kuru kayısı, ızgara hellim peyniri, pesto sos");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Tavuklu Bademli Salata");
-                infoUrun[6].porsiyonFiyati.Add("20,50");
+                infoUrun[6].urunFiyati.Add("20,50");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("Iceberg, akdeniz yeşillikleri, havuç, meksika fasülyesi, tane mısır, küp beyaz peynir, cherry domates, küp tavuk, soya sosu, zeytinyağı ve limon sos");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Deniz Mahsülleri Salata");
-                infoUrun[6].porsiyonFiyati.Add("20,50");
+                infoUrun[6].urunFiyati.Add("20,50");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("Iceberg, akdeniz yeşillikleri, kornişon tursu, havuç, mısır, kırmızı soğan, cherry domates, karides, mezgit, yengeç, parmesan peyniri, zeytinyağı ve limon sos");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Lor Peynirli Roka Salata");
-                infoUrun[6].porsiyonFiyati.Add("18,50");
+                infoUrun[6].urunFiyati.Add("18,50");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("Roka, ceviz, domates, lor peyniri, portakal ve balzamik sos");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Tavuklu Peynirli Salata");
-                infoUrun[6].porsiyonFiyati.Add("19,25");
+                infoUrun[6].urunFiyati.Add("19,25");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("Iceberg, kaşar, ceviz, ızgara tavuk, cherry domates, kızarmış susam ve özel krema sos");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Izgara Biftekli Salata");
-                infoUrun[6].porsiyonFiyati.Add("20,50");
+                infoUrun[6].urunFiyati.Add("20,50");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("Dilimlenmiş ve marine edilmiş ızgara biftek, iceberg, mevsim yeşillikleri, domates, salatalık, turşu, zeytin, havuç ve hardallı krema sos");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Kısırlı Köylü Salata");
-                infoUrun[6].porsiyonFiyati.Add("17,25");
+                infoUrun[6].urunFiyati.Add("17,25");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("Mevsim yeşillikleri, domates, salatalık, kornişon turşu, siyah zeytin, köz biber, havuç, beyaz peynir, kısır, çörekokut, zeytinyağı ve nar ekşisi sos");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Susamlı Fingers Salata");
-                infoUrun[6].porsiyonFiyati.Add("20,00");
+                infoUrun[6].urunFiyati.Add("20,00");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Roma Salatası");
-                infoUrun[6].porsiyonFiyati.Add("19,00");
+                infoUrun[6].urunFiyati.Add("19,00");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Keçi Peynirli Köylü Salata");
-                infoUrun[6].porsiyonFiyati.Add("18,00");
+                infoUrun[6].urunFiyati.Add("18,00");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Enginar Kalbi Salata");
-                infoUrun[6].porsiyonFiyati.Add("17,50");
+                infoUrun[6].urunFiyati.Add("17,50");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[6].urunAdi.Add("Bahçe Salatası");
-                infoUrun[6].porsiyonFiyati.Add("17,50");
+                infoUrun[6].urunFiyati.Add("17,50");
                 infoUrun[6].urunKategorisi.Add("Salatalar");
                 infoUrun[6].urunAciklamasi.Add("");
                 infoUrun[6].urunKDV.Add(8);
-                infoUrun[6].urunPorsiyonu.Add(0);
+                infoUrun[6].urunPorsiyonSinifi.Add(0);
                 infoUrun[6].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[7].urunAdi.Add("Texas Burger");
-                infoUrun[7].porsiyonFiyati.Add("17,25");
+                infoUrun[7].urunFiyati.Add("17,25");
                 infoUrun[7].urunKategorisi.Add("Burgerler");
                 infoUrun[7].urunAciklamasi.Add("Lav taşında pişmiş hamburger köftesi, yeşillik, turşu domates, özel texas sos, burger peyniri, soğan ve patates");
                 infoUrun[7].urunKDV.Add(8);
-                infoUrun[7].urunPorsiyonu.Add(0);
+                infoUrun[7].urunPorsiyonSinifi.Add(0);
                 infoUrun[7].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[7].urunAdi.Add("Köfte Burger");
-                infoUrun[7].porsiyonFiyati.Add("17,25");
+                infoUrun[7].urunFiyati.Add("17,25");
                 infoUrun[7].urunKategorisi.Add("Burgerler");
                 infoUrun[7].urunAciklamasi.Add("Lav taşında pişmiş ızgara köfte, rus salatası, turşu, domates, yeşillik soğan ve patates");
                 infoUrun[7].urunKDV.Add(8);
-                infoUrun[7].urunPorsiyonu.Add(0);
+                infoUrun[7].urunPorsiyonSinifi.Add(0);
                 infoUrun[7].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[7].urunAdi.Add("Steak Burger");
-                infoUrun[7].porsiyonFiyati.Add("17,00");
+                infoUrun[7].urunFiyati.Add("17,00");
                 infoUrun[7].urunKategorisi.Add("Burgerler");
                 infoUrun[7].urunAciklamasi.Add("Lav taşında pişmiş biftek, rus salatası, yeşillik, soğan, domates ve patates");
                 infoUrun[7].urunKDV.Add(8);
-                infoUrun[7].urunPorsiyonu.Add(0);
+                infoUrun[7].urunPorsiyonSinifi.Add(0);
                 infoUrun[7].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[7].urunAdi.Add("Cheeseburger");
-                infoUrun[7].porsiyonFiyati.Add("15,60");
+                infoUrun[7].urunFiyati.Add("15,60");
                 infoUrun[7].urunKategorisi.Add("Burgerler");
                 infoUrun[7].urunAciklamasi.Add("");
                 infoUrun[7].urunKDV.Add(8);
-                infoUrun[7].urunPorsiyonu.Add(0);
+                infoUrun[7].urunPorsiyonSinifi.Add(0);
                 infoUrun[7].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[7].urunAdi.Add("Hamburger");
-                infoUrun[7].porsiyonFiyati.Add("15,00");
+                infoUrun[7].urunFiyati.Add("15,00");
                 infoUrun[7].urunKategorisi.Add("Burgerler");
                 infoUrun[7].urunAciklamasi.Add("Lav taşında pişmiş hamburger köftesi, rus salatası, yeşillik, soğan, domates, turşu ve patates");
                 infoUrun[7].urunKDV.Add(8);
-                infoUrun[7].urunPorsiyonu.Add(0);
+                infoUrun[7].urunPorsiyonSinifi.Add(0);
                 infoUrun[7].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[7].urunAdi.Add("Chicken Burger");
-                infoUrun[7].porsiyonFiyati.Add("16,25");
+                infoUrun[7].urunFiyati.Add("16,25");
                 infoUrun[7].urunKategorisi.Add("Burgerler");
                 infoUrun[7].urunAciklamasi.Add("");
                 infoUrun[7].urunKDV.Add(8);
-                infoUrun[7].urunPorsiyonu.Add(0);
+                infoUrun[7].urunPorsiyonSinifi.Add(0);
                 infoUrun[7].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[7].urunAdi.Add("Üçlü Mini Burger");
-                infoUrun[7].porsiyonFiyati.Add("16,50");
+                infoUrun[7].urunFiyati.Add("16,50");
                 infoUrun[7].urunKategorisi.Add("Burgerler");
                 infoUrun[7].urunAciklamasi.Add("");
                 infoUrun[7].urunKDV.Add(8);
-                infoUrun[7].urunPorsiyonu.Add(0);
+                infoUrun[7].urunPorsiyonSinifi.Add(0);
                 infoUrun[7].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[8].urunAdi.Add("Tavuk Dürüm");
-                infoUrun[8].porsiyonFiyati.Add("21,50");
+                infoUrun[8].urunFiyati.Add("21,50");
                 infoUrun[8].urunKategorisi.Add("Dürümler");
                 infoUrun[8].urunAciklamasi.Add("");
                 infoUrun[8].urunKDV.Add(8);
-                infoUrun[8].urunPorsiyonu.Add(0);
+                infoUrun[8].urunPorsiyonSinifi.Add(0);
                 infoUrun[8].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[8].urunAdi.Add("Sebzeli Dürüm");
-                infoUrun[8].porsiyonFiyati.Add("18,50");
+                infoUrun[8].urunFiyati.Add("18,50");
                 infoUrun[8].urunKategorisi.Add("Dürümler");
                 infoUrun[8].urunAciklamasi.Add("");
                 infoUrun[8].urunKDV.Add(8);
-                infoUrun[8].urunPorsiyonu.Add(0);
+                infoUrun[8].urunPorsiyonSinifi.Add(0);
                 infoUrun[8].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[8].urunAdi.Add("Köfteli Dürüm");
-                infoUrun[8].porsiyonFiyati.Add("21,75");
+                infoUrun[8].urunFiyati.Add("21,75");
                 infoUrun[8].urunKategorisi.Add("Dürümler");
                 infoUrun[8].urunAciklamasi.Add("");
                 infoUrun[8].urunKDV.Add(8);
-                infoUrun[8].urunPorsiyonu.Add(0);
+                infoUrun[8].urunPorsiyonSinifi.Add(0);
                 infoUrun[8].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[8].urunAdi.Add("Etli Dürüm");
-                infoUrun[8].porsiyonFiyati.Add("23,00");
+                infoUrun[8].urunFiyati.Add("23,00");
                 infoUrun[8].urunKategorisi.Add("Dürümler");
                 infoUrun[8].urunAciklamasi.Add("");
                 infoUrun[8].urunKDV.Add(8);
-                infoUrun[8].urunPorsiyonu.Add(0);
+                infoUrun[8].urunPorsiyonSinifi.Add(0);
                 infoUrun[8].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[9].urunAdi.Add("Ton Balıklı Kumpir");
-                infoUrun[9].porsiyonFiyati.Add("15,50");
+                infoUrun[9].urunFiyati.Add("15,50");
                 infoUrun[9].urunKategorisi.Add("Kumpir");
                 infoUrun[9].urunAciklamasi.Add("Tereyağı, kaşar, ton balığı, tane mısır, turşu, zeytin");
                 infoUrun[9].urunKDV.Add(8);
-                infoUrun[9].urunPorsiyonu.Add(0);
+                infoUrun[9].urunPorsiyonSinifi.Add(0);
                 infoUrun[9].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[9].urunAdi.Add("Sosisli Kumpir");
-                infoUrun[9].porsiyonFiyati.Add("14,50");
+                infoUrun[9].urunFiyati.Add("14,50");
                 infoUrun[9].urunKategorisi.Add("Kumpir");
                 infoUrun[9].urunAciklamasi.Add("Tereyağı, kaşar, sosis, tane mısır, zeytin, turşu, rus salatası");
                 infoUrun[9].urunKDV.Add(8);
-                infoUrun[9].urunPorsiyonu.Add(0);
+                infoUrun[9].urunPorsiyonSinifi.Add(0);
                 infoUrun[9].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[9].urunAdi.Add("Kaşarlı Kumpir");
-                infoUrun[9].porsiyonFiyati.Add("13,50");
+                infoUrun[9].urunFiyati.Add("13,50");
                 infoUrun[9].urunKategorisi.Add("Kumpir");
                 infoUrun[9].urunAciklamasi.Add("Tereyağı, kaşar, tane mısır, turşu, zeytin");
                 infoUrun[9].urunKDV.Add(8);
-                infoUrun[9].urunPorsiyonu.Add(0);
+                infoUrun[9].urunPorsiyonSinifi.Add(0);
                 infoUrun[9].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[9].urunAdi.Add("Kıtır Piliç Kumpir");
-                infoUrun[9].porsiyonFiyati.Add("15,50");
+                infoUrun[9].urunFiyati.Add("15,50");
                 infoUrun[9].urunKategorisi.Add("Kumpir");
                 infoUrun[9].urunAciklamasi.Add("");
                 infoUrun[9].urunKDV.Add(8);
-                infoUrun[9].urunPorsiyonu.Add(0);
+                infoUrun[9].urunPorsiyonSinifi.Add(0);
                 infoUrun[9].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[9].urunAdi.Add("Karışık Kumpir");
-                infoUrun[9].porsiyonFiyati.Add("14,75");
+                infoUrun[9].urunFiyati.Add("14,75");
                 infoUrun[9].urunKategorisi.Add("Kumpir");
                 infoUrun[9].urunAciklamasi.Add("");
                 infoUrun[9].urunKDV.Add(8);
-                infoUrun[9].urunPorsiyonu.Add(0);
+                infoUrun[9].urunPorsiyonSinifi.Add(0);
                 infoUrun[9].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[9].urunAdi.Add("Acılı Kumpir");
-                infoUrun[9].porsiyonFiyati.Add("13,50");
+                infoUrun[9].urunFiyati.Add("13,50");
                 infoUrun[9].urunKategorisi.Add("Kumpir");
                 infoUrun[9].urunAciklamasi.Add("");
                 infoUrun[9].urunKDV.Add(8);
-                infoUrun[9].urunPorsiyonu.Add(0);
+                infoUrun[9].urunPorsiyonSinifi.Add(0);
                 infoUrun[9].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Sebzeli Capellini");
-                infoUrun[10].porsiyonFiyati.Add("19,75");
+                infoUrun[10].urunFiyati.Add("19,75");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Capellini makarna, kurutulmuş domates, sarımsak püresi, soya sos ve taze yeşil soğan");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Shiitake Mantarlı Casarecce");
-                infoUrun[10].porsiyonFiyati.Add("20,50");
+                infoUrun[10].urunFiyati.Add("20,50");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Casarecce makarna, mantar, sarımsak, sh,,take mantarı, kremai, domastes kurusu ve parmesan peyniri");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Biftekli Fettucini");
-                infoUrun[10].porsiyonFiyati.Add("22,50");
+                infoUrun[10].urunFiyati.Add("22,50");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Biftek, demiglace sos, krema ve parmesan peyniri");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Üç Renkli 3 Lezzetli Tortellini");
-                infoUrun[10].porsiyonFiyati.Add("21,00");
+                infoUrun[10].urunFiyati.Add("21,00");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Teryağında sarımsakla sotelenmiş ıspanak, domates, sade tortellini, krem sos, domates sos ve labne peyniri");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Spaghetti Napoliten");
-                infoUrun[10].porsiyonFiyati.Add("19,25");
+                infoUrun[10].urunFiyati.Add("19,25");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Domates sos ve kaşar peyniri");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Spaghetti Bolonez");
-                infoUrun[10].porsiyonFiyati.Add("21,00");
+                infoUrun[10].urunFiyati.Add("21,00");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Tavuklu Noodle");
-                infoUrun[10].porsiyonFiyati.Add("21,75");
+                infoUrun[10].urunFiyati.Add("21,75");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Julyen tavuk, havuç, kabak, soya filizi, renkli biber ve soya sosu");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Karidesli Noodle");
-                infoUrun[10].porsiyonFiyati.Add("21,75");
+                infoUrun[10].urunFiyati.Add("21,75");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Julyen havuç, kabak, soya filizi, renkli biber, karides ve soya sosu");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Lazanya");
-                infoUrun[10].porsiyonFiyati.Add("21,50");
+                infoUrun[10].urunFiyati.Add("21,50");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Güveçte lazanya yaprakları arasına ,ağır ateşte pişmiş kıymalı domates sos ve bol kaşar");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Tulum Peynirli Cevizli Köy Eriştesi");
-                infoUrun[10].porsiyonFiyati.Add("18,75");
+                infoUrun[10].urunFiyati.Add("18,75");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Tereyağında tatlandırılmış köy eriştesi, kırık ceviz ve üzerinde tulum peyniri");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Biftekli Penne Polo");
-                infoUrun[10].porsiyonFiyati.Add("21,50");
+                infoUrun[10].urunFiyati.Add("21,50");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Biftek, pesto sos, krema, parmesan peyniri");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Sebzeli Yöre Makarnası");
-                infoUrun[10].porsiyonFiyati.Add("19,00");
+                infoUrun[10].urunFiyati.Add("19,00");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Julyen tavuk ızgara, kabak, havuç, soya filizi, köy eriştesi, köri baharatı ve soya sos");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Porcini Mantarlı Tortellini");
-                infoUrun[10].porsiyonFiyati.Add("22,50");
+                infoUrun[10].urunFiyati.Add("22,50");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Porcini mantarı, labne peyniri, krema, parmesan peyniri ve krem sos");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Ceviz Dolgulu Margherita");
-                infoUrun[10].porsiyonFiyati.Add("21,00");
+                infoUrun[10].urunFiyati.Add("21,00");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Ceviz ve peynir dolgulu margherita, sarımsak, ceviz, krema sos ve parmesan peyniri");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Fettucini Alfredo");
-                infoUrun[10].porsiyonFiyati.Add("19,50");
+                infoUrun[10].urunFiyati.Add("19,50");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("Izgara tavuk, dolmalık fıstık, mantar, taze fesleğen, parmesan peyniri ve alfredo sos");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Penne Arabiatta");
-                infoUrun[10].porsiyonFiyati.Add("20,00");
+                infoUrun[10].urunFiyati.Add("20,00");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Fusilli Lunghi");
-                infoUrun[10].porsiyonFiyati.Add("19,75");
+                infoUrun[10].urunFiyati.Add("19,75");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[10].urunAdi.Add("Beş Peynirli Ravioli");
-                infoUrun[10].porsiyonFiyati.Add("21,00");
+                infoUrun[10].urunFiyati.Add("21,00");
                 infoUrun[10].urunKategorisi.Add("Makarnalar");
                 infoUrun[10].urunAciklamasi.Add("");
                 infoUrun[10].urunKDV.Add(8);
-                infoUrun[10].urunPorsiyonu.Add(0);
+                infoUrun[10].urunPorsiyonSinifi.Add(0);
                 infoUrun[10].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[11].urunAdi.Add("Chef Pizza");
-                infoUrun[11].porsiyonFiyati.Add("20,00");
+                infoUrun[11].urunFiyati.Add("20,00");
                 infoUrun[11].urunKategorisi.Add("Pizza");
                 infoUrun[11].urunAciklamasi.Add("");
                 infoUrun[11].urunKDV.Add(8);
-                infoUrun[11].urunPorsiyonu.Add(0);
+                infoUrun[11].urunPorsiyonSinifi.Add(0);
                 infoUrun[11].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[11].urunAdi.Add("Anadolu Pizza");
-                infoUrun[11].porsiyonFiyati.Add("17,00");
+                infoUrun[11].urunFiyati.Add("17,00");
                 infoUrun[11].urunKategorisi.Add("Pizza");
                 infoUrun[11].urunAciklamasi.Add("");
                 infoUrun[11].urunKDV.Add(8);
-                infoUrun[11].urunPorsiyonu.Add(0);
+                infoUrun[11].urunPorsiyonSinifi.Add(0);
                 infoUrun[11].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[12].urunAdi.Add("Ispanaklı Krep");
-                infoUrun[12].porsiyonFiyati.Add("17,00");
+                infoUrun[12].urunFiyati.Add("17,00");
                 infoUrun[12].urunKategorisi.Add("Krep");
                 infoUrun[12].urunAciklamasi.Add("");
                 infoUrun[12].urunKDV.Add(8);
-                infoUrun[12].urunPorsiyonu.Add(0);
+                infoUrun[12].urunPorsiyonSinifi.Add(0);
                 infoUrun[12].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[12].urunAdi.Add("Güveçte Tavuklu Mantarlı Krep");
-                infoUrun[12].porsiyonFiyati.Add("14,25");
+                infoUrun[12].urunFiyati.Add("14,25");
                 infoUrun[12].urunKategorisi.Add("Krep");
                 infoUrun[12].urunAciklamasi.Add("");
                 infoUrun[12].urunKDV.Add(8);
-                infoUrun[12].urunPorsiyonu.Add(0);
+                infoUrun[12].urunPorsiyonSinifi.Add(0);
                 infoUrun[12].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[12].urunAdi.Add("Güveçte Sebzeli Krep");
-                infoUrun[12].porsiyonFiyati.Add("14,00");
+                infoUrun[12].urunFiyati.Add("14,00");
                 infoUrun[12].urunKategorisi.Add("Krep");
                 infoUrun[12].urunAciklamasi.Add("");
                 infoUrun[12].urunKDV.Add(8);
-                infoUrun[12].urunPorsiyonu.Add(0);
+                infoUrun[12].urunPorsiyonSinifi.Add(0);
                 infoUrun[12].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[12].urunAdi.Add("Güveçte Ispanaklı Krep");
-                infoUrun[12].porsiyonFiyati.Add("14,00");
+                infoUrun[12].urunFiyati.Add("14,00");
                 infoUrun[12].urunKategorisi.Add("Krep");
                 infoUrun[12].urunAciklamasi.Add("");
                 infoUrun[12].urunKDV.Add(8);
-                infoUrun[12].urunPorsiyonu.Add(0);
+                infoUrun[12].urunPorsiyonSinifi.Add(0);
                 infoUrun[12].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[12].urunAdi.Add("Güveçte Biftekli Krep");
-                infoUrun[12].porsiyonFiyati.Add("14,75");
+                infoUrun[12].urunFiyati.Add("14,75");
                 infoUrun[12].urunKategorisi.Add("Krep");
                 infoUrun[12].urunAciklamasi.Add("");
                 infoUrun[12].urunKDV.Add(8);
-                infoUrun[12].urunPorsiyonu.Add(0);
+                infoUrun[12].urunPorsiyonSinifi.Add(0);
                 infoUrun[12].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[12].urunAdi.Add("Biftekli Krep");
-                infoUrun[12].porsiyonFiyati.Add("17,75");
+                infoUrun[12].urunFiyati.Add("17,75");
                 infoUrun[12].urunKategorisi.Add("Krep");
                 infoUrun[12].urunAciklamasi.Add("");
                 infoUrun[12].urunKDV.Add(8);
-                infoUrun[12].urunPorsiyonu.Add(0);
+                infoUrun[12].urunPorsiyonSinifi.Add(0);
                 infoUrun[12].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[13].urunAdi.Add("Tikka Soslu Tavuk");
-                infoUrun[13].porsiyonFiyati.Add("29,75");
+                infoUrun[13].urunFiyati.Add("29,75");
                 infoUrun[13].urunKategorisi.Add("Ana Yemekler");
                 infoUrun[13].urunAciklamasi.Add("");
                 infoUrun[13].urunKDV.Add(8);
-                infoUrun[13].urunPorsiyonu.Add(0);
+                infoUrun[13].urunPorsiyonSinifi.Add(0);
                 infoUrun[13].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[13].urunAdi.Add("Oyster Soslu Piliç");
-                infoUrun[13].porsiyonFiyati.Add("27,50");
+                infoUrun[13].urunFiyati.Add("27,50");
                 infoUrun[13].urunKategorisi.Add("Ana Yemekler");
                 infoUrun[13].urunAciklamasi.Add("");
                 infoUrun[13].urunKDV.Add(8);
-                infoUrun[13].urunPorsiyonu.Add(0);
+                infoUrun[13].urunPorsiyonSinifi.Add(0);
                 infoUrun[13].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[13].urunAdi.Add("Mantarlı Fleminyon");
-                infoUrun[13].porsiyonFiyati.Add("25,50");
+                infoUrun[13].urunFiyati.Add("25,50");
                 infoUrun[13].urunKategorisi.Add("Ana Yemekler");
                 infoUrun[13].urunAciklamasi.Add("");
                 infoUrun[13].urunKDV.Add(8);
-                infoUrun[13].urunPorsiyonu.Add(0);
+                infoUrun[13].urunPorsiyonSinifi.Add(0);
                 infoUrun[13].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[13].urunAdi.Add("Liva Steak");
-                infoUrun[13].porsiyonFiyati.Add("31,00");
+                infoUrun[13].urunFiyati.Add("31,00");
                 infoUrun[13].urunKategorisi.Add("Ana Yemekler");
                 infoUrun[13].urunAciklamasi.Add("");
                 infoUrun[13].urunKDV.Add(8);
-                infoUrun[13].urunPorsiyonu.Add(0);
+                infoUrun[13].urunPorsiyonSinifi.Add(0);
                 infoUrun[13].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[13].urunAdi.Add("Rokfor Soslu Peynirli Bonfile");
-                infoUrun[13].porsiyonFiyati.Add("34,75");
+                infoUrun[13].urunFiyati.Add("34,75");
                 infoUrun[13].urunKategorisi.Add("Ana Yemekler");
                 infoUrun[13].urunAciklamasi.Add("");
                 infoUrun[13].urunKDV.Add(8);
-                infoUrun[13].urunPorsiyonu.Add(0);
+                infoUrun[13].urunPorsiyonSinifi.Add(0);
                 infoUrun[13].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[13].urunAdi.Add("Liva Usulü Ispanaklı Schnitzel");
-                infoUrun[13].porsiyonFiyati.Add("28,50");
+                infoUrun[13].urunFiyati.Add("28,50");
                 infoUrun[13].urunKategorisi.Add("Ana Yemekler");
                 infoUrun[13].urunAciklamasi.Add("");
                 infoUrun[13].urunKDV.Add(8);
-                infoUrun[13].urunPorsiyonu.Add(0);
+                infoUrun[13].urunPorsiyonSinifi.Add(0);
                 infoUrun[13].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[13].urunAdi.Add("Jülyen Soslu Tavuk");
-                infoUrun[13].porsiyonFiyati.Add("28,75");
+                infoUrun[13].urunFiyati.Add("28,75");
                 infoUrun[13].urunKategorisi.Add("Ana Yemekler");
                 infoUrun[13].urunAciklamasi.Add("");
                 infoUrun[13].urunKDV.Add(8);
-                infoUrun[13].urunPorsiyonu.Add(0);
+                infoUrun[13].urunPorsiyonSinifi.Add(0);
                 infoUrun[13].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[13].urunAdi.Add("Fırında Mantar Soslu Antrikot");
-                infoUrun[13].porsiyonFiyati.Add("32,50");
+                infoUrun[13].urunFiyati.Add("32,50");
                 infoUrun[13].urunKategorisi.Add("Ana Yemekler");
                 infoUrun[13].urunAciklamasi.Add("");
                 infoUrun[13].urunKDV.Add(8);
-                infoUrun[13].urunPorsiyonu.Add(0);
+                infoUrun[13].urunPorsiyonSinifi.Add(0);
                 infoUrun[13].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[13].urunAdi.Add("Ekşi Tatlı Soslu Tavuk But");
-                infoUrun[13].porsiyonFiyati.Add("29,50");
+                infoUrun[13].urunFiyati.Add("29,50");
                 infoUrun[13].urunKategorisi.Add("Ana Yemekler");
                 infoUrun[13].urunAciklamasi.Add("");
                 infoUrun[13].urunKDV.Add(8);
-                infoUrun[13].urunPorsiyonu.Add(0);
+                infoUrun[13].urunPorsiyonSinifi.Add(0);
                 infoUrun[13].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[13].urunAdi.Add("Cafe De Paris Soslu Antrikot");
-                infoUrun[13].porsiyonFiyati.Add("32,50");
+                infoUrun[13].urunFiyati.Add("32,50");
                 infoUrun[13].urunKategorisi.Add("Ana Yemekler");
                 infoUrun[13].urunAciklamasi.Add("");
                 infoUrun[13].urunKDV.Add(8);
-                infoUrun[13].urunPorsiyonu.Add(0);
+                infoUrun[13].urunPorsiyonSinifi.Add(0);
                 infoUrun[13].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[13].urunAdi.Add("Bonfile Mozerella");
-                infoUrun[13].porsiyonFiyati.Add("29,50");
+                infoUrun[13].urunFiyati.Add("29,50");
                 infoUrun[13].urunKategorisi.Add("Ana Yemekler");
                 infoUrun[13].urunAciklamasi.Add("");
                 infoUrun[13].urunKDV.Add(8);
-                infoUrun[13].urunPorsiyonu.Add(0);
+                infoUrun[13].urunPorsiyonSinifi.Add(0);
                 infoUrun[13].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[13].urunAdi.Add("Arpacık Soğanlı Antrikot");
-                infoUrun[13].porsiyonFiyati.Add("32,50");
+                infoUrun[13].urunFiyati.Add("32,50");
                 infoUrun[13].urunKategorisi.Add("Ana Yemekler");
                 infoUrun[13].urunAciklamasi.Add("");
                 infoUrun[13].urunKDV.Add(8);
-                infoUrun[13].urunPorsiyonu.Add(0);
+                infoUrun[13].urunPorsiyonSinifi.Add(0);
                 infoUrun[13].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[14].urunAdi.Add("Kuzu Pirzola");
-                infoUrun[14].porsiyonFiyati.Add("30,50");
+                infoUrun[14].urunFiyati.Add("30,50");
                 infoUrun[14].urunKategorisi.Add("Anadolu Mutfağı");
                 infoUrun[14].urunAciklamasi.Add("");
                 infoUrun[14].urunKDV.Add(8);
-                infoUrun[14].urunPorsiyonu.Add(0);
+                infoUrun[14].urunPorsiyonSinifi.Add(0);
                 infoUrun[14].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[14].urunAdi.Add("Sac Kavurma");
-                infoUrun[14].porsiyonFiyati.Add("28,00");
+                infoUrun[14].urunFiyati.Add("28,00");
                 infoUrun[14].urunKategorisi.Add("Anadolu Mutfağı");
                 infoUrun[14].urunAciklamasi.Add("");
                 infoUrun[14].urunKDV.Add(8);
-                infoUrun[14].urunPorsiyonu.Add(0);
+                infoUrun[14].urunPorsiyonSinifi.Add(0);
                 infoUrun[14].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[14].urunAdi.Add("Köz Patlıcan Yatağında Kuzu Kavurma");
-                infoUrun[14].porsiyonFiyati.Add("30,50");
+                infoUrun[14].urunFiyati.Add("30,50");
                 infoUrun[14].urunKategorisi.Add("Anadolu Mutfağı");
                 infoUrun[14].urunAciklamasi.Add("");
                 infoUrun[14].urunKDV.Add(8);
-                infoUrun[14].urunPorsiyonu.Add(0);
+                infoUrun[14].urunPorsiyonSinifi.Add(0);
                 infoUrun[14].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[14].urunAdi.Add("Sultan Kebabı");
-                infoUrun[14].porsiyonFiyati.Add("31,00");
+                infoUrun[14].urunFiyati.Add("31,00");
                 infoUrun[14].urunKategorisi.Add("Anadolu Mutfağı");
                 infoUrun[14].urunAciklamasi.Add("");
                 infoUrun[14].urunKDV.Add(8);
-                infoUrun[14].urunPorsiyonu.Add(0);
+                infoUrun[14].urunPorsiyonSinifi.Add(0);
                 infoUrun[14].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[14].urunAdi.Add("Kızarmış Mantı");
-                infoUrun[14].porsiyonFiyati.Add("16,75");
+                infoUrun[14].urunFiyati.Add("16,75");
                 infoUrun[14].urunKategorisi.Add("Anadolu Mutfağı");
                 infoUrun[14].urunAciklamasi.Add("");
                 infoUrun[14].urunKDV.Add(8);
-                infoUrun[14].urunPorsiyonu.Add(0);
+                infoUrun[14].urunPorsiyonSinifi.Add(0);
                 infoUrun[14].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[14].urunAdi.Add("Karışık Izgara Tabağı");
-                infoUrun[14].porsiyonFiyati.Add("32,00");
+                infoUrun[14].urunFiyati.Add("32,00");
                 infoUrun[14].urunKategorisi.Add("Anadolu Mutfağı");
                 infoUrun[14].urunAciklamasi.Add("");
                 infoUrun[14].urunKDV.Add(8);
-                infoUrun[14].urunPorsiyonu.Add(0);
+                infoUrun[14].urunPorsiyonSinifi.Add(0);
                 infoUrun[14].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[14].urunAdi.Add("İçli Köfte");
-                infoUrun[14].porsiyonFiyati.Add("17,25");
+                infoUrun[14].urunFiyati.Add("17,25");
                 infoUrun[14].urunKategorisi.Add("Anadolu Mutfağı");
                 infoUrun[14].urunAciklamasi.Add("");
                 infoUrun[14].urunKDV.Add(8);
-                infoUrun[14].urunPorsiyonu.Add(0);
+                infoUrun[14].urunPorsiyonSinifi.Add(0);
                 infoUrun[14].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[14].urunAdi.Add("Etli Yaprak Sarma");
-                infoUrun[14].porsiyonFiyati.Add("17,00");
+                infoUrun[14].urunFiyati.Add("17,00");
                 infoUrun[14].urunKategorisi.Add("Anadolu Mutfağı");
                 infoUrun[14].urunAciklamasi.Add("");
                 infoUrun[14].urunKDV.Add(8);
-                infoUrun[14].urunPorsiyonu.Add(0);
+                infoUrun[14].urunPorsiyonSinifi.Add(0);
                 infoUrun[14].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[14].urunAdi.Add("Çökertme Kebabı");
-                infoUrun[14].porsiyonFiyati.Add("29,00");
+                infoUrun[14].urunFiyati.Add("29,00");
                 infoUrun[14].urunKategorisi.Add("Anadolu Mutfağı");
                 infoUrun[14].urunAciklamasi.Add("");
                 infoUrun[14].urunKDV.Add(8);
-                infoUrun[14].urunPorsiyonu.Add(0);
+                infoUrun[14].urunPorsiyonSinifi.Add(0);
                 infoUrun[14].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[15].urunAdi.Add("Izgara Sebze Tabağı");
-                infoUrun[15].porsiyonFiyati.Add("18,00");
+                infoUrun[15].urunFiyati.Add("18,00");
                 infoUrun[15].urunKategorisi.Add("Vejeteryan Yemekler");
                 infoUrun[15].urunAciklamasi.Add("");
                 infoUrun[15].urunKDV.Add(8);
-                infoUrun[15].urunPorsiyonu.Add(0);
+                infoUrun[15].urunPorsiyonSinifi.Add(0);
                 infoUrun[15].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[16].urunAdi.Add("Taco Somon");
-                infoUrun[16].porsiyonFiyati.Add("33,50");
+                infoUrun[16].urunFiyati.Add("33,50");
                 infoUrun[16].urunKategorisi.Add("Balıklar");
                 infoUrun[16].urunAciklamasi.Add("");
                 infoUrun[16].urunKDV.Add(8);
-                infoUrun[16].urunPorsiyonu.Add(0);
+                infoUrun[16].urunPorsiyonSinifi.Add(0);
                 infoUrun[16].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[16].urunAdi.Add("Levrek Fileto");
-                infoUrun[16].porsiyonFiyati.Add("31,75");
+                infoUrun[16].urunFiyati.Add("31,75");
                 infoUrun[16].urunKategorisi.Add("Balıklar");
                 infoUrun[16].urunAciklamasi.Add("");
                 infoUrun[16].urunKDV.Add(8);
-                infoUrun[16].urunPorsiyonu.Add(0);
+                infoUrun[16].urunPorsiyonSinifi.Add(0);
                 infoUrun[16].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[16].urunAdi.Add("Coca Cola");
-                infoUrun[16].porsiyonFiyati.Add("3,00");
+                infoUrun[16].urunFiyati.Add("3,00");
                 infoUrun[16].urunKategorisi.Add("Soğuk İçecekler");
                 infoUrun[16].urunAciklamasi.Add("");
                 infoUrun[16].urunKDV.Add(8);
-                infoUrun[16].urunPorsiyonu.Add(0);
+                infoUrun[16].urunPorsiyonSinifi.Add(0);
                 infoUrun[16].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[16].urunAdi.Add("Coca Cola Zero");
-                infoUrun[16].porsiyonFiyati.Add("3,00");
+                infoUrun[16].urunFiyati.Add("3,00");
                 infoUrun[16].urunKategorisi.Add("Soğuk İçecekler");
                 infoUrun[16].urunAciklamasi.Add("");
                 infoUrun[16].urunKDV.Add(8);
-                infoUrun[16].urunPorsiyonu.Add(0);
+                infoUrun[16].urunPorsiyonSinifi.Add(0);
                 infoUrun[16].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[16].urunAdi.Add("Coca Cola Light");
-                infoUrun[16].porsiyonFiyati.Add("3,00");
+                infoUrun[16].urunFiyati.Add("3,00");
                 infoUrun[16].urunKategorisi.Add("Soğuk İçecekler");
                 infoUrun[16].urunAciklamasi.Add("");
                 infoUrun[16].urunKDV.Add(8);
-                infoUrun[16].urunPorsiyonu.Add(0);
+                infoUrun[16].urunPorsiyonSinifi.Add(0);
                 infoUrun[16].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[16].urunAdi.Add("Fuse Tea Şeftali");
-                infoUrun[16].porsiyonFiyati.Add("3,00");
+                infoUrun[16].urunFiyati.Add("3,00");
                 infoUrun[16].urunKategorisi.Add("Soğuk İçecekler");
                 infoUrun[16].urunAciklamasi.Add("");
                 infoUrun[16].urunKDV.Add(8);
-                infoUrun[16].urunPorsiyonu.Add(0);
+                infoUrun[16].urunPorsiyonSinifi.Add(0);
                 infoUrun[16].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[16].urunAdi.Add("Fuse Tea Limon");
-                infoUrun[16].porsiyonFiyati.Add("3,00");
+                infoUrun[16].urunFiyati.Add("3,00");
                 infoUrun[16].urunKategorisi.Add("Soğuk İçecekler");
                 infoUrun[16].urunAciklamasi.Add("");
                 infoUrun[16].urunKDV.Add(8);
-                infoUrun[16].urunPorsiyonu.Add(0);
+                infoUrun[16].urunPorsiyonSinifi.Add(0);
                 infoUrun[16].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[16].urunAdi.Add("Fanta");
-                infoUrun[16].porsiyonFiyati.Add("3,00");
+                infoUrun[16].urunFiyati.Add("3,00");
                 infoUrun[16].urunKategorisi.Add("Soğuk İçecekler");
                 infoUrun[16].urunAciklamasi.Add("");
                 infoUrun[16].urunKDV.Add(8);
-                infoUrun[16].urunPorsiyonu.Add(0);
+                infoUrun[16].urunPorsiyonSinifi.Add(0);
                 infoUrun[16].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[16].urunAdi.Add("Sprite");
-                infoUrun[16].porsiyonFiyati.Add("3,00");
+                infoUrun[16].urunFiyati.Add("3,00");
                 infoUrun[16].urunKategorisi.Add("Soğuk İçecekler");
                 infoUrun[16].urunAciklamasi.Add("");
                 infoUrun[16].urunKDV.Add(8);
-                infoUrun[16].urunPorsiyonu.Add(0);
+                infoUrun[16].urunPorsiyonSinifi.Add(0);
                 infoUrun[16].urunMutfagaBildirilmeliMi.Add(true);
 
                 infoUrun[0].kategorininAdi = "Kahvaltı";
