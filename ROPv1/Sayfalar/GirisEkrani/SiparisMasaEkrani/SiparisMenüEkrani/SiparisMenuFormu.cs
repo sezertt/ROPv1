@@ -892,7 +892,7 @@ namespace ROPv1
                 // ikram et
                 if (buttonUrunIkram.Text == "İkram")
                 {
-                    decimal istenilenikramSayisi = (decimal)kacAdet;
+                    int istenilenikramSayisi = kacAdet;
 
                     // ürünün değerini istenilen kadar azalt, kalan hesaptan düş
                     listUrunFiyat.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listUrunFiyat.SelectedItems[0].SubItems[0].Text) - kacAdet).ToString();
@@ -1036,7 +1036,7 @@ namespace ROPv1
                 }
                 else // ikramı iptal et
                 {
-                    decimal istenilenIkramiptalSayisi = (decimal)kacAdet;
+                    int istenilenIkramiptalSayisi = kacAdet;
                     // ürünün değerini bul ve hesaba ekle
 
                     listUrunFiyat.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listUrunFiyat.SelectedItems[0].SubItems[0].Text) - kacAdet).ToString();
@@ -1563,7 +1563,7 @@ namespace ROPv1
                     }
 
                     //yeni ürünler için mutfak bildirimi
-                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=0");
+                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=0");
                     dr = cmd.ExecuteReader();
 
                     KontrolFormu dialog2 = null;
@@ -1605,7 +1605,7 @@ namespace ROPv1
                     }
 
                     // iptal edilen ürünler için mutfağa adisyon
-                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=1");
+                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=1");
                     dr = cmd.ExecuteReader();
 
                     try
@@ -1793,7 +1793,7 @@ namespace ROPv1
 
 
                 //yeni ürünler için mutfak bildirimi
-                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=0");
+                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=0");
                 dr = cmd.ExecuteReader();
 
                 KontrolFormu dialog2 = null;
@@ -1835,7 +1835,7 @@ namespace ROPv1
                 }
 
                 // iptal edilen ürünler için mutfağa adisyon
-                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=1");
+                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=1");
                 dr = cmd.ExecuteReader();
 
                 try
@@ -2019,7 +2019,6 @@ namespace ROPv1
             if (listUrunFiyat.Items.Count > 0)
             {
                 //ödendiğinde sql de ödendi flagini 1 yap 
-
                 hesapForm = new HesapFormu(this, listUrunFiyat, MasaAdi, hangiDepartman.departmanAdi, siparisiKimGirdi, iptalIkram);
                 hesapForm.ShowDialog();
             }
@@ -2085,9 +2084,9 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        public void ikramUpdateInsert(int siparisID, int adisyonID, decimal adet, double dusulecekDeger, decimal ikramAdedi, string yemekAdi, int ikramMi, DateTime verilisTarihi, double porsiyonu)
+        public void ikramUpdateInsert(int siparisID, int adisyonID, int adet, double dusulecekDeger, int ikramAdedi, string yemekAdi, int ikramMi, DateTime verilisTarihi, double porsiyonu)
         {
-            decimal yeniSiparisAdeti = adet - ikramAdedi;
+            int yeniSiparisAdeti = adet - ikramAdedi;
 
             SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet WHERE SiparisID=@id");
             cmd.Parameters.AddWithValue("@_Adet", yeniSiparisAdeti);
@@ -2140,9 +2139,9 @@ namespace ROPv1
             }
         }
 
-        public void iptalUpdateInsert(int siparisID, int adisyonID, decimal adet, double dusulecekDeger, decimal iptalAdedi, string yemekAdi, DateTime verilisTarihi, double porsiyon, string iptalNedeni)
+        public void iptalUpdateInsert(int siparisID, int adisyonID, int adet, double dusulecekDeger, int iptalAdedi, string yemekAdi, DateTime verilisTarihi, double porsiyon, string iptalNedeni)
         {
-            decimal yeniSiparisAdeti = adet - iptalAdedi;
+            int yeniSiparisAdeti = adet - iptalAdedi;
 
             SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet WHERE SiparisID=@_id");
             cmd.Parameters.AddWithValue("@_Adet", yeniSiparisAdeti);
@@ -2198,9 +2197,9 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        public void urunTasimaUpdateInsert(int siparisID, int aktarimYapilacakMasaninAdisyonID, decimal adet, double dusulecekDeger, decimal tasinacakMiktar, string yemekAdi, int ikramMi, DateTime verilisTarihi, string porsiyon)
+        public void urunTasimaUpdateInsert(int siparisID, int aktarimYapilacakMasaninAdisyonID, int adet, double dusulecekDeger, int tasinacakMiktar, string yemekAdi, int ikramMi, DateTime verilisTarihi, string porsiyon)
         {
-            decimal yeniSiparisAdeti = adet - tasinacakMiktar;
+            int yeniSiparisAdeti = adet - tasinacakMiktar;
 
             SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet WHERE SiparisID=@id");
             cmd.Parameters.AddWithValue("@_Adet", yeniSiparisAdeti);
@@ -2549,7 +2548,7 @@ namespace ROPv1
                 }
 
                 //yeni ürünler için mutfak bildirimi
-                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=0");
+                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=0");
                 dr = cmd.ExecuteReader();
 
                 KontrolFormu dialog2 = null;
@@ -2591,7 +2590,7 @@ namespace ROPv1
                 }
 
                 // iptal edilen ürünler için mutfağa adisyon
-                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=1");
+                cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=1");
                 dr = cmd.ExecuteReader();
 
                 try

@@ -30,9 +30,10 @@ namespace ROPv1
 
         private void Raporlar_Load(object sender, EventArgs e)
         {
-            dateBitis.MaxDate = DateTime.Today;
-            dateBaslangic.MaxDate = DateTime.Today;
+            dateBitis.MaxDate = DateTime.Parse(DateTime.Today.ToString("d MMMM yyy") + " 23:59:59");
+            dateBaslangic.MaxDate = DateTime.Parse(DateTime.Today.ToString("d MMMM yyy") + " 23:59:59");
             dateBitis.Value = DateTime.Today;
+            dateBitis.Value = DateTime.Parse(DateTime.Today.ToString("d MMMM yyy") + " 23:59:59");
             dateBaslangic.Value = DateTime.Today;
         }
 
@@ -67,8 +68,8 @@ namespace ROPv1
                     bitis = firstOfthisMonth.AddDays(-1).ToString("yyyy-MM-dd") + " 23:59:59";
                     break;
                 case 6: // Seçilen Tarih
-                    baslangic = dateBaslangic.Value.ToString("yyyy-MM-dd") + " 00:00:00";
-                    bitis = dateBitis.Value.ToString("yyyy-MM-dd") + " 23:59:59";
+                    baslangic = dateBaslangic.Value.ToString("yyyy-MM-dd HH:mm") + ":00";
+                    bitis = dateBitis.Value.ToString("yyyy-MM-dd HH:mm") + ":59";
                     break;
             }
 

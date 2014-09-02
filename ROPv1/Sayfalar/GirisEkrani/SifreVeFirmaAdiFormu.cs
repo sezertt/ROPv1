@@ -17,7 +17,7 @@ namespace ROPv1
 
         GirisEkrani girisEkrani;
 
-        public SifreVeFirmaAdiFormu(bool firmaMiSifreMi, GirisEkrani girisEkrani = null)
+        public SifreVeFirmaAdiFormu(bool firmaMiSifreMi, GirisEkrani girisEkrani = null) // firmamisifremi --> false şifre, true firma adı
         {
             InitializeComponent();
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
@@ -50,7 +50,7 @@ namespace ROPv1
         {
             if (firmaMiSifreMi) // firma
             {
-                if (textBoxIP.Text != "")
+                if (textBoxIP.Text.Trim() != "")
                 {
                     Properties.Settings.Default.FirmaAdi = textBoxIP.Text;
                     Properties.Settings.Default.Save();
@@ -97,12 +97,21 @@ namespace ROPv1
 
         private void SifreVeFirmaAdiFormu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(labelUrun1.Text == "Lisans şifresini giriniz" )
+            if (labelUrun1.Text == "Lisans şifresini giriniz")
+            {
                 if (!PasswordHash.ValidatePassword(textBoxIP.Text, Properties.Settings.Default.IP2Check[0]))
                 {
                     if (textBoxIP.Text != "warkilla")
+                        this.DialogResult = DialogResult.No;
+                }
+            }
+            else
+            {
+                if(textBoxIP.Text.Trim() == string.Empty)
+                {
                     this.DialogResult = DialogResult.No;
-                }        
+                }
+            }
         }
     }
 }

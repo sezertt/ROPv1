@@ -23,7 +23,8 @@ namespace ROPv1
         Raporlar gunRaporView;
         GirisEkrani girisForm;
         PinKoduFormu pinForm;
-        string ayarlaraGirenKisi;
+        string ayarlaraGirenKisi, odemeyiDegistirenKisi;
+        AdisyonGoruntuleme adisyonForm;
 
         public AdminGirisFormu(GirisEkrani girisForm)
         {
@@ -349,6 +350,7 @@ namespace ROPv1
             infoKullanici = loadInfoKullanicilar.LoadRestoran("tempfiles.xml");
 
             XmlLoad<string> loadInfoSonKullanici = new XmlLoad<string>();
+                   
             string[] sonGirisYapanKullanici = loadInfoSonKullanici.LoadRestoran("sonKullanici.xml");
             #endregion
 
@@ -359,6 +361,7 @@ namespace ROPv1
                 {
                     if (sonGirisYapanKullanici[0] == (new UnicodeEncoding()).GetString(infoKullanici[i].UIUN))
                     {
+                        odemeyiDegistirenKisi = (new UnicodeEncoding()).GetString(infoKullanici[i].UIN) + " " + (new UnicodeEncoding()).GetString(infoKullanici[i].UIS);
                         kullaniciAdi = i;
                         break;
                     }
@@ -413,8 +416,23 @@ namespace ROPv1
                     pinForm = null;
                 }
             }
-            AdisyonGoruntuleme adisyonForm = new AdisyonGoruntuleme();
-            adisyonForm.Show();
+            if(adisyonForm != null)
+            {
+                if (adisyonForm.IsDisposed)
+                {
+                    adisyonForm = new AdisyonGoruntuleme(odemeyiDegistirenKisi);
+                    adisyonForm.Show();
+                }
+                else
+                {
+                    adisyonForm.BringToFront();
+                }
+            }
+            else
+            {
+                adisyonForm = new AdisyonGoruntuleme(odemeyiDegistirenKisi);
+                adisyonForm.Show();
+            }
         }
 
         private void AdminGirisFormu_FormClosing(object sender, FormClosingEventArgs e)

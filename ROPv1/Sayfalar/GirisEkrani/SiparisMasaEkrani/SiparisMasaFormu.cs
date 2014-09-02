@@ -278,7 +278,7 @@ namespace ROPv1
                             break;
                     }
                 }
-            } 
+            }
             else// departman gösterimi clientlarda gerçekleşiyorsa
             {
                 if ((int)tablePanel.Tag != hangiMasaDizayni) //eğer seçili masa planı zaten ekrandaysa yenisi koyulmasın, ekranda değilse eskiler silinip yenisi eklensin
@@ -290,7 +290,7 @@ namespace ROPv1
 
         private void exitPressed(object sender, EventArgs e)
         {
-            if(girisEkrani != null)
+            if (girisEkrani != null)
                 girisEkrani.siparisForm = null;
 
             if (pinForm != null)
@@ -707,7 +707,7 @@ namespace ROPv1
                     case "hesapOdeniyor":
                         komut_hesapOdeniyor(parametreler["masa"], parametreler["departmanAdi"]);
                         break;
-                    case "masaGirilebilirMi": 
+                    case "masaGirilebilirMi":
                         komut_masaGirilebilirMi(parametreler["cevap"]);
                         break;
                     case "masaDegistir": // masa değişikliği bilgisi geldiğinde eğer o masalar bizde açıksa kapatmalıyız
@@ -731,6 +731,9 @@ namespace ROPv1
                         break;
                     case "OdemeOnay": //Yolladığımız giris mesajına karşılık gelen mesaj
                         komut_OdemeOnay(parametreler["odemeTipi"], parametreler["odemeMiktari"], parametreler["secilipOdenenSiparisBilgileri"]);
+                        break;
+                    case "odemeGuncelleTamamlandi": // Yolladığımız ödemegüncelle mesajına karşılık gelen mesaj
+                        komut_OdemeGuncelleTamamlandi(parametreler["odemeler"], parametreler["gelenOdemeler"], parametreler["siparisiGirenKisi"]);
                         break;
                     case "LoadSiparis": // serverdan siparis bilgileri geldiğinde
                         komut_loadSiparis(parametreler["siparisBilgileri"]);
@@ -829,6 +832,11 @@ namespace ROPv1
             client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odemeTipi=" + odemeTipi + "&odemeMiktari=" + odemeMiktari + "&indirimYapanKisi=" + indirimYapanKisi);
         }
 
+        public void hesapFormundanOdemeGuncelle(string masa, string departman, string komut, decimal[] odemeler, decimal[] gelenOdemeler, string siparisiGirenKisi)
+        {
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&odemeler=" + odemeler[0] + "*" + odemeler[1] + "*" + odemeler[2] + "&gelenOdemeler=" + gelenOdemeler[0] + "*" + gelenOdemeler[1] + "*" + gelenOdemeler[2] + "&siparisiGirenKisi=" + siparisiGirenKisi);
+        }
+
         public void hesapFormundanAdisyonYazdir(string masa, string departman, string garson, decimal yazdirilacakIndirim, DateTime acilisZamani, string firmaAdi, string firmaAdresTelefon, string yaziciWindowsAdi, decimal odenenMiktar)
         {
             client.MesajYolla("komut=AdisyonYazdir&masa=" + masa + "&departmanAdi=" + departman + "&garson=" + garson + "&yazdirilacakIndirim=" + yazdirilacakIndirim.ToString("0.00") + "&acilisZamani=" + acilisZamani + "&firmaAdi=" + firmaAdi + "&firmaAdresTelefon=" + firmaAdresTelefon + "&yaziciWindowsAdi=" + yaziciWindowsAdi + "&odenenMiktar=" + odenenMiktar);
@@ -837,7 +845,7 @@ namespace ROPv1
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
         public void menuFormundanServeraSiparisYolla(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, string ikramYeniMiEskiMi, string porsiyon, string iptalNedeni = null)
         {
-            if(iptalNedeni == null)
+            if (iptalNedeni == null)
             {
                 if (ikramYeniMiEskiMi == null)
                     client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&porsiyon=" + porsiyon);
@@ -961,12 +969,12 @@ namespace ROPv1
                                 break;
                             case 3: // 1 masa açık departmanda değişti
 
-                                if(hangiMasaButonunaBasildi != null)
+                                if (hangiMasaButonunaBasildi != null)
                                 {
                                     hangiMasaButonunaBasildi.ForeColor = SystemColors.ActiveCaption;
                                     hangiMasaButonunaBasildi.BackColor = Color.White;
                                 }
-                                
+
                                 tumKullanicilaraMesajYolla("komut=masaKapandi&masa=" + hangiMasaButonunaBasildi.Text + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                                 tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + siparisMenuForm.yeniMasaninAdi + "&departmanAdi=" + siparisMenuForm.yeniDepartmaninAdi);
                                 break;
@@ -1017,9 +1025,9 @@ namespace ROPv1
         {
             int kacinciDosya = Convert.ToInt32(kacinci);
 
-            client.path = Application.StartupPath; 
-            
-            client.MesajYolla("komut=veriGonder&kacinci=" + (kacinciDosya + 1) + "&sadeceXML=1");    
+            client.path = Application.StartupPath;
+
+            client.MesajYolla("komut=veriGonder&kacinci=" + (kacinciDosya + 1) + "&sadeceXML=1");
         }
 
         //yazıcıları hesap formuna gönder
@@ -1045,6 +1053,27 @@ namespace ROPv1
             {
                 //Mesajı yönlendirelim
                 siparisMenuForm.hesapForm.odemeOnaylandi(odemeTipi, odemeMiktari, secilipOdenenSiparisBilgileri);
+            }
+            catch
+            { }
+        }
+
+        private void komut_OdemeGuncelleTamamlandi(string _odemeler, string _gelenOdemeler, string siparisiGirenKisi)
+        {
+            try
+            {
+                decimal[] odemeler = { 0, 0, 0 }, gelenOdemeler = { 0, 0, 0 };
+
+                odemeler[0] = Convert.ToDecimal(_odemeler[0]);
+                odemeler[1] = Convert.ToDecimal(_odemeler[1]);
+                odemeler[2] = Convert.ToDecimal(_odemeler[2]);
+
+                gelenOdemeler[0] = Convert.ToDecimal(_gelenOdemeler[0]);
+                gelenOdemeler[1] = Convert.ToDecimal(_gelenOdemeler[1]);
+                gelenOdemeler[2] = Convert.ToDecimal(_gelenOdemeler[2]);
+
+                //Mesajı yönlendirelim
+                siparisMenuForm.hesapForm.odemeGuncellemeGeldi(odemeler, gelenOdemeler, siparisiGirenKisi);
             }
             catch
             { }

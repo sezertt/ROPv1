@@ -125,7 +125,9 @@
             this.dateBitis.CalendarMonthBackground = System.Drawing.SystemColors.ActiveCaption;
             this.dateBitis.CalendarTitleForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.dateBitis.CalendarTrailingForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dateBitis.CustomFormat = "d MMMM yyy - HH:mm";
             this.dateBitis.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.dateBitis.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateBitis.Location = new System.Drawing.Point(602, 7);
             this.dateBitis.Name = "dateBitis";
             this.dateBitis.Size = new System.Drawing.Size(259, 33);
@@ -142,11 +144,14 @@
             this.dateBaslangic.CalendarMonthBackground = System.Drawing.SystemColors.ActiveCaption;
             this.dateBaslangic.CalendarTitleForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.dateBaslangic.CalendarTrailingForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dateBaslangic.CustomFormat = "d MMMM yyy - HH:mm";
             this.dateBaslangic.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.dateBaslangic.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateBaslangic.Location = new System.Drawing.Point(337, 7);
             this.dateBaslangic.Name = "dateBaslangic";
             this.dateBaslangic.Size = new System.Drawing.Size(259, 33);
             this.dateBaslangic.TabIndex = 42;
+            this.dateBaslangic.Value = new System.DateTime(2014, 9, 1, 5, 29, 0, 0);
             this.dateBaslangic.ValueChanged += new System.EventHandler(this.dateBitis_ValueChanged);
             this.dateBaslangic.Enter += new System.EventHandler(this.dateBaslangic_Enter);
             // 

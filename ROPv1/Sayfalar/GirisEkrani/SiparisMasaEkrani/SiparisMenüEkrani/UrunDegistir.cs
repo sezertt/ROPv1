@@ -15,11 +15,11 @@ namespace ROPv1
         ListView.SelectedListViewItemCollection urunler;
         public List<int> miktarlar = new List<int>();
 
-        public UrunDegistir(ListView.SelectedListViewItemCollection selectedListViewItems)
+        public UrunDegistir(ListView.SelectedListViewItemCollection urunler)
         {
             InitializeComponent();
 
-            urunler = selectedListViewItems;
+            this.urunler = urunler;
 
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;

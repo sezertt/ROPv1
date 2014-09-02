@@ -82,6 +82,7 @@
             this.labelIndirimTL = new System.Windows.Forms.Label();
             this.labelIndirimYuzde = new System.Windows.Forms.Label();
             this.buttonDeleteText = new System.Windows.Forms.Button();
+            this.buttonHesapDuzenle = new System.Windows.Forms.Button();
             this.buttonAdisyonYazdir = new System.Windows.Forms.Button();
             this.buttonYemekFisi = new System.Windows.Forms.Button();
             this.buttonKart = new System.Windows.Forms.Button();
@@ -615,6 +616,7 @@
             this.labelOdenenToplam.TabIndex = 106;
             this.labelOdenenToplam.Text = "0,00";
             this.labelOdenenToplam.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.labelOdenenToplam.TextChanged += new System.EventHandler(this.labelOdenenToplam_TextChanged);
             // 
             // labelOdenenFisText
             // 
@@ -777,6 +779,26 @@
             this.buttonDeleteText.UseVisualStyleBackColor = false;
             this.buttonDeleteText.Click += new System.EventHandler(this.buttonDeleteText_Click);
             // 
+            // buttonHesapDuzenle
+            // 
+            this.buttonHesapDuzenle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonHesapDuzenle.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonHesapDuzenle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.buttonHesapDuzenle.Enabled = false;
+            this.buttonHesapDuzenle.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonHesapDuzenle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonHesapDuzenle.Image = global::ROPv1.Properties.Resources.hesapDuzenle;
+            this.buttonHesapDuzenle.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.buttonHesapDuzenle.Location = new System.Drawing.Point(1144, 238);
+            this.buttonHesapDuzenle.Name = "buttonHesapDuzenle";
+            this.buttonHesapDuzenle.Size = new System.Drawing.Size(205, 115);
+            this.buttonHesapDuzenle.TabIndex = 119;
+            this.buttonHesapDuzenle.Tag = "104";
+            this.buttonHesapDuzenle.Text = "Hesap Düzenle";
+            this.buttonHesapDuzenle.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.buttonHesapDuzenle.UseVisualStyleBackColor = false;
+            this.buttonHesapDuzenle.Click += new System.EventHandler(this.buttonHesapDuzenle_Click);
+            // 
             // buttonAdisyonYazdir
             // 
             this.buttonAdisyonYazdir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -879,9 +901,9 @@
             this.buttonIndirim.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonIndirim.Image = global::ROPv1.Properties.Resources.tl;
             this.buttonIndirim.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonIndirim.Location = new System.Drawing.Point(1143, 238);
+            this.buttonIndirim.Location = new System.Drawing.Point(1247, 119);
             this.buttonIndirim.Name = "buttonIndirim";
-            this.buttonIndirim.Size = new System.Drawing.Size(205, 115);
+            this.buttonIndirim.Size = new System.Drawing.Size(102, 115);
             this.buttonIndirim.TabIndex = 90;
             this.buttonIndirim.Tag = "104";
             this.buttonIndirim.Text = "İndirim";
@@ -916,9 +938,9 @@
             this.buttonIndirimYuzdeli.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonIndirimYuzdeli.Image = ((System.Drawing.Image)(resources.GetObject("buttonIndirimYuzdeli.Image")));
             this.buttonIndirimYuzdeli.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonIndirimYuzdeli.Location = new System.Drawing.Point(1143, 119);
+            this.buttonIndirimYuzdeli.Location = new System.Drawing.Point(1144, 119);
             this.buttonIndirimYuzdeli.Name = "buttonIndirimYuzdeli";
-            this.buttonIndirimYuzdeli.Size = new System.Drawing.Size(205, 115);
+            this.buttonIndirimYuzdeli.Size = new System.Drawing.Size(102, 115);
             this.buttonIndirimYuzdeli.TabIndex = 60;
             this.buttonIndirimYuzdeli.Tag = "0";
             this.buttonIndirimYuzdeli.Text = "İndirim";
@@ -933,6 +955,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 768);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonHesapDuzenle);
             this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.buttonAdisyonYazdir);
             this.Controls.Add(this.buttonDeleteText);
@@ -1048,5 +1071,6 @@
         private System.Windows.Forms.Button buttonAdisyonYazdir;
         private System.Windows.Forms.ColumnHeader Porsiyon;
         private System.Windows.Forms.ColumnHeader Porsiyonu;
+        private System.Windows.Forms.Button buttonHesapDuzenle;
     }
 }

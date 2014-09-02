@@ -154,5 +154,29 @@ namespace ROPv1.Properties {
                 this["SSIDPass"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2000-01-01")]
+        public global::System.DateTime IP4 {
+            get {
+                return ((global::System.DateTime)(this["IP4"]));
+            }
+            set {
+                this["IP4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int IP4B {
+            get {
+                return ((int)(this["IP4B"]));
+            }
+            set {
+                this["IP4B"] = value;
+            }
+        }
     }
 }

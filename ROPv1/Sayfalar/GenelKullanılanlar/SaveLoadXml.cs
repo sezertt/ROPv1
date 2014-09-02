@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.IO;
+using System.Windows.Forms;
 
 namespace ROPv1
 {
@@ -15,8 +16,10 @@ namespace ROPv1
             StreamWriter writer = null;
             try
             {
+                string path = Application.StartupPath + "\\" + filename;
+
                 XmlSerializer xmlSerializer = new XmlSerializer(IClass.GetType()); //serializerı oluşturuyoruz
-                writer = new StreamWriter(filename);
+                writer = new StreamWriter(path);
                 xmlSerializer.Serialize(writer, IClass);
             }
             finally
@@ -39,9 +42,11 @@ namespace ROPv1
 
         public T[] LoadRestoran(string filename)
         {
+            string path = Application.StartupPath + "\\" + filename;
+
             T[] result;
             XmlSerializer xmlSerializer = new XmlSerializer(type);
-            FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
+            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
             result = (T[])xmlSerializer.Deserialize(fs);
             fs.Close();
             return result;

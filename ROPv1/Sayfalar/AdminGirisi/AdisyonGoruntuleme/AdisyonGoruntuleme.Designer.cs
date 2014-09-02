@@ -29,6 +29,30 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            "Nakit",
+            "---",
+            "0,00"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            "Kredi Kartı",
+            "---",
+            "0,00"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            "Yemek Fişi",
+            "---",
+            "0,00"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            "İndirim (TL)",
+            "---",
+            "0,00"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            "İndirim (%)",
+            "---",
+            "0,00"}, -1);
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+            "",
+            "Toplam",
+            "0,00"}, -1);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdisyonGoruntuleme));
             this.labelGun = new System.Windows.Forms.Label();
             this.labelTarih = new System.Windows.Forms.Label();
@@ -64,6 +88,11 @@
             this.labelKalanText = new System.Windows.Forms.Label();
             this.buttonYazdir = new System.Windows.Forms.Button();
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
+            this.buttonHesapDuzenle = new System.Windows.Forms.Button();
+            this.listViewOdemeler = new System.Windows.Forms.ListView();
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // labelGun
@@ -310,8 +339,7 @@
             // 
             this.listAdisyonDetay.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.listAdisyonDetay.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-            this.listAdisyonDetay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listAdisyonDetay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.listAdisyonDetay.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader6,
             this.columnHeader5,
@@ -327,7 +355,7 @@
             this.listAdisyonDetay.MultiSelect = false;
             this.listAdisyonDetay.Name = "listAdisyonDetay";
             this.listAdisyonDetay.ShowItemToolTips = true;
-            this.listAdisyonDetay.Size = new System.Drawing.Size(420, 602);
+            this.listAdisyonDetay.Size = new System.Drawing.Size(420, 440);
             this.listAdisyonDetay.TabIndex = 43;
             this.listAdisyonDetay.UseCompatibleStateImageBehavior = false;
             this.listAdisyonDetay.View = System.Windows.Forms.View.Details;
@@ -465,7 +493,7 @@
             this.buttonYazdir.Enabled = false;
             this.buttonYazdir.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold);
             this.buttonYazdir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonYazdir.Location = new System.Drawing.Point(934, 750);
+            this.buttonYazdir.Location = new System.Drawing.Point(969, 750);
             this.buttonYazdir.Name = "buttonYazdir";
             this.buttonYazdir.Size = new System.Drawing.Size(120, 55);
             this.buttonYazdir.TabIndex = 104;
@@ -487,6 +515,73 @@
             this.keyboardcontrol1.Visible = false;
             this.keyboardcontrol1.UserKeyPressed += new KeyboardClassLibrary.KeyboardDelegate(this.keyboardcontrol1_UserKeyPressed);
             // 
+            // buttonHesapDuzenle
+            // 
+            this.buttonHesapDuzenle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonHesapDuzenle.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonHesapDuzenle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.buttonHesapDuzenle.Enabled = false;
+            this.buttonHesapDuzenle.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold);
+            this.buttonHesapDuzenle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonHesapDuzenle.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.buttonHesapDuzenle.Location = new System.Drawing.Point(771, 750);
+            this.buttonHesapDuzenle.Name = "buttonHesapDuzenle";
+            this.buttonHesapDuzenle.Size = new System.Drawing.Size(189, 55);
+            this.buttonHesapDuzenle.TabIndex = 120;
+            this.buttonHesapDuzenle.Tag = "104";
+            this.buttonHesapDuzenle.Text = "Hesap Düzenle";
+            this.buttonHesapDuzenle.UseVisualStyleBackColor = false;
+            this.buttonHesapDuzenle.Click += new System.EventHandler(this.buttonHesapDuzenle_Click);
+            // 
+            // listViewOdemeler
+            // 
+            this.listViewOdemeler.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listViewOdemeler.Alignment = System.Windows.Forms.ListViewAlignment.Left;
+            this.listViewOdemeler.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewOdemeler.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader12,
+            this.columnHeader13,
+            this.columnHeader14});
+            this.listViewOdemeler.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
+            this.listViewOdemeler.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.listViewOdemeler.FullRowSelect = true;
+            this.listViewOdemeler.GridLines = true;
+            this.listViewOdemeler.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
+            this.listViewOdemeler.LabelWrap = false;
+            this.listViewOdemeler.Location = new System.Drawing.Point(934, 573);
+            this.listViewOdemeler.Margin = new System.Windows.Forms.Padding(0);
+            this.listViewOdemeler.MultiSelect = false;
+            this.listViewOdemeler.Name = "listViewOdemeler";
+            this.listViewOdemeler.ShowItemToolTips = true;
+            this.listViewOdemeler.Size = new System.Drawing.Size(420, 166);
+            this.listViewOdemeler.TabIndex = 121;
+            this.listViewOdemeler.UseCompatibleStateImageBehavior = false;
+            this.listViewOdemeler.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "Tür";
+            this.columnHeader12.Width = 86;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "Kullanıcı";
+            this.columnHeader13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader13.Width = 186;
+            // 
+            // columnHeader14
+            // 
+            this.columnHeader14.Text = "Ödeme";
+            this.columnHeader14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader14.Width = 144;
+            // 
             // AdisyonGoruntuleme
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -494,6 +589,8 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 819);
             this.ControlBox = false;
+            this.Controls.Add(this.listViewOdemeler);
+            this.Controls.Add(this.buttonHesapDuzenle);
             this.Controls.Add(this.buttonYazdir);
             this.Controls.Add(this.labelKalanText);
             this.Controls.Add(this.labelToplamHesap);
@@ -568,5 +665,10 @@
         private System.Windows.Forms.Label labelKalanText;
         private System.Windows.Forms.Button buttonYazdir;
         private KeyboardClassLibrary.Keyboardcontrol keyboardcontrol1;
+        private System.Windows.Forms.Button buttonHesapDuzenle;
+        private System.Windows.Forms.ListView listViewOdemeler;
+        private System.Windows.Forms.ColumnHeader columnHeader12;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.ColumnHeader columnHeader14;
     }
 }

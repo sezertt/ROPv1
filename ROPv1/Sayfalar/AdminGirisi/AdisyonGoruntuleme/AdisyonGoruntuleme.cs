@@ -23,10 +23,12 @@ namespace ROPv1
         public YaziciFormu yaziciForm = null;
         bool hangiTakvimFocuslu = true, ilkAramaEventiReturnEt = true;
         int sonQuery = 0, toplamVeriSayisi = 0;
-        string baslangic, bitis;
+        string baslangic, bitis, siparisiGirenKisi;
 
-        public AdisyonGoruntuleme()
+        public AdisyonGoruntuleme(string siparisiGirenKisi)
         {
+            this.siparisiGirenKisi = siparisiGirenKisi;
+
             InitializeComponent();
         }
 
@@ -46,6 +48,7 @@ namespace ROPv1
             [DllImport("user32.dll")]
             internal static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
         }
+
         static void ToggleCapsLock(bool onOrOff)
         {
             if (IsKeyLocked(Keys.CapsLock) == onOrOff)
@@ -169,6 +172,11 @@ namespace ROPv1
             baslangic = dateBaslangic.Value.ToString("yyyy-MM-dd") + " 00:00:00";
             bitis = dateBitis.Value.ToString("yyyy-MM-dd") + " 23:59:59";
 
+            DateTime testDate = new DateTime();
+            testDate = DateTime.Parse("2001-01-01 00:00:00");
+
+            string testDateString = testDate.ToString("yyyy-MM-dd") + " 00:00:00";
+
             switch (comboAdisyonAyar.Text)
             {
                 case "Açık Adisyonlar":
@@ -184,13 +192,13 @@ namespace ROPv1
 
                 case "Tüm Adisyonlar":
                     sonQuery = 2;
-                    cmd = SQLBaglantisi.getCommand("SELECT COUNT(AdisyonID) FROM Adisyon WHERE KapanisZamani >='" + baslangic + "' AND KapanisZamani <= '" + bitis + "'");
+                    cmd = SQLBaglantisi.getCommand("SELECT COUNT(AdisyonID) FROM Adisyon WHERE (KapanisZamani >='" + baslangic + "' AND KapanisZamani <= '" + bitis + "') OR KapanisZamani<'" + testDate + "'");
                     dr = cmd.ExecuteReader();
                     dr.Read();
                     toplamVeriSayisi = dr.GetInt32(0);
                     adisyonSayisi = Convert.ToDouble(toplamVeriSayisi);
 
-                    cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE KapanisZamani >='" + baslangic + "' AND KapanisZamani <= '" + bitis + "' ORDER BY AdisyonID DESC");
+                    cmd = SQLBaglantisi.getCommand("SELECT TOP 23 AdisyonID, AdisyonNotu, AcilisZamani, KapanisZamani, DepartmanAdi, MasaAdi, IptalMi FROM Adisyon WHERE (KapanisZamani >='" + baslangic + "' AND KapanisZamani <= '" + bitis + "') OR KapanisZamani<'" + testDate + "' ORDER BY AdisyonID DESC");
                     break;
                 case "Adisyon ID":
                     sonQuery = 3;
@@ -252,8 +260,7 @@ namespace ROPv1
                 iptalMi = dr.GetBoolean(6);
 
 
-                DateTime testDate = new DateTime();
-                testDate = DateTime.Parse("2001-01-01 00:00:00");
+
 
                 if (kapanisZamani.Date > testDate.Date)
                 {
@@ -479,6 +486,7 @@ namespace ROPv1
         private void listAdisyon_SelectedIndexChanged(object sender, EventArgs e)
         {
             buttonYazdir.Enabled = false;
+            buttonHesapDuzenle.Enabled = false;
 
             if (listAdisyon.SelectedItems.Count != 1)
                 return;
@@ -494,7 +502,8 @@ namespace ROPv1
             {
                 string yemekAdi = dr.GetString(3);
                 bool ikramMi = dr.GetBoolean(4), iptalMi = dr.GetBoolean(5);
-                decimal adedi = dr.GetDecimal(2), fiyati = dr.GetDecimal(1);
+                decimal fiyati = dr.GetDecimal(1);
+                int adedi = dr.GetInt32(2);
 
                 listAdisyonDetay.Items.Add(dr.GetString(0));
                 listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add(yemekAdi);
@@ -524,8 +533,76 @@ namespace ROPv1
                     { }
                 }
                 buttonYazdir.Enabled = true;
+                buttonHesapDuzenle.Enabled = true;
             }
+
             labelToplamHesap.Text = adisyonHesabi.ToString("0.00");
+
+            cmd = SQLBaglantisi.getCommand("SELECT OdemeTipi, OdenenMiktar, IndirimiKimGirdi from OdemeDetay JOIN Adisyon ON OdemeDetay.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AdisyonID=@_AdisyonID");
+
+            cmd.Parameters.AddWithValue("@_AdisyonID", Convert.ToInt32(listAdisyon.SelectedItems[0].SubItems[0].Text));
+
+            dr = cmd.ExecuteReader();
+
+            listViewOdemeler.Items[0].SubItems[2].Text = "0,00";
+            listViewOdemeler.Items[1].SubItems[2].Text = "0,00";
+            listViewOdemeler.Items[2].SubItems[2].Text = "0,00";
+            listViewOdemeler.Items[3].SubItems[2].Text = "0,00";
+            listViewOdemeler.Items[4].SubItems[2].Text = "0,00";
+            listViewOdemeler.Items[5].SubItems[2].Text = "0,00";
+
+            listViewOdemeler.Items[0].SubItems[1].Text = "---";
+            listViewOdemeler.Items[1].SubItems[1].Text = "---";
+            listViewOdemeler.Items[2].SubItems[1].Text = "---";
+            listViewOdemeler.Items[3].SubItems[1].Text = "---";
+            listViewOdemeler.Items[4].SubItems[1].Text = "---";
+
+            while (dr.Read())
+            {
+                int odemeTipi;
+                decimal odenenMiktar;
+                string odemeyiAlanKisi;
+
+                try
+                {
+                    odemeTipi = dr.GetInt32(0);
+                    odenenMiktar = dr.GetDecimal(1);
+                    odemeyiAlanKisi = dr.GetString(2);
+                }
+                catch
+                {
+                    KontrolFormu dialog = new KontrolFormu("Ödeme bilgileri alınırken hata oluştu, lütfen tekrar giriş yapınız", false);
+                    dialog.Show();
+                    return;
+                }
+
+                if (odemeTipi == 101) // nakit
+                {
+                    listViewOdemeler.Items[0].SubItems[2].Text = odenenMiktar.ToString("0.00");
+                    listViewOdemeler.Items[0].SubItems[1].Text = odemeyiAlanKisi;
+                }
+                else if (odemeTipi == 102) // kredi kartı
+                {
+                    listViewOdemeler.Items[1].SubItems[2].Text = odenenMiktar.ToString("0.00");
+                    listViewOdemeler.Items[1].SubItems[1].Text = odemeyiAlanKisi;
+                }
+                else if (odemeTipi == 103)// yemek fişi
+                {
+                    listViewOdemeler.Items[2].SubItems[2].Text = odenenMiktar.ToString("0.00");
+                    listViewOdemeler.Items[2].SubItems[1].Text = odemeyiAlanKisi;
+                }
+                else if (odemeTipi == 104)// indirim TL
+                {
+                    listViewOdemeler.Items[3].SubItems[2].Text = odenenMiktar.ToString("0.00");
+                    listViewOdemeler.Items[3].SubItems[1].Text = odemeyiAlanKisi;
+                }
+                else // indirim Yüzde
+                {
+                    listViewOdemeler.Items[4].SubItems[2].Text = odenenMiktar.ToString("0.00");
+                    listViewOdemeler.Items[4].SubItems[1].Text = odemeyiAlanKisi;
+                }
+                listViewOdemeler.Items[5].SubItems[2].Text = (Convert.ToDecimal(listViewOdemeler.Items[5].SubItems[2].Text) + odenenMiktar).ToString("0.00");
+            }
             cmd.Connection.Close();
             cmd.Connection.Dispose();
         }
@@ -609,7 +686,7 @@ namespace ROPv1
             listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add(labelToplamHesap.Text);
 
             listAdisyonDetay.Font = new Font("Calibri", 10F, FontStyle.Bold);
-            for(int i=0; i< listAdisyonDetay.Items.Count;i++)
+            for (int i = 0; i < listAdisyonDetay.Items.Count; i++)
             {
                 listAdisyonDetay.Items[i].Font = new Font("Calibri", 10F, FontStyle.Bold);
             }
@@ -636,6 +713,42 @@ namespace ROPv1
             listAdisyonDetay.Columns[3].Width = 91;
 
             listAdisyonDetay.Items.RemoveAt(listAdisyonDetay.Items.Count - 1);
+        }
+
+        private void buttonHesapDuzenle_Click(object sender, EventArgs e)
+        {
+            decimal[] odemeler = new decimal[3];
+            odemeler[0] = Convert.ToDecimal(listViewOdemeler.Items[0].SubItems[2].Text);
+            odemeler[1] = Convert.ToDecimal(listViewOdemeler.Items[1].SubItems[2].Text);
+            odemeler[2] = Convert.ToDecimal(listViewOdemeler.Items[2].SubItems[2].Text);
+
+            //Hesap Formu Aç Direk Ödenen Miktarlar Değiştirilebilsin
+            HesapDuzenleme hesapDuzenlemeFormu = new HesapDuzenleme(odemeler, listAdisyon.SelectedItems[0].SubItems[2].Text, listAdisyon.SelectedItems[0].SubItems[1].Text, this, siparisiGirenKisi, listAdisyon.SelectedItems[0].SubItems[0].Text);
+            hesapDuzenlemeFormu.ShowDialog();
+        }
+
+        public void odemeGuncellemeGeldi(decimal[] odemeler, decimal[] gelenOdemeler, string siparisiGirenKisi)
+        {
+            if (odemeler[0] != gelenOdemeler[0])
+            {
+                listViewOdemeler.Items[0].SubItems[1].Text = siparisiGirenKisi;
+                listViewOdemeler.Items[0].SubItems[2].Text = (gelenOdemeler[0]).ToString("0.00");
+                listViewOdemeler.Items[5].SubItems[2].Text = (Convert.ToDecimal(listViewOdemeler.Items[5].SubItems[2].Text) - odemeler[0] + gelenOdemeler[0]).ToString("0.00");
+            }
+
+            if (odemeler[1] != gelenOdemeler[1])
+            {
+                listViewOdemeler.Items[1].SubItems[1].Text = siparisiGirenKisi;
+                listViewOdemeler.Items[1].SubItems[2].Text = (gelenOdemeler[1]).ToString("0.00");
+                listViewOdemeler.Items[5].SubItems[2].Text = (Convert.ToDecimal(listViewOdemeler.Items[5].SubItems[2].Text) - odemeler[1] + gelenOdemeler[1]).ToString("0.00");
+            }
+
+            if (odemeler[2] != gelenOdemeler[2])
+            {
+                listViewOdemeler.Items[2].SubItems[1].Text = siparisiGirenKisi;
+                listViewOdemeler.Items[2].SubItems[2].Text = (gelenOdemeler[2]).ToString("0.00");
+                listViewOdemeler.Items[5].SubItems[2].Text = (Convert.ToDecimal(listViewOdemeler.Items[5].SubItems[2].Text) - odemeler[2] + gelenOdemeler[2]).ToString("0.00");
+            }
         }
     }
 }

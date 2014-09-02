@@ -25,7 +25,7 @@ namespace ROPv1
 {
     public partial class HesapFormu : Form
     {
-        private SiparisMenuFormu menuFormu;
+        public SiparisMenuFormu menuFormu;
 
         CrystalReportAdisyon raporAdisyon = new CrystalReportAdisyon();
 
@@ -42,6 +42,8 @@ namespace ROPv1
         MyListView listHesaptakiler;
 
         decimal toplamHesap = 0, indirim = 0, indirimYuzde = 0, toplamOdemeVeIndirim = 0, paraUstu = 0;
+
+        decimal[] odemeler;
 
         const int urunBoyu = 240, fiyatBoyu = 90;
 
@@ -123,17 +125,15 @@ namespace ROPv1
         //çarpan özellikleri
         private void keyPressedOnPriceText(object sender, KeyPressEventArgs e)
         {
-            if (textNumberOfItem.Text == String.Empty)
-            {
-                if (e.KeyChar == '0')
-                    e.Handled = true;
-            }
-
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
             {
                 e.Handled = true;
             }
-            else if (e.KeyChar == ',' && (sender as TextBox).Text.IndexOf(',') > -1 && (sender as TextBox).Text.Length < 4)
+            else if (e.KeyChar == ',' && (sender as TextBox).SelectedText.Length == (sender as TextBox).Text.Length)
+            {
+                e.Handled = false;
+            }
+            else if (e.KeyChar == ',' && (sender as TextBox).Text.IndexOf(',') > -1)
             { // 1 kere , kullanmasına izin ver
 
                 e.Handled = true;
@@ -667,11 +667,11 @@ namespace ROPv1
                     {
                         siparisOlustur(adisyonID, siparis);
 
-                        menuFormu.masaFormu.serverdanSiparisIkramVeyaIptal(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[2].Text, Convert.ToDecimal(siparis.SubItems[3].Text).ToString(), null, siparis.SubItems[1].Text.Substring(0,siparis.SubItems[1].Text.Length-1));
+                        menuFormu.masaFormu.serverdanSiparisIkramVeyaIptal(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[2].Text, Convert.ToDecimal(siparis.SubItems[3].Text).ToString(), null, siparis.SubItems[1].Text.Substring(0, siparis.SubItems[1].Text.Length - 1));
                     }
 
                     //yeni ürünler için mutfak bildirimi
-                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=0");
+                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE AcikMi=1 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=0");
                     dr = cmd.ExecuteReader();
 
                     KontrolFormu dialog2 = null;
@@ -713,7 +713,7 @@ namespace ROPv1
                     }
 
                     // iptal edilen ürünler için mutfağa adisyon
-                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=1");
+                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE AcikMi=1 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=1");
                     dr = cmd.ExecuteReader();
 
                     try
@@ -736,12 +736,12 @@ namespace ROPv1
 
                         cmd.Connection.Close();
                         cmd.Connection.Dispose();
-                        
+
                         if (yaziciAdi != "")
                             asyncYaziciyaGonder(masaAdi, departmanAdi, firmaAdi, yaziciAdi, raporMutfakIptal);
                         else
                         {
-                            if(dialog2 == null)
+                            if (dialog2 == null)
                             {
                                 dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
                                 dialog2.Show();
@@ -762,7 +762,7 @@ namespace ROPv1
                     {
                         sonSiparisMi--;
 
-                        menuFormu.masaFormu.serveraSiparis(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[2].Text, siparisiGirenKisi, Convert.ToDecimal(siparis.SubItems[3].Text).ToString(), "", sonSiparisMi, siparis.SubItems[1].Text.Substring(0,siparis.SubItems[1].Text.Length -1), "ilkSiparis");
+                        menuFormu.masaFormu.serveraSiparis(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[2].Text, siparisiGirenKisi, Convert.ToDecimal(siparis.SubItems[3].Text).ToString(), "", sonSiparisMi, siparis.SubItems[1].Text.Substring(0, siparis.SubItems[1].Text.Length - 1), "ilkSiparis");
                     }
                     menuFormu.masaAcikMi = true;
                 }
@@ -799,7 +799,7 @@ namespace ROPv1
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add("-");
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(listHesaptakiler.Groups[2].Items[i].SubItems[1].Text);
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(listHesaptakiler.Groups[2].Items[i].SubItems[2].Text);
-                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add((Convert.ToDecimal(listHesaptakiler.Groups[2].Items[i].SubItems[3].Text)*Convert.ToInt32(listHesaptakiler.Groups[2].Items[i].Text)).ToString());
+                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add((Convert.ToDecimal(listHesaptakiler.Groups[2].Items[i].SubItems[3].Text) * Convert.ToInt32(listHesaptakiler.Groups[2].Items[i].Text)).ToString());
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
                 toplamHesap += Convert.ToDecimal(listHesaptakiler.Groups[2].Items[i].SubItems[3].Text) * Convert.ToInt32(listHesaptakiler.Groups[2].Items[i].SubItems[0].Text);
             }
@@ -834,7 +834,7 @@ namespace ROPv1
                 {
                     decimal yemeginFiyati, porsiyon;
                     int adet;
-                    string yemeginAdi;                    
+                    string yemeginAdi;
 
                     try
                     {
@@ -854,7 +854,7 @@ namespace ROPv1
 
                     for (int i = 0; i < listOdenenler.Items.Count; i++)
                     {
-                        if (yemeginAdi == listOdenenler.Items[i].SubItems[2].Text && (Double)porsiyon == Convert.ToDouble(listOdenenler.Items[i].SubItems[1].Text.Substring(0,listOdenenler.Items[i].SubItems[1].Text.Length-1)))
+                        if (yemeginAdi == listOdenenler.Items[i].SubItems[2].Text && (Double)porsiyon == Convert.ToDouble(listOdenenler.Items[i].SubItems[1].Text.Substring(0, listOdenenler.Items[i].SubItems[1].Text.Length - 1)))
                         {
                             listedeYeniGelenSiparisVarmi = i;
                             break;
@@ -1019,7 +1019,7 @@ namespace ROPv1
             {
                 decimal yemeginFiyati, porsiyon;
                 int adet;
-                string yemeginAdi;                
+                string yemeginAdi;
 
                 for (int i = 0; i < siparisler.Count(); i++)
                 {
@@ -1045,7 +1045,7 @@ namespace ROPv1
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(porsiyon + "P");
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginAdi);
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginFiyati.ToString("0.00"));
-                        listOdenenler.Items[listOdenenler.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);                 
+                        listOdenenler.Items[listOdenenler.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
                     }
                     else // varsa ürünün hesaptaki değerlerini istenilene göre arttır
                     {
@@ -1350,7 +1350,7 @@ namespace ROPv1
 
                         for (int j = 0; j < listOdenenler.Items.Count; j++)
                         {
-                           if (listUrunFiyat.Items[i].SubItems[3].Text == listOdenenler.Items[j].SubItems[2].Text && listUrunFiyat.Items[i].SubItems[2].Text == listOdenenler.Items[j].SubItems[1].Text)
+                            if (listUrunFiyat.Items[i].SubItems[3].Text == listOdenenler.Items[j].SubItems[2].Text && listUrunFiyat.Items[i].SubItems[2].Text == listOdenenler.Items[j].SubItems[1].Text)
                             {
                                 listedeYeniGelenSiparisVarmi = j;
                                 break;
@@ -1428,7 +1428,7 @@ namespace ROPv1
                         int odenmekIstenen = Convert.ToInt32(listUrunFiyat.Items[i].SubItems[1].Text.Substring(1, listUrunFiyat.Items[i].SubItems[1].Text.Length - 2));
                         decimal fiyat = Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[4].Text) / Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[0].Text);
 
-                        secilipOdenenSiparisBilgileri.Append("*" + odenmekIstenen.ToString() + "-" + listUrunFiyat.Items[i].SubItems[3].Text + "-" + fiyat + "-" + listUrunFiyat.Items[i].SubItems[2].Text.Substring(0, listUrunFiyat.Items[i].SubItems[2].Text.Length-1));
+                        secilipOdenenSiparisBilgileri.Append("*" + odenmekIstenen.ToString() + "-" + listUrunFiyat.Items[i].SubItems[3].Text + "-" + fiyat + "-" + listUrunFiyat.Items[i].SubItems[2].Text.Substring(0, listUrunFiyat.Items[i].SubItems[2].Text.Length - 1));
 
                         //eklenenleri var olandan düş
                         listUrunFiyat.Items[i].SubItems[4].Text = (Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[4].Text) - ((decimal)odenmekIstenen * fiyat)).ToString("0.00");
@@ -1553,9 +1553,9 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        public void odendiUpdateInsert(int siparisID, int adisyonID, decimal adet, double fiyati, decimal odemeAdedi, string yemekAdi, DateTime verilisTarihi, decimal porsiyon)
+        public void odendiUpdateInsert(int siparisID, int adisyonID, int adet, double fiyati, int odemeAdedi, string yemekAdi, DateTime verilisTarihi, decimal porsiyon)
         {
-            decimal yeniPorsiyonAdetiSiparis = adet - odemeAdedi;
+            int yeniPorsiyonAdetiSiparis = adet - odemeAdedi;
 
             SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet, OdendiMi=1 WHERE SiparisID=@id");
             cmd.Parameters.AddWithValue("@_Adet", odemeAdedi);
@@ -1725,6 +1725,7 @@ namespace ROPv1
                 textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
 
                 labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+                menuFormu.labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
 
                 SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "'");
                 SqlDataReader dr = cmd.ExecuteReader();
@@ -1833,7 +1834,7 @@ namespace ROPv1
                 textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
 
                 labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
-
+                menuFormu.labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
                 SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masaAdi + "' AND DepartmanAdi='" + departmanAdi + "'");
                 SqlDataReader dr = cmd.ExecuteReader();
                 dr.Read();
@@ -1865,7 +1866,7 @@ namespace ROPv1
                 }
 
                 //servera indirimi eklet
-                menuFormu.masaFormu.hesapFormundanIndirim(masaAdi, departmanAdi, "Indirim", tip, indirimYuzde,siparisiGirenKisi);
+                menuFormu.masaFormu.hesapFormundanIndirim(masaAdi, departmanAdi, "Indirim", tip, indirimYuzde, siparisiGirenKisi);
             }
         }
 
@@ -1916,6 +1917,7 @@ namespace ROPv1
 
                 textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
                 labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+                menuFormu.labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             }
             else  // indirim yüzde
             {
@@ -1962,8 +1964,52 @@ namespace ROPv1
 
                 textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
                 labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+                menuFormu.labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             }
-        }  
+        }
+
+        private void buttonHesapDuzenle_Click(object sender, EventArgs e)
+        {
+            odemeler = new decimal[3];
+            odemeler[0] = Convert.ToDecimal(labelOdenenNakit.Text);
+            odemeler[1] = Convert.ToDecimal(labelOdenenKart.Text);
+            odemeler[2] = Convert.ToDecimal(labelOdenenFis.Text);
+
+            //Hesap Formu Aç Direk Ödenen Miktarlar Değiştirilebilsin
+            HesapDuzenleme hesapDuzenlemeFormu = new HesapDuzenleme(odemeler, masaAdi, departmanAdi, this,  siparisiGirenKisi);
+            hesapDuzenlemeFormu.ShowDialog();
+        }
+
+        public void odemeGuncellemeGeldi(decimal [] odemeler, decimal [] gelenOdemeler, string siparisiGirenKisi)
+        {
+            labelOdenenNakit.Text = (gelenOdemeler[0]).ToString("0.00");
+
+            labelOdenenKart.Text = (gelenOdemeler[1]).ToString("0.00");
+
+            labelOdenenFis.Text = (gelenOdemeler[2]).ToString("0.00");
+
+            decimal eskiOdemeler = odemeler[0] + odemeler[1] + odemeler[2],
+                yeniOdemeler = gelenOdemeler[0] + gelenOdemeler[1] + gelenOdemeler[2];
+
+            labelOdenenToplam.Text = (Convert.ToDecimal(labelOdenenToplam.Text) - eskiOdemeler + yeniOdemeler).ToString("0.00");
+
+            toplamOdemeVeIndirim = toplamOdemeVeIndirim - eskiOdemeler + yeniOdemeler;
+
+            menuFormu.labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+            labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+        }
+
+        private void labelOdenenToplam_TextChanged(object sender, EventArgs e)
+        {
+            if(Convert.ToDecimal(labelOdenenToplam.Text) > 0)
+            {
+                buttonHesapDuzenle.Enabled = true;
+            }
+            else
+            {
+                buttonHesapDuzenle.Enabled = false;
+            }
+        }
 
     }
 }

@@ -173,6 +173,9 @@ namespace ROPv1
                     case "OdemeYapildi": // herhangi bir ödeme yapıldığında
                         komut_OdemeYapildi(parametreler["masa"], parametreler["departmanAdi"], parametreler["odemeTipi"], parametreler["odemeMiktari"], e.Client, parametreler["secilipOdenenSiparisBilgileri"], parametreler["odemeyiAlanKisi"]);
                         break;
+                    case "OdemeGuncelle": // Ödeme güncellendiğinde
+                        komut_OdemeGuncelle(parametreler["masa"], parametreler["departmanAdi"], parametreler["odemeler"], parametreler["gelenOdemeler"], e.Client, parametreler["siparisiGirenKisi"]);
+                        break;
                     case "giris": // bir kullanıcı servera bağlandığında
                         komut_giris(e.Client, parametreler["nick"]);
                         break;
@@ -576,6 +579,83 @@ namespace ROPv1
             cmd.Connection.Dispose();
 
             client.MesajYolla("komut=IndirimOnay&odemeTipi=" + odemeTipi + "&odemeMiktari=" + odemeMiktari);
+        }
+
+        private void komut_OdemeGuncelle(string masa, string departmanAdi, string _odemeler, string _gelenOdemeler, ClientRef client, string siparisiGirenKisi)
+        {
+            string[] stringOdemeler, stringGelenOdemeler;
+            try
+            {
+                stringOdemeler = _odemeler.Split('*');
+                stringGelenOdemeler = _gelenOdemeler.Split('*');
+            }
+            catch
+            {
+                //HATA MESAJI GÖNDER
+                komut_IslemHatasi(client, "İşlem gerçekleştirilemedi, lütfen tekrar deneyiniz");
+                return;
+            }
+
+            decimal[] odemeler = { 0, 0, 0 }, gelenOdemeler = { 0, 0, 0 };
+
+            odemeler[0] = Convert.ToDecimal(stringOdemeler[0]);
+            odemeler[1] = Convert.ToDecimal(stringOdemeler[1]);
+            odemeler[2] = Convert.ToDecimal(stringOdemeler[2]);
+
+            gelenOdemeler[0] = Convert.ToDecimal(stringGelenOdemeler[0]);
+            gelenOdemeler[1] = Convert.ToDecimal(stringGelenOdemeler[1]);
+            gelenOdemeler[2] = Convert.ToDecimal(stringGelenOdemeler[2]);
+
+            // adisyon id al 
+            int adisyonID;
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "' AND AcikMi=1");
+            SqlDataReader dr = cmd.ExecuteReader();
+            dr.Read();
+
+            try // açık
+            {
+                adisyonID = dr.GetInt32(0);
+            }
+            catch// kapalı
+            {
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
+                KontrolFormu dialog = new KontrolFormu("Ödeme bilgileri kaydedilirken bir hata oluştu, lütfen tekrar deneyiniz", false);
+                dialog.Show();
+                return;
+            }
+
+            decimal odenenMiktar = 0;
+
+            for (int i = 0; i < odemeler.Length; i++)
+            {
+                if (odemeler[i] != gelenOdemeler[i]) // değişen ödemeleri güncelle
+                {
+                    odenenMiktar = gelenOdemeler[i];
+                    int odemeTipi = 101 + i;
+
+                    cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID=@_AdisyonID1 AND OdemeTipi=@_OdemeTipi1) UPDATE OdemeDetay SET OdenenMiktar=@_OdenenMiktar1, IndirimiKimGirdi=@_IndirimiKimGirdi1 WHERE OdemeTipi=@_OdemeTipi2 AND AdisyonID=@_AdisyonID2 ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar,IndirimiKimGirdi) VALUES(@_AdisyonID3,@_OdemeTipi2,@_OdenenMiktar2,@_IndirimiKimGirdi2)");
+
+                    cmd.Parameters.AddWithValue("@_AdisyonID1", adisyonID);
+                    cmd.Parameters.AddWithValue("@_OdemeTipi1", odemeTipi);
+                    cmd.Parameters.AddWithValue("@_OdenenMiktar1", odenenMiktar);
+                    cmd.Parameters.AddWithValue("@_IndirimiKimGirdi1", siparisiGirenKisi);
+
+                    cmd.Parameters.AddWithValue("@_OdemeTipi2", odemeTipi);
+                    cmd.Parameters.AddWithValue("@_AdisyonID2", adisyonID);
+
+                    cmd.Parameters.AddWithValue("@_AdisyonID3", adisyonID);
+                    cmd.Parameters.AddWithValue("@_OdemeTipi2", odemeTipi);
+                    cmd.Parameters.AddWithValue("@_OdenenMiktar2", odenenMiktar);
+                    cmd.Parameters.AddWithValue("@_IndirimiKimGirdi2", siparisiGirenKisi);
+                    cmd.ExecuteNonQuery();
+
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                }
+            }
+
+            client.MesajYolla("komut=odemeGuncelleTamamlandi&odemeler=" + odemeler[0] + "*" + odemeler[1] + "*" + odemeler[2] + "&gelenOdemeler=" + gelenOdemeler[0] + "*" + gelenOdemeler[1] + "*" + gelenOdemeler[2] + "&siparisiGirenKisi=" + siparisiGirenKisi);
         }
 
         private void komut_OdemeYapildi(string masa, string departmanAdi, string odemeTipi, string odemeMiktari, ClientRef client, string secilipOdenenSiparisBilgileri, string odemeyiAlanKisi)
@@ -1481,7 +1561,7 @@ namespace ROPv1
 
 
             // iptal edilen ürünler için mutfağa adisyon
-            cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis WHERE MutfakCiktisiAlindiMi=0 AND IptalMi=1");
+            cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=1");
             dr = cmd.ExecuteReader();
 
             try
@@ -1977,6 +2057,12 @@ namespace ROPv1
                 else
                 {
                     kullanicilar.Add(new BagliKullanicilar(client, nick));
+
+                    if(kullanicilar.Count > Properties.Settings.Default.IP4B)
+                    {
+                        Properties.Settings.Default.IP4B = kullanicilar.Count;
+                        Properties.Settings.Default.Save();
+                    }
                 }
             }
             //Kullanıcıya işlemin başarılı olduğu bilgisini gönder
@@ -2369,12 +2455,112 @@ namespace ROPv1
             }
         }
 
+        private bool sendConnections(int connections)
+        {
+            bool mailGonderildi = false;
+
+            while (!mailGonderildi)
+            {
+                if (IsConnectedToInternet())
+                {
+                    try
+                    {
+                        MailMessage message = new MailMessage();
+                        SmtpClient smtp = new SmtpClient();
+
+                        message.From = new MailAddress("restomasyon@gmail.com");
+                        message.To.Add(new MailAddress("restomasyon@gmail.com"));
+
+                        if (Properties.Settings.Default.FirmaAdi == string.Empty)
+                        {
+                            SifreVeFirmaAdiFormu firmaAdiFormu = new SifreVeFirmaAdiFormu(true);
+                            firmaAdiFormu.ShowDialog();
+
+                            if (firmaAdiFormu.DialogResult == DialogResult.No)
+                            {
+                                return false;
+                            }
+                        }
+
+                        message.Subject = "" + Properties.Settings.Default.FirmaAdi;
+
+                        message.Body = "MBKS = " + Properties.Settings.Default.IP4B;
+                        
+                        smtp.Port = 587;
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.EnableSsl = true;
+                        smtp.UseDefaultCredentials = false;
+                        SecureString sfr = new System.Security.SecureString();
+
+                        sfr = convertToSecureString("Otomasyon23");
+                        sfr.MakeReadOnly();
+
+                        smtp.Credentials = new NetworkCredential("restomasyon@gmail.com", sfr);
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtp.Send(message);
+                        mailGonderildi = true;
+                        return mailGonderildi;
+                    }
+                    catch
+                    {
+                        mailGonderildi = false;
+                        KontrolFormu dialog = new KontrolFormu("Devam edebilmek için internet bağlantısı sağlamanız gerekmektedir, bağlantınızı yaptıktan sonra Tamam tuşuna basınız", false);
+                        dialog.ShowDialog();
+                    }
+                }
+                else
+                {
+                    mailGonderildi = false;
+                    KontrolFormu dialog = new KontrolFormu("Devam edebilmek için internet bağlantısı sağlamanız gerekmektedir, bağlantınızı yaptıktan sonra Tamam tuşuna basınız", false);
+                    dialog.ShowDialog();
+                }
+            }
+            return mailGonderildi;
+        }
+
+        private void bagliKullaniciSayisiIlet()
+        {
+            try
+            {
+                string path = Application.StartupPath + "\\mbks.txt";
+
+                System.IO.File.WriteAllText(path, "MBKS = " + Properties.Settings.Default.IP4B);
+
+                DateTime dateOfBeginning = Properties.Settings.Default.IP4;
+
+                if (dateOfBeginning == DateTime.Parse("01.01.2000"))
+                {
+                    dateOfBeginning = DateTime.Today;
+                    Properties.Settings.Default.IP4 = DateTime.Today;
+                    Properties.Settings.Default.Save();
+                }
+
+                if (dateOfBeginning.AddDays(60) < DateTime.Today)
+                {
+                    int connections = Properties.Settings.Default.IP4B;
+
+                    bool gonderildiMi = sendConnections(connections);
+
+                    if (!gonderildiMi)
+                    {
+                        System.Windows.Forms.Application.Exit();
+                        return;
+                    }
+
+                    Properties.Settings.Default.IP4 = DateTime.Today;
+                    Properties.Settings.Default.Save();
+                }
+            }
+            catch
+            { }
+        }
+
         //Form Load
         private void GirisEkrani_Load(object sender, EventArgs e)
         {
             //Properties.Settings.Default.Reset();
-
-            if (Properties.Settings.Default.FirmaAdi == "")
+            
+            if (Properties.Settings.Default.FirmaAdi.Trim() == "")
             {
                 SifreVeFirmaAdiFormu firmaAdiFormu = new SifreVeFirmaAdiFormu(true);
                 firmaAdiFormu.ShowDialog();
@@ -2438,7 +2624,7 @@ namespace ROPv1
             {
                 if (!PasswordHash.ValidatePassword(Properties.Settings.Default.IP3, sifre))
                 {
-                    SifreVeFirmaAdiFormu firmaAdiFormu = new SifreVeFirmaAdiFormu(false);
+                    SifreVeFirmaAdiFormu firmaAdiFormu = new SifreVeFirmaAdiFormu(false); // şifre
                     firmaAdiFormu.ShowDialog();
 
                     if (firmaAdiFormu.DialogResult == DialogResult.No)
@@ -2446,10 +2632,15 @@ namespace ROPv1
                         System.Windows.Forms.Application.Exit();
                         return;
                     }
+                    bagliKullaniciSayisiIlet();
 
                     Properties.Settings.Default.Port2 = 0;
                     Properties.Settings.Default.Save();
                 }
+            }
+            else
+            {
+                bagliKullaniciSayisiIlet();
             }
 
             //SQL SERVER BAĞLANTI KONTROLÜ YAPILIYOR
@@ -2551,9 +2742,9 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        public void odendiUpdateInsert(int siparisID, int adisyonID, decimal adet, double fiyati, decimal odemeAdedi, string yemekAdi, DateTime verilisTarihi, decimal porsiyon)
+        public void odendiUpdateInsert(int siparisID, int adisyonID, int adet, double fiyati, int odemeAdedi, string yemekAdi, DateTime verilisTarihi, decimal porsiyon)
         {
-            decimal yeniPorsiyonAdetiSiparis = adet - odemeAdedi;
+            int yeniPorsiyonAdetiSiparis = adet - odemeAdedi;
 
             SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet, OdendiMi=1 WHERE SiparisID=@id");
             cmd.Parameters.AddWithValue("@_Adet", odemeAdedi);
@@ -2593,9 +2784,9 @@ namespace ROPv1
             return true;
         }
 
-        public void ikramUpdateInsert(int siparisID, int adisyonID, decimal adet, double dusulecekDeger, decimal ikramAdedi, string yemekAdi, int ikramMi, DateTime verilisTarihi, decimal porsiyon)
+        public void ikramUpdateInsert(int siparisID, int adisyonID, int adet, double dusulecekDeger, int ikramAdedi, string yemekAdi, int ikramMi, DateTime verilisTarihi, decimal porsiyon)
         {
-            decimal yeniPorsiyonAdetiSiparis = adet - ikramAdedi;
+            int yeniPorsiyonAdetiSiparis = adet - ikramAdedi;
 
             SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet WHERE SiparisID=@id");
             cmd.Parameters.AddWithValue("@_Adet", yeniPorsiyonAdetiSiparis);
@@ -2634,9 +2825,9 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        public void iptalUpdateInsert(int siparisID, int adisyonID, decimal adet, double dusulecekDeger, decimal iptalAdedi, string yemekAdi, DateTime verilisTarihi, decimal porsiyon, string iptalNedeni)
+        public void iptalUpdateInsert(int siparisID, int adisyonID, int adet, double dusulecekDeger, int iptalAdedi, string yemekAdi, DateTime verilisTarihi, decimal porsiyon, string iptalNedeni)
         {
-            decimal yeniPorsiyonAdetiSiparis = adet - iptalAdedi;
+            int yeniPorsiyonAdetiSiparis = adet - iptalAdedi;
 
             SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet WHERE SiparisID=@id");
             cmd.Parameters.AddWithValue("@_Adet", yeniPorsiyonAdetiSiparis);
@@ -2706,9 +2897,9 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        public void urunTasimaUpdateInsert(int siparisID, int aktarimYapilacakMasaninAdisyonID, decimal adet, double dusulecekDeger, decimal tasinacakMiktar, string yemekAdi, int ikramMi, DateTime verilisTarihi, decimal porsiyon)
+        public void urunTasimaUpdateInsert(int siparisID, int aktarimYapilacakMasaninAdisyonID, int adet, double dusulecekDeger, int tasinacakMiktar, string yemekAdi, int ikramMi, DateTime verilisTarihi, decimal porsiyon)
         {
-            decimal yeniPorsiyonAdetiSiparis = adet - tasinacakMiktar;
+            int yeniPorsiyonAdetiSiparis = adet - tasinacakMiktar;
 
             SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET Adet = @_Adet WHERE SiparisID=@id");
             cmd.Parameters.AddWithValue("@_Adet", yeniPorsiyonAdetiSiparis);
