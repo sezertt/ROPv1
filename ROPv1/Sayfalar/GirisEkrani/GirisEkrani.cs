@@ -155,6 +155,9 @@ namespace ROPv1
                     case "Indirim": // yeni masa açıldığı bilgisi geldiğinde
                         komut_hesapIndirim(parametreler["masa"], parametreler["departmanAdi"], parametreler["odemeTipi"], parametreler["odemeMiktari"], e.Client, parametreler["indirimYapanKisi"]);
                         break;
+                    case "bildirim":
+                        komut_bildirim(parametreler["masalar"], e.Client);
+                        break;
                     case "masaGirilebilirMi": // yeni masa açıldığı bilgisi geldiğinde
                         komut_masaGirilebilirMi(parametreler["masa"], parametreler["departmanAdi"], e.Client);
                         break;
@@ -239,6 +242,106 @@ namespace ROPv1
         }
 
         #region Komutlar
+
+        private void komut_bildirim(string masalar, ClientRef client)
+        {
+            string[] departmanVeMasalar;
+            string[][] masaBilgileri;
+
+            if(masalar != "hepsi")
+            {
+                try
+                {
+                    departmanVeMasalar = masalar.Split('*');
+
+                    masaBilgileri = new string[departmanVeMasalar.Count()][];
+
+                    for (int i = 0; i < departmanVeMasalar.Count(); i++)
+                    {
+                        masaBilgileri[i] = new string[departmanVeMasalar[i].Count()];
+                        masaBilgileri[i] = departmanVeMasalar[0].Split('-');
+                    }
+                }
+                catch
+                {
+                    return;
+                }
+
+                SqlCommand cmd = null;
+                StringBuilder bildirimBilgileri = null;
+
+                for (int i = 0; i < masaBilgileri.Count(); i++)
+                {
+                    for (int j = 1; j < masaBilgileri[i].Count(); j++)
+                    {
+                        bildirimBilgileri = new StringBuilder();
+                        cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Adet, YemekAdi, Porsiyon from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masaBilgileri[i][j] + "' and Adisyon.DepartmanAdi='" + masaBilgileri[i][0] + "' AND Siparis.NotificationGorulduMu=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 ORDER BY Adet DESC");
+                        SqlDataReader dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            try
+                            {
+                                bildirimBilgileri.Append("*" + masaBilgileri[i][0] + "-" + masaBilgileri[i][j] + "-" + dr.GetDecimal(0).ToString() + "-" + dr.GetInt32(1).ToString() + "-" + dr.GetString(2) + "-" + dr.GetDecimal(3));
+                            }
+                            catch
+                            {
+                                //HATA MESAJI GÖNDER
+                                komut_IslemHatasi(client, "İşlem gerçekleştirilemedi, lütfen tekrar deneyiniz");
+                                bildirimBilgileri.Clear();
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
+
+                if (bildirimBilgileri != null)
+                {
+                    if (bildirimBilgileri.Length >= 1)
+                    {
+                        bildirimBilgileri.Remove(0, 1);
+                    }
+                }
+                client.MesajYolla("komut=bildirimBilgileri&bildirimBilgileri=" + bildirimBilgileri);
+            }
+            else
+            {
+                SqlCommand cmd = null;
+                StringBuilder bildirimBilgileri = null;
+
+                bildirimBilgileri = new StringBuilder();
+                cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Adet, YemekAdi, Porsiyon, DepartmanAdi, MasaAdi from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Siparis.NotificationGorulduMu=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 ORDER BY Adet DESC");
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    try
+                    {
+                        bildirimBilgileri.Append("*" + dr.GetString(4) + "-" + dr.GetString(5) + "-" + dr.GetDecimal(0).ToString() + "-" + dr.GetInt32(1).ToString() + "-" + dr.GetString(2) + "-" + dr.GetDecimal(3));
+                    }
+                    catch
+                    {
+                        //HATA MESAJI GÖNDER
+                        komut_IslemHatasi(client, "İşlem gerçekleştirilemedi, lütfen tekrar deneyiniz");
+                        bildirimBilgileri.Clear();
+                        return;
+                    }
+                }
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
+
+                if (bildirimBilgileri != null)
+                {
+                    if (bildirimBilgileri.Length >= 1)
+                    {
+                        bildirimBilgileri.Remove(0, 1);
+                    }
+                }
+                client.MesajYolla("komut=bildirimBilgileri&bildirimBilgileri=" + bildirimBilgileri);
+            }         
+        }
 
         private void komut_veriGonder(ClientRef client, string kacinci, string sadeceXML)
         {
@@ -2058,7 +2161,7 @@ namespace ROPv1
                 {
                     kullanicilar.Add(new BagliKullanicilar(client, nick));
 
-                    if(kullanicilar.Count > Properties.Settings.Default.IP4B)
+                    if (kullanicilar.Count > Properties.Settings.Default.IP4B)
                     {
                         Properties.Settings.Default.IP4B = kullanicilar.Count;
                         Properties.Settings.Default.Save();
@@ -2485,7 +2588,7 @@ namespace ROPv1
                         message.Subject = "" + Properties.Settings.Default.FirmaAdi;
 
                         message.Body = "MBKS = " + Properties.Settings.Default.IP4B;
-                        
+
                         smtp.Port = 587;
                         smtp.Host = "smtp.gmail.com";
                         smtp.EnableSsl = true;
@@ -2559,7 +2662,7 @@ namespace ROPv1
         private void GirisEkrani_Load(object sender, EventArgs e)
         {
             //Properties.Settings.Default.Reset();
-            
+
             if (Properties.Settings.Default.FirmaAdi.Trim() == "")
             {
                 SifreVeFirmaAdiFormu firmaAdiFormu = new SifreVeFirmaAdiFormu(true);

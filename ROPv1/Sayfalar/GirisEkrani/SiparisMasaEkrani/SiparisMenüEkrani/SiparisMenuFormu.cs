@@ -36,8 +36,6 @@ namespace ROPv1
 
         const int urunBoyu = 225, fiyatBoyu = 80;
 
-        string siparisiKimGirdi, adisyonNotu = "", MasaAdi;
-
         List<Menuler> menuListesi = new List<Menuler>();  // menüleri tutacak liste
 
         List<KategorilerineGoreUrunler> urunListesi = new List<KategorilerineGoreUrunler>();
@@ -58,7 +56,7 @@ namespace ROPv1
 
         public int masaDegisti = -1;
 
-        public string yeniDepartmaninAdi = "", yeniMasaninAdi = "", urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi = "", urunTasinirkenYeniMasaOlusturulduysaOlusanDepartmaninAdi;
+        public string yeniDepartmaninAdi = "", yeniMasaninAdi = "", urunTasinirkenYeniMasaOlusturulduysaOlusanMasaninAdi = "", urunTasinirkenYeniMasaOlusturulduysaOlusanDepartmaninAdi, siparisiKimGirdi, adisyonNotu = "", MasaAdi;
 
         public SiparisMenuFormu(SiparisMasaFormu masaFormu, string masaninAdi, Restoran butonBilgileri, string siparisiGirenKisi, bool masaAcikmi)
         {
@@ -179,6 +177,7 @@ namespace ROPv1
                             urunButonlari.Height = height;
                             urunButonlari.Width = width;
                             urunButonlari.Tag = j;
+                            urunButonlari.Name = urunListesi[i].urunAdi[j];
                             urunButonlari.Click += urunButonlari_Click;
 
                             flowPanelUrunler.Controls.Add(urunButonlari);
@@ -203,6 +202,7 @@ namespace ROPv1
                     urunButonlari.Height = height;
                     urunButonlari.Width = width;
                     urunButonlari.Tag = j;
+                    urunButonlari.Name = urunListesi[i].urunAdi[j];
                     urunButonlari.Click += urunButonlari_Click;
 
                     flowPanelUrunler.Controls.Add(urunButonlari);
@@ -224,6 +224,20 @@ namespace ROPv1
 
             //seçili olan menünün bilgisini tut, ürün seçiminde işe yarıyor
             hangiKategoriSecili = Convert.ToInt32(((Button)sender).Tag);
+
+            Button yeniSecilenUrunButonu = null;
+            try
+            {
+                yeniSecilenUrunButonu = flowPanelUrunler.Controls.Find(secilenUrun.urunAdi[0], true).FirstOrDefault() as Button;
+            }
+            catch
+            { }
+
+            if (yeniSecilenUrunButonu != null)
+            {
+                yeniSecilenUrunButonu.BackColor = SystemColors.ActiveCaption;
+                yeniSecilenUrunButonu.ForeColor = Color.White;
+            }
         }
 
         #region Panellerdeki itemların görünümünü ekrana göre ayarlıyoruz
@@ -286,11 +300,29 @@ namespace ROPv1
         //ürün butonlarına basıldığında çalışacak olan method
         void urunButonlari_Click(object sender, EventArgs e)
         {
+            Button oncekiSeciliUrunButonu = null;
+            try
+            {
+                oncekiSeciliUrunButonu = flowPanelUrunler.Controls.Find(secilenUrun.urunAdi[0], true).FirstOrDefault() as Button;
+            }
+            catch
+            { }
+
+            if(oncekiSeciliUrunButonu != null)
+            {
+                oncekiSeciliUrunButonu.BackColor = Color.White;
+                oncekiSeciliUrunButonu.ForeColor = SystemColors.ActiveCaption;
+            }
+
+            ((Button)sender).ForeColor = Color.White;
+            ((Button)sender).BackColor = SystemColors.ActiveCaption;
+
             buttonTemizle_Click(null, null);
 
             secilenUrun.urunAdi.Add(((Button)sender).Text);
             secilenUrun.urunPorsiyonSinifi.Add(urunListesi[hangiKategoriSecili].urunPorsiyonSinifi[Convert.ToInt32(((Button)sender).Tag)]);
             secilenUrun.urunFiyati.Add(urunListesi[hangiKategoriSecili].urunFiyati[Convert.ToInt32(((Button)sender).Tag)]);
+
             labelEklenecekUrun.Text = ((Button)sender).Text;
         }
 
@@ -376,6 +408,20 @@ namespace ROPv1
 
             if (listUrunFiyat.SelectedItems.Count > 0)
             {
+                Button oncekiSeciliUrunButonu = null;
+                try
+                {
+                    oncekiSeciliUrunButonu = flowPanelUrunler.Controls.Find(secilenUrun.urunAdi[0], true).FirstOrDefault() as Button;
+                }
+                catch
+                { }
+
+                if (oncekiSeciliUrunButonu != null)
+                {
+                    oncekiSeciliUrunButonu.BackColor = Color.White;
+                    oncekiSeciliUrunButonu.ForeColor = SystemColors.ActiveCaption;
+                }
+
                 secilenUrun.urunAdi.Clear();
                 secilenUrun.urunPorsiyonSinifi.Clear();
                 secilenUrun.urunFiyati.Clear();
@@ -385,6 +431,20 @@ namespace ROPv1
                 secilenUrun.urunFiyati.Add(listUrunFiyat.SelectedItems[0].SubItems[3].Text);
 
                 labelEklenecekUrun.Text = listUrunFiyat.SelectedItems[0].SubItems[2].Text;
+
+                Button yeniSecilenUrunButonu = null;
+                try
+                {
+                    yeniSecilenUrunButonu = flowPanelUrunler.Controls.Find(secilenUrun.urunAdi[0], true).FirstOrDefault() as Button;
+                }
+                catch
+                { }
+
+                if (yeniSecilenUrunButonu != null)
+                {
+                    yeniSecilenUrunButonu.BackColor = SystemColors.ActiveCaption;
+                    yeniSecilenUrunButonu.ForeColor = Color.White;
+                }
             }
         }
 
@@ -1264,16 +1324,34 @@ namespace ROPv1
             if (kacAdet > Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[0].Text))
                 kacAdet = Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[0].Text);
 
-            UrunIptalNedeniFormu urunIptalFormu = new UrunIptalNedeniFormu(kacAdet + " adet " + listUrunFiyat.SelectedItems[0].SubItems[2].Text + " iptal edilecek. Kısaca nedenini yazınız");
+            string iptalNedeni = "";
 
-            DialogResult eminMisiniz = urunIptalFormu.ShowDialog();
-
-            if (eminMisiniz == DialogResult.No)
+            if (listUrunFiyat.SelectedItems[0].Group == listUrunFiyat.Groups[yeniSiparisler])
             {
-                return;
-            }
+                DialogResult eminMisiniz;                
 
-            string iptalNedeni = urunIptalFormu.iptalNedeni;
+                using (KontrolFormu dialog = new KontrolFormu(kacAdet + " adet " + listUrunFiyat.SelectedItems[0].SubItems[2].Text + " iptal edilecek. Emin misiniz?", true))
+                {
+                    eminMisiniz = dialog.ShowDialog();
+
+                    if (eminMisiniz == DialogResult.No)
+                    {
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                UrunIptalNedeniFormu urunIptalFormu = new UrunIptalNedeniFormu(kacAdet + " adet " + listUrunFiyat.SelectedItems[0].SubItems[2].Text + " iptal edilecek. Kısaca nedenini yazınız");
+
+                DialogResult eminMisiniz = urunIptalFormu.ShowDialog();
+
+                if (eminMisiniz == DialogResult.No)
+                {
+                    return;
+                }
+                iptalNedeni = urunIptalFormu.iptalNedeni;
+            }     
 
             double dusulecekDeger = Convert.ToDouble(listUrunFiyat.SelectedItems[0].SubItems[3].Text);
 
@@ -1281,7 +1359,7 @@ namespace ROPv1
             {
                 listUrunFiyat.SelectedItems[0].SubItems[0].Text = (Convert.ToDouble(listUrunFiyat.SelectedItems[0].SubItems[0].Text) - kacAdet).ToString();
 
-                if (listUrunFiyat.SelectedItems[0].Group == listUrunFiyat.Groups[2] || listUrunFiyat.SelectedItems[0].Group == listUrunFiyat.Groups[3])
+                if (listUrunFiyat.SelectedItems[0].Group == listUrunFiyat.Groups[eskiSiparisler] || listUrunFiyat.SelectedItems[0].Group == listUrunFiyat.Groups[yeniSiparisler])
                 {
                     labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * kacAdet)).ToString("0.00");
                 }
@@ -1396,10 +1474,10 @@ namespace ROPv1
                     adisyonNotuUpdate(adisyonID);
 
                     cmd.Connection.Close();
-                    cmd.Connection.Dispose();
+                    cmd.Connection.Dispose();  
+                    
+                    masaFormu.serverdanSiparisIkramVeyaIptal(MasaAdi, hangiDepartman.departmanAdi, "iptal", kacAdet.ToString(), listUrunFiyat.SelectedItems[0].SubItems[2].Text, dusulecekDeger.ToString(), listUrunFiyat.SelectedItems[0].Group.Tag.ToString(), porsiyonu.ToString());
                 }
-
-                masaFormu.serverdanSiparisIkramVeyaIptal(MasaAdi, hangiDepartman.departmanAdi, "iptal", kacAdet.ToString(), listUrunFiyat.SelectedItems[0].SubItems[2].Text, dusulecekDeger.ToString(), listUrunFiyat.SelectedItems[0].Group.Tag.ToString(), porsiyonu.ToString());
 
                 if (listUrunFiyat.SelectedItems[0].Text == "0")
                 {
@@ -1628,12 +1706,12 @@ namespace ROPv1
 
                         cmd.Connection.Close();
                         cmd.Connection.Dispose();
-                        
+
                         if (yaziciAdi != "")
                             asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfakIptal);
                         else
                         {
-                            if(dialog2 == null)
+                            if (dialog2 == null)
                             {
                                 dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
                                 dialog2.Show();
@@ -1693,7 +1771,7 @@ namespace ROPv1
 
         private static void Basla(string masaAdi, string departmanAdi, string firmaAdi, string printerAdi, CrystalReportMutfak rapor)
         {
-            rapor.Refresh();            
+            rapor.Refresh();
 
             rapor.SetParameterValue("Masa", masaAdi);
             rapor.SetParameterValue("Departman", departmanAdi);
@@ -2724,6 +2802,7 @@ namespace ROPv1
                 porsiyonForm.BringToFront();
             }
         }
+
         public void porsiyonFormKapaniyor(string porsiyonMiktari)
         {
             buttonPorsiyonSec.Text = porsiyonMiktari;

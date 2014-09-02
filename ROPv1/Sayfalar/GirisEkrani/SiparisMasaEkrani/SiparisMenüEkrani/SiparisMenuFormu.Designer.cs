@@ -419,7 +419,7 @@
             this.labelEklenecekUrun.BackColor = System.Drawing.Color.Transparent;
             this.labelEklenecekUrun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelEklenecekUrun.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelEklenecekUrun.Location = new System.Drawing.Point(641, 12);
+            this.labelEklenecekUrun.Location = new System.Drawing.Point(646, 12);
             this.labelEklenecekUrun.Name = "labelEklenecekUrun";
             this.labelEklenecekUrun.Size = new System.Drawing.Size(154, 33);
             this.labelEklenecekUrun.TabIndex = 93;
