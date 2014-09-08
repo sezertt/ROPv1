@@ -1272,52 +1272,44 @@ namespace ROPv1
 
             double dusulecekDeger = Convert.ToDouble(dusulecekDegerGelen);
 
-            int degisecekSiparisIndexi = -1;
-
             for (int i = 0; i < listUrunFiyat.Groups[ikraminGrubu].Items.Count; i++)
             {
                 if (listUrunFiyat.Groups[ikraminGrubu].Items[i].SubItems[2].Text == yemekAdi && Convert.ToDouble(listUrunFiyat.Groups[ikraminGrubu].Items[i].SubItems[1].Text.Substring(0, listUrunFiyat.Groups[ikraminGrubu].Items[i].SubItems[1].Text.Length-1)) == Convert.ToDouble(porsiyon))
                 {
-                    degisecekSiparisIndexi = i;
-                    break;
+                    listUrunFiyat.Groups[ikraminGrubu].Items[i].SubItems[0].Text = (Convert.ToDouble(listUrunFiyat.Groups[ikraminGrubu].Items[i].SubItems[0].Text) - carpan).ToString();
+
+                    if (ikraminGrubu == 2) // iptali istenilen ürün ikram değilse kalan hesaptan da düşülmeli
+                    {
+                        labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
+                    }
+
+                    if (listUrunFiyat.Groups[ikraminGrubu].Items[i].Text == "0")
+                    {
+                        listedeSeciliOlanItemlar.RemoveAt(listUrunFiyat.Groups[ikraminGrubu].Items[i].Index);
+                        listUrunFiyat.Groups[ikraminGrubu].Items[i].Remove();
+                    }
+
+                    if (this.listUrunFiyat.Items.Count > 0)
+                    {
+                        int itemsCount = this.listUrunFiyat.Items.Count + 3; // 3 aslında grup sayısı -1
+                        int itemHeight = this.listUrunFiyat.Items[0].Bounds.Height;
+                        int VisiableItem = (int)this.listUrunFiyat.ClientRectangle.Height / itemHeight;
+                        if (itemsCount < VisiableItem)
+                        {
+                            listUrunFiyat.Columns[2].Width = urunBoyu + 10;
+                            listUrunFiyat.Columns[3].Width = fiyatBoyu + 10;
+                        }
+                    }
+                    buttonTemizle_Click(null, null);
+                    this.Enabled = true;
+                    return;
                 }
             }
-
-            if (degisecekSiparisIndexi == -1)
-            {
-                dialog2 = new KontrolFormu("Siparişlerde değişiklik oldu, lütfen masaya tekrar giriniz", false, this);
-                timerDialogClose.Start();
-                this.Enabled = false;
-                dialog2.Show();
-                return;
-            }
-
-            listUrunFiyat.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].SubItems[0].Text = (Convert.ToDouble(listUrunFiyat.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].SubItems[0].Text) - carpan).ToString();
-
-            if (ikraminGrubu == 2) // iptali istenilen ürün ikram değilse kalan hesaptan da düşülmeli
-            {
-                labelKalanHesap.Text = (Convert.ToDouble(labelKalanHesap.Text) - (dusulecekDeger * carpan)).ToString("0.00");
-            }
-
-            if (listUrunFiyat.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].Text == "0")
-            {
-                listedeSeciliOlanItemlar.RemoveAt(listUrunFiyat.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].Index);
-                listUrunFiyat.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].Remove();
-            }
-
-            if (this.listUrunFiyat.Items.Count > 0)
-            {
-                int itemsCount = this.listUrunFiyat.Items.Count + 3; // 3 aslında grup sayısı -1
-                int itemHeight = this.listUrunFiyat.Items[0].Bounds.Height;
-                int VisiableItem = (int)this.listUrunFiyat.ClientRectangle.Height / itemHeight;
-                if (itemsCount < VisiableItem)
-                {
-                    listUrunFiyat.Columns[2].Width = urunBoyu + 10;
-                    listUrunFiyat.Columns[3].Width = fiyatBoyu + 10;
-                }
-            }
-            buttonTemizle_Click(null, null);
-            this.Enabled = true;
+            dialog2 = new KontrolFormu("Siparişlerde değişiklik oldu, lütfen masaya tekrar giriniz", false, this);
+            timerDialogClose.Start();
+            this.Enabled = false;
+            dialog2.Show();
+            return;                     
         }
 
         // ürün iptal etme butonu
