@@ -1290,7 +1290,6 @@ namespace ROPv1
                 this.Enabled = false;
                 dialog2.Show();
                 return;
-
             }
 
             listUrunFiyat.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].SubItems[0].Text = (Convert.ToDouble(listUrunFiyat.Groups[ikraminGrubu].Items[degisecekSiparisIndexi].SubItems[0].Text) - carpan).ToString();
@@ -1308,7 +1307,7 @@ namespace ROPv1
 
             if (this.listUrunFiyat.Items.Count > 0)
             {
-                int itemsCount = this.listUrunFiyat.Items.Count + 3;// 3 aslında grup sayısı -1
+                int itemsCount = this.listUrunFiyat.Items.Count + 3; // 3 aslında grup sayısı -1
                 int itemHeight = this.listUrunFiyat.Items[0].Bounds.Height;
                 int VisiableItem = (int)this.listUrunFiyat.ClientRectangle.Height / itemHeight;
                 if (itemsCount < VisiableItem)
@@ -1317,7 +1316,6 @@ namespace ROPv1
                     listUrunFiyat.Columns[3].Width = fiyatBoyu + 10;
                 }
             }
-
             buttonTemizle_Click(null, null);
             this.Enabled = true;
         }
@@ -1343,9 +1341,7 @@ namespace ROPv1
                     eminMisiniz = dialog.ShowDialog();
 
                     if (eminMisiniz == DialogResult.No)
-                    {
-                        return;
-                    }
+                        return;                    
                 }
             }
             else
@@ -1355,9 +1351,8 @@ namespace ROPv1
                 DialogResult eminMisiniz = urunIptalFormu.ShowDialog();
 
                 if (eminMisiniz == DialogResult.No)
-                {
                     return;
-                }
+                
                 iptalNedeni = urunIptalFormu.iptalNedeni;
             }     
 

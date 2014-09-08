@@ -157,6 +157,9 @@ namespace ROPv1
                     case "bildirim":
                         komut_bildirim(parametreler["masalar"], e.Client);
                         break;
+                    case "bildirimGoruldu":
+                        komut_bildirimGoruldu(parametreler["masa"], parametreler["departmanAdi"], parametreler["yemekAdi"], parametreler["adedi"], parametreler["porsiyonu"]);
+                        break;
                     case "masaGirilebilirMi": // yeni masa açıldığı bilgisi geldiğinde
                         komut_masaGirilebilirMi(parametreler["masa"], parametreler["departmanAdi"], e.Client);
                         break;
@@ -244,6 +247,36 @@ namespace ROPv1
         }
 
         #region Komutlar
+
+        private void komut_bildirimGoruldu(string masa, string departmanAdi, string yemekAdi, string adedi, string porsiyonu)
+        {
+            SqlCommand cmd;
+
+            if(yemekAdi == "hepsi")
+            {
+                cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET NotificationGorulduMu=@_NotificationGorulduMu FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi=@_MasaAdi AND Adisyon.DepartmanAdi=@_DepartmanAdi AND Adisyon.IptalMi=0 AND Siparis.IptalMi=0 AND Adisyon.AcikMi=1");
+                cmd.Parameters.AddWithValue("@_NotificationGorulduMu", 1);
+                cmd.Parameters.AddWithValue("@_MasaAdi", masa);
+                cmd.Parameters.AddWithValue("@_DepartmanAdi", departmanAdi);
+
+                cmd.ExecuteNonQuery();
+            }
+            else
+            {
+                cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET NotificationGorulduMu=@_NotificationGorulduMu FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE YemekAdi=@_YemekAdi AND Adet=@_Adet AND Porsiyon=CONVERT(DECIMAL(5,2),@_Porsiyon) AND Adisyon.MasaAdi=@_MasaAdi AND Adisyon.DepartmanAdi=@_DepartmanAdi AND Adisyon.IptalMi=0 AND Siparis.IptalMi=0 AND Adisyon.AcikMi=1");
+                cmd.Parameters.AddWithValue("@_NotificationGorulduMu", 1);
+                cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
+                cmd.Parameters.AddWithValue("@_Adet", Convert.ToInt32(adedi));
+                cmd.Parameters.AddWithValue("@_Porsiyon", porsiyonu);
+                cmd.Parameters.AddWithValue("@_MasaAdi", masa);
+                cmd.Parameters.AddWithValue("@_DepartmanAdi", departmanAdi);
+
+                cmd.ExecuteNonQuery();
+            }
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+        }
 
         private void komut_bildirim(string masalar, ClientRef client)
         {
@@ -516,6 +549,9 @@ namespace ROPv1
 
                 cmd.ExecuteNonQuery();
             }
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
         }
 
         // Anket isteği geldiğinde anket sorularını clienta gönderen fonksiyon
@@ -910,7 +946,7 @@ namespace ROPv1
                 try
                 {
                     int odemeTipi = dr.GetInt32(0);
-                    if(odemeTipi == 104 || odemeTipi < 101)
+                    if (odemeTipi == 104 || odemeTipi < 101)
                     {
                         indirimler += dr.GetDecimal(1);
                     }
@@ -931,7 +967,7 @@ namespace ROPv1
 
             cmd.Connection.Close();
             cmd.Connection.Dispose();
-            
+
             alinanOdemeler -= odenenUrunler;
 
             client.MesajYolla("komut=OdemeBilgileriTablet&alinanOdemeler=" + alinanOdemeler + "&indirimler=" + indirimler);
@@ -1722,7 +1758,6 @@ namespace ROPv1
                         break;
                 }
             }
-
 
             // iptal edilen ürünler için mutfağa adisyon
             cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=1");
