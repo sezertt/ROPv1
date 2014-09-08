@@ -53,6 +53,12 @@
             "",
             "Toplam",
             "0,00"}, -1);
+            GlacialComponents.Controls.GLColumn glColumn1 = new GlacialComponents.Controls.GLColumn();
+            GlacialComponents.Controls.GLColumn glColumn2 = new GlacialComponents.Controls.GLColumn();
+            GlacialComponents.Controls.GLColumn glColumn3 = new GlacialComponents.Controls.GLColumn();
+            GlacialComponents.Controls.GLColumn glColumn4 = new GlacialComponents.Controls.GLColumn();
+            GlacialComponents.Controls.GLColumn glColumn5 = new GlacialComponents.Controls.GLColumn();
+            GlacialComponents.Controls.GLColumn glColumn6 = new GlacialComponents.Controls.GLColumn();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdisyonGoruntuleme));
             this.labelGun = new System.Windows.Forms.Label();
             this.labelTarih = new System.Windows.Forms.Label();
@@ -74,11 +80,6 @@
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.listAdisyonDetay = new System.Windows.Forms.ListView();
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonSayfaArttir = new System.Windows.Forms.Button();
             this.buttonSayfaAzalt = new System.Windows.Forms.Button();
             this.labelSayfaSayisi = new System.Windows.Forms.Label();
@@ -93,6 +94,7 @@
             this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listAdisyonDetay = new GlacialComponents.Controls.GlacialList();
             this.SuspendLayout();
             // 
             // labelGun
@@ -274,6 +276,7 @@
             this.listAdisyon.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.listAdisyon.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listAdisyon.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
@@ -328,60 +331,12 @@
             // columnHeader10
             // 
             this.columnHeader10.Text = "Adisyon Notu";
-            this.columnHeader10.Width = 338;
+            this.columnHeader10.Width = 342;
             // 
             // columnHeader11
             // 
             this.columnHeader11.Text = "Toplam";
             this.columnHeader11.Width = 100;
-            // 
-            // listAdisyonDetay
-            // 
-            this.listAdisyonDetay.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.listAdisyonDetay.Alignment = System.Windows.Forms.ListViewAlignment.Left;
-            this.listAdisyonDetay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.listAdisyonDetay.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader6,
-            this.columnHeader5,
-            this.columnHeader7,
-            this.columnHeader8});
-            this.listAdisyonDetay.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
-            this.listAdisyonDetay.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.listAdisyonDetay.FullRowSelect = true;
-            this.listAdisyonDetay.GridLines = true;
-            this.listAdisyonDetay.LabelWrap = false;
-            this.listAdisyonDetay.Location = new System.Drawing.Point(934, 127);
-            this.listAdisyonDetay.Margin = new System.Windows.Forms.Padding(0);
-            this.listAdisyonDetay.MultiSelect = false;
-            this.listAdisyonDetay.Name = "listAdisyonDetay";
-            this.listAdisyonDetay.ShowItemToolTips = true;
-            this.listAdisyonDetay.Size = new System.Drawing.Size(420, 440);
-            this.listAdisyonDetay.TabIndex = 43;
-            this.listAdisyonDetay.UseCompatibleStateImageBehavior = false;
-            this.listAdisyonDetay.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "Garson";
-            this.columnHeader6.Width = 109;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Ürün";
-            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader5.Width = 163;
-            // 
-            // columnHeader7
-            // 
-            this.columnHeader7.Text = "Adet";
-            this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader7.Width = 53;
-            // 
-            // columnHeader8
-            // 
-            this.columnHeader8.Text = "Fiyat";
-            this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader8.Width = 91;
             // 
             // buttonSayfaArttir
             // 
@@ -539,6 +494,7 @@
             this.listViewOdemeler.Alignment = System.Windows.Forms.ListViewAlignment.Left;
             this.listViewOdemeler.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewOdemeler.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listViewOdemeler.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader12,
             this.columnHeader13,
@@ -555,12 +511,12 @@
             listViewItem5,
             listViewItem6});
             this.listViewOdemeler.LabelWrap = false;
-            this.listViewOdemeler.Location = new System.Drawing.Point(934, 573);
+            this.listViewOdemeler.Location = new System.Drawing.Point(934, 562);
             this.listViewOdemeler.Margin = new System.Windows.Forms.Padding(0);
             this.listViewOdemeler.MultiSelect = false;
             this.listViewOdemeler.Name = "listViewOdemeler";
             this.listViewOdemeler.ShowItemToolTips = true;
-            this.listViewOdemeler.Size = new System.Drawing.Size(420, 166);
+            this.listViewOdemeler.Size = new System.Drawing.Size(420, 172);
             this.listViewOdemeler.TabIndex = 121;
             this.listViewOdemeler.UseCompatibleStateImageBehavior = false;
             this.listViewOdemeler.View = System.Windows.Forms.View.Details;
@@ -574,13 +530,111 @@
             // 
             this.columnHeader13.Text = "Kullanıcı";
             this.columnHeader13.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader13.Width = 186;
+            this.columnHeader13.Width = 190;
             // 
             // columnHeader14
             // 
             this.columnHeader14.Text = "Ödeme";
             this.columnHeader14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader14.Width = 144;
+            // 
+            // listAdisyonDetay
+            // 
+            this.listAdisyonDetay.AllowColumnResize = false;
+            this.listAdisyonDetay.AllowMultiselect = false;
+            this.listAdisyonDetay.AlternateBackground = System.Drawing.Color.DarkGreen;
+            this.listAdisyonDetay.AlternatingColors = false;
+            this.listAdisyonDetay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.listAdisyonDetay.AutoHeight = false;
+            this.listAdisyonDetay.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.listAdisyonDetay.BackgroundStretchToFit = true;
+            glColumn1.ActivatedEmbeddedType = GlacialComponents.Controls.GLActivatedEmbeddedTypes.None;
+            glColumn1.CheckBoxes = false;
+            glColumn1.ImageIndex = -1;
+            glColumn1.Name = "Garson";
+            glColumn1.NumericSort = false;
+            glColumn1.Text = "Garson";
+            glColumn1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            glColumn1.Width = 89;
+            glColumn2.ActivatedEmbeddedType = GlacialComponents.Controls.GLActivatedEmbeddedTypes.None;
+            glColumn2.CheckBoxes = false;
+            glColumn2.ImageIndex = -1;
+            glColumn2.Name = "Ürün";
+            glColumn2.NumericSort = false;
+            glColumn2.Text = "Ürün";
+            glColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            glColumn2.Width = 84;
+            glColumn3.ActivatedEmbeddedType = GlacialComponents.Controls.GLActivatedEmbeddedTypes.None;
+            glColumn3.CheckBoxes = false;
+            glColumn3.ImageIndex = -1;
+            glColumn3.Name = "Adet";
+            glColumn3.NumericSort = false;
+            glColumn3.Text = "Adet";
+            glColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            glColumn3.Width = 43;
+            glColumn4.ActivatedEmbeddedType = GlacialComponents.Controls.GLActivatedEmbeddedTypes.None;
+            glColumn4.CheckBoxes = false;
+            glColumn4.ImageIndex = -1;
+            glColumn4.Name = "Porsiyon";
+            glColumn4.NumericSort = false;
+            glColumn4.Text = "Pors.";
+            glColumn4.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            glColumn4.Width = 44;
+            glColumn5.ActivatedEmbeddedType = GlacialComponents.Controls.GLActivatedEmbeddedTypes.None;
+            glColumn5.CheckBoxes = false;
+            glColumn5.ImageIndex = -1;
+            glColumn5.Name = "Saat";
+            glColumn5.NumericSort = false;
+            glColumn5.Text = "Saat";
+            glColumn5.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            glColumn5.Width = 64;
+            glColumn6.ActivatedEmbeddedType = GlacialComponents.Controls.GLActivatedEmbeddedTypes.None;
+            glColumn6.CheckBoxes = false;
+            glColumn6.ImageIndex = -1;
+            glColumn6.Name = "Fiyat";
+            glColumn6.NumericSort = false;
+            glColumn6.Text = "Fiyat";
+            glColumn6.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            glColumn6.Width = 80;
+            this.listAdisyonDetay.Columns.AddRange(new GlacialComponents.Controls.GLColumn[] {
+            glColumn1,
+            glColumn2,
+            glColumn3,
+            glColumn4,
+            glColumn5,
+            glColumn6});
+            this.listAdisyonDetay.ControlStyle = GlacialComponents.Controls.GLControlStyles.SuperFlat;
+            this.listAdisyonDetay.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
+            this.listAdisyonDetay.ForeColor = System.Drawing.Color.Black;
+            this.listAdisyonDetay.FullRowSelect = true;
+            this.listAdisyonDetay.GridColor = System.Drawing.Color.LightGray;
+            this.listAdisyonDetay.GridLines = GlacialComponents.Controls.GLGridLines.gridBoth;
+            this.listAdisyonDetay.GridLineStyle = GlacialComponents.Controls.GLGridLineStyles.gridSolid;
+            this.listAdisyonDetay.GridTypes = GlacialComponents.Controls.GLGridTypes.gridOnExists;
+            this.listAdisyonDetay.HeaderHeight = 26;
+            this.listAdisyonDetay.HeaderVisible = true;
+            this.listAdisyonDetay.HeaderWordWrap = false;
+            this.listAdisyonDetay.HotColumnTracking = false;
+            this.listAdisyonDetay.HotItemTracking = false;
+            this.listAdisyonDetay.HotTrackingColor = System.Drawing.Color.LightGray;
+            this.listAdisyonDetay.HoverEvents = false;
+            this.listAdisyonDetay.HoverTime = 1;
+            this.listAdisyonDetay.ImageList = null;
+            this.listAdisyonDetay.ItemHeight = 79;
+            this.listAdisyonDetay.ItemWordWrap = true;
+            this.listAdisyonDetay.Location = new System.Drawing.Point(934, 127);
+            this.listAdisyonDetay.Margin = new System.Windows.Forms.Padding(0);
+            this.listAdisyonDetay.Name = "listAdisyonDetay";
+            this.listAdisyonDetay.Selectable = true;
+            this.listAdisyonDetay.SelectedTextColor = System.Drawing.Color.White;
+            this.listAdisyonDetay.SelectionColor = System.Drawing.SystemColors.ActiveCaption;
+            this.listAdisyonDetay.ShowBorder = false;
+            this.listAdisyonDetay.ShowFocusRect = false;
+            this.listAdisyonDetay.Size = new System.Drawing.Size(420, 421);
+            this.listAdisyonDetay.SortType = GlacialComponents.Controls.SortTypes.InsertionSort;
+            this.listAdisyonDetay.SuperFlatHeaderColor = System.Drawing.Color.White;
+            this.listAdisyonDetay.TabIndex = 122;
+            this.listAdisyonDetay.Text = "glacialList1";
             // 
             // AdisyonGoruntuleme
             // 
@@ -589,6 +643,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 819);
             this.ControlBox = false;
+            this.Controls.Add(this.listAdisyonDetay);
             this.Controls.Add(this.listViewOdemeler);
             this.Controls.Add(this.buttonHesapDuzenle);
             this.Controls.Add(this.buttonYazdir);
@@ -600,7 +655,6 @@
             this.Controls.Add(this.labelSayfa);
             this.Controls.Add(this.buttonSayfaArttir);
             this.Controls.Add(this.labelSayfaSayisi);
-            this.Controls.Add(this.listAdisyonDetay);
             this.Controls.Add(this.listAdisyon);
             this.Controls.Add(this.comboAdisyonAyar);
             this.Controls.Add(this.textboxAdisyonID);
@@ -651,16 +705,11 @@
         private System.Windows.Forms.ColumnHeader columnHeader9;
         private System.Windows.Forms.ColumnHeader columnHeader10;
         private System.Windows.Forms.ColumnHeader columnHeader11;
-        private System.Windows.Forms.ListView listAdisyonDetay;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader7;
-        private System.Windows.Forms.ColumnHeader columnHeader8;
         private System.Windows.Forms.Button buttonSayfaArttir;
         private System.Windows.Forms.Button buttonSayfaAzalt;
         private System.Windows.Forms.Label labelSayfaSayisi;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelSayfa;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.Label labelToplamHesap;
         private System.Windows.Forms.Label labelKalanText;
         private System.Windows.Forms.Button buttonYazdir;
@@ -670,5 +719,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader12;
         private System.Windows.Forms.ColumnHeader columnHeader13;
         private System.Windows.Forms.ColumnHeader columnHeader14;
+        private GlacialComponents.Controls.GlacialList listAdisyonDetay;
     }
 }

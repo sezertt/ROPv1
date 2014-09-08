@@ -104,11 +104,33 @@ namespace ROPv1
                 glitem.SubItems[6].Text = garsonu;
                 glitem.SubItems[7].Text = iptalNedeni;
 
+                glitem.SubItems[0].ForeColor = SystemColors.ActiveCaption;
+                glitem.SubItems[1].ForeColor = SystemColors.ActiveCaption;
+                glitem.SubItems[2].ForeColor = SystemColors.ActiveCaption;
+                glitem.SubItems[3].ForeColor = SystemColors.ActiveCaption;
+                glitem.SubItems[4].ForeColor = SystemColors.ActiveCaption;
+                glitem.SubItems[5].ForeColor = SystemColors.ActiveCaption;
+                glitem.SubItems[6].ForeColor = SystemColors.ActiveCaption;
+                glitem.SubItems[7].ForeColor = SystemColors.ActiveCaption;
+
+                glitem.ForeColor = SystemColors.ActiveCaption;
+
+                glitem.SubItems[0].ForceText = true;
+                glitem.SubItems[1].ForceText = true;
+                glitem.SubItems[2].ForceText = true;
+                glitem.SubItems[3].ForceText = true;
+                glitem.SubItems[4].ForceText = true;
+                glitem.SubItems[5].ForceText = true;
+                glitem.SubItems[6].ForceText = true;
+                glitem.SubItems[7].ForceText = true;
+
                 listIptalEdilenSorular.Items.Insert(0, glitem);
 
             }
             cmd.Connection.Close();
             cmd.Connection.Dispose();
+
+            listIptalEdilenSorular.Refresh();
             listIptalEdilenSorular.Items[0].Selected = true;
         }
     }

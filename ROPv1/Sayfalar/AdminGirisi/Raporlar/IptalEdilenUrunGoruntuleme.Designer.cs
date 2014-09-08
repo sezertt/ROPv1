@@ -206,7 +206,7 @@
             glColumn8});
             this.listIptalEdilenSorular.ControlStyle = GlacialComponents.Controls.GLControlStyles.XP;
             this.listIptalEdilenSorular.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
-            this.listIptalEdilenSorular.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.listIptalEdilenSorular.ForeColor = System.Drawing.Color.Black;
             this.listIptalEdilenSorular.FullRowSelect = true;
             this.listIptalEdilenSorular.GridColor = System.Drawing.Color.LightGray;
             this.listIptalEdilenSorular.GridLines = GlacialComponents.Controls.GLGridLines.gridBoth;

@@ -493,7 +493,7 @@ namespace ROPv1
 
             listAdisyonDetay.Items.Clear();
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Garsonu,Fiyatı,Adet,YemekAdi,IkramMi,IptalMi FROM Siparis WHERE AdisyonID='" + listAdisyon.SelectedItems[0].SubItems[0].Text + "'");
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Garsonu,Fiyatı,Adet,YemekAdi,IkramMi,IptalMi,Porsiyon,VerilisTarihi FROM Siparis WHERE AdisyonID='" + listAdisyon.SelectedItems[0].SubItems[0].Text + "'");
             SqlDataReader dr = cmd.ExecuteReader();
 
             decimal adisyonHesabi = 0;
@@ -504,34 +504,61 @@ namespace ROPv1
                 bool ikramMi = dr.GetBoolean(4), iptalMi = dr.GetBoolean(5);
                 decimal fiyati = dr.GetDecimal(1);
                 int adedi = dr.GetInt32(2);
+                decimal porsiyonu = dr.GetDecimal(6);
+                DateTime verilisTarihi = dr.GetDateTime(7);
 
-                listAdisyonDetay.Items.Add(dr.GetString(0));
-                listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add(yemekAdi);
-                listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add(Convert.ToDouble(adedi).ToString());
+                GlacialComponents.Controls.GLItem glitem = new GlacialComponents.Controls.GLItem();
+
+                glitem.Text = dr.GetString(0);
+
+                glitem.SubItems[1].Text = yemekAdi;
+                glitem.SubItems[2].Text = adedi.ToString();
+                glitem.SubItems[3].Text = Convert.ToDouble(porsiyonu).ToString();
+                glitem.SubItems[4].Text = verilisTarihi.ToShortTimeString();
+
                 if (ikramMi)
                 {
-                    listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add("(ikram)");
+                    glitem.SubItems[5].Text = "(ikram)";
                 }
                 else
                 {
-                    listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add((adedi * fiyati).ToString("0.00"));
+                    glitem.SubItems[5].Text = (adedi * fiyati).ToString("0.00");
                 }
-                listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].Font = new Font("Calibri", 14F, FontStyle.Bold);
 
+
+                glitem.SubItems[0].ForeColor = SystemColors.ActiveCaption;
+                glitem.SubItems[1].ForeColor = SystemColors.ActiveCaption;
+                glitem.SubItems[2].ForeColor = SystemColors.ActiveCaption;
+                glitem.SubItems[3].ForeColor = SystemColors.ActiveCaption;
+                glitem.SubItems[4].ForeColor = SystemColors.ActiveCaption;
+                glitem.SubItems[5].ForeColor = SystemColors.ActiveCaption;
+
+                glitem.ForeColor = SystemColors.ActiveCaption;
+
+                glitem.SubItems[0].ForceText = true;
+                glitem.SubItems[1].ForceText = true;
+                glitem.SubItems[2].ForceText = true;
+                glitem.SubItems[3].ForceText = true;
+                glitem.SubItems[4].ForceText = true;
+                glitem.SubItems[5].ForceText = true;
+
+
+                listAdisyonDetay.Items.Add(glitem);
 
                 if (iptalMi)
                 {
-                    listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].BackColor = Color.IndianRed;
+                    glitem.BackColor = Color.IndianRed;
                 }
                 else
                 {
                     try
                     {
-                        adisyonHesabi += Convert.ToDecimal(listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems[3].Text);
+                        adisyonHesabi += Convert.ToDecimal(glitem.SubItems[5].Text);
                     }
                     catch
                     { }
                 }
+  
                 buttonYazdir.Enabled = true;
                 buttonHesapDuzenle.Enabled = true;
             }
@@ -605,6 +632,8 @@ namespace ROPv1
             }
             cmd.Connection.Close();
             cmd.Connection.Dispose();
+            listAdisyonDetay.Refresh();
+            listAdisyonDetay.Items[0].Selected = true;
         }
 
         private void buttonYazdir_Click(object sender, EventArgs e)
@@ -680,37 +709,21 @@ namespace ROPv1
         public void yazdir(string[] yaziciBilgileri)
         {
             //yazdırmadan önce sayfaya göre list viewı ayarlıyoruz
-            listAdisyonDetay.Items.Add("");
-            listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add("Toplam");
-            listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add(":");
-            listAdisyonDetay.Items[listAdisyonDetay.Items.Count - 1].SubItems.Add(labelToplamHesap.Text);
+            GlacialComponents.Controls.GLItem glitem = new GlacialComponents.Controls.GLItem();
 
-            listAdisyonDetay.Font = new Font("Calibri", 10F, FontStyle.Bold);
-            for (int i = 0; i < listAdisyonDetay.Items.Count; i++)
-            {
-                listAdisyonDetay.Items[i].Font = new Font("Calibri", 10F, FontStyle.Bold);
-            }
-            listAdisyonDetay.Columns[2].Text = "Ad.";
-            listAdisyonDetay.Columns[0].Width = 90;
-            listAdisyonDetay.Columns[1].Width = 110;
-            listAdisyonDetay.Columns[2].Width = 30;
-            listAdisyonDetay.Columns[3].Width = 55;
+            glitem.Text = "TOPLAM";
+
+            glitem.SubItems[1].Text = "";
+            glitem.SubItems[2].Text = "";
+            glitem.SubItems[3].Text = "";
+            glitem.SubItems[4].Text = "";
+            glitem.SubItems[5].Text = labelToplamHesap.Text;
+
+            listAdisyonDetay.Items.Add(glitem);
 
             // yazdırıyoruz
             listViewPrinter printer = new listViewPrinter(listAdisyonDetay, new Point(13, 10), false, false, listAdisyon.SelectedItems[0].SubItems[1].Text + " " + listAdisyon.SelectedItems[0].SubItems[2].Text + " Adisyon Dökümü(" + listAdisyon.SelectedItems[0].SubItems[0].Text + ")\n" + listAdisyon.SelectedItems[0].SubItems[3].Text + " / " + listAdisyon.SelectedItems[0].SubItems[4].Text);
             printer.print(yaziciBilgileri[3]);
-
-            //listviewı eski haline getiriyoruz
-            listAdisyonDetay.Font = new Font("Calibri", 14F, FontStyle.Bold);
-            for (int i = 0; i < listAdisyonDetay.Items.Count; i++)
-            {
-                listAdisyonDetay.Items[i].Font = new Font("Calibri", 14F, FontStyle.Bold);
-            }
-            listAdisyonDetay.Columns[2].Text = "Adet";
-            listAdisyonDetay.Columns[0].Width = 109;
-            listAdisyonDetay.Columns[1].Width = 163;
-            listAdisyonDetay.Columns[2].Width = 53;
-            listAdisyonDetay.Columns[3].Width = 91;
 
             listAdisyonDetay.Items.RemoveAt(listAdisyonDetay.Items.Count - 1);
         }

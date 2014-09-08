@@ -25,7 +25,6 @@ using CrystalDecisions.CrystalReports.Engine;
 
 namespace ROPv1
 {
-
     public partial class GirisEkrani : Form
     {
         const int adet = 12;
@@ -191,6 +190,9 @@ namespace ROPv1
                     case "OdenenleriGonder": // bir kullanıcı menü ekranını açmak istediğinde masada verilen siparişleri aktarmak için
                         komut_OdenenleriGonder(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
                         break;
+                    case "OdemeBilgileriTablet":
+                        komut_OdemeBilgileriTablet(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
+                        break;
                     case "AdisyonNotu": // adisyon notu değiştirileceğinde eski adisyon notunu göstermek için
                         komut_adisyonNotu(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
                         break;
@@ -248,7 +250,7 @@ namespace ROPv1
             string[] departmanVeMasalar;
             string[][] masaBilgileri;
 
-            if(masalar != "hepsi")
+            if (masalar != "hepsi")
             {
                 try
                 {
@@ -340,7 +342,7 @@ namespace ROPv1
                     }
                 }
                 client.MesajYolla("komut=bildirimBilgileri&bildirimBilgileri=" + bildirimBilgileri);
-            }         
+            }
         }
 
         private void komut_veriGonder(ClientRef client, string kacinci, string sadeceXML)
@@ -879,6 +881,63 @@ namespace ROPv1
             client.MesajYolla("komut=OdemeOnay&odemeTipi=" + odemeTipi + "&odemeMiktari=" + odemeMiktari + "&secilipOdenenSiparisBilgileri=" + secilipOdenenSiparisBilgileri);
         }
 
+        //yapılan ödemelerden ödenen ürünler çıkarılarak seçilmeden ödenen miktar bulunur ve gönderilir
+        private void komut_OdemeBilgileriTablet(ClientRef client, string masa, string departmanAdi)
+        {
+            decimal alinanOdemeler = 0, odenenUrunler = 0, indirimler = 0;
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Adet from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' and Adisyon.DepartmanAdi='" + departmanAdi + "' and Siparis.IptalMi=0 AND Siparis.OdendiMi=1 AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 ORDER BY Adet DESC");
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                try
+                {
+                    odenenUrunler += dr.GetDecimal(0) * dr.GetInt32(1);
+                }
+                catch
+                {
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                    //HATA MESAJI GÖNDER
+                    komut_IslemHatasi(client, "İşlem gerçekleştirilemedi, lütfen tekrar deneyiniz");
+                    return;
+                }
+            }
+
+            cmd = SQLBaglantisi.getCommand("SELECT OdemeTipi, OdenenMiktar from OdemeDetay JOIN Adisyon ON OdemeDetay.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0");
+            dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                try
+                {
+                    int odemeTipi = dr.GetInt32(0);
+                    if(odemeTipi == 104 || odemeTipi < 101)
+                    {
+                        indirimler += dr.GetDecimal(1);
+                    }
+                    else
+                    {
+                        alinanOdemeler += dr.GetDecimal(1);
+                    }
+                }
+                catch
+                {
+                    cmd.Connection.Close();
+                    cmd.Connection.Dispose();
+                    //HATA MESAJI GÖNDER
+                    komut_IslemHatasi(client, "İşlem gerçekleştirilemedi, lütfen tekrar deneyiniz");
+                    return;
+                }
+            }
+
+            cmd.Connection.Close();
+            cmd.Connection.Dispose();
+            
+            alinanOdemeler -= odenenUrunler;
+
+            client.MesajYolla("komut=OdemeBilgileriTablet&alinanOdemeler=" + alinanOdemeler + "&indirimler=" + indirimler);
+
+        }
+
         //hesap ekranı load olurken ödenen siparişlere dair bilgileri gönderen method
         private void komut_OdenenleriGonder(ClientRef client, string masa, string departmanAdi)
         {
@@ -1261,11 +1320,9 @@ namespace ROPv1
 
         private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotuGelen, string sonSiparisMi, string porsiyon, string ilkSiparisMi = "")
         {
-            /*
-               if(ilkSiparisMi != "") // eğer hesap ödeme formuna geçerken gelen siparişler ise listeye ekleme çünkü onları zaten açılışta ekliyoruz
-            {
-                return;
-            }*/
+            miktar = miktar.Replace('.', ',');
+            dusulecekDegerGelen = dusulecekDegerGelen.Replace('.', ',');
+            porsiyon = porsiyon.Replace('.', ',');
 
             if (siparisForm != null)
             {
@@ -1311,13 +1368,17 @@ namespace ROPv1
                 }
             }
 
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,VerilisTarihi,Porsiyon) VALUES(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_VerilisTarihi,@_Porsiyon)");
+            bool urunMutfagaBildirilmeliMi = mutfakBilgilendirilmeliMi(yemekAdi);
+
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon) VALUES(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon)");
+
             cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiKimGirdi);
             cmd.Parameters.AddWithValue("@_Fiyatı", Convert.ToDecimal(dusulecekDegerGelen));
             cmd.Parameters.AddWithValue("@_Adet", Convert.ToInt32(miktar));
             cmd.Parameters.AddWithValue("@_YemekAdi", yemekAdi);
             cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
+            cmd.Parameters.AddWithValue("@_MutfakCiktisiAlinmaliMi", urunMutfagaBildirilmeliMi);
             cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(porsiyon));
 
             cmd.ExecuteNonQuery();

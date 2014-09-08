@@ -14,36 +14,42 @@ namespace ROPv1
     using System.Collections.Generic;
     using System.Data;
     using System.Diagnostics;
+    using GlacialComponents.Controls;
+
     public class listViewPrinter
     {
 
-        private ListView lv;
+        private GlacialList lv;
         private Point location;
-        private Boolean border ;
+        private Boolean border;
         private Boolean hasGroups;
         private string title;
         private int titleHeight;
 
         private PrintDocument pd = new PrintDocument();
 
-        public listViewPrinter(ListView lv, Point location, bool border, bool hasGroups, string title)
+        public listViewPrinter(GlacialList lv, Point location, bool border, bool hasGroups, string title)
         {
-	        this.lv = lv;
-	        this.location = location;
-	        this.border = border;
-	        this.hasGroups = hasGroups;
-	        this.title = title;
-	        titleHeight = !string.IsNullOrEmpty(title) ? lv.FindForm().CreateGraphics().MeasureString(title, new Font(lv.Font.Name, 12)).ToSize().Height : 0;
+            this.lv = lv;
+            this.location = location;
+            this.border = border;
+            this.hasGroups = hasGroups;
+            this.title = title;
+            titleHeight = !string.IsNullOrEmpty(title) ? lv.FindForm().CreateGraphics().MeasureString(title, new Font(lv.Font.Name, 12)).ToSize().Height : 0;
             pd.BeginPrint += pd_BeginPrint;
             pd.PrintPage += pd_PrintPage;
         }
 
         public void print(string printerName)
         {
-            
+
             pd.PrinterSettings.PrinterName = printerName;
-            pd.Print();
-             
+            try
+            {
+                pd.Print();
+            }
+            catch { }
+
             /*
             PrintPreviewDialog ppd = new PrintPreviewDialog();
             ppd.Document = pd;
@@ -74,7 +80,7 @@ namespace ROPv1
 
         int maxPagesTall;
 
-        ListViewItem[] items;
+        GLItem[] items;
 
         /// <summary>
         /// the majority of this Sub is calculating printed page ranges
@@ -83,139 +89,76 @@ namespace ROPv1
         /// <param name="e"></param>
         /// <remarks></remarks>
         private void pd_BeginPrint(object sender, System.Drawing.Printing.PrintEventArgs e)
-	{
-		//'this removes the printed page margins
-		pd.OriginAtMargins = true;
-		pd.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(location.X, 0, location.Y, 0);
-
-		pages = new Dictionary<int, pageDetails>();
-
-		int maxWidth = Convert.ToInt32(pd.DefaultPageSettings.PrintableArea.Width) - 40;
-        int maxHeight = Convert.ToInt32(pd.DefaultPageSettings.PrintableArea.Height - (titleHeight + 12)) - 40;
-
-		int pageCounter = 0;
-		pages.Add(pageCounter, new pageDetails { headerIndices = new List<int>() });
-
-		int columnCounter = 0;
-
-		int columnSum = 0;
-
-		for (int c = 0; c <= lv.Columns.Count - 1; c++) {
-			if (columnSum + lv.Columns[c].Width < maxWidth) {
-                columnSum += lv.Columns[c].Width;
-				columnCounter += 1;
-			} else {
-				pages[pageCounter] = new pageDetails {
-					columns = columnCounter,
-					rows = 0,
-					startCol = pages[pageCounter].startCol,
-					headerIndices = pages[pageCounter].headerIndices
-				};
-                columnSum = lv.Columns[c].Width;
-				columnCounter = 1;
-				pageCounter += 1;
-				pages.Add(pageCounter, new pageDetails {
-					startCol = c,
-					headerIndices = new List<int>()
-				});
-			}
-			if (c == lv.Columns.Count - 1) {
-				if (pages[pageCounter].columns == 0) {
-					pages[pageCounter] = new pageDetails {
-						columns = columnCounter,
-						rows = 0,
-						startCol = pages[pageCounter].startCol,
-						headerIndices = pages[pageCounter].headerIndices
-					};
-				}
-			}
-		}
-
-		maxPagesWide = pages.Keys.Max() + 1;
-
-		pageCounter = 0;
-
-		int rowCounter = 0;
-		int counter = 0;
-
-		int itemHeight = lv.GetItemRect(0).Height;
-
-		int rowSum = itemHeight;
-
-        if (hasGroups)
         {
-            for (int g = 0; g <= lv.Groups.Count - 1; g++)
+            //'this removes the printed page margins
+            pd.OriginAtMargins = true;
+            pd.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(location.X, 0, location.Y, 0);
+
+            pages = new Dictionary<int, pageDetails>();
+
+            int maxWidth = Convert.ToInt32(pd.DefaultPageSettings.PrintableArea.Width) - 40;
+            int maxHeight = Convert.ToInt32(pd.DefaultPageSettings.PrintableArea.Height - (titleHeight + 12)) - 40;
+
+            int pageCounter = 0;
+            pages.Add(pageCounter, new pageDetails { headerIndices = new List<int>() });
+
+            int columnCounter = 0;
+
+            int columnSum = 0;
+
+            for (int c = 0; c <= lv.Columns.Count - 1; c++)
             {
-                rowSum += itemHeight + 6;
-                pages[pageCounter].headerIndices.Add(counter);
-                for (int r = 0; r <= lv.Groups[g].Items.Count - 1; r++)
+                if (columnSum + lv.Columns[c].Width < maxWidth)
                 {
-                    counter += 1;
-                    if (rowSum + itemHeight < maxHeight)
+                    columnSum += lv.Columns[c].Width;
+                    columnCounter += 1;
+                }
+                else
+                {
+                    pages[pageCounter] = new pageDetails
                     {
-                        rowSum += itemHeight;
-                        rowCounter += 1;
-                    }
-                    else
+                        columns = columnCounter,
+                        rows = 0,
+                        startCol = pages[pageCounter].startCol,
+                        headerIndices = pages[pageCounter].headerIndices
+                    };
+                    columnSum = lv.Columns[c].Width;
+                    columnCounter = 1;
+                    pageCounter += 1;
+                    pages.Add(pageCounter, new pageDetails
+                    {
+                        startCol = c,
+                        headerIndices = new List<int>()
+                    });
+                }
+                if (c == lv.Columns.Count - 1)
+                {
+                    if (pages[pageCounter].columns == 0)
                     {
                         pages[pageCounter] = new pageDetails
                         {
-                            columns = pages[pageCounter].columns,
-                            rows = rowCounter,
+                            columns = columnCounter,
+                            rows = 0,
                             startCol = pages[pageCounter].startCol,
-                            startRow = pages[pageCounter].startRow,
                             headerIndices = pages[pageCounter].headerIndices
                         };
-                        for (int x = 1; x <= maxPagesWide - 1; x++)
-                        {
-                            pages[pageCounter + x] = new pageDetails
-                            {
-                                columns = pages[pageCounter + x].columns,
-                                rows = rowCounter,
-                                startCol = pages[pageCounter + x].startCol,
-                                startRow = pages[pageCounter].startRow,
-                                headerIndices = pages[pageCounter].headerIndices
-                            };
-                        }
-
-                        pageCounter += maxPagesWide;
-                        for (int x = 0; x <= maxPagesWide - 1; x++)
-                        {
-                            pages.Add(pageCounter + x, new pageDetails
-                            {
-                                columns = pages[x].columns,
-                                rows = 0,
-                                startCol = pages[x].startCol,
-                                startRow = counter - 1,
-                                headerIndices = new List<int>()
-                            });
-                        }
-
-                        rowSum = itemHeight * 2 + itemHeight + 6;
-                        rowCounter = 1;
-                    }
-                    if (counter == lv.Items.Count)
-                    {
-                        for (int x = 0; x <= maxPagesWide - 1; x++)
-                        {
-                            if (pages[pageCounter + x].rows == 0)
-                            {
-                                pages[pageCounter + x] = new pageDetails
-                                {
-                                    columns = pages[pageCounter + x].columns,
-                                    rows = rowCounter,
-                                    startCol = pages[pageCounter + x].startCol,
-                                    startRow = pages[pageCounter + x].startRow,
-                                    headerIndices = pages[pageCounter + x].headerIndices
-                                };
-                            }
-                        }
                     }
                 }
             }
-        }
-        else
-        {
+
+            maxPagesWide = pages.Keys.Max() + 1;
+
+            pageCounter = 0;
+
+            int rowCounter = 0;
+            int counter = 0;
+
+            int itemHeight = lv.ItemHeight;
+
+
+            int rowSum = itemHeight;
+
+
             for (int r = 0; r <= lv.Items.Count - 1; r++)
             {
                 counter += 1;
@@ -277,24 +220,12 @@ namespace ROPv1
                 }
             }
 
-        }
+            maxPagesTall = pages.Count / maxPagesWide;
 
-		maxPagesTall = pages.Count / maxPagesWide;
 
-        if (hasGroups)
-        {
-            items = new ListViewItem[] { };
-            foreach (ListViewGroup g in lv.Groups)
-            {
-                items = items.Concat(g.Items.Cast<ListViewItem>().ToArray()).ToArray();
-            }
+            items = lv.Items.Cast<GLItem>().ToArray();
+            
         }
-        else
-        {
-            items = lv.Items.Cast<ListViewItem>().ToArray();
-        }
-
-	}
         int startPage = 0;
 
         //int static_pd_PrintPage_startPage;
@@ -304,7 +235,7 @@ namespace ROPv1
             sf.Alignment = StringAlignment.Center;
             sf.LineAlignment = StringAlignment.Center;
 
-            Rectangle r2 = new Rectangle(location, new Size(lv.Columns.Cast<ColumnHeader>().Skip(pages[0].startCol).Take(pages[0].columns).Sum((ColumnHeader ch) => ch.Width), titleHeight));
+            Rectangle r2 = new Rectangle(location, new Size(lv.Columns.Cast<GLColumn>().Skip(pages[0].startCol).Take(pages[0].columns).Sum((GLColumn ch) => ch.Width), titleHeight));
 
             e.Graphics.DrawString(title, new Font(lv.Font.Name, 12), Brushes.Black, r2, sf);
 
@@ -312,8 +243,9 @@ namespace ROPv1
 
             int startX = location.X;
             int startY = location.Y + titleHeight + 12;
+
+            int itemHeight = lv.ItemHeight;
             
-            int itemHeight = lv.GetItemRect(0).Height;
 
             Point bottomRight;
 
@@ -339,21 +271,13 @@ namespace ROPv1
                 for (int r = pages[p].startRow; r <= pages[p].startRow + pages[p].rows - 1; r++)
                 {
                     startX = location.X;
-                    if (hasGroups)
-                    {
-                        if (r == pages[p].startRow | pages[p].headerIndices.Contains(r))
-                        {
-                            cell = new Rectangle(startX + 20, startY + 6, lv.Columns.Cast<ColumnHeader>().Skip(pages[p].startCol).Take(pages[p].columns).Sum((ColumnHeader ch) => ch.Width), itemHeight);
-                            e.Graphics.DrawString(items[r].Group.Header, new Font(lv.Font, FontStyle.Bold), Brushes.SteelBlue, cell, sf);
-                            e.Graphics.DrawLine(new Pen(Color.SteelBlue, 2), startX + 20 + e.Graphics.MeasureString(items[r].Group.Header, new Font(lv.Font, FontStyle.Bold)).Width + 12, cell.Top + 3 + cell.Height / 2, cell.Right - 20, cell.Top + 3 + cell.Height / 2);
-                            startY += itemHeight + 6;
-                        }
-                    }
                     for (int c = pages[p].startCol; c <= pages[p].startCol + pages[p].columns - 1; c++)
                     {
                         cell = new Rectangle(startX, startY, lv.Columns[c].Width, itemHeight);
                         e.Graphics.DrawString(items[r].SubItems[c].Text, lv.Font, Brushes.Black, cell, sf);
-                        if(lv.GridLines){ 
+
+                        if (lv.GridLines == GLGridLines.gridBoth)
+                        {
                             e.Graphics.DrawRectangle(Pens.Black, cell);
                         }
                         startX += lv.Columns[c].Width;
@@ -362,11 +286,12 @@ namespace ROPv1
                     if (r == pages[p].startRow + pages[p].rows - 1)
                     {
                         bottomRight = new Point(startX, startY);
-                        if(border){
-                        e.Graphics.DrawRectangle(Pens.Black, new Rectangle(location, new Size(bottomRight.X - location.X, bottomRight.Y - location.Y)));
+                        if (border)
+                        {
+                            e.Graphics.DrawRectangle(Pens.Black, new Rectangle(location, new Size(bottomRight.X - location.X, bottomRight.Y - location.Y)));
                         }
                     }
-                
+
                 }
 
                 if (p != pages.Count - 1)

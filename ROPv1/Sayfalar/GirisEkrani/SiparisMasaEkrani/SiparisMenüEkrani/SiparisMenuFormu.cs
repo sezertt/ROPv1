@@ -485,7 +485,7 @@ namespace ROPv1
             {
                 listUrunFiyat.Items.Add(kacAdet.ToString()); // adet
 
-                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(porsiyon.ToString() + "P"); //porsiyon
+                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(porsiyon + "P"); //porsiyon
 
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems[1].Tag = secilenUrun.urunPorsiyonSinifi[0];
 
@@ -595,7 +595,7 @@ namespace ROPv1
                         if (gruptaYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
                         {
                             listUrunFiyat.Items.Add(kacAdet.ToString());
-                            listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(Convert.ToDouble(porsiyonu) + "P");
+                            listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(porsiyonu + "P");
 
                             listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems[1].Tag = porsiyonSinifiBul(yemeginAdi);
 
@@ -627,6 +627,14 @@ namespace ROPv1
                     }
 
                     labelKalanHesap.Text = (Convert.ToDecimal(labelKalanHesap.Text) - odenenMiktar).ToString("0.00");
+
+                    cmd = SQLBaglantisi.getCommand("SELECT Fiyatı*Adet FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=1 AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 ORDER BY Adet DESC");
+                    dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        labelKalanHesap.Text = (Convert.ToDecimal(labelKalanHesap.Text) + dr.GetDecimal(0)).ToString("0.00");
+                    }
 
                     cmd.Connection.Close();
                     cmd.Connection.Dispose();
@@ -701,7 +709,7 @@ namespace ROPv1
                     hangiGrup = 2;
                 }
 
-                int gruptaYeniGelenSiparisVarmi = siparisGruptaVarMi(hangiGrup, yemeginAdi, (porsiyonu + "P").ToString()); //ürün cinsi hesapta var mı bak
+                int gruptaYeniGelenSiparisVarmi = siparisGruptaVarMi(hangiGrup, yemeginAdi, ((Double)porsiyonu + "P").ToString()); //ürün cinsi hesapta var mı bak
 
                 decimal eklenecekDeger = yemeginFiyati * porsiyonu;
 
@@ -808,7 +816,7 @@ namespace ROPv1
             int degisecekSiparisIndexi = -1;
             for (int i = 0; i < listUrunFiyat.Groups[eskiSiparisler].Items.Count; i++)
             {
-                if (listUrunFiyat.Groups[eskiSiparisler].Items[i].SubItems[2].Text == yemekAdi && listUrunFiyat.Groups[eskiSiparisler].Items[i].SubItems[1].Text == porsiyonu + "P")
+                if (listUrunFiyat.Groups[eskiSiparisler].Items[i].SubItems[2].Text == yemekAdi && Convert.ToDouble(listUrunFiyat.Groups[eskiSiparisler].Items[i].SubItems[1].Text.Substring(0, listUrunFiyat.Groups[eskiSiparisler].Items[i].SubItems[1].Text.Length-1)) == Convert.ToDouble(porsiyonu))
                 {
                     degisecekSiparisIndexi = i;
                     break;
@@ -832,7 +840,7 @@ namespace ROPv1
 
             for (int i = 0; i < listUrunFiyat.Groups[yeniIkramlar].Items.Count; i++) // varsa yeni ikramı olana ekle
             {
-                if (listUrunFiyat.Groups[yeniIkramlar].Items[i].SubItems[2].Text == yemekAdi && listUrunFiyat.Groups[yeniIkramlar].Items[i].SubItems[1].Text == porsiyonu + "P")
+                if (listUrunFiyat.Groups[yeniIkramlar].Items[i].SubItems[2].Text == yemekAdi && Convert.ToDouble(listUrunFiyat.Groups[yeniIkramlar].Items[i].SubItems[1].Text.Substring(0, listUrunFiyat.Groups[yeniIkramlar].Items[i].SubItems[1].Text.Length-1)) == Convert.ToDouble(porsiyonu))
                 {
                     listUrunFiyat.Groups[yeniIkramlar].Items[i].Text = (Convert.ToDouble(listUrunFiyat.Groups[yeniIkramlar].Items[i].Text) + carpan).ToString();
 
@@ -878,7 +886,7 @@ namespace ROPv1
             int degisecekSiparisIndexi = -1;
             for (int i = 0; i < listUrunFiyat.Groups[ikramYeniMiEskiMi].Items.Count; i++)
             {
-                if (listUrunFiyat.Groups[ikramYeniMiEskiMi].Items[i].SubItems[2].Text == yemekAdi && listUrunFiyat.Groups[ikramYeniMiEskiMi].Items[i].SubItems[1].Text == porsiyonu + "P")
+                if (listUrunFiyat.Groups[ikramYeniMiEskiMi].Items[i].SubItems[2].Text == yemekAdi && Convert.ToDouble(listUrunFiyat.Groups[ikramYeniMiEskiMi].Items[i].SubItems[1].Text.Substring(0, listUrunFiyat.Groups[ikramYeniMiEskiMi].Items[i].SubItems[1].Text.Length-1)) == Convert.ToDouble(porsiyonu))
                 {
                     degisecekSiparisIndexi = i;
                     break;
@@ -903,7 +911,7 @@ namespace ROPv1
 
             for (int i = 0; i < listUrunFiyat.Groups[eskiSiparisler].Items.Count; i++)
             {
-                if (listUrunFiyat.Groups[eskiSiparisler].Items[i].SubItems[2].Text == yemekAdi && listUrunFiyat.Groups[eskiSiparisler].Items[i].SubItems[1].Text == porsiyonu + "P")
+                if (listUrunFiyat.Groups[eskiSiparisler].Items[i].SubItems[2].Text == yemekAdi && listUrunFiyat.Groups[eskiSiparisler].Items[i].SubItems[1].Text == Convert.ToDouble(porsiyonu).ToString() + "P")
                 {
                     listUrunFiyat.Groups[eskiSiparisler].Items[i].Text = (Convert.ToDouble(listUrunFiyat.Groups[eskiSiparisler].Items[i].Text) + carpan).ToString();
                     urunYok = false;
@@ -914,7 +922,7 @@ namespace ROPv1
             if (urunYok)
             {
                 listUrunFiyat.Items.Add(carpan.ToString());
-                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(porsiyonu + "P");
+                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(Convert.ToDouble(porsiyonu).ToString() + "P");
 
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems[1].Tag = porsiyonSinifiBul(yemekAdi);
 
@@ -1268,7 +1276,7 @@ namespace ROPv1
 
             for (int i = 0; i < listUrunFiyat.Groups[ikraminGrubu].Items.Count; i++)
             {
-                if (listUrunFiyat.Groups[ikraminGrubu].Items[i].SubItems[2].Text == yemekAdi && listUrunFiyat.Groups[ikraminGrubu].Items[i].SubItems[1].Text == porsiyon + "P")
+                if (listUrunFiyat.Groups[ikraminGrubu].Items[i].SubItems[2].Text == yemekAdi && Convert.ToDouble(listUrunFiyat.Groups[ikraminGrubu].Items[i].SubItems[1].Text.Substring(0, listUrunFiyat.Groups[ikraminGrubu].Items[i].SubItems[1].Text.Length-1)) == Convert.ToDouble(porsiyon))
                 {
                     degisecekSiparisIndexi = i;
                     break;
@@ -1989,7 +1997,7 @@ namespace ROPv1
                 return;
             }
 
-            int gruptaYeniGelenSiparisVarmi = siparisGruptaVarMi(eskiSiparisler, yemekAdi, porsiyonu + "P"); //ürün cinsi hesapta var mı bak           
+            int gruptaYeniGelenSiparisVarmi = siparisGruptaVarMi(eskiSiparisler, yemekAdi, Convert.ToDouble(porsiyonu).ToString() + "P"); //ürün cinsi hesapta var mı bak           
             int kacAdet = Convert.ToInt32(miktar);
 
             if (gruptaYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
@@ -2000,7 +2008,7 @@ namespace ROPv1
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems[1].Tag = porsiyonSinifiBul(yemekAdi);
 
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(yemekAdi);
-                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(fiyatGelen);
+                listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add((Convert.ToDouble(fiyatGelen)).ToString("0.00"));
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].Group = listUrunFiyat.Groups[eskiSiparisler];
                 listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
                 listedeSeciliOlanItemlar.Add(false);

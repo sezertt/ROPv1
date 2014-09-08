@@ -864,7 +864,7 @@ namespace ROPv1
                     if (listedeYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
                     {
                         listOdenenler.Items.Add(adet.ToString());
-                        listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(porsiyon + "P");
+                        listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add((Double)porsiyon + "P");
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginAdi);
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginFiyati.ToString("0.00"));
                         listOdenenler.Items[listOdenenler.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
@@ -1042,7 +1042,7 @@ namespace ROPv1
                     if (gruptaYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
                     {
                         listOdenenler.Items.Add(adet.ToString());
-                        listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(porsiyon + "P");
+                        listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add((Double)porsiyon + "P");
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginAdi);
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginFiyati.ToString("0.00"));
                         listOdenenler.Items[listOdenenler.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
@@ -1288,7 +1288,7 @@ namespace ROPv1
                 {
                     if (listUrunFiyat.Items[i].SubItems[1].Text != "-")
                     {
-                        //AKTARMALARDAKİ SİPARİŞLERİ UPDATE ET BOL VS. ikram iptaldeki gibi
+                        //AKTARMALARDAKİ SİPARİŞLERİ UPDATE ET
 
                         int secilenAdet = Convert.ToInt32(listUrunFiyat.Items[i].SubItems[1].Text.Substring(1, listUrunFiyat.Items[i].SubItems[1].Text.Length - 2));
                         string yemeginAdi = listUrunFiyat.Items[i].SubItems[3].Text;
@@ -1377,7 +1377,7 @@ namespace ROPv1
                         listUrunFiyat.Items[i].SubItems[4].Text = (Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[4].Text) - ((decimal)odenmekIstenen * fiyat)).ToString("0.00");
                         listUrunFiyat.Items[i].SubItems[0].Text = (Convert.ToDouble(listUrunFiyat.Items[i].SubItems[0].Text) - odenmekIstenen).ToString();
 
-                        menuFormu.listUrunFiyat.Items[i].SubItems[0].Text = (Convert.ToDouble(listUrunFiyat.Items[i].SubItems[0].Text) - odenmekIstenen).ToString();
+                        menuFormu.listUrunFiyat.Items[i].SubItems[0].Text = (Convert.ToDouble(menuFormu.listUrunFiyat.Items[i].SubItems[0].Text) - odenmekIstenen).ToString();
 
                         //tamamı seçildiyse var olanı sil
                         if (Convert.ToDouble(listUrunFiyat.Items[i].SubItems[0].Text) == 0)
@@ -1500,7 +1500,7 @@ namespace ROPv1
                     if (listedeYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
                     {
                         listOdenenler.Items.Add(adet.ToString());
-                        listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(porsiyon + "P");
+                        listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add((Double)porsiyon + "P");
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginAdi);
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginFiyati.ToString("0.00"));
                         listOdenenler.Items[listOdenenler.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
