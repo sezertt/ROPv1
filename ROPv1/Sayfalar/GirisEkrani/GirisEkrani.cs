@@ -1635,6 +1635,10 @@ namespace ROPv1
 
         private void komut_iptal(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu, string ikraminGrubu, string porsiyon, string iptalNedeni)
         {
+            miktar = miktar.Replace('.', ',');
+            dusulecekDegerGelen = dusulecekDegerGelen.Replace('.', ',');
+            porsiyon = porsiyon.Replace('.', ',');
+
             if (siparisForm != null)
             {
                 if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == masa)
@@ -1646,6 +1650,8 @@ namespace ROPv1
                     });
                 }
             }
+
+
 
             siparisiKimGirdi = siparisiGirenKisi;
 
@@ -1818,6 +1824,10 @@ namespace ROPv1
 
         private void komut_ikram(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu, string porsiyon)
         {
+            miktar = miktar.Replace('.', ',');
+            dusulecekDegerGelen = dusulecekDegerGelen.Replace('.', ',');
+            porsiyon = porsiyon.Replace('.', ',');
+
             if (siparisForm != null)
             {
                 if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == masa)
@@ -1954,6 +1964,10 @@ namespace ROPv1
 
         private void komut_ikramIptal(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotu, string ikramYeniMiEskiMi, string porsiyon)
         {
+            miktar = miktar.Replace('.', ',');
+            dusulecekDegerGelen = dusulecekDegerGelen.Replace('.', ',');
+            porsiyon = porsiyon.Replace('.', ',');
+
             if (siparisForm != null)
             {
                 if (siparisForm.siparisMenuForm != null && siparisForm.viewdakiDepartmaninAdi == departmanAdi && siparisForm.hangiMasaButonunaBasildi.Text == masa)
