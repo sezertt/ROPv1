@@ -16,12 +16,12 @@ namespace ROPv1
         SiparisMasaFormu masaFormu;
         AnketKullanicilari anketKullaniciFormu;
 
-        public KontrolFormu(string textboxText, bool BoxType, SiparisMenuFormu menuFormu)
+        public KontrolFormu(string textboxText, bool BoxType, SiparisMenuFormu menuFormuGelen)
         {
             InitializeComponent();
 
-            if (menuFormu != null)
-                this.menuFormu = menuFormu;
+            if (menuFormuGelen != null)
+                this.menuFormu = menuFormuGelen;
 
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
@@ -36,16 +36,16 @@ namespace ROPv1
             }
         }
 
-        public KontrolFormu(string textboxText, bool BoxType, SiparisMasaFormu masaFormu)
+        public KontrolFormu(string textboxText, bool BoxType, SiparisMasaFormu masaFormuGelen)
         {
             InitializeComponent();
 
-            if (masaFormu != null)
-                this.masaFormu = masaFormu;
+            if (masaFormuGelen != null)
+                this.masaFormu = masaFormuGelen;
 
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
-            
+
             labelAciklama.Text = textboxText;
             buttonDevamEt.Visible = true;
             buttonDevamEtme.Visible = true;
@@ -102,12 +102,6 @@ namespace ROPv1
         private void buttonTamam_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void KontrolFormu_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (menuFormu != null)
-                menuFormu.Close();
         }
 
         private void buttonDevamEt_Click(object sender, EventArgs e)

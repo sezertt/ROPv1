@@ -791,6 +791,17 @@ namespace ROPv1
                         dialog2.ShowDialog();
                         Environment.Exit(7);
                         break;
+                    
+                    //tablet için olan case ler
+                    case "Default":
+                    case "OdemeBilgileriTablet":
+                    case "baglanti":
+                    case "modemBilgileri":
+                    case "bildirim":
+                    case "bildirimBilgileri":
+                    case "garson":
+                    case "bildirimGoruldu":
+                        break;
                 }
             }
             catch (Exception)
@@ -849,7 +860,7 @@ namespace ROPv1
             {
                 if (ikramYeniMiEskiMi == null)
                     client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&porsiyon=" + porsiyon);
-                else
+                else 
                     client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi + "&porsiyon=" + porsiyon);
             }
             else

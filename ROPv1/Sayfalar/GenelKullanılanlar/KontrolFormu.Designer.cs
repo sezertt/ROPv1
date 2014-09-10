@@ -179,7 +179,6 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.KontrolFormu_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KontrolFormu_KeyDown);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
