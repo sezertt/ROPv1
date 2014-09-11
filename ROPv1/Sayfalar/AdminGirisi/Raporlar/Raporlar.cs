@@ -196,7 +196,10 @@ namespace ROPv1
         private void OnLoaded(object sender, EventArgs e)
         {
             Application.Idle -= OnLoaded;
-            _waitForm.Close();
+            this.Invoke((MethodInvoker)delegate
+            {
+                _waitForm.Close();
+            }); 
         }
     }
 

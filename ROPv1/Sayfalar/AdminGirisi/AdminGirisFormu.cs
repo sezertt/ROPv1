@@ -38,7 +38,10 @@ namespace ROPv1
             {
                 if (pinForm.Visible)
                 {
-                    pinForm.Close();
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        pinForm.Close();
+                    });
                     pinForm = null;
                 }
             }
@@ -117,7 +120,10 @@ namespace ROPv1
                     {
                         if (pinForm.Visible)
                         {
-                            pinForm.Close();
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                pinForm.Close();
+                            }); 
                             pinForm = null;
                         }
                     }
@@ -133,7 +139,10 @@ namespace ROPv1
                     {
                         if (pinForm.Visible)
                         {
-                            pinForm.Close();
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                pinForm.Close();
+                            }); 
                             pinForm = null;
                         }
                     }
@@ -162,7 +171,10 @@ namespace ROPv1
                     {
                         if (pinForm.Visible)
                         {
-                            pinForm.Close();
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                pinForm.Close();
+                            }); 
                             pinForm = null;
                         }
                     }
@@ -182,7 +194,10 @@ namespace ROPv1
                     {
                         if (pinForm.Visible)
                         {
-                            pinForm.Close();
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                pinForm.Close();
+                            }); 
                             pinForm = null;
                         }
                     }
@@ -384,7 +399,10 @@ namespace ROPv1
             {
                 if (pinForm.Visible)
                 {
-                    pinForm.Close();
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        pinForm.Close();
+                    }); 
                     pinForm = null;
                 }
             }
@@ -412,7 +430,10 @@ namespace ROPv1
             {
                 if (pinForm.Visible)
                 {
-                    pinForm.Close();
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        pinForm.Close();
+                    }); 
                     pinForm = null;
                 }
             }
@@ -449,7 +470,10 @@ namespace ROPv1
             {
                 if (pinForm.Visible)
                 {
-                    pinForm.Close();
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        pinForm.Close();
+                    }); 
                     pinForm = null;
                 }
             }
@@ -505,7 +529,10 @@ namespace ROPv1
             {
                 if (pinForm.Visible)
                 {
-                    pinForm.Close();
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        pinForm.Close();
+                    }); 
                     pinForm = null;
                 }
             }

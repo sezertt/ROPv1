@@ -107,7 +107,7 @@ namespace ROPv1
         private void buttonDevamEt_Click(object sender, EventArgs e)
         {
             if (masaFormu != null)
-                masaFormu.komut_masaGirilebilirMi("True");
+                masaFormu.komut_masaGirilebilirMi("True",true);
             this.Close();
         }
 
@@ -126,6 +126,14 @@ namespace ROPv1
             if (anketKullaniciFormu != null)
                 anketKullaniciFormu.kullaniciyiSilOnaylandi();
             this.Close();
+        }
+
+        private void KontrolFormu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                menuFormu.Close();
+            }); 
         }
     }
 }
