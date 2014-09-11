@@ -130,10 +130,13 @@ namespace ROPv1
 
         private void KontrolFormu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.Invoke((MethodInvoker)delegate
+            if(menuFormu!=null)
             {
-                menuFormu.Close();
-            }); 
+                this.Invoke((MethodInvoker)delegate
+                {
+                    menuFormu.Close();
+                }); 
+            }
         }
     }
 }

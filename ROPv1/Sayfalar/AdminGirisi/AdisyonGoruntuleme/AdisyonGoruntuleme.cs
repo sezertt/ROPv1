@@ -297,6 +297,7 @@ namespace ROPv1
                 if (iptalMi)
                 {
                     listAdisyon.Items[listAdisyon.Items.Count - 1].BackColor = Color.IndianRed;
+                    listAdisyon.Items[listAdisyon.Items.Count - 1].ForeColor = Color.White;
                 }
             }
             labelSayfaSayisi.Text = Math.Ceiling(adisyonSayisi / 23).ToString();
@@ -477,6 +478,7 @@ namespace ROPv1
                 if (iptalMi)
                 {
                     listAdisyon.Items[listAdisyon.Items.Count - 1].BackColor = Color.IndianRed;
+                    listAdisyon.Items[listAdisyon.Items.Count - 1].ForeColor = Color.White;
                 }
             }
             cmd.Connection.Close();
@@ -548,6 +550,8 @@ namespace ROPv1
                 if (iptalMi)
                 {
                     glitem.BackColor = Color.IndianRed;
+                    glitem.ForeColor = Color.White;
+
                 }
                 else
                 {

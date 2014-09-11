@@ -297,7 +297,7 @@
             this.listAdisyon.Name = "listAdisyon";
             this.listAdisyon.Scrollable = false;
             this.listAdisyon.ShowItemToolTips = true;
-            this.listAdisyon.Size = new System.Drawing.Size(915, 607);
+            this.listAdisyon.Size = new System.Drawing.Size(915, 576);
             this.listAdisyon.TabIndex = 42;
             this.listAdisyon.UseCompatibleStateImageBehavior = false;
             this.listAdisyon.View = System.Windows.Forms.View.Details;
@@ -345,7 +345,7 @@
             this.buttonSayfaArttir.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonSayfaArttir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSayfaArttir.Image = global::ROPv1.Properties.Resources.righticon;
-            this.buttonSayfaArttir.Location = new System.Drawing.Point(622, 746);
+            this.buttonSayfaArttir.Location = new System.Drawing.Point(622, 715);
             this.buttonSayfaArttir.Name = "buttonSayfaArttir";
             this.buttonSayfaArttir.Size = new System.Drawing.Size(120, 61);
             this.buttonSayfaArttir.TabIndex = 45;
@@ -361,7 +361,7 @@
             this.buttonSayfaAzalt.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonSayfaAzalt.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSayfaAzalt.Image = global::ROPv1.Properties.Resources.lefticon;
-            this.buttonSayfaAzalt.Location = new System.Drawing.Point(227, 746);
+            this.buttonSayfaAzalt.Location = new System.Drawing.Point(227, 715);
             this.buttonSayfaAzalt.Name = "buttonSayfaAzalt";
             this.buttonSayfaAzalt.Size = new System.Drawing.Size(120, 61);
             this.buttonSayfaAzalt.TabIndex = 44;
@@ -377,7 +377,7 @@
             this.labelSayfaSayisi.BackColor = System.Drawing.Color.Transparent;
             this.labelSayfaSayisi.Font = new System.Drawing.Font("Calibri", 32F);
             this.labelSayfaSayisi.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelSayfaSayisi.Location = new System.Drawing.Point(496, 748);
+            this.labelSayfaSayisi.Location = new System.Drawing.Point(496, 717);
             this.labelSayfaSayisi.Name = "labelSayfaSayisi";
             this.labelSayfaSayisi.Size = new System.Drawing.Size(45, 53);
             this.labelSayfaSayisi.TabIndex = 47;
@@ -391,7 +391,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Calibri", 32F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.SystemColors.Window;
-            this.label2.Location = new System.Drawing.Point(464, 748);
+            this.label2.Location = new System.Drawing.Point(464, 717);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 53);
             this.label2.TabIndex = 48;
@@ -404,7 +404,7 @@
             this.labelSayfa.BackColor = System.Drawing.Color.Transparent;
             this.labelSayfa.Font = new System.Drawing.Font("Calibri", 32F);
             this.labelSayfa.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelSayfa.Location = new System.Drawing.Point(338, 748);
+            this.labelSayfa.Location = new System.Drawing.Point(338, 717);
             this.labelSayfa.Name = "labelSayfa";
             this.labelSayfa.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelSayfa.Size = new System.Drawing.Size(138, 53);
@@ -419,7 +419,7 @@
             this.labelToplamHesap.BackColor = System.Drawing.Color.Transparent;
             this.labelToplamHesap.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelToplamHesap.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelToplamHesap.Location = new System.Drawing.Point(1202, 760);
+            this.labelToplamHesap.Location = new System.Drawing.Point(1202, 729);
             this.labelToplamHesap.Margin = new System.Windows.Forms.Padding(0);
             this.labelToplamHesap.Name = "labelToplamHesap";
             this.labelToplamHesap.Size = new System.Drawing.Size(152, 33);
@@ -434,7 +434,7 @@
             this.labelKalanText.BackColor = System.Drawing.Color.Transparent;
             this.labelKalanText.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelKalanText.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelKalanText.Location = new System.Drawing.Point(1095, 760);
+            this.labelKalanText.Location = new System.Drawing.Point(1095, 729);
             this.labelKalanText.Name = "labelKalanText";
             this.labelKalanText.Size = new System.Drawing.Size(104, 33);
             this.labelKalanText.TabIndex = 103;
@@ -448,7 +448,7 @@
             this.buttonYazdir.Enabled = false;
             this.buttonYazdir.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold);
             this.buttonYazdir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonYazdir.Location = new System.Drawing.Point(969, 750);
+            this.buttonYazdir.Location = new System.Drawing.Point(969, 719);
             this.buttonYazdir.Name = "buttonYazdir";
             this.buttonYazdir.Size = new System.Drawing.Size(120, 55);
             this.buttonYazdir.TabIndex = 104;
@@ -463,7 +463,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.keyboardcontrol1.ForeColor = System.Drawing.SystemColors.Window;
             this.keyboardcontrol1.KeyboardType = KeyboardClassLibrary.BoW.Standard;
-            this.keyboardcontrol1.Location = new System.Drawing.Point(4, 535);
+            this.keyboardcontrol1.Location = new System.Drawing.Point(4, 504);
             this.keyboardcontrol1.Name = "keyboardcontrol1";
             this.keyboardcontrol1.Size = new System.Drawing.Size(924, 282);
             this.keyboardcontrol1.TabIndex = 50;
@@ -479,7 +479,7 @@
             this.buttonHesapDuzenle.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold);
             this.buttonHesapDuzenle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonHesapDuzenle.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonHesapDuzenle.Location = new System.Drawing.Point(771, 750);
+            this.buttonHesapDuzenle.Location = new System.Drawing.Point(771, 719);
             this.buttonHesapDuzenle.Name = "buttonHesapDuzenle";
             this.buttonHesapDuzenle.Size = new System.Drawing.Size(189, 55);
             this.buttonHesapDuzenle.TabIndex = 120;
@@ -511,12 +511,14 @@
             listViewItem5,
             listViewItem6});
             this.listViewOdemeler.LabelWrap = false;
-            this.listViewOdemeler.Location = new System.Drawing.Point(934, 562);
+            this.listViewOdemeler.Location = new System.Drawing.Point(934, 521);
             this.listViewOdemeler.Margin = new System.Windows.Forms.Padding(0);
+            this.listViewOdemeler.MaximumSize = new System.Drawing.Size(420, 162);
+            this.listViewOdemeler.MinimumSize = new System.Drawing.Size(420, 162);
             this.listViewOdemeler.MultiSelect = false;
             this.listViewOdemeler.Name = "listViewOdemeler";
             this.listViewOdemeler.ShowItemToolTips = true;
-            this.listViewOdemeler.Size = new System.Drawing.Size(420, 172);
+            this.listViewOdemeler.Size = new System.Drawing.Size(420, 162);
             this.listViewOdemeler.TabIndex = 121;
             this.listViewOdemeler.UseCompatibleStateImageBehavior = false;
             this.listViewOdemeler.View = System.Windows.Forms.View.Details;
@@ -625,12 +627,12 @@
             this.listAdisyonDetay.Location = new System.Drawing.Point(934, 127);
             this.listAdisyonDetay.Margin = new System.Windows.Forms.Padding(0);
             this.listAdisyonDetay.Name = "listAdisyonDetay";
-            this.listAdisyonDetay.Selectable = true;
-            this.listAdisyonDetay.SelectedTextColor = System.Drawing.Color.White;
-            this.listAdisyonDetay.SelectionColor = System.Drawing.SystemColors.ActiveCaption;
+            this.listAdisyonDetay.Selectable = false;
+            this.listAdisyonDetay.SelectedTextColor = System.Drawing.SystemColors.ActiveCaption;
+            this.listAdisyonDetay.SelectionColor = System.Drawing.Color.Transparent;
             this.listAdisyonDetay.ShowBorder = false;
-            this.listAdisyonDetay.ShowFocusRect = false;
-            this.listAdisyonDetay.Size = new System.Drawing.Size(420, 421);
+            this.listAdisyonDetay.ShowFocusRect = true;
+            this.listAdisyonDetay.Size = new System.Drawing.Size(420, 385);
             this.listAdisyonDetay.SortType = GlacialComponents.Controls.SortTypes.InsertionSort;
             this.listAdisyonDetay.SuperFlatHeaderColor = System.Drawing.Color.White;
             this.listAdisyonDetay.TabIndex = 122;
@@ -641,7 +643,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1366, 819);
+            this.ClientSize = new System.Drawing.Size(1366, 788);
             this.ControlBox = false;
             this.Controls.Add(this.listAdisyonDetay);
             this.Controls.Add(this.listViewOdemeler);

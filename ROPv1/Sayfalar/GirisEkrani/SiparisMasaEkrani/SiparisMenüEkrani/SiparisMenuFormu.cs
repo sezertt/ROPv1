@@ -245,7 +245,7 @@ namespace ROPv1
         {
             flowPanelMenuBasliklari.SuspendLayout();
 
-            int height = (flowPanelMenuBasliklari.Bounds.Height - 66) / 11;
+            int height = (flowPanelMenuBasliklari.Bounds.Height - 66) / 10;
             int width = (flowPanelMenuBasliklari.Bounds.Width - 24);
 
             foreach (Control ctrl in flowPanelMenuBasliklari.Controls)

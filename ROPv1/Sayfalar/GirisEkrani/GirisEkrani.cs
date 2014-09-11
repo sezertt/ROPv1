@@ -273,6 +273,12 @@ namespace ROPv1
                 cmd.Parameters.AddWithValue("@_DepartmanAdi", departmanAdi);
 
                 cmd.ExecuteNonQuery();
+
+                cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET HesapIstendi=0, TemizlikIstendi=0, GarsonIstendi=0 WHERE Adisyon.MasaAdi=@_MasaAdi AND Adisyon.DepartmanAdi=@_DepartmanAdi AND IptalMi=0 AND AcikMi=1");
+                cmd.Parameters.AddWithValue("@_MasaAdi", masa);
+                cmd.Parameters.AddWithValue("@_DepartmanAdi", departmanAdi);
+
+                cmd.ExecuteNonQuery();
             }
             else
             {
@@ -295,8 +301,7 @@ namespace ROPv1
 
         private void komut_OzelBildirim(string masa, string departmanAdi, string komut, string kalanHesap = null)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET @_komut=1 WHERE MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi AND AcikMi=1 AND IptalMi=0");
-            cmd.Parameters.AddWithValue("@_komut", komut);
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET "+ komut +"=1 WHERE MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi AND AcikMi=1 AND IptalMi=0");
             cmd.Parameters.AddWithValue("@_MasaAdi", masa);
             cmd.Parameters.AddWithValue("@_DepartmanAdi", departmanAdi);
 
@@ -347,8 +352,7 @@ namespace ROPv1
 
         private void komut_OzelBildirimGoruldu(string masa, string departmanAdi, string komut)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET @_komut=0 WHERE MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi AND AcikMi=1 AND IptalMi=0");
-            cmd.Parameters.AddWithValue("@_komut", komut);
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET " + komut + "=0 WHERE MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi AND AcikMi=1 AND IptalMi=0");
             cmd.Parameters.AddWithValue("@_MasaAdi", masa);
             cmd.Parameters.AddWithValue("@_DepartmanAdi", departmanAdi);
 
