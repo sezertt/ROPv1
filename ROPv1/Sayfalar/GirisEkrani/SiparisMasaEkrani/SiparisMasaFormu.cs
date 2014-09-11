@@ -807,6 +807,8 @@ namespace ROPv1
                     case "garsonGoruldu":
                     case "hesapGoruldu":
                     case "temizlikGoruldu":
+                    case "hesapGeliyor":
+                    case "hesapIslemde":
                         break;
                 }
             }

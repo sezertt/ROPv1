@@ -1569,12 +1569,34 @@ namespace ROPv1
         {
             if (Properties.Settings.Default.Server == 2) //server - diğer tüm clientlara söylemeli yaptığı ikram vs. neyse
             {
-                SqlCommand cmd;
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT OdemeYapiliyor,HesapIstendi FROM Adisyon WHERE AcikMi=1 AND IptalMi=0 AND MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi");
+                cmd.Parameters.AddWithValue("@_MasaAdi", MasaAdi);
+                cmd.Parameters.AddWithValue("@_DepartmanAdi", hangiDepartman.departmanAdi);
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                dr.Read();
+                try
+                {
+                    if (dr.GetBoolean(0))
+                    {
+                        this.Close();
+                    }
+                    else if (dr.GetBoolean(1))
+                    {
+                        this.Close();
+                    }
+                }
+                catch
+                { }
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose(); 
 
                 if (listUrunFiyat.Groups[2].Items.Count == 0 && listUrunFiyat.Groups[3].Items.Count == 0) // listede hiç sipariş yoksa, siparişler ya ödenmiştir yada iptal edilmiştir
                 {
                     cmd = SQLBaglantisi.getCommand("SELECT OdenenMiktar from OdemeDetay JOIN Adisyon ON OdemeDetay.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0");
-                    SqlDataReader dr = cmd.ExecuteReader();
+                    dr = cmd.ExecuteReader();
 
                     try // eğer masanın ödenmiş siparişi varsa hesabı kapat 
                     {
@@ -1641,7 +1663,7 @@ namespace ROPv1
                     int adisyonID;
 
                     cmd = SQLBaglantisi.getCommand("SELECT AdisyonID FROM Adisyon WHERE MasaAdi='" + MasaAdi + "' AND DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND AcikMi=1");
-                    SqlDataReader dr = cmd.ExecuteReader();
+                    dr = cmd.ExecuteReader();
                     dr.Read();
 
                     try // açık
