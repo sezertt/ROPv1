@@ -804,9 +804,9 @@ namespace ROPv1
                     case "GarsonIstendi":
                     case "HesapIstendi":
                     case "TemizlikIstendi":
-                    case "garsonGoruldu":
-                    case "hesapGoruldu":
-                    case "temizlikGoruldu":
+                    case "GarsonGoruldu":
+                    case "HesapGoruldu":
+                    case "TemizlikGoruldu":
                     case "hesapGeliyor":
                     case "hesapIslemde":
                         break;

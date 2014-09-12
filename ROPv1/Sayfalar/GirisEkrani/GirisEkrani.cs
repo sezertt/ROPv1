@@ -165,9 +165,9 @@ namespace ROPv1
                     case "TemizlikIstendi":
                         komut_OzelBildirim(parametreler["masa"], parametreler["departmanAdi"], parametreler["komut"], parametreler["kalanHesap"]);
                         break;
-                    case "garsonGoruldu":
-                    case "hesapGoruldu":
-                    case "temizlikGoruldu":
+                    case "GarsonGoruldu":
+                    case "HesapGoruldu":
+                    case "TemizlikGoruldu":
                         komut_OzelBildirimGoruldu(parametreler["masa"], parametreler["departmanAdi"], parametreler["komut"]);
                         break;
                     case "masaGirilebilirMi": 
@@ -190,6 +190,9 @@ namespace ROPv1
                         break;
                     case "OdemeGuncelle": // Ödeme güncellendiğinde
                         komut_OdemeGuncelle(parametreler["masa"], parametreler["departmanAdi"], parametreler["odemeler"], parametreler["gelenOdemeler"], e.Client, parametreler["siparisiGirenKisi"]);
+                        break;
+                    case "masayiAc":
+                        komut_masayiAc(parametreler["masa"], parametreler["departmanAdi"]);
                         break;
                     case "giris": // bir kullanıcı servera bağlandığında
                         komut_giris(e.Client, parametreler["nick"]);
@@ -352,7 +355,7 @@ namespace ROPv1
 
         private void komut_OzelBildirimGoruldu(string masa, string departmanAdi, string komut)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET " + komut + "=0 WHERE MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi AND AcikMi=1 AND IptalMi=0");
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET " + komut.Replace("Goruldu","Istendi") + "=0 WHERE MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi AND AcikMi=1 AND IptalMi=0");
             cmd.Parameters.AddWithValue("@_MasaAdi", masa);
             cmd.Parameters.AddWithValue("@_DepartmanAdi", departmanAdi);
 
@@ -2440,6 +2443,11 @@ namespace ROPv1
             }
             //Tüm kullanıcılara açılmak istenilen masayı gönderelim
             tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + masa + "&departmanAdi=" + departmanAdi);
+        }
+                
+        private void komut_masayiAc(string masa, string departmanAdi)
+        {
+            bosAdisyonOlustur(masa,departmanAdi);
         }
 
         private void komut_masaKapandi(string masa, string departmanAdi)
