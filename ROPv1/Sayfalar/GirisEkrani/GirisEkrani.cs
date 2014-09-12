@@ -459,7 +459,7 @@ namespace ROPv1
 
                 StringBuilder ozelBildirimBilgileri = null;
 
-                bildirimBilgileri = new StringBuilder();
+                ozelBildirimBilgileri = new StringBuilder();
 
                 cmd = SQLBaglantisi.getCommand("SELECT DepartmanAdi, MasaAdi, HesapIstendi, TemizlikIstendi, GarsonIstendi from Adisyon WHERE AcikMi=1 AND IptalMi=0 AND (HesapIstendi=1 OR TemizlikIstendi=1 OR GarsonIstendi=1)");
                 dr = cmd.ExecuteReader();
