@@ -170,7 +170,7 @@ namespace ROPv1
                     case "TemizlikGoruldu":
                         komut_OzelBildirimGoruldu(parametreler["masa"], parametreler["departmanAdi"], parametreler["komut"]);
                         break;
-                    case "masaGirilebilirMi": 
+                    case "masaGirilebilirMi":
                         komut_masaGirilebilirMi(parametreler["masa"], parametreler["departmanAdi"], e.Client);
                         break;
                     case "masaDegistir": // Masa değiştirmek ve bu bilgiyi diğer kullanıcılara bildirmek için
@@ -304,7 +304,7 @@ namespace ROPv1
 
         private void komut_OzelBildirim(string masa, string departmanAdi, string komut, string kalanHesap = null)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET "+ komut +"=1 WHERE MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi AND AcikMi=1 AND IptalMi=0");
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET " + komut + "=1 WHERE MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi AND AcikMi=1 AND IptalMi=0");
             cmd.Parameters.AddWithValue("@_MasaAdi", masa);
             cmd.Parameters.AddWithValue("@_DepartmanAdi", departmanAdi);
 
@@ -343,7 +343,7 @@ namespace ROPv1
                             }
                         }
                     }
-                }       
+                }
                 //Tüm kullanıcılara kapatılmak istenilen masayı gönderelim
                 tumKullanicilaraMesajYolla("komut=masaKapandi&masa=" + masa + "&departmanAdi=" + departmanAdi);
             }
@@ -355,7 +355,7 @@ namespace ROPv1
 
         private void komut_OzelBildirimGoruldu(string masa, string departmanAdi, string komut)
         {
-            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET " + komut.Replace("Goruldu","Istendi") + "=0 WHERE MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi AND AcikMi=1 AND IptalMi=0");
+            SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET " + komut.Replace("Goruldu", "Istendi") + "=0 WHERE MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi AND AcikMi=1 AND IptalMi=0");
             cmd.Parameters.AddWithValue("@_MasaAdi", masa);
             cmd.Parameters.AddWithValue("@_DepartmanAdi", departmanAdi);
 
@@ -366,7 +366,7 @@ namespace ROPv1
 
             tumKullanicilaraMesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departmanAdi);
         }
-        
+
 
         private void komut_bildirim(string masalar, ClientRef client)
         {
@@ -394,6 +394,7 @@ namespace ROPv1
 
                 SqlCommand cmd = null;
                 StringBuilder bildirimBilgileri = null;
+                StringBuilder ozelBildirimBilgileri = null;
 
                 for (int i = 0; i < masaBilgileri.Count(); i++)
                 {
@@ -419,6 +420,46 @@ namespace ROPv1
                                 return;
                             }
                         }
+                        ozelBildirimBilgileri = new StringBuilder();
+
+                        cmd = SQLBaglantisi.getCommand("SELECT DepartmanAdi, MasaAdi, HesapIstendi, TemizlikIstendi, GarsonIstendi from Adisyon WHERE AcikMi=1 AND IptalMi=0 AND (HesapIstendi=1 OR TemizlikIstendi=1 OR GarsonIstendi=1) AND MasaAdi=@_MasaAdi and DepartmanAdi=@_DepartmanAdi");
+                        cmd.Parameters.AddWithValue("@_MasaAdi", masaBilgileri[i][j]);
+                        cmd.Parameters.AddWithValue("@_DepartmanAdi", masaBilgileri[i][0]);
+
+                        dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            try
+                            {
+                                int ozelBildirim = 0;
+
+                                if (dr.GetBoolean(2)) //HesapIstendi ==> 1
+                                {
+                                    ozelBildirim += 1;
+                                }
+
+                                if (dr.GetBoolean(3)) //TemizlikIstendi ==> 2
+                                {
+                                    ozelBildirim += 2;
+                                }
+
+                                if (dr.GetBoolean(4)) //GarsonIstendi ==> 4
+                                {
+                                    ozelBildirim += 4;
+                                }
+
+                                // 3 ==> Hesap + Temizlik        5 ==> Hesap + Garson       6 ==> Temizlik + Garson      7 ==> Hepsi
+
+                                ozelBildirimBilgileri.Append("*" + ozelBildirim + "-" + dr.GetString(0) + "-" + dr.GetString(1));
+                            }
+                            catch
+                            {
+                                //HATA MESAJI GÖNDER
+                                komut_IslemHatasi(client, "İşlem gerçekleştirilemedi, lütfen tekrar deneyiniz");
+                                ozelBildirimBilgileri.Clear();
+                                return;
+                            }
+                        }
                     }
                 }
 
@@ -432,7 +473,14 @@ namespace ROPv1
                         bildirimBilgileri.Remove(0, 1);
                     }
                 }
-                client.MesajYolla("komut=bildirimBilgileri&bildirimBilgileri=" + bildirimBilgileri);
+                if (ozelBildirimBilgileri != null)
+                {
+                    if (ozelBildirimBilgileri.Length >= 1)
+                    {
+                        ozelBildirimBilgileri.Remove(0, 1);
+                    }
+                }
+                client.MesajYolla("komut=bildirimBilgileri&bildirimBilgileri=" + bildirimBilgileri + "&ozelBildirimBilgileri=" + ozelBildirimBilgileri);
             }
             else
             {
@@ -467,7 +515,7 @@ namespace ROPv1
                 {
                     try
                     {
-                        int ozelBildirim=0;
+                        int ozelBildirim = 0;
 
                         if (dr.GetBoolean(2)) //HesapIstendi ==> 1
                         {
@@ -1527,13 +1575,13 @@ namespace ROPv1
             dr.Read();
             try
             {
-                if(dr.GetBoolean(0))
+                if (dr.GetBoolean(0))
                 {
                     if (Convert.ToInt32(sonSiparisMi) == 0)
                         client.MesajYolla("komut=hesapGeliyor");
                     return;
-                }      
-                else if(dr.GetBoolean(1))
+                }
+                else if (dr.GetBoolean(1))
                 {
                     if (Convert.ToInt32(sonSiparisMi) == 0)
                         client.MesajYolla("komut=hesapIslemde");
@@ -1544,9 +1592,9 @@ namespace ROPv1
             { }
 
             cmd.Connection.Close();
-            cmd.Connection.Dispose(); 
-            
-            
+            cmd.Connection.Dispose();
+
+
             miktar = miktar.Replace('.', ',');
             dusulecekDegerGelen = dusulecekDegerGelen.Replace('.', ',');
             porsiyon = porsiyon.Replace('.', ',');
@@ -1850,7 +1898,7 @@ namespace ROPv1
             { }
 
             cmd.Connection.Close();
-            cmd.Connection.Dispose(); 
+            cmd.Connection.Dispose();
 
             miktar = miktar.Replace('.', ',');
             dusulecekDegerGelen = dusulecekDegerGelen.Replace('.', ',');
@@ -1877,7 +1925,7 @@ namespace ROPv1
             this.adisyonNotu = adisyonNotu;
 
             double dusulecekDeger = Convert.ToDouble(dusulecekDegerGelen);
-                        
+
             string ikramSQLGirdisi;
 
             if (ikraminGrubu == "0" || ikraminGrubu == "1") // eski ikram veya yeni ikram grubundaysa, ikramlardan iptal edilecek
@@ -2063,7 +2111,7 @@ namespace ROPv1
             { }
 
             cmd.Connection.Close();
-            cmd.Connection.Dispose(); 
+            cmd.Connection.Dispose();
 
             miktar = miktar.Replace('.', ',');
             dusulecekDegerGelen = dusulecekDegerGelen.Replace('.', ',');
@@ -2229,7 +2277,7 @@ namespace ROPv1
             { }
 
             cmd.Connection.Close();
-            cmd.Connection.Dispose(); 
+            cmd.Connection.Dispose();
 
             miktar = miktar.Replace('.', ',');
             dusulecekDegerGelen = dusulecekDegerGelen.Replace('.', ',');
@@ -2444,10 +2492,10 @@ namespace ROPv1
             //Tüm kullanıcılara açılmak istenilen masayı gönderelim
             tumKullanicilaraMesajYolla("komut=masaAcildi&masa=" + masa + "&departmanAdi=" + departmanAdi);
         }
-                
+
         private void komut_masayiAc(string masa, string departmanAdi)
         {
-            bosAdisyonOlustur(masa,departmanAdi);
+            bosAdisyonOlustur(masa, departmanAdi);
         }
 
         private void komut_masaKapandi(string masa, string departmanAdi)
@@ -2478,7 +2526,7 @@ namespace ROPv1
                         }
                     }
                 }
-            }       
+            }
 
             //Tüm kullanıcılara kapatılmak istenilen masayı gönderelim
             tumKullanicilaraMesajYolla("komut=masaKapandi&masa=" + masa + "&departmanAdi=" + departmanAdi);
