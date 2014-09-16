@@ -2625,7 +2625,7 @@ namespace ROPv1
 
                             aktarmaBilgileri.Append("*" + listUrunFiyat.SelectedItems[i].SubItems[2].Text + "-" + dusulecekDeger.ToString() + "-" + istenilenTasimaMiktari.ToString() + "-" + tasinacakUrunIkramMi.ToString() + "-" + listUrunFiyat.SelectedItems[i].SubItems[1].Text.Substring(0, listUrunFiyat.SelectedItems[i].SubItems[1].Text.Length - 1));
 
-                            if (Convert.ToDouble(listUrunFiyat.SelectedItems[i].SubItems[0].Text) > Convert.ToDouble(istenilenTasimaMiktari))
+                            if (Convert.ToDouble(listUrunFiyat.SelectedItems[i].SubItems[0].Text) > Convert.ToDouble(istenilenTasimaMiktari)) // eğer kalan ürün varsa masa açık
                                 masaAcikMi = true;
                         }
 

@@ -182,7 +182,7 @@ namespace ROPv1
                     case "ikramIptal": // ikramın iptal edildiği bilgisini dağıtmak için
                         komut_ikramIptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["ikramYeniMiEskiMi"], parametreler["porsiyon"]);
                         break;
-                    case "urunuTasi": // ikramın iptal edildiği bilgisini dağıtmak için
+                    case "urunuTasi":
                         komut_urunuTasi(parametreler["masa"], parametreler["departmanAdi"], parametreler["yeniMasa"], parametreler["yeniDepartmanAdi"], parametreler["siparisiGirenKisi"], parametreler["aktarmaBilgileri"], e.Client);
                         break;
                     case "OdemeYapildi": // herhangi bir ödeme yapıldığında
@@ -212,8 +212,9 @@ namespace ROPv1
                     case "AdisyonNotu": // adisyon notu değiştirileceğinde eski adisyon notunu göstermek için
                         komut_adisyonNotu(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
                         break;
+                    case "departmanMasaSecimiIcin"://departmanın masaları hakkında bilgi                 
                     case "departman"://departmanın masaları hakkında bilgi                 
-                        komut_departman(e.Client, parametreler["departmanAdi"]);
+                        komut_departman(e.Client, parametreler["departmanAdi"], parametreler["komut"]);
                         break;
                     case "anketIstegi":// anket isteği geldiğinde
                         komut_anketIstegi(e.Client);
@@ -2533,7 +2534,7 @@ namespace ROPv1
         }
 
         // departman komutu- açık masa bilgilerini alan fonksiyon       
-        private void komut_departman(ClientRef client, string departmanAdi)
+        private void komut_departman(ClientRef client, string departmanAdi, string komut)
         {
             StringBuilder acikMasalar = new StringBuilder();
             SqlCommand cmd = SQLBaglantisi.getCommand("SELECT MasaAdi FROM Adisyon WHERE DepartmanAdi='" + departmanAdi + "' AND AcikMi=1");
@@ -2559,7 +2560,7 @@ namespace ROPv1
             }
 
             //Kullanıcıya istenilen departmanın açık kapalı masalarını gönderelim
-            client.MesajYolla("komut=departman&masa=" + acikMasalar);
+            client.MesajYolla("komut=" + komut + "&masa=" + acikMasalar);
         }
 
         // giris komutunu uygulayan fonksiyon        
