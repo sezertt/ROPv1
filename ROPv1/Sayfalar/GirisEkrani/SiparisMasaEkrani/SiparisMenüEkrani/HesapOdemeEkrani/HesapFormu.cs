@@ -671,7 +671,9 @@ namespace ROPv1
                     }
 
                     //yeni ürünler için mutfak bildirimi
-                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE AcikMi=1 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=0");
+                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE AcikMi=1 AND Adisyon.IptalMi=0 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=0 AND Siparis.IkramMi=0 AND Siparis.OdendiMi=0 AND MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi");
+                    cmd.Parameters.AddWithValue("@_MasaAdi", masaAdi);
+                    cmd.Parameters.AddWithValue("@_DepartmanAdi", departmanAdi);
                     dr = cmd.ExecuteReader();
 
                     KontrolFormu dialog2 = null;
@@ -713,7 +715,9 @@ namespace ROPv1
                     }
 
                     // iptal edilen ürünler için mutfağa adisyon
-                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE AcikMi=1 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=1");
+                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE AcikMi=1 AND Adisyon.IptalMi=0 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=1 AND Siparis.IkramMi=0 AND Siparis.OdendiMi=0 AND MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi");
+                    cmd.Parameters.AddWithValue("@_MasaAdi", masaAdi);
+                    cmd.Parameters.AddWithValue("@_DepartmanAdi", departmanAdi);
                     dr = cmd.ExecuteReader();
 
                     try

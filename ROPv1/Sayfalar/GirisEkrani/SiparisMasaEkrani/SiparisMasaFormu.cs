@@ -809,7 +809,8 @@ namespace ROPv1
                     case "TemizlikGoruldu":
                     case "hesapGeliyor":
                     case "hesapIslemde":
-                    case "departmanMasaSecimiIcin":               
+                    case "departmanMasaSecimiIcin":          
+                    case "urunuTasiTablet":
                         break;
                 }
             }
