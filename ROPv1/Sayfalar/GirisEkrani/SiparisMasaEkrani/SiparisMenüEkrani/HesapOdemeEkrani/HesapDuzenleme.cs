@@ -148,7 +148,8 @@ namespace ROPv1
                             cmd.Connection.Close();
                             cmd.Connection.Dispose();
                         }
-                    }                        
+                    }
+                    hesapForm.menuFormu.masaFormu.tumKullanicilaraMesajYolla("komut=OdemeIndirimOnayTablet&masaAdi=" + masaAdi + "&departmanAdi=" + departmanAdi);
                 }
                 else
                 {

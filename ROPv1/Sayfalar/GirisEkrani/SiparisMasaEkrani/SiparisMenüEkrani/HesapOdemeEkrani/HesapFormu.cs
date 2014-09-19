@@ -53,6 +53,7 @@ namespace ROPv1
 
         bool indirimYetkisi = true;
 
+
         public HesapFormu(SiparisMenuFormu menuFormu, MyListView siparisListView, string masaAdi, string departmanAdi, string siparisiGirenKisi, bool indirimYetkisi)
         {
             InitializeComponent();
@@ -1276,11 +1277,20 @@ namespace ROPv1
                 }
 
                 // odeme miktarını ve türünü gir
-                cmd = SQLBaglantisi.getCommand("INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar,IndirimiKimGirdi) VALUES(@_AdisyonID,@_OdemeTipi,@_OdenenMiktar,@_IndirimiKimGirdi)");
-                cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
-                cmd.Parameters.AddWithValue("@_OdemeTipi", Convert.ToInt32(((Button)sender).Tag));
-                cmd.Parameters.AddWithValue("@_OdenenMiktar", odenenMiktar);
-                cmd.Parameters.AddWithValue("@_IndirimiKimGirdi", siparisiGirenKisi);
+                cmd = SQLBaglantisi.getCommand("IF EXISTS (SELECT * FROM OdemeDetay WHERE AdisyonID=@_AdisyonID1 AND OdemeTipi=@_OdemeTipi1) UPDATE OdemeDetay SET OdenenMiktar=OdenenMiktar+@_OdenenMiktar1, IndirimiKimGirdi=@_IndirimiKimGirdi1 WHERE OdemeTipi=@_OdemeTipi2 AND AdisyonID=@_AdisyonID2 ELSE INSERT INTO OdemeDetay(AdisyonID,OdemeTipi,OdenenMiktar,IndirimiKimGirdi) VALUES(@_AdisyonID3,@_OdemeTipi3,@_OdenenMiktar2,@_IndirimiKimGirdi2)");
+
+                cmd.Parameters.AddWithValue("@_AdisyonID1", adisyonID);
+                cmd.Parameters.AddWithValue("@_OdemeTipi1", Convert.ToInt32(((Button)sender).Tag));
+                cmd.Parameters.AddWithValue("@_OdenenMiktar1", odenenMiktar);
+                cmd.Parameters.AddWithValue("@_IndirimiKimGirdi1", siparisiGirenKisi);
+
+                cmd.Parameters.AddWithValue("@_OdemeTipi2", Convert.ToInt32(((Button)sender).Tag));
+                cmd.Parameters.AddWithValue("@_AdisyonID2", adisyonID);
+
+                cmd.Parameters.AddWithValue("@_AdisyonID3", adisyonID);
+                cmd.Parameters.AddWithValue("@_OdemeTipi3", Convert.ToInt32(((Button)sender).Tag));
+                cmd.Parameters.AddWithValue("@_OdenenMiktar2", odenenMiktar);
+                cmd.Parameters.AddWithValue("@_IndirimiKimGirdi2", siparisiGirenKisi);
 
                 cmd.ExecuteNonQuery();
 
@@ -1419,6 +1429,8 @@ namespace ROPv1
                 labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
                 textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
                 buttonDeleteText_Click(null, null);
+
+                menuFormu.masaFormu.tumKullanicilaraMesajYolla("komut=OdemeIndirimOnayTablet&masaAdi=" + masaAdi + "&departmanAdi=" + departmanAdi);
             }
             else //client
             {
@@ -1764,6 +1776,9 @@ namespace ROPv1
 
                 cmd.Connection.Close();
                 cmd.Connection.Dispose();
+
+
+                menuFormu.masaFormu.tumKullanicilaraMesajYolla("komut=OdemeIndirimOnayTablet&masaAdi=" + masaAdi + "&departmanAdi=" + departmanAdi);
             }
             else
             {
@@ -1861,6 +1876,8 @@ namespace ROPv1
 
                 cmd.Connection.Close();
                 cmd.Connection.Dispose();
+
+                menuFormu.masaFormu.tumKullanicilaraMesajYolla("komut=OdemeIndirimOnayTablet&masaAdi=" + masaAdi + "&departmanAdi=" + departmanAdi);
             }
             else
             {
@@ -1996,12 +2013,18 @@ namespace ROPv1
             decimal eskiOdemeler = odemeler[0] + odemeler[1] + odemeler[2],
                 yeniOdemeler = gelenOdemeler[0] + gelenOdemeler[1] + gelenOdemeler[2];
 
+            if (Convert.ToDecimal(labelKalanHesap.Text) <= 0)
+                toplamOdemeVeIndirim = eskiOdemeler;
+
             labelOdenenToplam.Text = (Convert.ToDecimal(labelOdenenToplam.Text) - eskiOdemeler + yeniOdemeler).ToString("0.00");
 
             toplamOdemeVeIndirim = toplamOdemeVeIndirim - eskiOdemeler + yeniOdemeler;
 
             menuFormu.labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
             labelKalanHesap.Text = (toplamHesap - toplamOdemeVeIndirim).ToString("0.00");
+
+            textBoxSecilenlerinTutari.Text = labelKalanHesap.Text;
+            textNumberOfItem.Text = textBoxSecilenlerinTutari.Text;
         }
 
         private void labelOdenenToplam_TextChanged(object sender, EventArgs e)

@@ -720,16 +720,16 @@ namespace ROPv1
                     case "ikramIptal": // serverdan ikram iptal isteğinin sonucu geldiğinde
                         komut_ikramIptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["ikramYeniMiEskiMi"], parametreler["porsiyon"]);
                         break;
-                    case "BulunanYazicilar": //Yolladığımız giris mesajına karşılık gelen mesaj
+                    case "BulunanYazicilar": 
                         komut_yazicilarGeldi(parametreler["adisyonYazicilari"], parametreler["digerYazicilar"], parametreler["garson"], parametreler["acilisZamani"]);
                         break;
                     case "giris": //Yolladığımız giris mesajına karşılık gelen mesaj
                         komut_giris(parametreler["sonuc"]);
                         break;
-                    case "IndirimOnay": //Yolladığımız giris mesajına karşılık gelen mesaj
+                    case "IndirimOnay": 
                         komut_IndirimOnay(parametreler["odemeTipi"], parametreler["odemeMiktari"]);
                         break;
-                    case "OdemeOnay": //Yolladığımız giris mesajına karşılık gelen mesaj
+                    case "OdemeOnay":
                         komut_OdemeOnay(parametreler["odemeTipi"], parametreler["odemeMiktari"], parametreler["secilipOdenenSiparisBilgileri"]);
                         break;
                     case "odemeGuncelleTamamlandi": // Yolladığımız ödemegüncelle mesajına karşılık gelen mesaj
@@ -738,7 +738,7 @@ namespace ROPv1
                     case "LoadSiparis": // serverdan siparis bilgileri geldiğinde
                         komut_loadSiparis(parametreler["siparisBilgileri"]);
                         break;
-                    case "OdenenleriGonder": // serverdan siparis bilgileri geldiğinde
+                    case "OdenenleriGonder": 
                         komut_OdenenleriGonder(parametreler["siparisBilgileri"], parametreler["odemeBilgileri"]);
                         break;
                     case "toplumesaj": //tüm gruba gelen mesaj - server kapandığında(şimdilik)
@@ -795,6 +795,7 @@ namespace ROPv1
                     //tablet için olan case ler
                     case "Default":
                     case "OdemeBilgileriTablet":
+                    case "OdemeBilgileriGuncelleTablet":
                     case "baglanti":
                     case "modemBilgileri":
                     case "bildirim":
@@ -811,6 +812,9 @@ namespace ROPv1
                     case "hesapIslemde":
                     case "departmanMasaSecimiIcin":          
                     case "urunuTasiTablet":
+                    case "departmanMasaTasimaIcin":
+                    case "OdemeIndirimOnayTablet":
+                    case "siparisListesineGeriEkle":
                         break;
                 }
             }
@@ -1126,7 +1130,7 @@ namespace ROPv1
                     {
                         SqlCommand cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET OdemeYapiliyor=@_OdemeYapiliyor WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE IptalMi=0 AND AcikMi=1 AND MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi)");
                         cmd.Parameters.AddWithValue("@_MasaAdi", hangiMasa);
-                        cmd.Parameters.AddWithValue("@_DepartmanAdi", restoranListesi[hangiDepartmanButonu]);
+                        cmd.Parameters.AddWithValue("@_DepartmanAdi", restoranListesi[hangiDepartmanButonu].departmanAdi);
                         cmd.Parameters.AddWithValue("@_OdemeYapiliyor", 0);
                         cmd.ExecuteNonQuery();
 
@@ -1135,7 +1139,7 @@ namespace ROPv1
                     }
                     else
                     {
-                        client.MesajYolla("komut=masaGirilebilir&masa=" + hangiMasa + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu]);
+                        client.MesajYolla("komut=masaGirilebilir&masa=" + hangiMasa + "&departmanAdi=" + restoranListesi[hangiDepartmanButonu].departmanAdi);
                     }
                 }
 
