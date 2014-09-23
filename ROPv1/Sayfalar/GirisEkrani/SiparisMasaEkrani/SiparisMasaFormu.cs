@@ -815,6 +815,7 @@ namespace ROPv1
                     case "departmanMasaTasimaIcin":
                     case "OdemeIndirimOnayTablet":
                     case "siparisListesineGeriEkle":
+                    case "masaDegistirTablet":
                         break;
                 }
             }

@@ -48,7 +48,7 @@ namespace ROPv1
 
         UItemp[] infoKullanici;
 
-        bool iptalIkram = true, adisyonNotuGuncellenmeliMi = false;
+        bool iptalIkram = true, adisyonNotuGuncellenmeliMi = false, adisyonDegistirebilirMi = false, satisYapabilirMi = false;
 
         public bool porsiyonFormVisible = false;
 
@@ -88,13 +88,18 @@ namespace ROPv1
             }
             //yetkilerine göre işlemlere izin verme
 
-            //if (Helper.VerifyHash("false", "SHA512", infoKullanici[kullaniciYeri].UIY[4]))
             if (PasswordHash.ValidatePassword("false", infoKullanici[kullaniciYeri].UIY[4]))
             {
                 buttonUrunIkram.Enabled = false;
                 buttonUrunIptal.Enabled = false;
                 iptalIkram = false;
             }
+
+            if (PasswordHash.ValidatePassword("true", infoKullanici[kullaniciYeri].UIY[3]))
+                adisyonDegistirebilirMi = true;
+
+            if (PasswordHash.ValidatePassword("true", infoKullanici[kullaniciYeri].UIY[0]))
+                satisYapabilirMi = true;
 
             MasaAdi = masaninAdi;
             labelMasa.Text = "Masa: " + MasaAdi;
@@ -544,6 +549,12 @@ namespace ROPv1
                 }
             }
             return 0;
+        }
+
+        public void masaDegisimHatasi(string mesaj)
+        {
+            KontrolFormu dialog = new KontrolFormu(mesaj, false);
+            dialog.Show();
         }
 
         //Bu form kapandığında masanın son durumunu düzenlemesi için masa formunu uyar
@@ -2152,7 +2163,7 @@ namespace ROPv1
             if (listUrunFiyat.Items.Count > 0)
             {
                 //ödendiğinde sql de ödendi flagini 1 yap 
-                hesapForm = new HesapFormu(this, listUrunFiyat, MasaAdi, hangiDepartman.departmanAdi, siparisiKimGirdi, iptalIkram);
+                hesapForm = new HesapFormu(this, listUrunFiyat, MasaAdi, hangiDepartman.departmanAdi, siparisiKimGirdi, iptalIkram, adisyonDegistirebilirMi, satisYapabilirMi);
                 hesapForm.ShowDialog();
             }
         }

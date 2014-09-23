@@ -51,10 +51,10 @@ namespace ROPv1
 
         public YaziciFormu yaziciForm = null;
 
-        bool indirimYetkisi = true;
+        bool indirimYetkisi = true, adisyonDegistirebilirMi, satisYapabilirMi;
 
 
-        public HesapFormu(SiparisMenuFormu menuFormu, MyListView siparisListView, string masaAdi, string departmanAdi, string siparisiGirenKisi, bool indirimYetkisi)
+        public HesapFormu(SiparisMenuFormu menuFormu, MyListView siparisListView, string masaAdi, string departmanAdi, string siparisiGirenKisi, bool indirimYetkisi, bool adisyonDegistirebilirMi, bool satisYapabilirMi)
         {
             InitializeComponent();
 
@@ -64,6 +64,8 @@ namespace ROPv1
             this.listHesaptakiler = siparisListView;
             this.siparisiGirenKisi = siparisiGirenKisi;
             this.indirimYetkisi = indirimYetkisi;
+            this.adisyonDegistirebilirMi = adisyonDegistirebilirMi;
+            this.satisYapabilirMi = satisYapabilirMi;
         }
 
         decimal KesiriDecimalYap(string kesir) // verilen kesirli stringi decimale çevirerek return eder
@@ -302,9 +304,12 @@ namespace ROPv1
                 labelKalanText.Text = "Kalan:";
                 ((Label)sender).ForeColor = Color.White;
                 labelKalanText.ForeColor = Color.White;
-                buttonKart.Enabled = true;
-                buttonNakit.Enabled = true;
-                buttonYemekFisi.Enabled = true;
+                if (satisYapabilirMi)
+                {
+                    buttonKart.Enabled = true;
+                    buttonNakit.Enabled = true;
+                    buttonYemekFisi.Enabled = true;
+                }
             }
         }
 
@@ -610,6 +615,16 @@ namespace ROPv1
         //form load
         private void HesapFormu_Load(object sender, EventArgs e)
         {
+            if (!adisyonDegistirebilirMi)
+                buttonHesapDuzenle.Enabled = false;
+
+            if (!satisYapabilirMi)
+            {
+                buttonNakit.Enabled = false;
+                buttonKart.Enabled = false;
+                buttonYemekFisi.Enabled = false;
+            }
+
             if (!indirimYetkisi)
             {
                 buttonIndirim.Enabled = false;
@@ -1654,6 +1669,12 @@ namespace ROPv1
 
         private void buttonTamam_Click(object sender, EventArgs e)
         {
+            if(!satisYapabilirMi)
+            {
+                this.Close();
+                return;
+            }
+
             if (buttonNakit.Enabled == false)
             {
                 for (int i = menuFormu.listUrunFiyat.Items.Count - 1; i > -1; i--)
@@ -2031,7 +2052,8 @@ namespace ROPv1
         {
             if(Convert.ToDecimal(labelOdenenToplam.Text) > 0)
             {
-                buttonHesapDuzenle.Enabled = true;
+                if(adisyonDegistirebilirMi)
+                    buttonHesapDuzenle.Enabled = true;
             }
             else
             {

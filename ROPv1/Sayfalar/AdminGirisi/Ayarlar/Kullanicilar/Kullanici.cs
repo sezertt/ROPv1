@@ -38,7 +38,6 @@ namespace ROPv1
 
                 for (int j = 0; j < 5; j++)
                 {
-                    //if (Helper.VerifyHash("true", "SHA512", kullaniciListesi[i].UIY[j]))
                     if (PasswordHash.ValidatePassword("true", kullaniciListesi[i].UIY[j]))
                     {
                         treeYetkiler.Nodes[j].Checked = true;

@@ -155,10 +155,10 @@
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Controls.Add(this.exitButton);
-            this.flowLayoutPanel1.Controls.Add(this.anketCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.reportCheckBox);
-            this.flowLayoutPanel1.Controls.Add(this.stokCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.ayarCheckBox);
+            this.flowLayoutPanel1.Controls.Add(this.stokCheckBox);
+            this.flowLayoutPanel1.Controls.Add(this.anketCheckBox);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(439, 7);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -194,7 +194,7 @@
             this.anketCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.anketCheckBox.Image = global::ROPv1.Properties.Resources.anket;
             this.anketCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.anketCheckBox.Location = new System.Drawing.Point(561, 3);
+            this.anketCheckBox.Location = new System.Drawing.Point(3, 3);
             this.anketCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
             this.anketCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
             this.anketCheckBox.Name = "anketCheckBox";
@@ -215,7 +215,7 @@
             this.reportCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.reportCheckBox.Image = global::ROPv1.Properties.Resources.reportscolor;
             this.reportCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.reportCheckBox.Location = new System.Drawing.Point(375, 3);
+            this.reportCheckBox.Location = new System.Drawing.Point(561, 3);
             this.reportCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
             this.reportCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
             this.reportCheckBox.Name = "reportCheckBox";
@@ -257,7 +257,7 @@
             this.ayarCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingscolor;
             this.ayarCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ayarCheckBox.Location = new System.Drawing.Point(3, 3);
+            this.ayarCheckBox.Location = new System.Drawing.Point(375, 3);
             this.ayarCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
             this.ayarCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
             this.ayarCheckBox.Name = "ayarCheckBox";

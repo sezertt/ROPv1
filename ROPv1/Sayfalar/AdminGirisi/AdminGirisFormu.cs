@@ -25,10 +25,12 @@ namespace ROPv1
         PinKoduFormu pinForm;
         string ayarlaraGirenKisi, odemeyiDegistirenKisi;
         AdisyonGoruntuleme adisyonForm;
+        bool adisyonDegistirebilirMi = false;
 
-        public AdminGirisFormu(GirisEkrani girisForm)
+        public AdminGirisFormu(GirisEkrani girisForm, bool adisyonDegistirebilirMi)
         {
             this.girisForm = girisForm;
+            this.adisyonDegistirebilirMi = adisyonDegistirebilirMi;
             InitializeComponent();
         }
 
@@ -382,7 +384,7 @@ namespace ROPv1
                     }
                 }
                 //yetkilerine göre işlemlere izin verme
-                for (int i = 0; i < 4; i++)
+                for (int i = 1; i < 3; i++)
                 {
                     if (PasswordHash.ValidatePassword("false", infoKullanici[kullaniciAdi].UIY[i]))
                     {
@@ -441,7 +443,7 @@ namespace ROPv1
             {
                 if (adisyonForm.IsDisposed)
                 {
-                    adisyonForm = new AdisyonGoruntuleme(odemeyiDegistirenKisi);
+                    adisyonForm = new AdisyonGoruntuleme(odemeyiDegistirenKisi, adisyonDegistirebilirMi);
                     adisyonForm.Show();
                 }
                 else
@@ -451,7 +453,7 @@ namespace ROPv1
             }
             else
             {
-                adisyonForm = new AdisyonGoruntuleme(odemeyiDegistirenKisi);
+                adisyonForm = new AdisyonGoruntuleme(odemeyiDegistirenKisi, adisyonDegistirebilirMi);
                 adisyonForm.Show();
             }
         }

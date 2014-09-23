@@ -34,9 +34,9 @@
             GlacialComponents.Controls.GLColumn glColumn3 = new GlacialComponents.Controls.GLColumn();
             this.buttonSaveNewProduct = new System.Windows.Forms.Button();
             this.glacialListUrunler = new GlacialComponents.Controls.GlacialList();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.labelUrunSayisiYazisi = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.SuspendLayout();
             // 
             // buttonSaveNewProduct
@@ -129,11 +129,6 @@
             this.glacialListUrunler.Text = "glacialList1";
             this.glacialListUrunler.SizeChanged += new System.EventHandler(this.glacialListUrunler_SizeChanged);
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
             // labelUrunSayisiYazisi
             // 
             this.labelUrunSayisiYazisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -160,6 +155,11 @@
             this.label1.Text = "Mutfak Bildirimi = Ürün sipariş edildiğinde mutfak yazıcısından bildirim alınması" +
     "";
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 26);
+            // 
             // UrunlerTusu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,9 +181,9 @@
 
         private System.Windows.Forms.Button buttonSaveNewProduct;
         private GlacialComponents.Controls.GlacialList glacialListUrunler;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Label labelUrunSayisiYazisi;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 
 
     }

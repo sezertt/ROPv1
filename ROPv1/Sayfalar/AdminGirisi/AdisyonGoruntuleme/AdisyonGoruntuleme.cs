@@ -21,14 +21,14 @@ namespace ROPv1
     public partial class AdisyonGoruntuleme : Form
     {
         public YaziciFormu yaziciForm = null;
-        bool hangiTakvimFocuslu = true, ilkAramaEventiReturnEt = true;
+        bool hangiTakvimFocuslu = true, ilkAramaEventiReturnEt = true, adisyonDegistirebilirMi = false;
         int sonQuery = 0, toplamVeriSayisi = 0;
         string baslangic, bitis, siparisiGirenKisi;
 
-        public AdisyonGoruntuleme(string siparisiGirenKisi)
+        public AdisyonGoruntuleme(string siparisiGirenKisi, bool adisyonDegistirebilirMi)
         {
             this.siparisiGirenKisi = siparisiGirenKisi;
-
+            this.adisyonDegistirebilirMi = adisyonDegistirebilirMi;
             InitializeComponent();
         }
 
@@ -125,6 +125,11 @@ namespace ROPv1
             dateBitis.MaxDate = DateTime.Today;
             dateBaslangic.MaxDate = DateTime.Today;
             comboAdisyonAyar.SelectedIndex = 0;
+
+            if (!adisyonDegistirebilirMi)
+            {
+                buttonHesapDuzenle.Enabled = false;
+            }                    
         }
 
         private void comboAdisyonAyar_Leave(object sender, EventArgs e)
@@ -564,7 +569,10 @@ namespace ROPv1
                 }
   
                 buttonYazdir.Enabled = true;
-                buttonHesapDuzenle.Enabled = true;
+                if (adisyonDegistirebilirMi)
+                {
+                    buttonHesapDuzenle.Enabled = true;
+                }   
             }
 
             labelToplamHesap.Text = adisyonHesabi.ToString("0.00");
