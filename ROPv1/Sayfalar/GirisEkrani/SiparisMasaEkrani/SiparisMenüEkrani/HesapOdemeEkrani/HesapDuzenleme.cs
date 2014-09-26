@@ -169,6 +169,9 @@ namespace ROPv1
 
         private void textBoxUrun5_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == 22)
+                e.Handled = true;
+
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
             {
                 e.Handled = true;

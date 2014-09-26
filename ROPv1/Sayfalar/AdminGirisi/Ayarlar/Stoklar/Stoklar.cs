@@ -407,6 +407,9 @@ namespace ROPv1
         //ürünün miktarı girilirken sadece sayı ve 1 , girilebilsin
         private void textBoxUrunMiktari_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == 22)
+                e.Handled = true;
+
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
             {
                 e.Handled = true;
@@ -541,6 +544,9 @@ namespace ROPv1
         //ürünün miktarı girilirken sadece sayı ve 1 , girilebilsin
         private void txtStogaEkle_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == 22)
+                e.Handled = true;
+
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
             {
                 e.Handled = true;
@@ -566,6 +572,9 @@ namespace ROPv1
 
         private void textboxUrunAdi_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == 22)
+                e.Handled = true;
+
             if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == '*' || e.KeyChar == '-')
             {
                 e.Handled = true;

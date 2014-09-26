@@ -39,7 +39,6 @@ namespace ROPv1
         private void button_Click(object sender, EventArgs e)
         {
             menuForm.porsiyonFormKapaniyor(((Button)sender).Text);
-            menuForm.porsiyonFormVisible = false;
             this.Close();
         }
     }

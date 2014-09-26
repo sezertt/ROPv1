@@ -480,12 +480,12 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "Porsiyon";
-            this.columnHeader4.Width = 70;
+            this.columnHeader4.Width = 90;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "Siparişler";
-            this.columnHeader2.Width = 235;
+            this.columnHeader2.Width = 215;
             // 
             // columnHeader3
             // 

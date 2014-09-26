@@ -10,8 +10,10 @@ namespace ROPv1
     public class KategorilerineGoreUrunler
     {
         public List<string> urunAdi;
-        public List<string> urunFiyati;
+        public List<string> urunPorsiyonFiyati;
+        public List<string> urunKiloFiyati;
         public List<string> urunKategorisi;
+        public List<string> urunTuru;
         public List<string> urunAciklamasi;
         public List<bool> urunMutfagaBildirilmeliMi;
         public List<int> urunPorsiyonSinifi; // 0 ve diğerleri ürün sadece tek porsiyon olarak satılıyor --- 1 ürün yarım porsiyon olarak satılıyor --- 2 çeyrek
@@ -22,8 +24,10 @@ namespace ROPv1
         public KategorilerineGoreUrunler()
         {
             urunAdi = new List<string>();
-            urunFiyati = new List<string>();
+            urunPorsiyonFiyati = new List<string>();
+            urunKiloFiyati = new List<string>();
             urunKategorisi = new List<string>();
+            urunTuru = new List<string>();
             urunAciklamasi = new List<string>();
             urunMutfagaBildirilmeliMi = new List<bool>();
             urunPorsiyonSinifi = new List<int>();

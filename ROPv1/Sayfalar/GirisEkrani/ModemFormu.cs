@@ -70,6 +70,9 @@ namespace ROPv1
 
         private void textboxSSID_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == 22)
+                e.Handled = true;
+
             if (e.KeyChar == '<' || e.KeyChar == '>' || e.KeyChar == '&' || e.KeyChar == '=' || e.KeyChar == '*' || e.KeyChar == '-')
             {
                 e.Handled = true;

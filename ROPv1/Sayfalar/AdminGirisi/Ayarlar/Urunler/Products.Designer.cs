@@ -33,10 +33,9 @@
             this.buttonResim = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.comboKDV = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.comboNewKategoriName = new System.Windows.Forms.ComboBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.textboxUrunFiyat = new System.Windows.Forms.TextBox();
+            this.textboxUrunPorsiyonFiyat = new System.Windows.Forms.TextBox();
             this.textboxUrunName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -51,6 +50,11 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.textBoxUrunAciklamasi = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textboxUrunKiloFiyat = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboTur = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.newProductForm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,12 +62,16 @@
             // 
             this.newProductForm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.newProductForm.BackColor = System.Drawing.Color.White;
+            this.newProductForm.Controls.Add(this.label4);
+            this.newProductForm.Controls.Add(this.comboTur);
+            this.newProductForm.Controls.Add(this.textboxUrunKiloFiyat);
+            this.newProductForm.Controls.Add(this.label3);
             this.newProductForm.Controls.Add(this.buttonResim);
             this.newProductForm.Controls.Add(this.label2);
             this.newProductForm.Controls.Add(this.comboKDV);
             this.newProductForm.Controls.Add(this.label1);
             this.newProductForm.Controls.Add(this.comboNewKategoriName);
-            this.newProductForm.Controls.Add(this.textboxUrunFiyat);
+            this.newProductForm.Controls.Add(this.textboxUrunPorsiyonFiyat);
             this.newProductForm.Controls.Add(this.textboxUrunName);
             this.newProductForm.Controls.Add(this.label7);
             this.newProductForm.Controls.Add(this.label5);
@@ -86,7 +94,7 @@
             this.buttonResim.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonResim.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonResim.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonResim.Location = new System.Drawing.Point(8, 238);
+            this.buttonResim.Location = new System.Drawing.Point(8, 244);
             this.buttonResim.Name = "buttonResim";
             this.buttonResim.Size = new System.Drawing.Size(305, 38);
             this.buttonResim.TabIndex = 45;
@@ -98,7 +106,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(4, 202);
+            this.label2.Location = new System.Drawing.Point(4, 210);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(90, 24);
             this.label2.TabIndex = 44;
@@ -114,24 +122,12 @@
             "1",
             "8",
             "18"});
-            this.comboKDV.Location = new System.Drawing.Point(100, 200);
+            this.comboKDV.Location = new System.Drawing.Point(100, 208);
             this.comboKDV.Name = "comboKDV";
             this.comboKDV.Size = new System.Drawing.Size(213, 32);
             this.comboKDV.TabIndex = 43;
             this.comboKDV.Click += new System.EventHandler(this.showMenu);
             this.comboKDV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label1.Location = new System.Drawing.Point(4, 135);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(112, 24);
-            this.label1.TabIndex = 42;
-            this.label1.Text = "Kategorisi";
             // 
             // comboNewKategoriName
             // 
@@ -141,10 +137,10 @@
             this.comboNewKategoriName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.comboNewKategoriName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.comboNewKategoriName.FormattingEnabled = true;
-            this.comboNewKategoriName.Location = new System.Drawing.Point(8, 162);
+            this.comboNewKategoriName.Location = new System.Drawing.Point(118, 171);
             this.comboNewKategoriName.MaxDropDownItems = 20;
             this.comboNewKategoriName.Name = "comboNewKategoriName";
-            this.comboNewKategoriName.Size = new System.Drawing.Size(305, 32);
+            this.comboNewKategoriName.Size = new System.Drawing.Size(195, 32);
             this.comboNewKategoriName.TabIndex = 4;
             this.comboNewKategoriName.Click += new System.EventHandler(this.showMenu);
             this.comboNewKategoriName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
@@ -154,19 +150,19 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // textboxUrunFiyat
+            // textboxUrunPorsiyonFiyat
             // 
-            this.textboxUrunFiyat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textboxUrunFiyat.ContextMenuStrip = this.contextMenuStrip1;
-            this.textboxUrunFiyat.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.textboxUrunFiyat.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textboxUrunFiyat.Location = new System.Drawing.Point(187, 95);
-            this.textboxUrunFiyat.Name = "textboxUrunFiyat";
-            this.textboxUrunFiyat.Size = new System.Drawing.Size(126, 32);
-            this.textboxUrunFiyat.TabIndex = 3;
-            this.textboxUrunFiyat.Enter += new System.EventHandler(this.fiyatGirilcek);
-            this.textboxUrunFiyat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPressedOnPriceText);
-            this.textboxUrunFiyat.Leave += new System.EventHandler(this.fiyatGirildi);
+            this.textboxUrunPorsiyonFiyat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxUrunPorsiyonFiyat.ContextMenuStrip = this.contextMenuStrip1;
+            this.textboxUrunPorsiyonFiyat.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.textboxUrunPorsiyonFiyat.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.textboxUrunPorsiyonFiyat.Location = new System.Drawing.Point(187, 97);
+            this.textboxUrunPorsiyonFiyat.Name = "textboxUrunPorsiyonFiyat";
+            this.textboxUrunPorsiyonFiyat.Size = new System.Drawing.Size(126, 32);
+            this.textboxUrunPorsiyonFiyat.TabIndex = 3;
+            this.textboxUrunPorsiyonFiyat.Enter += new System.EventHandler(this.fiyatGirilcek);
+            this.textboxUrunPorsiyonFiyat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPressedOnPriceText);
+            this.textboxUrunPorsiyonFiyat.Leave += new System.EventHandler(this.fiyatGirildi);
             // 
             // textboxUrunName
             // 
@@ -174,10 +170,10 @@
             this.textboxUrunName.ContextMenuStrip = this.contextMenuStrip1;
             this.textboxUrunName.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.textboxUrunName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.textboxUrunName.Location = new System.Drawing.Point(8, 57);
+            this.textboxUrunName.Location = new System.Drawing.Point(52, 22);
             this.textboxUrunName.MaxLength = 30;
             this.textboxUrunName.Name = "textboxUrunName";
-            this.textboxUrunName.Size = new System.Drawing.Size(305, 32);
+            this.textboxUrunName.Size = new System.Drawing.Size(261, 32);
             this.textboxUrunName.TabIndex = 2;
             this.textboxUrunName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxUrunName_KeyPress);
             // 
@@ -187,7 +183,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label7.Location = new System.Drawing.Point(4, 98);
+            this.label7.Location = new System.Drawing.Point(4, 100);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(183, 24);
             this.label7.TabIndex = 25;
@@ -199,11 +195,11 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label5.Location = new System.Drawing.Point(4, 30);
+            this.label5.Location = new System.Drawing.Point(4, 25);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(103, 24);
+            this.label5.Size = new System.Drawing.Size(50, 24);
             this.label5.TabIndex = 19;
-            this.label5.Text = "Ürün Adı:";
+            this.label5.Text = "Adı:";
             // 
             // buttonSaveNewProduct
             // 
@@ -213,7 +209,7 @@
             this.buttonSaveNewProduct.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSaveNewProduct.Image = global::ROPv1.Properties.Resources.icon;
             this.buttonSaveNewProduct.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSaveNewProduct.Location = new System.Drawing.Point(203, 282);
+            this.buttonSaveNewProduct.Location = new System.Drawing.Point(203, 284);
             this.buttonSaveNewProduct.Name = "buttonSaveNewProduct";
             this.buttonSaveNewProduct.Size = new System.Drawing.Size(110, 45);
             this.buttonSaveNewProduct.TabIndex = 6;
@@ -230,7 +226,7 @@
             this.buttonDeleteProduct.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonDeleteProduct.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonDeleteProduct.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDeleteProduct.Location = new System.Drawing.Point(8, 282);
+            this.buttonDeleteProduct.Location = new System.Drawing.Point(8, 284);
             this.buttonDeleteProduct.Name = "buttonDeleteProduct";
             this.buttonDeleteProduct.Size = new System.Drawing.Size(110, 45);
             this.buttonDeleteProduct.TabIndex = 5;
@@ -247,7 +243,7 @@
             this.buttonCancel.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonCancel.Image = global::ROPv1.Properties.Resources.delete;
             this.buttonCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonCancel.Location = new System.Drawing.Point(8, 282);
+            this.buttonCancel.Location = new System.Drawing.Point(8, 284);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(110, 45);
             this.buttonCancel.TabIndex = 8;
@@ -378,6 +374,77 @@
             this.textBoxUrunAciklamasi.Text = "Ürün Açıklaması";
             this.textBoxUrunAciklamasi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textboxUrunName_KeyPress);
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label1.Location = new System.Drawing.Point(4, 174);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(112, 24);
+            this.label1.TabIndex = 42;
+            this.label1.Text = "Kategorisi";
+            // 
+            // textboxUrunKiloFiyat
+            // 
+            this.textboxUrunKiloFiyat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textboxUrunKiloFiyat.ContextMenuStrip = this.contextMenuStrip1;
+            this.textboxUrunKiloFiyat.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.textboxUrunKiloFiyat.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.textboxUrunKiloFiyat.Location = new System.Drawing.Point(187, 134);
+            this.textboxUrunKiloFiyat.Name = "textboxUrunKiloFiyat";
+            this.textboxUrunKiloFiyat.Size = new System.Drawing.Size(126, 32);
+            this.textboxUrunKiloFiyat.TabIndex = 46;
+            this.textboxUrunKiloFiyat.Enter += new System.EventHandler(this.fiyatGirilcek);
+            this.textboxUrunKiloFiyat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.keyPressedOnPriceText);
+            this.textboxUrunKiloFiyat.Leave += new System.EventHandler(this.fiyatGirildi);
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label3.Location = new System.Drawing.Point(4, 137);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(184, 24);
+            this.label3.TabIndex = 47;
+            this.label3.Text = "1 Kilogram Fiyatı:";
+            // 
+            // comboTur
+            // 
+            this.comboTur.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboTur.ContextMenuStrip = this.contextMenuStrip1;
+            this.comboTur.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.comboTur.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.comboTur.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.comboTur.FormattingEnabled = true;
+            this.comboTur.Items.AddRange(new object[] {
+            "Porsiyon",
+            "Kilogram",
+            "Porsiyon & Kilogram"});
+            this.comboTur.Location = new System.Drawing.Point(69, 59);
+            this.comboTur.MaxDropDownItems = 20;
+            this.comboTur.Name = "comboTur";
+            this.comboTur.Size = new System.Drawing.Size(244, 32);
+            this.comboTur.TabIndex = 48;
+            this.comboTur.SelectedIndexChanged += new System.EventHandler(this.comboTur_SelectedIndexChanged);
+            this.comboTur.Click += new System.EventHandler(this.showMenu);
+            this.comboTur.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxKeyPressed);
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label4.Location = new System.Drawing.Point(4, 62);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(64, 24);
+            this.label4.TabIndex = 49;
+            this.label4.Text = "Türü:";
+            // 
             // Products
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -412,10 +479,9 @@
         private KeyboardClassLibrary.Keyboardcontrol keyboardcontrol1;
         private System.Windows.Forms.Button buttonDeleteProduct;
         private System.Windows.Forms.Button buttonAddNewProduct;
-        private System.Windows.Forms.TextBox textboxUrunFiyat;
+        private System.Windows.Forms.TextBox textboxUrunPorsiyonFiyat;
         private System.Windows.Forms.TreeView treeUrunAdi;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboNewKategoriName;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Label labelUrunSayisi;
@@ -426,6 +492,11 @@
         private System.Windows.Forms.ComboBox comboKDV;
         private System.Windows.Forms.TextBox textBoxUrunAciklamasi;
         private System.Windows.Forms.Button buttonResim;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox comboTur;
+        private System.Windows.Forms.TextBox textboxUrunKiloFiyat;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label1;
 
     }
 }

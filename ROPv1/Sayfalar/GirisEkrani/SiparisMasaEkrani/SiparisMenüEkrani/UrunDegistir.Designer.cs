@@ -171,6 +171,7 @@
             // textBoxUrun5
             // 
             this.textBoxUrun5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxUrun5.ContextMenuStrip = this.contextMenuStrip1;
             this.textBoxUrun5.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold);
             this.textBoxUrun5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxUrun5.Location = new System.Drawing.Point(395, 167);
@@ -186,6 +187,7 @@
             // textBoxUrun4
             // 
             this.textBoxUrun4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxUrun4.ContextMenuStrip = this.contextMenuStrip1;
             this.textBoxUrun4.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold);
             this.textBoxUrun4.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxUrun4.Location = new System.Drawing.Point(395, 127);
@@ -201,6 +203,7 @@
             // textBoxUrun3
             // 
             this.textBoxUrun3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxUrun3.ContextMenuStrip = this.contextMenuStrip1;
             this.textBoxUrun3.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold);
             this.textBoxUrun3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxUrun3.Location = new System.Drawing.Point(395, 90);
@@ -216,6 +219,7 @@
             // textBoxUrun2
             // 
             this.textBoxUrun2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxUrun2.ContextMenuStrip = this.contextMenuStrip1;
             this.textBoxUrun2.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold);
             this.textBoxUrun2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxUrun2.Location = new System.Drawing.Point(395, 52);
@@ -231,6 +235,7 @@
             // textBoxUrun1
             // 
             this.textBoxUrun1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxUrun1.ContextMenuStrip = this.contextMenuStrip1;
             this.textBoxUrun1.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold);
             this.textBoxUrun1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.textBoxUrun1.Location = new System.Drawing.Point(395, 14);

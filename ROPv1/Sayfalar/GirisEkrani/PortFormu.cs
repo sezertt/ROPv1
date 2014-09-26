@@ -61,6 +61,9 @@ namespace ROPv1
 
         private void textBoxIP_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == 22)
+                e.Handled = true;
+
             if (e.KeyChar == ',')
                 e.KeyChar = '.';
         }

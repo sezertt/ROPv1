@@ -602,15 +602,15 @@ namespace ROPv1
 
         #region Serverdan Clientlara
 
-        public void serverdanSiparisIkramVeyaIptal(string masa, string departman, string komut, string miktar, string yemekAdi, string dusulecekDeger, string ikramYeniMiEskiMi, string porsiyon)
+        public void serverdanSiparisIkramVeyaIptal(string masa, string departman, string komut, string miktar, string yemekAdi, string dusulecekDeger, string ikramYeniMiEskiMi, string porsiyon, string tur)
         {
             if (ikramYeniMiEskiMi == null)
             {
-                tumKullanicilaraMesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDeger + "&porsiyon=" + porsiyon);
+                tumKullanicilaraMesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDeger + "&porsiyon=" + porsiyon + "&tur=" + tur);
             }
             else
             {
-                tumKullanicilaraMesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDeger + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi + "&porsiyon=" + porsiyon);
+                tumKullanicilaraMesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&dusulecekDeger=" + dusulecekDeger + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi + "&porsiyon=" + porsiyon + "&tur=" + tur);
             }
         }
 
@@ -699,10 +699,10 @@ namespace ROPv1
                 switch (parametreler["komut"])
                 {
                     case "siparis":
-                        komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["porsiyon"], parametreler["ilkSiparis"]);
+                        komut_siparis(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["porsiyon"], parametreler["tur"], parametreler["ilkSiparis"]);
                         break;
                     case "iptal": // serverdan iptal isteğinin sonucu geldiğinde
-                        komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["ikramYeniMiEskiMi"], parametreler["porsiyon"]);
+                        komut_iptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["ikramYeniMiEskiMi"], parametreler["porsiyon"], parametreler["tur"]);
                         break;
                     case "hesapOdeniyor":
                         komut_hesapOdeniyor(parametreler["masa"], parametreler["departmanAdi"]);
@@ -715,18 +715,18 @@ namespace ROPv1
                         komut_masaDegisti(parametreler["masa"], parametreler["departmanAdi"], parametreler["yeniMasa"], parametreler["yeniDepartmanAdi"], parametreler["komut"]);
                         break;
                     case "ikram": // serverdan ikram isteğinin sonucu geldiğinde
-                        komut_ikram(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["porsiyon"]);
+                        komut_ikram(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["porsiyon"], parametreler["tur"]);
                         break;
                     case "ikramIptal": // serverdan ikram iptal isteğinin sonucu geldiğinde
-                        komut_ikramIptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["ikramYeniMiEskiMi"], parametreler["porsiyon"]);
+                        komut_ikramIptal(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["dusulecekDeger"], parametreler["ikramYeniMiEskiMi"], parametreler["porsiyon"], parametreler["tur"]);
                         break;
-                    case "BulunanYazicilar": 
+                    case "BulunanYazicilar":
                         komut_yazicilarGeldi(parametreler["adisyonYazicilari"], parametreler["digerYazicilar"], parametreler["garson"], parametreler["acilisZamani"]);
                         break;
                     case "giris": //Yolladığımız giris mesajına karşılık gelen mesaj
                         komut_giris(parametreler["sonuc"]);
                         break;
-                    case "IndirimOnay": 
+                    case "IndirimOnay":
                         komut_IndirimOnay(parametreler["odemeTipi"], parametreler["odemeMiktari"]);
                         break;
                     case "OdemeOnay":
@@ -738,7 +738,7 @@ namespace ROPv1
                     case "LoadSiparis": // serverdan siparis bilgileri geldiğinde
                         komut_loadSiparis(parametreler["siparisBilgileri"]);
                         break;
-                    case "OdenenleriGonder": 
+                    case "OdenenleriGonder":
                         komut_OdenenleriGonder(parametreler["siparisBilgileri"], parametreler["odemeBilgileri"]);
                         break;
                     case "toplumesaj": //tüm gruba gelen mesaj - server kapandığında(şimdilik)
@@ -791,7 +791,7 @@ namespace ROPv1
                         dialog2.ShowDialog();
                         Environment.Exit(7);
                         break;
-                    
+
                     //tablet için olan case ler
                     case "Default":
                     case "OdemeBilgileriTablet":
@@ -810,7 +810,7 @@ namespace ROPv1
                     case "TemizlikGoruldu":
                     case "hesapGeliyor":
                     case "hesapIslemde":
-                    case "departmanMasaSecimiIcin":          
+                    case "departmanMasaSecimiIcin":
                     case "urunuTasiTablet":
                     case "departmanMasaTasimaIcin":
                     case "OdemeIndirimOnayTablet":
@@ -869,21 +869,21 @@ namespace ROPv1
         }
 
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
-        public void menuFormundanServeraSiparisYolla(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, string ikramYeniMiEskiMi, string porsiyon, string iptalNedeni = null)
+        public void menuFormundanServeraSiparisYolla(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, string ikramYeniMiEskiMi, string porsiyon, string tur, string iptalNedeni = null)
         {
             if (iptalNedeni == null)
             {
                 if (ikramYeniMiEskiMi == null)
-                    client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&porsiyon=" + porsiyon);
-                else 
-                    client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi + "&porsiyon=" + porsiyon);
+                    client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&porsiyon=" + porsiyon + "&tur=" + tur);
+                else
+                    client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi + "&porsiyon=" + porsiyon + "&tur=" + tur);
             }
             else
             {
                 if (ikramYeniMiEskiMi == null)
-                    client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&porsiyon=" + porsiyon + "&iptalNedeni=" + iptalNedeni);
+                    client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&porsiyon=" + porsiyon + "&tur=" + tur + "&iptalNedeni=" + iptalNedeni);
                 else
-                    client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi + "&porsiyon=" + porsiyon + "&iptalNedeni=" + iptalNedeni);
+                    client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&ikramYeniMiEskiMi=" + ikramYeniMiEskiMi + "&porsiyon=" + porsiyon + "&tur=" + tur + "&iptalNedeni=" + iptalNedeni);
             }
         }
 
@@ -900,9 +900,9 @@ namespace ROPv1
         }
 
         /// Masaformu vasıtasıyla sunucuya bir mesaj yollamak içindir.        
-        public void serveraSiparis(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, int sonSiparisMi, string porsiyon, string ilkSiparis = "")
+        public void serveraSiparis(string masa, string departman, string komut, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDeger, string adisyonNotu, int sonSiparisMi, string porsiyon, string tur, string ilkSiparis = "")
         {
-            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&sonSiparisMi=" + sonSiparisMi + "&porsiyon=" + porsiyon + "&ilkSiparis=" + ilkSiparis);
+            client.MesajYolla("komut=" + komut + "&masa=" + masa + "&departmanAdi=" + departman + "&miktar=" + miktar + "&yemekAdi=" + yemekAdi + "&siparisiGirenKisi=" + siparisiGirenKisi + "&dusulecekDeger=" + dusulecekDeger + "&adisyonNotu=" + adisyonNotu + "&sonSiparisMi=" + sonSiparisMi + "&porsiyon=" + porsiyon + "&tur=" + tur + "&ilkSiparis=" + ilkSiparis);
         }
 
         public void serveraNotuYolla(string masa, string departman, string komut, string adisyonNotu)
@@ -1116,7 +1116,7 @@ namespace ROPv1
             { }
         }
 
-        public void komut_masaGirilebilirMi(string cevap,bool masaGirilebilirMi = false)
+        public void komut_masaGirilebilirMi(string cevap, bool masaGirilebilirMi = false)
         {
             if (cevap == "True")
             {
@@ -1377,30 +1377,39 @@ namespace ROPv1
             }
         }
 
-        private void komut_iptal(string masa, string departmanAdi, string miktar, string yemekAdi, string dusulecekDeger, string ikramYeniMiEskiMi, string porsiyon)
+        private void komut_iptal(string masa, string departmanAdi, string miktar, string yemekAdi, string dusulecekDeger, string ikramYeniMiEskiMi, string porsiyon, string tur)
         {
             // Eğer clientta da aynı departmanın aynı masası açıksa mesajı yönlendirelim
             if (siparisMenuForm != null && restoranListesi[hangiDepartmanButonu].departmanAdi == departmanAdi && hangiMasaButonunaBasildi.Text == masa)
             {
-                siparisMenuForm.iptalGeldi(miktar, yemekAdi, dusulecekDeger, ikramYeniMiEskiMi, porsiyon);
+                if (tur == "P")
+                    siparisMenuForm.iptalGeldi(miktar, yemekAdi, dusulecekDeger, ikramYeniMiEskiMi, porsiyon, false);
+                else
+                    siparisMenuForm.iptalGeldi(miktar, yemekAdi, dusulecekDeger, ikramYeniMiEskiMi, porsiyon, true);
             }
         }
 
-        private void komut_ikram(string masa, string departmanAdi, string miktar, string yemekAdi, string dusulecekDeger, string porsiyon)
+        private void komut_ikram(string masa, string departmanAdi, string miktar, string yemekAdi, string dusulecekDeger, string porsiyon, string tur)
         {
             // Eğer clientta da aynı departmanın aynı masası açıksa mesajı yönlendirelim
             if (siparisMenuForm != null && restoranListesi[hangiDepartmanButonu].departmanAdi == departmanAdi && hangiMasaButonunaBasildi.Text == masa)
             {
-                siparisMenuForm.ikramGeldi(miktar, yemekAdi, dusulecekDeger, porsiyon);
+                if (tur == "P")
+                    siparisMenuForm.ikramGeldi(miktar, yemekAdi, dusulecekDeger, porsiyon, false);
+                else
+                    siparisMenuForm.ikramGeldi(miktar, yemekAdi, dusulecekDeger, porsiyon, true);
             }
         }
 
-        private void komut_ikramIptal(string masa, string departmanAdi, string miktar, string yemekAdi, string dusulecekDeger, string ikramYeniMiEskiMi, string porsiyon)
+        private void komut_ikramIptal(string masa, string departmanAdi, string miktar, string yemekAdi, string dusulecekDeger, string ikramYeniMiEskiMi, string porsiyon, string tur)
         {
             // Eğer clientta da aynı departmanın aynı masası açıksa mesajı yönlendirelim
             if (siparisMenuForm != null && restoranListesi[hangiDepartmanButonu].departmanAdi == departmanAdi && hangiMasaButonunaBasildi.Text == masa)
             {
-                siparisMenuForm.ikramIptaliGeldi(miktar, yemekAdi, dusulecekDeger, ikramYeniMiEskiMi, porsiyon);
+                if (tur == "P")
+                    siparisMenuForm.ikramIptaliGeldi(miktar, yemekAdi, dusulecekDeger, ikramYeniMiEskiMi, porsiyon, false);
+                else
+                    siparisMenuForm.ikramIptaliGeldi(miktar, yemekAdi, dusulecekDeger, ikramYeniMiEskiMi, porsiyon, true);
             }
         }
 
@@ -1488,12 +1497,15 @@ namespace ROPv1
             }
         }
 
-        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string fiyat, string porsiyon, string ilkSiparisMi = "")
+        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string fiyat, string porsiyon, string tur, string ilkSiparisMi = "")
         {
             // Eğer clientta da aynı departmanın aynı masası açıksa mesajı yönlendirelim
             if (siparisMenuForm != null && restoranListesi[hangiDepartmanButonu].departmanAdi == departmanAdi && hangiMasaButonunaBasildi.Text == masa)
             {
-                siparisMenuForm.siparisOnayiGeldi(miktar, yemekAdi, fiyat, porsiyon, ilkSiparisMi);
+                if (tur == "P")
+                    siparisMenuForm.siparisOnayiGeldi(miktar, yemekAdi, fiyat, porsiyon, false, ilkSiparisMi);
+                else
+                    siparisMenuForm.siparisOnayiGeldi(miktar, yemekAdi, fiyat, porsiyon, true, ilkSiparisMi);
             }
         }
         #endregion

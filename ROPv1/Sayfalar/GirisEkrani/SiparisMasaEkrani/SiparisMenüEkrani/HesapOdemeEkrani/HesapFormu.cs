@@ -45,7 +45,7 @@ namespace ROPv1
 
         decimal[] odemeler;
 
-        const int urunBoyu = 240, fiyatBoyu = 90;
+        const int urunBoyu = 230, fiyatBoyu = 90;
 
         int seciliItemSayisi = 0;
 
@@ -683,7 +683,7 @@ namespace ROPv1
                     {
                         siparisOlustur(adisyonID, siparis);
 
-                        menuFormu.masaFormu.serverdanSiparisIkramVeyaIptal(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[2].Text, Convert.ToDecimal(siparis.SubItems[3].Text).ToString(), null, siparis.SubItems[1].Text.Substring(0, siparis.SubItems[1].Text.Length - 1));
+                        menuFormu.masaFormu.serverdanSiparisIkramVeyaIptal(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[2].Text, Convert.ToDecimal(siparis.SubItems[3].Text).ToString(), null, siparis.SubItems[1].Text.Substring(0, siparis.SubItems[1].Text.Length - 1),siparis.SubItems[1].Text[siparis.SubItems[1].Text.Length - 1].ToString());
                     }
 
                     //yeni ürünler için mutfak bildirimi
@@ -782,7 +782,7 @@ namespace ROPv1
                     {
                         sonSiparisMi--;
 
-                        menuFormu.masaFormu.serveraSiparis(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[2].Text, siparisiGirenKisi, Convert.ToDecimal(siparis.SubItems[3].Text).ToString(), "", sonSiparisMi, siparis.SubItems[1].Text.Substring(0, siparis.SubItems[1].Text.Length - 1), "ilkSiparis");
+                        menuFormu.masaFormu.serveraSiparis(masaAdi, departmanAdi, "siparis", siparis.SubItems[0].Text, siparis.SubItems[2].Text, siparisiGirenKisi, Convert.ToDecimal(siparis.SubItems[3].Text).ToString(), "", sonSiparisMi, siparis.SubItems[1].Text.Substring(0, siparis.SubItems[1].Text.Length - 1),siparis.SubItems[1].Text[siparis.SubItems[1].Text.Length - 1].ToString(), "ilkSiparis");
                     }
                     menuFormu.masaAcikMi = true;
                 }
@@ -832,8 +832,8 @@ namespace ROPv1
                 int VisiableItem = (int)this.listUrunFiyat.ClientRectangle.Height / itemHeight;
                 if (itemsCount >= VisiableItem)
                 {
-                    listUrunFiyat.Columns[1].Width = urunBoyu;
-                    listUrunFiyat.Columns[2].Width = fiyatBoyu;
+                    listUrunFiyat.Columns[3].Width = urunBoyu;
+                    listUrunFiyat.Columns[4].Width = fiyatBoyu;
                 }
             }
 
@@ -848,13 +848,14 @@ namespace ROPv1
 
                 urunListesi.AddRange(infoUrun);
 
-                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Adet, YemekAdi, Porsiyon FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masaAdi + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=1 AND Siparis.IkramMi=0 AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 ORDER BY Adet DESC");
+                SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Adet, YemekAdi, Porsiyon, KiloSatisiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masaAdi + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.IptalMi=0 AND Siparis.OdendiMi=1 AND Siparis.IkramMi=0 AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 ORDER BY Adet DESC");
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
                     decimal yemeginFiyati, porsiyon;
                     int adet;
                     string yemeginAdi;
+                    bool turBool;
 
                     try
                     {
@@ -862,6 +863,7 @@ namespace ROPv1
                         adet = dr.GetInt32(1);
                         yemeginAdi = dr.GetString(2);
                         porsiyon = dr.GetDecimal(3);
+                        turBool = dr.GetBoolean(4);
                     }
                     catch
                     {
@@ -870,11 +872,16 @@ namespace ROPv1
                         return;
                     }
 
+                    string tur = "P";
+
+                    if (turBool)
+                        tur = "K";
+
                     int listedeYeniGelenSiparisVarmi = -1; //ürün cinsi hesapta var mı bak 
 
                     for (int i = 0; i < listOdenenler.Items.Count; i++)
                     {
-                        if (yemeginAdi == listOdenenler.Items[i].SubItems[2].Text && (Double)porsiyon == Convert.ToDouble(listOdenenler.Items[i].SubItems[1].Text.Substring(0, listOdenenler.Items[i].SubItems[1].Text.Length - 1)))
+                        if (yemeginAdi == listOdenenler.Items[i].SubItems[2].Text && (Double)porsiyon == Convert.ToDouble(listOdenenler.Items[i].SubItems[1].Text.Substring(0, listOdenenler.Items[i].SubItems[1].Text.Length - 1)) && tur == listOdenenler.Items[i].SubItems[1].Text[listOdenenler.Items[i].SubItems[1].Text.Length - 1].ToString())
                         {
                             listedeYeniGelenSiparisVarmi = i;
                             break;
@@ -884,7 +891,7 @@ namespace ROPv1
                     if (listedeYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
                     {
                         listOdenenler.Items.Add(adet.ToString());
-                        listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add((Double)porsiyon + "P");
+                        listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add((Double)porsiyon + tur);
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginAdi);
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginFiyati.ToString("0.00"));
                         listOdenenler.Items[listOdenenler.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
@@ -1039,7 +1046,8 @@ namespace ROPv1
             {
                 decimal yemeginFiyati, porsiyon;
                 int adet;
-                string yemeginAdi;
+                string yemeginAdi,tur = "P";
+                bool turBool;
 
                 for (int i = 0; i < siparisler.Count(); i++)
                 {
@@ -1048,11 +1056,15 @@ namespace ROPv1
                     adet = Convert.ToInt32(detaylari[1]);
                     yemeginAdi = detaylari[2];
                     porsiyon = Convert.ToDecimal(detaylari[3]);
+                    turBool = Convert.ToBoolean(detaylari[4]);
+
+                    if(turBool)
+                        tur = "K";
 
                     int gruptaYeniGelenSiparisVarmi = -1; //ürün cinsi hesapta var mı bak 
                     for (int j = 0; j < listOdenenler.Items.Count; j++)
                     {
-                        if (yemeginAdi == listOdenenler.Items[j].SubItems[2].Text && (Double)porsiyon == Convert.ToDouble(listOdenenler.Items[j].SubItems[1].Text.Substring(0, listOdenenler.Items[j].SubItems[1].Text.Length - 1)))
+                        if (yemeginAdi == listOdenenler.Items[j].SubItems[2].Text && (Double)porsiyon == Convert.ToDouble(listOdenenler.Items[j].SubItems[1].Text.Substring(0, listOdenenler.Items[j].SubItems[1].Text.Length - 1)) && tur == listOdenenler.Items[j].SubItems[1].Text[listOdenenler.Items[j].SubItems[1].Text.Length - 1].ToString())
                         {
                             gruptaYeniGelenSiparisVarmi = j;
                             break;
@@ -1062,7 +1074,7 @@ namespace ROPv1
                     if (gruptaYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
                     {
                         listOdenenler.Items.Add(adet.ToString());
-                        listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add((Double)porsiyon + "P");
+                        listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add((Double)porsiyon + tur);
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginAdi);
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginFiyati.ToString("0.00"));
                         listOdenenler.Items[listOdenenler.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
@@ -1080,8 +1092,8 @@ namespace ROPv1
                     int VisiableItem = (int)this.listOdenenler.ClientRectangle.Height / itemHeight;
                     if (itemsCount >= VisiableItem)
                     {
-                        listOdenenler.Columns[1].Width = urunBoyu;
-                        listOdenenler.Columns[2].Width = fiyatBoyu;
+                        listOdenenler.Columns[2].Width = urunBoyu;
+                        listOdenenler.Columns[3].Width = fiyatBoyu;
                     }
                 }
             }
@@ -1323,14 +1335,23 @@ namespace ROPv1
                         string yemeginAdi = listUrunFiyat.Items[i].SubItems[3].Text;
                         decimal yemeginFiyati = Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[4].Text) / Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[0].Text);
                         decimal porsiyon = Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[2].Text.Substring(0, listUrunFiyat.Items[i].SubItems[2].Text.Length - 1));
+                        string tur = listUrunFiyat.Items[i].SubItems[2].Text[listUrunFiyat.Items[i].SubItems[2].Text.Length - 1].ToString();
 
-                        cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adet,Siparis.VerilisTarihi,Siparis.Garsonu FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masaAdi + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemeginAdi + "' AND Siparis.Porsiyon=CONVERT(DECIMAL(5,2),@_Porsiyon) ORDER BY Adet DESC");
+                        bool turBool = false;
+
+                        if (tur == "K")
+                            turBool = true;
+
+                        cmd = SQLBaglantisi.getCommand("SELECT SiparisID,Adet,Siparis.VerilisTarihi,Siparis.Garsonu,NotificationGorulduMu FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND Siparis.IkramMi=0 AND Siparis.IptalMi=0 AND Siparis.OdendiMi=0 AND Adisyon.MasaAdi='" + masaAdi + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Siparis.YemekAdi='" + yemeginAdi + "' AND Siparis.Porsiyon=CONVERT(DECIMAL(5,2),@_Porsiyon) AND Siparis.KiloSatisiMi=@_Tur ORDER BY Adet DESC");
+
                         cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
+                        cmd.Parameters.AddWithValue("@_Tur", turBool);
 
                         dr = cmd.ExecuteReader();
 
                         int siparisID, adet;
                         DateTime verilisTarihi;
+                        bool NotificationGorulduMu;
                         while (dr.Read())
                         {
                             try
@@ -1339,6 +1360,7 @@ namespace ROPv1
                                 adet = dr.GetInt32(1);
                                 verilisTarihi = dr.GetDateTime(2);
                                 siparisiGirenKisi = dr.GetString(3);
+                                NotificationGorulduMu = dr.GetBoolean(4);
                             }
                             catch
                             {
@@ -1358,7 +1380,7 @@ namespace ROPv1
                             }
                             else if (adet > secilenAdet) // den büyükse
                             {
-                                odendiUpdateInsert(siparisID, adisyonID, adet, (double)yemeginFiyati, secilenAdet, yemeginAdi, verilisTarihi, porsiyon);
+                                odendiUpdateInsert(siparisID, adisyonID, adet, (double)yemeginFiyati, secilenAdet, yemeginAdi, verilisTarihi, porsiyon, turBool, NotificationGorulduMu);
 
                                 secilenAdet = 0;
                             }
@@ -1459,7 +1481,7 @@ namespace ROPv1
                         int odenmekIstenen = Convert.ToInt32(listUrunFiyat.Items[i].SubItems[1].Text.Substring(1, listUrunFiyat.Items[i].SubItems[1].Text.Length - 2));
                         decimal fiyat = Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[4].Text) / Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[0].Text);
 
-                        secilipOdenenSiparisBilgileri.Append("*" + odenmekIstenen.ToString() + "-" + listUrunFiyat.Items[i].SubItems[3].Text + "-" + fiyat + "-" + listUrunFiyat.Items[i].SubItems[2].Text.Substring(0, listUrunFiyat.Items[i].SubItems[2].Text.Length - 1));
+                        secilipOdenenSiparisBilgileri.Append("*" + odenmekIstenen.ToString() + "-" + listUrunFiyat.Items[i].SubItems[3].Text + "-" + fiyat + "-" + listUrunFiyat.Items[i].SubItems[2].Text.Substring(0, listUrunFiyat.Items[i].SubItems[2].Text.Length - 1) + "-" + listUrunFiyat.Items[i].SubItems[2].Text[listUrunFiyat.Items[i].SubItems[2].Text.Length - 1].ToString());
 
                         //eklenenleri var olandan düş
                         listUrunFiyat.Items[i].SubItems[4].Text = (Convert.ToDecimal(listUrunFiyat.Items[i].SubItems[4].Text) - ((decimal)odenmekIstenen * fiyat)).ToString("0.00");
@@ -1506,7 +1528,7 @@ namespace ROPv1
             if (siparisler.Count() > 0 && siparisler[0] != "")
             {
                 int adet;
-                string yemeginAdi;
+                string yemeginAdi, tur;
                 decimal yemeginFiyati, porsiyon;
 
                 for (int i = 0; i < siparisler.Count(); i++)
@@ -1516,12 +1538,13 @@ namespace ROPv1
                     yemeginAdi = detaylari[1];
                     yemeginFiyati = Convert.ToDecimal(detaylari[2]);
                     porsiyon = yemeginFiyati = Convert.ToDecimal(detaylari[3]);
-
+                    tur = detaylari[4];
+                    
                     int listedeYeniGelenSiparisVarmi = -1; //ürün cinsi hesapta var mı bak 
 
                     for (int j = 0; j < listOdenenler.Items.Count; j++)
                     {
-                        if (yemeginAdi == listOdenenler.Items[j].SubItems[2].Text && (Double)porsiyon == Convert.ToDouble(listOdenenler.Items[j].SubItems[1].Text.Substring(0, listOdenenler.Items[j].SubItems[1].Text.Length - 1)))
+                        if (yemeginAdi == listOdenenler.Items[j].SubItems[2].Text && (Double)porsiyon == Convert.ToDouble(listOdenenler.Items[j].SubItems[1].Text.Substring(0, listOdenenler.Items[j].SubItems[1].Text.Length - 1)) && tur == listOdenenler.Items[j].SubItems[1].Text[listOdenenler.Items[j].SubItems[1].Text.Length - 1].ToString())
                         {
                             listedeYeniGelenSiparisVarmi = j;
                             break;
@@ -1531,7 +1554,7 @@ namespace ROPv1
                     if (listedeYeniGelenSiparisVarmi == -1) //yoksa ürünü hesaba ekle
                     {
                         listOdenenler.Items.Add(adet.ToString());
-                        listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add((Double)porsiyon + "P");
+                        listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add((Double)porsiyon + tur);
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginAdi);
                         listOdenenler.Items[listOdenenler.Items.Count - 1].SubItems.Add(yemeginFiyati.ToString("0.00"));
                         listOdenenler.Items[listOdenenler.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
@@ -1584,7 +1607,7 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        public void odendiUpdateInsert(int siparisID, int adisyonID, int adet, double fiyati, int odemeAdedi, string yemekAdi, DateTime verilisTarihi, decimal porsiyon)
+        public void odendiUpdateInsert(int siparisID, int adisyonID, int adet, double fiyati, int odemeAdedi, string yemekAdi, DateTime verilisTarihi, decimal porsiyon, bool turBool, bool NotificationGorulduMu)
         {
             int yeniPorsiyonAdetiSiparis = adet - odemeAdedi;
 
@@ -1595,7 +1618,7 @@ namespace ROPv1
 
             bool urunMutfagaBildirilmeliMi = mutfakBilgilendirilmeliMi(yemekAdi);
 
-            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,VerilisTarihi,MutfakCiktisiAlindiMi,MutfakCiktisiAlinmaliMi,Porsiyon) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_VerilisTarihi,@_MutfakCiktisiAlindiMi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon)");
+            cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,VerilisTarihi,MutfakCiktisiAlindiMi,MutfakCiktisiAlinmaliMi,Porsiyon,KiloSatisiMi,NotificationGorulduMu) values(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_VerilisTarihi,@_MutfakCiktisiAlindiMi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon,@_KiloSatisiMi,@_NotificationGorulduMu)");
             cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiGirenKisi);
             cmd.Parameters.AddWithValue("@_Fiyatı", fiyati);
@@ -1605,6 +1628,17 @@ namespace ROPv1
             cmd.Parameters.AddWithValue("@_MutfakCiktisiAlindiMi", 1);
             cmd.Parameters.AddWithValue("@_MutfakCiktisiAlinmaliMi", urunMutfagaBildirilmeliMi);
             cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
+
+            if(turBool)
+            {
+                cmd.Parameters.AddWithValue("@_KiloSatisiMi", 1);
+                cmd.Parameters.AddWithValue("@_NotificationGorulduMu", 1);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@_KiloSatisiMi", 0);
+                cmd.Parameters.AddWithValue("@_NotificationGorulduMu", NotificationGorulduMu);
+            }
 
             cmd.ExecuteNonQuery();
 
@@ -1649,7 +1683,8 @@ namespace ROPv1
         {
             bool urunMutfagaBildirilmeliMi = mutfakBilgilendirilmeliMi(siparis.SubItems[1].Text);
 
-            SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon) VALUES(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon)");
+            SqlCommand cmd = SQLBaglantisi.getCommand("INSERT INTO Siparis(AdisyonID,Garsonu,Fiyatı,Adet,YemekAdi,VerilisTarihi,MutfakCiktisiAlinmaliMi,Porsiyon,KiloSatisiMi,NotificationGorulduMu) VALUES(@_AdisyonID,@_Garsonu,@_Fiyatı,@_Adet,@_YemekAdi,@_VerilisTarihi,@_MutfakCiktisiAlinmaliMi,@_Porsiyon,@_KiloSatisiMi,@_NotificationGorulduMu)");
+
             cmd.Parameters.AddWithValue("@_AdisyonID", adisyonID);
             cmd.Parameters.AddWithValue("@_Garsonu", siparisiGirenKisi);
             cmd.Parameters.AddWithValue("@_Fiyatı", Convert.ToDecimal(siparis.SubItems[3].Text));
@@ -1658,6 +1693,17 @@ namespace ROPv1
             cmd.Parameters.AddWithValue("@_VerilisTarihi", DateTime.Now);
             cmd.Parameters.AddWithValue("@_MutfakCiktisiAlinmaliMi", urunMutfagaBildirilmeliMi);
             cmd.Parameters.AddWithValue("@_Porsiyon", Convert.ToDecimal(siparis.SubItems[1].Text.Substring(0, siparis.SubItems[1].Text.Length - 1)));
+
+            if (siparis.SubItems[1].Text[siparis.SubItems[1].Text.Length - 1] == 'P')
+            {
+                cmd.Parameters.AddWithValue("@_KiloSatisiMi", 0);
+                cmd.Parameters.AddWithValue("@_NotificationGorulduMu", 0);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@_KiloSatisiMi", 1);
+                cmd.Parameters.AddWithValue("@_NotificationGorulduMu", 1);
+            }
 
             cmd.ExecuteNonQuery();
 

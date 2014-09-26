@@ -459,12 +459,12 @@
             // 
             // Porsiyonu
             // 
-            this.Porsiyonu.Width = 70;
+            this.Porsiyonu.Width = 80;
             // 
             // yemekAdi
             // 
             this.yemekAdi.Text = "Siparişler";
-            this.yemekAdi.Width = 250;
+            this.yemekAdi.Width = 240;
             // 
             // Fiyati
             // 
@@ -513,12 +513,12 @@
             // 
             // Porsiyon
             // 
-            this.Porsiyon.Width = 70;
+            this.Porsiyon.Width = 80;
             // 
             // Adi
             // 
             this.Adi.Text = "Siparişler";
-            this.Adi.Width = 250;
+            this.Adi.Width = 240;
             // 
             // Fiyat
             // 

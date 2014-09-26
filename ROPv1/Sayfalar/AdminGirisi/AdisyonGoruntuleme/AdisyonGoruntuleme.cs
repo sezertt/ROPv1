@@ -264,9 +264,6 @@ namespace ROPv1
                 masaAdi = dr.GetString(5);
                 iptalMi = dr.GetBoolean(6);
 
-
-
-
                 if (kapanisZamani.Date > testDate.Date)
                 {
                     DateTime temp = kapanisZamani;
