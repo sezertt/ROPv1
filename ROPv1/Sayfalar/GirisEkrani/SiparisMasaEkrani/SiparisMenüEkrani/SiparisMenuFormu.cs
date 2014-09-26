@@ -578,7 +578,7 @@ namespace ROPv1
                     {
                         listUrunFiyat.Items.Add(kacAdet.ToString()); // adet
 
-                        listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(kilo.ToString("0.00") + "K"); // porsiyon
+                        listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(kilo + "K"); // porsiyon
                         listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(secilenUrun.urunAdi[0]); // ad
                         listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems.Add(eklenecekDeger.ToString("0.00")); // fiyat
 
@@ -591,7 +591,7 @@ namespace ROPv1
                         listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].Font = new Font("Calibri", 18.75F, FontStyle.Bold);
                         listedeSeciliOlanItemlar.Add(false);
 
-                        gorunumuDuzenle(secilenUrun.urunAdi[0], listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems[3].Text, labelCokluAdet.Text, kilo.ToString("0.00"));
+                        gorunumuDuzenle(secilenUrun.urunAdi[0], listUrunFiyat.Items[listUrunFiyat.Items.Count - 1].SubItems[3].Text, labelCokluAdet.Text, kilo.ToString());
                     }
                     else // varsa ürünün hesaptaki değerlerini istenilene göre arttır
                     {
