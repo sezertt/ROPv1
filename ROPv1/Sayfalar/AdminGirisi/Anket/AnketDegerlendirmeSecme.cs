@@ -82,7 +82,7 @@ namespace ROPv1
             while (dr.Read())
             {
                 toplamCevapSayisi++;
-                cevapSayilari[Convert.ToInt32(dr.GetString(0)) - 1]++;
+                cevapSayilari[Convert.ToInt32(Convert.ToDouble(dr.GetString(0))) - 1]++;
             }
 
             cmd.Connection.Close();
@@ -160,7 +160,7 @@ namespace ROPv1
                 {
                     cevapSayisi++;
 
-                    int cevap = Convert.ToInt32(dr2.GetString(0)) - 1;
+                    int cevap = Convert.ToInt32(Convert.ToDouble(dr2.GetString(0))) - 1;
 
                     yildizSayisi[cevap]++;
 

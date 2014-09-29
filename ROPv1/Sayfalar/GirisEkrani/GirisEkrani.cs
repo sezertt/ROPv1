@@ -1185,7 +1185,7 @@ namespace ROPv1
                 try
                 {
                     odenenUrunler += dr.GetDecimal(0) * dr.GetInt32(1);
-                    //fiyat - adet -porsiyon - yemekadi
+                    //fiyat - adet -porsiyon - yemekadi - kiloSatışıMı
                     odenenUrunBilgileri.Append("*" + dr.GetDecimal(0).ToString() + "-" + dr.GetInt32(1).ToString() + "-" + dr.GetDecimal(2) + "-" + dr.GetString(3) + "-" + dr.GetBoolean(4));
                 }
                 catch
@@ -1686,7 +1686,7 @@ namespace ROPv1
             cmd.Connection.Dispose();
         }
 
-        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotuGelen, string sonSiparisMi, string porsiyon, string tur, string ilkSiparisMi = "", string porsiyonSinifi = "")
+        private void komut_siparis(string masa, string departmanAdi, string miktar, string yemekAdi, string siparisiGirenKisi, string dusulecekDegerGelen, ClientRef client, string adisyonNotuGelen, string sonSiparisMi, string porsiyon, string tur = "P", string ilkSiparisMi = "", string porsiyonSinifi = "")
         {
             SqlCommand cmd = SQLBaglantisi.getCommand("SELECT OdemeYapiliyor,HesapIstendi FROM Adisyon WHERE AcikMi=1 AND IptalMi=0 AND MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi");
             cmd.Parameters.AddWithValue("@_MasaAdi", masa);
@@ -3033,8 +3033,26 @@ namespace ROPv1
                 {
                     XmlSave.SaveRestoran(username, "sonKullanici.xml");
 
-                    adminForm = new AdminGirisFormu(this, true);
-                    Task.Factory.StartNew(() => adminForm.ShowDialog());
+
+                    try
+                    {
+                        Task reportTask = Task.Factory.StartNew(
+                            () =>
+                            {
+                                adminForm = new AdminGirisFormu(this, true);
+                                adminForm.ShowDialog();
+                            }
+                            , CancellationToken.None
+                            , TaskCreationOptions.None
+                            , TaskScheduler.FromCurrentSynchronizationContext()
+                            );
+
+                        reportTask.Wait();
+                    }
+                    catch
+                    {}
+
+                    //Task.Factory.StartNew(() => adminForm.ShowDialog());
                     //adminForm.Show();
                 }
                 else
@@ -3062,8 +3080,25 @@ namespace ROPv1
                         { //şifre doğru
                             XmlSave.SaveRestoran(username, "sonKullanici.xml");
 
-                            adminForm = new AdminGirisFormu(this, adisyonDegistirebilirMi);
-                            Task.Factory.StartNew(() => adminForm.ShowDialog());
+                            try
+                            {
+                                Task reportTask = Task.Factory.StartNew(
+                                    () =>
+                                    {
+                                        adminForm = new AdminGirisFormu(this, adisyonDegistirebilirMi);
+
+                                        adminForm.ShowDialog();
+                                    }
+                                    , CancellationToken.None
+                                    , TaskCreationOptions.None
+                                    , TaskScheduler.FromCurrentSynchronizationContext()
+                                    );
+
+                                reportTask.Wait();
+                            }
+                            catch
+                            { }
+                            //Task.Factory.StartNew(() => adminForm.ShowDialog());
                         }
                         else
                         {
@@ -3101,9 +3136,26 @@ namespace ROPv1
             if (siparisForm == null)
             {
                 //sipariş ekranına geçilecek
-                siparisForm = new SiparisMasaFormu(kullanicilar, this);
 
-                Task.Factory.StartNew(() => siparisForm.ShowDialog());
+                //Task.Factory.StartNew(() => siparisForm.ShowDialog());
+                try
+                {
+                    Task reportTask = Task.Factory.StartNew(
+                        () =>
+                        {
+                            siparisForm = new SiparisMasaFormu(kullanicilar, this);
+
+                            siparisForm.ShowDialog();
+                        }
+                        , CancellationToken.None
+                        , TaskCreationOptions.None
+                        , TaskScheduler.FromCurrentSynchronizationContext()
+                        );
+
+                    reportTask.Wait();
+                }
+                catch
+                { }
             }
             else
             {

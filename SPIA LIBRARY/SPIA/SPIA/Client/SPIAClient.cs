@@ -130,6 +130,7 @@ namespace SPIA.Client
                 binaryOkuyucu = new BinaryReader(agAkisi, Encoding.UTF8);
                 binaryYazici = new BinaryWriter(agAkisi, Encoding.UTF8);
                 thread = new Thread(new ThreadStart(tCalis));
+                thread.SetApartmentState(ApartmentState.STA);
                 calisiyor = true;
                 thread.Start();
                 return true;

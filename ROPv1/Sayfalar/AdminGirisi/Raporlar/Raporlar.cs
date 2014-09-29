@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -162,44 +163,86 @@ namespace ROPv1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ShowWaitForm();
-
             raporGunSonu = new CrystalReportGunSonuRaporu();
-
+           
             buttonRaporla.Visible = false;
             comboAdisyonAyar.SelectedIndex = 0;
             comboAdisyonAyar.Enabled = true;
         }
 
-        private MyWaitForm _waitForm;
-
-        //girişe basıldığında id kontrolü sırasında lütfen bekleyiniz yazan bir form göstermek için
-        protected void ShowWaitForm()
+        void CallSaveDialog() 
         {
-            // don't display more than one wait form at a time
-            if (_waitForm != null && !_waitForm.IsDisposed)
+            var desktopFolder = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.InitialDirectory = desktopFolder;
+            saveFileDialog1.Filter = "PDF (*.pdf)|*.pdf"; //"txt files (*.txt)|*.txt|All files (*.*)|*.*"
+            saveFileDialog1.RestoreDirectory = true;
+
+            DialogResult saveDialog = saveFileDialog1.ShowDialog();
+
+            if (saveDialog == DialogResult.OK)
             {
-                return;
+                raporGunSonu.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, saveFileDialog1.FileName); 
             }
-
-            _waitForm = new MyWaitForm("Rapor Hazırlanıyor...\nLütfen Bekleyin");
-            _waitForm.TopMost = true;
-            _waitForm.StartPosition = FormStartPosition.CenterScreen;
-            _waitForm.Show();
-            _waitForm.Refresh();
-
-            // force the wait window to display for at least 700ms so it doesn't just flash on the screen
-            System.Threading.Thread.Sleep(750);
-            Application.Idle += OnLoaded;
         }
 
-        private void OnLoaded(object sender, EventArgs e)
+        void CallSaveDialog1()
         {
-            Application.Idle -= OnLoaded;
-            this.Invoke((MethodInvoker)delegate
+            var desktopFolder = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.InitialDirectory = desktopFolder;
+            saveFileDialog1.Filter = "Excel (*.xls)|*.xls"; //"txt files (*.txt)|*.txt|All files (*.*)|*.*"
+            saveFileDialog1.RestoreDirectory = true;
+
+            DialogResult saveDialog = saveFileDialog1.ShowDialog();
+
+            if (saveDialog == DialogResult.OK)
             {
-                _waitForm.Close();
-            }); 
+                raporGunSonu.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.ExcelRecord, saveFileDialog1.FileName);
+            }
+        }
+
+        void CallSaveDialog2()
+        {
+            var desktopFolder = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.InitialDirectory = desktopFolder;
+            saveFileDialog1.Filter = "Word (*.doc)|*.doc"; //"txt files (*.txt)|*.txt|All files (*.*)|*.*"
+            saveFileDialog1.RestoreDirectory = true;
+
+            DialogResult saveDialog = saveFileDialog1.ShowDialog();
+
+            if (saveDialog == DialogResult.OK)
+            {
+                raporGunSonu.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.WordForWindows, saveFileDialog1.FileName);
+            }
+        }
+
+        private void buttonPdf_Click(object sender, EventArgs e)
+        {
+            Thread myth;
+            myth = new Thread(new System.Threading.ThreadStart(CallSaveDialog));
+            myth.SetApartmentState(ApartmentState.STA);
+            myth.Start();              
+        }
+
+        private void buttonExcel_Click(object sender, EventArgs e)
+        {
+            Thread myth;
+            myth = new Thread(new System.Threading.ThreadStart(CallSaveDialog1));
+            myth.SetApartmentState(ApartmentState.STA);
+            myth.Start();  
+        }
+
+        private void buttonWord_Click(object sender, EventArgs e)
+        {
+            Thread myth;
+            myth = new Thread(new System.Threading.ThreadStart(CallSaveDialog2));
+            myth.SetApartmentState(ApartmentState.STA);
+            myth.Start();  
         }
     }
 

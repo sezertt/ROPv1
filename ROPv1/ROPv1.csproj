@@ -38,6 +38,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -594,6 +595,9 @@
     <None Include="Resources\righticon.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\word.png" />
+    <None Include="Resources\excel.png" />
+    <None Include="Resources\pdf.png" />
     <None Include="Resources\hesapDuzenle.png" />
     <None Include="Resources\swap.png" />
     <None Include="Resources\pay.png" />

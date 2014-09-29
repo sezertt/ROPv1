@@ -198,6 +198,7 @@ namespace SPIA.Server
                 {
                     calisiyor = true;
                     thread = new Thread(new ThreadStart(tDinle));
+                    thread.SetApartmentState(ApartmentState.STA);
                     thread.Start();
                     return true;
                 }
@@ -367,6 +368,7 @@ namespace SPIA.Server
                     binaryOkuyucu = new BinaryReader(agAkisi, Encoding.UTF8);
                     binaryYazici = new BinaryWriter(agAkisi, Encoding.UTF8);
                     thread = new Thread(new ThreadStart(tCalis));
+                    thread.SetApartmentState(ApartmentState.STA);
                     calisiyor = true;
                     thread.Start();
                     return true;

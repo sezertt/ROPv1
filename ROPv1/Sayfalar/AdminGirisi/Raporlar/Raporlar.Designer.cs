@@ -30,11 +30,14 @@
         {
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             this.comboAdisyonAyar = new System.Windows.Forms.ComboBox();
-            this.buttonAzalt = new System.Windows.Forms.Button();
-            this.buttonArttir = new System.Windows.Forms.Button();
             this.dateBitis = new System.Windows.Forms.DateTimePicker();
             this.dateBaslangic = new System.Windows.Forms.DateTimePicker();
             this.buttonRaporla = new System.Windows.Forms.Button();
+            this.buttonExcel = new System.Windows.Forms.Button();
+            this.buttonWord = new System.Windows.Forms.Button();
+            this.buttonPdf = new System.Windows.Forms.Button();
+            this.buttonAzalt = new System.Windows.Forms.Button();
+            this.buttonArttir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // crystalReportViewer1
@@ -44,7 +47,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.crystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.crystalReportViewer1.CachedPageNumberPerDoc = 10;
             this.crystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default;
             this.crystalReportViewer1.Location = new System.Drawing.Point(0, 0);
             this.crystalReportViewer1.Name = "crystalReportViewer1";
@@ -84,38 +86,6 @@
             this.comboAdisyonAyar.Click += new System.EventHandler(this.comboAdisyonAyar_Click);
             this.comboAdisyonAyar.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboAdisyonAyar_KeyPress);
             this.comboAdisyonAyar.Leave += new System.EventHandler(this.comboAdisyonAyar_Leave);
-            // 
-            // buttonAzalt
-            // 
-            this.buttonAzalt.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.buttonAzalt.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonAzalt.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonAzalt.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonAzalt.Image = global::ROPv1.Properties.Resources.downIcon;
-            this.buttonAzalt.Location = new System.Drawing.Point(940, 7);
-            this.buttonAzalt.Name = "buttonAzalt";
-            this.buttonAzalt.Size = new System.Drawing.Size(70, 34);
-            this.buttonAzalt.TabIndex = 45;
-            this.buttonAzalt.TabStop = false;
-            this.buttonAzalt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAzalt.UseVisualStyleBackColor = false;
-            this.buttonAzalt.Click += new System.EventHandler(this.buttonAzalt_Click);
-            // 
-            // buttonArttir
-            // 
-            this.buttonArttir.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.buttonArttir.BackColor = System.Drawing.Color.White;
-            this.buttonArttir.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonArttir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonArttir.Image = global::ROPv1.Properties.Resources.upIcon;
-            this.buttonArttir.Location = new System.Drawing.Point(866, 7);
-            this.buttonArttir.Name = "buttonArttir";
-            this.buttonArttir.Size = new System.Drawing.Size(70, 34);
-            this.buttonArttir.TabIndex = 44;
-            this.buttonArttir.TabStop = false;
-            this.buttonArttir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonArttir.UseVisualStyleBackColor = false;
-            this.buttonArttir.Click += new System.EventHandler(this.buttonArttir_Click);
             // 
             // dateBitis
             // 
@@ -172,11 +142,94 @@
             this.buttonRaporla.UseVisualStyleBackColor = false;
             this.buttonRaporla.Click += new System.EventHandler(this.button1_Click);
             // 
+            // buttonExcel
+            // 
+            this.buttonExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonExcel.BackColor = System.Drawing.Color.Transparent;
+            this.buttonExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonExcel.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonExcel.ForeColor = System.Drawing.Color.Transparent;
+            this.buttonExcel.Image = global::ROPv1.Properties.Resources.excel;
+            this.buttonExcel.Location = new System.Drawing.Point(772, 521);
+            this.buttonExcel.Name = "buttonExcel";
+            this.buttonExcel.Size = new System.Drawing.Size(64, 72);
+            this.buttonExcel.TabIndex = 50;
+            this.buttonExcel.TabStop = false;
+            this.buttonExcel.UseVisualStyleBackColor = false;
+            this.buttonExcel.Click += new System.EventHandler(this.buttonExcel_Click);
+            // 
+            // buttonWord
+            // 
+            this.buttonWord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonWord.BackColor = System.Drawing.Color.Transparent;
+            this.buttonWord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonWord.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonWord.ForeColor = System.Drawing.Color.Transparent;
+            this.buttonWord.Image = global::ROPv1.Properties.Resources.word;
+            this.buttonWord.Location = new System.Drawing.Point(912, 521);
+            this.buttonWord.Name = "buttonWord";
+            this.buttonWord.Size = new System.Drawing.Size(64, 72);
+            this.buttonWord.TabIndex = 49;
+            this.buttonWord.TabStop = false;
+            this.buttonWord.UseVisualStyleBackColor = false;
+            this.buttonWord.Click += new System.EventHandler(this.buttonWord_Click);
+            // 
+            // buttonPdf
+            // 
+            this.buttonPdf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPdf.BackColor = System.Drawing.Color.Transparent;
+            this.buttonPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPdf.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonPdf.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonPdf.Image = global::ROPv1.Properties.Resources.pdf;
+            this.buttonPdf.Location = new System.Drawing.Point(842, 521);
+            this.buttonPdf.Name = "buttonPdf";
+            this.buttonPdf.Size = new System.Drawing.Size(64, 72);
+            this.buttonPdf.TabIndex = 48;
+            this.buttonPdf.TabStop = false;
+            this.buttonPdf.UseVisualStyleBackColor = false;
+            this.buttonPdf.Click += new System.EventHandler(this.buttonPdf_Click);
+            // 
+            // buttonAzalt
+            // 
+            this.buttonAzalt.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonAzalt.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonAzalt.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonAzalt.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonAzalt.Image = global::ROPv1.Properties.Resources.downIcon;
+            this.buttonAzalt.Location = new System.Drawing.Point(940, 7);
+            this.buttonAzalt.Name = "buttonAzalt";
+            this.buttonAzalt.Size = new System.Drawing.Size(70, 34);
+            this.buttonAzalt.TabIndex = 45;
+            this.buttonAzalt.TabStop = false;
+            this.buttonAzalt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAzalt.UseVisualStyleBackColor = false;
+            this.buttonAzalt.Click += new System.EventHandler(this.buttonAzalt_Click);
+            // 
+            // buttonArttir
+            // 
+            this.buttonArttir.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.buttonArttir.BackColor = System.Drawing.Color.White;
+            this.buttonArttir.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonArttir.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonArttir.Image = global::ROPv1.Properties.Resources.upIcon;
+            this.buttonArttir.Location = new System.Drawing.Point(866, 7);
+            this.buttonArttir.Name = "buttonArttir";
+            this.buttonArttir.Size = new System.Drawing.Size(70, 34);
+            this.buttonArttir.TabIndex = 44;
+            this.buttonArttir.TabStop = false;
+            this.buttonArttir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonArttir.UseVisualStyleBackColor = false;
+            this.buttonArttir.Click += new System.EventHandler(this.buttonArttir_Click);
+            // 
             // Raporlar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.buttonRaporla);
+            this.Controls.Add(this.buttonExcel);
+            this.Controls.Add(this.buttonWord);
+            this.Controls.Add(this.buttonPdf);
             this.Controls.Add(this.comboAdisyonAyar);
             this.Controls.Add(this.buttonAzalt);
             this.Controls.Add(this.buttonArttir);
@@ -199,6 +252,9 @@
         private System.Windows.Forms.DateTimePicker dateBitis;
         private System.Windows.Forms.DateTimePicker dateBaslangic;
         private System.Windows.Forms.Button buttonRaporla;
+        private System.Windows.Forms.Button buttonPdf;
+        private System.Windows.Forms.Button buttonWord;
+        private System.Windows.Forms.Button buttonExcel;
 
     }
 }

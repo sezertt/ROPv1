@@ -40,6 +40,8 @@ namespace ROPv1
                 {
                     kilo = Convert.ToDouble(textBoxKG.Text) / 1000;
                 }
+
+                kilo = Math.Round(kilo, 2);
                 
                 this.Close();
             }

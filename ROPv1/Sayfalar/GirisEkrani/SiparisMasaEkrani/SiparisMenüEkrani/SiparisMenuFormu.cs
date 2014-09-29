@@ -34,7 +34,7 @@ namespace ROPv1
 
         const int eskiIkramlar = 0, yeniIkramlar = 1, eskiSiparisler = 2, yeniSiparisler = 3;
 
-        const int urunBoyu = 225, fiyatBoyu = 80;
+        const int urunBoyu = 205, fiyatBoyu = 80;
 
         List<Menuler> menuListesi = new List<Menuler>();  // menüleri tutacak liste
 
@@ -1549,6 +1549,9 @@ namespace ROPv1
         {
             int kacAdet = Convert.ToInt32(labelCokluAdet.Text);
 
+            if (kacAdet > Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[0].Text))
+                kacAdet = Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[0].Text);
+
             if (Convert.ToDecimal(listUrunFiyat.SelectedItems[0].SubItems[3].Text) * kacAdet > Convert.ToDecimal(labelKalanHesap.Text))
             {
                 KontrolFormu dialog = new KontrolFormu("Ürün fiyatı kalan hesaptan büyük olduğu için ürün iptal edilemez", false);
@@ -1557,9 +1560,6 @@ namespace ROPv1
             }
 
             double porsiyonu = Convert.ToDouble(listUrunFiyat.SelectedItems[0].SubItems[1].Text.Substring(0, listUrunFiyat.SelectedItems[0].SubItems[1].Text.Length - 1));
-
-            if (kacAdet > Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[0].Text))
-                kacAdet = Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[0].Text);
 
             string iptalNedeni = "";
 
