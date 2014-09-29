@@ -1152,7 +1152,7 @@ namespace ROPv1
 
             bool turBool= false;
 
-            if(tur != "P")
+            if (tur == "K")
             {
                 turBool = true;
             }
@@ -1591,7 +1591,7 @@ namespace ROPv1
 
             bool turBool = false;
 
-            if (tur != "P")
+            if (tur == "K")
             {
                 turBool = true;
             }
@@ -2754,7 +2754,7 @@ namespace ROPv1
 
                             bool turBool = false;
 
-                            if (tur != "P")
+                            if (tur == "K")
                             {
                                 turBool = true;
                             }

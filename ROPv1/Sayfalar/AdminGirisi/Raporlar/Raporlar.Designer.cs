@@ -146,6 +146,7 @@
             // 
             this.buttonExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonExcel.BackColor = System.Drawing.Color.Transparent;
+            this.buttonExcel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.buttonExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonExcel.Font = new System.Drawing.Font("Arial", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.buttonExcel.ForeColor = System.Drawing.Color.Transparent;
