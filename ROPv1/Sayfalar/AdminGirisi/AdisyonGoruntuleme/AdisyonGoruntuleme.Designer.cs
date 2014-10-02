@@ -95,6 +95,7 @@
             this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.listAdisyonDetay = new GlacialComponents.Controls.GlacialList();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelGun
@@ -463,7 +464,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.keyboardcontrol1.ForeColor = System.Drawing.SystemColors.Window;
             this.keyboardcontrol1.KeyboardType = KeyboardClassLibrary.BoW.Standard;
-            this.keyboardcontrol1.Location = new System.Drawing.Point(4, 504);
+            this.keyboardcontrol1.Location = new System.Drawing.Point(0, 504);
             this.keyboardcontrol1.Name = "keyboardcontrol1";
             this.keyboardcontrol1.Size = new System.Drawing.Size(924, 282);
             this.keyboardcontrol1.TabIndex = 50;
@@ -638,6 +639,19 @@
             this.listAdisyonDetay.TabIndex = 122;
             this.listAdisyonDetay.Text = "glacialList1";
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Calibri", 10.25F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.SystemColors.Window;
+            this.label1.Location = new System.Drawing.Point(13, 715);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(212, 61);
+            this.label1.TabIndex = 123;
+            this.label1.Text = "Not: Adisyon seçiminde hesaplanan toplama, iptal edilen ürünler de dahildir.";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // AdisyonGoruntuleme
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -645,13 +659,14 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 788);
             this.ControlBox = false;
+            this.Controls.Add(this.keyboardcontrol1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.listAdisyonDetay);
             this.Controls.Add(this.listViewOdemeler);
             this.Controls.Add(this.buttonHesapDuzenle);
             this.Controls.Add(this.buttonYazdir);
             this.Controls.Add(this.labelKalanText);
             this.Controls.Add(this.labelToplamHesap);
-            this.Controls.Add(this.keyboardcontrol1);
             this.Controls.Add(this.buttonSayfaAzalt);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.labelSayfa);
@@ -722,5 +737,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader13;
         private System.Windows.Forms.ColumnHeader columnHeader14;
         private GlacialComponents.Controls.GlacialList listAdisyonDetay;
+        private System.Windows.Forms.Label label1;
     }
 }

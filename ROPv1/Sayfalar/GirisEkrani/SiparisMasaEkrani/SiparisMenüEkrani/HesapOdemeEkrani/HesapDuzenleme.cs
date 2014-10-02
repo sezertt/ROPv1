@@ -17,7 +17,7 @@ namespace ROPv1
 
         AdisyonGoruntuleme adisyonGoruntulemeForm;
 
-        decimal[] eskiOdemeler, yeniOdemeler = {0,0,0};
+        decimal[] eskiOdemeler, yeniOdemeler = { 0, 0, 0 };
 
         public List<int> miktarlar = new List<int>();
 
@@ -65,8 +65,16 @@ namespace ROPv1
             yeniOdemeler[1] = Convert.ToDecimal(textBoxKart.Text);
             yeniOdemeler[2] = Convert.ToDecimal(textBoxFis.Text);
 
-            if(gelenAdisyonID != null)
-            {                
+            if (yeniOdemeler[0] + yeniOdemeler[1] + yeniOdemeler[2] != eskiOdemeler[0] + eskiOdemeler[1] + eskiOdemeler[2])
+            {
+                KontrolFormu dialog = new KontrolFormu("Girilen ödeme bilgileri toplamı hesaba eşit olmak zorunda, lütfen kontrol edip tekrar deneyiniz", false);
+                dialog.Show();
+                iptal = true;
+                return;
+            }
+
+            if (gelenAdisyonID != null)
+            {
                 decimal odenenMiktar = 0;
 
                 for (int i = 0; i < eskiOdemeler.Length; i++)
@@ -122,7 +130,7 @@ namespace ROPv1
 
                     decimal odenenMiktar = 0;
 
-                    for (int i = 0; i < eskiOdemeler.Length;i++)
+                    for (int i = 0; i < eskiOdemeler.Length; i++)
                     {
                         if (eskiOdemeler[i] != yeniOdemeler[i]) // değişen ödemeleri güncelle
                         {
@@ -208,7 +216,7 @@ namespace ROPv1
         {
             if (!iptal && hesapForm != null)
             {
-                hesapForm.odemeGuncellemeGeldi(eskiOdemeler, yeniOdemeler,siparisiGirenKisi);
+                hesapForm.odemeGuncellemeGeldi(eskiOdemeler, yeniOdemeler, siparisiGirenKisi);
             }
             else if (!iptal && adisyonGoruntulemeForm != null)
             {

@@ -65,6 +65,9 @@
     <Reference Include="GlacialList">
       <HintPath>dll dosyası\GlacialList.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -95,25 +98,37 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrystalReports\CrystalReportGunSonuRaporu.cs">
+    <Compile Include="CrystalReportsAnaRaporlar\CrystalReportGunSonuRaporu.cs">
       <DependentUpon>CrystalReportGunSonuRaporu.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="CrystalReports\CrystalReportMutfakUrunIptal.cs">
+    <Compile Include="CrystalReportsYanRaporlar\CrystalReportMutfakUrunKiloIptal.cs">
+      <DependentUpon>CrystalReportMutfakUrunKiloIptal.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CrystalReportsYanRaporlar\CrystalReportMutfakKilo.cs">
+      <DependentUpon>CrystalReportMutfakKilo.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CrystalReportsAnaRaporlar\CrystalReportMutfakUrunIptal.cs">
       <DependentUpon>CrystalReportMutfakUrunIptal.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="CrystalReports\CrystalReportMutfak.cs">
+    <Compile Include="CrystalReportsAnaRaporlar\CrystalReportMutfak.cs">
       <DependentUpon>CrystalReportMutfak.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="CrystalReports\CrystalReportAdisyon.cs">
+    <Compile Include="CrystalReportsAnaRaporlar\CrystalReportAdisyon.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CrystalReportAdisyon.rpt</DependentUpon>
@@ -366,19 +381,27 @@
     <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMasaFormu.Designer.cs">
       <DependentUpon>SiparisMasaFormu.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CrystalReports\CrystalReportGunSonuRaporu.rpt">
+    <EmbeddedResource Include="CrystalReportsAnaRaporlar\CrystalReportGunSonuRaporu.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReportGunSonuRaporu.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="CrystalReports\CrystalReportMutfakUrunIptal.rpt">
+    <EmbeddedResource Include="CrystalReportsYanRaporlar\CrystalReportMutfakUrunKiloIptal.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReportMutfakUrunKiloIptal.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReportsYanRaporlar\CrystalReportMutfakKilo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReportMutfakKilo.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalReportsAnaRaporlar\CrystalReportMutfakUrunIptal.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReportMutfakUrunIptal.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="CrystalReports\CrystalReportMutfak.rpt">
+    <EmbeddedResource Include="CrystalReportsAnaRaporlar\CrystalReportMutfak.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReportMutfak.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="CrystalReports\CrystalReportAdisyon.rpt">
+    <EmbeddedResource Include="CrystalReportsAnaRaporlar\CrystalReportAdisyon.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReportAdisyon.cs</LastGenOutput>
     </EmbeddedResource>

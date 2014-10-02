@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Data.SqlClient;
 using System.Threading;
-using ROPv1.CrystalReports;
+using ROPv1.CrystalReportsAnaRaporlar;
 
 namespace ROPv1
 {
@@ -391,6 +391,11 @@ namespace ROPv1
 
                 if (listUrunFiyat.SelectedItems[0].Group == listUrunFiyat.Groups[yeniSiparisler])
                     buttonTasi.Enabled = false;
+                else
+                    buttonTasi.Enabled = true;
+
+                if (listUrunFiyat.SelectedItems[0].Group == listUrunFiyat.Groups[yeniIkramlar] || listUrunFiyat.SelectedItems[0].Group == listUrunFiyat.Groups[eskiIkramlar])
+                    buttonUrunIptal.Enabled = false;
                 else
                     buttonTasi.Enabled = true;
             }
@@ -1134,6 +1139,9 @@ namespace ROPv1
         {
             int kacAdet = Convert.ToInt32(labelCokluAdet.Text);
 
+            if (kacAdet > Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[0].Text))
+                kacAdet = Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[0].Text);
+
             if (Convert.ToDecimal(listUrunFiyat.SelectedItems[0].SubItems[3].Text) * kacAdet > Convert.ToDecimal(labelKalanHesap.Text) && buttonUrunIkram.Text == "İkram")
             {
                 KontrolFormu dialog = new KontrolFormu("Ürün fiyatı kalan hesaptan büyük olduğu için ürün ikram edilemez", false);
@@ -1141,10 +1149,7 @@ namespace ROPv1
                 return;
             }
 
-            double porsiyonu = Convert.ToDouble(listUrunFiyat.SelectedItems[0].SubItems[1].Text.Substring(0, listUrunFiyat.SelectedItems[0].SubItems[1].Text.Length - 1));
-
-            if (kacAdet > Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[0].Text))
-                kacAdet = Convert.ToInt32(listUrunFiyat.SelectedItems[0].SubItems[0].Text);
+            double porsiyonu = Convert.ToDouble(listUrunFiyat.SelectedItems[0].SubItems[1].Text.Substring(0, listUrunFiyat.SelectedItems[0].SubItems[1].Text.Length - 1));            
 
             double dusulecekDeger = Convert.ToDouble(listUrunFiyat.SelectedItems[0].SubItems[3].Text);
 
@@ -1254,6 +1259,9 @@ namespace ROPv1
 
                             istenilenikramSayisi = 0;
                         }
+
+                        if (istenilenikramSayisi == 0)
+                            break;
                     }
 
                     if (istenilenikramSayisi != 0)// ikram edilecekler daha bitmedi başka garsonların siparişlerinden ikram iptaline devam et
@@ -1300,6 +1308,8 @@ namespace ROPv1
 
                                 istenilenikramSayisi = 0;
                             }
+                            if (istenilenikramSayisi == 0)
+                                break;
                         }
                     }
 
@@ -1412,6 +1422,8 @@ namespace ROPv1
 
                             istenilenIkramiptalSayisi = 0;
                         }
+                        if (istenilenIkramiptalSayisi == 0)
+                            break;
                     }
 
                     if (istenilenIkramiptalSayisi != 0)// ikram edilecekler daha bitmedi başka garsonların siparişlerinden ikram iptaline devam et
@@ -1458,6 +1470,8 @@ namespace ROPv1
 
                                 istenilenIkramiptalSayisi = 0;
                             }
+                            if (istenilenIkramiptalSayisi == 0)
+                                break;
                         }
                     }
 
@@ -1563,11 +1577,26 @@ namespace ROPv1
 
             string iptalNedeni = "";
 
+            string adetMiKiloMu = "adet";
+
+            string tur = listUrunFiyat.SelectedItems[0].SubItems[1].Text[listUrunFiyat.SelectedItems[0].SubItems[1].Text.Length - 1].ToString();
+
+            bool turBool = false;
+
+            double kiloVeyaAdetMiktari = kacAdet;
+
+            if (tur == "K")
+            {
+                turBool = true;
+                adetMiKiloMu = "kilo";
+                kiloVeyaAdetMiktari = porsiyonu;
+            }
+
             if (listUrunFiyat.SelectedItems[0].Group == listUrunFiyat.Groups[yeniSiparisler])
             {
                 DialogResult eminMisiniz;
 
-                using (KontrolFormu dialog = new KontrolFormu(kacAdet + " adet " + listUrunFiyat.SelectedItems[0].SubItems[2].Text + " iptal edilecek. Emin misiniz?", true))
+                using (KontrolFormu dialog = new KontrolFormu(kiloVeyaAdetMiktari + " " + adetMiKiloMu + " " + listUrunFiyat.SelectedItems[0].SubItems[2].Text + " iptal edilecek. Emin misiniz?", true))
                 {
                     eminMisiniz = dialog.ShowDialog();
 
@@ -1577,7 +1606,7 @@ namespace ROPv1
             }
             else
             {
-                UrunIptalNedeniFormu urunIptalFormu = new UrunIptalNedeniFormu(kacAdet + " adet " + listUrunFiyat.SelectedItems[0].SubItems[2].Text + " iptal edilecek. Kısaca nedenini yazınız");
+                UrunIptalNedeniFormu urunIptalFormu = new UrunIptalNedeniFormu(kiloVeyaAdetMiktari + " " + adetMiKiloMu + " " + listUrunFiyat.SelectedItems[0].SubItems[2].Text + " iptal edilecek. Kısaca nedenini yazınız");
 
                 DialogResult eminMisiniz = urunIptalFormu.ShowDialog();
 
@@ -1585,15 +1614,6 @@ namespace ROPv1
                     return;
 
                 iptalNedeni = urunIptalFormu.iptalNedeni;
-            }
-
-            string tur = listUrunFiyat.SelectedItems[0].SubItems[1].Text[listUrunFiyat.SelectedItems[0].SubItems[1].Text.Length - 1].ToString();
-
-            bool turBool = false;
-
-            if (tur == "K")
-            {
-                turBool = true;
             }
 
             double dusulecekDeger = Convert.ToDouble(listUrunFiyat.SelectedItems[0].SubItems[3].Text);
@@ -1668,6 +1688,8 @@ namespace ROPv1
 
                             istenilenSiparisiptalSayisi = 0;
                         }
+                        if (istenilenSiparisiptalSayisi == 0)
+                            break;  
                     }
 
                     if (istenilenSiparisiptalSayisi != 0)// iptal edilecekler daha bitmedi başka garsonların siparişlerinden iptale devam et
@@ -1713,6 +1735,8 @@ namespace ROPv1
 
                                 istenilenSiparisiptalSayisi = 0;
                             }
+                            if (istenilenSiparisiptalSayisi == 0)
+                                break;
                         }
                     }
 
@@ -1815,6 +1839,53 @@ namespace ROPv1
 
                 if (listUrunFiyat.Groups[2].Items.Count == 0 && listUrunFiyat.Groups[3].Items.Count == 0) // listede hiç sipariş yoksa, siparişler ya ödenmiştir yada iptal edilmiştir
                 {
+                    // iptal edilen ürünler için mutfağa adisyon
+                    cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=1 AND Siparis.IkramMi=0 AND Siparis.OdendiMi=0 AND MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi");
+                    cmd.Parameters.AddWithValue("@_MasaAdi", MasaAdi);
+                    cmd.Parameters.AddWithValue("@_DepartmanAdi", hangiDepartman.departmanAdi);
+                    dr = cmd.ExecuteReader();
+
+                    KontrolFormu dialog2 = null;
+
+                    try
+                    {
+                        dr.Read();
+
+                        dr.GetBoolean(0);
+
+                        // mutfak adisyonu iste 
+                        cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
+                        dr = cmd.ExecuteReader();
+
+                        string firmaAdi = "", yaziciAdi = "";
+
+                        while (dr.Read())
+                        {
+                            firmaAdi = dr.GetString(0);
+                            yaziciAdi = dr.GetString(1);
+                        }
+
+                        cmd.Connection.Close();
+                        cmd.Connection.Dispose();
+
+                        if (yaziciAdi != "")
+                            asyncYaziciyaGonder(MasaAdi, hangiDepartman.departmanAdi, firmaAdi, yaziciAdi, raporMutfakIptal).Join();
+                        else
+                        {
+                            if (dialog2 == null)
+                            {
+                                dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
+                                dialog2.Show();
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        cmd.Connection.Close();
+                        cmd.Connection.Dispose();
+                    }
+
+
                     cmd = SQLBaglantisi.getCommand("SELECT OdenenMiktar from OdemeDetay JOIN Adisyon ON OdemeDetay.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + MasaAdi + "' AND Adisyon.DepartmanAdi='" + hangiDepartman.departmanAdi + "' AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0");
                     dr = cmd.ExecuteReader();
 

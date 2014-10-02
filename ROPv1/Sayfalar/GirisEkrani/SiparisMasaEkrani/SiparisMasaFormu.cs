@@ -816,6 +816,7 @@ namespace ROPv1
                     case "OdemeIndirimOnayTablet":
                     case "siparisListesineGeriEkle":
                     case "masaDegistirTablet":
+                    case "anketIstegi":
                         break;
                 }
             }

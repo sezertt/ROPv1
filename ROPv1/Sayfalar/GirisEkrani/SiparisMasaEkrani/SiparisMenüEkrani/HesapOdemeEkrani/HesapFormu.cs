@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Threading;
-using ROPv1.CrystalReports;
+using ROPv1.CrystalReportsAnaRaporlar;
 using CrystalDecisions.CrystalReports.Engine;
 
 // ÖDEME TİPLERİ 

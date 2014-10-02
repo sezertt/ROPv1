@@ -15,7 +15,7 @@ using System.Data.SqlClient;
 using SPIA;
 using SPIA.Server;
 using System.Threading;
-using ROPv1.CrystalReports;
+using ROPv1.CrystalReportsAnaRaporlar;
 using System.Net.Mail;
 using System.Net;
 using System.Security.Cryptography;
@@ -1975,8 +1975,54 @@ namespace ROPv1
         {
             SqlCommand cmd;
 
-            cmd = SQLBaglantisi.getCommand("SELECT OdenenMiktar from OdemeDetay JOIN Adisyon ON OdemeDetay.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0");
+            // iptal edilen ürünler için mutfağa adisyon
+            cmd = SQLBaglantisi.getCommand("SELECT MutfakCiktisiAlindiMi FROM Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 AND MutfakCiktisiAlindiMi=0 AND Siparis.IptalMi=1 AND Siparis.IkramMi=0 AND Siparis.OdendiMi=0 AND MasaAdi=@_MasaAdi AND DepartmanAdi=@_DepartmanAdi");
+            cmd.Parameters.AddWithValue("@_MasaAdi", masa);
+            cmd.Parameters.AddWithValue("@_DepartmanAdi", departmanAdi);
             SqlDataReader dr = cmd.ExecuteReader();
+
+            KontrolFormu dialog2 = null;
+
+            try
+            {
+                dr.Read();
+
+                dr.GetBoolean(0);
+
+                // mutfak adisyonu iste 
+                cmd = SQLBaglantisi.getCommand("SELECT FirmaAdi,Yazici FROM Yazici WHERE YaziciAdi LIKE 'Mutfak%'");
+                dr = cmd.ExecuteReader();
+
+                string firmaAdi = "", yaziciAdi = "";
+
+                while (dr.Read())
+                {
+                    firmaAdi = dr.GetString(0);
+                    yaziciAdi = dr.GetString(1);
+                }
+
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
+
+                if (yaziciAdi != "")
+                    asyncYaziciyaGonder(masa, departmanAdi, firmaAdi, yaziciAdi, raporMutfakIptal).Join(); // THREAD JOIN ASYNC BİRLEŞTİR BİTİNCE BURAYA DÖN BİTMEDEN GEÇME
+                else
+                {
+                    if (dialog2 == null)
+                    {
+                        dialog2 = new KontrolFormu("Mutfak yazıcısı bulunamadı", false);
+                        dialog2.Show();
+                    }
+                }
+            }
+            catch
+            {
+                cmd.Connection.Close();
+                cmd.Connection.Dispose();
+            }
+
+            cmd = SQLBaglantisi.getCommand("SELECT OdenenMiktar from OdemeDetay JOIN Adisyon ON OdemeDetay.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' AND Adisyon.DepartmanAdi='" + departmanAdi + "' AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0");
+            dr = cmd.ExecuteReader();
 
             try // eğer masanın ödenmiş siparişi varsa hesabı kapat 
             {
@@ -1989,7 +2035,6 @@ namespace ROPv1
 
                 if (odenenmiktar != 0) // eğer sıfırdan farklı ise adisyonu kapatıyoruz
                 {
-
                     cmd = SQLBaglantisi.getCommand("UPDATE Siparis SET OdendiMi=1 WHERE Siparis.IptalMi=0 AND AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");
                     cmd.ExecuteNonQuery();
                     cmd = SQLBaglantisi.getCommand("UPDATE Adisyon SET AcikMi=0,KapanisZamani=@date WHERE AdisyonID=(SELECT AdisyonID FROM Adisyon WHERE AcikMi=1 AND MasaAdi='" + masa + "' AND DepartmanAdi='" + departmanAdi + "')");

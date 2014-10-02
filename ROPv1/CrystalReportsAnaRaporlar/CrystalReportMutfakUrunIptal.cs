@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ROPv1.CrystalReports {
+namespace ROPv1.CrystalReportsAnaRaporlar {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -41,7 +41,7 @@ namespace ROPv1.CrystalReports {
         
         public override string FullResourceName {
             get {
-                return "ROPv1.CrystalReports.CrystalReportMutfakUrunIptal.rpt";
+                return "ROPv1.CrystalReportsAnaRaporlar.CrystalReportMutfakUrunIptal.rpt";
             }
             set {
                 // Do nothing

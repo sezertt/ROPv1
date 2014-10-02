@@ -11,7 +11,9 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Data.SqlClient;
-using ROPv1.CrystalReports;
+using ROPv1.CrystalReportsAnaRaporlar;
+using System.Reflection;
+using Microsoft.Office.Interop;
 
 namespace ROPv1
 {
@@ -202,6 +204,38 @@ namespace ROPv1
             {
                 raporGunSonu.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.ExcelRecord, saveFileDialog1.FileName);
             }
+
+            object oMissing = Missing.Value;
+            Microsoft.Office.Interop.Excel.Application app;
+            Microsoft.Office.Interop.Excel.Workbook wkBk;
+            Microsoft.Office.Interop.Excel.Worksheet wkSht;
+
+            string filename = saveFileDialog1.FileName;
+            app = new Microsoft.Office.Interop.Excel.Application();
+            app.DisplayAlerts = false;
+            wkBk = app.Workbooks.Open(filename, oMissing, oMissing, oMissing, oMissing, oMissing,
+                oMissing, oMissing, oMissing, oMissing, oMissing, oMissing, oMissing, oMissing, oMissing);
+            wkSht = (Microsoft.Office.Interop.Excel.Worksheet)wkBk.Sheets.get_Item(1);
+
+            Microsoft.Office.Interop.Excel.Range last = wkSht.Cells.SpecialCells(Microsoft.Office.Interop.Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+            Microsoft.Office.Interop.Excel.Range range = wkSht.get_Range("A1", last);
+
+            //Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)wkSht.Cells[iTotalRows, iTotalColumns];
+
+            range.Columns.AutoFit();
+
+            wkBk.Save();
+            app.Visible = false;
+            wkBk.Close(oMissing, filename, oMissing);
+            app.Quit();
+
+            Marshal.ReleaseComObject(wkSht);
+            Marshal.ReleaseComObject(wkBk);
+            Marshal.ReleaseComObject(app);
+            wkSht = null;
+            wkBk = null;
+            app = null;
+            GC.Collect();
         }
 
         void CallSaveDialog2()
