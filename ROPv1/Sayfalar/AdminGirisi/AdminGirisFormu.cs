@@ -71,7 +71,7 @@ namespace ROPv1
                 leftPanelView.Nodes.Add("Ürünler");
                 leftPanelView.Nodes.Add("Stok Ayarları");
                 leftPanelView.Nodes.Add("Reçeteler");
-                leftPanelView.Nodes.Add("İşletme Bilgileri");
+                leftPanelView.Nodes.Add("Yazıcı ve İşletme Bilgileri");
                 leftPanelView.SelectedNode = leftPanelView.Nodes[0];
             }
         }
@@ -558,6 +558,12 @@ namespace ROPv1
                 KontrolFormu dialog = new KontrolFormu("Dosya Aktarımı Tamamlandı", false);
                 dialog.Show();
             }
+        }
+
+        private void buttonTerazi_Click(object sender, EventArgs e)
+        {
+            TeraziBarkodFormu teraziBarkodForm = new TeraziBarkodFormu();
+            teraziBarkodForm.ShowDialog();
         }
     }
 }

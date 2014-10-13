@@ -15,10 +15,13 @@ namespace ROPv1
         public List<string> urunKategorisi;
         public List<string> urunTuru;
         public List<string> urunAciklamasi;
-        public List<bool> urunMutfagaBildirilmeliMi;
+        public List<bool> urunYaziciyaBildirilmeliMi;
         public List<int> urunPorsiyonSinifi; // 0 ve diğerleri ürün sadece tek porsiyon olarak satılıyor --- 1 ürün yarım porsiyon olarak satılıyor --- 2 çeyrek
         public List<int> urunKDV;
+        public List<string> urunBarkodu;
+        public List<string> urunYazicisi;
         public string kategorininAdi;
+        public List<List<string>> urunMarsYazicilari;
 
 
         public KategorilerineGoreUrunler()
@@ -29,9 +32,12 @@ namespace ROPv1
             urunKategorisi = new List<string>();
             urunTuru = new List<string>();
             urunAciklamasi = new List<string>();
-            urunMutfagaBildirilmeliMi = new List<bool>();
+            urunYaziciyaBildirilmeliMi = new List<bool>();
             urunPorsiyonSinifi = new List<int>();
             urunKDV = new List<int>();
+            urunBarkodu = new List<string>();
+            urunYazicisi = new List<string>();
+            urunMarsYazicilari = new List<List<string>>();
         }
     }
 }

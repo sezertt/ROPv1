@@ -140,11 +140,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\MarsYazicilari.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\MarsYazicilari.Designer.cs">
+      <DependentUpon>MarsYazicilari.cs</DependentUpon>
+    </Compile>
     <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\UrunlerTusu.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\UrunlerTusu.Designer.cs">
       <DependentUpon>UrunlerTusu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sayfalar\AdminGirisi\TeraziBarkodFormu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\AdminGirisi\TeraziBarkodFormu.Designer.cs">
+      <DependentUpon>TeraziBarkodFormu.cs</DependentUpon>
     </Compile>
     <Compile Include="Sayfalar\AdminGirisi\Raporlar\IptalEdilenUrunGoruntuleme.cs">
       <SubType>UserControl</SubType>
@@ -236,6 +248,12 @@
     </Compile>
     <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\HesapOdemeEkrani\HesapDuzenleme.Designer.cs">
       <DependentUpon>HesapDuzenleme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\BarkodFormu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\BarkodFormu.Designer.cs">
+      <DependentUpon>BarkodFormu.cs</DependentUpon>
     </Compile>
     <Compile Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\UrunIptalNedeniFormu.cs">
       <SubType>Form</SubType>
@@ -405,8 +423,15 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReportAdisyon.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\MarsYazicilari.resx">
+      <DependentUpon>MarsYazicilari.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\AdminGirisi\Ayarlar\Urunler\UrunlerTusu.resx">
       <DependentUpon>UrunlerTusu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\AdminGirisi\TeraziBarkodFormu.resx">
+      <DependentUpon>TeraziBarkodFormu.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\AdminGirisi\Raporlar\IptalEdilenUrunGoruntuleme.resx">
       <DependentUpon>IptalEdilenUrunGoruntuleme.cs</DependentUpon>
@@ -457,6 +482,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\HesapOdemeEkrani\HesapDuzenleme.resx">
       <DependentUpon>HesapDuzenleme.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\BarkodFormu.resx">
+      <DependentUpon>BarkodFormu.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\GirisEkrani\SiparisMasaEkrani\SiparisMenüEkrani\UrunIptalNedeniFormu.resx">

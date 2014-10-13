@@ -32,6 +32,7 @@
             GlacialComponents.Controls.GLColumn glColumn1 = new GlacialComponents.Controls.GLColumn();
             GlacialComponents.Controls.GLColumn glColumn2 = new GlacialComponents.Controls.GLColumn();
             GlacialComponents.Controls.GLColumn glColumn3 = new GlacialComponents.Controls.GLColumn();
+            GlacialComponents.Controls.GLColumn glColumn4 = new GlacialComponents.Controls.GLColumn();
             this.buttonSaveNewProduct = new System.Windows.Forms.Button();
             this.glacialListUrunler = new GlacialComponents.Controls.GlacialList();
             this.labelUrunSayisiYazisi = new System.Windows.Forms.Label();
@@ -83,19 +84,28 @@
             glColumn2.NumericSort = false;
             glColumn2.Text = "Porsiyon";
             glColumn2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            glColumn2.Width = 250;
+            glColumn2.Width = 150;
             glColumn3.ActivatedEmbeddedType = GlacialComponents.Controls.GLActivatedEmbeddedTypes.None;
             glColumn3.CheckBoxes = false;
             glColumn3.ImageIndex = -1;
             glColumn3.Name = "Column4";
             glColumn3.NumericSort = false;
-            glColumn3.Text = "Mutfak Bildirimi";
+            glColumn3.Text = "Yazıcı Bildirimi";
             glColumn3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            glColumn3.Width = 299;
+            glColumn3.Width = 179;
+            glColumn4.ActivatedEmbeddedType = GlacialComponents.Controls.GLActivatedEmbeddedTypes.None;
+            glColumn4.CheckBoxes = false;
+            glColumn4.ImageIndex = -1;
+            glColumn4.Name = "Column1";
+            glColumn4.NumericSort = false;
+            glColumn4.Text = "Yazıcı";
+            glColumn4.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            glColumn4.Width = 220;
             this.glacialListUrunler.Columns.AddRange(new GlacialComponents.Controls.GLColumn[] {
             glColumn1,
             glColumn2,
-            glColumn3});
+            glColumn3,
+            glColumn4});
             this.glacialListUrunler.ControlStyle = GlacialComponents.Controls.GLControlStyles.XP;
             this.glacialListUrunler.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold);
             this.glacialListUrunler.ForeColor = System.Drawing.SystemColors.ActiveCaption;
@@ -158,7 +168,7 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // UrunlerTusu
             // 

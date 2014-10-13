@@ -41,24 +41,25 @@
             this.ımageList1 = new System.Windows.Forms.ImageList(this.components);
             this.labelKalanHesap = new System.Windows.Forms.Label();
             this.labelKalan = new System.Windows.Forms.Label();
+            this.buttonTemizle = new System.Windows.Forms.Button();
+            this.timerDialogClose = new System.Windows.Forms.Timer(this.components);
+            this.AddGroupBox = new System.Windows.Forms.GroupBox();
+            this.buttonPorsiyonSec = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbCoklu = new System.Windows.Forms.GroupBox();
+            this.labelCokluAdet = new System.Windows.Forms.Label();
+            this.labelEklenecekUrun = new System.Windows.Forms.Label();
+            this.buttonBarkod = new System.Windows.Forms.Button();
+            this.buttonCokluCikar = new System.Windows.Forms.Button();
+            this.buttonCokluEkle = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
+            this.buttonUrunIkram = new System.Windows.Forms.Button();
             this.buttonUrunIptal = new System.Windows.Forms.Button();
             this.buttonTasi = new System.Windows.Forms.Button();
             this.buttonMasaDegistir = new System.Windows.Forms.Button();
             this.buttonNotEkle = new System.Windows.Forms.Button();
             this.buttonTamam = new System.Windows.Forms.Button();
             this.buttonHesapOde = new System.Windows.Forms.Button();
-            this.buttonTemizle = new System.Windows.Forms.Button();
-            this.timerDialogClose = new System.Windows.Forms.Timer(this.components);
-            this.AddGroupBox = new System.Windows.Forms.GroupBox();
-            this.buttonUrunIkram = new System.Windows.Forms.Button();
-            this.buttonPorsiyonSec = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.gbCoklu = new System.Windows.Forms.GroupBox();
-            this.labelCokluAdet = new System.Windows.Forms.Label();
-            this.buttonCokluCikar = new System.Windows.Forms.Button();
-            this.buttonCokluEkle = new System.Windows.Forms.Button();
-            this.labelEklenecekUrun = new System.Windows.Forms.Label();
             this.listUrunFiyat = new ROPv1.MyListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -154,6 +155,163 @@
             this.labelKalan.Text = "Kalan Hesap :";
             this.labelKalan.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // buttonTemizle
+            // 
+            this.buttonTemizle.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonTemizle.Font = new System.Drawing.Font("Arial", 16.5F, System.Drawing.FontStyle.Bold);
+            this.buttonTemizle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonTemizle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonTemizle.Location = new System.Drawing.Point(5, 625);
+            this.buttonTemizle.Name = "buttonTemizle";
+            this.buttonTemizle.Size = new System.Drawing.Size(174, 40);
+            this.buttonTemizle.TabIndex = 87;
+            this.buttonTemizle.Text = "Seçimi Temizle";
+            this.buttonTemizle.UseVisualStyleBackColor = false;
+            this.buttonTemizle.Click += new System.EventHandler(this.buttonTemizle_Click);
+            // 
+            // timerDialogClose
+            // 
+            this.timerDialogClose.Interval = 4000;
+            this.timerDialogClose.Tick += new System.EventHandler(this.timerDialogClose_Tick);
+            // 
+            // AddGroupBox
+            // 
+            this.AddGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.AddGroupBox.Controls.Add(this.buttonAdd);
+            this.AddGroupBox.Controls.Add(this.buttonUrunIkram);
+            this.AddGroupBox.Controls.Add(this.buttonUrunIptal);
+            this.AddGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AddGroupBox.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.AddGroupBox.ForeColor = System.Drawing.SystemColors.Window;
+            this.AddGroupBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.AddGroupBox.Location = new System.Drawing.Point(6, 236);
+            this.AddGroupBox.Margin = new System.Windows.Forms.Padding(2);
+            this.AddGroupBox.Name = "AddGroupBox";
+            this.AddGroupBox.Padding = new System.Windows.Forms.Padding(2);
+            this.AddGroupBox.Size = new System.Drawing.Size(173, 210);
+            this.AddGroupBox.TabIndex = 90;
+            this.AddGroupBox.TabStop = false;
+            this.AddGroupBox.Text = "Ürün İşlemleri";
+            // 
+            // buttonPorsiyonSec
+            // 
+            this.buttonPorsiyonSec.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonPorsiyonSec.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonPorsiyonSec.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonPorsiyonSec.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonPorsiyonSec.Location = new System.Drawing.Point(8, 23);
+            this.buttonPorsiyonSec.Name = "buttonPorsiyonSec";
+            this.buttonPorsiyonSec.Size = new System.Drawing.Size(157, 40);
+            this.buttonPorsiyonSec.TabIndex = 84;
+            this.buttonPorsiyonSec.Text = "Tam";
+            this.buttonPorsiyonSec.UseVisualStyleBackColor = false;
+            this.buttonPorsiyonSec.Click += new System.EventHandler(this.buttonPorsiyonSec_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.groupBox1.Controls.Add(this.buttonPorsiyonSec);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox1.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.Window;
+            this.groupBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.groupBox1.Location = new System.Drawing.Point(6, 160);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(173, 71);
+            this.groupBox1.TabIndex = 91;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Porsiyon Seç";
+            // 
+            // gbCoklu
+            // 
+            this.gbCoklu.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.gbCoklu.Controls.Add(this.labelCokluAdet);
+            this.gbCoklu.Controls.Add(this.buttonCokluCikar);
+            this.gbCoklu.Controls.Add(this.buttonCokluEkle);
+            this.gbCoklu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.gbCoklu.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.gbCoklu.ForeColor = System.Drawing.SystemColors.Window;
+            this.gbCoklu.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.gbCoklu.Location = new System.Drawing.Point(6, 450);
+            this.gbCoklu.Margin = new System.Windows.Forms.Padding(2);
+            this.gbCoklu.Name = "gbCoklu";
+            this.gbCoklu.Padding = new System.Windows.Forms.Padding(2);
+            this.gbCoklu.Size = new System.Drawing.Size(173, 124);
+            this.gbCoklu.TabIndex = 91;
+            this.gbCoklu.TabStop = false;
+            this.gbCoklu.Text = "İşlem Miktarı";
+            // 
+            // labelCokluAdet
+            // 
+            this.labelCokluAdet.BackColor = System.Drawing.Color.Transparent;
+            this.labelCokluAdet.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.labelCokluAdet.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelCokluAdet.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelCokluAdet.Location = new System.Drawing.Point(12, 25);
+            this.labelCokluAdet.Name = "labelCokluAdet";
+            this.labelCokluAdet.Size = new System.Drawing.Size(150, 33);
+            this.labelCokluAdet.TabIndex = 94;
+            this.labelCokluAdet.Text = "1";
+            this.labelCokluAdet.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelEklenecekUrun
+            // 
+            this.labelEklenecekUrun.AutoSize = true;
+            this.labelEklenecekUrun.BackColor = System.Drawing.Color.Transparent;
+            this.labelEklenecekUrun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.labelEklenecekUrun.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelEklenecekUrun.Location = new System.Drawing.Point(646, 12);
+            this.labelEklenecekUrun.Name = "labelEklenecekUrun";
+            this.labelEklenecekUrun.Size = new System.Drawing.Size(154, 33);
+            this.labelEklenecekUrun.TabIndex = 93;
+            this.labelEklenecekUrun.Text = "Ürün Seçiniz";
+            this.labelEklenecekUrun.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelEklenecekUrun.TextChanged += new System.EventHandler(this.labelEklenecekUrun_TextChanged);
+            // 
+            // buttonBarkod
+            // 
+            this.buttonBarkod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonBarkod.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonBarkod.Font = new System.Drawing.Font("Arial", 16.5F, System.Drawing.FontStyle.Bold);
+            this.buttonBarkod.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonBarkod.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonBarkod.Location = new System.Drawing.Point(183, 625);
+            this.buttonBarkod.Name = "buttonBarkod";
+            this.buttonBarkod.Size = new System.Drawing.Size(451, 40);
+            this.buttonBarkod.TabIndex = 94;
+            this.buttonBarkod.Text = "Barkod ile İşlem";
+            this.buttonBarkod.UseVisualStyleBackColor = false;
+            this.buttonBarkod.Click += new System.EventHandler(this.buttonBarkod_Click);
+            // 
+            // buttonCokluCikar
+            // 
+            this.buttonCokluCikar.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonCokluCikar.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonCokluCikar.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonCokluCikar.Image = global::ROPv1.Properties.Resources.minus;
+            this.buttonCokluCikar.Location = new System.Drawing.Point(8, 61);
+            this.buttonCokluCikar.Name = "buttonCokluCikar";
+            this.buttonCokluCikar.Size = new System.Drawing.Size(75, 55);
+            this.buttonCokluCikar.TabIndex = 86;
+            this.buttonCokluCikar.UseVisualStyleBackColor = false;
+            this.buttonCokluCikar.Click += new System.EventHandler(this.buttonCokluCikar_Click);
+            // 
+            // buttonCokluEkle
+            // 
+            this.buttonCokluEkle.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonCokluEkle.Font = new System.Drawing.Font("Arial", 30F, System.Drawing.FontStyle.Bold);
+            this.buttonCokluEkle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonCokluEkle.Image = global::ROPv1.Properties.Resources.addBig;
+            this.buttonCokluEkle.Location = new System.Drawing.Point(89, 61);
+            this.buttonCokluEkle.Name = "buttonCokluEkle";
+            this.buttonCokluEkle.Size = new System.Drawing.Size(75, 55);
+            this.buttonCokluEkle.TabIndex = 85;
+            this.buttonCokluEkle.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.buttonCokluEkle.UseVisualStyleBackColor = false;
+            this.buttonCokluEkle.Click += new System.EventHandler(this.buttonCokluEkle_Click);
+            // 
             // buttonAdd
             // 
             this.buttonAdd.BackColor = System.Drawing.SystemColors.Window;
@@ -169,6 +327,22 @@
             this.buttonAdd.Text = "Ekle";
             this.buttonAdd.UseVisualStyleBackColor = false;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
+            // buttonUrunIkram
+            // 
+            this.buttonUrunIkram.BackColor = System.Drawing.SystemColors.Window;
+            this.buttonUrunIkram.Enabled = false;
+            this.buttonUrunIkram.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.buttonUrunIkram.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonUrunIkram.Image = global::ROPv1.Properties.Resources.icon;
+            this.buttonUrunIkram.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonUrunIkram.Location = new System.Drawing.Point(8, 146);
+            this.buttonUrunIkram.Name = "buttonUrunIkram";
+            this.buttonUrunIkram.Size = new System.Drawing.Size(157, 55);
+            this.buttonUrunIkram.TabIndex = 80;
+            this.buttonUrunIkram.Text = "İkram";
+            this.buttonUrunIkram.UseVisualStyleBackColor = false;
+            this.buttonUrunIkram.Click += new System.EventHandler(this.buttonUrunIkram_Click);
             // 
             // buttonUrunIptal
             // 
@@ -269,164 +443,6 @@
             this.buttonHesapOde.UseVisualStyleBackColor = false;
             this.buttonHesapOde.Click += new System.EventHandler(this.paymentButton_Click);
             // 
-            // buttonTemizle
-            // 
-            this.buttonTemizle.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonTemizle.Font = new System.Drawing.Font("Arial", 16.5F, System.Drawing.FontStyle.Bold);
-            this.buttonTemizle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonTemizle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonTemizle.Location = new System.Drawing.Point(5, 625);
-            this.buttonTemizle.Name = "buttonTemizle";
-            this.buttonTemizle.Size = new System.Drawing.Size(174, 40);
-            this.buttonTemizle.TabIndex = 87;
-            this.buttonTemizle.Text = "Seçimi Temizle";
-            this.buttonTemizle.UseVisualStyleBackColor = false;
-            this.buttonTemizle.Click += new System.EventHandler(this.buttonTemizle_Click);
-            // 
-            // timerDialogClose
-            // 
-            this.timerDialogClose.Interval = 4000;
-            this.timerDialogClose.Tick += new System.EventHandler(this.timerDialogClose_Tick);
-            // 
-            // AddGroupBox
-            // 
-            this.AddGroupBox.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.AddGroupBox.Controls.Add(this.buttonAdd);
-            this.AddGroupBox.Controls.Add(this.buttonUrunIkram);
-            this.AddGroupBox.Controls.Add(this.buttonUrunIptal);
-            this.AddGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AddGroupBox.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.AddGroupBox.ForeColor = System.Drawing.SystemColors.Window;
-            this.AddGroupBox.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.AddGroupBox.Location = new System.Drawing.Point(6, 236);
-            this.AddGroupBox.Margin = new System.Windows.Forms.Padding(2);
-            this.AddGroupBox.Name = "AddGroupBox";
-            this.AddGroupBox.Padding = new System.Windows.Forms.Padding(2);
-            this.AddGroupBox.Size = new System.Drawing.Size(173, 210);
-            this.AddGroupBox.TabIndex = 90;
-            this.AddGroupBox.TabStop = false;
-            this.AddGroupBox.Text = "Ürün İşlemleri";
-            // 
-            // buttonUrunIkram
-            // 
-            this.buttonUrunIkram.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonUrunIkram.Enabled = false;
-            this.buttonUrunIkram.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonUrunIkram.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonUrunIkram.Image = global::ROPv1.Properties.Resources.icon;
-            this.buttonUrunIkram.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonUrunIkram.Location = new System.Drawing.Point(8, 146);
-            this.buttonUrunIkram.Name = "buttonUrunIkram";
-            this.buttonUrunIkram.Size = new System.Drawing.Size(157, 55);
-            this.buttonUrunIkram.TabIndex = 80;
-            this.buttonUrunIkram.Text = "İkram";
-            this.buttonUrunIkram.UseVisualStyleBackColor = false;
-            this.buttonUrunIkram.Click += new System.EventHandler(this.buttonUrunIkram_Click);
-            // 
-            // buttonPorsiyonSec
-            // 
-            this.buttonPorsiyonSec.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonPorsiyonSec.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonPorsiyonSec.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonPorsiyonSec.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonPorsiyonSec.Location = new System.Drawing.Point(8, 23);
-            this.buttonPorsiyonSec.Name = "buttonPorsiyonSec";
-            this.buttonPorsiyonSec.Size = new System.Drawing.Size(157, 40);
-            this.buttonPorsiyonSec.TabIndex = 84;
-            this.buttonPorsiyonSec.Text = "Tam";
-            this.buttonPorsiyonSec.UseVisualStyleBackColor = false;
-            this.buttonPorsiyonSec.Click += new System.EventHandler(this.buttonPorsiyonSec_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.groupBox1.Controls.Add(this.buttonPorsiyonSec);
-            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.groupBox1.ForeColor = System.Drawing.SystemColors.Window;
-            this.groupBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.groupBox1.Location = new System.Drawing.Point(6, 160);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(173, 71);
-            this.groupBox1.TabIndex = 91;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Porsiyon Seç";
-            // 
-            // gbCoklu
-            // 
-            this.gbCoklu.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.gbCoklu.Controls.Add(this.labelCokluAdet);
-            this.gbCoklu.Controls.Add(this.buttonCokluCikar);
-            this.gbCoklu.Controls.Add(this.buttonCokluEkle);
-            this.gbCoklu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.gbCoklu.Font = new System.Drawing.Font("Calibri", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.gbCoklu.ForeColor = System.Drawing.SystemColors.Window;
-            this.gbCoklu.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.gbCoklu.Location = new System.Drawing.Point(6, 450);
-            this.gbCoklu.Margin = new System.Windows.Forms.Padding(2);
-            this.gbCoklu.Name = "gbCoklu";
-            this.gbCoklu.Padding = new System.Windows.Forms.Padding(2);
-            this.gbCoklu.Size = new System.Drawing.Size(173, 124);
-            this.gbCoklu.TabIndex = 91;
-            this.gbCoklu.TabStop = false;
-            this.gbCoklu.Text = "İşlem Miktarı";
-            // 
-            // labelCokluAdet
-            // 
-            this.labelCokluAdet.BackColor = System.Drawing.Color.Transparent;
-            this.labelCokluAdet.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelCokluAdet.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelCokluAdet.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelCokluAdet.Location = new System.Drawing.Point(12, 25);
-            this.labelCokluAdet.Name = "labelCokluAdet";
-            this.labelCokluAdet.Size = new System.Drawing.Size(150, 33);
-            this.labelCokluAdet.TabIndex = 94;
-            this.labelCokluAdet.Text = "1";
-            this.labelCokluAdet.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // buttonCokluCikar
-            // 
-            this.buttonCokluCikar.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonCokluCikar.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.buttonCokluCikar.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonCokluCikar.Image = global::ROPv1.Properties.Resources.minus;
-            this.buttonCokluCikar.Location = new System.Drawing.Point(8, 61);
-            this.buttonCokluCikar.Name = "buttonCokluCikar";
-            this.buttonCokluCikar.Size = new System.Drawing.Size(75, 55);
-            this.buttonCokluCikar.TabIndex = 86;
-            this.buttonCokluCikar.UseVisualStyleBackColor = false;
-            this.buttonCokluCikar.Click += new System.EventHandler(this.buttonCokluCikar_Click);
-            // 
-            // buttonCokluEkle
-            // 
-            this.buttonCokluEkle.BackColor = System.Drawing.SystemColors.Window;
-            this.buttonCokluEkle.Font = new System.Drawing.Font("Arial", 30F, System.Drawing.FontStyle.Bold);
-            this.buttonCokluEkle.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonCokluEkle.Image = global::ROPv1.Properties.Resources.addBig;
-            this.buttonCokluEkle.Location = new System.Drawing.Point(89, 61);
-            this.buttonCokluEkle.Name = "buttonCokluEkle";
-            this.buttonCokluEkle.Size = new System.Drawing.Size(75, 55);
-            this.buttonCokluEkle.TabIndex = 85;
-            this.buttonCokluEkle.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.buttonCokluEkle.UseVisualStyleBackColor = false;
-            this.buttonCokluEkle.Click += new System.EventHandler(this.buttonCokluEkle_Click);
-            // 
-            // labelEklenecekUrun
-            // 
-            this.labelEklenecekUrun.AutoSize = true;
-            this.labelEklenecekUrun.BackColor = System.Drawing.Color.Transparent;
-            this.labelEklenecekUrun.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.labelEklenecekUrun.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelEklenecekUrun.Location = new System.Drawing.Point(646, 12);
-            this.labelEklenecekUrun.Name = "labelEklenecekUrun";
-            this.labelEklenecekUrun.Size = new System.Drawing.Size(154, 33);
-            this.labelEklenecekUrun.TabIndex = 93;
-            this.labelEklenecekUrun.Text = "Ürün Seçiniz";
-            this.labelEklenecekUrun.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelEklenecekUrun.TextChanged += new System.EventHandler(this.labelEklenecekUrun_TextChanged);
-            // 
             // listUrunFiyat
             // 
             this.listUrunFiyat.Activation = System.Windows.Forms.ItemActivation.OneClick;
@@ -465,7 +481,7 @@
             this.listUrunFiyat.Margin = new System.Windows.Forms.Padding(0);
             this.listUrunFiyat.Name = "listUrunFiyat";
             this.listUrunFiyat.ShowItemToolTips = true;
-            this.listUrunFiyat.Size = new System.Drawing.Size(450, 504);
+            this.listUrunFiyat.Size = new System.Drawing.Size(450, 458);
             this.listUrunFiyat.SmallImageList = this.ımageList1;
             this.listUrunFiyat.TabIndex = 0;
             this.listUrunFiyat.UseCompatibleStateImageBehavior = false;
@@ -500,6 +516,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1366, 768);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonBarkod);
             this.Controls.Add(this.flowPanelMenuBasliklari);
             this.Controls.Add(this.labelDepartman);
             this.Controls.Add(this.labelEklenecekUrun);
@@ -567,5 +584,6 @@
         private System.Windows.Forms.Button buttonCokluCikar;
         private System.Windows.Forms.Button buttonCokluEkle;
         private System.Windows.Forms.Label labelEklenecekUrun;
+        private System.Windows.Forms.Button buttonBarkod;
     }
 }

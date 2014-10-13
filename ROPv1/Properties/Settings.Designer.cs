@@ -178,5 +178,17 @@ namespace ROPv1.Properties {
                 this["IP4B"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("29")]
+        public string TeraziBarkod {
+            get {
+                return ((string)(this["TeraziBarkod"]));
+            }
+            set {
+                this["TeraziBarkod"] = value;
+            }
+        }
     }
 }
