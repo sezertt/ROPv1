@@ -22,6 +22,7 @@ using System.Security.Cryptography;
 using System.Security;
 using System.Net.NetworkInformation;
 using CrystalDecisions.CrystalReports.Engine;
+using ROPv1.Sayfalar.CallerId;
 
 namespace ROPv1
 {
@@ -53,6 +54,8 @@ namespace ROPv1
         public SiparisMasaFormu siparisForm;
 
         public AdminGirisFormu adminForm;
+
+        public CallerIDFormu frmCallerId;
 
         string siparisiKimGirdi, adisyonNotu;
 
@@ -175,7 +178,7 @@ namespace ROPv1
                         break;
                     case "masaDegistirTablet":
                     case "masaDegistir": // Masa değiştirmek ve bu bilgiyi diğer kullanıcılara bildirmek için
-                        komut_masaDegistir(parametreler["yeniMasa"], parametreler["yeniDepartmanAdi"], parametreler["eskiMasa"], parametreler["eskiDepartmanAdi"], parametreler["yapilmasiGereken"],parametreler["komut"],e.Client);
+                        komut_masaDegistir(parametreler["yeniMasa"], parametreler["yeniDepartmanAdi"], parametreler["eskiMasa"], parametreler["eskiDepartmanAdi"], parametreler["yapilmasiGereken"], parametreler["komut"], e.Client);
                         break;
                     case "ikram": // ürün ikram edildiği bilgisini dağıtmak için
                         komut_ikram(parametreler["masa"], parametreler["departmanAdi"], parametreler["miktar"], parametreler["yemekAdi"], parametreler["siparisiGirenKisi"], parametreler["dusulecekDeger"], e.Client, parametreler["adisyonNotu"], parametreler["porsiyon"], parametreler["tur"]);
@@ -210,7 +213,7 @@ namespace ROPv1
                         break;
                     case "OdemeBilgileriGuncelleTablet":
                     case "OdemeBilgileriTablet":
-                        komut_OdemeBilgileriTablet(e.Client, parametreler["masa"], parametreler["departmanAdi"],parametreler["komut"]);
+                        komut_OdemeBilgileriTablet(e.Client, parametreler["masa"], parametreler["departmanAdi"], parametreler["komut"]);
                         break;
                     case "AdisyonNotu": // adisyon notu değiştirileceğinde eski adisyon notunu göstermek için
                         komut_adisyonNotu(e.Client, parametreler["masa"], parametreler["departmanAdi"]);
@@ -342,7 +345,7 @@ namespace ROPv1
 
             cmd.Connection.Close();
             cmd.Connection.Dispose();
-            
+
 
             if (kalanHesap != null && Convert.ToDecimal(kalanHesap.Replace('.', ',')) == 0)
             {
@@ -1179,7 +1182,7 @@ namespace ROPv1
 
             SqlCommand cmd = SQLBaglantisi.getCommand("SELECT Fiyatı, Adet, Porsiyon, YemekAdi, KiloSatisiMi from Siparis JOIN Adisyon ON Siparis.AdisyonID=Adisyon.AdisyonID WHERE Adisyon.MasaAdi='" + masa + "' and Adisyon.DepartmanAdi='" + departmanAdi + "' and Siparis.IptalMi=0 AND Siparis.OdendiMi=1 AND Siparis.IkramMi=0 AND Adisyon.AcikMi=1 AND Adisyon.IptalMi=0 ORDER BY Adet DESC");
             SqlDataReader dr = cmd.ExecuteReader();
-          
+
             while (dr.Read())
             {
                 try
@@ -1562,7 +1565,7 @@ namespace ROPv1
                             {
                                 tablebutton.ForeColor = Color.White;
                                 tablebutton.BackColor = Color.Firebrick;
-                            }    
+                            }
                         }
                         if (siparisForm.hangiMasaButonunaBasildi != null)
                         {
@@ -1585,16 +1588,16 @@ namespace ROPv1
             }
 
             tumKullanicilaraMesajYolla("komut=urunuTasiTablet&masa=" + MasaAdi + "&departmanAdi=" + departmanAdi + "&yeniMasa=" + yeniMasa + "&yeniDepartmanAdi=" + yeniDepartmanAdi + "&aktarmaBilgileri=" + aktarmaBilgileri);
-            
+
             //Tüm kullanıcılara ürün taşındı mesajı gönderelim
             tumKullanicilaraMesajYolla("komut=urunTasindi&masa=" + MasaAdi + "&departmanAdi=" + departmanAdi + "&yeniMasa=" + yeniMasa + "&yeniDepartmanAdi=" + yeniDepartmanAdi);
-            
+
         }
 
         private void komut_masaDegistir(string yeniMasa, string yeniDepartmanAdi, string eskiMasa, string eskiDepartmanAdi, string yapilmasiGereken, string komut, ClientRef client)
         {
             SqlCommand cmd;
-          
+
             switch (Convert.ToInt32(yapilmasiGereken))
             {
                 case 0: // departman değişmedi ve masaların ikisi de açık
@@ -2818,7 +2821,7 @@ namespace ROPv1
                 //Kullanıcıya istenilen departmanın açık kapalı masalarını gönderelim
                 client.MesajYolla("komut=" + komut + "&masa=" + acikMasalar);
             }
-            else 
+            else
             {
                 client.MesajYolla("komut=" + komut + "&masa=" + acikMasalar + "&masaDepartman=" + masaDepartman);
             }
@@ -3095,7 +3098,7 @@ namespace ROPv1
                         reportTask.Wait();
                     }
                     catch
-                    {}
+                    { }
 
                     //Task.Factory.StartNew(() => adminForm.ShowDialog());
                     //adminForm.Show();
@@ -3429,8 +3432,8 @@ namespace ROPv1
         //Form Load
         private void GirisEkrani_Load(object sender, EventArgs e)
         {
+            axCIDv51.Start();
             //Properties.Settings.Default.Reset();
-
             if (Properties.Settings.Default.FirmaAdi.Trim() == "")
             {
                 SifreVeFirmaAdiFormu firmaAdiFormu = new SifreVeFirmaAdiFormu(true);
@@ -3650,8 +3653,8 @@ namespace ROPv1
             {
                 cmd.Parameters.AddWithValue("@_KiloSatisiMi", 0);
                 cmd.Parameters.AddWithValue("@_NotificationGorulduMu", NotificationGorulduMu);
-            } 
-            
+            }
+
             cmd.ExecuteNonQuery();
 
             cmd.Connection.Close();
@@ -3767,7 +3770,7 @@ namespace ROPv1
                 cmd.Parameters.AddWithValue("@_Porsiyon", porsiyon);
                 cmd.Parameters.AddWithValue("@_IptalNedeni", iptalNedeni);
                 cmd.Parameters.AddWithValue("@_KiloSatisiMi", 0);
-            }            
+            }
 
             cmd.ExecuteNonQuery();
 
@@ -3858,5 +3861,11 @@ namespace ROPv1
         }
 
         #endregion
+
+        private void axCIDv51_OnCallerID(object sender, Axcidv5callerid.ICIDv5Events_OnCallerIDEvent e)
+        {
+            frmCallerId = new CallerIDFormu(this, e);
+            frmCallerId.Show();
+        }
     }
 }

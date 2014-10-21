@@ -37,10 +37,10 @@
             this.leftPanelView = new System.Windows.Forms.TreeView();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.exitButton = new System.Windows.Forms.Button();
-            this.anketCheckBox = new System.Windows.Forms.CheckBox();
             this.reportCheckBox = new System.Windows.Forms.CheckBox();
-            this.stokCheckBox = new System.Windows.Forms.CheckBox();
             this.ayarCheckBox = new System.Windows.Forms.CheckBox();
+            this.stokCheckBox = new System.Windows.Forms.CheckBox();
+            this.anketCheckBox = new System.Windows.Forms.CheckBox();
             this.labelSaat = new System.Windows.Forms.Label();
             this.labelTarih = new System.Windows.Forms.Label();
             this.labelGun = new System.Windows.Forms.Label();
@@ -185,27 +185,6 @@
             this.exitButton.UseVisualStyleBackColor = false;
             this.exitButton.Click += new System.EventHandler(this.exitPressed);
             // 
-            // anketCheckBox
-            // 
-            this.anketCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.anketCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.anketCheckBox.BackColor = System.Drawing.SystemColors.Window;
-            this.anketCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.anketCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.anketCheckBox.Image = global::ROPv1.Properties.Resources.anket;
-            this.anketCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.anketCheckBox.Location = new System.Drawing.Point(3, 3);
-            this.anketCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
-            this.anketCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
-            this.anketCheckBox.Name = "anketCheckBox";
-            this.anketCheckBox.Size = new System.Drawing.Size(180, 110);
-            this.anketCheckBox.TabIndex = 3;
-            this.anketCheckBox.Tag = "4";
-            this.anketCheckBox.Text = "Anket";
-            this.anketCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.anketCheckBox.UseVisualStyleBackColor = false;
-            this.anketCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
-            // 
             // reportCheckBox
             // 
             this.reportCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -226,6 +205,27 @@
             this.reportCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.reportCheckBox.UseVisualStyleBackColor = false;
             this.reportCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
+            // 
+            // ayarCheckBox
+            // 
+            this.ayarCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.ayarCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ayarCheckBox.BackColor = System.Drawing.SystemColors.Window;
+            this.ayarCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.ayarCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingscolor;
+            this.ayarCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.ayarCheckBox.Location = new System.Drawing.Point(375, 3);
+            this.ayarCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
+            this.ayarCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
+            this.ayarCheckBox.Name = "ayarCheckBox";
+            this.ayarCheckBox.Size = new System.Drawing.Size(180, 110);
+            this.ayarCheckBox.TabIndex = 4;
+            this.ayarCheckBox.Tag = "3";
+            this.ayarCheckBox.Text = "Ayarlar";
+            this.ayarCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.ayarCheckBox.UseVisualStyleBackColor = false;
+            this.ayarCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
             // 
             // stokCheckBox
             // 
@@ -248,26 +248,26 @@
             this.stokCheckBox.UseVisualStyleBackColor = false;
             this.stokCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
             // 
-            // ayarCheckBox
+            // anketCheckBox
             // 
-            this.ayarCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.ayarCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.ayarCheckBox.BackColor = System.Drawing.SystemColors.Window;
-            this.ayarCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.ayarCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ayarCheckBox.Image = global::ROPv1.Properties.Resources.settingscolor;
-            this.ayarCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ayarCheckBox.Location = new System.Drawing.Point(375, 3);
-            this.ayarCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
-            this.ayarCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
-            this.ayarCheckBox.Name = "ayarCheckBox";
-            this.ayarCheckBox.Size = new System.Drawing.Size(180, 110);
-            this.ayarCheckBox.TabIndex = 4;
-            this.ayarCheckBox.Tag = "3";
-            this.ayarCheckBox.Text = "Ayarlar";
-            this.ayarCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.ayarCheckBox.UseVisualStyleBackColor = false;
-            this.ayarCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
+            this.anketCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.anketCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.anketCheckBox.BackColor = System.Drawing.SystemColors.Window;
+            this.anketCheckBox.Font = new System.Drawing.Font("Arial", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.anketCheckBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.anketCheckBox.Image = global::ROPv1.Properties.Resources.anket;
+            this.anketCheckBox.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.anketCheckBox.Location = new System.Drawing.Point(3, 3);
+            this.anketCheckBox.MaximumSize = new System.Drawing.Size(300, 110);
+            this.anketCheckBox.MinimumSize = new System.Drawing.Size(180, 110);
+            this.anketCheckBox.Name = "anketCheckBox";
+            this.anketCheckBox.Size = new System.Drawing.Size(180, 110);
+            this.anketCheckBox.TabIndex = 3;
+            this.anketCheckBox.Tag = "4";
+            this.anketCheckBox.Text = "Anket";
+            this.anketCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.anketCheckBox.UseVisualStyleBackColor = false;
+            this.anketCheckBox.CheckedChanged += new System.EventHandler(this.saleCheckChanged);
             // 
             // labelSaat
             // 

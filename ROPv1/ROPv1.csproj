@@ -56,6 +56,24 @@
   <PropertyGroup>
     <ApplicationManifest>Gereksizler\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
@@ -152,6 +170,14 @@
     <Compile Include="Sayfalar\AdminGirisi\Raporlar\IptalEdilenUrunGoruntuleme.Designer.cs">
       <DependentUpon>IptalEdilenUrunGoruntuleme.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sayfalar\CallerId\CallerId.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\CallerId\CallerId.Designer.cs">
+      <DependentUpon>CallerId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sayfalar\CallerId\CallerIDDAL.cs" />
+    <Compile Include="Sayfalar\CallerId\Customer.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\Invoker.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\KiloMuPorsiyonMuForm.cs">
       <SubType>Form</SubType>
@@ -411,6 +437,9 @@
     <EmbeddedResource Include="Sayfalar\AdminGirisi\Raporlar\IptalEdilenUrunGoruntuleme.resx">
       <DependentUpon>IptalEdilenUrunGoruntuleme.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Sayfalar\CallerId\CallerId.resx">
+      <DependentUpon>CallerId.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Sayfalar\GenelKullanılanlar\KiloMuPorsiyonMuForm.resx">
       <DependentUpon>KiloMuPorsiyonMuForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -659,7 +688,34 @@
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="Axcidv5callerid">
+      <Guid>{ABD767AA-AF41-4B9C-909B-160B2AF85190}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="cidv5callerid">
+      <Guid>{ABD767AA-AF41-4B9C-909B-160B2AF85190}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
