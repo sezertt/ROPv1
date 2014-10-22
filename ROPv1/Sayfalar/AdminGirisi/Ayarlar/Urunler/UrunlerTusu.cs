@@ -28,6 +28,16 @@ namespace ROPv1
             XmlLoad<KategorilerineGoreUrunler> loadInfoUrun = new XmlLoad<KategorilerineGoreUrunler>();
             KategorilerineGoreUrunler[] infoUrun = loadInfoUrun.LoadRestoran("urunler.xml");
 
+            SqlCommand cmd = SQLBaglantisi.getCommand("SELECT YaziciAdi FROM Yazici");
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            List<string> yazicilar = new List<string>();
+
+            while (dr.Read())
+            {
+                yazicilar.Add(dr.GetString(0));
+            }
+
             urunListesi.AddRange(infoUrun);
 
             for (int i = 0; i < urunListesi.Count; i++)
@@ -52,20 +62,37 @@ namespace ROPv1
                     comboBoxPorsiyon.KeyPress += comboBox_KeyPress;
                     comboBoxPorsiyon.Click += showMenu;
 
-                    ComboBox comboBoxMutfak = new ComboBox();
-                    comboBoxMutfak.Items.Add("Mutfak Bilgilendirilsin");
-                    comboBoxMutfak.Items.Add("Mutfak Bilgilendirilmesin");
+                    ComboBox comboBoxYaziciBilgilendirme = new ComboBox();
+                    comboBoxYaziciBilgilendirme.Items.Add("Yazıcı Bilgilendirilsin");
+                    comboBoxYaziciBilgilendirme.Items.Add("Bildirim Yok");
 
-                    comboBoxMutfak.Tag = urunListesi[i].urunAdi[j] + "m";
+                    comboBoxYaziciBilgilendirme.Tag = urunListesi[i].urunAdi[j] + "m";
 
-                    if (urunListesi[i].urunMutfagaBildirilmeliMi[j])
-                        comboBoxMutfak.Text = "Mutfak Bilgilendirilsin";
+                    if (urunListesi[i].urunYaziciyaBildirilmeliMi[j])
+                        comboBoxYaziciBilgilendirme.Text = "Yazıcı Bilgilendirilsin";
                     else
-                        comboBoxMutfak.Text = "Mutfak Bilgilendirilmesin";
+                        comboBoxYaziciBilgilendirme.Text = "Bildirim Yok";
 
-                    comboBoxMutfak.ContextMenuStrip = contextMenuStrip1;
-                    comboBoxMutfak.KeyPress += comboBox_KeyPress;
-                    comboBoxMutfak.Click += showMenu;
+                    comboBoxYaziciBilgilendirme.ContextMenuStrip = contextMenuStrip1;
+                    comboBoxYaziciBilgilendirme.KeyPress += comboBox_KeyPress;
+                    comboBoxYaziciBilgilendirme.Click += showMenu;
+
+                    
+
+                    ComboBox comboBoxYazici = new ComboBox();
+
+                    foreach(string yazici in yazicilar)
+                    {
+                        comboBoxYazici.Items.Add(yazici);
+                    }
+
+                    comboBoxYazici.Tag = urunListesi[i].urunAdi[j] + "y";
+
+                    comboBoxYazici.Text = urunListesi[i].urunYazicisi[j];
+
+                    comboBoxYazici.ContextMenuStrip = contextMenuStrip1;
+                    comboBoxYazici.KeyPress += comboBox_KeyPress;
+                    comboBoxYazici.Click += showMenu;
 
                     GLItem urun = new GLItem();
                     urun.ForeColor = SystemColors.ActiveCaption;
@@ -73,10 +100,12 @@ namespace ROPv1
 
                     glacialListUrunler.Items.Add(urun);
                     glacialListUrunler.Items[glacialListUrunler.Items.Count - 1].SubItems[1].Control = comboBoxPorsiyon;
-                    glacialListUrunler.Items[glacialListUrunler.Items.Count - 1].SubItems[2].Control = comboBoxMutfak;
+                    glacialListUrunler.Items[glacialListUrunler.Items.Count - 1].SubItems[2].Control = comboBoxYaziciBilgilendirme;
+                    glacialListUrunler.Items[glacialListUrunler.Items.Count - 1].SubItems[3].Control = comboBoxYazici;
                     glacialListUrunler.Items[glacialListUrunler.Items.Count - 1].SubItems[0].ForeColor = SystemColors.ActiveCaption;
                     glacialListUrunler.Items[glacialListUrunler.Items.Count - 1].SubItems[1].Control.ForeColor = SystemColors.ActiveCaption;
                     glacialListUrunler.Items[glacialListUrunler.Items.Count - 1].SubItems[2].Control.ForeColor = SystemColors.ActiveCaption;
+                    glacialListUrunler.Items[glacialListUrunler.Items.Count - 1].SubItems[3].Control.ForeColor = SystemColors.ActiveCaption;
 
                 }
             }
@@ -142,16 +171,18 @@ namespace ROPv1
 
                     urunListesi[i].urunPorsiyonSinifi[j] = urunPorsiyonu;
 
-                    string urunMutfagaBildirilmeliMiString = ((ComboBox)glacialListUrunler.Items[glacialUrunListesiSirasi].SubItems[2].Control).Text;
+                    string urunYaziciyaBildirilmeliMiString = ((ComboBox)glacialListUrunler.Items[glacialUrunListesiSirasi].SubItems[2].Control).Text;
 
-                    bool urunMutfagaBildirilmeliMi = true; // Mutfak Bilgilendirilsin
+                    bool urunYaziciyaBildirilmeliMi = true; // Yazıcı Bilgilendirilsin
 
-                    if (urunMutfagaBildirilmeliMiString == "Mutfak Bilgilendirilmesin")
+                    if (urunYaziciyaBildirilmeliMiString == "Bildirim Yok")
                     {
-                        urunMutfagaBildirilmeliMi = false;
+                        urunYaziciyaBildirilmeliMi = false;
                     }
 
-                    urunListesi[i].urunMutfagaBildirilmeliMi[j] = urunMutfagaBildirilmeliMi;
+                    urunListesi[i].urunYaziciyaBildirilmeliMi[j] = urunYaziciyaBildirilmeliMi;
+
+                    urunListesi[i].urunYazicisi[j] = ((ComboBox)glacialListUrunler.Items[glacialUrunListesiSirasi].SubItems[3].Control).Text;
 
                     glacialUrunListesiSirasi++;
                 }

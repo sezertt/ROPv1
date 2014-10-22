@@ -59,5 +59,26 @@ namespace ROPv1.Sayfalar.CallerId
                 return false;
             }
         }
+
+        public List<int> sonSiparisler(string phone)
+        {
+            try
+            {
+                List<int> orders = new List<int>();
+                Customer customer = new Customer();
+                SqlCommand cmd = SQLBaglantisi.getCommand("Select OrderId from CustomerOrders Where Phone=@phone");
+                cmd.Parameters.AddWithValue("@phone", phone);
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    orders.Add(dr.GetInt32(0));
+                }
+                return orders;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

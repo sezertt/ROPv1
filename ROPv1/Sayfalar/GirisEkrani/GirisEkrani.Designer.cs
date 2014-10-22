@@ -33,6 +33,9 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.passwordBoxHost = new System.Windows.Forms.Integration.ElementHost();
             this.usernameBoxHost = new System.Windows.Forms.Integration.ElementHost();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.girisButton = new System.Windows.Forms.Button();
             this.keyboardcontrol1 = new KeyboardClassLibrary.Keyboardcontrol();
             this.labelGun = new System.Windows.Forms.Label();
             this.labelTarih = new System.Windows.Forms.Label();
@@ -40,17 +43,10 @@
             this.timerSaat = new System.Windows.Forms.Timer(this.components);
             this.textboxOnlineKullanicilar = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.grpBoxCallerId = new System.Windows.Forms.GroupBox();
-            this.axCIDv51 = new Axcidv5callerid.AxCIDv5();
-            this.girisButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
             this.buttonConnection = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            this.grpBoxCallerId.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axCIDv51)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -87,6 +83,44 @@
             this.usernameBoxHost.Size = new System.Drawing.Size(220, 80);
             this.usernameBoxHost.TabIndex = 2;
             this.usernameBoxHost.Child = null;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pictureBox1.BackgroundImage = global::ROPv1.Properties.Resources.username;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(32, 46);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(60, 74);
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pictureBox2.BackgroundImage = global::ROPv1.Properties.Resources.password;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(32, 134);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(60, 60);
+            this.pictureBox2.TabIndex = 4;
+            this.pictureBox2.TabStop = false;
+            // 
+            // girisButton
+            // 
+            this.girisButton.BackColor = System.Drawing.SystemColors.Window;
+            this.girisButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.girisButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.girisButton.Image = global::ROPv1.Properties.Resources.icon;
+            this.girisButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.girisButton.Location = new System.Drawing.Point(197, 211);
+            this.girisButton.Name = "girisButton";
+            this.girisButton.Size = new System.Drawing.Size(157, 52);
+            this.girisButton.TabIndex = 4;
+            this.girisButton.Text = "Yönetici Girişi";
+            this.girisButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.girisButton.UseVisualStyleBackColor = false;
+            this.girisButton.Click += new System.EventHandler(this.girisButtonPressed);
             // 
             // keyboardcontrol1
             // 
@@ -161,41 +195,6 @@
             this.timer1.Interval = 60000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // grpBoxCallerId
-            // 
-            this.grpBoxCallerId.Controls.Add(this.axCIDv51);
-            this.grpBoxCallerId.Location = new System.Drawing.Point(1326, 725);
-            this.grpBoxCallerId.Name = "grpBoxCallerId";
-            this.grpBoxCallerId.Size = new System.Drawing.Size(40, 43);
-            this.grpBoxCallerId.TabIndex = 40;
-            this.grpBoxCallerId.TabStop = false;
-            this.grpBoxCallerId.Visible = false;
-            // 
-            // axCIDv51
-            // 
-            this.axCIDv51.Location = new System.Drawing.Point(6, 10);
-            this.axCIDv51.Name = "axCIDv51";
-            this.axCIDv51.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axCIDv51.OcxState")));
-            this.axCIDv51.Size = new System.Drawing.Size(26, 26);
-            this.axCIDv51.TabIndex = 0;
-            this.axCIDv51.OnCallerID += new Axcidv5callerid.ICIDv5Events_OnCallerIDEventHandler(this.axCIDv51_OnCallerID);
-            // 
-            // girisButton
-            // 
-            this.girisButton.BackColor = System.Drawing.SystemColors.Window;
-            this.girisButton.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.girisButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.girisButton.Image = global::ROPv1.Properties.Resources.icon;
-            this.girisButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.girisButton.Location = new System.Drawing.Point(197, 211);
-            this.girisButton.Name = "girisButton";
-            this.girisButton.Size = new System.Drawing.Size(157, 52);
-            this.girisButton.TabIndex = 4;
-            this.girisButton.Text = "Yönetici Girişi";
-            this.girisButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.girisButton.UseVisualStyleBackColor = false;
-            this.girisButton.Click += new System.EventHandler(this.girisButtonPressed);
-            // 
             // exitButton
             // 
             this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -231,28 +230,6 @@
             this.buttonConnection.UseVisualStyleBackColor = false;
             this.buttonConnection.Click += new System.EventHandler(this.buttonConnection_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pictureBox1.BackgroundImage = global::ROPv1.Properties.Resources.username;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(32, 46);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(60, 74);
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pictureBox2.BackgroundImage = global::ROPv1.Properties.Resources.password;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(32, 134);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(60, 60);
-            this.pictureBox2.TabIndex = 4;
-            this.pictureBox2.TabStop = false;
-            // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -279,7 +256,6 @@
             this.CancelButton = this.exitButton;
             this.ClientSize = new System.Drawing.Size(1366, 768);
             this.ControlBox = false;
-            this.Controls.Add(this.grpBoxCallerId);
             this.Controls.Add(this.labelTarih);
             this.Controls.Add(this.buttonConnection);
             this.Controls.Add(this.groupBox1);
@@ -304,8 +280,6 @@
             this.Load += new System.EventHandler(this.GirisEkrani_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GirisEkrani_KeyDown);
             this.groupBox1.ResumeLayout(false);
-            this.grpBoxCallerId.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.axCIDv51)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
@@ -331,8 +305,6 @@
         private System.Windows.Forms.TextBox textboxOnlineKullanicilar;
         private System.Windows.Forms.Button buttonConnection;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.GroupBox grpBoxCallerId;
-        public Axcidv5callerid.AxCIDv5 axCIDv51;
     }
 }
 

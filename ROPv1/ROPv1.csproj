@@ -178,6 +178,13 @@
     </Compile>
     <Compile Include="Sayfalar\CallerId\CallerIDDAL.cs" />
     <Compile Include="Sayfalar\CallerId\Customer.cs" />
+    <Compile Include="Sayfalar\CallerId\Order.cs" />
+    <Compile Include="Sayfalar\CallerId\PaketSiparis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sayfalar\CallerId\PaketSiparis.Designer.cs">
+      <DependentUpon>PaketSiparis.cs</DependentUpon>
+    </Compile>
     <Compile Include="Sayfalar\GenelKullanılanlar\Invoker.cs" />
     <Compile Include="Sayfalar\GenelKullanılanlar\KiloMuPorsiyonMuForm.cs">
       <SubType>Form</SubType>

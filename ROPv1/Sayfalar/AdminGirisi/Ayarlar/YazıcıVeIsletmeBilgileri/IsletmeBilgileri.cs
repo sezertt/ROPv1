@@ -77,10 +77,10 @@ namespace ROPv1
                     comboBoxFirmaAdi.Items.Add(yazici[1]);
 
                 if (treeYaziciAdi.Nodes.Count < 2)
-                {  
+                {
                     comboYaziciAdi.Text = yazici[0];
                     comboBoxFirmaAdi.Text = yazici[1];
-                    textBoxAdres.Text = yazici[2];                  
+                    textBoxAdres.Text = yazici[2];
                     comboYukluYazicilar.Text = yazici[3];
                     textBoxTelefon.Text = yazici[4];
                 }
@@ -194,6 +194,23 @@ namespace ROPv1
         {
             if (treeYaziciAdi.SelectedNode == null)
                 return;
+            List<KategorilerineGoreUrunler> urunListesi = new List<KategorilerineGoreUrunler>();
+
+            XmlLoad<KategorilerineGoreUrunler> loadInfoUrun = new XmlLoad<KategorilerineGoreUrunler>();
+            KategorilerineGoreUrunler[] infoUrun = loadInfoUrun.LoadRestoran("urunler.xml");
+            urunListesi.AddRange(infoUrun);
+
+            for (int i = 0; i < urunListesi.Count; i++)
+                for (int j = 0; j < urunListesi[i].urunYazicisi.Count; j++)
+                {
+                    if (comboYaziciAdi.Text == urunListesi[i].urunYazicisi[j])
+                    {
+                        KontrolFormu dialog2 = new KontrolFormu("Yazıcıya bağlı ürünler bulunmakta,\nönce -Ürün Özellikleri-'ni kullanarak yazıcıları değiştiriniz", false);
+                        dialog2.Show();
+                        return;
+                    }
+
+                }
 
             DialogResult eminMisiniz;
 
@@ -210,9 +227,12 @@ namespace ROPv1
                 cmd.Connection.Dispose();
 
                 treeYaziciAdi.Nodes[treeYaziciAdi.SelectedNode.Index].Remove();
+                yazicilar.RemoveAt(treeYaziciAdi.SelectedNode.Index);
 
                 if (treeYaziciAdi.Nodes.Count < 2)
                     buttonYaziciyiSil.Enabled = false;
+
+                treeYaziciAdi_AfterSelect(null, null);
             }
         }
 
@@ -220,7 +240,7 @@ namespace ROPv1
         {
             KontrolFormu dialog;
 
-            if(comboYukluYazicilar.Text.Contains("-") || comboYukluYazicilar.Text.Contains("<") || comboYukluYazicilar.Text.Contains(">") || comboYukluYazicilar.Text.Contains("&") || comboYukluYazicilar.Text.Contains("=") || comboYukluYazicilar.Text.Contains("*"))
+            if (comboYukluYazicilar.Text.Contains("-") || comboYukluYazicilar.Text.Contains("<") || comboYukluYazicilar.Text.Contains(">") || comboYukluYazicilar.Text.Contains("&") || comboYukluYazicilar.Text.Contains("=") || comboYukluYazicilar.Text.Contains("*"))
             {
                 dialog = new KontrolFormu("Yazıcı adında -, &, <, >, * karakterleri bulunamaz, lütfen yazıcınızı tekrar başka bir isimle yükleyin veya başka bir yazıcı seçin ", false);
                 dialog.Show();
@@ -291,7 +311,7 @@ namespace ROPv1
                         break;
                     }
                 }
-                if(firmaYok)
+                if (firmaYok)
                     comboBoxFirmaAdi.Items.Add(yazici[1]);
 
                 dialog = new KontrolFormu("Yeni Yazıcı Bilgileri Kaydedilmiştir", false);
@@ -318,7 +338,7 @@ namespace ROPv1
                 cmd.Parameters.AddWithValue("@firmaAdi", comboBoxFirmaAdi.Text);
                 cmd.Parameters.AddWithValue("@firmaAdres", textBoxAdres.Text);
                 cmd.Parameters.AddWithValue("@yazici", comboYukluYazicilar.Text);
-                cmd.Parameters.AddWithValue("@telefon",textBoxTelefon.Text);
+                cmd.Parameters.AddWithValue("@telefon", textBoxTelefon.Text);
                 cmd.Parameters.AddWithValue("@yaziciAdi2", yazicilar[treeYaziciAdi.SelectedNode.Index][0]);
                 cmd.ExecuteNonQuery();
 
